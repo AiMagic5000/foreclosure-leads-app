@@ -125,7 +125,7 @@ export default function LandingPage() {
   const judicialCount = statesData.filter(s => s.foreclosureType === 'judicial').length
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       {/* Schema.org JSON-LD */}
       <script
         type="application/ld+json"
@@ -193,8 +193,8 @@ export default function LandingPage() {
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Asset Recovery Business",
-            "url": "https://dashboard.assetrecoverybusiness.com",
-            "logo": "https://dashboard.assetrecoverybusiness.com/logo.png",
+            "url": "https://foreclosure-leads.alwaysencrypted.com",
+            "logo": "https://foreclosure-leads.alwaysencrypted.com/logo.png",
             "sameAs": [],
             "contactPoint": {
               "@type": "ContactPoint",
@@ -206,24 +206,24 @@ export default function LandingPage() {
       />
 
       {/* Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2">
-            <Building2 className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold">Asset Recovery Leads</span>
+            <Building2 className="h-8 w-8 text-[#1e3a5f]" />
+            <span className="text-xl font-bold text-gray-900">Asset Recovery Leads</span>
           </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="#features" className="text-sm font-medium hover:text-primary transition-colors">Features</Link>
-            <Link href="#pricing" className="text-sm font-medium hover:text-primary transition-colors">Pricing</Link>
-            <Link href="/states-guide" className="text-sm font-medium hover:text-primary transition-colors">50 States Guide</Link>
-            <Link href="#faq" className="text-sm font-medium hover:text-primary transition-colors">FAQ</Link>
+          <nav className="hidden md:flex items-center gap-8">
+            <Link href="#features" className="text-sm font-medium text-gray-600 hover:text-[#1e3a5f] transition-colors">Features</Link>
+            <Link href="#pricing" className="text-sm font-medium text-gray-600 hover:text-[#1e3a5f] transition-colors">Pricing</Link>
+            <Link href="/states-guide" className="text-sm font-medium text-gray-600 hover:text-[#1e3a5f] transition-colors">50 States Guide</Link>
+            <Link href="#faq" className="text-sm font-medium text-gray-600 hover:text-[#1e3a5f] transition-colors">FAQ</Link>
           </nav>
           <div className="flex items-center gap-3">
             <Link href="/sign-in">
-              <Button variant="ghost" size="sm">Sign In</Button>
+              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-[#1e3a5f]">Sign In</Button>
             </Link>
             <Link href="/sign-up">
-              <Button size="sm" variant="gradient">Start Free Trial</Button>
+              <Button size="sm" className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">Start Free Trial</Button>
             </Link>
           </div>
         </div>
@@ -231,41 +231,40 @@ export default function LandingPage() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 md:py-32">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
-          <div className="container mx-auto px-4 relative">
+        <section className="py-20 md:py-28 bg-white">
+          <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <Badge variant="secondary" className="mb-6">
+              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-4">
                 Updated Daily - {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-              </Badge>
-              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
-                Fresh Foreclosure Leads,{" "}
-                <span className="gradient-text">Delivered Daily</span>
+              </p>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-6 leading-tight">
+                Fresh Foreclosure Leads,<br />
+                <span className="text-[#1e3a5f]">Delivered Daily</span>
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
                 Access tax deed surplus and mortgage overage leads across all 50 states.
                 Skip-traced, DNC-compliant, and ready for outreach.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
                 <Link href="/sign-up">
-                  <Button size="xl" variant="gradient" className="w-full sm:w-auto">
+                  <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white px-8 py-6 text-base w-full sm:w-auto">
                     Start 7-Day Free Trial
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
                 <Link href="#pricing">
-                  <Button size="xl" variant="outline" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-6 text-base w-full sm:w-auto">
                     View Pricing
                   </Button>
                 </Link>
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto pt-8 border-t border-gray-200">
                 {stats.map((stat) => (
                   <div key={stat.label} className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold text-primary">{stat.value}</div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                    <div className="text-3xl md:text-4xl font-bold text-[#1e3a5f]">{stat.value}</div>
+                    <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -274,23 +273,23 @@ export default function LandingPage() {
         </section>
 
         {/* Trust Badges */}
-        <section className="py-8 border-y bg-muted/30">
+        <section className="py-6 border-y border-gray-200 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="flex flex-wrap items-center justify-center gap-8 text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-center gap-8 text-gray-600">
               <div className="flex items-center gap-2">
-                <Shield className="h-5 w-5" />
+                <Shield className="h-5 w-5 text-[#1e3a5f]" />
                 <span className="text-sm font-medium">TCPA Compliant</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5" />
+                <CheckCircle className="h-5 w-5 text-[#1e3a5f]" />
                 <span className="text-sm font-medium">DNC Scrubbed</span>
               </div>
               <div className="flex items-center gap-2">
-                <Database className="h-5 w-5" />
+                <Database className="h-5 w-5 text-[#1e3a5f]" />
                 <span className="text-sm font-medium">Updated Every 24 Hours</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
+                <Users className="h-5 w-5 text-[#1e3a5f]" />
                 <span className="text-sm font-medium">500+ Active Agents</span>
               </div>
             </div>
@@ -298,42 +297,38 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="py-20 md:py-28">
+        <section id="features" className="py-20 md:py-24 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <Badge variant="outline" className="mb-4">Features</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">Features</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Everything You Need to Recover Surplus Funds
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 From lead generation to outreach automation, we handle the heavy lifting
                 so you can focus on closing deals and helping property owners.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature) => (
-                <Card key={feature.title} className="relative overflow-hidden group hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <feature.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <CardTitle className="text-xl">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base">{feature.description}</CardDescription>
-                  </CardContent>
-                </Card>
+                <div key={feature.title} className="p-6 rounded-lg border border-gray-200 hover:border-[#1e3a5f]/30 hover:shadow-sm transition-all">
+                  <div className="h-12 w-12 rounded-lg bg-[#1e3a5f]/10 flex items-center justify-center mb-4">
+                    <feature.icon className="h-6 w-6 text-[#1e3a5f]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
         {/* How It Works */}
-        <section className="py-20 bg-muted/30">
+        <section className="py-20 bg-gray-50 border-y border-gray-200">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <Badge variant="outline" className="mb-4">How It Works</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">How It Works</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 From Data to Deals in 4 Simple Steps
               </h2>
             </div>
@@ -345,11 +340,11 @@ export default function LandingPage() {
                 { step: "4", title: "You Close", desc: "Access leads in your dashboard and start outreach" },
               ].map((item) => (
                 <div key={item.step} className="text-center">
-                  <div className="h-14 w-14 rounded-full bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center mx-auto mb-4">
+                  <div className="h-14 w-14 rounded-full bg-[#1e3a5f] text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">
                     {item.step}
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm">{item.desc}</p>
+                  <h3 className="font-semibold text-gray-900 text-lg mb-2">{item.title}</h3>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -357,27 +352,27 @@ export default function LandingPage() {
         </section>
 
         {/* State Coverage */}
-        <section className="py-20">
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <Badge variant="outline" className="mb-4">Coverage</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">Coverage</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Comprehensive 50-State Coverage
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
                 We track foreclosures in every US state, with detailed statute information
                 for both tax deed and mortgage surplus funds.
               </p>
               <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <Badge variant="nonJudicial" className="text-base px-4 py-2">
+                <span className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium">
                   {nonJudicialCount} Non-Judicial States
-                </Badge>
-                <Badge variant="judicial" className="text-base px-4 py-2">
+                </span>
+                <span className="inline-flex items-center px-4 py-2 rounded-full bg-orange-50 text-orange-700 text-sm font-medium">
                   {judicialCount} Judicial States
-                </Badge>
+                </span>
               </div>
               <Link href="/states-guide">
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="lg" className="border-gray-300 text-gray-700 hover:bg-gray-50">
                   View 50 States Guide
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -387,110 +382,105 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-20 bg-muted/30">
+        <section id="pricing" className="py-20 bg-gray-50 border-y border-gray-200">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <Badge variant="outline" className="mb-4">Pricing</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">Pricing</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Simple, Transparent Pricing
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 Choose the plan that fits your business. All plans include a 7-day free trial.
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {pricingPlans.map((plan) => (
-                <Card
+                <div
                   key={plan.name}
-                  className={`relative ${plan.popular ? 'border-primary shadow-xl scale-105' : ''}`}
+                  className={`relative bg-white rounded-lg p-8 ${plan.popular ? 'border-2 border-[#1e3a5f] shadow-lg' : 'border border-gray-200'}`}
                 >
                   {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                      <Badge variant="default" className="px-4 py-1">Most Popular</Badge>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <span className="bg-[#1e3a5f] text-white text-xs font-medium px-3 py-1 rounded-full">Most Popular</span>
                     </div>
                   )}
-                  <CardHeader className="text-center pb-4">
-                    <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                    <CardDescription>{plan.description}</CardDescription>
+                  <div className="text-center pb-6 border-b border-gray-200">
+                    <h3 className="text-xl font-semibold text-gray-900">{plan.name}</h3>
+                    <p className="text-gray-500 text-sm mt-1">{plan.description}</p>
                     <div className="mt-4">
-                      <span className="text-4xl font-bold">${plan.price}</span>
-                      <span className="text-muted-foreground">/month</span>
+                      <span className="text-4xl font-bold text-gray-900">${plan.price}</span>
+                      <span className="text-gray-500">/month</span>
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3 mb-6">
-                      {plan.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
-                          <span className="text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Link href="/sign-up" className="block">
-                      <Button
-                        className="w-full"
-                        variant={plan.popular ? "gradient" : "outline"}
-                      >
-                        {plan.cta}
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
+                  </div>
+                  <ul className="space-y-3 my-6">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span className="text-gray-600 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href="/sign-up" className="block">
+                    <Button
+                      className={`w-full ${plan.popular ? 'bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'}`}
+                    >
+                      {plan.cta}
+                    </Button>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
         {/* Testimonials */}
-        <section className="py-20">
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <Badge variant="outline" className="mb-4">Testimonials</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">Testimonials</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Trusted by Recovery Agents Nationwide
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {testimonials.map((testimonial, i) => (
-                <Card key={i} className="relative">
-                  <CardContent className="pt-6">
-                    <div className="flex gap-1 mb-4">
-                      {[...Array(testimonial.rating)].map((_, j) => (
-                        <Star key={j} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-muted-foreground mb-4 italic">"{testimonial.quote}"</p>
-                    <div>
-                      <p className="font-semibold">{testimonial.author}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div key={i} className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, j) => (
+                      <Star key={j} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">"{testimonial.quote}"</p>
+                  <div>
+                    <p className="font-semibold text-gray-900">{testimonial.author}</p>
+                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
         {/* FAQ Section */}
-        <section id="faq" className="py-20 bg-muted/30">
+        <section id="faq" className="py-20 bg-gray-50 border-y border-gray-200">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <Badge variant="outline" className="mb-4">FAQ</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">FAQ</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Frequently Asked Questions
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 Everything you need to know about surplus funds recovery and our platform.
               </p>
             </div>
             <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="w-full">
+              <Accordion type="single" collapsible className="w-full space-y-4">
                 {faqs.map((faq, i) => (
-                  <AccordionItem key={i} value={`faq-${i}`}>
-                    <AccordionTrigger className="text-left">
+                  <AccordionItem key={i} value={`faq-${i}`} className="bg-white border border-gray-200 rounded-lg px-6">
+                    <AccordionTrigger className="text-left text-gray-900 hover:text-[#1e3a5f] py-4">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="text-gray-600 pb-4">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -501,18 +491,18 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20">
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <div className="max-w-4xl mx-auto text-center bg-[#1e3a5f] rounded-2xl p-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 Ready to Start Recovering Surplus Funds?
               </h2>
-              <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+              <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
                 Join 500+ recovery agents who trust our platform for fresh, compliant leads.
                 Start your 7-day free trial today.
               </p>
               <Link href="/sign-up">
-                <Button size="xl" className="bg-white text-blue-600 hover:bg-gray-100">
+                <Button size="lg" className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-8 py-6 text-base">
                   Start Free Trial
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -523,49 +513,49 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t py-12">
+      <footer className="border-t border-gray-200 py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <Link href="/" className="flex items-center gap-2 mb-4">
-                <Building2 className="h-6 w-6 text-primary" />
-                <span className="font-bold">Asset Recovery Leads</span>
+                <Building2 className="h-6 w-6 text-[#1e3a5f]" />
+                <span className="font-bold text-gray-900">Asset Recovery Leads</span>
               </Link>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-500">
                 Daily foreclosure lead data for surplus funds recovery professionals.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="#features" className="hover:text-foreground">Features</Link></li>
-                <li><Link href="#pricing" className="hover:text-foreground">Pricing</Link></li>
-                <li><Link href="/states-guide" className="hover:text-foreground">50 States Guide</Link></li>
-                <li><Link href="#faq" className="hover:text-foreground">FAQ</Link></li>
+              <h4 className="font-semibold text-gray-900 mb-4">Product</h4>
+              <ul className="space-y-2 text-sm text-gray-500">
+                <li><Link href="#features" className="hover:text-[#1e3a5f]">Features</Link></li>
+                <li><Link href="#pricing" className="hover:text-[#1e3a5f]">Pricing</Link></li>
+                <li><Link href="/states-guide" className="hover:text-[#1e3a5f]">50 States Guide</Link></li>
+                <li><Link href="#faq" className="hover:text-[#1e3a5f]">FAQ</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/blog" className="hover:text-foreground">Blog</Link></li>
-                <li><Link href="/guides" className="hover:text-foreground">Guides</Link></li>
-                <li><Link href="/api" className="hover:text-foreground">API Docs</Link></li>
+              <h4 className="font-semibold text-gray-900 mb-4">Resources</h4>
+              <ul className="space-y-2 text-sm text-gray-500">
+                <li><Link href="/blog" className="hover:text-[#1e3a5f]">Blog</Link></li>
+                <li><Link href="/guides" className="hover:text-[#1e3a5f]">Guides</Link></li>
+                <li><Link href="/api" className="hover:text-[#1e3a5f]">API Docs</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/privacy" className="hover:text-foreground">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-foreground">Terms of Service</Link></li>
-                <li><Link href="/compliance" className="hover:text-foreground">Compliance</Link></li>
+              <h4 className="font-semibold text-gray-900 mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm text-gray-500">
+                <li><Link href="/privacy" className="hover:text-[#1e3a5f]">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-[#1e3a5f]">Terms of Service</Link></li>
+                <li><Link href="/compliance" className="hover:text-[#1e3a5f]">Compliance</Link></li>
               </ul>
             </div>
           </div>
-          <div className="border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
+          <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-gray-500">
               &copy; {new Date().getFullYear()} Asset Recovery Business. All rights reserved.
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-400">
               Data provided for informational purposes. Users are responsible for compliance with all applicable laws.
             </p>
           </div>
