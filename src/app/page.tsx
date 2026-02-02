@@ -1,9 +1,8 @@
 import Link from "next/link"
-import { CheckCircle, TrendingUp, Shield, Zap, MapPin, Phone, Clock, Database, ArrowRight, Star, Users, Building2 } from "lucide-react"
+import { CheckCircle, Shield, Zap, MapPin, Phone, Clock, Database, ArrowRight, Star, Users, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Header } from "@/components/header"
 import { faqs } from "@/data/faqs"
 import { statesData } from "@/data/states"
 
@@ -205,66 +204,44 @@ export default function LandingPage() {
         }}
       />
 
-      {/* Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2">
-            <Building2 className="h-8 w-8 text-[#1e3a5f]" />
-            <span className="text-xl font-bold text-gray-900">Asset Recovery Leads</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="#features" className="text-sm font-medium text-gray-600 hover:text-[#1e3a5f] transition-colors">Features</Link>
-            <Link href="#pricing" className="text-sm font-medium text-gray-600 hover:text-[#1e3a5f] transition-colors">Pricing</Link>
-            <Link href="/states-guide" className="text-sm font-medium text-gray-600 hover:text-[#1e3a5f] transition-colors">50 States Guide</Link>
-            <Link href="#faq" className="text-sm font-medium text-gray-600 hover:text-[#1e3a5f] transition-colors">FAQ</Link>
-          </nav>
-          <div className="flex items-center gap-3">
-            <Link href="/sign-in">
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-[#1e3a5f]">Sign In</Button>
-            </Link>
-            <Link href="/sign-up">
-              <Button size="sm" className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">Start Free Trial</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main>
         {/* Hero Section */}
-        <section className="py-20 md:py-28 bg-white">
-          <div className="container mx-auto px-4">
+        <section className="py-12 sm:py-16 md:py-24 lg:py-28 bg-white">
+          <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
-              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-4">
+              <p className="text-xs sm:text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3 sm:mb-4">
                 Updated Daily - {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
               </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-4 sm:mb-6 leading-tight">
                 Fresh Foreclosure Leads,<br />
                 <span className="text-[#1e3a5f]">Delivered Daily</span>
               </h1>
-              <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
                 Access tax deed surplus and mortgage overage leads across all 50 states.
                 Skip-traced, DNC-compliant, and ready for outreach.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                <Link href="/sign-up">
-                  <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white px-8 py-6 text-base w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-10 sm:mb-16 px-4 sm:px-0">
+                <Link href="/sign-up" className="w-full sm:w-auto">
+                  <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full">
                     Start 7-Day Free Trial
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Link href="#pricing">
-                  <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-6 text-base w-full sm:w-auto">
+                <Link href="#pricing" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full">
                     View Pricing
                   </Button>
                 </Link>
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto pt-8 border-t border-gray-200">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 max-w-3xl mx-auto pt-6 sm:pt-8 border-t border-gray-200">
                 {stats.map((stat) => (
                   <div key={stat.label} className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold text-[#1e3a5f]">{stat.value}</div>
-                    <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1e3a5f]">{stat.value}</div>
+                    <div className="text-xs sm:text-sm text-gray-500 mt-1">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -382,47 +359,47 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-20 bg-gray-50 border-y border-gray-200">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">Pricing</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <section id="pricing" className="py-12 sm:py-16 md:py-20 bg-gray-50 border-y border-gray-200">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="text-center mb-10 sm:mb-16">
+              <p className="text-xs sm:text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-2 sm:mb-3">Pricing</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Simple, Transparent Pricing
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-2">
                 Choose the plan that fits your business. All plans include a 7-day free trial.
               </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {pricingPlans.map((plan) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+              {pricingPlans.map((plan, index) => (
                 <div
                   key={plan.name}
-                  className={`relative bg-white rounded-lg p-8 ${plan.popular ? 'border-2 border-[#1e3a5f] shadow-lg' : 'border border-gray-200'}`}
+                  className={`relative bg-white rounded-lg p-6 sm:p-8 ${plan.popular ? 'border-2 border-[#1e3a5f] shadow-lg md:scale-105' : 'border border-gray-200'} ${plan.popular && index === 1 ? 'order-first md:order-none' : ''}`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="bg-[#1e3a5f] text-white text-xs font-medium px-3 py-1 rounded-full">Most Popular</span>
+                      <span className="bg-[#1e3a5f] text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap">Most Popular</span>
                     </div>
                   )}
-                  <div className="text-center pb-6 border-b border-gray-200">
-                    <h3 className="text-xl font-semibold text-gray-900">{plan.name}</h3>
-                    <p className="text-gray-500 text-sm mt-1">{plan.description}</p>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold text-gray-900">${plan.price}</span>
-                      <span className="text-gray-500">/month</span>
+                  <div className="text-center pb-4 sm:pb-6 border-b border-gray-200">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900">{plan.name}</h3>
+                    <p className="text-gray-500 text-xs sm:text-sm mt-1">{plan.description}</p>
+                    <div className="mt-3 sm:mt-4">
+                      <span className="text-3xl sm:text-4xl font-bold text-gray-900">${plan.price}</span>
+                      <span className="text-gray-500 text-sm">/month</span>
                     </div>
                   </div>
-                  <ul className="space-y-3 my-6">
+                  <ul className="space-y-2 sm:space-y-3 my-4 sm:my-6">
                     {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-600 text-sm">{feature}</span>
+                      <li key={feature} className="flex items-start gap-2 sm:gap-3">
+                        <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span className="text-gray-600 text-xs sm:text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
                   <Link href="/sign-up" className="block">
                     <Button
-                      className={`w-full ${plan.popular ? 'bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'}`}
+                      className={`w-full text-sm sm:text-base py-2.5 sm:py-3 ${plan.popular ? 'bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'}`}
                     >
                       {plan.cta}
                     </Button>
@@ -513,21 +490,21 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <Link href="/" className="flex items-center gap-2 mb-4">
-                <Building2 className="h-6 w-6 text-[#1e3a5f]" />
-                <span className="font-bold text-gray-900">Asset Recovery Leads</span>
+      <footer className="border-t border-gray-200 py-8 sm:py-12 bg-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8">
+            <div className="col-span-2 md:col-span-1">
+              <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4">
+                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-[#1e3a5f]" />
+                <span className="font-bold text-gray-900 text-sm sm:text-base">Asset Recovery Leads</span>
               </Link>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500">
                 Daily foreclosure lead data for surplus funds recovery professionals.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
+              <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">Product</h4>
+              <ul className="space-y-2 text-xs sm:text-sm text-gray-500">
                 <li><Link href="#features" className="hover:text-[#1e3a5f]">Features</Link></li>
                 <li><Link href="#pricing" className="hover:text-[#1e3a5f]">Pricing</Link></li>
                 <li><Link href="/states-guide" className="hover:text-[#1e3a5f]">50 States Guide</Link></li>
@@ -535,27 +512,27 @@ export default function LandingPage() {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Resources</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
+              <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">Resources</h4>
+              <ul className="space-y-2 text-xs sm:text-sm text-gray-500">
                 <li><Link href="/blog" className="hover:text-[#1e3a5f]">Blog</Link></li>
                 <li><Link href="/guides" className="hover:text-[#1e3a5f]">Guides</Link></li>
                 <li><Link href="/api" className="hover:text-[#1e3a5f]">API Docs</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
+              <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">Legal</h4>
+              <ul className="space-y-2 text-xs sm:text-sm text-gray-500">
                 <li><Link href="/privacy" className="hover:text-[#1e3a5f]">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="hover:text-[#1e3a5f]">Terms of Service</Link></li>
                 <li><Link href="/compliance" className="hover:text-[#1e3a5f]">Compliance</Link></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-gray-500">
+          <div className="border-t border-gray-200 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
+            <p className="text-xs sm:text-sm text-gray-500">
               &copy; {new Date().getFullYear()} Asset Recovery Business. All rights reserved.
             </p>
-            <p className="text-xs text-gray-400">
+            <p className="text-[10px] sm:text-xs text-gray-400">
               Data provided for informational purposes. Users are responsible for compliance with all applicable laws.
             </p>
           </div>
