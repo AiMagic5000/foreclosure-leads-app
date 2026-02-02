@@ -1,0 +1,185 @@
+version: '3.8'
+
+# Foreclosure Lead Scraper Infrastructure
+# Deploy on R740 Server for continuous scraping
+
+services:
+  # Redis for job queue
+  redis:
+    image: redis:7-alpine
+    container_name: scraper-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - scraper-network
+
+  # Job Scheduler - schedules scrape jobs based on county configuration
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scraper-scheduler
+    restart: unless-stopped
+    command: python -m workers.job_worker scheduler
+    environment:
+      - DB_HOST=${DB_HOST:-foreclosure-db.alwaysencrypted.com}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-postgres}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - scraper-network
+
+  # Job Workers (scale as needed)
+  worker-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scraper-worker-1
+    restart: unless-stopped
+    command: python -m workers.job_worker
+    environment:
+      - DB_HOST=${DB_HOST:-foreclosure-db.alwaysencrypted.com}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-postgres}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - WORKER_ID=worker-1
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MAX_CONCURRENT_JOBS=5
+    volumes:
+      - scraper-data:/data/scraper
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - scraper-network
+
+  worker-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scraper-worker-2
+    restart: unless-stopped
+    command: python -m workers.job_worker
+    environment:
+      - DB_HOST=${DB_HOST:-foreclosure-db.alwaysencrypted.com}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-postgres}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - WORKER_ID=worker-2
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MAX_CONCURRENT_JOBS=5
+    volumes:
+      - scraper-data:/data/scraper
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - scraper-network
+
+  worker-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scraper-worker-3
+    restart: unless-stopped
+    command: python -m workers.job_worker
+    environment:
+      - DB_HOST=${DB_HOST:-foreclosure-db.alwaysencrypted.com}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-postgres}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - WORKER_ID=worker-3
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MAX_CONCURRENT_JOBS=5
+    volumes:
+      - scraper-data:/data/scraper
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - scraper-network
+
+  # Email Automation Worker
+  email-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scraper-email
+    restart: unless-stopped
+    command: python -m utils.email_automation
+    environment:
+      - DB_HOST=${DB_HOST:-foreclosure-db.alwaysencrypted.com}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-postgres}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SMTP_HOST=${SMTP_HOST:-smtp.hostinger.com}
+      - SMTP_PORT=${SMTP_PORT:-465}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - FROM_EMAIL=${FROM_EMAIL:-data@foreclosure-leads.com}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - scraper-network
+
+  # Monitoring dashboard (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: scraper-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - scraper-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: scraper-grafana
+    restart: unless-stopped
+    ports:
+      - "3456:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - scraper-network
+
+volumes:
+  redis-data:
+  scraper-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  scraper-network:
+    driver: bridge

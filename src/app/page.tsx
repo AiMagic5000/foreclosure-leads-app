@@ -3,6 +3,7 @@ import { CheckCircle, Shield, Zap, MapPin, Phone, Clock, Database, ArrowRight, S
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Header } from "@/components/header"
+import { HeroAnimation } from "@/components/hero-animation"
 import { faqs } from "@/data/faqs"
 import { statesData } from "@/data/states"
 
@@ -207,9 +208,12 @@ export default function LandingPage() {
       <Header />
 
       <main>
-        {/* Hero Section */}
-        <section className="py-12 sm:py-16 md:py-24 lg:py-28 bg-white">
-          <div className="container mx-auto px-4 sm:px-6">
+        {/* Hero Section with Motion Graphics */}
+        <section className="relative py-12 sm:py-16 md:py-24 lg:py-28 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden min-h-[600px] md:min-h-[700px]">
+          {/* Animated Background */}
+          <HeroAnimation />
+
+          <div className="container mx-auto px-4 sm:px-6 relative z-20">
             <div className="max-w-4xl mx-auto text-center">
               <p className="text-xs sm:text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3 sm:mb-4">
                 Updated Daily - {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
