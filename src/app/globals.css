@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-card: #ffffff;
+  --color-card-foreground: #0a0a0a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0a0a0a;
+  --color-primary: #0f172a;
+  --color-primary-foreground: #f8fafc;
+  --color-secondary: #f1f5f9;
+  --color-secondary-foreground: #0f172a;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-accent: #f1f5f9;
+  --color-accent-foreground: #0f172a;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #0f172a;
+  --radius: 0.75rem;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme inline {
+    --color-background: #0a0a0a;
+    --color-foreground: #fafafa;
+    --color-card: #0a0a0a;
+    --color-card-foreground: #fafafa;
+    --color-popover: #0a0a0a;
+    --color-popover-foreground: #fafafa;
+    --color-primary: #fafafa;
+    --color-primary-foreground: #0a0a0a;
+    --color-secondary: #1e293b;
+    --color-secondary-foreground: #fafafa;
+    --color-muted: #1e293b;
+    --color-muted-foreground: #94a3b8;
+    --color-accent: #1e293b;
+    --color-accent-foreground: #fafafa;
+    --color-destructive: #dc2626;
+    --color-destructive-foreground: #fafafa;
+    --color-border: #1e293b;
+    --color-input: #1e293b;
+    --color-ring: #cbd5e1;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: gradient 3s linear infinite;
+  }
+
+  .glass {
+    @apply bg-white/80 dark:bg-black/80 backdrop-blur-xl;
+  }
+
+  .glass-card {
+    @apply bg-white/60 dark:bg-gray-900/60 backdrop-blur-lg border border-white/20 dark:border-gray-800/50;
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+/* Mobile-first touch improvements */
+@media (hover: none) {
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Safe area padding for notched devices */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
