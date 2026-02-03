@@ -19,6 +19,10 @@ import {
   AlertTriangle,
   Zap,
   ArrowRight,
+  Database,
+  ShieldCheck,
+  UserCheck,
+  Send,
 } from "lucide-react"
 
 export default function AutomationPage() {
@@ -26,10 +30,10 @@ export default function AutomationPage() {
   const [callbackNumber, setCallbackNumber] = useState("")
 
   const stats = {
-    voicemailsSent: 1247,
+    voicemailsSent: 499,
     deliveryRate: 94.2,
     callbackRate: 8.7,
-    activeLeads: 342,
+    activeLeads: 137,
   }
 
   const recentActivity = [
@@ -130,6 +134,209 @@ export default function AutomationPage() {
         </CardContent>
       </Card>
 
+      {/* How It Works - n8n Style Workflow */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <MessageSquare className="h-5 w-5 text-primary" />
+            How Personalized Voicemail Outreach Works
+          </CardTitle>
+          <CardDescription>
+            Our automated system builds a custom ringless voicemail for every prospect
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* n8n-style workflow canvas */}
+          <div className="relative bg-[#1a1a2e] dark:bg-[#0d0d1a] rounded-xl p-6 overflow-hidden">
+            {/* Dot grid background like n8n canvas */}
+            <div className="absolute inset-0 opacity-[0.08]" style={{
+              backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+              backgroundSize: "20px 20px"
+            }} />
+
+            {/* Desktop: horizontal node layout */}
+            <div className="relative hidden sm:flex items-center gap-0 justify-between">
+              {/* Node 1 */}
+              <div className="relative z-10 flex flex-col items-center gap-2 flex-1 max-w-[180px]">
+                <div className="w-14 h-14 rounded-xl bg-[#3b82f6] flex items-center justify-center shadow-lg shadow-blue-500/30 border border-blue-400/30">
+                  <Database className="h-7 w-7 text-white" />
+                </div>
+                <div className="text-center">
+                  <p className="text-white text-xs font-semibold">Data Collection</p>
+                  <p className="text-gray-400 text-[10px] mt-0.5 leading-tight">Pull lead & property info</p>
+                </div>
+                {/* Output handle */}
+                <div className="absolute right-[-6px] top-[24px] w-3 h-3 rounded-full bg-[#3b82f6] border-2 border-[#1a1a2e]" />
+              </div>
+
+              {/* Wire 1->2 */}
+              <div className="flex-1 max-w-[60px] h-[2px] bg-gradient-to-r from-[#3b82f6] to-[#10b981] relative self-start mt-[30px]">
+                <div className="absolute top-1/2 -translate-y-1/2 right-0 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[6px] border-l-[#10b981]" />
+              </div>
+
+              {/* Node 2 */}
+              <div className="relative z-10 flex flex-col items-center gap-2 flex-1 max-w-[180px]">
+                <div className="w-14 h-14 rounded-xl bg-[#10b981] flex items-center justify-center shadow-lg shadow-green-500/30 border border-green-400/30">
+                  <ShieldCheck className="h-7 w-7 text-white" />
+                </div>
+                <div className="text-center">
+                  <p className="text-white text-xs font-semibold">DNC Scrubbing</p>
+                  <p className="text-gray-400 text-[10px] mt-0.5 leading-tight">Federal & state DNC check</p>
+                </div>
+                <div className="absolute left-[-6px] top-[24px] w-3 h-3 rounded-full bg-[#10b981] border-2 border-[#1a1a2e]" />
+                <div className="absolute right-[-6px] top-[24px] w-3 h-3 rounded-full bg-[#10b981] border-2 border-[#1a1a2e]" />
+              </div>
+
+              {/* Wire 2->3 */}
+              <div className="flex-1 max-w-[60px] h-[2px] bg-gradient-to-r from-[#10b981] to-[#8b5cf6] relative self-start mt-[30px]">
+                <div className="absolute top-1/2 -translate-y-1/2 right-0 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[6px] border-l-[#8b5cf6]" />
+              </div>
+
+              {/* Node 3 */}
+              <div className="relative z-10 flex flex-col items-center gap-2 flex-1 max-w-[180px]">
+                <div className="w-14 h-14 rounded-xl bg-[#8b5cf6] flex items-center justify-center shadow-lg shadow-purple-500/30 border border-purple-400/30">
+                  <UserCheck className="h-7 w-7 text-white" />
+                </div>
+                <div className="text-center">
+                  <p className="text-white text-xs font-semibold">Personalize</p>
+                  <p className="text-gray-400 text-[10px] mt-0.5 leading-tight">Custom message per lead</p>
+                </div>
+                <div className="absolute left-[-6px] top-[24px] w-3 h-3 rounded-full bg-[#8b5cf6] border-2 border-[#1a1a2e]" />
+                <div className="absolute right-[-6px] top-[24px] w-3 h-3 rounded-full bg-[#8b5cf6] border-2 border-[#1a1a2e]" />
+              </div>
+
+              {/* Wire 3->4 */}
+              <div className="flex-1 max-w-[60px] h-[2px] bg-gradient-to-r from-[#8b5cf6] to-[#f59e0b] relative self-start mt-[30px]">
+                <div className="absolute top-1/2 -translate-y-1/2 right-0 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[6px] border-l-[#f59e0b]" />
+              </div>
+
+              {/* Node 4 */}
+              <div className="relative z-10 flex flex-col items-center gap-2 flex-1 max-w-[180px]">
+                <div className="w-14 h-14 rounded-xl bg-[#f59e0b] flex items-center justify-center shadow-lg shadow-amber-500/30 border border-amber-400/30">
+                  <Send className="h-7 w-7 text-white" />
+                </div>
+                <div className="text-center">
+                  <p className="text-white text-xs font-semibold">Ringless Delivery</p>
+                  <p className="text-gray-400 text-[10px] mt-0.5 leading-tight">Direct to voicemail</p>
+                </div>
+                <div className="absolute left-[-6px] top-[24px] w-3 h-3 rounded-full bg-[#f59e0b] border-2 border-[#1a1a2e]" />
+              </div>
+            </div>
+
+            {/* Mobile: vertical node layout */}
+            <div className="relative sm:hidden flex flex-col items-center gap-0">
+              {/* Node 1 */}
+              <div className="relative z-10 flex items-center gap-3 w-full bg-[#222244] rounded-xl p-3 border border-[#3b82f6]/30">
+                <div className="w-11 h-11 rounded-lg bg-[#3b82f6] flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20">
+                  <Database className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-white text-xs font-semibold">Data Collection</p>
+                  <p className="text-gray-400 text-[10px] leading-tight">Pull lead & property info</p>
+                </div>
+                <div className="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#3b82f6] border-2 border-[#1a1a2e] z-20" />
+              </div>
+
+              {/* Wire 1->2 */}
+              <div className="w-[2px] h-6 bg-gradient-to-b from-[#3b82f6] to-[#10b981]" />
+
+              {/* Node 2 */}
+              <div className="relative z-10 flex items-center gap-3 w-full bg-[#222244] rounded-xl p-3 border border-[#10b981]/30">
+                <div className="w-11 h-11 rounded-lg bg-[#10b981] flex items-center justify-center shrink-0 shadow-lg shadow-green-500/20">
+                  <ShieldCheck className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-white text-xs font-semibold">DNC Scrubbing</p>
+                  <p className="text-gray-400 text-[10px] leading-tight">Federal & state DNC check</p>
+                </div>
+                <div className="absolute top-[-6px] left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#10b981] border-2 border-[#1a1a2e] z-20" />
+                <div className="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#10b981] border-2 border-[#1a1a2e] z-20" />
+              </div>
+
+              {/* Wire 2->3 */}
+              <div className="w-[2px] h-6 bg-gradient-to-b from-[#10b981] to-[#8b5cf6]" />
+
+              {/* Node 3 */}
+              <div className="relative z-10 flex items-center gap-3 w-full bg-[#222244] rounded-xl p-3 border border-[#8b5cf6]/30">
+                <div className="w-11 h-11 rounded-lg bg-[#8b5cf6] flex items-center justify-center shrink-0 shadow-lg shadow-purple-500/20">
+                  <UserCheck className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-white text-xs font-semibold">Personalize</p>
+                  <p className="text-gray-400 text-[10px] leading-tight">Custom message per lead</p>
+                </div>
+                <div className="absolute top-[-6px] left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#8b5cf6] border-2 border-[#1a1a2e] z-20" />
+                <div className="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#8b5cf6] border-2 border-[#1a1a2e] z-20" />
+              </div>
+
+              {/* Wire 3->4 */}
+              <div className="w-[2px] h-6 bg-gradient-to-b from-[#8b5cf6] to-[#f59e0b]" />
+
+              {/* Node 4 */}
+              <div className="relative z-10 flex items-center gap-3 w-full bg-[#222244] rounded-xl p-3 border border-[#f59e0b]/30">
+                <div className="w-11 h-11 rounded-lg bg-[#f59e0b] flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/20">
+                  <Send className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-white text-xs font-semibold">Ringless Delivery</p>
+                  <p className="text-gray-400 text-[10px] leading-tight">Direct to voicemail</p>
+                </div>
+                <div className="absolute top-[-6px] left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#f59e0b] border-2 border-[#1a1a2e] z-20" />
+              </div>
+            </div>
+          </div>
+
+          {/* Detail cards below the canvas */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="p-4 rounded-lg border space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#3b82f6] text-white text-sm font-bold">1</span>
+                <h4 className="font-medium text-sm">Data Collection</h4>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                We pull all lead data and property information for each prospect -- owner name, property address,
+                county, state, foreclosure type, and surplus fund amounts.
+              </p>
+            </div>
+            <div className="p-4 rounded-lg border space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#10b981] text-white text-sm font-bold">2</span>
+                <h4 className="font-medium text-sm">DNC Scrubbing</h4>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Before any outreach, every phone number is scrubbed against the Federal Do Not Call Registry
+                and state-specific DNC lists. Non-compliant numbers are removed from the queue automatically.
+              </p>
+            </div>
+            <div className="p-4 rounded-lg border space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#8b5cf6] text-white text-sm font-bold">3</span>
+                <h4 className="font-medium text-sm">Personalized Message</h4>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Each voicemail is generated using the prospect's actual data -- their name, property address,
+                and relevant details -- so every message feels personal rather than a generic blast.
+              </p>
+            </div>
+            <div className="p-4 rounded-lg border space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#f59e0b] text-white text-sm font-bold">4</span>
+                <h4 className="font-medium text-sm">Ringless Delivery</h4>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                The personalized voicemail is delivered directly to the prospect's voicemail box
+                without ringing their phone. Non-intrusive with higher callback rates than cold calls.
+              </p>
+            </div>
+          </div>
+          <div className="p-3 rounded-lg bg-muted/50 text-sm text-muted-foreground">
+            <strong className="text-foreground">Compliance built in:</strong> Our system refreshes DNC data every 31 days
+            per FCC requirements. State-specific regulations are applied based on the state each voicemail
+            is delivered to, so your outreach stays compliant no matter where your leads are located.
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Stats Grid */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -139,7 +346,7 @@ export default function AutomationPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.voicemailsSent.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">This month</p>
+            <p className="text-xs text-muted-foreground">This week</p>
           </CardContent>
         </Card>
         <Card>
@@ -169,7 +376,7 @@ export default function AutomationPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.activeLeads}</div>
-            <p className="text-xs text-muted-foreground">Leads pending</p>
+            <p className="text-xs text-muted-foreground">Leads pending this week</p>
           </CardContent>
         </Card>
       </div>

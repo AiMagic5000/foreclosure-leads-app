@@ -13,6 +13,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { CountyMap } from "@/components/county-map"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -171,6 +172,31 @@ export default function DashboardPage() {
           </Card>
         ))}
       </div>
+
+      {/* Interactive County Map */}
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Lead Distribution Map</CardTitle>
+            <CardDescription>
+              Interactive map showing leads by county. Blue = Judicial states, Orange = Non-judicial states.
+            </CardDescription>
+          </div>
+          <div className="flex items-center gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-blue-500" />
+              <span className="text-muted-foreground">Judicial</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-orange-500" />
+              <span className="text-muted-foreground">Non-Judicial</span>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <CountyMap isDark={false} />
+        </CardContent>
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Recent Leads */}

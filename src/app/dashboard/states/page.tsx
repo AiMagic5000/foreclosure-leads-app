@@ -1,16 +1,45 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useTheme } from "@/components/theme-provider"
 import { statesData } from "@/data/states"
+import { stateOverageGuide } from "@/data/state-overage-guide"
+import { stateFlags } from "@/data/state-flags"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink } from "lucide-react"
+import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, Info, Lock, Users, TrendingUp } from "lucide-react"
+import { CountyMap } from "@/components/county-map"
+import { useUser } from "@clerk/nextjs"
+import { supabase } from "@/lib/supabase"
 
 export default function StatesPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedType, setSelectedType] = useState<string>("all")
+  const [selectedState, setSelectedState] = useState<string | null>(null)
+  const [stateLeadCounts, setStateLeadCounts] = useState<Record<string, number>>({})
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
+  const { isSignedIn, user } = useUser()
+  const isPaid = isSignedIn === true
+  const selectedStates = isPaid ? ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"] : []
+
+  useEffect(() => {
+    async function fetchLeadCounts() {
+      const { data, error } = await supabase
+        .from("state_data")
+        .select("state_abbr, lead_count") as { data: { state_abbr: string; lead_count: number }[] | null; error: unknown }
+      if (!error && data) {
+        const counts: Record<string, number> = {}
+        for (const row of data) {
+          counts[row.state_abbr] = row.lead_count ?? 0
+        }
+        setStateLeadCounts(counts)
+      }
+    }
+    fetchLeadCounts()
+  }, [])
 
   const filteredStates = statesData.filter((state) => {
     const matchesSearch =
@@ -20,10 +49,11 @@ export default function StatesPage() {
     return matchesSearch && matchesType
   })
 
+  // Updated colors to match map: Blue for Judicial, Red for Non-Judicial
   const typeColors = {
-    judicial: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
-    "non-judicial": "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-    both: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
+    judicial: "bg-blue-600 text-white dark:bg-blue-700 dark:text-white",
+    "non-judicial": "bg-red-600 text-white dark:bg-red-700 dark:text-white",
+    both: "bg-purple-600 text-white dark:bg-purple-700 dark:text-white",
   }
 
   return (
@@ -112,17 +142,59 @@ export default function StatesPage() {
         </Card>
       </div>
 
+      {/* Interactive County Map */}
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle>Foreclosure Map</CardTitle>
+          <CardDescription>
+            Click any county to view lead data. Blue = Judicial, Red = Non-Judicial.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <CountyMap isDark={isDark} />
+        </CardContent>
+      </Card>
+
       {/* States Grid */}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {filteredStates.map((state) => (
-          <Card key={state.abbr} className="overflow-hidden">
+          <Card
+            key={state.abbr}
+            className="overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+            onClick={() => setSelectedState(state.abbr)}
+          >
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-primary" />
-                  <CardTitle className="text-lg">{state.name}</CardTitle>
+                <div className="flex items-center gap-3">
+                  {stateFlags[state.abbr] && (
+                    <a
+                      href={stateFlags[state.abbr].wikiUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="shrink-0 hover:opacity-80 transition-opacity"
+                      title={`${state.name} on Wikipedia`}
+                    >
+                      <img
+                        src={stateFlags[state.abbr].flagUrl}
+                        alt={`Flag of ${state.name}`}
+                        className="h-8 w-auto rounded-sm border border-border shadow-sm"
+                        loading="lazy"
+                      />
+                    </a>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <CardTitle className="text-lg">{state.name}</CardTitle>
+                    <Info className="h-4 w-4 text-muted-foreground" />
+                  </div>
                 </div>
-                <Badge className={typeColors[state.foreclosureType]}>{state.foreclosureType}</Badge>
+                <div className="flex flex-col items-end gap-1">
+                  <Badge className={typeColors[state.foreclosureType]}>{state.foreclosureType}</Badge>
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Users className="h-3 w-3" />
+                    <span>{(stateLeadCounts[state.abbr] || 0).toLocaleString()} leads</span>
+                  </div>
+                </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -166,16 +238,17 @@ export default function StatesPage() {
 
               {/* Data Sources */}
               {state.sources.length > 0 && (
-                <div className="pt-2 border-t">
+                <div className="pt-2 border-t relative">
                   <p className="text-xs font-medium text-muted-foreground mb-2">Data Sources</p>
-                  <div className="flex flex-wrap gap-1">
+                  <div className={`flex flex-wrap gap-1 ${!isPaid ? "select-none" : ""}`} style={!isPaid ? { filter: "blur(4px)" } : undefined}>
                     {state.sources.slice(0, 3).map((source, idx) => (
                       <a
                         key={idx}
-                        href={source.url}
-                        target="_blank"
+                        href={isPaid ? source.url : "#"}
+                        target={isPaid ? "_blank" : undefined}
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                        onClick={isPaid ? undefined : (e) => e.preventDefault()}
                       >
                         {source.name}
                         <ExternalLink className="h-3 w-3" />
@@ -187,6 +260,14 @@ export default function StatesPage() {
                       </span>
                     )}
                   </div>
+                  {!isPaid && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded">
+                        <Lock className="h-3 w-3" />
+                        <span>Subscribe to view</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </CardContent>
@@ -201,6 +282,183 @@ export default function StatesPage() {
           <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
         </div>
       )}
+
+      {/* State Overage Detail Popup */}
+      {selectedState && (() => {
+        const stateInfo = statesData.find(s => s.abbr === selectedState)
+        const overageInfo = stateOverageGuide[selectedState]
+        if (!stateInfo) return null
+
+        return (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            onClick={() => setSelectedState(null)}
+          >
+            <div
+              className="bg-background border rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-5 border-b">
+                <div className="flex items-center gap-3">
+                  {stateFlags[selectedState] && (
+                    <a
+                      href={stateFlags[selectedState].wikiUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0 hover:opacity-80 transition-opacity"
+                      title={`${stateInfo.name} on Wikipedia`}
+                    >
+                      <img
+                        src={stateFlags[selectedState].flagUrl}
+                        alt={`Flag of ${stateInfo.name}`}
+                        className="h-10 w-auto rounded-sm border border-border shadow-sm"
+                      />
+                    </a>
+                  )}
+                  <div>
+                    <h2 className="text-xl font-bold">{stateInfo.name}</h2>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Badge className={typeColors[stateInfo.foreclosureType]}>
+                        {stateInfo.foreclosureType}
+                      </Badge>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Users className="h-3 w-3" />
+                        <span>{(stateLeadCounts[selectedState] || 0).toLocaleString()} vetted leads</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedState(null)}
+                  className="p-2 rounded-lg hover:bg-muted transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Lead Count Banner */}
+              <div className="px-5 pt-4 pb-2">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-primary/5 border">
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-semibold">{(stateLeadCounts[selectedState] || 0).toLocaleString()} Vetted Leads Available</span>
+                  </div>
+                  {isPaid && selectedStates.includes(selectedState) ? (
+                    <a
+                      href={`/dashboard/leads?state=${selectedState}`}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-white bg-primary px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View Leads
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+                  ) : (
+                    <a
+                      href="/dashboard/settings"
+                      className="inline-flex items-center gap-1 text-xs font-medium text-white bg-slate-600 px-3 py-1.5 rounded-md hover:bg-slate-500 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Lock className="h-3 w-3" />
+                      {!isPaid ? "Subscribe to Access" : "Add This State"}
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Statutes */}
+              <div className="p-5 space-y-4">
+                {(overageInfo?.taxOverageStatute || stateInfo.taxOverageStatute) && (
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <Scale className="h-4 w-4 text-blue-500" />
+                      <span className="text-sm font-semibold">Tax Overage Statute</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground pl-6">
+                      {overageInfo?.taxOverageStatute || stateInfo.taxOverageStatute}
+                    </p>
+                  </div>
+                )}
+
+                {(overageInfo?.mortgageOverageStatute || stateInfo.mortgageOverageStatute) && (
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-red-500" />
+                      <span className="text-sm font-semibold">Mortgage Overage Statute</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground pl-6">
+                      {overageInfo?.mortgageOverageStatute || stateInfo.mortgageOverageStatute}
+                    </p>
+                  </div>
+                )}
+
+                {stateInfo.claimWindow && (
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4 text-amber-500" />
+                      <span className="text-sm font-semibold">Claim Window</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground pl-6">{stateInfo.claimWindow}</p>
+                  </div>
+                )}
+
+                {stateInfo.feeLimits && (
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <DollarSign className="h-4 w-4 text-green-500" />
+                      <span className="text-sm font-semibold">Fee Limits</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground pl-6">{stateInfo.feeLimits}</p>
+                  </div>
+                )}
+
+                {/* Notes from 50 States Overage Guide */}
+                {overageInfo?.notes && (
+                  <div className="mt-4 p-4 rounded-lg bg-muted/50 border">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="h-4 w-4 text-primary" />
+                      <span className="text-sm font-semibold">Overage Notes</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {overageInfo.notes}
+                    </p>
+                  </div>
+                )}
+
+                {/* Data Sources - Blurred for unpaid */}
+                {stateInfo.sources.length > 0 && (
+                  <div className="pt-4 border-t relative">
+                    <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">Data Sources</p>
+                    <div className={`flex flex-wrap gap-2 ${!isPaid ? "select-none" : ""}`} style={!isPaid ? { filter: "blur(4px)" } : undefined}>
+                      {stateInfo.sources.map((source, idx) => (
+                        <a
+                          key={idx}
+                          href={isPaid ? source.url : "#"}
+                          target={isPaid ? "_blank" : undefined}
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-primary hover:underline bg-primary/5 px-2 py-1 rounded"
+                          onClick={isPaid ? undefined : (e) => e.preventDefault()}
+                        >
+                          {source.name}
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      ))}
+                    </div>
+                    {!isPaid && (
+                      <div className="absolute inset-0 flex items-center justify-center pt-4">
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded">
+                          <Lock className="h-3 w-3" />
+                          <span>Subscribe to view sources</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }

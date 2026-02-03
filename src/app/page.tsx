@@ -1,15 +1,17 @@
 import Link from "next/link"
-import { CheckCircle, Shield, Zap, MapPin, Phone, Clock, Database, ArrowRight, Star, Users, Building2 } from "lucide-react"
+import Image from "next/image"
+import { CheckCircle, Shield, Zap, MapPin, Phone, Clock, Database, ArrowRight, Star, Users, Building2, Play, TrendingUp, DollarSign } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Header } from "@/components/header"
 import { HeroAnimation } from "@/components/hero-animation"
+import { ApiDocsPopup } from "@/components/api-docs-popup"
 import { faqs } from "@/data/faqs"
 import { statesData } from "@/data/states"
 
 export default function LandingPage() {
   const stats = [
-    { value: "50", label: "States Covered" },
+    { value: "3,200", label: "Counties Covered" },
     { value: "10K+", label: "Leads Monthly" },
     { value: "24hr", label: "Data Updates" },
     { value: "95%", label: "Skip Trace Rate" },
@@ -19,32 +21,38 @@ export default function LandingPage() {
     {
       icon: Database,
       title: "Daily Fresh Leads",
-      description: "Our Crawl4AI system scrapes county recorders, public trustees, and auction sites every 24 hours across all 50 states."
+      description: "Our proprietary system scrapes county recorders, public trustees, and auction sites every 24 hours across all 50 states.",
+      image: "/dashboard.jpg"
     },
     {
       icon: Phone,
       title: "Skip-Traced Contacts",
-      description: "Every lead includes phone numbers, emails, and mailing addresses found through FastPeopleSearch and TruePeopleSearch."
+      description: "Every lead includes phone numbers, emails, and mailing addresses found through FastPeopleSearch and TruePeopleSearch.",
+      image: "/hero-agent.jpg"
     },
     {
       icon: Shield,
       title: "DNC Compliant",
-      description: "Automatic scrubbing against Federal and State Do Not Call registries. Stay compliant, avoid fines."
+      description: "Automatic scrubbing against Federal and State Do Not Call registries. Stay compliant, avoid fines.",
+      image: null
     },
     {
       icon: Zap,
       title: "Voicemail Automation",
-      description: "Optional add-on delivers personalized ringless voicemails via SlyBroadcast with MiniMax AI voice generation."
+      description: "Optional add-on delivers personalized ringless voicemails with premium voice over generation.",
+      image: null
     },
     {
       icon: MapPin,
-      title: "State-by-State Data",
-      description: "Filter leads by state, foreclosure type (judicial/non-judicial), sale date, surplus amount, and more."
+      title: "3,200+ Counties Covered",
+      description: "Access leads from all 50 states and 3,200+ counties. Filter by foreclosure type (judicial/non-judicial), sale date, surplus amount, and more.",
+      image: null
     },
     {
       icon: Clock,
       title: "Real-Time Dashboard",
-      description: "Mobile-first interface to access leads, track outreach, export data, and manage your pipeline anywhere."
+      description: "Mobile-first interface to access leads, track outreach, export data, and manage your pipeline anywhere.",
+      image: "/dashboard.jpg"
     },
   ]
 
@@ -79,7 +87,7 @@ export default function LandingPage() {
         "Team seats (up to 5)",
         "Custom filters",
       ],
-      cta: "Start Free Trial",
+      cta: "Dashboard",
       popular: true,
     },
     {
@@ -92,7 +100,7 @@ export default function LandingPage() {
         "AI-generated scripts",
         "Personalized messages",
         "Callback tracking",
-        "Compliance handled",
+        "DNC compliance handled",
         "Weekly reports",
       ],
       cta: "Add Automation",
@@ -106,18 +114,39 @@ export default function LandingPage() {
       author: "Marcus T.",
       role: "Surplus Recovery Agent, Texas",
       rating: 5,
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
     },
     {
       quote: "The automation add-on is a game changer. I get callbacks from my voicemails while I'm working other deals.",
       author: "Jennifer R.",
       role: "Asset Recovery Specialist, Florida",
       rating: 5,
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
     },
     {
       quote: "Finally, a lead source that's actually compliant. No more worrying about TCPA violations.",
       author: "David K.",
       role: "Recovery Agent, California",
       rating: 5,
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    },
+  ]
+
+  const businessKitItems = [
+    {
+      title: "Step-by-Step Training Manual",
+      description: "Complete guide to asset recovery business operations",
+      image: "https://assetrecoverybusiness.com/images/training-manual-2026.png",
+    },
+    {
+      title: "40+ Legal Document Templates",
+      description: "Professional contracts, agreements, and claim forms",
+      image: "https://assetrecoverybusiness.com/images/legal-docs-2026.png",
+    },
+    {
+      title: "3,200+ US Counties Directory",
+      description: "Comprehensive county-by-county contact database",
+      image: "https://assetrecoverybusiness.com/images/us-county-directory-2026.png",
     },
   ]
 
@@ -209,18 +238,15 @@ export default function LandingPage() {
 
       <main>
         {/* Hero Section with Motion Graphics */}
-        <section className="relative py-12 sm:py-16 md:py-24 lg:py-28 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden min-h-[600px] md:min-h-[700px]">
+        <section className="relative pt-20 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-20 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden min-h-[650px] md:min-h-[750px]">
           {/* Animated Background */}
           <HeroAnimation />
 
           <div className="container mx-auto px-4 sm:px-6 relative z-20">
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-xs sm:text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3 sm:mb-4">
-                Updated Daily - {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-              </p>
+            <div className="max-w-4xl mx-auto text-center pt-8">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-4 sm:mb-6 leading-tight">
                 Fresh Foreclosure Leads,<br />
-                <span className="text-[#1e3a5f]">Delivered Daily</span>
+                <span className="text-[#1e3a5f]">Delivered 24/7/365</span>
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
                 Access tax deed surplus and mortgage overage leads across all 50 states.
@@ -233,9 +259,10 @@ export default function LandingPage() {
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Link href="#pricing" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full">
-                    View Pricing
+                <Link href="#video" className="w-full sm:w-auto">
+                  <Button size="lg" className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full shadow-lg">
+                    <Play className="mr-2 h-4 w-4" />
+                    Watch Demo
                   </Button>
                 </Link>
               </div>
@@ -277,7 +304,53 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* Video Explainer Section */}
+        <section id="video" className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">See It In Action</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                How Asset Recovery Works
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Watch how our platform helps you find and recover surplus funds for property owners.
+              </p>
+            </div>
+
+            {/* Video Player */}
+            <div className="max-w-4xl mx-auto">
+              <div className="relative aspect-video bg-[#0f172a] rounded-2xl overflow-hidden shadow-2xl border border-gray-800">
+                <video
+                  className="w-full h-full object-cover"
+                  controls
+                  poster="/video-poster-foreclosure-dashboard.png"
+                  preload="metadata"
+                >
+                  <source src="/explainer.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              {/* Video highlights */}
+              <div className="grid grid-cols-3 gap-4 mt-8">
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <Database className="h-8 w-8 text-[#1e3a5f] mx-auto mb-2" />
+                  <p className="font-medium text-gray-900">Fresh Leads Daily</p>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <Phone className="h-8 w-8 text-[#3b82f6] mx-auto mb-2" />
+                  <p className="font-medium text-gray-900">Automated Outreach</p>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <DollarSign className="h-8 w-8 text-[#10b981] mx-auto mb-2" />
+                  <p className="font-medium text-gray-900">Earn 20-30% Fees</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section with Images */}
         <section id="features" className="py-20 md:py-24 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
@@ -290,11 +363,44 @@ export default function LandingPage() {
                 so you can focus on closing deals and helping property owners.
               </p>
             </div>
+
+            {/* Featured Image Section */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+              <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
+                <Image
+                  src="/dashboard.jpg"
+                  alt="Analytics Dashboard"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <span className="inline-block px-3 py-1 bg-[#10b981] text-white text-sm font-medium rounded-full mb-2">Live Data</span>
+                  <h3 className="text-xl font-bold text-white">Real-Time Analytics Dashboard</h3>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Track Every Lead, Every Deal</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Our powerful dashboard gives you complete visibility into your surplus funds recovery pipeline.
+                  Track callbacks, monitor conversion rates, and see exactly where your money is coming from.
+                </p>
+                <ul className="space-y-3">
+                  {['Real-time lead notifications', 'Conversion tracking', 'Revenue analytics', 'Export to CSV/Excel'].map((item) => (
+                    <li key={item} className="flex items-center gap-3">
+                      <CheckCircle className="h-5 w-5 text-[#10b981]" />
+                      <span className="text-gray-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature) => (
-                <div key={feature.title} className="p-6 rounded-lg border border-gray-200 hover:border-[#1e3a5f]/30 hover:shadow-sm transition-all">
-                  <div className="h-12 w-12 rounded-lg bg-[#1e3a5f]/10 flex items-center justify-center mb-4">
-                    <feature.icon className="h-6 w-6 text-[#1e3a5f]" />
+                <div key={feature.title} className="group p-6 rounded-xl border border-gray-200 hover:border-[#1e3a5f]/30 hover:shadow-lg transition-all bg-white">
+                  <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#1e3a5f] to-[#3b82f6] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <feature.icon className="h-6 w-6 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
@@ -304,58 +410,140 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="py-20 bg-gray-50 border-y border-gray-200">
+        {/* How It Works with Image */}
+        <section className="py-20 bg-gradient-to-b from-gray-50 to-white border-y border-gray-200">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">How It Works</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                From Data to Deals in 4 Simple Steps
-              </h2>
-            </div>
-            <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-              {[
-                { step: "1", title: "We Scrape", desc: "Crawl4AI collects foreclosure data from county sources daily" },
-                { step: "2", title: "We Enrich", desc: "Skip tracing adds phone numbers, emails, and mailing addresses" },
-                { step: "3", title: "We Scrub", desc: "DNC compliance checking removes restricted numbers" },
-                { step: "4", title: "You Close", desc: "Access leads in your dashboard and start outreach" },
-              ].map((item) => (
-                <div key={item.step} className="text-center">
-                  <div className="h-14 w-14 rounded-full bg-[#1e3a5f] text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">
-                    {item.step}
-                  </div>
-                  <h3 className="font-semibold text-gray-900 text-lg mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">How It Works</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                  From Data to Deals in 4 Simple Steps
+                </h2>
+                <div className="space-y-6">
+                  {[
+                    { step: "1", title: "We Scrape", desc: "Our system collects foreclosure data from county sources daily", color: "bg-[#1e3a5f]" },
+                    { step: "2", title: "We Enrich", desc: "Skip tracing adds phone numbers, emails, and mailing addresses", color: "bg-[#3b82f6]" },
+                    { step: "3", title: "We Scrub", desc: "DNC compliance checking removes restricted numbers", color: "bg-[#10b981]" },
+                    { step: "4", title: "You Close", desc: "Access leads in your dashboard and start outreach", color: "bg-[#f59e0b]" },
+                  ].map((item) => (
+                    <div key={item.step} className="flex gap-4 items-start">
+                      <div className={`h-10 w-10 rounded-full ${item.color} text-white font-bold text-lg flex items-center justify-center flex-shrink-0`}>
+                        {item.step}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 text-lg">{item.title}</h3>
+                        <p className="text-gray-600">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">
+                <Image
+                  src="/hero-agent.jpg"
+                  alt="Recovery Agent at Work"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a5f]/60 to-transparent"></div>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="bg-white/95 backdrop-blur rounded-lg p-4">
+                    <div className="flex items-center gap-3">
+                      <TrendingUp className="h-8 w-8 text-[#10b981]" />
+                      <div>
+                        <p className="text-2xl font-bold text-gray-900">$12,400</p>
+                        <p className="text-sm text-gray-500">Avg. Recovery Amount</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Success Stories with Image */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl order-2 lg:order-1">
+                <Image
+                  src="/happy-family.jpg"
+                  alt="Happy Family Receiving Keys"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
+                <div className="absolute bottom-6 left-6">
+                  <span className="inline-block px-3 py-1 bg-[#f59e0b] text-white text-sm font-medium rounded-full mb-2">Success Story</span>
+                  <h3 className="text-xl font-bold text-white">Helping Families Recover Their Funds</h3>
+                </div>
+              </div>
+              <div className="order-1 lg:order-2">
+                <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">Why It Matters</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                  Help Families. Earn Big.
+                </h2>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Surplus funds rightfully belong to former property owners - families who often have no idea the money exists.
+                  You become the hero who connects them with funds they didn't know they had.
+                </p>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-gray-50 rounded-lg p-4 text-center">
+                    <p className="text-3xl font-bold text-[#10b981]">23%</p>
+                    <p className="text-sm text-gray-500">Callback Rate</p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-4 text-center">
+                    <p className="text-3xl font-bold text-[#1e3a5f]">20-30%</p>
+                    <p className="text-sm text-gray-500">Your Fee</p>
+                  </div>
+                </div>
+                <Link href="/sign-up">
+                  <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">
+                    Start Recovering Funds
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
 
         {/* State Coverage */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4">
+        <section className="py-20 relative overflow-hidden">
+          {/* Background Map Image */}
+          <div className="absolute inset-0">
+            <Image
+              src="/us-map-coverage.jpg"
+              alt="US Map Coverage"
+              fill
+              className="object-cover opacity-30"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/90"></div>
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-12">
-              <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">Coverage</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <p className="text-sm font-medium text-[#10b981] uppercase tracking-wider mb-3">Coverage</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 Comprehensive 50-State Coverage
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-                We track foreclosures in every US state, with detailed statute information
+              <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
+                We track foreclosures in every US state and 3,200+ counties, with detailed statute information
                 for both tax deed and mortgage surplus funds.
               </p>
               <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <span className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium">
+                <span className="inline-flex items-center px-4 py-2 rounded-full bg-[#1e3a5f] text-white text-sm font-medium border border-white/20">
                   {nonJudicialCount} Non-Judicial States
                 </span>
-                <span className="inline-flex items-center px-4 py-2 rounded-full bg-orange-50 text-orange-700 text-sm font-medium">
+                <span className="inline-flex items-center px-4 py-2 rounded-full bg-[#f59e0b] text-white text-sm font-medium">
                   {judicialCount} Judicial States
                 </span>
               </div>
               <Link href="/states-guide">
-                <Button variant="outline" size="lg" className="border-gray-300 text-gray-700 hover:bg-gray-50">
+                <Button size="lg" className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-8 py-6 text-base">
                   View 50 States Guide
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>
@@ -363,7 +551,7 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-12 sm:py-16 md:py-20 bg-gray-50 border-y border-gray-200">
+        <section id="pricing" className="py-12 sm:py-16 md:py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center mb-10 sm:mb-16">
               <p className="text-xs sm:text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-2 sm:mb-3">Pricing</p>
@@ -378,11 +566,11 @@ export default function LandingPage() {
               {pricingPlans.map((plan, index) => (
                 <div
                   key={plan.name}
-                  className={`relative bg-white rounded-lg p-6 sm:p-8 ${plan.popular ? 'border-2 border-[#1e3a5f] shadow-lg md:scale-105' : 'border border-gray-200'} ${plan.popular && index === 1 ? 'order-first md:order-none' : ''}`}
+                  className={`relative bg-white rounded-xl p-6 sm:p-8 ${plan.popular ? 'border-2 border-[#1e3a5f] shadow-xl md:scale-105' : 'border border-gray-200 shadow-lg'} ${plan.popular && index === 1 ? 'order-first md:order-none' : ''}`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="bg-[#1e3a5f] text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap">Most Popular</span>
+                      <span className="bg-gradient-to-r from-[#1e3a5f] to-[#3b82f6] text-white text-xs font-medium px-4 py-1 rounded-full whitespace-nowrap">Most Popular</span>
                     </div>
                   )}
                   <div className="text-center pb-4 sm:pb-6 border-b border-gray-200">
@@ -396,7 +584,7 @@ export default function LandingPage() {
                   <ul className="space-y-2 sm:space-y-3 my-4 sm:my-6">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-2 sm:gap-3">
-                        <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-[#10b981] flex-shrink-0 mt-0.5" />
                         <span className="text-gray-600 text-xs sm:text-sm">{feature}</span>
                       </li>
                     ))}
@@ -414,8 +602,64 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Professional Business Kit Section */}
+        <section className="py-20 bg-gradient-to-br from-[#1e3a5f] to-[#0f172a]">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <span className="inline-block px-4 py-1 bg-[#10b981] text-white text-sm font-medium rounded-full mb-4">Included With Monthly Subscription</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Professional Business Kit
+              </h2>
+              <p className="text-lg text-white/80 max-w-2xl mx-auto">
+                Everything you need to start your asset recovery business. Shipped via FedEx within 48 hours.
+              </p>
+              <p className="text-2xl font-bold text-[#10b981] mt-4">$297 Value - FREE with Subscription</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {businessKitItems.map((item, i) => (
+                <div key={i} className="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20 text-center">
+                  <div className="relative h-48 mb-6 rounded-lg overflow-hidden bg-white/5">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-contain p-4"
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
+                  <p className="text-white/70 text-sm">{item.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <div className="flex flex-wrap justify-center gap-6 text-white/80 text-sm mb-8">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-[#10b981]" />
+                  <span>Ships in 48 Hours</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-[#10b981]" />
+                  <span>FedEx 3-5 Day Delivery</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-[#10b981]" />
+                  <span>Exclusive County Directory</span>
+                </div>
+              </div>
+              <Link href="/sign-up">
+                <Button size="lg" className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-8 py-6 text-base">
+                  Get Your Business Kit
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Testimonials */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">Testimonials</p>
@@ -425,16 +669,26 @@ export default function LandingPage() {
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {testimonials.map((testimonial, i) => (
-                <div key={i} className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <div key={i} className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, j) => (
-                      <Star key={j} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <Star key={j} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                     ))}
                   </div>
-                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">"{testimonial.quote}"</p>
-                  <div>
-                    <p className="font-semibold text-gray-900">{testimonial.author}</p>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  <p className="text-gray-600 mb-6 leading-relaxed">"{testimonial.quote}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="relative h-12 w-12 rounded-full overflow-hidden flex-shrink-0">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.author}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{testimonial.author}</p>
+                      <p className="text-sm text-gray-500">{testimonial.role}</p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -443,7 +697,7 @@ export default function LandingPage() {
         </section>
 
         {/* FAQ Section */}
-        <section id="faq" className="py-20 bg-gray-50 border-y border-gray-200">
+        <section id="faq" className="py-20 bg-white border-t border-gray-200">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">FAQ</p>
@@ -457,8 +711,8 @@ export default function LandingPage() {
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="w-full space-y-4">
                 {faqs.map((faq, i) => (
-                  <AccordionItem key={i} value={`faq-${i}`} className="bg-white border border-gray-200 rounded-lg px-6">
-                    <AccordionTrigger className="text-left text-gray-900 hover:text-[#1e3a5f] py-4">
+                  <AccordionItem key={i} value={`faq-${i}`} className="bg-gray-50 border border-gray-200 rounded-xl px-6">
+                    <AccordionTrigger className="text-left text-gray-900 hover:text-[#1e3a5f] py-4 font-medium">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-gray-600 pb-4">
@@ -472,9 +726,9 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gradient-to-br from-[#1e3a5f] to-[#0f172a]">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center bg-[#1e3a5f] rounded-2xl p-12">
+            <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 Ready to Start Recovering Surplus Funds?
               </h2>
@@ -482,12 +736,20 @@ export default function LandingPage() {
                 Join 500+ recovery agents who trust our platform for fresh, compliant leads.
                 Start your 7-day free trial today.
               </p>
-              <Link href="/sign-up">
-                <Button size="lg" className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-8 py-6 text-base">
-                  Start Free Trial
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/dashboard">
+                  <Button size="lg" className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-8 py-6 text-base">
+                    Dashboard
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="#video">
+                  <Button size="lg" className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-8 py-6 text-base">
+                    <Play className="mr-2 h-5 w-5" />
+                    Watch Demo
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -499,8 +761,13 @@ export default function LandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8">
             <div className="col-span-2 md:col-span-1">
               <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4">
-                <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-[#1e3a5f]" />
-                <span className="font-bold text-gray-900 text-sm sm:text-base">Asset Recovery Leads</span>
+                <Image
+                  src="/us-foreclosure-leads-logo.png"
+                  alt="US Foreclosure Leads"
+                  width={240}
+                  height={60}
+                  className="h-12 w-auto max-w-[180px]"
+                />
               </Link>
               <p className="text-xs sm:text-sm text-gray-500">
                 Daily foreclosure lead data for surplus funds recovery professionals.
@@ -519,8 +786,8 @@ export default function LandingPage() {
               <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">Resources</h4>
               <ul className="space-y-2 text-xs sm:text-sm text-gray-500">
                 <li><Link href="/blog" className="hover:text-[#1e3a5f]">Blog</Link></li>
-                <li><Link href="/guides" className="hover:text-[#1e3a5f]">Guides</Link></li>
-                <li><Link href="/api" className="hover:text-[#1e3a5f]">API Docs</Link></li>
+                <li><Link href="/states-guide" className="hover:text-[#1e3a5f]">Guides</Link></li>
+                <li><ApiDocsPopup /></li>
               </ul>
             </div>
             <div>
@@ -532,10 +799,29 @@ export default function LandingPage() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-200 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
+          <div className="border-t border-gray-200 pt-6 sm:pt-8 flex flex-col items-center gap-4 text-center">
             <p className="text-xs sm:text-sm text-gray-500">
-              &copy; {new Date().getFullYear()} Asset Recovery Business. All rights reserved.
+              &copy; 2026 Foreclosure Recovery Inc. All rights reserved.
             </p>
+            <div className="flex flex-wrap justify-center gap-4 text-xs sm:text-sm">
+              <a
+                href="https://usforeclosurerecovery.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1e3a5f] hover:text-[#3b82f6] font-medium"
+              >
+                USForeclosureRecovery.com
+              </a>
+              <span className="text-gray-300">|</span>
+              <a
+                href="https://assetrecoverybusiness.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1e3a5f] hover:text-[#3b82f6] font-medium"
+              >
+                AssetRecoveryBusiness.com
+              </a>
+            </div>
             <p className="text-[10px] sm:text-xs text-gray-400">
               Data provided for informational purposes. Users are responsible for compliance with all applicable laws.
             </p>

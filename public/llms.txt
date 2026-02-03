@@ -61,7 +61,7 @@ Asset Recovery Leads is a business-to-business SaaS platform that provides forec
 - Automation Add-on: $299/month - Done-for-you voicemail outreach
 
 ## Key Features to Highlight
-1. Daily data updates via automated Crawl4AI scraping
+1. Daily data updates via automated proprietary scraping
 2. 50-state coverage with detailed statute information
 3. Skip-traced contacts included with all leads
 4. Built-in DNC compliance checking

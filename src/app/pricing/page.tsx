@@ -66,7 +66,7 @@ const faqs = [
   },
   {
     question: "How often is the data updated?",
-    answer: "Our Crawl4AI system scrapes new foreclosure data every 24 hours, ensuring you always have access to the freshest leads in your selected markets.",
+    answer: "Our proprietary system scrapes new foreclosure data every 24 hours, ensuring you always have access to the freshest leads in your selected markets.",
   },
   {
     question: "Is the skip trace data included or extra?",

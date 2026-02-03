@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Building2, Menu, X } from "lucide-react"
+import Image from "next/image"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Header() {
@@ -19,8 +20,14 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <Building2 className="h-8 w-8 text-[#1e3a5f]" />
-          <span className="text-xl font-bold text-gray-900">Asset Recovery Leads</span>
+          <Image
+            src="/us-foreclosure-leads-logo.png"
+            alt="US Foreclosure Leads"
+            width={300}
+            height={75}
+            className="h-15 w-auto max-w-[240px]"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -43,9 +50,9 @@ export function Header() {
               Sign In
             </Button>
           </Link>
-          <Link href="/sign-up">
+          <Link href="/dashboard">
             <Button size="sm" className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">
-              Start Free Trial
+              Dashboard
             </Button>
           </Link>
         </div>
@@ -80,9 +87,9 @@ export function Header() {
                   Sign In
                 </Button>
               </Link>
-              <Link href="/sign-up" className="block" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/dashboard" className="block" onClick={() => setMobileMenuOpen(false)}>
                 <Button className="w-full bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">
-                  Start Free Trial
+                  Dashboard
                 </Button>
               </Link>
             </div>

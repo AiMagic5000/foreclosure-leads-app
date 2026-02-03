@@ -14,6 +14,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://dashboard.assetrecoverybusiness.com"),
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   title: {
     default: "Asset Recovery Leads - Foreclosure Surplus Funds Data Platform",
     template: "%s | Asset Recovery Leads"
@@ -88,11 +93,22 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" className="light" suppressHydrationWarning>
         <head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  var theme = localStorage.getItem('theme') || 'light';
+                  document.documentElement.classList.remove('light', 'dark');
+                  document.documentElement.classList.add(theme);
+                })();
+              `,
+            }}
+          />
         </head>
         <body className="min-h-screen antialiased font-sans">
           {children}
