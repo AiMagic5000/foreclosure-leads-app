@@ -367,11 +367,11 @@ export default function LandingPage() {
             {/* Featured Image Section */}
             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
               <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
-                <Image
-                  src="/dashboard.jpg"
-                  alt="Analytics Dashboard"
-                  fill
-                  className="object-cover"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://seafile.alwaysencrypted.com/f/ed91a1ea66a041c09263/?dl=1"
+                  alt="Asset Recovery Leads Dashboard"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6">
@@ -439,24 +439,12 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">
-                <Image
-                  src="/hero-agent.jpg"
-                  alt="Recovery Agent at Work"
-                  fill
-                  className="object-cover"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://seafile.alwaysencrypted.com/f/decae24362ee47648be4/?dl=1"
+                  alt="Asset Recovery Platform on Multiple Monitors"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a5f]/60 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="bg-white/95 backdrop-blur rounded-lg p-4">
-                    <div className="flex items-center gap-3">
-                      <TrendingUp className="h-8 w-8 text-[#10b981]" />
-                      <div>
-                        <p className="text-2xl font-bold text-gray-900">$12,400</p>
-                        <p className="text-sm text-gray-500">Avg. Recovery Amount</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
