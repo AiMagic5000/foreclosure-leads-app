@@ -44,29 +44,8 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { useUser } from "@clerk/nextjs"
+import { usePin } from "@/lib/pin-context"
 import { supabase } from "@/lib/supabase"
-
-// Subscription check - in production this fetches from DB via API
-// For demo: checks if user is signed in. Paid status would come from Stripe webhook data.
-function useSubscription() {
-  const { isSignedIn, user } = useUser()
-  const email = user?.primaryEmailAddress?.emailAddress || ""
-  // Admin emails get full access
-  const isAdmin = email === "coreypearsonemail@gmail.com"
-  // Demo mode: treat signed-in users as paid with all demo states
-  // In production: fetch from /api/user/subscription
-  const isPaid = isSignedIn === true
-  const selectedStates = isAdmin
-    ? ["AL","AR","AZ","CA","CO","DC","FL","GA","IA","ID","IL","IN","KY","LA","MA","MD","MI","MN","MO","MS","NC","NE","NJ","NM","NV","NY","OH","OK","OR","PA","SC","TN","TX","UT","VA","WA","WI"]
-    : ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"]
-  return {
-    isPaid,
-    tier: isAdmin ? "admin" : isPaid ? "multi_state" : "free",
-    selectedStates,
-    isLoading: isSignedIn === undefined,
-  }
-}
 
 interface LeadData {
   id: string
@@ -2140,7 +2119,7 @@ export default function LeadsPage() {
   const [dbLeads, setDbLeads] = useState<LeadData[]>([])
   const [dbStates, setDbStates] = useState<string[]>(["All States"])
   const [leadsLoading, setLeadsLoading] = useState(true)
-  const { isPaid, selectedStates: paidStates, tier, isLoading } = useSubscription()
+  const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
 
   // Fetch leads from Supabase
   useEffect(() => {
@@ -2174,13 +2153,13 @@ export default function LeadsPage() {
     )
   }
 
-  // Paywall: if not paid, show upgrade prompt
-  if (!isLoading && !isPaid) {
+  // Paywall: if not verified, show PIN access prompt
+  if (!isLoading && !isVerified && !isAdmin) {
     return (
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Foreclosure Leads</h1>
-          <p className="text-muted-foreground">Access requires an active subscription</p>
+          <p className="text-muted-foreground">Enter your access PIN to view leads</p>
         </div>
 
         {/* Blurred preview of leads behind paywall */}
@@ -2190,21 +2169,21 @@ export default function LeadsPage() {
               <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Lock className="h-8 w-8 text-primary" />
               </div>
-              <h2 className="text-xl font-bold mb-2">Subscription Required</h2>
+              <h2 className="text-xl font-bold mb-2">PIN Access Required</h2>
               <p className="text-muted-foreground mb-4">
-                Select your states and subscribe to access skip-traced foreclosure leads with property data, contact info, and surplus recovery analysis.
+                Enter the 8-character PIN sent to your email after purchase to access skip-traced foreclosure leads with property data, contact info, and surplus recovery analysis.
               </p>
               <div className="space-y-3">
-                <Link href="/dashboard/states">
+                <Link href="https://startmybusinessinc.gumroad.com/l/vzqbhs" target="_blank" rel="noopener noreferrer">
                   <Button className="w-full" size="lg">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    Select States & Subscribe
+                    <CreditCard className="h-4 w-4 mr-2" />
+                    Purchase 5-State Access - $495
                   </Button>
                 </Link>
-                <Link href="/pricing">
+                <Link href="/dashboard/settings">
                   <Button variant="outline" className="w-full">
-                    <CreditCard className="h-4 w-4 mr-2" />
-                    View Pricing Plans
+                    <Lock className="h-4 w-4 mr-2" />
+                    Already Have a PIN? Go to Settings
                   </Button>
                 </Link>
               </div>

@@ -15,6 +15,7 @@ import {
   Briefcase,
   ClipboardList,
   GraduationCap,
+  Shield,
   Menu,
   X,
   Bell,
@@ -24,6 +25,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { PinProvider } from "@/lib/pin-context"
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -35,6 +37,7 @@ const navigation = [
   { name: "Automation", href: "/dashboard/automation", icon: Zap },
   { name: "Export", href: "/dashboard/export", icon: Download },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
+  { name: "Admin", href: "/dashboard/admin", icon: Shield },
 ]
 
 export default function DashboardLayout({
@@ -71,6 +74,7 @@ export default function DashboardLayout({
   const mutedText = isDark ? "text-slate-400" : "text-gray-500"
 
   return (
+    <PinProvider>
     <div className={cn("min-h-screen", bg)}>
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
@@ -147,6 +151,11 @@ export default function DashboardLayout({
                       New
                     </span>
                   )}
+                  {item.name === "Admin" && (
+                    <span className="ml-auto text-xs bg-red-500/20 text-red-500 px-2 py-0.5 rounded-full">
+                      Staff
+                    </span>
+                  )}
                 </Link>
               )
             })}
@@ -187,16 +196,23 @@ export default function DashboardLayout({
               </a>
             </div>
 
-            {/* Multi-State Upgrade */}
+            {/* Additional State */}
             <div className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white">
-              <p className="font-semibold text-sm">Upgrade to Multiple States</p>
-              <p className="text-xs opacity-90 mt-1">Access all 50 states for $499/mo</p>
-              <Button
-                size="sm"
-                className="w-full mt-3 bg-white text-blue-600 hover:bg-gray-100"
+              <p className="font-semibold text-sm">Need More States?</p>
+              <p className="text-xs opacity-90 mt-1">Add states for $175 each</p>
+              <a
+                href="https://startmybusinessinc.gumroad.com/l/blwra"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
               >
-                Upgrade Now
-              </Button>
+                <Button
+                  size="sm"
+                  className="w-full mt-3 bg-white text-blue-600 hover:bg-gray-100"
+                >
+                  Add a State
+                </Button>
+              </a>
             </div>
           </div>
         </div>
@@ -268,5 +284,6 @@ export default function DashboardLayout({
         <main className="p-4 lg:p-6">{children}</main>
       </div>
     </div>
+    </PinProvider>
   )
 }

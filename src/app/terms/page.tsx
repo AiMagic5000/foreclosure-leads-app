@@ -7,9 +7,9 @@ const sections = [
   { id: "acceptance", title: "Acceptance of Terms" },
   { id: "service", title: "Description of Service" },
   { id: "account", title: "Account Registration & Security" },
-  { id: "billing", title: "Subscription Plans & Billing" },
-  { id: "trial", title: "Free Trial" },
-  { id: "cancellation", title: "Cancellation & Refunds" },
+  { id: "billing", title: "Pricing & Payments" },
+  { id: "trial", title: "Trial Policy" },
+  { id: "cancellation", title: "Refund Policy" },
   { id: "acceptable-use", title: "Acceptable Use Policy" },
   { id: "data-accuracy", title: "Data Accuracy Disclaimer" },
   { id: "compliance", title: "Compliance Obligations" },
@@ -137,7 +137,7 @@ export default function TermsOfService() {
                 Terms of Service
               </h1>
               <p className="text-slate-600 mb-8">
-                Last Updated: February 2, 2026
+                Last Updated: February 3, 2026
               </p>
 
               <div className="prose prose-slate max-w-none space-y-12">
@@ -149,7 +149,8 @@ export default function TermsOfService() {
                   <p className="text-slate-700 leading-relaxed mb-4">
                     These Terms of Service ("Terms") constitute a legally
                     binding agreement between you ("User," "you," or "your")
-                    and US Foreclosure Recovery Inc. ("Company," "we," "us," or
+                    and Foreclosure Recovery Inc., operating in partnership with
+                    Start My Business Incorporated ("Company," "we," "us," or
                     "our") governing your access to and use of the services
                     provided through usforeclosurerecovery.com (the "Platform"
                     or "Service").
@@ -264,123 +265,134 @@ export default function TermsOfService() {
                 {/* Section 4 */}
                 <section id="billing">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    4. Subscription Plans & Billing
+                    4. Pricing & Payments
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    The Service is offered on a subscription basis with the
-                    following pricing tiers:
+                    The Service is offered on a one-time purchase basis with the
+                    following pricing:
                   </p>
                   <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-4">
                     <ul className="space-y-3 text-slate-700">
                       <li>
                         <strong className="text-[#1e3a5f]">
-                          Single State Plan:
+                          5-State Lead Access:
                         </strong>{" "}
-                        $129.00 per month - Access to foreclosure surplus leads
-                        for one (1) selected state, including skip tracing and
-                        DNC scrubbing services.
+                        $495.00 (one-time) - Access to foreclosure surplus leads
+                        for five (5) states of your choice, including skip
+                        tracing, DNC compliance, property enrichment, contract
+                        templates, ringless voicemail, and dashboard access.
                       </li>
                       <li>
                         <strong className="text-[#1e3a5f]">
-                          Multi-State Plan:
+                          Additional State Access:
                         </strong>{" "}
-                        $499.00 per month - Access to foreclosure surplus leads
-                        for multiple states (up to five states), including skip
-                        tracing and DNC scrubbing services.
+                        $175.00 per state (one-time) - Add any additional US
+                        state to your existing dashboard with the same features.
                       </li>
                       <li>
                         <strong className="text-[#1e3a5f]">
-                          Voicemail Automation Add-On:
+                          Asset Recovery Business Build Out:
                         </strong>{" "}
-                        $299.00 per month - Optional add-on for automated
-                        voicemail delivery to leads.
+                        $2,495.00 (one-time, or $2,120.75 with 15% returning
+                        customer discount) - Complete business formation,
+                        website, branding, compliance documentation, and all
+                        features of the 5-State plan.
                       </li>
                     </ul>
                   </div>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    All subscription fees are billed monthly in advance on the
-                    anniversary date of your initial subscription. Payment must
-                    be made by credit card, debit card, or other payment method
-                    approved by the Company. By providing payment information,
-                    you authorize the Company to charge the applicable fees to
-                    your designated payment method on a recurring basis.
+                    All purchases are one-time payments processed by Start My
+                    Business Incorporated (StartMyBusiness.us) on behalf of
+                    Foreclosure Recovery Inc. and its affiliated entities
+                    including US Foreclosure Recovery
+                    (usforeclosurerecovery.com) and Asset Recovery Business
+                    (assetrecoverybusiness.com). By providing payment
+                    information, you authorize the payment processor to charge
+                    the applicable fee to your designated payment method.
                   </p>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    Subscription fees do not include applicable sales tax,
-                    value-added tax (VAT), or other governmental taxes or fees,
-                    which shall be your responsibility. If your payment method
-                    fails or your account becomes past due, the Company
-                    reserves the right to suspend access to the Service until
-                    payment is received.
+                    Fees do not include applicable sales tax, value-added tax
+                    (VAT), or other governmental taxes or fees, which shall be
+                    your responsibility. If your payment method fails, the
+                    Company reserves the right to suspend access to the Service
+                    until payment is received.
                   </p>
                   <p className="text-slate-700 leading-relaxed">
-                    The Company reserves the right to modify subscription
-                    pricing upon thirty (30) days' written notice. Price
-                    changes will apply to subsequent billing cycles and will
-                    not affect the current billing period.
+                    The Company reserves the right to update pricing for future
+                    purchases upon thirty (30) days' written notice. Price
+                    changes will not affect completed purchases.
                   </p>
                 </section>
 
                 {/* Section 5 */}
                 <section id="trial">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    5. Free Trial
+                    5. Trial Policy
                   </h2>
-                  <p className="text-slate-700 leading-relaxed mb-4">
-                    New Users may be eligible for a seven (7) day free trial of
-                    the Service. During the trial period, you will have access
-                    to the features of the selected subscription plan at no
-                    charge.
-                  </p>
-                  <p className="text-slate-700 leading-relaxed mb-4">
-                    To activate the free trial, you must provide valid payment
-                    information. If you do not cancel your subscription before
-                    the end of the trial period, your payment method will
-                    automatically be charged the applicable subscription fee,
-                    and your subscription will continue on a monthly recurring
-                    basis.
-                  </p>
-                  <p className="text-slate-700 leading-relaxed mb-4">
-                    The free trial is available only once per User or business
-                    entity. The Company reserves the right to determine
-                    eligibility for the free trial and may deny access if it
-                    determines that a User has previously received a trial or
-                    is attempting to abuse the trial offer.
-                  </p>
                   <p className="text-slate-700 leading-relaxed">
-                    During the trial period, all Terms of Service apply in full,
-                    including but not limited to acceptable use policies,
-                    compliance obligations, and disclaimers.
+                    The Company does not currently offer free trials. All access
+                    to the Service requires a completed purchase. From time to
+                    time, the Company may offer promotional pricing or
+                    limited-time offers at its sole discretion.
                   </p>
                 </section>
 
                 {/* Section 6 */}
                 <section id="cancellation">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    6. Cancellation & Refunds
+                    6. Refund Policy
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    You may cancel your subscription at any time by accessing
-                    your account settings on the Platform or by contacting
-                    customer support at support@usforeclosurerecovery.com.
-                    Cancellation will take effect at the end of your current
-                    billing cycle, and you will retain access to the Service
-                    until that date.
+                    Due to the nature of our digital product and the significant
+                    cost associated with lead qualification technology, all
+                    purchases are generally non-refundable.
                   </p>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     <strong className="text-[#1e3a5f]">
-                      No Refunds Policy:
+                      Before Access:
                     </strong>{" "}
-                    All subscription fees are non-refundable. If you cancel
-                    your subscription during a billing cycle, you will not
-                    receive a refund or credit for any unused portion of the
-                    subscription period. The Company does not provide prorated
-                    refunds for partial months of service.
+                    If you have not yet accessed or downloaded any lead data,
+                    you may request a refund within seven (7) days of purchase
+                    by contacting support@usforeclosurerecovery.com. Refunds
+                    requested before any data access will be processed within
+                    10 business days.
                   </p>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    If you cancel during the free trial period, you will not be
-                    charged, provided the cancellation is completed before the
-                    trial period expires.
+                    <strong className="text-[#1e3a5f]">
+                      After Access:
+                    </strong>{" "}
+                    Once you have accessed the lead dashboard, viewed lead data,
+                    or downloaded any lead information (CSV exports, individual
+                    lead details, or contact data), your eligibility for a
+                    refund is substantially diminished. This is because:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-slate-700 mb-4">
+                    <li>
+                      (a) The Company has invested significant capital in the
+                      technology, data sources, and third-party services
+                      required to qualify, skip-trace, enrich, and deliver
+                      verified leads.
+                    </li>
+                    <li>
+                      (b) Lead data, once viewed or downloaded, cannot be
+                      returned or un-accessed.
+                    </li>
+                    <li>
+                      (c) The cost of skip tracing, DNC verification, property
+                      enrichment, and continuous data updates represents a
+                      material per-lead expense that is incurred on your behalf
+                      at the time of access.
+                    </li>
+                  </ul>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    <strong className="text-[#1e3a5f]">
+                      Dispute Resolution for Refund Requests:
+                    </strong>{" "}
+                    If you believe exceptional circumstances warrant a refund
+                    after data access, you may submit a written request to
+                    support@usforeclosurerecovery.com explaining your
+                    circumstances. Each request will be evaluated individually
+                    at the sole discretion of the Company.
                   </p>
                   <p className="text-slate-700 leading-relaxed">
                     The Company reserves the right to terminate or suspend your
@@ -840,7 +852,7 @@ export default function TermsOfService() {
                     regarding these Terms of Service or the Platform, please
                     contact us at:
                   </p>
-                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-6">
+                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-4">
                     <p className="text-slate-900 font-semibold mb-2">
                       US Foreclosure Recovery Inc.
                     </p>
@@ -862,6 +874,34 @@ export default function TermsOfService() {
                         className="text-[#3b82f6] hover:underline"
                       >
                         usforeclosurerecovery.com
+                      </a>
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-6">
+                    <p className="text-slate-900 font-semibold mb-2">
+                      Payment Processing & Business Services:
+                    </p>
+                    <p className="text-slate-700 font-semibold mb-2">
+                      Start My Business Incorporated
+                    </p>
+                    <p className="text-slate-700 mb-1">
+                      Website:{" "}
+                      <a
+                        href="https://StartMyBusiness.us"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#3b82f6] hover:underline"
+                      >
+                        StartMyBusiness.us
+                      </a>
+                    </p>
+                    <p className="text-slate-700">
+                      Email:{" "}
+                      <a
+                        href="mailto:support@startmybusiness.us"
+                        className="text-[#3b82f6] hover:underline"
+                      >
+                        support@startmybusiness.us
                       </a>
                     </p>
                   </div>
@@ -891,11 +931,12 @@ export default function TermsOfService() {
       <footer className="bg-[#1e3a5f] text-white py-8 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm">
-            &copy; {new Date().getFullYear()} US Foreclosure Recovery Inc. All
-            rights reserved.
+            &copy; {new Date().getFullYear()} Foreclosure Recovery Inc. in
+            partnership with Start My Business Incorporated. All rights
+            reserved.
           </p>
           <p className="text-xs text-slate-300 mt-2">
-            Last Updated: February 2, 2026
+            Last Updated: February 3, 2026
           </p>
         </div>
       </footer>

@@ -58,53 +58,53 @@ export default function LandingPage() {
 
   const pricingPlans = [
     {
-      name: "Single State",
-      price: 129,
-      description: "Perfect for agents focusing on one market",
+      name: "5-State Lead Access",
+      price: 495,
+      priceLabel: "one-time",
+      description: "Choose any 5 states -- full access to leads, data, and tools",
       features: [
-        "Choose any 1 state",
-        "Unlimited lead access",
-        "Skip-traced contacts",
-        "DNC-scrubbed data",
-        "CSV export",
-        "Mobile dashboard",
-        "Email support",
+        "Choose any 5 US states",
+        "Unlimited lead access with daily refreshes",
+        "Full skip tracing (phones, emails, addresses)",
+        "National DNC Registry verification",
+        "Property data enrichment (value, tax, sqft)",
+        "Complete contract template library",
+        "Integrated ringless voicemail (RVM)",
+        "CSV export and real-time dashboard",
+        "3,200+ county directory access",
+        "Hire a Closer marketplace (10% fee)",
+        "Contract Admin services (5% fee)",
+        "Closing Training (8-module course)",
+        "7-day support, 9am-5pm Pacific",
+        "Additional states: $175 each",
       ],
       cta: "Get Started",
-      popular: false,
-    },
-    {
-      name: "Multi-State",
-      price: 499,
-      description: "For growing agencies and teams",
-      features: [
-        "All 50 states access",
-        "Unlimited lead access",
-        "Skip-traced contacts",
-        "DNC-scrubbed data",
-        "CSV & API export",
-        "Priority support",
-        "Team seats (up to 5)",
-        "Custom filters",
-      ],
-      cta: "Dashboard",
       popular: true,
+      href: "https://startmybusinessinc.gumroad.com/l/vzqbhs",
     },
     {
-      name: "Automation Add-On",
-      price: 299,
-      description: "Done-for-you lead outreach",
+      name: "Asset Recovery Business Build Out",
+      price: 2495,
+      priceLabel: "one-time",
+      description: "Complete business with website, compliance, and everything you need",
       features: [
-        "Requires base plan",
-        "Auto voicemail delivery",
-        "AI-generated scripts",
-        "Personalized messages",
-        "Callback tracking",
-        "DNC compliance handled",
-        "Weekly reports",
+        "Everything in 5-State Lead Access",
+        "Custom branded website",
+        "LLC formation assistance",
+        "45 points of compliance",
+        "Professional contracts and agreements",
+        "Training and certification program",
+        "Dedicated account manager",
+        "Priority support",
       ],
-      cta: "Add Automation",
+      cta: "Build Your Business",
       popular: false,
+      href: "https://gumroad.com/l/placeholder-business-buildout",
+      discount: {
+        text: "15% off for existing customers",
+        price: 2120.75,
+        halfDown: 1060.38,
+      },
     },
   ]
 
@@ -559,14 +559,14 @@ export default function LandingPage() {
                 Simple, Transparent Pricing
               </h2>
               <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-2">
-                Choose the plan that fits your business. All plans include a 7-day free trial.
+                One-time payment. No monthly fees. No hidden charges. Start recovering surplus funds today.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
-              {pricingPlans.map((plan, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
+              {pricingPlans.map((plan) => (
                 <div
                   key={plan.name}
-                  className={`relative bg-white rounded-xl p-6 sm:p-8 ${plan.popular ? 'border-2 border-[#1e3a5f] shadow-xl md:scale-105' : 'border border-gray-200 shadow-lg'} ${plan.popular && index === 1 ? 'order-first md:order-none' : ''}`}
+                  className={`relative bg-white rounded-xl p-6 sm:p-8 ${plan.popular ? 'border-2 border-[#1e3a5f] shadow-xl' : 'border border-gray-200 shadow-lg'}`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -577,9 +577,15 @@ export default function LandingPage() {
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-900">{plan.name}</h3>
                     <p className="text-gray-500 text-xs sm:text-sm mt-1">{plan.description}</p>
                     <div className="mt-3 sm:mt-4">
-                      <span className="text-3xl sm:text-4xl font-bold text-gray-900">${plan.price}</span>
-                      <span className="text-gray-500 text-sm">/month</span>
+                      <span className="text-3xl sm:text-4xl font-bold text-gray-900">${plan.price.toLocaleString()}</span>
+                      <span className="text-gray-500 text-sm ml-1">{plan.priceLabel}</span>
                     </div>
+                    {plan.discount && (
+                      <div className="mt-2 space-y-1">
+                        <p className="text-sm text-[#10b981] font-medium">{plan.discount.text}: ${plan.discount.price.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500">Half-down to start: ${plan.discount.halfDown.toLocaleString()}</p>
+                      </div>
+                    )}
                   </div>
                   <ul className="space-y-2 sm:space-y-3 my-4 sm:my-6">
                     {plan.features.map((feature) => (
@@ -589,15 +595,30 @@ export default function LandingPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/sign-up" className="block">
+                  <a href={plan.href} target="_blank" rel="noopener noreferrer" className="block">
                     <Button
                       className={`w-full text-sm sm:text-base py-2.5 sm:py-3 ${plan.popular ? 'bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'}`}
                     >
                       {plan.cta}
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               ))}
+            </div>
+            {/* Additional State */}
+            <div className="max-w-4xl mx-auto mt-8 text-center">
+              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-gray-50 border border-gray-200">
+                <span className="text-gray-600 text-sm">Need more states?</span>
+                <span className="font-bold text-gray-900">$175 per additional state</span>
+                <a
+                  href="https://startmybusinessinc.gumroad.com/l/blwra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-[#1e3a5f] hover:text-[#3b82f6] underline"
+                >
+                  Add a State
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -734,10 +755,10 @@ export default function LandingPage() {
               </h2>
               <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
                 Join 500+ recovery agents who trust our platform for fresh, compliant leads.
-                Start your 7-day free trial today.
+                One-time payment. No subscriptions. No recurring charges.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/dashboard">
+                <Link href="#pricing">
                   <Button size="lg" className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-8 py-6 text-base">
                     Dashboard
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -821,7 +842,21 @@ export default function LandingPage() {
               >
                 AssetRecoveryBusiness.com
               </a>
+              <span className="text-gray-300">|</span>
+              <a
+                href="https://startmybusiness.us"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1e3a5f] hover:text-[#3b82f6] font-medium"
+              >
+                StartMyBusiness.us
+              </a>
             </div>
+            <p className="text-[10px] sm:text-xs text-gray-400 max-w-2xl">
+              Website development and management provided by Start My Business Incorporated (StartMyBusiness.us).
+              Foreclosure Recovery Inc., US Foreclosure Recovery, and Asset Recovery Business are partner entities of Start My Business Incorporated.
+              Payment processing is handled by Start My Business Incorporated on behalf of all affiliated entities.
+            </p>
             <p className="text-[10px] sm:text-xs text-gray-400">
               Data provided for informational purposes. Users are responsible for compliance with all applicable laws.
             </p>

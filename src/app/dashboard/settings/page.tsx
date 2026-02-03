@@ -12,8 +12,6 @@ import {
   CreditCard,
   Bell,
   Shield,
-  MapPin,
-  Calendar,
   CheckCircle2,
   AlertTriangle,
   ExternalLink,
@@ -24,11 +22,8 @@ import {
   Building2,
   Globe,
   ArrowRight,
-  Lock,
   TrendingUp,
   Camera,
-  X,
-  Check,
 } from "lucide-react"
 
 const DEFAULT_AVATAR = "/avatars/default-shield.jpg"
@@ -39,53 +34,6 @@ export default function SettingsPage() {
   const [emailDigest, setEmailDigest] = useState("daily")
   const [profileImage, setProfileImage] = useState<string>(DEFAULT_AVATAR)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [showChangePlan, setShowChangePlan] = useState(false)
-  const [showUpdateCard, setShowUpdateCard] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState("multi-state")
-  const [cardSaved, setCardSaved] = useState(false)
-  const [planChanged, setPlanChanged] = useState(false)
-
-  const plans = [
-    {
-      id: "single-state",
-      name: "Single State",
-      price: 99,
-      description: "Access leads in 1 state",
-      features: ["1 state of your choice", "Unlimited leads", "CSV export", "Email support"],
-    },
-    {
-      id: "five-state",
-      name: "5-State Bundle",
-      price: 249,
-      description: "Access leads in up to 5 states",
-      features: ["Up to 5 states", "Unlimited leads", "CSV export", "Priority support", "Weekly digest"],
-    },
-    {
-      id: "multi-state",
-      name: "Multi-State",
-      price: 499,
-      description: "Access all 50 states",
-      features: ["All 50 states", "Unlimited leads", "CSV + API export", "Priority support", "Daily digest", "Dedicated account manager"],
-      popular: true,
-    },
-  ]
-
-  const handleChangePlan = () => {
-    setPlanChanged(true)
-    setTimeout(() => {
-      setPlanChanged(false)
-      setShowChangePlan(false)
-    }, 2000)
-  }
-
-  const handleUpdateCard = () => {
-    setCardSaved(true)
-    setTimeout(() => {
-      setCardSaved(false)
-      setShowUpdateCard(false)
-    }, 2000)
-  }
-
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -98,13 +46,8 @@ export default function SettingsPage() {
     reader.readAsDataURL(file)
   }
 
-  // Mock subscription data
+  // Mock add-on data
   const subscription = {
-    plan: "Multi-State",
-    price: 499,
-    status: "active",
-    nextBilling: "March 2, 2026",
-    selectedStates: ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"],
     automationAddon: true,
   }
 
@@ -194,23 +137,23 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        {/* Subscription Section */}
+        {/* Access Status Section */}
         <Card className="bg-[#0f172a] text-white border-0">
           <CardHeader>
             <div className="flex items-center gap-2">
               <CreditCard className="h-5 w-5 text-white/80" />
-              <CardTitle className="text-white">Subscription</CardTitle>
+              <CardTitle className="text-white">Access Status</CardTitle>
             </div>
-            <CardDescription className="text-white/70">Manage your plan and billing</CardDescription>
+            <CardDescription className="text-white/70">Your lead access and PIN information</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="p-4 rounded-lg border border-white/20 bg-white/10">
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <h4 className="font-semibold text-lg text-white">{subscription.plan} Plan</h4>
+                  <h4 className="font-semibold text-lg text-white">5-State Lead Access</h4>
                   <p className="text-2xl font-bold text-white">
-                    ${subscription.price}
-                    <span className="text-sm font-normal text-white/70">/month</span>
+                    $495
+                    <span className="text-sm font-normal text-white/70 ml-1">one-time</span>
                   </p>
                 </div>
                 <Badge
@@ -221,59 +164,48 @@ export default function SettingsPage() {
                   Active
                 </Badge>
               </div>
-
-              <div className="flex items-center gap-2 text-sm text-white/70">
-                <Calendar className="h-4 w-4" />
-                <span>Next billing: {subscription.nextBilling}</span>
-              </div>
+              <p className="text-sm text-white/70">
+                Enter your PIN on the county map or leads page to access your states.
+              </p>
             </div>
 
-            {/* Selected States */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-white/90">
-                <MapPin className="h-4 w-4" />
-                <span>Selected States ({subscription.selectedStates.length})</span>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {subscription.selectedStates.map((state) => (
-                  <Badge key={state} className="bg-white/15 text-white border-white/20 hover:bg-white/25">
-                    {state}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* Add-ons */}
             <div className="p-3 rounded-lg border border-white/20 bg-white/10">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-white">Automation Add-on</p>
-                  <p className="text-sm text-white/70">+$299/month</p>
+                  <p className="font-medium text-white">Need More States?</p>
+                  <p className="text-sm text-white/70">$175 per additional state</p>
                 </div>
-                {subscription.automationAddon ? (
-                  <Badge className="bg-emerald-500/20 border-emerald-400 text-emerald-200">
-                    Active
-                  </Badge>
-                ) : (
+                <a
+                  href="https://startmybusinessinc.gumroad.com/l/blwra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/10">
-                    Add
+                    Add State
                   </Button>
-                )}
+                </a>
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <Button className="flex-1 bg-white/15 text-white hover:bg-white/25 border border-white/20" onClick={() => setShowChangePlan(true)}>
-                Change Plan
-              </Button>
-              <Button className="flex-1 bg-white/15 text-white hover:bg-white/25 border border-white/20" onClick={() => setShowUpdateCard(true)}>
-                Update Card
-              </Button>
+            <div className="p-3 rounded-lg border border-white/20 bg-white/10">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-white">Full Business Build Out</p>
+                  <p className="text-sm text-white/70">
+                    $2,495 regular / $2,120.75 with 15% customer discount
+                  </p>
+                </div>
+                <a
+                  href="https://gumroad.com/l/placeholder-business-buildout"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/10">
+                    Learn More
+                  </Button>
+                </a>
+              </div>
             </div>
-
-            <Button variant="ghost" className="w-full text-red-300 hover:text-red-200 hover:bg-red-500/20">
-              Cancel Subscription
-            </Button>
           </CardContent>
         </Card>
 
@@ -385,12 +317,12 @@ export default function SettingsPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">Multi-State Access</h4>
-                    <Badge className="text-[10px] bg-white/20 text-white border-white/30">$499/mo</Badge>
+                    <Badge className="text-[10px] bg-white/20 text-white border-white/30">$175/state</Badge>
                   </div>
                 </div>
-                <p className="text-xs text-white/80">Unlock all 50 states for lead generation. Maximize your pipeline with nationwide coverage.</p>
+                <p className="text-xs text-white/80">Add individual states to your access for $175 each. Expand your coverage as your business grows.</p>
                 <Button size="sm" className="w-full bg-white text-blue-600 hover:bg-white/90 font-semibold">
-                  Upgrade Now
+                  Add a State
                   <ArrowRight className="ml-2 h-3.5 w-3.5" />
                 </Button>
               </div>
@@ -578,179 +510,6 @@ export default function SettingsPage() {
         </Card>
       </div>
 
-      {/* Change Plan Modal */}
-      {showChangePlan && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowChangePlan(false)} />
-          <div className="relative bg-background rounded-2xl shadow-2xl border w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-background z-10 flex items-center justify-between p-6 border-b">
-              <div>
-                <h2 className="text-xl font-bold">Change Your Plan</h2>
-                <p className="text-sm text-muted-foreground">Select the plan that fits your business</p>
-              </div>
-              <button
-                onClick={() => setShowChangePlan(false)}
-                className="p-2 rounded-lg hover:bg-muted transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-4">
-              {plans.map((plan) => (
-                <button
-                  key={plan.id}
-                  type="button"
-                  onClick={() => setSelectedPlan(plan.id)}
-                  className={`w-full text-left rounded-xl border-2 p-5 transition-all ${
-                    selectedPlan === plan.id
-                      ? "border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/20"
-                      : "border-border hover:border-muted-foreground/30"
-                  } ${plan.popular ? "relative" : ""}`}
-                >
-                  {plan.popular && (
-                    <span className="absolute -top-3 right-4 bg-emerald-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                      Most Popular
-                    </span>
-                  )}
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-lg">{plan.name}</h3>
-                        {selectedPlan === plan.id && (
-                          <Check className="h-5 w-5 text-emerald-500" />
-                        )}
-                      </div>
-                      <p className="text-sm text-muted-foreground">{plan.description}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold">${plan.price}</p>
-                      <p className="text-xs text-muted-foreground">/month</p>
-                    </div>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {plan.features.map((feature, idx) => (
-                      <span
-                        key={idx}
-                        className="inline-flex items-center gap-1 text-xs bg-muted rounded-full px-2.5 py-1"
-                      >
-                        <CheckCircle2 className="h-3 w-3 text-emerald-500" />
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            <div className="sticky bottom-0 bg-background border-t p-6 flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">
-                Changes take effect on your next billing cycle
-              </p>
-              <div className="flex gap-3">
-                <Button variant="outline" onClick={() => setShowChangePlan(false)}>
-                  Cancel
-                </Button>
-                <Button
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white min-w-[140px]"
-                  onClick={handleChangePlan}
-                  disabled={planChanged}
-                >
-                  {planChanged ? (
-                    <span className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      Plan Updated
-                    </span>
-                  ) : (
-                    "Confirm Change"
-                  )}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Update Card Modal */}
-      {showUpdateCard && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowUpdateCard(false)} />
-          <div className="relative bg-background rounded-2xl shadow-2xl border w-full max-w-md">
-            <div className="flex items-center justify-between p-6 border-b">
-              <div>
-                <h2 className="text-xl font-bold">Update Payment Method</h2>
-                <p className="text-sm text-muted-foreground">Enter your new card details</p>
-              </div>
-              <button
-                onClick={() => setShowUpdateCard(false)}
-                className="p-2 rounded-lg hover:bg-muted transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-4">
-              <div className="p-3 rounded-lg bg-muted/50 border flex items-center gap-3">
-                <CreditCard className="h-5 w-5 text-muted-foreground" />
-                <div className="text-sm">
-                  <p className="font-medium">Current card on file</p>
-                  <p className="text-muted-foreground">Visa ending in 4242</p>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <div className="grid gap-2">
-                  <label className="text-sm font-medium">Name on Card</label>
-                  <Input placeholder="John Doe" />
-                </div>
-                <div className="grid gap-2">
-                  <label className="text-sm font-medium">Card Number</label>
-                  <Input placeholder="4242 4242 4242 4242" maxLength={19} />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="grid gap-2">
-                    <label className="text-sm font-medium">Expiration</label>
-                    <Input placeholder="MM/YY" maxLength={5} />
-                  </div>
-                  <div className="grid gap-2">
-                    <label className="text-sm font-medium">CVC</label>
-                    <Input placeholder="123" maxLength={4} type="password" />
-                  </div>
-                </div>
-                <div className="grid gap-2">
-                  <label className="text-sm font-medium">Billing ZIP Code</label>
-                  <Input placeholder="12345" maxLength={10} />
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2 text-xs text-muted-foreground p-3 rounded-lg bg-muted/50">
-                <Lock className="h-4 w-4 shrink-0 mt-0.5" />
-                <span>Your payment information is encrypted and stored securely. We never store your full card number.</span>
-              </div>
-            </div>
-
-            <div className="border-t p-6 flex gap-3">
-              <Button variant="outline" className="flex-1" onClick={() => setShowUpdateCard(false)}>
-                Cancel
-              </Button>
-              <Button
-                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white"
-                onClick={handleUpdateCard}
-                disabled={cardSaved}
-              >
-                {cardSaved ? (
-                  <span className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4" />
-                    Card Saved
-                  </span>
-                ) : (
-                  "Save Card"
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

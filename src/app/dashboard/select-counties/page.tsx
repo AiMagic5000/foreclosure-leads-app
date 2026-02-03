@@ -6,7 +6,7 @@ import { MapPin, ArrowRight, Check, Info } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CountyMap } from "@/components/county-map"
-import { countyDirectory } from "@/data/county-directory"
+import { countyDirectoryLookup } from "@/data/county-directory"
 
 export default function SelectCountiesPage() {
   const router = useRouter()
@@ -38,8 +38,8 @@ export default function SelectCountiesPage() {
   // Get selected county details
   const selectedCountyDetails = selectedCounties.map(fips => ({
     fips,
-    ...countyDirectory[fips]
-  })).filter(c => c.name)
+    ...countyDirectoryLookup[fips]
+  })).filter(c => c.county)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -90,9 +90,16 @@ export default function SelectCountiesPage() {
               <CardContent>
                 <CountyMap
                   isDark={false}
-                  selectionMode={true}
-                  selectedCounties={selectedCounties}
-                  onCountiesChange={handleCountiesChange}
+                  onCountyClick={(county) => {
+                    const fips = county.fips
+                    if (fips) {
+                      handleCountiesChange(
+                        selectedCounties.includes(fips)
+                          ? selectedCounties.filter(f => f !== fips)
+                          : [...selectedCounties, fips]
+                      )
+                    }
+                  }}
                 />
               </CardContent>
             </Card>
@@ -139,7 +146,7 @@ export default function SelectCountiesPage() {
                         className="flex items-center justify-between p-2 bg-slate-50 rounded-lg"
                       >
                         <div>
-                          <p className="font-medium text-sm">{county.name}</p>
+                          <p className="font-medium text-sm">{county.county}</p>
                           <p className="text-xs text-slate-500">{county.state}</p>
                         </div>
                         <button

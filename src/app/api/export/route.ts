@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs/server"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
+
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "coreypearsonemail@gmail.com"
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,22 +12,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // Get user's subscription info
-    const { data: user, error: userError } = await supabaseAdmin
-      .from("users")
-      .select("subscription_tier, selected_states")
-      .eq("clerk_id", userId)
-      .single()
+    const user = await currentUser()
+    const email = user?.emailAddresses?.[0]?.emailAddress || ""
+    const isAdmin = email === ADMIN_EMAIL
 
-    if (userError || !user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 })
-    }
+    // Check PIN access
+    let allowedStates: string[] = []
 
-    if (user.subscription_tier === "free") {
-      return NextResponse.json(
-        { error: "Subscription required to export leads" },
-        { status: 403 }
-      )
+    if (isAdmin) {
+      allowedStates = [] // empty means all access
+    } else {
+      // Check database for active PIN
+      const { data: pinData } = await supabaseAdmin
+        .from("user_pins")
+        .select("states_access")
+        .eq("email", email)
+        .eq("is_active", true)
+        .limit(1)
+        .single()
+
+      if (!pinData) {
+        return NextResponse.json(
+          { error: "Access required. Please enter your PIN or purchase access." },
+          { status: 403 }
+        )
+      }
+
+      allowedStates = pinData.states_access.includes("ALL") ? [] : pinData.states_access
     }
 
     const body = await request.json()
@@ -36,13 +49,11 @@ export async function POST(request: NextRequest) {
       includeSkipTrace = true,
     } = body
 
-    // Validate states based on subscription
-    let allowedStates = states
-    if (user.subscription_tier === "single_state") {
-      allowedStates = states.filter((s: string) =>
-        user.selected_states?.includes(s)
-      )
-      if (allowedStates.length === 0) {
+    // Filter requested states against allowed states
+    let queryStates = states
+    if (allowedStates.length > 0) {
+      queryStates = states.filter((s: string) => allowedStates.includes(s))
+      if (queryStates.length === 0) {
         return NextResponse.json(
           { error: "No access to selected states" },
           { status: 403 }
@@ -58,9 +69,8 @@ export async function POST(request: NextRequest) {
           ? "*"
           : "id, property_address, city, state, state_abbr, zip_code, parcel_id, owner_name, case_number, sale_date, sale_amount, mortgage_amount, lender_name, trustee_name, foreclosure_type, status, created_at"
       )
-      .in("state_abbr", allowedStates)
+      .in("state_abbr", queryStates)
 
-    // Apply date filter
     if (dateRange && dateRange !== "all") {
       const days = parseInt(dateRange)
       const startDate = new Date()
@@ -73,19 +83,18 @@ export async function POST(request: NextRequest) {
     })
 
     if (leadsError) {
-      console.error("Error fetching leads for export:", leadsError)
       return NextResponse.json(
         { error: "Failed to fetch leads" },
         { status: 500 }
       )
     }
 
-    // Log the export activity
+    // Log activity
     await supabaseAdmin.from("user_activity").insert({
-      user_id: user.subscription_tier, // Would need to get actual user ID
+      user_id: email,
       action: "export",
       details: {
-        states: allowedStates,
+        states: queryStates,
         dateRange,
         format,
         leadCount: leads?.length || 0,
@@ -99,26 +108,24 @@ export async function POST(request: NextRequest) {
         meta: {
           totalRecords: leads?.length || 0,
           exportedAt: new Date().toISOString(),
-          states: allowedStates,
+          states: queryStates,
         },
       })
     }
 
-    // Generate CSV
     if (!leads || leads.length === 0) {
       return NextResponse.json({ error: "No leads to export" }, { status: 404 })
     }
 
-    const headers = Object.keys(leads[0])
+    const csvHeaders = Object.keys(leads[0])
     const csvRows = [
-      headers.join(","),
+      csvHeaders.join(","),
       ...leads.map((lead) =>
-        headers
+        csvHeaders
           .map((header) => {
             const value = lead[header as keyof typeof lead]
             if (value === null || value === undefined) return ""
             const stringValue = String(value)
-            // Escape quotes and wrap in quotes if contains comma or quote
             if (stringValue.includes(",") || stringValue.includes('"')) {
               return `"${stringValue.replace(/"/g, '""')}"`
             }

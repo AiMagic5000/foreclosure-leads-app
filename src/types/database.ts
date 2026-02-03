@@ -61,6 +61,18 @@ export interface Database {
           status: string
           last_updated: string
           created_at: string
+          apn_number: string | null
+          assessed_value: number | null
+          tax_amount: number | null
+          lot_size: string | null
+          year_built: number | null
+          estimated_market_value: number | null
+          property_type: string | null
+          bedrooms: number | null
+          bathrooms: number | null
+          square_footage: number | null
+          enrichment_source: string | null
+          enriched_at: string | null
         }
         Insert: {
           id: string
@@ -109,6 +121,18 @@ export interface Database {
           dnc_checked?: boolean
           on_dnc?: boolean
           can_contact?: boolean
+          apn_number?: string | null
+          assessed_value?: number | null
+          tax_amount?: number | null
+          lot_size?: string | null
+          year_built?: number | null
+          estimated_market_value?: number | null
+          property_type?: string | null
+          bedrooms?: number | null
+          bathrooms?: number | null
+          square_footage?: number | null
+          enrichment_source?: string | null
+          enriched_at?: string | null
         }
       }
       users: {
@@ -266,6 +290,44 @@ export interface Database {
           details?: Json | null
         }
       }
+      user_pins: {
+        Row: {
+          id: string
+          email: string
+          pin: string
+          states_access: string[]
+          package_type: string
+          gumroad_sale_id: string | null
+          created_at: string
+          expires_at: string | null
+          is_active: boolean
+          last_used_at: string | null
+          created_by: string
+        }
+        Insert: {
+          email: string
+          pin: string
+          states_access: string[]
+          package_type?: string
+          gumroad_sale_id?: string | null
+          expires_at?: string | null
+          is_active?: boolean
+          created_by?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          pin?: string
+          states_access?: string[]
+          package_type?: string
+          gumroad_sale_id?: string | null
+          created_at?: string
+          expires_at?: string | null
+          is_active?: boolean
+          last_used_at?: string | null
+          created_by?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -285,3 +347,4 @@ export type StateData = Database['public']['Tables']['state_data']['Row']
 export type ScrapeRun = Database['public']['Tables']['scrape_runs']['Row']
 export type DncCache = Database['public']['Tables']['dnc_cache']['Row']
 export type UserActivity = Database['public']['Tables']['user_activity']['Row']
+export type UserPin = Database['public']['Tables']['user_pins']['Row']

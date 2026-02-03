@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs/server"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
+
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "coreypearsonemail@gmail.com"
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,23 +12,33 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // Get user's subscription info
-    const { data: user, error: userError } = await supabaseAdmin
-      .from("users")
-      .select("subscription_tier, selected_states")
-      .eq("clerk_id", userId)
-      .single()
+    // Get user email from Clerk
+    const user = await currentUser()
+    const email = user?.emailAddresses?.[0]?.emailAddress || ""
+    const isAdmin = email === ADMIN_EMAIL
 
-    if (userError || !user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 })
-    }
+    // Check PIN-based access from headers (set by client after PIN verification)
+    const pinStates = request.headers.get("x-pin-states")
+    const parsedStates: string[] = pinStates ? JSON.parse(pinStates) : []
+    const hasAllAccess = isAdmin || parsedStates.includes("ALL")
 
-    // Check subscription access
-    if (user.subscription_tier === "free") {
-      return NextResponse.json(
-        { error: "Subscription required to access leads" },
-        { status: 403 }
-      )
+    // If not admin and no PIN states, check if they have a PIN in the database
+    if (!isAdmin && parsedStates.length === 0) {
+      const { data: pinData } = await supabaseAdmin
+        .from("user_pins")
+        .select("states_access")
+        .eq("email", email)
+        .eq("is_active", true)
+        .limit(1)
+        .single()
+
+      if (!pinData) {
+        return NextResponse.json(
+          { error: "Access required. Please enter your PIN or purchase access." },
+          { status: 403 }
+        )
+      }
+      parsedStates.push(...pinData.states_access)
     }
 
     // Parse query parameters
@@ -42,16 +54,9 @@ export async function GET(request: NextRequest) {
       .from("foreclosure_leads")
       .select("*", { count: "exact" })
 
-    // Filter by state based on subscription
-    if (user.subscription_tier === "single_state") {
-      if (user.selected_states && user.selected_states.length > 0) {
-        query = query.in("state_abbr", user.selected_states)
-      } else {
-        return NextResponse.json(
-          { error: "No state selected. Please select a state in settings." },
-          { status: 400 }
-        )
-      }
+    // Filter by states based on PIN access (unless admin/ALL)
+    if (!hasAllAccess && parsedStates.length > 0) {
+      query = query.in("state_abbr", parsedStates)
     }
 
     // Apply filters
@@ -76,7 +81,6 @@ export async function GET(request: NextRequest) {
     const { data: leads, error: leadsError, count } = await query
 
     if (leadsError) {
-      console.error("Error fetching leads:", leadsError)
       return NextResponse.json(
         { error: "Failed to fetch leads" },
         { status: 500 }

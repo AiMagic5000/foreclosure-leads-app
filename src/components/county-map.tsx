@@ -7,7 +7,7 @@ import {
   Geography,
   ZoomableGroup,
 } from 'react-simple-maps';
-import { Search, RotateCcw, Download, X, MapPin, Phone, Mail, Globe } from 'lucide-react';
+import { Search, RotateCcw, Download, X, MapPin, Phone, Mail, Globe, Users } from 'lucide-react';
 import { findCountyContact, type CountyContact } from '@/data/county-directory';
 
 // Judicial foreclosure states (require court process) - BLUE
@@ -65,12 +65,23 @@ interface CountyData {
 interface CountyMapProps {
   isDark?: boolean;
   onCountyClick?: (county: CountyData) => void;
+  onDownloadLeads?: (stateAbbr: string) => void;
+  onAddToDashboard?: (stateAbbr: string) => void;
+  isPinVerified?: boolean;
+  onPinRequired?: () => void;
 }
 
 // US counties TopoJSON URL
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json';
 
-export function CountyMap({ isDark = false, onCountyClick }: CountyMapProps) {
+export function CountyMap({
+  isDark = false,
+  onCountyClick,
+  onDownloadLeads,
+  onAddToDashboard,
+  isPinVerified = false,
+  onPinRequired
+}: CountyMapProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCounty, setSelectedCounty] = useState<CountyData | null>(null);
   const [leadData, setLeadData] = useState<Record<string, number>>({});
@@ -283,10 +294,10 @@ export function CountyMap({ isDark = false, onCountyClick }: CountyMapProps) {
           <ZoomableGroup
             zoom={position.zoom}
             center={position.coordinates}
-            onMoveEnd={({ coordinates, zoom }) => setPosition({ coordinates: coordinates as [number, number], zoom })}
+            onMoveEnd={({ coordinates, zoom }: { coordinates: [number, number]; zoom: number }) => setPosition({ coordinates, zoom })}
           >
             <Geographies geography={GEO_URL}>
-              {({ geographies }) =>
+              {({ geographies }: { geographies: Array<{ id: string; rsmKey: string; properties: Record<string, string> }> }) =>
                 geographies.map((geo) => {
                   const fips = geo.id;
                   const isHovered = hoveredCounty === fips;
@@ -487,6 +498,38 @@ export function CountyMap({ isDark = false, onCountyClick }: CountyMapProps) {
                 </p>
               </div>
             )}
+
+            {/* Action Buttons */}
+            <div className="mt-3 pt-3 border-t flex gap-2" style={{ borderColor: theme.border }}>
+              <button
+                onClick={() => {
+                  if (!isPinVerified) {
+                    onPinRequired?.();
+                    return;
+                  }
+                  onDownloadLeads?.(selectedCounty.state);
+                }}
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-white transition-colors"
+                style={{ backgroundColor: '#10b981' }}
+              >
+                <Download size={14} />
+                Download
+              </button>
+              <button
+                onClick={() => {
+                  if (!isPinVerified) {
+                    onPinRequired?.();
+                    return;
+                  }
+                  onAddToDashboard?.(selectedCounty.state);
+                }}
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-white transition-colors"
+                style={{ backgroundColor: theme.accent }}
+              >
+                <Users size={14} />
+                Add Leads
+              </button>
+            </div>
           </div>
         );
       })()}
