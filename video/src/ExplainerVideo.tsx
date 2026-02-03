@@ -100,7 +100,7 @@ const LeadsScene: React.FC = () => {
             lineHeight: 1.6,
             opacity: interpolate(frame, [20, 50], [0, 1], { extrapolateRight: 'clamp' }),
           }}>
-            Our Crawl4AI system scrapes county recorders, public trustees, and auction sites across all 50 states — every single day.
+            Our proprietary technology scrapes county recorders, public trustees, and auction sites across all 50 states — every single day.
           </p>
 
           <div style={{
@@ -467,7 +467,7 @@ const CTAScene: React.FC = () => {
           color: '#64748b',
           marginTop: 40,
         }}>
-          foreclosure-leads.alwaysencrypted.com
+          usforeclosureleads.com
         </p>
       </div>
     </AbsoluteFill>
@@ -482,6 +482,9 @@ export const ExplainerVideo: React.FC = () => {
     <AbsoluteFill>
       {/* Background music at 4% volume */}
       <Audio src={staticFile('background-music.mp3')} volume={0.04} />
+
+      {/* Voiceover at full volume */}
+      <Audio src={staticFile('voiceover.mp3')} volume={1} />
 
       {/* Scene 1: Intro (0-5 seconds) */}
       <Sequence from={0} durationInFrames={fps * 5}>
