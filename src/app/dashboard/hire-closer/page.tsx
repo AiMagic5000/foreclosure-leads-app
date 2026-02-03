@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -390,103 +390,95 @@ export default function HireCloserPage() {
     )
   }
 
-  // Access gate: Only vetted agents or 45-point compliance clients
-  const [accessGranted, setAccessGranted] = useState(false)
-  const [accessCode, setAccessCode] = useState("")
-  const [accessError, setAccessError] = useState("")
+  // PIN-gated access for action buttons (voice samples, contact, forwarding)
+  const [pinUnlocked, setPinUnlocked] = useState(false)
+  const [showPinModal, setShowPinModal] = useState(false)
+  const [pinDigits, setPinDigits] = useState(["", "", "", "", "", ""])
+  const [pinError, setPinError] = useState("")
+  const [pendingAction, setPendingAction] = useState<(() => void) | null>(null)
+  const pinInputRefs = useRef<(HTMLInputElement | null)[]>([])
 
-  const handleAccessSubmit = () => {
-    // In production: validate against DB for vetted agent status or compliance client
-    // Demo codes for testing
-    const validCodes = ["VETTED2026", "COMPLIANCE45", "RECOVERY-PRO"]
-    if (validCodes.includes(accessCode.toUpperCase().trim())) {
-      setAccessGranted(true)
-      setAccessError("")
-    } else {
-      setAccessError("Invalid access code. This feature is restricted to vetted agents and compliance clients.")
+  const VALID_PINS = ["452026", "100045", "777888"]
+
+  const requirePin = useCallback((action: () => void) => {
+    if (pinUnlocked) {
+      action()
+      return
+    }
+    setPendingAction(() => action)
+    setPinDigits(["", "", "", "", "", ""])
+    setPinError("")
+    setShowPinModal(true)
+    setTimeout(() => pinInputRefs.current[0]?.focus(), 100)
+  }, [pinUnlocked])
+
+  const handlePinDigitChange = (index: number, value: string) => {
+    if (value.length > 1) value = value.slice(-1)
+    if (value && !/^\d$/.test(value)) return
+
+    const next = [...pinDigits]
+    next[index] = value
+    setPinDigits(next)
+    setPinError("")
+
+    if (value && index < 5) {
+      pinInputRefs.current[index + 1]?.focus()
+    }
+
+    if (value && index === 5) {
+      const fullPin = next.join("")
+      if (fullPin.length === 6) {
+        if (VALID_PINS.includes(fullPin)) {
+          setPinUnlocked(true)
+          setShowPinModal(false)
+          if (pendingAction) {
+            setTimeout(() => pendingAction(), 50)
+            setPendingAction(null)
+          }
+        } else {
+          setPinError("Invalid PIN. Access denied.")
+          setPinDigits(["", "", "", "", "", ""])
+          setTimeout(() => pinInputRefs.current[0]?.focus(), 100)
+        }
+      }
     }
   }
 
-  if (!accessGranted) {
-    return (
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Hire a Closer</h1>
-          <p className="text-muted-foreground">
-            Vetted asset recovery agents ready to close your leads on recorded lines
-          </p>
-        </div>
+  const handlePinKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !pinDigits[index] && index > 0) {
+      pinInputRefs.current[index - 1]?.focus()
+    }
+    if (e.key === "Escape") {
+      setShowPinModal(false)
+      setPendingAction(null)
+    }
+  }
 
-        <Card className="max-w-2xl mx-auto">
-          <CardContent className="pt-8 pb-8">
-            <div className="text-center space-y-6">
-              <div className="mx-auto w-20 h-20 rounded-full bg-amber-500/10 flex items-center justify-center">
-                <Shield className="h-10 w-10 text-amber-500" />
-              </div>
-
-              <div>
-                <h2 className="text-xl font-bold mb-2">Restricted Access</h2>
-                <p className="text-muted-foreground max-w-md mx-auto">
-                  Hiring a closer is only available to vetted asset recovery agents
-                  or clients of our <span className="font-semibold text-foreground">45 Points of Compliance</span> fully
-                  built asset recovery business package.
-                </p>
-              </div>
-
-              {/* Access Code Entry */}
-              <div className="max-w-sm mx-auto space-y-3">
-                <p className="text-sm font-medium">Enter your access code:</p>
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="Access code..."
-                    value={accessCode}
-                    onChange={(e) => setAccessCode(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleAccessSubmit()}
-                    className="text-center font-mono tracking-wider"
-                  />
-                  <Button onClick={handleAccessSubmit}>
-                    <Lock className="h-4 w-4 mr-2" />
-                    Verify
-                  </Button>
-                </div>
-                {accessError && (
-                  <p className="text-sm text-red-500">{accessError}</p>
-                )}
-              </div>
-
-              <div className="border-t pt-6 space-y-4">
-                <p className="text-sm font-semibold">How to get access:</p>
-                <div className="grid gap-3 max-w-md mx-auto text-left">
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium">Vetted Agent Program</p>
-                      <p className="text-xs text-muted-foreground">Complete our agent vetting process with background check and compliance training</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-r from-emerald-600/10 to-green-500/10 border border-emerald-500/20">
-                    <Award className="h-5 w-5 text-emerald-500 mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium">45 Points of Compliance Package</p>
-                      <p className="text-xs text-muted-foreground">Get a fully built asset recovery business with closer access included. Start for half down.</p>
-                      <a
-                        href="https://assetrecoverybusiness.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-emerald-600 hover:text-emerald-500"
-                      >
-                        View Details
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    )
+  const handlePinPaste = (e: React.ClipboardEvent) => {
+    e.preventDefault()
+    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6)
+    if (!pasted) return
+    const next = ["", "", "", "", "", ""]
+    for (let i = 0; i < pasted.length; i++) {
+      next[i] = pasted[i]
+    }
+    setPinDigits(next)
+    if (pasted.length === 6) {
+      if (VALID_PINS.includes(pasted)) {
+        setPinUnlocked(true)
+        setShowPinModal(false)
+        if (pendingAction) {
+          setTimeout(() => pendingAction(), 50)
+          setPendingAction(null)
+        }
+      } else {
+        setPinError("Invalid PIN. Access denied.")
+        setPinDigits(["", "", "", "", "", ""])
+        setTimeout(() => pinInputRefs.current[0]?.focus(), 100)
+      }
+    } else {
+      pinInputRefs.current[pasted.length]?.focus()
+    }
   }
 
   return (
@@ -735,12 +727,15 @@ export default function HireCloserPage() {
                   <span>Avg. response: {closer.responseTime}</span>
                 </div>
 
-                {/* Voice Sample */}
+                {/* Voice Sample - PIN gated */}
                 <Button
                   variant="outline"
                   size="sm"
                   className="w-full"
-                  onClick={(e) => toggleVoiceSample(closer.id, closer.voiceSampleUrl, e)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    requirePin(() => toggleVoiceSample(closer.id, closer.voiceSampleUrl, e))
+                  }}
                 >
                   {playingVoice === closer.id ? (
                     <>
@@ -749,15 +744,30 @@ export default function HireCloserPage() {
                     </>
                   ) : (
                     <>
-                      <Volume2 className="h-4 w-4 mr-2" />
+                      {pinUnlocked ? (
+                        <Volume2 className="h-4 w-4 mr-2" />
+                      ) : (
+                        <Lock className="h-4 w-4 mr-2 text-amber-500" />
+                      )}
                       Listen to Voice Sample
                     </>
                   )}
                 </Button>
 
-                {/* CTA */}
-                <Button className="w-full" size="sm">
-                  <PhoneForwarded className="h-4 w-4 mr-2" />
+                {/* CTA - PIN gated */}
+                <Button
+                  className="w-full"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    requirePin(() => setSelectedCloser(closer))
+                  }}
+                >
+                  {pinUnlocked ? (
+                    <PhoneForwarded className="h-4 w-4 mr-2" />
+                  ) : (
+                    <Lock className="h-4 w-4 mr-2" />
+                  )}
                   Forward Calls to {closer.name.split(" ")[0]}
                 </Button>
               </div>
@@ -811,19 +821,19 @@ export default function HireCloserPage() {
                         {record.outcome === "signed" ? "Signed" : record.outcome === "callback" ? "Callback" : record.outcome === "no-answer" ? "No Answer" : "Declined"}
                       </Badge>
                       {record.hasAudio && (
-                        <Button variant="outline" size="sm" className="h-7 text-xs gap-1">
-                          <Play className="h-3 w-3" />
+                        <Button variant="outline" size="sm" className="h-7 text-xs gap-1" onClick={() => requirePin(() => {})}>
+                          {pinUnlocked ? <Play className="h-3 w-3" /> : <Lock className="h-3 w-3 text-amber-500" />}
                           Audio
                         </Button>
                       )}
                       {record.hasTranscript && (
-                        <Button variant="outline" size="sm" className="h-7 text-xs gap-1">
-                          <FileText className="h-3 w-3" />
+                        <Button variant="outline" size="sm" className="h-7 text-xs gap-1" onClick={() => requirePin(() => {})}>
+                          {pinUnlocked ? <FileText className="h-3 w-3" /> : <Lock className="h-3 w-3 text-amber-500" />}
                           Transcript
                         </Button>
                       )}
-                      <Button variant="outline" size="sm" className="h-7 text-xs gap-1">
-                        <Download className="h-3 w-3" />
+                      <Button variant="outline" size="sm" className="h-7 text-xs gap-1" onClick={() => requirePin(() => {})}>
+                        {pinUnlocked ? <Download className="h-3 w-3" /> : <Lock className="h-3 w-3 text-amber-500" />}
                       </Button>
                     </div>
                   </div>
@@ -839,6 +849,95 @@ export default function HireCloserPage() {
           </CardContent>
         )}
       </Card>
+
+      {/* PIN Access Modal */}
+      {showPinModal && (
+        <div
+          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={() => { setShowPinModal(false); setPendingAction(null) }}
+        >
+          <div
+            className="bg-background border rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-sm mx-0 sm:mx-4 p-6 sm:p-8 animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center space-y-5">
+              {/* Drag handle for mobile */}
+              <div className="w-10 h-1 rounded-full bg-muted-foreground/30 mx-auto sm:hidden" />
+
+              <div className="mx-auto w-16 h-16 rounded-full bg-amber-500/10 flex items-center justify-center">
+                <Lock className="h-8 w-8 text-amber-500" />
+              </div>
+
+              <div>
+                <h2 className="text-lg font-bold">Enter Your 6-Digit PIN</h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Closer access is restricted to vetted agents and{" "}
+                  <span className="font-semibold text-foreground">45 Points of Compliance</span> clients.
+                </p>
+              </div>
+
+              {/* 6-Digit PIN Input */}
+              <div className="flex justify-center gap-2 sm:gap-3" onPaste={handlePinPaste}>
+                {pinDigits.map((digit, i) => (
+                  <input
+                    key={i}
+                    ref={(el) => { pinInputRefs.current[i] = el }}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handlePinDigitChange(i, e.target.value)}
+                    onKeyDown={(e) => handlePinKeyDown(i, e)}
+                    className="w-11 h-14 sm:w-12 sm:h-16 text-center text-xl font-bold rounded-lg border-2 border-muted bg-muted/30 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-colors"
+                    autoComplete="off"
+                  />
+                ))}
+              </div>
+
+              {pinError && (
+                <p className="text-sm text-red-500 font-medium">{pinError}</p>
+              )}
+
+              <div className="border-t pt-4 space-y-3">
+                <p className="text-xs font-semibold text-muted-foreground">How to get a PIN:</p>
+                <div className="space-y-2 text-left">
+                  <div className="flex items-start gap-2.5 p-2.5 rounded-lg bg-muted/50 border">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-medium">Vetted Agent Program</p>
+                      <p className="text-[10px] text-muted-foreground">Background check + compliance training</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2.5 p-2.5 rounded-lg bg-gradient-to-r from-emerald-600/10 to-green-500/10 border border-emerald-500/20">
+                    <Award className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-medium">45 Points of Compliance</p>
+                      <p className="text-[10px] text-muted-foreground">Full asset recovery business with closer access included.</p>
+                      <a
+                        href="https://assetrecoverybusiness.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 mt-1 text-[10px] font-semibold text-emerald-600 hover:text-emerald-500"
+                      >
+                        Learn More <ExternalLink className="h-2.5 w-2.5" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full text-muted-foreground"
+                onClick={() => { setShowPinModal(false); setPendingAction(null) }}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Closer Detail Modal */}
       {selectedCloser && (
@@ -993,12 +1092,12 @@ export default function HireCloserPage() {
                   />
                 </div>
                 <div className="flex gap-3">
-                  <Button className="flex-1">
-                    <PhoneForwarded className="h-4 w-4 mr-2" />
+                  <Button className="flex-1" onClick={() => requirePin(() => {})}>
+                    {pinUnlocked ? <PhoneForwarded className="h-4 w-4 mr-2" /> : <Lock className="h-4 w-4 mr-2" />}
                     Enable Forwarding
                   </Button>
-                  <Button variant="outline">
-                    <Phone className="h-4 w-4" />
+                  <Button variant="outline" onClick={() => requirePin(() => {})}>
+                    {pinUnlocked ? <Phone className="h-4 w-4" /> : <Lock className="h-4 w-4 text-amber-500" />}
                   </Button>
                 </div>
                 <p className="text-[10px] text-muted-foreground">
