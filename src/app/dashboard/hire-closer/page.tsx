@@ -754,21 +754,17 @@ export default function HireCloserPage() {
                   )}
                 </Button>
 
-                {/* CTA - PIN gated */}
+                {/* View Profile CTA */}
                 <Button
                   className="w-full"
                   size="sm"
                   onClick={(e) => {
                     e.stopPropagation()
-                    requirePin(() => setSelectedCloser(closer))
+                    setSelectedCloser(closer)
                   }}
                 >
-                  {pinUnlocked ? (
-                    <PhoneForwarded className="h-4 w-4 mr-2" />
-                  ) : (
-                    <Lock className="h-4 w-4 mr-2" />
-                  )}
-                  Forward Calls to {closer.name.split(" ")[0]}
+                  <PhoneForwarded className="h-4 w-4 mr-2" />
+                  View Profile & Hire {closer.name.split(" ")[0]}
                 </Button>
               </div>
             </CardContent>
@@ -1104,6 +1100,29 @@ export default function HireCloserPage() {
                   All forwarded calls are recorded on a compliant line. Both parties are notified at the start of each call.
                   Recordings and AI-generated transcripts are available within minutes.
                 </p>
+              </div>
+
+              {/* Hire Contract Admin */}
+              <div className="border-t pt-5 space-y-3">
+                <h4 className="text-sm font-semibold flex items-center gap-1.5">
+                  <FileText className="h-4 w-4 text-blue-500" />
+                  Contract Administration
+                </h4>
+                <p className="text-xs text-muted-foreground">
+                  Farm out paperwork, filing, and follow-ups to a dedicated contract admin for 5% of your service fee. They handle document prep, county filings, and client communication so you can focus on closing.
+                </p>
+                <Button
+                  variant="outline"
+                  className="w-full border-blue-200 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-950"
+                  onClick={() => requirePin(() => {})}
+                >
+                  {pinUnlocked ? (
+                    <FileText className="h-4 w-4 mr-2 text-blue-500" />
+                  ) : (
+                    <Lock className="h-4 w-4 mr-2 text-amber-500" />
+                  )}
+                  Hire Contract Admin
+                </Button>
               </div>
             </div>
           </div>
