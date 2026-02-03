@@ -22,8 +22,12 @@ export default function StatesPage() {
   const { theme } = useTheme()
   const isDark = theme === "dark"
   const { isSignedIn, user } = useUser()
+  const email = user?.primaryEmailAddress?.emailAddress || ""
+  const isAdmin = email === "coreypearsonemail@gmail.com"
   const isPaid = isSignedIn === true
-  const selectedStates = isPaid ? ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"] : []
+  const selectedStates = isAdmin
+    ? ["AL","AR","AZ","CA","CO","DC","FL","GA","IA","ID","IL","IN","KY","LA","MA","MD","MI","MN","MO","MS","NC","NE","NJ","NM","NV","NY","OH","OK","OR","PA","SC","TN","TX","UT","VA","WA","WI"]
+    : isPaid ? ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"] : []
 
   useEffect(() => {
     async function fetchLeadCounts() {

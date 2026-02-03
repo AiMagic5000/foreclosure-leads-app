@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import {
   Search,
@@ -45,18 +45,24 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { useUser } from "@clerk/nextjs"
+import { supabase } from "@/lib/supabase"
 
 // Subscription check - in production this fetches from DB via API
 // For demo: checks if user is signed in. Paid status would come from Stripe webhook data.
 function useSubscription() {
   const { isSignedIn, user } = useUser()
+  const email = user?.primaryEmailAddress?.emailAddress || ""
+  // Admin emails get full access
+  const isAdmin = email === "coreypearsonemail@gmail.com"
   // Demo mode: treat signed-in users as paid with all demo states
   // In production: fetch from /api/user/subscription
   const isPaid = isSignedIn === true
-  const selectedStates = ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"]
+  const selectedStates = isAdmin
+    ? ["AL","AR","AZ","CA","CO","DC","FL","GA","IA","ID","IL","IN","KY","LA","MA","MD","MI","MN","MO","MS","NC","NE","NJ","NM","NV","NY","OH","OK","OR","PA","SC","TN","TX","UT","VA","WA","WI"]
+    : ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"]
   return {
     isPaid,
-    tier: isPaid ? "multi_state" : "free",
+    tier: isAdmin ? "admin" : isPaid ? "multi_state" : "free",
     selectedStates,
     isLoading: isSignedIn === undefined,
   }
@@ -2024,6 +2030,106 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
   )
 }
 
+// Map a Supabase DB row to the LeadData interface
+function mapDbRowToLead(row: Record<string, unknown>): LeadData {
+  const saleAmount = Number(row.sale_amount) || 0
+  const mortgageAmount = Number(row.mortgage_amount) || 0
+  const estimatedSurplus = mortgageAmount > saleAmount ? 0 : Math.round((saleAmount - mortgageAmount) * 0.3)
+  return {
+    id: String(row.id || ""),
+    ownerName: String(row.owner_name || "Unknown Owner"),
+    propertyAddress: String(row.property_address || ""),
+    city: String(row.city || ""),
+    state: String(row.state || ""),
+    stateAbbr: String(row.state_abbr || ""),
+    zipCode: String(row.zip_code || ""),
+    county: "",
+    parcelId: String(row.parcel_id || ""),
+    saleDate: String(row.sale_date || ""),
+    saleAmount,
+    mortgageAmount,
+    lenderName: String(row.lender_name || ""),
+    foreclosureType: String(row.foreclosure_type || "foreclosure"),
+    primaryPhone: String(row.primary_phone || ""),
+    secondaryPhone: row.secondary_phone ? String(row.secondary_phone) : null,
+    primaryEmail: row.primary_email ? String(row.primary_email) : null,
+    secondaryEmail: null,
+    status: String(row.status || "new"),
+    source: String(row.source || ""),
+    scrapedAt: String(row.scraped_at || new Date().toISOString()),
+    lat: Number(row.lat) || 0,
+    lng: Number(row.lng) || 0,
+    skipTrace: {
+      fullName: String(row.owner_name || ""),
+      aliases: [],
+      age: 0,
+      dob: "",
+      ssn_last4: "",
+      currentAddress: String(row.property_address || ""),
+      previousAddresses: [],
+      phones: row.primary_phone ? [{ number: String(row.primary_phone), type: "Mobile", carrier: "" }] : [],
+      emails: row.primary_email ? [String(row.primary_email)] : [],
+      relatives: (row.associated_names as string[]) || [],
+      employer: null,
+      bankruptcyFlag: false,
+      liensFlag: false,
+      judgmentsFlag: false,
+    },
+    property: {
+      propertyType: "Single Family Residence",
+      yearBuilt: 0,
+      sqft: 0,
+      lotSize: "",
+      bedrooms: 0,
+      bathrooms: 0,
+      stories: 0,
+      garage: "",
+      pool: false,
+      roofType: "",
+      hvac: "",
+      foundation: "",
+      construction: "",
+      zoning: "",
+      subdivision: "",
+      legalDescription: "",
+    },
+    taxData: {
+      assessedValue: 0,
+      marketValue: 0,
+      taxYear: 2025,
+      annualTaxes: 0,
+      taxStatus: "Unknown",
+      exemptions: [],
+      lastTaxPayment: "",
+      taxDelinquent: false,
+      delinquentAmount: 0,
+    },
+    saleHistory: [],
+    mortgageInfo: {
+      lender: String(row.lender_name || ""),
+      originalAmount: mortgageAmount,
+      originationDate: "",
+      interestRate: 0,
+      loanType: "",
+      maturityDate: "",
+      secondMortgage: false,
+      secondAmount: null,
+    },
+    foreclosureDetails: {
+      filingDate: "",
+      caseNumber: String(row.case_number || ""),
+      courtName: "",
+      trustee: String(row.trustee_name || ""),
+      auctionDate: String(row.sale_date || ""),
+      auctionLocation: "",
+      openingBid: saleAmount,
+      estimatedSurplus,
+      defaultAmount: 0,
+      noticeType: "",
+    },
+  }
+}
+
 export default function LeadsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedState, setSelectedState] = useState("All States")
@@ -2031,7 +2137,36 @@ export default function LeadsPage() {
   const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
   const [revealedLeads, setRevealedLeads] = useState<string[]>([])
+  const [dbLeads, setDbLeads] = useState<LeadData[]>([])
+  const [dbStates, setDbStates] = useState<string[]>(["All States"])
+  const [leadsLoading, setLeadsLoading] = useState(true)
   const { isPaid, selectedStates: paidStates, tier, isLoading } = useSubscription()
+
+  // Fetch leads from Supabase
+  useEffect(() => {
+    async function fetchLeads() {
+      setLeadsLoading(true)
+      const { data, error } = await supabase
+        .from("foreclosure_leads")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(500) as { data: Record<string, unknown>[] | null; error: unknown }
+
+      if (!error && data) {
+        const mapped = data.map(mapDbRowToLead)
+        setDbLeads(mapped)
+
+        // Build unique states list
+        const stateSet = new Set<string>()
+        for (const lead of mapped) {
+          if (lead.state) stateSet.add(lead.state)
+        }
+        setDbStates(["All States", ...Array.from(stateSet).sort()])
+      }
+      setLeadsLoading(false)
+    }
+    fetchLeads()
+  }, [])
 
   const toggleRevealed = (id: string) => {
     setRevealedLeads((prev) =>
@@ -2093,7 +2228,7 @@ export default function LeadsPage() {
 
           {/* Blurred lead cards behind the paywall */}
           <div className="space-y-4 filter blur-sm pointer-events-none select-none" aria-hidden="true">
-            {mockLeads.slice(0, 3).map((lead) => (
+            {dbLeads.slice(0, 3).map((lead) => (
               <Card key={lead.id}>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-4">
@@ -2124,7 +2259,7 @@ export default function LeadsPage() {
     converted: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
   } as const
 
-  const filteredLeads = mockLeads.filter((lead) => {
+  const filteredLeads = dbLeads.filter((lead) => {
     const matchesSearch =
       searchQuery === "" ||
       lead.ownerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -2168,7 +2303,7 @@ export default function LeadsPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Foreclosure Leads</h1>
           <p className="text-muted-foreground">
-            {filteredLeads.length} leads found -- Click any lead to view full property data, skip trace, tax records & map
+            {leadsLoading ? "Loading leads..." : `${filteredLeads.length} leads found`} -- Click any lead to view full property data, skip trace, tax records & map
           </p>
         </div>
         <div className="flex gap-3">
@@ -2197,7 +2332,7 @@ export default function LeadsPage() {
               onChange={(e) => setSelectedState(e.target.value)}
               className="h-11 rounded-lg border border-input bg-background px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
             >
-              {states.map((state) => (
+              {dbStates.map((state) => (
                 <option key={state} value={state}>
                   {state}
                 </option>
