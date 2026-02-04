@@ -2413,6 +2413,12 @@ export default function LeadsPage() {
                         ${lead.saleAmount.toLocaleString()}
                       </span>
                     </div>
+                    {lead.taxData.marketValue > 0 && (
+                      <div className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400">
+                        <TrendingUp className="h-3 w-3" />
+                        MV: ${lead.taxData.marketValue.toLocaleString()}
+                      </div>
+                    )}
                     <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
                       <TrendingUp className="h-3 w-3" />
                       ${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} potential
@@ -2498,6 +2504,12 @@ export default function LeadsPage() {
                       <DollarSign className="h-4 w-4 text-muted-foreground" />
                       <span className="font-medium">${lead.saleAmount.toLocaleString()}</span>
                     </div>
+                    {lead.taxData.marketValue > 0 && (
+                      <div className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400">
+                        <TrendingUp className="h-3 w-3" />
+                        MV: ${lead.taxData.marketValue.toLocaleString()}
+                      </div>
+                    )}
                     <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
                       <TrendingUp className="h-3 w-3" />
                       ${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} potential
