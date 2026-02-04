@@ -5,7 +5,7 @@ nixPkgs = ["nodejs_22", "npm-9_x"]
 cmds = ["npm ci"]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["npx next build --no-turbopack"]
 
 [start]
 cmd = "npm run start"
