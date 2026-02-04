@@ -1766,32 +1766,50 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
       {activeTab === "property" && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-1 p-3 rounded-lg bg-muted/50 border">
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Building</h4>
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Location</h4>
+            <DataRow label="Address" value={lead.propertyAddress} icon={MapPin} />
+            <DataRow label="City" value={`${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`} />
+            {lead.parcelId && <DataRow label="APN" value={lead.parcelId} icon={Hash} />}
+            {lead.county && <DataRow label="County" value={lead.county} icon={Globe} />}
             <DataRow label="Type" value={lead.property.propertyType} icon={Building} />
-            <DataRow label="Year Built" value={lead.property.yearBuilt} icon={Calendar} />
-            <DataRow label="Sq Ft" value={lead.property.sqft.toLocaleString()} icon={Ruler} />
-            <DataRow label="Lot Size" value={lead.property.lotSize} icon={TreePine} />
-            <DataRow label="Stories" value={lead.property.stories} />
+          </div>
+          <div className="space-y-1 p-3 rounded-lg bg-muted/50 border">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Building</h4>
+            <DataRow label="Year Built" value={lead.property.yearBuilt || "---"} icon={Calendar} />
+            <DataRow label="Sq Ft" value={lead.property.sqft > 0 ? lead.property.sqft.toLocaleString() : "---"} icon={Ruler} />
+            <DataRow label="Lot Size" value={lead.property.lotSize || "---"} icon={TreePine} />
+            <DataRow label="Stories" value={lead.property.stories || "---"} />
           </div>
           <div className="space-y-1 p-3 rounded-lg bg-muted/50 border">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Features</h4>
-            <DataRow label="Bedrooms" value={lead.property.bedrooms} icon={BedDouble} />
-            <DataRow label="Bathrooms" value={lead.property.bathrooms} icon={Bath} />
-            <DataRow label="Garage" value={lead.property.garage} icon={Car} />
-            <DataRow label="Pool" value={lead.property.pool ? "Yes" : "No"} />
-            <DataRow label="Roof" value={lead.property.roofType} />
+            <DataRow label="Bedrooms" value={lead.property.bedrooms || "---"} icon={BedDouble} />
+            <DataRow label="Bathrooms" value={lead.property.bathrooms || "---"} icon={Bath} />
+            <DataRow label="Garage" value={lead.property.garage || "---"} icon={Car} />
+            <DataRow label="Pool" value={lead.property.pool ? "Yes" : "---"} />
+            <DataRow label="Roof" value={lead.property.roofType || "---"} />
           </div>
-          <div className="space-y-1 p-3 rounded-lg bg-muted/50 border">
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Construction</h4>
-            <DataRow label="HVAC" value={lead.property.hvac} />
-            <DataRow label="Foundation" value={lead.property.foundation} />
-            <DataRow label="Construction" value={lead.property.construction} />
-            <DataRow label="Zoning" value={lead.property.zoning} />
-            <DataRow label="Subdivision" value={lead.property.subdivision} />
-          </div>
-          <div className="sm:col-span-2 lg:col-span-3 p-3 rounded-lg bg-muted/50 border">
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Legal Description</h4>
-            <p className="text-sm font-mono">{lead.property.legalDescription}</p>
+          <div className="sm:col-span-2 lg:col-span-3 p-3 rounded-lg border bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-500/30">
+            <h4 className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-2">Financial Summary</h4>
+            <div className="grid gap-4 sm:grid-cols-4">
+              <div className="text-center">
+                <p className="text-xl font-bold text-blue-600">${lead.saleAmount.toLocaleString()}</p>
+                <p className="text-xs text-muted-foreground">Sale Amount</p>
+              </div>
+              {lead.taxData.marketValue > 0 && (
+                <div className="text-center">
+                  <p className="text-xl font-bold text-blue-600">${lead.taxData.marketValue.toLocaleString()}</p>
+                  <p className="text-xs text-muted-foreground">Est. Market Value</p>
+                </div>
+              )}
+              <div className="text-center">
+                <p className="text-xl font-bold text-emerald-600">${lead.foreclosureDetails.estimatedSurplus.toLocaleString()}</p>
+                <p className="text-xs text-muted-foreground">Est. Surplus</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xl font-bold text-emerald-700">${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()}</p>
+                <p className="text-xs text-muted-foreground">25% Service Fee</p>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -1969,7 +1987,11 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
           <div className="rounded-lg overflow-hidden border" style={{ height: 400 }}>
             <iframe
               title={`Map - ${lead.propertyAddress}`}
-              src={`https://maps.google.com/maps?q=${lead.lat},${lead.lng}&z=17&output=embed`}
+              src={
+                lead.lat && lead.lng
+                  ? `https://maps.google.com/maps?q=${lead.lat},${lead.lng}&z=17&output=embed`
+                  : `https://maps.google.com/maps?q=${encodeURIComponent(`${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`)}&z=17&output=embed`
+              }
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -1983,14 +2005,18 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
               <MapPin className="h-4 w-4 text-muted-foreground" />
               <span>{lead.propertyAddress}, {lead.city}, {lead.stateAbbr} {lead.zipCode}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Hash className="h-4 w-4 text-muted-foreground" />
-              <span>APN: {lead.parcelId}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Globe className="h-4 w-4 text-muted-foreground" />
-              <span>{lead.county} County</span>
-            </div>
+            {lead.parcelId && (
+              <div className="flex items-center gap-1.5">
+                <Hash className="h-4 w-4 text-muted-foreground" />
+                <span>APN: {lead.parcelId}</span>
+              </div>
+            )}
+            {lead.county && (
+              <div className="flex items-center gap-1.5">
+                <Globe className="h-4 w-4 text-muted-foreground" />
+                <span>{lead.county} County</span>
+              </div>
+            )}
             <div className="flex items-center gap-1.5">
               <Database className="h-4 w-4 text-muted-foreground" />
               <span>Source: {lead.source}</span>
@@ -2022,7 +2048,22 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
 function mapDbRowToLead(row: Record<string, unknown>): LeadData {
   const saleAmount = Number(row.sale_amount) || 0
   const mortgageAmount = Number(row.mortgage_amount) || 0
-  const estimatedSurplus = mortgageAmount > saleAmount ? 0 : Math.round((saleAmount - mortgageAmount) * 0.3)
+  const marketValue = Number(row.estimated_market_value) || 0
+  const dbOverage = Number(row.overage_amount) || 0
+
+  // Use DB-calculated overage if available, otherwise calculate
+  let estimatedSurplus = dbOverage
+  if (!estimatedSurplus && saleAmount > 0) {
+    if (mortgageAmount > 0 && saleAmount > mortgageAmount) {
+      estimatedSurplus = saleAmount - mortgageAmount
+    } else if (marketValue > 0 && saleAmount > marketValue * 0.8) {
+      estimatedSurplus = Math.round(saleAmount - marketValue * 0.8)
+    }
+  }
+
+  // Use apn_number as primary, parcel_id as fallback
+  const apn = String(row.apn_number || row.parcel_id || "")
+
   return {
     id: String(row.id || ""),
     ownerName: String(row.owner_name || "Unknown Owner"),
@@ -2031,8 +2072,8 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
     state: String(row.state || ""),
     stateAbbr: String(row.state_abbr || ""),
     zipCode: String(row.zip_code || ""),
-    county: "",
-    parcelId: String(row.parcel_id || ""),
+    county: String(row.county || ""),
+    parcelId: apn,
     saleDate: String(row.sale_date || ""),
     saleAmount,
     mortgageAmount,
@@ -2053,7 +2094,7 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
       age: 0,
       dob: "",
       ssn_last4: "",
-      currentAddress: String(row.property_address || ""),
+      currentAddress: String(row.mailing_address || row.property_address || ""),
       previousAddresses: [],
       phones: row.primary_phone ? [{ number: String(row.primary_phone), type: "Mobile", carrier: "" }] : [],
       emails: row.primary_email ? [String(row.primary_email)] : [],
@@ -2070,7 +2111,7 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
       lotSize: String(row.lot_size || ""),
       bedrooms: Number(row.bedrooms) || 0,
       bathrooms: Number(row.bathrooms) || 0,
-      stories: 0,
+      stories: Number(row.stories) || 0,
       garage: "",
       pool: false,
       roofType: "",
@@ -2083,7 +2124,7 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
     },
     taxData: {
       assessedValue: Number(row.assessed_value) || 0,
-      marketValue: Number(row.estimated_market_value) || 0,
+      marketValue,
       taxYear: 2025,
       annualTaxes: Number(row.tax_amount) || 0,
       taxStatus: "Unknown",
@@ -2236,7 +2277,9 @@ function LeadsPageContent() {
                     </div>
                     <div className="text-right">
                       <div className="font-medium">${lead.saleAmount.toLocaleString()}</div>
-                      <div className="text-xs text-emerald-600">${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} potential</div>
+                      {lead.foreclosureDetails.estimatedSurplus > 0 && (
+                        <div className="text-xs text-emerald-600">${lead.foreclosureDetails.estimatedSurplus.toLocaleString()} surplus</div>
+                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -2407,9 +2450,11 @@ function LeadsPageContent() {
                       />
                       <div>
                         <div className="font-medium">{formatOwnerName(lead.ownerName, isRevealed)}</div>
-                        <div className="text-sm text-muted-foreground">
-                          APN: {lead.parcelId}
-                        </div>
+                        {lead.parcelId ? (
+                          <div className="text-xs text-muted-foreground">APN: {lead.parcelId}</div>
+                        ) : (
+                          <div className="text-xs text-muted-foreground">{lead.foreclosureType}</div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -2421,6 +2466,14 @@ function LeadsPageContent() {
                         <div className="text-sm text-muted-foreground">
                           {lead.city}, {lead.stateAbbr} {lead.zipCode}
                         </div>
+                        {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+                            {lead.property.bedrooms > 0 && <span>{lead.property.bedrooms} bd</span>}
+                            {lead.property.bathrooms > 0 && <span>{lead.property.bathrooms} ba</span>}
+                            {lead.property.sqft > 0 && <span>{lead.property.sqft.toLocaleString()} sqft</span>}
+                            {lead.property.lotSize && <span>{lead.property.lotSize} lot</span>}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -2437,14 +2490,24 @@ function LeadsPageContent() {
                         MV: ${lead.taxData.marketValue.toLocaleString()}
                       </div>
                     )}
-                    <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
-                      <TrendingUp className="h-3 w-3" />
-                      ${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} potential
-                    </div>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3" />
-                      {new Date(lead.saleDate).toLocaleDateString()}
-                    </div>
+                    {lead.foreclosureDetails.estimatedSurplus > 0 && (
+                      <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
+                        <DollarSign className="h-3 w-3" />
+                        ${lead.foreclosureDetails.estimatedSurplus.toLocaleString()} surplus
+                      </div>
+                    )}
+                    {lead.foreclosureDetails.estimatedSurplus > 0 && (
+                      <div className="flex items-center gap-1 text-xs font-bold text-emerald-700">
+                        <TrendingUp className="h-3 w-3" />
+                        ${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} fee
+                      </div>
+                    )}
+                    {lead.saleDate && (
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(lead.saleDate).toLocaleDateString()}
+                      </div>
+                    )}
                   </div>
                   <div className="col-span-2 space-y-1" onClick={(e) => e.stopPropagation()}>
                     {lead.primaryPhone && (
@@ -2458,6 +2521,9 @@ function LeadsPageContent() {
                         <Mail className="h-3 w-3" />
                         <span className="truncate max-w-[150px]">{formatEmail(lead.primaryEmail, isRevealed)}</span>
                       </div>
+                    )}
+                    {!lead.primaryPhone && !lead.primaryEmail && (
+                      <div className="text-xs text-muted-foreground italic">No contact data</div>
                     )}
                   </div>
                   <div className="col-span-1 flex flex-col items-end gap-1">
@@ -2522,7 +2588,19 @@ function LeadsPageContent() {
 
                   <div className="flex items-start gap-2 text-sm">
                     <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-                    <span>{lead.propertyAddress}, {lead.city}, {lead.stateAbbr} {lead.zipCode}</span>
+                    <div>
+                      <span>{lead.propertyAddress}, {lead.city}, {lead.stateAbbr} {lead.zipCode}</span>
+                      {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+                          {lead.property.bedrooms > 0 && <span>{lead.property.bedrooms} bd</span>}
+                          {lead.property.bathrooms > 0 && <span>{lead.property.bathrooms} ba</span>}
+                          {lead.property.sqft > 0 && <span>{lead.property.sqft.toLocaleString()} sqft</span>}
+                        </div>
+                      )}
+                      {lead.parcelId && (
+                        <div className="text-xs text-muted-foreground">APN: {lead.parcelId}</div>
+                      )}
+                    </div>
                   </div>
 
                   <div className="flex flex-wrap gap-4 text-sm items-center">
@@ -2536,14 +2614,24 @@ function LeadsPageContent() {
                         MV: ${lead.taxData.marketValue.toLocaleString()}
                       </div>
                     )}
-                    <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
-                      <TrendingUp className="h-3 w-3" />
-                      ${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} potential
-                    </div>
-                    <div className="flex items-center gap-1 text-muted-foreground">
-                      <Calendar className="h-4 w-4" />
-                      {new Date(lead.saleDate).toLocaleDateString()}
-                    </div>
+                    {lead.foreclosureDetails.estimatedSurplus > 0 && (
+                      <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
+                        <DollarSign className="h-3 w-3" />
+                        ${lead.foreclosureDetails.estimatedSurplus.toLocaleString()} surplus
+                      </div>
+                    )}
+                    {lead.foreclosureDetails.estimatedSurplus > 0 && (
+                      <div className="flex items-center gap-1 text-xs font-bold text-emerald-700">
+                        <TrendingUp className="h-3 w-3" />
+                        ${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} fee
+                      </div>
+                    )}
+                    {lead.saleDate && (
+                      <div className="flex items-center gap-1 text-muted-foreground">
+                        <Calendar className="h-4 w-4" />
+                        {new Date(lead.saleDate).toLocaleDateString()}
+                      </div>
+                    )}
                     <RecoveryCountdown
                       saleDate={lead.saleDate || null}
                       stateAbbr={lead.stateAbbr}
