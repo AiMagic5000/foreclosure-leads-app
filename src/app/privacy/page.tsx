@@ -147,7 +147,7 @@ export default function PrivacyPage() {
             </p>
             <div className="mt-6 p-6 bg-blue-50 border-l-4 border-blue-600 rounded-r-lg">
               <p className="text-slate-700 leading-relaxed">
-                US Foreclosure Recovery Inc. ("Company," "we," "us," or "our")
+                Foreclosure Recovery Inc. ("Company," "we," "us," or "our")
                 respects your privacy and is committed to protecting your
                 personal information. This Privacy Policy explains how we
                 collect, use, disclose, and safeguard your information when you
@@ -849,7 +849,7 @@ export default function PrivacyPage() {
 
             <div className="p-8 bg-gradient-to-br from-blue-50 to-slate-50 rounded-xl border border-blue-200 shadow-sm">
               <h3 className="text-xl font-bold text-slate-900 mb-6">
-                US Foreclosure Recovery Inc.
+                Foreclosure Recovery Inc.
               </h3>
 
               <div className="space-y-4">
@@ -908,7 +908,7 @@ export default function PrivacyPage() {
                 This Privacy Policy was last updated on February 1, 2026.
               </p>
               <p className="text-sm text-slate-500">
-                © 2026 US Foreclosure Recovery Inc. All rights reserved.
+                © 2026 Foreclosure Recovery Inc. All rights reserved.
               </p>
             </div>
           </footer>

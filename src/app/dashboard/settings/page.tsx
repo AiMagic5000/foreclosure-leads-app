@@ -180,7 +180,7 @@ export default function SettingsPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/10">
+                  <Button size="sm" className="bg-white/15 border border-white/30 text-white hover:bg-white/25">
                     Add State
                   </Button>
                 </a>
@@ -196,11 +196,11 @@ export default function SettingsPage() {
                   </p>
                 </div>
                 <a
-                  href="https://gumroad.com/l/placeholder-business-buildout"
+                  href="https://assetrecoverybusiness.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/10">
+                  <Button size="sm" className="bg-white/15 border border-white/30 text-white hover:bg-white/25">
                     Learn More
                   </Button>
                 </a>

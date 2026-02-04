@@ -178,7 +178,7 @@ export default function TermsOfService() {
                     2. Description of Service
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    US Foreclosure Recovery Inc. operates a software-as-a-service
+                    Foreclosure Recovery Inc. operates a software-as-a-service
                     (SaaS) platform that provides the following services to
                     Users:
                   </p>
@@ -304,7 +304,7 @@ export default function TermsOfService() {
                     All purchases are one-time payments processed by Start My
                     Business Incorporated (StartMyBusiness.us) on behalf of
                     Foreclosure Recovery Inc. and its affiliated entities
-                    including US Foreclosure Recovery
+                    including Foreclosure Recovery
                     (usforeclosurerecovery.com) and Asset Recovery Business
                     (assetrecoverybusiness.com). By providing payment
                     information, you authorize the payment processor to charge
@@ -581,7 +581,7 @@ export default function TermsOfService() {
                     All content, software, code, design, graphics, logos,
                     trademarks, trade names, and other materials on the
                     Platform (collectively, "Intellectual Property") are owned
-                    by or licensed to US Foreclosure Recovery Inc. and are
+                    by or licensed to Foreclosure Recovery Inc. and are
                     protected by United States and international copyright,
                     trademark, patent, and other intellectual property laws.
                   </p>
@@ -745,7 +745,7 @@ export default function TermsOfService() {
                   <p className="text-slate-700 leading-relaxed mb-4">
                     The arbitration shall be conducted by a single arbitrator
                     appointed in accordance with AAA rules. The arbitration
-                    shall take place in the State of Florida unless otherwise
+                    shall take place in the State of Wyoming unless otherwise
                     agreed by both parties. The arbitrator's decision shall be
                     final and binding, and judgment on the award may be entered
                     in any court of competent jurisdiction.
@@ -775,14 +775,14 @@ export default function TermsOfService() {
                   <p className="text-slate-700 leading-relaxed mb-4">
                     These Terms and any Disputes arising out of or related to
                     the Service shall be governed by and construed in
-                    accordance with the laws of the State of Florida, without
+                    accordance with the laws of the State of Wyoming, without
                     regard to its conflict of laws principles.
                   </p>
                   <p className="text-slate-700 leading-relaxed">
                     To the extent that arbitration does not apply or is
                     unavailable, you agree to submit to the exclusive
                     jurisdiction of the state and federal courts located in the
-                    State of Florida for resolution of any legal proceedings.
+                    State of Wyoming for resolution of any legal proceedings.
                   </p>
                 </section>
 
@@ -835,7 +835,7 @@ export default function TermsOfService() {
                   <p className="text-slate-700 leading-relaxed">
                     These Terms, together with the Privacy Policy and any other
                     policies or agreements referenced herein, constitute the
-                    entire agreement between you and US Foreclosure Recovery
+                    entire agreement between you and Foreclosure Recovery
                     Inc. regarding the Service and supersede all prior or
                     contemporaneous communications, agreements, and
                     understandings, whether written or oral.
@@ -854,7 +854,7 @@ export default function TermsOfService() {
                   </p>
                   <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-4">
                     <p className="text-slate-900 font-semibold mb-2">
-                      US Foreclosure Recovery Inc.
+                      Foreclosure Recovery Inc.
                     </p>
                     <p className="text-slate-700 mb-1">
                       Email:{" "}
@@ -914,7 +914,7 @@ export default function TermsOfService() {
                   Acknowledgment of Terms
                 </h3>
                 <p className="text-sm leading-relaxed">
-                  By using the US Foreclosure Recovery platform, you acknowledge
+                  By using the Foreclosure Recovery platform, you acknowledge
                   that you have read, understood, and agree to be bound by
                   these Terms of Service. You confirm that you are legally
                   authorized to enter into this agreement and that you will

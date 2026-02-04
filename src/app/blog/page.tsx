@@ -225,7 +225,7 @@ export default function BlogPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-sm text-gray-300">
-              &copy; 2026 US Foreclosure Recovery Inc. All rights reserved.
+              &copy; 2026 Foreclosure Recovery Inc. All rights reserved.
             </p>
           </div>
         </div>

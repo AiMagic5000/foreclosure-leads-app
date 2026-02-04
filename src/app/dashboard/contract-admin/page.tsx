@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -25,6 +25,8 @@ import {
   CalendarCheck,
   Briefcase,
   ArrowRight,
+  CheckCircle2,
+  ExternalLink,
 } from "lucide-react"
 
 interface AdminProfile {
@@ -369,6 +371,97 @@ export default function ContractAdminPage() {
     )
   }
 
+  // 8-digit authorization code for hiring
+  const [pinUnlocked, setPinUnlocked] = useState(false)
+  const [showPinModal, setShowPinModal] = useState(false)
+  const [pinDigits, setPinDigits] = useState(["", "", "", "", "", "", "", ""])
+  const [pinError, setPinError] = useState("")
+  const [pendingAction, setPendingAction] = useState<(() => void) | null>(null)
+  const pinInputRefs = useRef<(HTMLInputElement | null)[]>([])
+
+  const VALID_PINS = ["45202600", "10004500", "77788800"]
+
+  const requirePin = useCallback((action: () => void) => {
+    if (pinUnlocked) {
+      action()
+      return
+    }
+    setPendingAction(() => action)
+    setPinDigits(["", "", "", "", "", "", "", ""])
+    setPinError("")
+    setShowPinModal(true)
+    setTimeout(() => pinInputRefs.current[0]?.focus(), 100)
+  }, [pinUnlocked])
+
+  const handlePinDigitChange = (index: number, value: string) => {
+    if (value.length > 1) value = value.slice(-1)
+    if (value && !/^[a-zA-Z0-9]$/.test(value)) return
+
+    const next = [...pinDigits]
+    next[index] = value.toUpperCase()
+    setPinDigits(next)
+    setPinError("")
+
+    if (value && index < 7) {
+      pinInputRefs.current[index + 1]?.focus()
+    }
+
+    if (value && index === 7) {
+      const fullPin = next.join("")
+      if (fullPin.length === 8) {
+        if (VALID_PINS.includes(fullPin)) {
+          setPinUnlocked(true)
+          setShowPinModal(false)
+          if (pendingAction) {
+            setTimeout(() => pendingAction(), 50)
+            setPendingAction(null)
+          }
+        } else {
+          setPinError("Invalid authorization code. Access denied.")
+          setPinDigits(["", "", "", "", "", "", "", ""])
+          setTimeout(() => pinInputRefs.current[0]?.focus(), 100)
+        }
+      }
+    }
+  }
+
+  const handlePinKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !pinDigits[index] && index > 0) {
+      pinInputRefs.current[index - 1]?.focus()
+    }
+    if (e.key === "Escape") {
+      setShowPinModal(false)
+      setPendingAction(null)
+    }
+  }
+
+  const handlePinPaste = (e: React.ClipboardEvent) => {
+    e.preventDefault()
+    const pasted = e.clipboardData.getData("text").replace(/[^a-zA-Z0-9]/g, "").slice(0, 8).toUpperCase()
+    if (!pasted) return
+    const next = ["", "", "", "", "", "", "", ""]
+    for (let i = 0; i < pasted.length; i++) {
+      next[i] = pasted[i]
+    }
+    setPinDigits(next)
+    if (pasted.length === 8) {
+      if (VALID_PINS.includes(pasted)) {
+        setPinUnlocked(true)
+        setShowPinModal(false)
+        if (pendingAction) {
+          setTimeout(() => pendingAction(), 50)
+          setPendingAction(null)
+        }
+      } else {
+        setPinError("Invalid authorization code. Access denied.")
+        setPinDigits(["", "", "", "", "", "", "", ""])
+        setTimeout(() => pinInputRefs.current[0]?.focus(), 100)
+      }
+    } else {
+      pinInputRefs.current[pasted.length]?.focus()
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -597,7 +690,14 @@ export default function ContractAdminPage() {
                 </div>
 
                 {/* CTA */}
-                <Button className="w-full mt-2 bg-purple-600 hover:bg-purple-700" size="sm">
+                <Button
+                  className="w-full mt-2 bg-purple-600 hover:bg-purple-700"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    requirePin(() => setSelectedAdmin(admin))
+                  }}
+                >
                   <Briefcase className="h-4 w-4 mr-2" />
                   Hire {admin.name.split(" ")[0]}
                 </Button>
@@ -709,6 +809,93 @@ export default function ContractAdminPage() {
           </CardContent>
         )}
       </Card>
+
+      {/* 8-Digit Authorization Code Modal */}
+      {showPinModal && (
+        <div
+          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={() => { setShowPinModal(false); setPendingAction(null) }}
+        >
+          <div
+            className="bg-background border rounded-t-2xl sm:rounded-2xl shadow-2xl w-full sm:max-w-md mx-0 sm:mx-4 p-6 sm:p-8 animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center space-y-5">
+              <div className="w-10 h-1 rounded-full bg-muted-foreground/30 mx-auto sm:hidden" />
+
+              <div className="mx-auto w-16 h-16 rounded-full bg-purple-500/10 flex items-center justify-center">
+                <Lock className="h-8 w-8 text-purple-500" />
+              </div>
+
+              <div>
+                <h2 className="text-lg font-bold">Enter Your 8-Digit Authorization Code</h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Contract admin access is restricted to{" "}
+                  <span className="font-semibold text-foreground">Fully Built Asset Recovery Business</span> clients.
+                </p>
+              </div>
+
+              <div className="flex justify-center gap-1.5 sm:gap-2" onPaste={handlePinPaste}>
+                {pinDigits.map((digit, i) => (
+                  <input
+                    key={i}
+                    ref={(el) => { pinInputRefs.current[i] = el }}
+                    type="text"
+                    inputMode="text"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handlePinDigitChange(i, e.target.value)}
+                    onKeyDown={(e) => handlePinKeyDown(i, e)}
+                    className="w-10 h-12 sm:w-11 sm:h-14 text-center text-lg font-bold rounded-lg border-2 border-muted bg-muted/30 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-colors uppercase"
+                    autoComplete="off"
+                  />
+                ))}
+              </div>
+
+              {pinError && (
+                <p className="text-sm text-red-500 font-medium">{pinError}</p>
+              )}
+
+              <div className="border-t pt-4 space-y-3">
+                <p className="text-xs font-semibold text-muted-foreground">How to get an authorization code:</p>
+                <div className="space-y-2 text-left">
+                  <div className="flex items-start gap-2.5 p-2.5 rounded-lg bg-gradient-to-r from-purple-600/10 to-indigo-500/10 border border-purple-500/20">
+                    <Award className="h-4 w-4 text-purple-500 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-medium">Fully Built Asset Recovery Business</p>
+                      <p className="text-[10px] text-muted-foreground">Purchase the complete business package to receive your authorization code.</p>
+                      <a
+                        href="https://assetrecoverybusiness.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 mt-1 text-[10px] font-semibold text-purple-600 hover:text-purple-500"
+                      >
+                        Learn More <ExternalLink className="h-2.5 w-2.5" />
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2.5 p-2.5 rounded-lg bg-muted/50 border">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-medium">45 Points of Compliance</p>
+                      <p className="text-[10px] text-muted-foreground">Clients with full compliance certification receive contract admin access.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full text-muted-foreground"
+                onClick={() => { setShowPinModal(false); setPendingAction(null) }}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Admin Detail Modal */}
       {selectedAdmin && (
@@ -854,7 +1041,14 @@ export default function ContractAdminPage() {
 
               {/* CTA */}
               <div className="border-t pt-5">
-                <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                <Button
+                  className="w-full bg-purple-600 hover:bg-purple-700"
+                  onClick={() => {
+                    requirePin(() => {
+                      // Hire action placeholder
+                    })
+                  }}
+                >
                   <Briefcase className="h-4 w-4 mr-2" />
                   Hire {selectedAdmin.name.split(" ")[0]} for Contract Admin
                 </Button>

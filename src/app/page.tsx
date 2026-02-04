@@ -99,7 +99,7 @@ export default function LandingPage() {
       ],
       cta: "Build Your Business",
       popular: false,
-      href: "https://gumroad.com/l/placeholder-business-buildout",
+      href: "https://assetrecoverybusiness.com/",
       discount: {
         text: "15% off for existing customers",
         price: 2120.75,
@@ -168,16 +168,16 @@ export default function LandingPage() {
             "offers": [
               {
                 "@type": "Offer",
-                "name": "Single State Plan",
-                "price": "129",
+                "name": "5-State Lead Access",
+                "price": "495",
                 "priceCurrency": "USD",
                 "priceValidUntil": "2026-12-31",
                 "availability": "https://schema.org/InStock"
               },
               {
                 "@type": "Offer",
-                "name": "Multi-State Plan",
-                "price": "499",
+                "name": "Asset Recovery Business Build Out",
+                "price": "2495",
                 "priceCurrency": "USD",
                 "priceValidUntil": "2026-12-31",
                 "availability": "https://schema.org/InStock"
@@ -253,9 +253,9 @@ export default function LandingPage() {
                 Skip-traced, DNC-compliant, and ready for outreach.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-10 sm:mb-16 px-4 sm:px-0">
-                <Link href="/sign-up" className="w-full sm:w-auto">
+                <Link href="/sign-in" className="w-full sm:w-auto">
                   <Button size="lg" className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full">
-                    Start 7-Day Free Trial
+                    Get Started
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>

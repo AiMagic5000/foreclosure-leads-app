@@ -74,7 +74,7 @@ export default function CompliancePage() {
               Compliance & Legal Information
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl">
-              US Foreclosure Recovery Inc. maintains the highest standards of
+              Foreclosure Recovery Inc. maintains the highest standards of
               legal compliance across all aspects of our foreclosure surplus
               fund recovery services. This page outlines our comprehensive
               approach to regulatory adherence and data protection.
@@ -192,7 +192,7 @@ export default function CompliancePage() {
                   </h2>
                   <div className="prose max-w-none text-gray-700 space-y-4">
                     <p>
-                      US Foreclosure Recovery Inc. is committed to operating
+                      Foreclosure Recovery Inc. is committed to operating
                       with the highest level of ethical standards and legal
                       compliance in all jurisdictions where we conduct business.
                       Our platform and services are designed from the ground up
@@ -229,7 +229,7 @@ export default function CompliancePage() {
                     <p>
                       The Telephone Consumer Protection Act (TCPA) of 1991
                       regulates telephone solicitations and the use of automated
-                      telephone equipment. US Foreclosure Recovery Inc. strictly
+                      telephone equipment. Foreclosure Recovery Inc. strictly
                       adheres to all TCPA requirements in our operations and
                       requires all users of our platform to maintain the same
                       standards.
@@ -309,7 +309,7 @@ export default function CompliancePage() {
                   </h2>
                   <div className="prose max-w-none text-gray-700 space-y-4">
                     <p>
-                      US Foreclosure Recovery Inc. maintains comprehensive Do Not
+                      Foreclosure Recovery Inc. maintains comprehensive Do Not
                       Call list management to ensure compliance with both federal
                       and state DNC registries. We implement multiple layers of
                       protection to prevent calls to numbers on these restricted
@@ -502,7 +502,7 @@ export default function CompliancePage() {
                       Foreclosure surplus fund recovery is regulated at the state
                       level, with significant variation in requirements,
                       limitations, and procedures across different jurisdictions.
-                      US Foreclosure Recovery Inc. maintains detailed compliance
+                      Foreclosure Recovery Inc. maintains detailed compliance
                       documentation for all 50 states and updates our platform to
                       reflect changes in state law.
                     </p>
@@ -639,7 +639,7 @@ export default function CompliancePage() {
                   </h2>
                   <div className="prose max-w-none text-gray-700 space-y-4">
                     <p>
-                      US Foreclosure Recovery Inc. implements comprehensive data
+                      Foreclosure Recovery Inc. implements comprehensive data
                       protection measures to safeguard personally identifiable
                       information (PII) and maintain the privacy of property
                       owners whose data is processed through our platform. We
@@ -1272,7 +1272,7 @@ export default function CompliancePage() {
                   </h2>
                   <div className="prose max-w-none text-gray-700 space-y-4">
                     <p>
-                      US Foreclosure Recovery Inc. maintains zero tolerance for
+                      Foreclosure Recovery Inc. maintains zero tolerance for
                       fraudulent activity on our platform. We implement
                       comprehensive measures to prevent fraud, protect property
                       owners from deceptive practices, and ensure that all users
@@ -1623,7 +1623,7 @@ export default function CompliancePage() {
                       Third-Party Audits
                     </h3>
                     <p>
-                      US Foreclosure Recovery Inc. undergoes regular third-party
+                      Foreclosure Recovery Inc. undergoes regular third-party
                       compliance audits to verify our record keeping practices and
                       overall regulatory adherence. These audits include:
                     </p>
@@ -1663,7 +1663,7 @@ export default function CompliancePage() {
                   </h2>
                   <div className="prose max-w-none text-gray-700 space-y-4">
                     <p>
-                      All users of the US Foreclosure Recovery platform are
+                      All users of the Foreclosure Recovery platform are
                       independent business operators responsible for their own
                       compliance with applicable laws and regulations. While we
                       provide tools and guidance to facilitate compliance, users
@@ -1875,7 +1875,7 @@ export default function CompliancePage() {
                   </h2>
                   <div className="prose max-w-none text-gray-700 space-y-4">
                     <p>
-                      US Foreclosure Recovery Inc. is committed to maintaining the
+                      Foreclosure Recovery Inc. is committed to maintaining the
                       integrity of our platform and the foreclosure surplus
                       recovery industry. We encourage both users and property
                       owners to report suspected violations of our policies or
@@ -1908,7 +1908,7 @@ export default function CompliancePage() {
                         during business hours
                       </li>
                       <li>
-                        <strong>Mail:</strong> US Foreclosure Recovery Inc.,
+                        <strong>Mail:</strong> Foreclosure Recovery Inc.,
                         Compliance Department, [Address]
                       </li>
                     </ul>
@@ -2080,7 +2080,7 @@ export default function CompliancePage() {
                     <p>
                       The regulatory landscape governing foreclosure surplus
                       recovery, telecommunications, and data privacy is constantly
-                      evolving. US Foreclosure Recovery Inc. maintains a proactive
+                      evolving. Foreclosure Recovery Inc. maintains a proactive
                       approach to monitoring legal developments and updating our
                       platform and user education accordingly.
                     </p>
@@ -2474,7 +2474,7 @@ export default function CompliancePage() {
                       Mailing Address
                     </h3>
                     <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 my-4">
-                      <p className="font-medium mb-2">US Foreclosure Recovery Inc.</p>
+                      <p className="font-medium mb-2">Foreclosure Recovery Inc.</p>
                       <p>Compliance Department</p>
                       <p>Attn: Compliance Officer</p>
                       <p>[Street Address]</p>
@@ -2547,7 +2547,7 @@ export default function CompliancePage() {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <p className="mb-2">
-              Copyright {new Date().getFullYear()} US Foreclosure Recovery Inc.
+              Copyright {new Date().getFullYear()} Foreclosure Recovery Inc.
               All rights reserved.
             </p>
             <p className="text-sm text-gray-300">
