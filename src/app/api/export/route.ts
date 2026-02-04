@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
       .select(
         includeSkipTrace
           ? "*"
-          : "id, property_address, city, state, state_abbr, zip_code, parcel_id, owner_name, case_number, sale_date, sale_amount, mortgage_amount, lender_name, trustee_name, foreclosure_type, status, created_at"
+          : "id, property_address, city, state, state_abbr, zip_code, parcel_id, owner_name, case_number, sale_date, sale_amount, mortgage_amount, lender_name, trustee_name, foreclosure_type, status, created_at, estimated_market_value, property_type, bedrooms, bathrooms, square_footage, year_built, assessed_value, tax_amount, lot_size, enrichment_source, enriched_at"
       )
       .in("state_abbr", queryStates)
 
