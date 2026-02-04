@@ -92,6 +92,11 @@ LA_COUNTY_CITIES = {
     "littlerock", "pearblossom", "llano", "pasadena", "altadena",
     "south pasadena", "san marino", "la canada flintridge",
     "glendale", "burbank", "toluca lake", "universal city",
+    "tujunga", "sunland", "la crescenta", "montrose", "la tuna canyon",
+    "topanga", "malibu canyon", "agoura", "west hills", "winnetka",
+    "lake view terrace", "shadow hills", "la crescenta-montrose",
+    "san fernando", "mission hills", "sepulveda", "north hills",
+    "lake los angeles", "little rock", "juniper hills",
 }
 
 ORANGE_COUNTY_CITIES = {
