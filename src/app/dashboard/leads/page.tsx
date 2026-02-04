@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import {
   Search,
   Download,
@@ -2109,9 +2110,11 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
   }
 }
 
-export default function LeadsPage() {
+function LeadsPageContent() {
+  const searchParams = useSearchParams()
+  const stateParam = searchParams.get("state")
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedState, setSelectedState] = useState("All States")
+  const [selectedState, setSelectedState] = useState(stateParam || "All States")
   const [selectedStatus, setSelectedStatus] = useState("all")
   const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
@@ -2120,6 +2123,13 @@ export default function LeadsPage() {
   const [dbStates, setDbStates] = useState<string[]>(["All States"])
   const [leadsLoading, setLeadsLoading] = useState(true)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
+
+  // Sync URL state param with dropdown
+  useEffect(() => {
+    if (stateParam && stateParam !== selectedState) {
+      setSelectedState(stateParam)
+    }
+  }, [stateParam])
 
   // Fetch leads from Supabase
   useEffect(() => {
@@ -2561,5 +2571,13 @@ export default function LeadsPage() {
         </Card>
       )}
     </div>
+  )
+}
+
+export default function LeadsPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading leads...</div>}>
+      <LeadsPageContent />
+    </Suspense>
   )
 }

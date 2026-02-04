@@ -4,12 +4,13 @@ import { useState, useEffect } from "react"
 import { useTheme } from "@/components/theme-provider"
 import { statesData } from "@/data/states"
 import { stateOverageGuide } from "@/data/state-overage-guide"
+import { stateForeclosureInfo } from "@/data/state-foreclosure-info"
 import { stateFlags } from "@/data/state-flags"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, Info, Lock, Users, TrendingUp } from "lucide-react"
+import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, Info, Lock, Users, TrendingUp, Gavel, Home, Shield, Banknote, CalendarDays, BookOpen, AlertTriangle } from "lucide-react"
 import { CountyMap } from "@/components/county-map"
 import { useUser } from "@clerk/nextjs"
 import { supabase } from "@/lib/supabase"
@@ -202,6 +203,39 @@ export default function StatesPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Enriched Quick Info */}
+              {(() => {
+                const fi = stateForeclosureInfo[state.abbr]
+                return (
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    {fi?.taxSaleType && (
+                      <div className="flex items-center gap-1.5 p-1.5 rounded bg-muted/50">
+                        <Home className="h-3 w-3 text-blue-500 shrink-0" />
+                        <span className="text-muted-foreground">{fi.taxSaleType}</span>
+                      </div>
+                    )}
+                    {fi?.redemptionPeriod && (
+                      <div className="flex items-center gap-1.5 p-1.5 rounded bg-muted/50">
+                        <Clock className="h-3 w-3 text-amber-500 shrink-0" />
+                        <span className="text-muted-foreground truncate">Redeem: {fi.redemptionPeriod}</span>
+                      </div>
+                    )}
+                    {fi?.biddingType && (
+                      <div className="flex items-center gap-1.5 p-1.5 rounded bg-muted/50">
+                        <Gavel className="h-3 w-3 text-purple-500 shrink-0" />
+                        <span className="text-muted-foreground truncate">{fi.biddingType}</span>
+                      </div>
+                    )}
+                    {(state.claimWindow || fi?.claimDeadline) && (
+                      <div className="flex items-center gap-1.5 p-1.5 rounded bg-muted/50">
+                        <CalendarDays className="h-3 w-3 text-green-500 shrink-0" />
+                        <span className="text-muted-foreground truncate">{state.claimWindow || fi?.claimDeadline}</span>
+                      </div>
+                    )}
+                  </div>
+                )
+              })()}
+
               {/* Statutes */}
               <div className="space-y-2">
                 {state.taxOverageStatute && (
@@ -224,21 +258,13 @@ export default function StatesPage() {
                 )}
               </div>
 
-              {/* Additional Info */}
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                {state.claimWindow && (
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="h-3.5 w-3.5 text-muted-foreground" />
-                    <span className="text-muted-foreground">{state.claimWindow}</span>
-                  </div>
-                )}
-                {state.feeLimits && (
-                  <div className="flex items-center gap-1.5">
-                    <DollarSign className="h-3.5 w-3.5 text-muted-foreground" />
-                    <span className="text-muted-foreground">{state.feeLimits}</span>
-                  </div>
-                )}
-              </div>
+              {/* Fee Limits */}
+              {state.feeLimits && (
+                <div className="flex items-center gap-1.5 text-sm">
+                  <DollarSign className="h-3.5 w-3.5 text-muted-foreground" />
+                  <span className="text-muted-foreground">{state.feeLimits}</span>
+                </div>
+              )}
 
               {/* Data Sources */}
               {state.sources.length > 0 && (
@@ -370,95 +396,229 @@ export default function StatesPage() {
                 </div>
               </div>
 
-              {/* Statutes */}
-              <div className="p-5 space-y-4">
-                {(overageInfo?.taxOverageStatute || stateInfo.taxOverageStatute) && (
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <Scale className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm font-semibold">Tax Overage Statute</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground pl-6">
-                      {overageInfo?.taxOverageStatute || stateInfo.taxOverageStatute}
-                    </p>
-                  </div>
-                )}
-
-                {(overageInfo?.mortgageOverageStatute || stateInfo.mortgageOverageStatute) && (
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-red-500" />
-                      <span className="text-sm font-semibold">Mortgage Overage Statute</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground pl-6">
-                      {overageInfo?.mortgageOverageStatute || stateInfo.mortgageOverageStatute}
-                    </p>
-                  </div>
-                )}
-
-                {stateInfo.claimWindow && (
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-amber-500" />
-                      <span className="text-sm font-semibold">Claim Window</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground pl-6">{stateInfo.claimWindow}</p>
-                  </div>
-                )}
-
-                {stateInfo.feeLimits && (
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-green-500" />
-                      <span className="text-sm font-semibold">Fee Limits</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground pl-6">{stateInfo.feeLimits}</p>
-                  </div>
-                )}
-
-                {/* Notes from 50 States Overage Guide */}
-                {overageInfo?.notes && (
-                  <div className="mt-4 p-4 rounded-lg bg-muted/50 border">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Info className="h-4 w-4 text-primary" />
-                      <span className="text-sm font-semibold">Overage Notes</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {overageInfo.notes}
-                    </p>
-                  </div>
-                )}
-
-                {/* Data Sources - Blurred for unpaid */}
-                {stateInfo.sources.length > 0 && (
-                  <div className="pt-4 border-t relative">
-                    <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">Data Sources</p>
-                    <div className={`flex flex-wrap gap-2 ${!isPaid ? "select-none" : ""}`} style={!isPaid ? { filter: "blur(4px)" } : undefined}>
-                      {stateInfo.sources.map((source, idx) => (
-                        <a
-                          key={idx}
-                          href={isPaid ? source.url : "#"}
-                          target={isPaid ? "_blank" : undefined}
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-primary hover:underline bg-primary/5 px-2 py-1 rounded"
-                          onClick={isPaid ? undefined : (e) => e.preventDefault()}
-                        >
-                          {source.name}
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      ))}
-                    </div>
-                    {!isPaid && (
-                      <div className="absolute inset-0 flex items-center justify-center pt-4">
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded">
-                          <Lock className="h-3 w-3" />
-                          <span>Subscribe to view sources</span>
+              {/* Enriched Content */}
+              {(() => {
+                const fi = stateForeclosureInfo[selectedState]
+                return (
+                  <div className="p-5 space-y-4">
+                    {/* Tax Sale Overview */}
+                    {fi && (fi.taxSaleType || fi.biddingType || fi.saleFrequency) && (
+                      <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Gavel className="h-4 w-4 text-blue-500" />
+                          <span className="text-sm font-semibold">Tax Sale Overview</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 text-sm">
+                          {fi.taxSaleType && (
+                            <div>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Sale Type</span>
+                              <p className="font-medium">{fi.taxSaleType}</p>
+                            </div>
+                          )}
+                          {fi.biddingType && (
+                            <div>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Bidding</span>
+                              <p className="font-medium">{fi.biddingType}</p>
+                            </div>
+                          )}
+                          {fi.redemptionPeriod && (
+                            <div>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Redemption</span>
+                              <p className="font-medium">{fi.redemptionPeriod}</p>
+                            </div>
+                          )}
+                          {fi.saleFrequency && (
+                            <div className="col-span-2">
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Sale Schedule</span>
+                              <p className="font-medium">{fi.saleFrequency}</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
+
+                    {/* Funds & Claims */}
+                    {fi && (fi.fundsHolder || fi.escheatPeriod || fi.claimDeadline || stateInfo.claimWindow) && (
+                      <div className="p-4 rounded-lg bg-green-500/5 border border-green-500/20">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Banknote className="h-4 w-4 text-green-500" />
+                          <span className="text-sm font-semibold">Surplus Funds & Claims</span>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          {fi.fundsHolder && (
+                            <div>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Who Holds Funds</span>
+                              <p className="text-muted-foreground">{fi.fundsHolder}</p>
+                            </div>
+                          )}
+                          {(stateInfo.claimWindow || fi.claimDeadline) && (
+                            <div>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Claim Deadline</span>
+                              <p className="font-medium">{stateInfo.claimWindow || fi.claimDeadline}</p>
+                            </div>
+                          )}
+                          {fi.escheatPeriod && (
+                            <div>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Escheat Period</span>
+                              <p className="text-muted-foreground">{fi.escheatPeriod}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Attorney & Fees */}
+                    {fi && (fi.attorneyRequired || fi.feeRestrictions || stateInfo.feeLimits) && (
+                      <div className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/20">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Shield className="h-4 w-4 text-amber-500" />
+                          <span className="text-sm font-semibold">Attorney & Fee Requirements</span>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          {fi.attorneyRequired && (
+                            <div>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Attorney Required</span>
+                              <p className="text-muted-foreground">{fi.attorneyRequired}</p>
+                            </div>
+                          )}
+                          {(stateInfo.feeLimits || fi.feeRestrictions) && (
+                            <div>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wide">Fee Restrictions</span>
+                              <p className="text-muted-foreground">{stateInfo.feeLimits || fi.feeRestrictions}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Statutes */}
+                    {(overageInfo?.taxOverageStatute || stateInfo.taxOverageStatute) && (
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <Scale className="h-4 w-4 text-blue-500" />
+                          <span className="text-sm font-semibold">Tax Overage Statute</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground pl-6">
+                          {overageInfo?.taxOverageStatute || stateInfo.taxOverageStatute}
+                        </p>
+                      </div>
+                    )}
+
+                    {(overageInfo?.mortgageOverageStatute || stateInfo.mortgageOverageStatute) && (
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-4 w-4 text-red-500" />
+                          <span className="text-sm font-semibold">Mortgage Overage Statute</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground pl-6">
+                          {overageInfo?.mortgageOverageStatute || stateInfo.mortgageOverageStatute}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Key Statutes from Foreclosure Academy */}
+                    {fi && fi.keyStatutes.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="h-4 w-4 text-indigo-500" />
+                          <span className="text-sm font-semibold">Key Statutes</span>
+                        </div>
+                        <div className="pl-6 space-y-1">
+                          {fi.keyStatutes.map((statute, idx) => (
+                            <p key={idx} className="text-xs text-muted-foreground">
+                              {fi.statuteUrls[idx] ? (
+                                <a href={fi.statuteUrls[idx]} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                  {statute}
+                                  <ExternalLink className="inline h-3 w-3 ml-1" />
+                                </a>
+                              ) : statute}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Key Notes / Warnings */}
+                    {fi && fi.keyNotes.length > 0 && (
+                      <div className="p-4 rounded-lg bg-red-500/5 border border-red-500/20">
+                        <div className="flex items-center gap-2 mb-2">
+                          <AlertTriangle className="h-4 w-4 text-red-500" />
+                          <span className="text-sm font-semibold">Important Notes</span>
+                        </div>
+                        <ul className="space-y-1.5 text-sm text-muted-foreground pl-2">
+                          {fi.keyNotes.map((note, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="text-red-500 mt-1 shrink-0">&#8226;</span>
+                              <span>{note}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Mortgage Foreclosure Details */}
+                    {fi && fi.mortgageInfo.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Home className="h-4 w-4 text-orange-500" />
+                          <span className="text-sm font-semibold">Mortgage Foreclosure Details</span>
+                        </div>
+                        <div className="pl-6 space-y-1.5 max-h-40 overflow-y-auto">
+                          {fi.mortgageInfo.slice(0, 10).map((info, idx) => (
+                            <p key={idx} className="text-xs text-muted-foreground leading-relaxed">{info}</p>
+                          ))}
+                          {fi.mortgageInfo.length > 10 && (
+                            <p className="text-xs text-primary">+{fi.mortgageInfo.length - 10} more details available</p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Overage Notes from guide */}
+                    {overageInfo?.notes && (
+                      <div className="mt-4 p-4 rounded-lg bg-muted/50 border">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Info className="h-4 w-4 text-primary" />
+                          <span className="text-sm font-semibold">Overage Notes</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {overageInfo.notes}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Data Sources - Blurred for unpaid */}
+                    {stateInfo.sources.length > 0 && (
+                      <div className="pt-4 border-t relative">
+                        <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">Data Sources</p>
+                        <div className={`flex flex-wrap gap-2 ${!isPaid ? "select-none" : ""}`} style={!isPaid ? { filter: "blur(4px)" } : undefined}>
+                          {stateInfo.sources.map((source, idx) => (
+                            <a
+                              key={idx}
+                              href={isPaid ? source.url : "#"}
+                              target={isPaid ? "_blank" : undefined}
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-xs text-primary hover:underline bg-primary/5 px-2 py-1 rounded"
+                              onClick={isPaid ? undefined : (e) => e.preventDefault()}
+                            >
+                              {source.name}
+                              <ExternalLink className="h-3 w-3" />
+                            </a>
+                          ))}
+                        </div>
+                        {!isPaid && (
+                          <div className="absolute inset-0 flex items-center justify-center pt-4">
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded">
+                              <Lock className="h-3 w-3" />
+                              <span>Subscribe to view sources</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                )
+              })()}
             </div>
           </div>
         )
