@@ -328,6 +328,75 @@ export interface Database {
           created_by?: string
         }
       }
+      training_modules: {
+        Row: {
+          id: number
+          module_number: number
+          title: string
+          description: string
+          duration: string
+          poster_url: string
+          video_url: string
+          status: 'completed' | 'current' | 'locked'
+          sort_order: number
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          module_number: number
+          title: string
+          description: string
+          duration?: string
+          poster_url?: string
+          video_url?: string
+          status?: 'completed' | 'current' | 'locked'
+          sort_order?: number
+          updated_by?: string
+        }
+        Update: {
+          module_number?: number
+          title?: string
+          description?: string
+          duration?: string
+          poster_url?: string
+          video_url?: string
+          status?: 'completed' | 'current' | 'locked'
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string
+        }
+      }
+      training_resources: {
+        Row: {
+          id: string
+          module_id: number
+          file_name: string
+          display_name: string
+          file_url: string
+          file_size: number
+          file_type: string
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          module_id: number
+          file_name: string
+          display_name: string
+          file_url: string
+          file_size?: number
+          file_type?: string
+          sort_order?: number
+        }
+        Update: {
+          module_id?: number
+          file_name?: string
+          display_name?: string
+          file_url?: string
+          file_size?: number
+          file_type?: string
+          sort_order?: number
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -348,3 +417,5 @@ export type ScrapeRun = Database['public']['Tables']['scrape_runs']['Row']
 export type DncCache = Database['public']['Tables']['dnc_cache']['Row']
 export type UserActivity = Database['public']['Tables']['user_activity']['Row']
 export type UserPin = Database['public']['Tables']['user_pins']['Row']
+export type TrainingModule = Database['public']['Tables']['training_modules']['Row']
+export type TrainingResource = Database['public']['Tables']['training_resources']['Row']

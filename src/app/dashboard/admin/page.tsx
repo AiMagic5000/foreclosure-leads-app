@@ -56,6 +56,8 @@ interface LeadStats {
   skipTraced: number
   hasEmail: number
   hasPhone: number
+  enriched: number
+  hasMarketValue: number
 }
 
 export default function AdminPage() {
@@ -103,7 +105,7 @@ export default function AdminPage() {
       // Get all leads for aggregation (source, state, phone, email)
       const { data: leads } = await supabase
         .from("foreclosure_leads")
-        .select("source, state, primary_phone, primary_email, skip_traced_at")
+        .select("source, state, primary_phone, primary_email, skip_traced_at, enriched_at, estimated_market_value")
         .limit(10000)
 
       if (leads && Array.isArray(leads)) {
@@ -112,8 +114,10 @@ export default function AdminPage() {
         let skipTraced = 0
         let hasEmail = 0
         let hasPhone = 0
+        let enriched = 0
+        let hasMarketValue = 0
 
-        type LeadRow = { source: string | null; state: string | null; primary_phone: string | null; primary_email: string | null; skip_traced_at: string | null }
+        type LeadRow = { source: string | null; state: string | null; primary_phone: string | null; primary_email: string | null; skip_traced_at: string | null; enriched_at: string | null; estimated_market_value: number | null }
         for (const lead of leads as LeadRow[]) {
           const src = lead.source || "unknown"
           sourceMap.set(src, (sourceMap.get(src) || 0) + 1)
@@ -122,6 +126,8 @@ export default function AdminPage() {
           if (lead.skip_traced_at) skipTraced++
           if (lead.primary_email) hasEmail++
           if (lead.primary_phone) hasPhone++
+          if (lead.enriched_at) enriched++
+          if (lead.estimated_market_value && lead.estimated_market_value > 0) hasMarketValue++
         }
 
         setLeadStats({
@@ -135,6 +141,8 @@ export default function AdminPage() {
           skipTraced,
           hasEmail,
           hasPhone,
+          enriched,
+          hasMarketValue,
         })
       }
     } catch {
@@ -432,7 +440,19 @@ export default function AdminPage() {
                   <BarChart3 className="h-4 w-4 text-yellow-600" />
                   <h3 className="text-sm font-semibold text-yellow-800 dark:text-yellow-200">Enrichment Status</h3>
                 </div>
-                <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+                  <div>
+                    <p className="text-lg font-bold text-yellow-900 dark:text-yellow-100">
+                      {leadStats.enriched > 0 ? Math.round((leadStats.enriched / leadStats.total) * 100) : 0}%
+                    </p>
+                    <p className="text-xs text-yellow-600">Property Enriched</p>
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold text-yellow-900 dark:text-yellow-100">
+                      {leadStats.hasMarketValue > 0 ? Math.round((leadStats.hasMarketValue / leadStats.total) * 100) : 0}%
+                    </p>
+                    <p className="text-xs text-yellow-600">Market Value</p>
+                  </div>
                   <div>
                     <p className="text-lg font-bold text-yellow-900 dark:text-yellow-100">
                       {leadStats.skipTraced > 0 ? Math.round((leadStats.skipTraced / leadStats.total) * 100) : 0}%
