@@ -47,6 +47,7 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { usePin } from "@/lib/pin-context"
 import { supabase } from "@/lib/supabase"
+import { RecoveryCountdown } from "@/components/recovery-countdown"
 
 interface LeadData {
   id: string
@@ -1703,6 +1704,13 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
 
   return (
     <div className="mt-4 border-t pt-4 space-y-4">
+      {/* Recovery Countdown Timer */}
+      <RecoveryCountdown
+        saleDate={lead.saleDate || null}
+        stateAbbr={lead.stateAbbr}
+        scrapedAt={lead.scrapedAt}
+      />
+
       {/* Tabs */}
       <div className="flex flex-wrap gap-1.5">
         {tabs.map((tab) => (
@@ -2139,7 +2147,7 @@ function LeadsPageContent() {
         .from("foreclosure_leads")
         .select("*")
         .order("created_at", { ascending: false })
-        .limit(500) as { data: Record<string, unknown>[] | null; error: unknown }
+        .limit(2500) as { data: Record<string, unknown>[] | null; error: unknown }
 
       if (!error && data) {
         const mapped = data.map(mapDbRowToLead)
@@ -2452,15 +2460,23 @@ function LeadsPageContent() {
                       </div>
                     )}
                   </div>
-                  <div className="col-span-1 flex items-center justify-between">
-                    <Badge className={statusColors[lead.status as keyof typeof statusColors]}>
-                      {lead.status.replace("_", " ")}
-                    </Badge>
-                    {isExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                    )}
+                  <div className="col-span-1 flex flex-col items-end gap-1">
+                    <div className="flex items-center gap-1">
+                      <Badge className={statusColors[lead.status as keyof typeof statusColors]}>
+                        {lead.status.replace("_", " ")}
+                      </Badge>
+                      {isExpanded ? (
+                        <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                      )}
+                    </div>
+                    <RecoveryCountdown
+                      saleDate={lead.saleDate || null}
+                      stateAbbr={lead.stateAbbr}
+                      scrapedAt={lead.scrapedAt}
+                      compact
+                    />
                   </div>
                 </div>
 
@@ -2509,7 +2525,7 @@ function LeadsPageContent() {
                     <span>{lead.propertyAddress}, {lead.city}, {lead.stateAbbr} {lead.zipCode}</span>
                   </div>
 
-                  <div className="flex flex-wrap gap-4 text-sm">
+                  <div className="flex flex-wrap gap-4 text-sm items-center">
                     <div className="flex items-center gap-1">
                       <DollarSign className="h-4 w-4 text-muted-foreground" />
                       <span className="font-medium">${lead.saleAmount.toLocaleString()}</span>
@@ -2528,6 +2544,12 @@ function LeadsPageContent() {
                       <Calendar className="h-4 w-4" />
                       {new Date(lead.saleDate).toLocaleDateString()}
                     </div>
+                    <RecoveryCountdown
+                      saleDate={lead.saleDate || null}
+                      stateAbbr={lead.stateAbbr}
+                      scrapedAt={lead.scrapedAt}
+                      compact
+                    />
                   </div>
 
                   {(lead.primaryPhone || lead.primaryEmail) && (

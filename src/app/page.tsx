@@ -114,21 +114,21 @@ export default function LandingPage() {
       author: "Marcus T.",
       role: "Surplus Recovery Agent, Texas",
       rating: 5,
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      image: "/marcus-t.jpg",
     },
     {
       quote: "The automation add-on is a game changer. I get callbacks from my voicemails while I'm working other deals.",
       author: "Jennifer R.",
       role: "Asset Recovery Specialist, Florida",
       rating: 5,
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
+      image: "/jennifer-r.jpg",
     },
     {
       quote: "Finally, a lead source that's actually compliant. No more worrying about TCPA violations.",
       author: "David K.",
       role: "Recovery Agent, California",
       rating: 5,
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      image: "/david-k.jpg",
     },
   ]
 
