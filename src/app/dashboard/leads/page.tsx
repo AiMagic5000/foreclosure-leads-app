@@ -1417,47 +1417,22 @@ function formatEmail(email: string, revealed = false) {
   )
 }
 
-// Google Street View URL helpers
-const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-
-function getStreetViewImageUrl(lat: number, lng: number, size = "200x150") {
-  if (!lat || !lng || !GOOGLE_MAPS_API_KEY) return null
-  return `https://maps.googleapis.com/maps/api/streetview?size=${size}&location=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}&source=outdoor`
-}
-
+// Google Street View URL helpers (no API key required - uses direct links)
 function getStreetViewLink(lat: number, lng: number) {
   if (!lat || !lng) return null
   return `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${lat},${lng}`
 }
 
-function getStaticMapUrl(lat: number, lng: number, size = "200x150") {
-  // Fallback to a static map thumbnail if Street View not available
-  if (!lat || !lng || !GOOGLE_MAPS_API_KEY) return null
-  return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=18&size=${size}&maptype=satellite&key=${GOOGLE_MAPS_API_KEY}`
+function getGoogleMapsLink(lat: number, lng: number) {
+  if (!lat || !lng) return null
+  return `https://www.google.com/maps?q=${lat},${lng}&t=k&z=19`
 }
 
-function StreetViewImage({ lat, lng, className = "", size = "200x150" }: { lat: number; lng: number; className?: string; size?: string }) {
-  const imageUrl = getStreetViewImageUrl(lat, lng, size)
-  const staticMapUrl = getStaticMapUrl(lat, lng, size)
-  const linkUrl = getStreetViewLink(lat, lng)
+function StreetViewButton({ lat, lng, className = "", compact = false }: { lat: number; lng: number; className?: string; compact?: boolean }) {
+  const streetViewUrl = getStreetViewLink(lat, lng)
+  const mapsUrl = getGoogleMapsLink(lat, lng)
 
-  // Placeholder when no API key or no coordinates
-  if (!imageUrl) {
-    if (lat && lng && linkUrl) {
-      return (
-        <a
-          href={linkUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className={cn("bg-gradient-to-br from-emerald-500/20 to-blue-500/20 flex flex-col items-center justify-center text-muted-foreground hover:from-emerald-500/30 hover:to-blue-500/30 transition-colors cursor-pointer", className)}
-          title="Click to open in Google Street View"
-        >
-          <MapPin className="h-5 w-5 opacity-60" />
-          <span className="text-[9px] mt-0.5 opacity-60">View Map</span>
-        </a>
-      )
-    }
+  if (!lat || !lng) {
     return (
       <div className={cn("bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-muted-foreground", className)}>
         <Home className="h-5 w-5 opacity-40" />
@@ -1465,39 +1440,47 @@ function StreetViewImage({ lat, lng, className = "", size = "200x150" }: { lat: 
     )
   }
 
+  if (compact) {
+    return (
+      <a
+        href={streetViewUrl || "#"}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className={cn("bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 flex items-center justify-center gap-1.5 text-white font-medium rounded transition-all shadow-sm hover:shadow", className)}
+        title="Open Google Street View"
+      >
+        <Eye className="h-4 w-4" />
+        <span className="text-xs">Street View</span>
+      </a>
+    )
+  }
+
   return (
-    <a
-      href={linkUrl || "#"}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={(e) => e.stopPropagation()}
-      className="block relative group"
-      title="Click to open in Google Street View"
-    >
-      <img
-        src={imageUrl}
-        alt="Street View"
-        className={cn("object-cover transition-opacity", className)}
-        onError={(e) => {
-          const img = e.target as HTMLImageElement
-          // Try satellite map fallback
-          if (staticMapUrl && img.src !== staticMapUrl) {
-            img.src = staticMapUrl
-          } else {
-            img.style.display = "none"
-            const fallback = img.nextElementSibling as HTMLElement
-            if (fallback) fallback.style.display = "flex"
-          }
-        }}
-      />
-      <div className={cn("bg-gradient-to-br from-emerald-500/20 to-blue-500/20 flex-col items-center justify-center text-muted-foreground hidden", className)}>
-        <MapPin className="h-5 w-5 opacity-60" />
-        <span className="text-[9px] mt-0.5 opacity-60">View Map</span>
-      </div>
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded flex items-center justify-center">
-        <Eye className="h-4 w-4 text-white opacity-0 group-hover:opacity-80 transition-opacity drop-shadow-lg" />
-      </div>
-    </a>
+    <div className={cn("flex flex-col gap-1.5", className)}>
+      <a
+        href={streetViewUrl || "#"}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className="bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 flex items-center justify-center gap-2 text-white font-medium py-2 px-3 rounded transition-all shadow-sm hover:shadow"
+        title="Open Google Street View"
+      >
+        <Eye className="h-4 w-4" />
+        <span className="text-sm">Street View</span>
+      </a>
+      <a
+        href={mapsUrl || "#"}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className="bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 flex items-center justify-center gap-2 text-white font-medium py-1.5 px-3 rounded text-xs transition-all shadow-sm hover:shadow"
+        title="Open Google Maps Satellite"
+      >
+        <MapPin className="h-3 w-3" />
+        <span>Satellite Map</span>
+      </a>
+    </div>
   )
 }
 
@@ -2526,11 +2509,11 @@ function LeadsPageContent() {
                   </div>
                   <div className="col-span-3">
                     <div className="flex items-center gap-3">
-                      <StreetViewImage
+                      <StreetViewButton
                         lat={lead.lat}
                         lng={lead.lng}
-                        size="80x60"
-                        className="h-[60px] w-[80px] rounded shrink-0"
+                        compact
+                        className="h-[40px] min-w-[100px] rounded shrink-0"
                       />
                       <div>
                         <div className="font-medium">{formatOwnerName(lead.ownerName, isRevealed)}</div>
@@ -2594,11 +2577,10 @@ function LeadsPageContent() {
                     )}
                   </div>
                   <div className="col-span-2" onClick={(e) => e.stopPropagation()}>
-                    <StreetViewImage
+                    <StreetViewButton
                       lat={lead.lat}
                       lng={lead.lng}
-                      size="200x120"
-                      className="h-[72px] w-full rounded object-cover"
+                      className="w-full"
                     />
                   </div>
                   <div className="col-span-1 flex flex-col items-end gap-1">
@@ -2636,11 +2618,11 @@ function LeadsPageContent() {
                           className="h-4 w-4 rounded border-gray-300 mt-1"
                         />
                       </div>
-                      <StreetViewImage
+                      <StreetViewButton
                         lat={lead.lat}
                         lng={lead.lng}
-                        size="80x60"
-                        className="h-[60px] w-[80px] rounded shrink-0"
+                        compact
+                        className="h-[40px] min-w-[100px] rounded shrink-0"
                       />
                       <div>
                         <div className="font-medium">{formatOwnerName(lead.ownerName, isRevealed)}</div>
@@ -2717,11 +2699,10 @@ function LeadsPageContent() {
 
                   {/* Mobile Street View */}
                   <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
-                    <StreetViewImage
+                    <StreetViewButton
                       lat={lead.lat}
                       lng={lead.lng}
-                      size="400x200"
-                      className="h-[120px] w-full rounded object-cover"
+                      className="w-full"
                     />
                   </div>
                 </div>
