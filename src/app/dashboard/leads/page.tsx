@@ -944,7 +944,7 @@ function LeadsPageContent() {
   const [selectedStatus, setSelectedStatus] = useState("all")
   const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
-  const [revealedLeads, setRevealedLeads] = useState<string[]>([])
+  const [hiddenLeads, setHiddenLeads] = useState<string[]>([])
   const [dbLeads, setDbLeads] = useState<LeadData[]>([])
   const [dbStates, setDbStates] = useState<string[]>(["All States"])
   const [leadsLoading, setLeadsLoading] = useState(true)
@@ -1001,8 +1001,8 @@ function LeadsPageContent() {
     [dbLeads]
   )
 
-  const toggleRevealed = useCallback((id: string) => {
-    setRevealedLeads((prev) =>
+  const toggleHidden = useCallback((id: string) => {
+    setHiddenLeads((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     )
   }, [])
@@ -1273,7 +1273,7 @@ function LeadsPageContent() {
       <div className="space-y-4">
         {paginatedLeads.map((lead) => {
           const isExpanded = expandedLeads.includes(lead.id)
-          const isRevealed = revealedLeads.includes(lead.id)
+          const isRevealed = !hiddenLeads.includes(lead.id)
           return (
             <Card
               key={lead.id}
@@ -1645,7 +1645,7 @@ function LeadsPageContent() {
                 </div>
 
                 {/* Expandable Detail Dropdown */}
-                {isExpanded && <LeadDropdown lead={lead} revealed={isRevealed} onReveal={() => toggleRevealed(lead.id)} />}
+                {isExpanded && <LeadDropdown lead={lead} revealed={isRevealed} onReveal={() => toggleHidden(lead.id)} />}
               </CardContent>
             </Card>
           )
