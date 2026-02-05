@@ -2637,12 +2637,38 @@ function LeadsPageContent() {
                       </div>
                     )}
                   </div>
-                  <div className="col-span-2" onClick={(e) => e.stopPropagation()}>
-                    <StreetViewButton
-                      lat={lead.lat}
-                      lng={lead.lng}
-                      className="w-full"
-                    />
+                  <div className="col-span-2">
+                    {lead.primaryPhone ? (
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1.5">
+                          <Phone className="h-3.5 w-3.5 text-emerald-600" />
+                          <a href={`tel:${lead.primaryPhone}`} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => e.stopPropagation()}>
+                            {isRevealed || revealedLeads.includes(lead.id) ? lead.primaryPhone : lead.primaryPhone.replace(/\d(?=\d{4})/g, '*')}
+                          </a>
+                        </div>
+                        {lead.secondaryPhone && (
+                          <div className="flex items-center gap-1.5">
+                            <Phone className="h-3 w-3 text-muted-foreground" />
+                            <span className="text-xs text-muted-foreground">
+                              {isRevealed || revealedLeads.includes(lead.id) ? lead.secondaryPhone : lead.secondaryPhone.replace(/\d(?=\d{4})/g, '*')}
+                            </span>
+                          </div>
+                        )}
+                        {lead.primaryEmail && (
+                          <div className="flex items-center gap-1.5">
+                            <Mail className="h-3 w-3 text-blue-600" />
+                            <span className="text-xs text-blue-600 truncate max-w-[140px]">
+                              {isRevealed || revealedLeads.includes(lead.id) ? lead.primaryEmail : '****@****.com'}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <Phone className="h-3.5 w-3.5" />
+                        <span className="text-xs">No phone on file</span>
+                      </div>
+                    )}
                   </div>
                   <div className="col-span-1 flex flex-col items-end gap-1">
                     <div className="flex items-center gap-1">
@@ -2810,13 +2836,30 @@ function LeadsPageContent() {
                     />
                   </div>
 
-                  {/* Mobile Street View */}
-                  <div className="border-t pt-3" onClick={(e) => e.stopPropagation()}>
-                    <StreetViewButton
-                      lat={lead.lat}
-                      lng={lead.lng}
-                      className="w-full"
-                    />
+                  {/* Mobile Contact Info */}
+                  <div className="border-t pt-3">
+                    {lead.primaryPhone ? (
+                      <div className="flex items-center gap-2">
+                        <Phone className="h-4 w-4 text-emerald-600" />
+                        <a href={`tel:${lead.primaryPhone}`} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => e.stopPropagation()}>
+                          {isRevealed || revealedLeads.includes(lead.id) ? lead.primaryPhone : lead.primaryPhone.replace(/\d(?=\d{4})/g, '*')}
+                        </a>
+                        {lead.primaryEmail && (
+                          <>
+                            <span className="text-muted-foreground">|</span>
+                            <Mail className="h-3.5 w-3.5 text-blue-600" />
+                            <span className="text-xs text-blue-600 truncate">
+                              {isRevealed || revealedLeads.includes(lead.id) ? lead.primaryEmail : '****@****.com'}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                        <Phone className="h-4 w-4" />
+                        <span>No phone on file</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -2847,12 +2890,15 @@ function LeadsPageContent() {
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             </button>
-            <div className="w-full bg-slate-100" style={{ aspectRatio: '16/9' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`https://maps.googleapis.com/maps/api/streetview?size=800x450&location=${encodeURIComponent(mapModal.address)}&key=AIzaSyDVar9A9qVzZYGJwhoCiU-tsFVIPWkJ28A`}
-                alt={mapModal.address}
-                className="w-full h-full object-cover"
+            <div className="w-full" style={{ aspectRatio: '16/9' }}>
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src={`https://www.google.com/maps?q=${encodeURIComponent(mapModal.address)}&layer=c&cbll=${mapModal.lat},${mapModal.lng}&cbp=12,0,0,0,0&output=svembed`}
               />
             </div>
             <div className="p-4 bg-slate-50 border-t">
