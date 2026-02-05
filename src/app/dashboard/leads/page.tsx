@@ -2244,17 +2244,10 @@ function LeadsPageContent() {
   const [mapModal, setMapModal] = useState<{lat: number, lng: number, address: string, propertyType: string} | null>(null)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
 
-  // Property placeholder colors based on property type
-  const getPropertyPlaceholderStyle = (propertyType: string) => {
-    const typeColors: Record<string, string> = {
-      "Single Family Residence": "from-blue-500 to-blue-700",
-      "Multi-Family": "from-purple-500 to-purple-700",
-      "Condo": "from-cyan-500 to-cyan-700",
-      "Townhouse": "from-teal-500 to-teal-700",
-      "Commercial": "from-orange-500 to-orange-700",
-      "Land": "from-green-500 to-green-700",
-    }
-    return typeColors[propertyType] || "from-slate-500 to-slate-700"
+  // Generate Street View image URL
+  const getStreetViewUrl = (address: string, city: string, state: string, zip: string, size: string = "80x80") => {
+    const fullAddress = `${address}, ${city}, ${state} ${zip}`
+    return `https://maps.googleapis.com/maps/api/streetview?size=${size}&location=${encodeURIComponent(fullAddress)}&key=AIzaSyDVar9A9qVzZYGJwhoCiU-tsFVIPWkJ28A`
   }
 
   // Sync URL state param with dropdown
@@ -2525,21 +2518,28 @@ function LeadsPageContent() {
                       className="h-4 w-4 rounded border-gray-300 flex-shrink-0"
                     />
                     <div
-                      className={cn(
-                        "relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-gradient-to-br cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all",
-                        getPropertyPlaceholderStyle(lead.property.propertyType)
-                      )}
-                      title="Click to view map"
-                      onClick={() => lead.lat && lead.lng && setMapModal({
+                      className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all bg-slate-100"
+                      title="Click to view property"
+                      onClick={() => setMapModal({
                         lat: lead.lat,
                         lng: lead.lng,
                         address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
                         propertyType: lead.property.propertyType
                       })}
                     >
-                      <Home className="h-8 w-8 text-white/80" />
-                      <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-[8px] text-white text-center py-0.5 truncate px-1">
-                        {lead.property.propertyType?.split(" ")[0] || "Home"}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={getStreetViewUrl(lead.propertyAddress, lead.city, lead.stateAbbr, lead.zipCode, "80x80")}
+                        alt={lead.propertyAddress}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement
+                          target.style.display = 'none'
+                          target.nextElementSibling?.classList.remove('hidden')
+                        }}
+                      />
+                      <div className="hidden absolute inset-0 flex items-center justify-center bg-slate-200">
+                        <Home className="h-8 w-8 text-slate-400" />
                       </div>
                     </div>
                   </div>
@@ -2680,26 +2680,31 @@ function LeadsPageContent() {
                         />
                       </div>
                       <div
-                        className={cn(
-                          "relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-gradient-to-br cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all",
-                          getPropertyPlaceholderStyle(lead.property.propertyType)
-                        )}
-                        title="Click to view map"
+                        className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all bg-slate-100"
+                        title="Click to view property"
                         onClick={(e) => {
                           e.stopPropagation()
-                          if (lead.lat && lead.lng) {
-                            setMapModal({
-                              lat: lead.lat,
-                              lng: lead.lng,
-                              address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
-                              propertyType: lead.property.propertyType
-                            })
-                          }
+                          setMapModal({
+                            lat: lead.lat,
+                            lng: lead.lng,
+                            address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
+                            propertyType: lead.property.propertyType
+                          })
                         }}
                       >
-                        <Home className="h-8 w-8 text-white/80" />
-                        <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-[8px] text-white text-center py-0.5 truncate px-1">
-                          {lead.property.propertyType?.split(" ")[0] || "Home"}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={getStreetViewUrl(lead.propertyAddress, lead.city, lead.stateAbbr, lead.zipCode, "80x80")}
+                          alt={lead.propertyAddress}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement
+                            target.style.display = 'none'
+                            target.nextElementSibling?.classList.remove('hidden')
+                          }}
+                        />
+                        <div className="hidden absolute inset-0 flex items-center justify-center bg-slate-200">
+                          <Home className="h-8 w-8 text-slate-400" />
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -2842,19 +2847,17 @@ function LeadsPageContent() {
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             </button>
-            <div className="w-full" style={{ aspectRatio: '16/9' }}>
-              <iframe
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                loading="lazy"
-                allowFullScreen
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=${mapModal.lng - 0.002},${mapModal.lat - 0.001},${mapModal.lng + 0.002},${mapModal.lat + 0.001}&layer=mapnik&marker=${mapModal.lat},${mapModal.lng}`}
+            <div className="w-full bg-slate-100" style={{ aspectRatio: '16/9' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`https://maps.googleapis.com/maps/api/streetview?size=800x450&location=${encodeURIComponent(mapModal.address)}&key=AIzaSyDVar9A9qVzZYGJwhoCiU-tsFVIPWkJ28A`}
+                alt={mapModal.address}
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="p-4 bg-slate-50 border-t">
               <p className="font-medium text-slate-800">{mapModal.address}</p>
-              <p className="text-sm text-slate-500">{mapModal.propertyType || "Property"} • OpenStreetMap</p>
+              <p className="text-sm text-slate-500">{mapModal.propertyType || "Property"} • Street View</p>
             </div>
           </div>
         </div>
