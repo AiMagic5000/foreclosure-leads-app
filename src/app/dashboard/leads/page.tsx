@@ -2849,13 +2849,12 @@ function LeadsPageContent() {
                 style={{ border: 0 }}
                 loading="lazy"
                 allowFullScreen
-                referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDVar9A9qVzZYGJwhoCiU-tsFVIPWkJ28A&q=${encodeURIComponent(mapModal.address)}&zoom=18&maptype=satellite`}
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${mapModal.lng - 0.002},${mapModal.lat - 0.001},${mapModal.lng + 0.002},${mapModal.lat + 0.001}&layer=mapnik&marker=${mapModal.lat},${mapModal.lng}`}
               />
             </div>
             <div className="p-4 bg-slate-50 border-t">
               <p className="font-medium text-slate-800">{mapModal.address}</p>
-              <p className="text-sm text-slate-500">{mapModal.propertyType || "Property"} • Satellite View</p>
+              <p className="text-sm text-slate-500">{mapModal.propertyType || "Property"} • OpenStreetMap</p>
             </div>
           </div>
         </div>
