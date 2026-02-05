@@ -2241,6 +2241,7 @@ function LeadsPageContent() {
   const [dbLeads, setDbLeads] = useState<LeadData[]>([])
   const [dbStates, setDbStates] = useState<string[]>(["All States"])
   const [leadsLoading, setLeadsLoading] = useState(true)
+  const [mapModal, setMapModal] = useState<{lat: number, lng: number, address: string, propertyType: string} | null>(null)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
 
   // Property placeholder colors based on property type
@@ -2525,10 +2526,16 @@ function LeadsPageContent() {
                     />
                     <div
                       className={cn(
-                        "relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-gradient-to-br",
+                        "relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-gradient-to-br cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all",
                         getPropertyPlaceholderStyle(lead.property.propertyType)
                       )}
-                      title={lead.property.propertyType || "Property"}
+                      title="Click to view map"
+                      onClick={() => lead.lat && lead.lng && setMapModal({
+                        lat: lead.lat,
+                        lng: lead.lng,
+                        address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
+                        propertyType: lead.property.propertyType
+                      })}
                     >
                       <Home className="h-8 w-8 text-white/80" />
                       <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-[8px] text-white text-center py-0.5 truncate px-1">
@@ -2674,10 +2681,21 @@ function LeadsPageContent() {
                       </div>
                       <div
                         className={cn(
-                          "relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-gradient-to-br",
+                          "relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-gradient-to-br cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all",
                           getPropertyPlaceholderStyle(lead.property.propertyType)
                         )}
-                        title={lead.property.propertyType || "Property"}
+                        title="Click to view map"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          if (lead.lat && lead.lng) {
+                            setMapModal({
+                              lat: lead.lat,
+                              lng: lead.lng,
+                              address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
+                              propertyType: lead.property.propertyType
+                            })
+                          }
+                        }}
                       >
                         <Home className="h-8 w-8 text-white/80" />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-[8px] text-white text-center py-0.5 truncate px-1">
@@ -2804,6 +2822,44 @@ function LeadsPageContent() {
           )
         })}
       </div>
+
+      {/* Map Modal Popup */}
+      {mapModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          onClick={() => setMapModal(null)}
+        >
+          <div
+            className="relative bg-white rounded-lg shadow-2xl overflow-hidden max-w-[800px] w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setMapModal(null)}
+              className="absolute top-3 right-3 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <div className="w-full" style={{ aspectRatio: '16/9' }}>
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDVar9A9qVzZYGJwhoCiU-tsFVIPWkJ28A&q=${encodeURIComponent(mapModal.address)}&zoom=18&maptype=satellite`}
+              />
+            </div>
+            <div className="p-4 bg-slate-50 border-t">
+              <p className="font-medium text-slate-800">{mapModal.address}</p>
+              <p className="text-sm text-slate-500">{mapModal.propertyType || "Property"} • Satellite View</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Source note */}
       {filteredLeads.length > 0 && (
