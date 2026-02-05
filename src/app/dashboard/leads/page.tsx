@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 import {
   Search,
@@ -73,6 +74,7 @@ interface LeadData {
   scrapedAt: string
   lat: number
   lng: number
+  propertyImageUrl?: string | null
   skipTrace: {
     fullName: string
     aliases: string[]
@@ -2155,6 +2157,7 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
     scrapedAt: String(row.scraped_at || new Date().toISOString()),
     lat: Number(row.lat) || 0,
     lng: Number(row.lng) || 0,
+    propertyImageUrl: row.property_image_url ? String(row.property_image_url) : null,
     skipTrace: {
       fullName: String(row.owner_name || ""),
       aliases: [],
@@ -2463,16 +2466,17 @@ function LeadsPageContent() {
       {/* Leads Table Header */}
       <div className="hidden lg:block">
         <div className="grid grid-cols-12 gap-4 px-4 py-2 text-sm font-medium text-muted-foreground border-b">
-          <div className="col-span-1 flex items-center">
+          <div className="col-span-1 flex items-center gap-2">
             <input
               type="checkbox"
               checked={selectedLeads.length === filteredLeads.length && filteredLeads.length > 0}
               onChange={toggleAllLeads}
               className="h-4 w-4 rounded border-gray-300"
             />
+            <span className="text-xs">Photo</span>
           </div>
           <div className="col-span-3">Property Owner</div>
-          <div className="col-span-3">Address</div>
+          <div className="col-span-3">Address & Details</div>
           <div className="col-span-2">Sale Info</div>
           <div className="col-span-2">Street View</div>
           <div className="col-span-1">Status</div>
@@ -2499,28 +2503,43 @@ function LeadsPageContent() {
                   className="hidden lg:grid grid-cols-12 gap-4 items-center cursor-pointer"
                   onClick={() => toggleExpanded(lead.id)}
                 >
-                  <div className="col-span-1" onClick={(e) => e.stopPropagation()}>
+                  <div className="col-span-1 flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                     <input
                       type="checkbox"
                       checked={selectedLeads.includes(lead.id)}
                       onChange={() => toggleLeadSelection(lead.id)}
-                      className="h-4 w-4 rounded border-gray-300"
+                      className="h-4 w-4 rounded border-gray-300 flex-shrink-0"
                     />
+                    {lead.propertyImageUrl ? (
+                      <div className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0">
+                        <Image
+                          src={lead.propertyImageUrl}
+                          alt={lead.propertyAddress}
+                          fill
+                          className="object-cover"
+                          sizes="80px"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded bg-muted flex items-center justify-center border border-gray-200 flex-shrink-0">
+                        <Home className="h-8 w-8 text-muted-foreground/50" />
+                      </div>
+                    )}
                   </div>
                   <div className="col-span-3">
-                    <div className="flex items-center gap-3">
-                      <StreetViewButton
-                        lat={lead.lat}
-                        lng={lead.lng}
-                        compact
-                        className="h-[40px] min-w-[100px] rounded shrink-0"
-                      />
-                      <div>
+                    <div className="flex items-start gap-2">
+                      <div className="flex-1">
                         <div className="font-medium">{formatOwnerName(lead.ownerName, isRevealed)}</div>
-                        {lead.parcelId ? (
-                          <div className="text-xs text-muted-foreground">APN: {lead.parcelId}</div>
-                        ) : (
-                          <div className="text-xs text-muted-foreground">{lead.foreclosureType}</div>
+                        {lead.parcelId && (
+                          <Badge variant="outline" className="text-xs mt-1 bg-blue-50 border-blue-200 text-blue-700">
+                            <Hash className="h-3 w-3 mr-1" />
+                            {lead.parcelId}
+                          </Badge>
+                        )}
+                        {lead.county && (
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {lead.county} County
+                          </div>
                         )}
                       </div>
                     </div>
@@ -2528,17 +2547,42 @@ function LeadsPageContent() {
                   <div className="col-span-3">
                     <div className="flex items-start gap-2">
                       <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-                      <div>
-                        <div>{lead.propertyAddress}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium truncate">{lead.propertyAddress}</div>
                         <div className="text-sm text-muted-foreground">
                           {lead.city}, {lead.stateAbbr} {lead.zipCode}
                         </div>
                         {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                            {lead.property.bedrooms > 0 && <span>{lead.property.bedrooms} bd</span>}
-                            {lead.property.bathrooms > 0 && <span>{lead.property.bathrooms} ba</span>}
-                            {lead.property.sqft > 0 && <span>{lead.property.sqft.toLocaleString()} sqft</span>}
-                            {lead.property.lotSize && <span>{lead.property.lotSize} lot</span>}
+                          <div className="flex items-center gap-2 text-xs font-medium text-slate-600 mt-1">
+                            {lead.property.bedrooms > 0 && (
+                              <span className="flex items-center gap-0.5">
+                                <BedDouble className="h-3 w-3" />
+                                {lead.property.bedrooms}
+                              </span>
+                            )}
+                            {lead.property.bathrooms > 0 && (
+                              <span className="flex items-center gap-0.5">
+                                <Bath className="h-3 w-3" />
+                                {lead.property.bathrooms}
+                              </span>
+                            )}
+                            {lead.property.sqft > 0 && (
+                              <span className="flex items-center gap-0.5">
+                                <Ruler className="h-3 w-3" />
+                                {lead.property.sqft.toLocaleString()} sf
+                              </span>
+                            )}
+                          </div>
+                        )}
+                        {lead.property.yearBuilt > 0 && (
+                          <div className="text-xs text-muted-foreground mt-1">
+                            Built {lead.property.yearBuilt}
+                            {lead.property.lotSize && ` • ${lead.property.lotSize} lot`}
+                          </div>
+                        )}
+                        {lead.taxData.assessedValue > 0 && (
+                          <div className="text-xs font-medium text-blue-600 mt-1">
+                            Assessed: ${lead.taxData.assessedValue.toLocaleString()}
                           </div>
                         )}
                       </div>
@@ -2618,17 +2662,32 @@ function LeadsPageContent() {
                           className="h-4 w-4 rounded border-gray-300 mt-1"
                         />
                       </div>
-                      <StreetViewButton
-                        lat={lead.lat}
-                        lng={lead.lng}
-                        compact
-                        className="h-[40px] min-w-[100px] rounded shrink-0"
-                      />
-                      <div>
-                        <div className="font-medium">{formatOwnerName(lead.ownerName, isRevealed)}</div>
+                      {lead.propertyImageUrl ? (
+                        <div className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0">
+                          <Image
+                            src={lead.propertyImageUrl}
+                            alt={lead.propertyAddress}
+                            fill
+                            className="object-cover"
+                            sizes="80px"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-20 h-20 rounded bg-muted flex items-center justify-center border border-gray-200 flex-shrink-0">
+                          <Home className="h-8 w-8 text-muted-foreground/50" />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium truncate">{formatOwnerName(lead.ownerName, isRevealed)}</div>
                         <div className="text-sm text-muted-foreground">
                           {lead.city}, {lead.stateAbbr}
                         </div>
+                        {lead.parcelId && (
+                          <Badge variant="outline" className="text-xs mt-1 bg-blue-50 border-blue-200 text-blue-700">
+                            <Hash className="h-3 w-3 mr-1" />
+                            {lead.parcelId}
+                          </Badge>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -2645,17 +2704,41 @@ function LeadsPageContent() {
 
                   <div className="flex items-start gap-2 text-sm">
                     <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span>{lead.propertyAddress}, {lead.city}, {lead.stateAbbr} {lead.zipCode}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium">{lead.propertyAddress}</div>
+                      <div className="text-muted-foreground">{lead.city}, {lead.stateAbbr} {lead.zipCode}</div>
                       {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                          {lead.property.bedrooms > 0 && <span>{lead.property.bedrooms} bd</span>}
-                          {lead.property.bathrooms > 0 && <span>{lead.property.bathrooms} ba</span>}
-                          {lead.property.sqft > 0 && <span>{lead.property.sqft.toLocaleString()} sqft</span>}
+                        <div className="flex items-center gap-3 text-xs font-medium text-slate-600 mt-1">
+                          {lead.property.bedrooms > 0 && (
+                            <span className="flex items-center gap-1">
+                              <BedDouble className="h-3 w-3" />
+                              {lead.property.bedrooms}
+                            </span>
+                          )}
+                          {lead.property.bathrooms > 0 && (
+                            <span className="flex items-center gap-1">
+                              <Bath className="h-3 w-3" />
+                              {lead.property.bathrooms}
+                            </span>
+                          )}
+                          {lead.property.sqft > 0 && (
+                            <span className="flex items-center gap-1">
+                              <Ruler className="h-3 w-3" />
+                              {lead.property.sqft.toLocaleString()} sf
+                            </span>
+                          )}
                         </div>
                       )}
-                      {lead.parcelId && (
-                        <div className="text-xs text-muted-foreground">APN: {lead.parcelId}</div>
+                      {lead.property.yearBuilt > 0 && (
+                        <div className="text-xs text-muted-foreground mt-1">
+                          Built {lead.property.yearBuilt}
+                          {lead.property.lotSize && ` • ${lead.property.lotSize} lot`}
+                        </div>
+                      )}
+                      {lead.county && (
+                        <div className="text-xs text-muted-foreground mt-1">
+                          {lead.county} County
+                        </div>
                       )}
                     </div>
                   </div>
