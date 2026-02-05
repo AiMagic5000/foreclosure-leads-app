@@ -2241,8 +2241,20 @@ function LeadsPageContent() {
   const [dbLeads, setDbLeads] = useState<LeadData[]>([])
   const [dbStates, setDbStates] = useState<string[]>(["All States"])
   const [leadsLoading, setLeadsLoading] = useState(true)
-  const [imageModal, setImageModal] = useState<{url: string, address: string} | null>(null)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
+
+  // Property placeholder colors based on property type
+  const getPropertyPlaceholderStyle = (propertyType: string) => {
+    const typeColors: Record<string, string> = {
+      "Single Family Residence": "from-blue-500 to-blue-700",
+      "Multi-Family": "from-purple-500 to-purple-700",
+      "Condo": "from-cyan-500 to-cyan-700",
+      "Townhouse": "from-teal-500 to-teal-700",
+      "Commercial": "from-orange-500 to-orange-700",
+      "Land": "from-green-500 to-green-700",
+    }
+    return typeColors[propertyType] || "from-slate-500 to-slate-700"
+  }
 
   // Sync URL state param with dropdown
   useEffect(() => {
@@ -2511,25 +2523,18 @@ function LeadsPageContent() {
                       onChange={() => toggleLeadSelection(lead.id)}
                       className="h-4 w-4 rounded border-gray-300 flex-shrink-0"
                     />
-                    {lead.propertyImageUrl ? (
-                      <div
-                        className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all"
-                        onClick={() => setImageModal({ url: lead.propertyImageUrl!, address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}` })}
-                        title="Click to enlarge"
-                      >
-                        <Image
-                          src={lead.propertyImageUrl}
-                          alt={lead.propertyAddress}
-                          fill
-                          className="object-cover"
-                          sizes="80px"
-                        />
+                    <div
+                      className={cn(
+                        "relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-gradient-to-br",
+                        getPropertyPlaceholderStyle(lead.property.propertyType)
+                      )}
+                      title={lead.property.propertyType || "Property"}
+                    >
+                      <Home className="h-8 w-8 text-white/80" />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-[8px] text-white text-center py-0.5 truncate px-1">
+                        {lead.property.propertyType?.split(" ")[0] || "Home"}
                       </div>
-                    ) : (
-                      <div className="w-20 h-20 rounded bg-muted flex items-center justify-center border border-gray-200 flex-shrink-0">
-                        <Home className="h-8 w-8 text-muted-foreground/50" />
-                      </div>
-                    )}
+                    </div>
                   </div>
                   <div className="col-span-3">
                     <div className="flex items-start gap-2">
@@ -2667,28 +2672,18 @@ function LeadsPageContent() {
                           className="h-4 w-4 rounded border-gray-300 mt-1"
                         />
                       </div>
-                      {lead.propertyImageUrl ? (
-                        <div
-                          className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            setImageModal({ url: lead.propertyImageUrl!, address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}` })
-                          }}
-                          title="Click to enlarge"
-                        >
-                          <Image
-                            src={lead.propertyImageUrl}
-                            alt={lead.propertyAddress}
-                            fill
-                            className="object-cover"
-                            sizes="80px"
-                          />
+                      <div
+                        className={cn(
+                          "relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-gradient-to-br",
+                          getPropertyPlaceholderStyle(lead.property.propertyType)
+                        )}
+                        title={lead.property.propertyType || "Property"}
+                      >
+                        <Home className="h-8 w-8 text-white/80" />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-[8px] text-white text-center py-0.5 truncate px-1">
+                          {lead.property.propertyType?.split(" ")[0] || "Home"}
                         </div>
-                      ) : (
-                        <div className="w-20 h-20 rounded bg-muted flex items-center justify-center border border-gray-200 flex-shrink-0">
-                          <Home className="h-8 w-8 text-muted-foreground/50" />
-                        </div>
-                      )}
+                      </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-medium truncate">{formatOwnerName(lead.ownerName, isRevealed)}</div>
                         <div className="text-sm text-muted-foreground">
@@ -2809,43 +2804,6 @@ function LeadsPageContent() {
           )
         })}
       </div>
-
-      {/* Image Modal */}
-      {imageModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-          onClick={() => setImageModal(null)}
-        >
-          <div
-            className="relative bg-white rounded-lg shadow-2xl overflow-hidden max-w-[800px] w-full mx-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setImageModal(null)}
-              className="absolute top-3 right-3 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-            <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
-              <Image
-                src={imageModal.url.replace('size=80x80', 'size=800x450')}
-                alt={imageModal.address}
-                fill
-                className="object-cover"
-                sizes="800px"
-                priority
-              />
-            </div>
-            <div className="p-4 bg-slate-50 border-t">
-              <p className="font-medium text-slate-800">{imageModal.address}</p>
-              <p className="text-sm text-slate-500">Google Street View</p>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Source note */}
       {filteredLeads.length > 0 && (
