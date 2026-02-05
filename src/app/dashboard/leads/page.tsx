@@ -2241,6 +2241,7 @@ function LeadsPageContent() {
   const [dbLeads, setDbLeads] = useState<LeadData[]>([])
   const [dbStates, setDbStates] = useState<string[]>(["All States"])
   const [leadsLoading, setLeadsLoading] = useState(true)
+  const [imageModal, setImageModal] = useState<{url: string, address: string} | null>(null)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
 
   // Sync URL state param with dropdown
@@ -2511,7 +2512,11 @@ function LeadsPageContent() {
                       className="h-4 w-4 rounded border-gray-300 flex-shrink-0"
                     />
                     {lead.propertyImageUrl ? (
-                      <div className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0">
+                      <div
+                        className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all"
+                        onClick={() => setImageModal({ url: lead.propertyImageUrl!, address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}` })}
+                        title="Click to enlarge"
+                      >
                         <Image
                           src={lead.propertyImageUrl}
                           alt={lead.propertyAddress}
@@ -2663,7 +2668,14 @@ function LeadsPageContent() {
                         />
                       </div>
                       {lead.propertyImageUrl ? (
-                        <div className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0">
+                        <div
+                          className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setImageModal({ url: lead.propertyImageUrl!, address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}` })
+                          }}
+                          title="Click to enlarge"
+                        >
                           <Image
                             src={lead.propertyImageUrl}
                             alt={lead.propertyAddress}
@@ -2798,10 +2810,47 @@ function LeadsPageContent() {
         })}
       </div>
 
+      {/* Image Modal */}
+      {imageModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          onClick={() => setImageModal(null)}
+        >
+          <div
+            className="relative bg-white rounded-lg shadow-2xl overflow-hidden max-w-[800px] w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setImageModal(null)}
+              className="absolute top-3 right-3 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+              <Image
+                src={imageModal.url.replace('size=80x80', 'size=800x450')}
+                alt={imageModal.address}
+                fill
+                className="object-cover"
+                sizes="800px"
+                priority
+              />
+            </div>
+            <div className="p-4 bg-slate-50 border-t">
+              <p className="font-medium text-slate-800">{imageModal.address}</p>
+              <p className="text-sm text-slate-500">Google Street View</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Source note */}
       {filteredLeads.length > 0 && (
         <p className="text-xs text-muted-foreground text-center pt-2">
-          Street View images from Google Maps. Click to open full view. All lead data sourced from county recorder offices, court filings, and public notice databases.
+          All lead data sourced from county recorder offices, court filings, and public notice databases.
         </p>
       )}
 
