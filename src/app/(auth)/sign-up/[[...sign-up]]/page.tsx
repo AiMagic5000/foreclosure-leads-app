@@ -16,6 +16,7 @@ export default function SignUpPage() {
         <span className="text-xl font-bold">Asset Recovery Leads</span>
       </Link>
       <SignUp
+        forceRedirectUrl="/dashboard"
         appearance={{
           elements: {
             rootBox: "mx-auto",
