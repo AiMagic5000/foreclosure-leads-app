@@ -1377,114 +1377,6 @@ function DataRow({ label, value, icon: Icon, blurred = false, revealed = false }
   )
 }
 
-function formatOwnerName(name: string, revealed = false) {
-  const parts = name.split(" ")
-  if (parts.length <= 1) return name
-  const firstName = parts[0]
-  const middleParts = parts.slice(1, -1)
-  const lastName = parts[parts.length - 1]
-  return (
-    <>
-      {firstName} {middleParts.map(m => m + " ")}
-      <BlurredText revealed={revealed}>{lastName}</BlurredText>
-    </>
-  )
-}
-
-function formatPhone(phone: string, revealed = false) {
-  if (revealed) return <>{phone}</>
-  const clean = phone.replace(/\D/g, "")
-  if (clean.length >= 10) {
-    const visible = phone.slice(0, -4)
-    const blurred = phone.slice(-4)
-    return (
-      <>
-        {visible}<BlurredText>{blurred}</BlurredText>
-      </>
-    )
-  }
-  return <>{phone}</>
-}
-
-function formatEmail(email: string, revealed = false) {
-  if (revealed) return <>{email}</>
-  const atIndex = email.indexOf("@")
-  if (atIndex === -1) return <>{email}</>
-  const username = email.slice(0, atIndex + 1)
-  const provider = email.slice(atIndex + 1)
-  return (
-    <>
-      {username}<BlurredText>{provider}</BlurredText>
-    </>
-  )
-}
-
-// Google Street View URL helpers (no API key required - uses direct links)
-function getStreetViewLink(lat: number, lng: number) {
-  if (!lat || !lng) return null
-  return `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${lat},${lng}`
-}
-
-function getGoogleMapsLink(lat: number, lng: number) {
-  if (!lat || !lng) return null
-  return `https://www.google.com/maps?q=${lat},${lng}&t=k&z=19`
-}
-
-function StreetViewButton({ lat, lng, className = "", compact = false }: { lat: number; lng: number; className?: string; compact?: boolean }) {
-  const streetViewUrl = getStreetViewLink(lat, lng)
-  const mapsUrl = getGoogleMapsLink(lat, lng)
-
-  if (!lat || !lng) {
-    return (
-      <div className={cn("bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-muted-foreground", className)}>
-        <Home className="h-5 w-5 opacity-40" />
-      </div>
-    )
-  }
-
-  if (compact) {
-    return (
-      <a
-        href={streetViewUrl || "#"}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        className={cn("bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 flex items-center justify-center gap-1.5 text-white font-medium rounded transition-all shadow-sm hover:shadow", className)}
-        title="Open Google Street View"
-      >
-        <Eye className="h-4 w-4" />
-        <span className="text-xs">Street View</span>
-      </a>
-    )
-  }
-
-  return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
-      <a
-        href={streetViewUrl || "#"}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        className="bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 flex items-center justify-center gap-2 text-white font-medium py-2 px-3 rounded transition-all shadow-sm hover:shadow"
-        title="Open Google Street View"
-      >
-        <Eye className="h-4 w-4" />
-        <span className="text-sm">Street View</span>
-      </a>
-      <a
-        href={mapsUrl || "#"}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        className="bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 flex items-center justify-center gap-2 text-white font-medium py-1.5 px-3 rounded text-xs transition-all shadow-sm hover:shadow"
-        title="Open Google Maps Satellite"
-      >
-        <MapPin className="h-3 w-3" />
-        <span>Satellite Map</span>
-      </a>
-    </div>
-  )
-}
 
 function FlagBadge({ label, active }: { label: string; active: boolean }) {
   return (
@@ -1836,9 +1728,9 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-1 p-3 rounded-lg bg-muted/50 border">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Location</h4>
-            <DataRow label="Address" value={lead.propertyAddress} icon={MapPin} />
+            <DataRow label="Address" value={lead.propertyAddress} icon={MapPin} blurred revealed={revealed} />
             <DataRow label="City" value={`${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`} />
-            {lead.parcelId && <DataRow label="APN" value={lead.parcelId} icon={Hash} />}
+            {lead.parcelId && <DataRow label="APN" value={lead.parcelId} icon={Hash} blurred revealed={revealed} />}
             {lead.county && <DataRow label="County" value={lead.county} icon={Globe} />}
             <DataRow label="Type" value={lead.property.propertyType} icon={Building} />
           </div>
@@ -1913,12 +1805,12 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
             <div className="text-sm space-y-2">
               <div>
                 <span className="text-xs text-muted-foreground">Current:</span>
-                <p className="font-medium">{lead.skipTrace.currentAddress}</p>
+                <p className="font-medium"><BlurredText revealed={revealed}>{lead.skipTrace.currentAddress}</BlurredText></p>
               </div>
               {lead.skipTrace.previousAddresses.map((addr, i) => (
                 <div key={i}>
                   <span className="text-xs text-muted-foreground">Previous {i + 1}:</span>
-                  <p>{addr}</p>
+                  <p><BlurredText revealed={revealed}>{addr}</BlurredText></p>
                 </div>
               ))}
             </div>
@@ -1929,7 +1821,7 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
               {lead.skipTrace.relatives.map((rel, i) => (
                 <p key={i} className="text-sm flex items-center gap-1.5">
                   <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                  {rel}
+                  <BlurredText revealed={revealed}>{rel}</BlurredText>
                 </p>
               ))}
             </div>
@@ -2009,7 +1901,7 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1 p-3 rounded-lg bg-muted/50 border">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Filing Details</h4>
-            <DataRow label="Case Number" value={lead.foreclosureDetails.caseNumber} icon={FileText} />
+            <DataRow label="Case Number" value={lead.foreclosureDetails.caseNumber} icon={FileText} blurred revealed={revealed} />
             <DataRow label="Filing Date" value={new Date(lead.foreclosureDetails.filingDate).toLocaleDateString()} icon={Calendar} />
             <DataRow label="Notice Type" value={lead.foreclosureDetails.noticeType} icon={Gavel} />
             <DataRow label="Court" value={lead.foreclosureDetails.courtName} icon={Scale} />
@@ -2072,12 +1964,12 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
           <div className="flex flex-wrap gap-4 text-sm">
             <div className="flex items-center gap-1.5">
               <MapPin className="h-4 w-4 text-muted-foreground" />
-              <span>{lead.propertyAddress}, {lead.city}, {lead.stateAbbr} {lead.zipCode}</span>
+              <span><BlurredText revealed={revealed}>{lead.propertyAddress}, {lead.city}, {lead.stateAbbr} {lead.zipCode}</BlurredText></span>
             </div>
             {lead.parcelId && (
               <div className="flex items-center gap-1.5">
                 <Hash className="h-4 w-4 text-muted-foreground" />
-                <span>APN: {lead.parcelId}</span>
+                <span>APN: <BlurredText revealed={revealed}>{lead.parcelId}</BlurredText></span>
               </div>
             )}
             {lead.county && (
@@ -2244,10 +2136,13 @@ function LeadsPageContent() {
   const [mapModal, setMapModal] = useState<{lat: number, lng: number, address: string, propertyType: string} | null>(null)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
 
-  // Generate Street View image URL
-  const getStreetViewUrl = (address: string, city: string, state: string, zip: string, size: string = "80x80") => {
-    const fullAddress = `${address}, ${city}, ${state} ${zip}`
-    return `https://maps.googleapis.com/maps/api/streetview?size=${size}&location=${encodeURIComponent(fullAddress)}&key=AIzaSyDVar9A9qVzZYGJwhoCiU-tsFVIPWkJ28A`
+  // Generate satellite image URL from Esri World Imagery (free, no API key)
+  const getSatelliteUrl = (lat: number, lng: number, zoom: number = 18) => {
+    if (!lat || !lng || lat === 0 || lng === 0) return null
+    const n = Math.pow(2, zoom)
+    const x = Math.floor((lng + 180) / 360 * n)
+    const y = Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * n)
+    return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${zoom}/${y}/${x}`
   }
 
   // Sync URL state param with dropdown
@@ -2517,40 +2412,39 @@ function LeadsPageContent() {
                       onChange={() => toggleLeadSelection(lead.id)}
                       className="h-4 w-4 rounded border-gray-300 flex-shrink-0"
                     />
-                    <div
-                      className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all bg-slate-100"
-                      title="Click to view property"
-                      onClick={() => setMapModal({
-                        lat: lead.lat,
-                        lng: lead.lng,
-                        address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
-                        propertyType: lead.property.propertyType
-                      })}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={getStreetViewUrl(lead.propertyAddress, lead.city, lead.stateAbbr, lead.zipCode, "80x80")}
-                        alt={lead.propertyAddress}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement
-                          target.style.display = 'none'
-                          target.nextElementSibling?.classList.remove('hidden')
-                        }}
-                      />
-                      <div className="hidden absolute inset-0 flex items-center justify-center bg-slate-200">
-                        <Home className="h-8 w-8 text-slate-400" />
-                      </div>
-                    </div>
+                    {(() => {
+                      const satUrl = getSatelliteUrl(lead.lat, lead.lng)
+                      return satUrl ? (
+                        <div
+                          className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all"
+                          title="Click to view property"
+                          onClick={() => setMapModal({
+                            lat: lead.lat,
+                            lng: lead.lng,
+                            address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
+                            propertyType: lead.property.propertyType
+                          })}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={satUrl} alt={lead.propertyAddress} className="w-full h-full object-cover" />
+                        </div>
+                      ) : (
+                        <div className="w-20 h-20 rounded bg-slate-200 flex items-center justify-center border border-gray-200 flex-shrink-0">
+                          <Home className="h-8 w-8 text-slate-400" />
+                        </div>
+                      )
+                    })()}
                   </div>
                   <div className="col-span-3">
                     <div className="flex items-start gap-2">
                       <div className="flex-1">
-                        <div className="font-medium">{formatOwnerName(lead.ownerName, isRevealed)}</div>
+                        <div className="font-medium">
+                          <BlurredText revealed={isRevealed}>{lead.ownerName}</BlurredText>
+                        </div>
                         {lead.parcelId && (
                           <Badge variant="outline" className="text-xs mt-1 bg-blue-50 border-blue-200 text-blue-700">
                             <Hash className="h-3 w-3 mr-1" />
-                            {lead.parcelId}
+                            <BlurredText revealed={isRevealed}>{lead.parcelId}</BlurredText>
                           </Badge>
                         )}
                         {lead.county && (
@@ -2565,7 +2459,9 @@ function LeadsPageContent() {
                     <div className="flex items-start gap-2">
                       <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">{lead.propertyAddress}</div>
+                        <div className="font-medium truncate">
+                          <BlurredText revealed={isRevealed}>{lead.propertyAddress}</BlurredText>
+                        </div>
                         <div className="text-sm text-muted-foreground">
                           {lead.city}, {lead.stateAbbr} {lead.zipCode}
                         </div>
@@ -2642,15 +2538,15 @@ function LeadsPageContent() {
                       <div className="space-y-1">
                         <div className="flex items-center gap-1.5">
                           <Phone className="h-3.5 w-3.5 text-emerald-600" />
-                          <a href={`tel:${lead.primaryPhone}`} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => e.stopPropagation()}>
-                            {isRevealed || revealedLeads.includes(lead.id) ? lead.primaryPhone : lead.primaryPhone.replace(/\d(?=\d{4})/g, '*')}
+                          <a href={isRevealed ? `tel:${lead.primaryPhone}` : '#'} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => { e.stopPropagation(); if (!isRevealed) e.preventDefault() }}>
+                            <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                           </a>
                         </div>
                         {lead.secondaryPhone && (
                           <div className="flex items-center gap-1.5">
                             <Phone className="h-3 w-3 text-muted-foreground" />
                             <span className="text-xs text-muted-foreground">
-                              {isRevealed || revealedLeads.includes(lead.id) ? lead.secondaryPhone : lead.secondaryPhone.replace(/\d(?=\d{4})/g, '*')}
+                              <BlurredText revealed={isRevealed}>{lead.secondaryPhone}</BlurredText>
                             </span>
                           </div>
                         )}
@@ -2658,7 +2554,7 @@ function LeadsPageContent() {
                           <div className="flex items-center gap-1.5">
                             <Mail className="h-3 w-3 text-blue-600" />
                             <span className="text-xs text-blue-600 truncate max-w-[140px]">
-                              {isRevealed || revealedLeads.includes(lead.id) ? lead.primaryEmail : '****@****.com'}
+                              <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
                             </span>
                           </div>
                         )}
@@ -2705,43 +2601,42 @@ function LeadsPageContent() {
                           className="h-4 w-4 rounded border-gray-300 mt-1"
                         />
                       </div>
-                      <div
-                        className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all bg-slate-100"
-                        title="Click to view property"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          setMapModal({
-                            lat: lead.lat,
-                            lng: lead.lng,
-                            address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
-                            propertyType: lead.property.propertyType
-                          })
-                        }}
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={getStreetViewUrl(lead.propertyAddress, lead.city, lead.stateAbbr, lead.zipCode, "80x80")}
-                          alt={lead.propertyAddress}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.style.display = 'none'
-                            target.nextElementSibling?.classList.remove('hidden')
-                          }}
-                        />
-                        <div className="hidden absolute inset-0 flex items-center justify-center bg-slate-200">
-                          <Home className="h-8 w-8 text-slate-400" />
-                        </div>
-                      </div>
+                      {(() => {
+                        const satUrl = getSatelliteUrl(lead.lat, lead.lng)
+                        return satUrl ? (
+                          <div
+                            className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all bg-slate-100"
+                            title="Click to view property"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setMapModal({
+                                lat: lead.lat,
+                                lng: lead.lng,
+                                address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
+                                propertyType: lead.property.propertyType
+                              })
+                            }}
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={satUrl} alt={lead.propertyAddress} className="w-full h-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-20 h-20 rounded bg-slate-200 flex items-center justify-center border border-gray-200 flex-shrink-0">
+                            <Home className="h-8 w-8 text-slate-400" />
+                          </div>
+                        )
+                      })()}
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">{formatOwnerName(lead.ownerName, isRevealed)}</div>
+                        <div className="font-medium truncate">
+                          <BlurredText revealed={isRevealed}>{lead.ownerName}</BlurredText>
+                        </div>
                         <div className="text-sm text-muted-foreground">
                           {lead.city}, {lead.stateAbbr}
                         </div>
                         {lead.parcelId && (
                           <Badge variant="outline" className="text-xs mt-1 bg-blue-50 border-blue-200 text-blue-700">
                             <Hash className="h-3 w-3 mr-1" />
-                            {lead.parcelId}
+                            <BlurredText revealed={isRevealed}>{lead.parcelId}</BlurredText>
                           </Badge>
                         )}
                       </div>
@@ -2761,7 +2656,9 @@ function LeadsPageContent() {
                   <div className="flex items-start gap-2 text-sm">
                     <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="font-medium">{lead.propertyAddress}</div>
+                      <div className="font-medium">
+                        <BlurredText revealed={isRevealed}>{lead.propertyAddress}</BlurredText>
+                      </div>
                       <div className="text-muted-foreground">{lead.city}, {lead.stateAbbr} {lead.zipCode}</div>
                       {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
                         <div className="flex items-center gap-3 text-xs font-medium text-slate-600 mt-1">
@@ -2841,15 +2738,15 @@ function LeadsPageContent() {
                     {lead.primaryPhone ? (
                       <div className="flex items-center gap-2">
                         <Phone className="h-4 w-4 text-emerald-600" />
-                        <a href={`tel:${lead.primaryPhone}`} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => e.stopPropagation()}>
-                          {isRevealed || revealedLeads.includes(lead.id) ? lead.primaryPhone : lead.primaryPhone.replace(/\d(?=\d{4})/g, '*')}
+                        <a href={isRevealed ? `tel:${lead.primaryPhone}` : '#'} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => { e.stopPropagation(); if (!isRevealed) e.preventDefault() }}>
+                          <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                         </a>
                         {lead.primaryEmail && (
                           <>
                             <span className="text-muted-foreground">|</span>
                             <Mail className="h-3.5 w-3.5 text-blue-600" />
                             <span className="text-xs text-blue-600 truncate">
-                              {isRevealed || revealedLeads.includes(lead.id) ? lead.primaryEmail : '****@****.com'}
+                              <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
                             </span>
                           </>
                         )}
@@ -2891,19 +2788,48 @@ function LeadsPageContent() {
               </svg>
             </button>
             <div className="w-full" style={{ aspectRatio: '16/9' }}>
-              <iframe
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                loading="lazy"
-                allowFullScreen
-                referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps?q=${encodeURIComponent(mapModal.address)}&layer=c&cbll=${mapModal.lat},${mapModal.lng}&cbp=12,0,0,0,0&output=svembed`}
-              />
+              {(() => {
+                const satUrl = getSatelliteUrl(mapModal.lat, mapModal.lng, 19)
+                if (!satUrl) return (
+                  <div className="w-full h-full flex items-center justify-center bg-slate-200">
+                    <Home className="h-16 w-16 text-slate-400" />
+                  </div>
+                )
+                const zoom = 19
+                const n = Math.pow(2, zoom)
+                const centerX = (mapModal.lng + 180) / 360 * n
+                const centerY = (1 - Math.log(Math.tan(mapModal.lat * Math.PI / 180) + 1 / Math.cos(mapModal.lat * Math.PI / 180)) / Math.PI) / 2 * n
+                const tiles: {x: number, y: number, key: string}[] = []
+                for (let dy = -1; dy <= 1; dy++) {
+                  for (let dx = -2; dx <= 2; dx++) {
+                    const tx = Math.floor(centerX) + dx
+                    const ty = Math.floor(centerY) + dy
+                    tiles.push({x: tx, y: ty, key: `${tx}-${ty}`})
+                  }
+                }
+                return (
+                  <div className="w-full h-full relative overflow-hidden bg-slate-800">
+                    <div className="absolute inset-0 grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)', gridTemplateRows: 'repeat(3, 1fr)' }}>
+                      {tiles.map(t => (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          key={t.key}
+                          src={`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${zoom}/${t.y}/${t.x}`}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      ))}
+                    </div>
+                    <div className="absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
+                      Satellite View
+                    </div>
+                  </div>
+                )
+              })()}
             </div>
             <div className="p-4 bg-slate-50 border-t">
               <p className="font-medium text-slate-800">{mapModal.address}</p>
-              <p className="text-sm text-slate-500">{mapModal.propertyType || "Property"} • Street View</p>
+              <p className="text-sm text-slate-500">{mapModal.propertyType || "Property"} • Satellite Imagery</p>
             </div>
           </div>
         </div>
