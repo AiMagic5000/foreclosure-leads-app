@@ -3,13 +3,15 @@
 Skip Trace Enrichment Script
 Enriches foreclosure leads with phone numbers and emails from free public search sites.
 
+Uses cloudscraper (Cloudflare bypass) with WhitePages and Addresses.com as primary sources.
+TruePeopleSearch and FastPeopleSearch are CAPTCHA-protected and used as fallbacks only.
+
 Usage:
     python skip_trace.py [--batch-size 50] [--delay 5] [--dry-run]
 
 Environment Variables:
     SUPABASE_URL: Supabase project URL (default: https://foreclosure-db.alwaysencrypted.com)
     SUPABASE_SERVICE_KEY: Service role key
-    CRAWL4AI_URL: Crawl4AI instance URL (default: https://crawl4ai.alwaysencrypted.com)
 """
 
 import os
@@ -23,6 +25,8 @@ from typing import Dict, List, Optional, Tuple
 from urllib.parse import quote
 
 import requests
+import cloudscraper
+from bs4 import BeautifulSoup
 
 # Configuration
 SUPABASE_URL = os.getenv(
@@ -33,19 +37,6 @@ SUPABASE_SERVICE_KEY = os.getenv(
     "SUPABASE_SERVICE_KEY",
     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTc3MDA2MjM0MCwiZXhwIjo0OTI1NzM1OTQwLCJyb2xlIjoic2VydmljZV9yb2xlIn0.qIVnMdQCymz03PkiJfOFo3NpndVJoEd3fmhSQjuK9fU"
 )
-CRAWL4AI_URL = os.getenv(
-    "CRAWL4AI_URL",
-    "https://crawl4ai.alwaysencrypted.com"
-)
-
-# User agents for rotation
-USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-]
 
 # Regex patterns
 PHONE_PATTERN = re.compile(r'(\(?[2-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4})')
@@ -84,6 +75,11 @@ class SkipTraceEnricher:
             "Content-Type": "application/json",
         }
 
+        # Create cloudscraper session for Cloudflare bypass
+        self.scraper = cloudscraper.create_scraper(
+            browser={'browser': 'chrome', 'platform': 'windows', 'mobile': False}
+        )
+
         # Statistics
         self.stats = {
             'total_processed': 0,
@@ -91,8 +87,6 @@ class SkipTraceEnricher:
             'emails_found': 0,
             'addresses_found': 0,
             'failed': 0,
-            'truepeoplesearch_success': 0,
-            'fastpeoplesearch_success': 0,
             'whitepages_success': 0,
             'addresses_com_success': 0,
         }
@@ -232,170 +226,44 @@ class SkipTraceEnricher:
 
         return None
 
-    def crawl_url(self, url: str) -> Optional[str]:
-        """Crawl a URL using Crawl4AI and return markdown content.
+    def fetch_html(self, url: str) -> Optional[str]:
+        """Fetch HTML from a URL using cloudscraper (bypasses Cloudflare).
 
         Args:
-            url: URL to crawl
+            url: URL to fetch
 
         Returns:
-            Markdown content or None if failed
+            HTML content or None if failed
         """
         try:
-            user_agent = random.choice(USER_AGENTS)
-
-            response = requests.post(
-                f"{CRAWL4AI_URL}/crawl",
-                json={
-                    "urls": [url],
-                    "priority": 8,
-                    "crawler_params": {
-                        "user_agent": user_agent,
-                        "headless": True,
-                        "page_timeout": 30000,
-                    }
-                },
-                timeout=60
-            )
+            response = self.scraper.get(url, timeout=30)
 
             if response.status_code == 200:
-                result = response.json()
-                if result.get('success') and result.get('results'):
-                    md = result['results'][0].get('markdown', '')
-                    # Crawl4AI may return markdown as a dict with 'raw_markdown' key
-                    if isinstance(md, dict):
-                        md = md.get('raw_markdown', '') or md.get('markdown', '') or str(md)
-                    return str(md) if md else ''
+                return response.text
 
-            logger.warning(f"Crawl failed for {url}: {response.status_code}")
+            if response.status_code == 403:
+                logger.warning(f"CAPTCHA/blocked for {url}: {response.status_code}")
+            else:
+                logger.warning(f"HTTP {response.status_code} for {url}")
             return None
 
         except Exception as e:
-            logger.error(f"Error crawling {url}: {str(e)}")
+            logger.error(f"Error fetching {url}: {str(e)}")
             return None
-
-    def search_truepeoplesearch(
-        self,
-        first_name: str,
-        last_name: str,
-        city: str,
-        state: str
-    ) -> Dict[str, any]:
-        """Search TruePeopleSearch for contact information.
-
-        Args:
-            first_name: First name
-            last_name: Last name
-            city: City
-            state: State abbreviation
-
-        Returns:
-            Dictionary with extracted data
-        """
-        name = f"{first_name} {last_name}".strip()
-        location = f"{city} {state}"
-        url = f"https://www.truepeoplesearch.com/results?name={quote(name)}&citystatezip={quote(location)}"
-
-        logger.info(f"Searching TruePeopleSearch: {name} in {location}")
-
-        markdown = self.crawl_url(url)
-        if not markdown:
-            return {}
-
-        data = {}
-
-        # Extract phones
-        phones = self.extract_phones(markdown)
-        if phones:
-            data['primary_phone'] = phones[0]
-            if len(phones) > 1:
-                data['secondary_phone'] = phones[1]
-
-        # Extract emails
-        emails = self.extract_emails(markdown)
-        if emails:
-            data['primary_email'] = emails[0]
-            if len(emails) > 1:
-                data['email_addresses'] = emails[1]
-
-        # Extract address
-        address = self.extract_address(markdown, city, state)
-        if address:
-            data['mailing_address'] = address
-
-        if data:
-            data['skip_trace_source'] = 'truepeoplesearch'
-            self.stats['truepeoplesearch_success'] += 1
-
-        return data
-
-    def search_fastpeoplesearch(
-        self,
-        first_name: str,
-        last_name: str,
-        city: str,
-        state: str
-    ) -> Dict[str, any]:
-        """Search FastPeopleSearch for contact information.
-
-        Args:
-            first_name: First name
-            last_name: Last name
-            city: City
-            state: State abbreviation
-
-        Returns:
-            Dictionary with extracted data
-        """
-        # Format: /name/{firstname-lastname}_{city}-{state}
-        name_part = f"{first_name.lower()}-{last_name.lower()}"
-        location_part = f"{city.lower().replace(' ', '-')}-{state.upper()}"
-        url = f"https://www.fastpeoplesearch.com/name/{name_part}_{location_part}"
-
-        logger.info(f"Searching FastPeopleSearch: {first_name} {last_name} in {city}, {state}")
-
-        markdown = self.crawl_url(url)
-        if not markdown:
-            return {}
-
-        data = {}
-
-        # Extract phones
-        phones = self.extract_phones(markdown)
-        if phones:
-            data['primary_phone'] = phones[0]
-            if len(phones) > 1:
-                data['secondary_phone'] = phones[1]
-
-        # Extract emails
-        emails = self.extract_emails(markdown)
-        if emails:
-            data['primary_email'] = emails[0]
-            if len(emails) > 1:
-                data['email_addresses'] = emails[1]
-
-        # Extract address
-        address = self.extract_address(markdown, city, state)
-        if address:
-            data['mailing_address'] = address
-
-        if data:
-            data['skip_trace_source'] = 'fastpeoplesearch'
-            self.stats['fastpeoplesearch_success'] += 1
-
-        return data
 
     def search_whitepages(
         self,
         first_name: str,
         last_name: str,
+        city: str,
         state: str
     ) -> Dict[str, any]:
-        """Search WhitePages for contact information.
+        """Search WhitePages for contact information (PRIMARY SOURCE).
 
         Args:
             first_name: First name
             last_name: Last name
+            city: City name
             state: State abbreviation
 
         Returns:
@@ -406,18 +274,32 @@ class SkipTraceEnricher:
 
         logger.info(f"Searching WhitePages: {first_name} {last_name} in {state}")
 
-        markdown = self.crawl_url(url)
-        if not markdown:
+        html = self.fetch_html(url)
+        if not html:
             return {}
 
         data = {}
+        soup = BeautifulSoup(html, 'html.parser')
+        text = soup.get_text(separator=' ')
 
-        # Extract phones
-        phones = self.extract_phones(markdown)
+        # Extract phones from HTML
+        phones = self.extract_phones(text)
         if phones:
             data['primary_phone'] = phones[0]
             if len(phones) > 1:
                 data['secondary_phone'] = phones[1]
+
+        # Extract emails
+        emails = self.extract_emails(text)
+        if emails:
+            data['primary_email'] = emails[0]
+            if len(emails) > 1:
+                data['secondary_email'] = emails[1]
+
+        # Extract address - look for city match in structured data
+        address = self.extract_address(text, city, state)
+        if address:
+            data['mailing_address'] = address
 
         if data:
             data['skip_trace_source'] = 'whitepages'
@@ -429,13 +311,15 @@ class SkipTraceEnricher:
         self,
         first_name: str,
         last_name: str,
+        city: str,
         state: str
     ) -> Dict[str, any]:
-        """Search Addresses.com for contact information.
+        """Search Addresses.com for contact information (SECONDARY SOURCE).
 
         Args:
             first_name: First name
             last_name: Last name
+            city: City name
             state: State abbreviation
 
         Returns:
@@ -446,25 +330,32 @@ class SkipTraceEnricher:
 
         logger.info(f"Searching Addresses.com: {first_name} {last_name} in {state}")
 
-        markdown = self.crawl_url(url)
-        if not markdown:
+        html = self.fetch_html(url)
+        if not html:
             return {}
 
         data = {}
+        soup = BeautifulSoup(html, 'html.parser')
+        text = soup.get_text(separator=' ')
 
         # Extract phones
-        phones = self.extract_phones(markdown)
+        phones = self.extract_phones(text)
         if phones:
             data['primary_phone'] = phones[0]
             if len(phones) > 1:
                 data['secondary_phone'] = phones[1]
 
         # Extract emails
-        emails = self.extract_emails(markdown)
+        emails = self.extract_emails(text)
         if emails:
             data['primary_email'] = emails[0]
             if len(emails) > 1:
-                data['email_addresses'] = emails[1]
+                data['secondary_email'] = emails[1]
+
+        # Extract address
+        address = self.extract_address(text, city, state)
+        if address:
+            data['mailing_address'] = address
 
         if data:
             data['skip_trace_source'] = 'addresses.com'
@@ -475,6 +366,9 @@ class SkipTraceEnricher:
     def enrich_lead(self, lead: Dict) -> Dict[str, any]:
         """Enrich a single lead with contact information.
 
+        Search order: WhitePages (best success) -> Addresses.com (backup).
+        Both work with cloudscraper without CAPTCHA issues.
+
         Args:
             lead: Lead dictionary from database
 
@@ -482,43 +376,22 @@ class SkipTraceEnricher:
             Dictionary with enriched data
         """
         first_name, last_name = self.parse_name(lead['owner_name'])
-        city = lead['city']
-        state = lead['state_abbr']
+        city = lead.get('city', '')
+        state = lead.get('state_abbr', '')
 
         if not first_name or not last_name:
             logger.warning(f"Could not parse name: {lead['owner_name']}")
             return {}
 
-        # Try TruePeopleSearch first
-        data = self.search_truepeoplesearch(first_name, last_name, city, state)
+        # Try WhitePages first (most reliable, no CAPTCHA)
+        data = self.search_whitepages(first_name, last_name, city, state)
 
-        # Add random delay
+        # Add random delay between requests
         time.sleep(random.uniform(self.delay, self.delay + 2))
 
-        # If no phone found, try FastPeopleSearch
+        # If no phone found, try Addresses.com
         if not data.get('primary_phone'):
-            data_fps = self.search_fastpeoplesearch(first_name, last_name, city, state)
-            if data_fps:
-                # Merge data, preferring FastPeopleSearch if we have nothing
-                for key, value in data_fps.items():
-                    if not data.get(key):
-                        data[key] = value
-
-            time.sleep(random.uniform(self.delay, self.delay + 2))
-
-        # If still no phone, try WhitePages
-        if not data.get('primary_phone'):
-            data_wp = self.search_whitepages(first_name, last_name, state)
-            if data_wp:
-                for key, value in data_wp.items():
-                    if not data.get(key):
-                        data[key] = value
-
-            time.sleep(random.uniform(self.delay, self.delay + 2))
-
-        # If still no phone, try Addresses.com
-        if not data.get('primary_phone'):
-            data_ac = self.search_addresses_com(first_name, last_name, state)
+            data_ac = self.search_addresses_com(first_name, last_name, city, state)
             if data_ac:
                 for key, value in data_ac.items():
                     if not data.get(key):
@@ -635,8 +508,6 @@ class SkipTraceEnricher:
         logger.info(f"Addresses Found: {self.stats['addresses_found']}")
         logger.info(f"Failed: {self.stats['failed']}")
         logger.info(f"\nSuccess by Source:")
-        logger.info(f"  TruePeopleSearch: {self.stats['truepeoplesearch_success']}")
-        logger.info(f"  FastPeopleSearch: {self.stats['fastpeoplesearch_success']}")
         logger.info(f"  WhitePages: {self.stats['whitepages_success']}")
         logger.info(f"  Addresses.com: {self.stats['addresses_com_success']}")
 
