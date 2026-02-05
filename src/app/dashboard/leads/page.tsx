@@ -2159,6 +2159,7 @@ function LeadsPageContent() {
       const { data, error } = await supabase
         .from("foreclosure_leads")
         .select("*")
+        .order("primary_phone", { ascending: true, nullsFirst: false })
         .order("created_at", { ascending: false })
         .limit(2500) as { data: Record<string, unknown>[] | null; error: unknown }
 
@@ -2315,7 +2316,20 @@ function LeadsPageContent() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Foreclosure Leads</h1>
           <p className="text-muted-foreground">
-            {leadsLoading ? "Loading leads..." : `${filteredLeads.length} leads found`} -- Click any lead to view full property data, skip trace, tax records & map
+            {leadsLoading ? "Loading leads..." : (
+              <>
+                {filteredLeads.length} leads found
+                {(() => {
+                  const withPhone = dbLeads.filter(l => l.primaryPhone).length
+                  return withPhone > 0 ? (
+                    <span className="ml-2 text-emerald-600 font-medium">
+                      ({withPhone} skip traced with contact info)
+                    </span>
+                  ) : null
+                })()}
+                <span className="hidden sm:inline"> -- Click any lead to expand</span>
+              </>
+            )}
           </p>
         </div>
         <div className="flex gap-3">
