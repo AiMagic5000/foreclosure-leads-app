@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: [
+      'lucide-react',
+      'd3',
+      'recharts',
+      'framer-motion',
+      'date-fns',
+    ],
+  },
   images: {
     remotePatterns: [
       {

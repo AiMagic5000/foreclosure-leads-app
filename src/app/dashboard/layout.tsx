@@ -59,9 +59,11 @@ export default function DashboardLayout({
   }, [])
 
   useEffect(() => {
-    if (mounted) {
+    if (!mounted) return
+    const timeoutId = setTimeout(() => {
       localStorage.setItem("dashboard-theme", isDark ? "dark" : "light")
-    }
+    }, 300)
+    return () => clearTimeout(timeoutId)
   }, [isDark, mounted])
 
   const toggleTheme = () => setIsDark(!isDark)

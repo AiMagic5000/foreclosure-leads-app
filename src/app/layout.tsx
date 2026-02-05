@@ -100,17 +100,11 @@ export default function RootLayout({
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
           <script
             dangerouslySetInnerHTML={{
-              __html: `
-                (function() {
-                  var theme = localStorage.getItem('theme') || 'light';
-                  document.documentElement.classList.remove('light', 'dark');
-                  document.documentElement.classList.add(theme);
-                })();
-              `,
+              __html: `!function(){try{var t=localStorage.getItem("theme")||"light";document.documentElement.classList.remove("light","dark");document.documentElement.classList.add(t)}catch(e){}}()`,
             }}
           />
         </head>
-        <body className="min-h-screen antialiased font-sans">
+        <body className="min-h-screen antialiased font-sans" suppressHydrationWarning>
           {children}
         </body>
       </html>

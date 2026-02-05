@@ -9,150 +9,150 @@ import { ApiDocsPopup } from "@/components/api-docs-popup"
 import { faqs } from "@/data/faqs"
 import { statesData } from "@/data/states"
 
+const STATS = [
+  { value: "3,200", label: "Counties Covered" },
+  { value: "10K+", label: "Leads Monthly" },
+  { value: "24hr", label: "Data Updates" },
+  { value: "95%", label: "Skip Trace Rate" },
+] as const
+
+const FEATURES = [
+  {
+    icon: Database,
+    title: "Daily Fresh Leads",
+    description: "Our proprietary system scrapes county recorders, public trustees, and auction sites every 24 hours across all 50 states.",
+    image: "/dashboard.jpg"
+  },
+  {
+    icon: Phone,
+    title: "Skip-Traced Contacts",
+    description: "Every lead includes phone numbers, emails, and mailing addresses found through FastPeopleSearch and TruePeopleSearch.",
+    image: "/hero-agent.jpg"
+  },
+  {
+    icon: Shield,
+    title: "DNC Compliant",
+    description: "Automatic scrubbing against Federal and State Do Not Call registries. Stay compliant, avoid fines.",
+    image: null
+  },
+  {
+    icon: Zap,
+    title: "Voicemail Automation",
+    description: "Optional add-on delivers personalized ringless voicemails with premium voice over generation.",
+    image: null
+  },
+  {
+    icon: MapPin,
+    title: "3,200+ Counties Covered",
+    description: "Access leads from all 50 states and 3,200+ counties. Filter by foreclosure type (judicial/non-judicial), sale date, surplus amount, and more.",
+    image: null
+  },
+  {
+    icon: Clock,
+    title: "Real-Time Dashboard",
+    description: "Mobile-first interface to access leads, track outreach, export data, and manage your pipeline anywhere.",
+    image: "/dashboard.jpg"
+  },
+]
+
+const PRICING_PLANS = [
+  {
+    name: "5-State Lead Access",
+    price: 495,
+    priceLabel: "one-time",
+    description: "Choose any 5 states -- full access to leads, data, and tools",
+    features: [
+      "Choose any 5 US states",
+      "Unlimited lead access with daily refreshes",
+      "Full skip tracing (phones, emails, addresses)",
+      "National DNC Registry verification",
+      "Property data enrichment (value, tax, sqft)",
+      "Complete contract template library",
+      "Integrated ringless voicemail (RVM)",
+      "CSV export and real-time dashboard",
+      "3,200+ county directory access",
+      "Hire a Closer marketplace (10% fee)",
+      "Contract Admin services (5% fee)",
+      "Closing Training (8-module course)",
+      "7-day support, 9am-5pm Pacific",
+      "Additional states: $175 each",
+    ],
+    cta: "Get Started",
+    popular: true,
+    href: "https://startmybusinessinc.gumroad.com/l/vzqbhs",
+  },
+  {
+    name: "Asset Recovery Business Build Out",
+    price: 2495,
+    priceLabel: "one-time",
+    description: "Complete business with website, compliance, and everything you need",
+    features: [
+      "Everything in 5-State Lead Access",
+      "Custom branded website",
+      "LLC formation assistance",
+      "45 points of compliance",
+      "Professional contracts and agreements",
+      "Training and certification program",
+      "Dedicated account manager",
+      "Priority support",
+    ],
+    cta: "Build Your Business",
+    popular: false,
+    href: "https://assetrecoverybusiness.com/",
+    discount: {
+      text: "15% off for existing customers",
+      price: 2120.75,
+      halfDown: 1060.38,
+    },
+  },
+]
+
+const TESTIMONIALS = [
+  {
+    quote: "I recovered $47,000 in surplus funds my first month using these leads. The skip tracing saves me hours every day.",
+    author: "Marcus T.",
+    role: "Surplus Recovery Agent, Texas",
+    rating: 5,
+    image: "/marcus-t.jpg",
+  },
+  {
+    quote: "The automation add-on is a game changer. I get callbacks from my voicemails while I'm working other deals.",
+    author: "Jennifer R.",
+    role: "Asset Recovery Specialist, Florida",
+    rating: 5,
+    image: "/jennifer-r.jpg",
+  },
+  {
+    quote: "Finally, a lead source that's actually compliant. No more worrying about TCPA violations.",
+    author: "David K.",
+    role: "Recovery Agent, California",
+    rating: 5,
+    image: "/david-k.jpg",
+  },
+]
+
+const BUSINESS_KIT_ITEMS = [
+  {
+    title: "Step-by-Step Training Manual",
+    description: "Complete guide to asset recovery business operations",
+    image: "https://assetrecoverybusiness.com/images/training-manual-2026.png",
+  },
+  {
+    title: "40+ Legal Document Templates",
+    description: "Professional contracts, agreements, and claim forms",
+    image: "https://assetrecoverybusiness.com/images/legal-docs-2026.png",
+  },
+  {
+    title: "3,200+ US Counties Directory",
+    description: "Comprehensive county-by-county contact database",
+    image: "https://assetrecoverybusiness.com/images/us-county-directory-2026.png",
+  },
+]
+
+const NON_JUDICIAL_COUNT = statesData.filter(s => s.foreclosureType === 'non-judicial').length
+const JUDICIAL_COUNT = statesData.filter(s => s.foreclosureType === 'judicial').length
+
 export default function LandingPage() {
-  const stats = [
-    { value: "3,200", label: "Counties Covered" },
-    { value: "10K+", label: "Leads Monthly" },
-    { value: "24hr", label: "Data Updates" },
-    { value: "95%", label: "Skip Trace Rate" },
-  ]
-
-  const features = [
-    {
-      icon: Database,
-      title: "Daily Fresh Leads",
-      description: "Our proprietary system scrapes county recorders, public trustees, and auction sites every 24 hours across all 50 states.",
-      image: "/dashboard.jpg"
-    },
-    {
-      icon: Phone,
-      title: "Skip-Traced Contacts",
-      description: "Every lead includes phone numbers, emails, and mailing addresses found through FastPeopleSearch and TruePeopleSearch.",
-      image: "/hero-agent.jpg"
-    },
-    {
-      icon: Shield,
-      title: "DNC Compliant",
-      description: "Automatic scrubbing against Federal and State Do Not Call registries. Stay compliant, avoid fines.",
-      image: null
-    },
-    {
-      icon: Zap,
-      title: "Voicemail Automation",
-      description: "Optional add-on delivers personalized ringless voicemails with premium voice over generation.",
-      image: null
-    },
-    {
-      icon: MapPin,
-      title: "3,200+ Counties Covered",
-      description: "Access leads from all 50 states and 3,200+ counties. Filter by foreclosure type (judicial/non-judicial), sale date, surplus amount, and more.",
-      image: null
-    },
-    {
-      icon: Clock,
-      title: "Real-Time Dashboard",
-      description: "Mobile-first interface to access leads, track outreach, export data, and manage your pipeline anywhere.",
-      image: "/dashboard.jpg"
-    },
-  ]
-
-  const pricingPlans = [
-    {
-      name: "5-State Lead Access",
-      price: 495,
-      priceLabel: "one-time",
-      description: "Choose any 5 states -- full access to leads, data, and tools",
-      features: [
-        "Choose any 5 US states",
-        "Unlimited lead access with daily refreshes",
-        "Full skip tracing (phones, emails, addresses)",
-        "National DNC Registry verification",
-        "Property data enrichment (value, tax, sqft)",
-        "Complete contract template library",
-        "Integrated ringless voicemail (RVM)",
-        "CSV export and real-time dashboard",
-        "3,200+ county directory access",
-        "Hire a Closer marketplace (10% fee)",
-        "Contract Admin services (5% fee)",
-        "Closing Training (8-module course)",
-        "7-day support, 9am-5pm Pacific",
-        "Additional states: $175 each",
-      ],
-      cta: "Get Started",
-      popular: true,
-      href: "https://startmybusinessinc.gumroad.com/l/vzqbhs",
-    },
-    {
-      name: "Asset Recovery Business Build Out",
-      price: 2495,
-      priceLabel: "one-time",
-      description: "Complete business with website, compliance, and everything you need",
-      features: [
-        "Everything in 5-State Lead Access",
-        "Custom branded website",
-        "LLC formation assistance",
-        "45 points of compliance",
-        "Professional contracts and agreements",
-        "Training and certification program",
-        "Dedicated account manager",
-        "Priority support",
-      ],
-      cta: "Build Your Business",
-      popular: false,
-      href: "https://assetrecoverybusiness.com/",
-      discount: {
-        text: "15% off for existing customers",
-        price: 2120.75,
-        halfDown: 1060.38,
-      },
-    },
-  ]
-
-  const testimonials = [
-    {
-      quote: "I recovered $47,000 in surplus funds my first month using these leads. The skip tracing saves me hours every day.",
-      author: "Marcus T.",
-      role: "Surplus Recovery Agent, Texas",
-      rating: 5,
-      image: "/marcus-t.jpg",
-    },
-    {
-      quote: "The automation add-on is a game changer. I get callbacks from my voicemails while I'm working other deals.",
-      author: "Jennifer R.",
-      role: "Asset Recovery Specialist, Florida",
-      rating: 5,
-      image: "/jennifer-r.jpg",
-    },
-    {
-      quote: "Finally, a lead source that's actually compliant. No more worrying about TCPA violations.",
-      author: "David K.",
-      role: "Recovery Agent, California",
-      rating: 5,
-      image: "/david-k.jpg",
-    },
-  ]
-
-  const businessKitItems = [
-    {
-      title: "Step-by-Step Training Manual",
-      description: "Complete guide to asset recovery business operations",
-      image: "https://assetrecoverybusiness.com/images/training-manual-2026.png",
-    },
-    {
-      title: "40+ Legal Document Templates",
-      description: "Professional contracts, agreements, and claim forms",
-      image: "https://assetrecoverybusiness.com/images/legal-docs-2026.png",
-    },
-    {
-      title: "3,200+ US Counties Directory",
-      description: "Comprehensive county-by-county contact database",
-      image: "https://assetrecoverybusiness.com/images/us-county-directory-2026.png",
-    },
-  ]
-
-  const nonJudicialCount = statesData.filter(s => s.foreclosureType === 'non-judicial').length
-  const judicialCount = statesData.filter(s => s.foreclosureType === 'judicial').length
-
   return (
     <div className="min-h-screen bg-white">
       {/* Schema.org JSON-LD */}
@@ -269,7 +269,7 @@ export default function LandingPage() {
 
               {/* Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 max-w-3xl mx-auto pt-6 sm:pt-8 border-t border-gray-200">
-                {stats.map((stat) => (
+                {STATS.map((stat) => (
                   <div key={stat.label} className="text-center">
                     <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1e3a5f]">{stat.value}</div>
                     <div className="text-xs sm:text-sm text-gray-500 mt-1">{stat.label}</div>
@@ -397,7 +397,7 @@ export default function LandingPage() {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {features.map((feature) => (
+              {FEATURES.map((feature) => (
                 <div key={feature.title} className="group p-6 rounded-xl border border-gray-200 hover:border-[#1e3a5f]/30 hover:shadow-lg transition-all bg-white">
                   <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#1e3a5f] to-[#3b82f6] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <feature.icon className="h-6 w-6 text-white" />
@@ -522,10 +522,10 @@ export default function LandingPage() {
               </p>
               <div className="flex flex-wrap justify-center gap-4 mb-8">
                 <span className="inline-flex items-center px-4 py-2 rounded-full bg-[#1e3a5f] text-white text-sm font-medium border border-white/20">
-                  {nonJudicialCount} Non-Judicial States
+                  {NON_JUDICIAL_COUNT} Non-Judicial States
                 </span>
                 <span className="inline-flex items-center px-4 py-2 rounded-full bg-[#f59e0b] text-white text-sm font-medium">
-                  {judicialCount} Judicial States
+                  {JUDICIAL_COUNT} Judicial States
                 </span>
               </div>
               <Link href="/states-guide">
@@ -551,7 +551,7 @@ export default function LandingPage() {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
-              {pricingPlans.map((plan) => (
+              {PRICING_PLANS.map((plan) => (
                 <div
                   key={plan.name}
                   className={`relative bg-white rounded-xl p-6 sm:p-8 ${plan.popular ? 'border-2 border-[#1e3a5f] shadow-xl' : 'border border-gray-200 shadow-lg'}`}
@@ -626,7 +626,7 @@ export default function LandingPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {businessKitItems.map((item, i) => (
+              {BUSINESS_KIT_ITEMS.map((item, i) => (
                 <div key={i} className="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20 text-center">
                   <div className="relative h-48 mb-6 rounded-lg overflow-hidden bg-white/5">
                     <Image
@@ -677,7 +677,7 @@ export default function LandingPage() {
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {testimonials.map((testimonial, i) => (
+              {TESTIMONIALS.map((testimonial, i) => (
                 <div key={i} className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, j) => (

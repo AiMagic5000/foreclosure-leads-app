@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { useTheme } from "@/components/theme-provider"
 import { statesData } from "@/data/states"
 import { stateOverageGuide } from "@/data/state-overage-guide"
@@ -46,13 +46,16 @@ export default function StatesPage() {
     fetchLeadCounts()
   }, [])
 
-  const filteredStates = statesData.filter((state) => {
-    const matchesSearch =
-      state.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      state.abbr.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesType = selectedType === "all" || state.foreclosureType === selectedType
-    return matchesSearch && matchesType
-  })
+  const filteredStates = useMemo(() => {
+    const query = searchQuery.toLowerCase()
+    return statesData.filter((state) => {
+      const matchesSearch =
+        state.name.toLowerCase().includes(query) ||
+        state.abbr.toLowerCase().includes(query)
+      const matchesType = selectedType === "all" || state.foreclosureType === selectedType
+      return matchesSearch && matchesType
+    })
+  }, [searchQuery, selectedType])
 
   // Updated colors to match map: Blue for Judicial, Red for Non-Judicial
   const typeColors = {

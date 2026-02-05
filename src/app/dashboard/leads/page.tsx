@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, Suspense } from "react"
+import { useState, useEffect, useMemo, useCallback, Suspense } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
@@ -2164,14 +2164,15 @@ function LeadsPageContent() {
         .limit(2500) as { data: Record<string, unknown>[] | null; error: unknown }
 
       if (!error && data) {
-        const mapped = data.map(mapDbRowToLead)
-        setDbLeads(mapped)
-
-        // Build unique states list
+        // Single pass: map rows and build state set simultaneously
+        const mapped: LeadData[] = []
         const stateSet = new Set<string>()
-        for (const lead of mapped) {
+        for (const row of data) {
+          const lead = mapDbRowToLead(row)
+          mapped.push(lead)
           if (lead.state) stateSet.add(lead.state)
         }
+        setDbLeads(mapped)
         setDbStates(["All States", ...Array.from(stateSet).sort()])
       }
       setLeadsLoading(false)
@@ -2179,11 +2180,16 @@ function LeadsPageContent() {
     fetchLeads()
   }, [])
 
-  const toggleRevealed = (id: string) => {
+  const skipTracedCount = useMemo(
+    () => dbLeads.filter(l => l.primaryPhone).length,
+    [dbLeads]
+  )
+
+  const toggleRevealed = useCallback((id: string) => {
     setRevealedLeads((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     )
-  }
+  }, [])
 
   // Paywall: if not verified, show PIN access prompt
   if (!isLoading && !isVerified && !isAdmin) {
@@ -2272,42 +2278,45 @@ function LeadsPageContent() {
     converted: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
   } as const
 
-  const filteredLeads = dbLeads.filter((lead) => {
-    const matchesSearch =
-      searchQuery === "" ||
-      lead.ownerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.propertyAddress.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.parcelId.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredLeads = useMemo(() => {
+    const query = searchQuery.toLowerCase()
+    return dbLeads.filter((lead) => {
+      const matchesSearch =
+        query === "" ||
+        lead.ownerName.toLowerCase().includes(query) ||
+        lead.propertyAddress.toLowerCase().includes(query) ||
+        lead.city.toLowerCase().includes(query) ||
+        lead.parcelId.toLowerCase().includes(query)
 
-    const matchesState =
-      selectedState === "All States" || lead.state === selectedState
+      const matchesState =
+        selectedState === "All States" || lead.state === selectedState
 
-    const matchesStatus =
-      selectedStatus === "all" || lead.status === selectedStatus
+      const matchesStatus =
+        selectedStatus === "all" || lead.status === selectedStatus
 
-    return matchesSearch && matchesState && matchesStatus
-  })
+      return matchesSearch && matchesState && matchesStatus
+    })
+  }, [dbLeads, searchQuery, selectedState, selectedStatus])
 
-  const toggleLeadSelection = (id: string) => {
+  const toggleLeadSelection = useCallback((id: string) => {
     setSelectedLeads((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     )
-  }
+  }, [])
 
-  const toggleAllLeads = () => {
+  const toggleAllLeads = useCallback(() => {
     if (selectedLeads.length === filteredLeads.length) {
       setSelectedLeads([])
     } else {
       setSelectedLeads(filteredLeads.map((l) => l.id))
     }
-  }
+  }, [selectedLeads.length, filteredLeads])
 
-  const toggleExpanded = (id: string) => {
+  const toggleExpanded = useCallback((id: string) => {
     setExpandedLeads((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     )
-  }
+  }, [])
 
   return (
     <div className="space-y-6">
@@ -2319,14 +2328,11 @@ function LeadsPageContent() {
             {leadsLoading ? "Loading leads..." : (
               <>
                 {filteredLeads.length} leads found
-                {(() => {
-                  const withPhone = dbLeads.filter(l => l.primaryPhone).length
-                  return withPhone > 0 ? (
-                    <span className="ml-2 text-emerald-600 font-medium">
-                      ({withPhone} skip traced with contact info)
-                    </span>
-                  ) : null
-                })()}
+                {skipTracedCount > 0 && (
+                  <span className="ml-2 text-emerald-600 font-medium">
+                    ({skipTracedCount} skip traced with contact info)
+                  </span>
+                )}
                 <span className="hidden sm:inline"> -- Click any lead to expand</span>
               </>
             )}
