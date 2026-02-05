@@ -153,7 +153,7 @@ interface LeadData {
   }
 }
 
-const LEADS_PER_PAGE = 50
+const LEADS_PER_PAGE = 20
 
 
 const statusOptions = [
@@ -1145,6 +1145,37 @@ function LeadsPageContent() {
     )
   }, [])
 
+  const PaginationBar = () => filteredLeads.length > LEADS_PER_PAGE ? (
+    <div className="flex items-center justify-between px-2 py-3">
+      <p className="text-sm text-muted-foreground">
+        Showing {((currentPage - 1) * LEADS_PER_PAGE) + 1}-{Math.min(currentPage * LEADS_PER_PAGE, filteredLeads.length)} of {filteredLeads.length} leads
+      </p>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+          disabled={currentPage === 1}
+        >
+          <ChevronLeft className="h-4 w-4 mr-1" />
+          Previous
+        </Button>
+        <span className="text-sm font-medium px-3">
+          Page {currentPage} of {totalPages}
+        </span>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+          disabled={currentPage === totalPages}
+        >
+          Next
+          <ChevronRight className="h-4 w-4 ml-1" />
+        </Button>
+      </div>
+    </div>
+  ) : null
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -1215,10 +1246,13 @@ function LeadsPageContent() {
         </CardContent>
       </Card>
 
+      {/* Top Pagination */}
+      <PaginationBar />
+
       {/* Leads Table Header */}
       <div className="hidden lg:block">
         <div className="grid grid-cols-12 gap-4 px-4 py-2 text-sm font-medium text-muted-foreground border-b">
-          <div className="col-span-1 flex items-center gap-2">
+          <div className="col-span-2 flex items-center gap-2">
             <input
               type="checkbox"
               checked={selectedLeads.length === paginatedLeads.length && paginatedLeads.length > 0}
@@ -1227,10 +1261,10 @@ function LeadsPageContent() {
             />
             <span className="text-xs">Photo</span>
           </div>
-          <div className="col-span-3">Property Owner</div>
+          <div className="col-span-2">Property Owner</div>
           <div className="col-span-3">Address & Details</div>
           <div className="col-span-2">Sale Info</div>
-          <div className="col-span-2">Street View</div>
+          <div className="col-span-2">Contact</div>
           <div className="col-span-1">Status</div>
         </div>
       </div>
@@ -1255,7 +1289,7 @@ function LeadsPageContent() {
                   className="hidden lg:grid grid-cols-12 gap-4 items-center cursor-pointer"
                   onClick={() => toggleExpanded(lead.id)}
                 >
-                  <div className="col-span-1 flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                  <div className="col-span-2 flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                     <input
                       type="checkbox"
                       checked={selectedLeads.includes(lead.id)}
@@ -1285,10 +1319,10 @@ function LeadsPageContent() {
                       )
                     })()}
                   </div>
-                  <div className="col-span-3">
+                  <div className="col-span-2">
                     <div className="flex items-start gap-2">
                       <div className="flex-1">
-                        <div className="font-medium">
+                        <div className="font-medium text-sm">
                           <BlurredText revealed={isRevealed}>{lead.ownerName}</BlurredText>
                         </div>
                         {lead.parcelId && (
@@ -1618,37 +1652,8 @@ function LeadsPageContent() {
         })}
       </div>
 
-      {/* Pagination Controls */}
-      {filteredLeads.length > LEADS_PER_PAGE && (
-        <div className="flex items-center justify-between px-2 py-4">
-          <p className="text-sm text-muted-foreground">
-            Showing {((currentPage - 1) * LEADS_PER_PAGE) + 1}-{Math.min(currentPage * LEADS_PER_PAGE, filteredLeads.length)} of {filteredLeads.length} leads
-          </p>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className="h-4 w-4 mr-1" />
-              Previous
-            </Button>
-            <span className="text-sm font-medium px-3">
-              Page {currentPage} of {totalPages}
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-              disabled={currentPage === totalPages}
-            >
-              Next
-              <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* Bottom Pagination */}
+      <PaginationBar />
 
       {/* Map Modal Popup */}
       {mapModal && (
