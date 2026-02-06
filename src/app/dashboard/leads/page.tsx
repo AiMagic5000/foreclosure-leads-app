@@ -46,7 +46,7 @@ import {
   Volume2,
   Loader2,
 } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
@@ -1073,6 +1073,34 @@ function LeadsPageContent() {
   const [currentPage, setCurrentPage] = useState(1)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
   const [sendingVoiceDrop, setSendingVoiceDrop] = useState<Record<string, boolean>>({})
+  const [testVdOpen, setTestVdOpen] = useState(false)
+  const [testVdPhone, setTestVdPhone] = useState("")
+  const [testVdName, setTestVdName] = useState("")
+  const [testVdSending, setTestVdSending] = useState(false)
+  const [testVdResult, setTestVdResult] = useState<{ success?: boolean; error?: string; script?: string } | null>(null)
+
+  const sendTestVoiceDrop = useCallback(async () => {
+    if (!testVdPhone || testVdSending) return
+    setTestVdSending(true)
+    setTestVdResult(null)
+    try {
+      const res = await fetch("/api/voice-drop", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ testPhone: testVdPhone, testName: testVdName || "John Smith" }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setTestVdResult({ success: false, error: data.error || "Test failed" })
+      } else {
+        setTestVdResult({ success: true, script: data.script })
+      }
+    } catch (err) {
+      setTestVdResult({ success: false, error: err instanceof Error ? err.message : "Test failed" })
+    } finally {
+      setTestVdSending(false)
+    }
+  }, [testVdPhone, testVdName, testVdSending])
 
   const sendVoiceDrop = useCallback(async (leadId: string) => {
     setSendingVoiceDrop(prev => ({ ...prev, [leadId]: true }))
@@ -1564,8 +1592,101 @@ function LeadsPageContent() {
             <Download className="h-4 w-4 mr-2" />
             Export CSV ({filteredLeads.length})
           </Button>
+          {isAdmin && (
+            <Button
+              variant="outline"
+              onClick={() => setTestVdOpen(true)}
+              className="border-amber-500 text-amber-700 hover:bg-amber-50"
+            >
+              <Volume2 className="h-4 w-4 mr-2" />
+              Test Voice Drop
+            </Button>
+          )}
         </div>
       </div>
+
+      {/* Test Voice Drop Modal */}
+      {testVdOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setTestVdOpen(false)}>
+          <Card className="w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Volume2 className="h-5 w-5 text-amber-600" />
+                Test Voice Drop
+              </CardTitle>
+              <CardDescription>
+                Send a test voicemail to any phone number to verify the automation works before using it on leads.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="text-sm font-medium mb-1.5 block">Phone Number</label>
+                <Input
+                  placeholder="(555) 123-4567"
+                  value={testVdPhone}
+                  onChange={(e) => setTestVdPhone(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-1.5 block">Test Name (optional)</label>
+                <Input
+                  placeholder="John Smith"
+                  value={testVdName}
+                  onChange={(e) => setTestVdName(e.target.value)}
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Name used in the personalized script. Defaults to &quot;John Smith&quot;.
+                </p>
+              </div>
+              {testVdResult && (
+                <div className={`p-3 rounded-lg text-sm ${testVdResult.success ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-red-50 text-red-800 border border-red-200"}`}>
+                  {testVdResult.success ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1.5 font-medium">
+                        <CheckCircle2 className="h-4 w-4" />
+                        Voice drop sent successfully
+                      </div>
+                      {testVdResult.script && (
+                        <details className="text-xs">
+                          <summary className="cursor-pointer font-medium">View script used</summary>
+                          <pre className="mt-1 whitespace-pre-wrap bg-white/50 p-2 rounded">{testVdResult.script}</pre>
+                        </details>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5">
+                      <XCircle className="h-4 w-4" />
+                      {testVdResult.error}
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+            <div className="flex justify-end gap-2 p-6 pt-0">
+              <Button variant="outline" onClick={() => { setTestVdOpen(false); setTestVdResult(null) }}>
+                Cancel
+              </Button>
+              <Button
+                onClick={sendTestVoiceDrop}
+                disabled={!testVdPhone || testVdSending}
+                className="bg-amber-600 hover:bg-amber-700 text-white"
+              >
+                {testVdSending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="h-4 w-4 mr-2" />
+                    Send Test
+                  </>
+                )}
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
 
       {/* Filters */}
       <Card>
@@ -1870,16 +1991,16 @@ function LeadsPageContent() {
                   </div>
                   <div className="col-span-2">
                     {lead.primaryPhone ? (
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-1.5 flex-wrap">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-1.5">
                           <DncStatusIcon lead={lead} />
                           <Phone className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                           <a href={isRevealed ? `tel:${lead.primaryPhone}` : '#'} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => { e.stopPropagation(); if (!isRevealed) e.preventDefault() }}>
                             <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                           </a>
-                          <span onClick={(e) => e.stopPropagation()}>
-                            <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
-                          </span>
+                        </div>
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
                         </div>
                         {lead.primaryEmail && (
                           <div className="flex items-center gap-1.5">

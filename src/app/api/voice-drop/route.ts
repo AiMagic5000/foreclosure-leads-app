@@ -115,10 +115,43 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { leadId } = body
+    const { leadId, testPhone, testName } = body
 
+    // TEST MODE: send to any phone number with sample data
+    if (testPhone) {
+      const cleanPhone = cleanPhoneNumber(testPhone)
+      if (cleanPhone.length < 10) {
+        return NextResponse.json({ error: "Invalid phone number" }, { status: 400 })
+      }
+
+      const testLead = {
+        owner_name: testName || "John Smith",
+        property_address: "123 Main Street",
+        parcel_id: "TEST-0001",
+      }
+      const script = generateScript(testLead)
+
+      const audioBuffer = await generateAudio(script)
+      const audioBase64 = audioBuffer.toString("base64")
+
+      const result = await sendSlyBroadcast(cleanPhone, audioBase64)
+
+      if (!result.success) {
+        return NextResponse.json({ error: result.error || "Test voice drop delivery failed", script }, { status: 500 })
+      }
+
+      return NextResponse.json({
+        success: true,
+        test: true,
+        campaignId: result.campaignId,
+        phone: cleanPhone,
+        script,
+      })
+    }
+
+    // PRODUCTION MODE: send to a specific lead
     if (!leadId) {
-      return NextResponse.json({ error: "leadId is required" }, { status: 400 })
+      return NextResponse.json({ error: "leadId or testPhone is required" }, { status: 400 })
     }
 
     // Fetch lead from DB
