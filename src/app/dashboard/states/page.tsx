@@ -46,6 +46,8 @@ export default function StatesPage() {
     fetchLeadCounts()
   }, [])
 
+  const AVOID_STATES = new Set(["AR", "CA", "SC"])
+
   const filteredStates = useMemo(() => {
     const query = searchQuery.toLowerCase()
     return statesData.filter((state) => {
@@ -197,6 +199,12 @@ export default function StatesPage() {
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-1">
+                  {AVOID_STATES.has(state.abbr) && (
+                    <div className="flex flex-col items-center -mt-1 mb-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-500">AVOID</span>
+                      <X className="h-8 w-8 text-red-600 dark:text-red-500 stroke-[3]" />
+                    </div>
+                  )}
                   <Badge className={typeColors[state.foreclosureType]}>{state.foreclosureType}</Badge>
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Users className="h-3 w-3" />

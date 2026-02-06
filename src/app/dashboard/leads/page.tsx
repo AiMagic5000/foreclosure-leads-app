@@ -165,6 +165,18 @@ const statusOptions = [
   { value: "converted", label: "Converted" },
 ]
 
+const sortOptions = [
+  { value: "newest", label: "Newest First" },
+  { value: "oldest", label: "Oldest First" },
+  { value: "fee_high", label: "Highest Fee" },
+  { value: "fee_low", label: "Lowest Fee" },
+  { value: "surplus_high", label: "Highest Surplus" },
+  { value: "surplus_low", label: "Lowest Surplus" },
+  { value: "expiring_soon", label: "Expiring Soon" },
+  { value: "sale_date_asc", label: "Sale Date (Oldest)" },
+  { value: "sale_date_desc", label: "Sale Date (Newest)" },
+]
+
 function BlurredText({ children, className = "", revealed = false }: { children: React.ReactNode; className?: string; revealed?: boolean }) {
   if (revealed) {
     return <span className={className}>{children}</span>
@@ -620,7 +632,13 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
             <div className="text-sm space-y-2">
               <div>
                 <span className="text-xs text-muted-foreground">Current:</span>
-                <p className="font-medium"><BlurredText revealed={revealed}>{lead.skipTrace.currentAddress}</BlurredText></p>
+                <p className="font-medium">
+                  <BlurredText revealed={revealed}>
+                    {lead.skipTrace.currentAddress}
+                    {lead.city && lead.stateAbbr && `, ${lead.city}, ${lead.stateAbbr}`}
+                    {lead.zipCode && ` ${lead.zipCode}`}
+                  </BlurredText>
+                </p>
               </div>
               {lead.skipTrace.previousAddresses.map((addr, i) => (
                 <div key={i}>
@@ -942,6 +960,7 @@ function LeadsPageContent() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedState, setSelectedState] = useState(stateParam || "All States")
   const [selectedStatus, setSelectedStatus] = useState("all")
+  const [sortBy, setSortBy] = useState("fee_high")
   const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
   const [hiddenLeads, setHiddenLeads] = useState<string[]>([])
@@ -1096,7 +1115,7 @@ function LeadsPageContent() {
 
   const filteredLeads = useMemo(() => {
     const query = searchQuery.toLowerCase()
-    return dbLeads.filter((lead) => {
+    const filtered = dbLeads.filter((lead) => {
       const matchesSearch =
         query === "" ||
         lead.ownerName.toLowerCase().includes(query) ||
@@ -1108,11 +1127,57 @@ function LeadsPageContent() {
         selectedState === "All States" || lead.state === selectedState
 
       const matchesStatus =
-        selectedStatus === "all" || lead.status === selectedStatus
+        selectedStatus === "all" ||
+        lead.status === selectedStatus ||
+        (selectedStatus === "skip_traced" && lead.primaryPhone && lead.primaryPhone.length > 0)
 
       return matchesSearch && matchesState && matchesStatus
     })
-  }, [dbLeads, searchQuery, selectedState, selectedStatus])
+
+    // Sort the filtered leads
+    return filtered.sort((a, b) => {
+      const feeA = a.foreclosureDetails.estimatedSurplus * 0.25
+      const feeB = b.foreclosureDetails.estimatedSurplus * 0.25
+      const surplusA = a.foreclosureDetails.estimatedSurplus
+      const surplusB = b.foreclosureDetails.estimatedSurplus
+      const dateA = a.saleDate ? new Date(a.saleDate).getTime() : 0
+      const dateB = b.saleDate ? new Date(b.saleDate).getTime() : 0
+      const createdA = a.scrapedAt ? new Date(a.scrapedAt).getTime() : 0
+      const createdB = b.scrapedAt ? new Date(b.scrapedAt).getTime() : 0
+
+      switch (sortBy) {
+        case "fee_high":
+          return feeB - feeA
+        case "fee_low":
+          return feeA - feeB
+        case "surplus_high":
+          return surplusB - surplusA
+        case "surplus_low":
+          return surplusA - surplusB
+        case "expiring_soon":
+          // Leads with sale dates closer to now (expiring soon) first
+          if (!dateA && !dateB) return 0
+          if (!dateA) return 1
+          if (!dateB) return -1
+          return dateA - dateB
+        case "sale_date_asc":
+          if (!dateA && !dateB) return 0
+          if (!dateA) return 1
+          if (!dateB) return -1
+          return dateA - dateB
+        case "sale_date_desc":
+          if (!dateA && !dateB) return 0
+          if (!dateA) return 1
+          if (!dateB) return -1
+          return dateB - dateA
+        case "oldest":
+          return createdA - createdB
+        case "newest":
+        default:
+          return createdB - createdA
+      }
+    })
+  }, [dbLeads, searchQuery, selectedState, selectedStatus, sortBy])
 
   // Reset to page 1 when filters change
   useEffect(() => {
@@ -1237,6 +1302,17 @@ function LeadsPageContent() {
               className="h-11 rounded-lg border border-input bg-background px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
             >
               {statusOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="h-11 rounded-lg border border-input bg-background px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              {sortOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
