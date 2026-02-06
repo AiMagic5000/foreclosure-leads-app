@@ -41,3 +41,19 @@ yarn-error.log*
 next-env.d.ts
 .env*.local
 video/
+
+# backend scrapers (contain API keys, run on R730 server)
+lead-scrapers/*.py
+lead-scrapers/__pycache__/
+lead-scrapers/venv/
+lead-scrapers/*.log
+
+# session checkpoints (may contain secrets)
+.checkpoints/
+
+# local-only files
+PROJECT-CHECKPOINT.md
+PRODUCTION-IMPROVEMENTS.md
+10-leads/
+automations/
+enrichment/
