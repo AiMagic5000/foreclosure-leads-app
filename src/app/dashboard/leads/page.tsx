@@ -1102,6 +1102,118 @@ function LeadsPageContent() {
     }
   }, [testVdPhone, testVdName, testVdSending])
 
+  // Skip Trace state
+  const [skipTraceOpen, setSkipTraceOpen] = useState(false)
+  const [skipTraceLoading, setSkipTraceLoading] = useState(false)
+  const [skipTraceResult, setSkipTraceResult] = useState<{
+    step: "idle" | "submitting" | "polling" | "importing" | "done" | "error"
+    message: string
+    queueId?: string
+    analytics?: { balance: number; properties_traced: number }
+    importResult?: { updated: number; skipped: number; totalResults: number }
+  }>({ step: "idle", message: "" })
+  const [skipTraceBatchSize, setSkipTraceBatchSize] = useState("100")
+  const [skipTracePriority, setSkipTracePriority] = useState("best_data")
+
+  const loadSkipTraceAnalytics = useCallback(async () => {
+    try {
+      const res = await fetch("/api/skip-trace?action=analytics")
+      if (res.ok) {
+        const data = await res.json()
+        setSkipTraceResult(prev => ({ ...prev, analytics: data }))
+      }
+    } catch { /* ignore */ }
+  }, [])
+
+  const submitSkipTrace = useCallback(async () => {
+    setSkipTraceLoading(true)
+    setSkipTraceResult({ step: "submitting", message: "Submitting leads to Tracerfy..." })
+    try {
+      const res = await fetch("/api/skip-trace", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          batchSize: parseInt(skipTraceBatchSize),
+          priority: skipTracePriority,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Submit failed")
+
+      const queueId = data.queueId
+      setSkipTraceResult({
+        step: "polling",
+        message: `Submitted ${data.leadsSubmitted} leads. Queue ID: ${queueId}. Waiting for results...`,
+        queueId: String(queueId),
+      })
+
+      // Poll for completion
+      let attempts = 0
+      const maxAttempts = 60 // 5 minutes max
+      const poll = async () => {
+        attempts++
+        try {
+          const statusRes = await fetch(`/api/skip-trace?action=status&queueId=${queueId}`)
+          const statusData = await statusRes.json()
+
+          const isPending = statusData.pending === true ||
+            (Array.isArray(statusData) && statusData.length === 0)
+
+          if (isPending && attempts < maxAttempts) {
+            setSkipTraceResult(prev => ({
+              ...prev,
+              step: "polling",
+              message: `Processing... (check ${attempts}/${maxAttempts}). Tracerfy is tracing ${data.leadsSubmitted} leads.`,
+            }))
+            setTimeout(poll, 5000)
+            return
+          }
+
+          // Results ready - import them
+          setSkipTraceResult(prev => ({ ...prev, step: "importing", message: "Results ready. Importing into database..." }))
+          const importRes = await fetch(`/api/skip-trace?action=import&queueId=${queueId}`)
+          const importData = await importRes.json()
+
+          if (importData.success) {
+            setSkipTraceResult({
+              step: "done",
+              message: `Import complete! ${importData.updated} leads updated, ${importData.skipped} skipped.`,
+              queueId: String(queueId),
+              importResult: importData,
+            })
+            // Refresh leads
+            window.location.reload()
+          } else {
+            setSkipTraceResult({
+              step: "error",
+              message: importData.error || "Import failed",
+              queueId: String(queueId),
+            })
+          }
+        } catch (err) {
+          if (attempts < maxAttempts) {
+            setTimeout(poll, 5000)
+          } else {
+            setSkipTraceResult({
+              step: "error",
+              message: `Polling timed out after ${maxAttempts} attempts. Queue ID: ${queueId} - check Tracerfy dashboard.`,
+              queueId: String(queueId),
+            })
+          }
+        }
+      }
+
+      setTimeout(poll, 10000) // First check after 10 seconds
+    } catch (err) {
+      setSkipTraceResult({
+        step: "error",
+        message: err instanceof Error ? err.message : "Skip trace failed",
+      })
+    } finally {
+      setSkipTraceLoading(false)
+    }
+  }, [skipTraceBatchSize, skipTracePriority])
+
   const sendVoiceDrop = useCallback(async (leadId: string) => {
     setSendingVoiceDrop(prev => ({ ...prev, [leadId]: true }))
     try {
@@ -1602,8 +1714,144 @@ function LeadsPageContent() {
               Test Voice Drop
             </Button>
           )}
+          {isAdmin && (
+            <Button
+              variant="outline"
+              onClick={() => { setSkipTraceOpen(true); loadSkipTraceAnalytics() }}
+              className="border-blue-500 text-blue-700 hover:bg-blue-50"
+            >
+              <UserSearch className="h-4 w-4 mr-2" />
+              Skip Trace
+            </Button>
+          )}
         </div>
       </div>
+
+      {/* Skip Trace Modal */}
+      {skipTraceOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => { if (skipTraceResult.step === "idle" || skipTraceResult.step === "done" || skipTraceResult.step === "error") setSkipTraceOpen(false) }}>
+          <Card className="w-full max-w-lg" onClick={(e) => e.stopPropagation()}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <UserSearch className="h-5 w-5 text-blue-600" />
+                Skip Trace via Tracerfy
+              </CardTitle>
+              <CardDescription>
+                Submit leads without phone numbers to Tracerfy for skip tracing. Returns phone numbers, emails, and mailing addresses.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {skipTraceResult.analytics && (
+                <div className="flex gap-4 p-3 bg-blue-50 rounded-lg text-sm">
+                  <div>
+                    <span className="text-muted-foreground">Credits:</span>{" "}
+                    <span className="font-bold text-blue-700">{skipTraceResult.analytics.balance.toLocaleString()}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Traced:</span>{" "}
+                    <span className="font-medium">{skipTraceResult.analytics.properties_traced.toLocaleString()}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Need trace:</span>{" "}
+                    <span className="font-medium">{dbLeads.filter(l => !l.primaryPhone).length.toLocaleString()}</span>
+                  </div>
+                </div>
+              )}
+
+              {(skipTraceResult.step === "idle" || skipTraceResult.step === "error") && (
+                <>
+                  <div>
+                    <label className="text-sm font-medium mb-1.5 block">Batch Size</label>
+                    <select
+                      value={skipTraceBatchSize}
+                      onChange={(e) => setSkipTraceBatchSize(e.target.value)}
+                      className="w-full h-10 rounded-lg border border-input bg-background px-3 text-sm"
+                    >
+                      <option value="10">10 leads (test run)</option>
+                      <option value="50">50 leads</option>
+                      <option value="100">100 leads</option>
+                      <option value="250">250 leads</option>
+                      <option value="500">500 leads</option>
+                      <option value="1000">1,000 leads (max)</option>
+                    </select>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Each lead costs 1 credit ($0.02). {skipTraceBatchSize} leads = {parseInt(skipTraceBatchSize)} credits.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-1.5 block">Priority</label>
+                    <select
+                      value={skipTracePriority}
+                      onChange={(e) => setSkipTracePriority(e.target.value)}
+                      className="w-full h-10 rounded-lg border border-input bg-background px-3 text-sm"
+                    >
+                      <option value="best_data">Best Data First (has address + city)</option>
+                      <option value="highest_surplus">Highest Surplus First</option>
+                      <option value="newest">Newest Leads First</option>
+                    </select>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      &quot;Best Data First&quot; traces leads with addresses for highest hit rate.
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {skipTraceResult.step !== "idle" && (
+                <div className={`p-3 rounded-lg text-sm ${
+                  skipTraceResult.step === "done" ? "bg-emerald-50 text-emerald-800 border border-emerald-200" :
+                  skipTraceResult.step === "error" ? "bg-red-50 text-red-800 border border-red-200" :
+                  "bg-blue-50 text-blue-800 border border-blue-200"
+                }`}>
+                  <div className="flex items-center gap-2">
+                    {(skipTraceResult.step === "submitting" || skipTraceResult.step === "polling" || skipTraceResult.step === "importing") && (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    )}
+                    {skipTraceResult.step === "done" && <CheckCircle2 className="h-4 w-4" />}
+                    {skipTraceResult.step === "error" && <XCircle className="h-4 w-4" />}
+                    <span>{skipTraceResult.message}</span>
+                  </div>
+                  {skipTraceResult.importResult && (
+                    <div className="mt-2 text-xs space-y-0.5">
+                      <div>Results returned: {skipTraceResult.importResult.totalResults}</div>
+                      <div>Leads updated with phone/email: {skipTraceResult.importResult.updated}</div>
+                      <div>No data found: {skipTraceResult.importResult.skipped}</div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+            <div className="flex justify-end gap-2 p-6 pt-0">
+              <Button
+                variant="outline"
+                onClick={() => { setSkipTraceOpen(false); setSkipTraceResult({ step: "idle", message: "" }) }}
+                disabled={skipTraceResult.step === "submitting" || skipTraceResult.step === "polling" || skipTraceResult.step === "importing"}
+              >
+                {skipTraceResult.step === "done" ? "Close" : "Cancel"}
+              </Button>
+              {(skipTraceResult.step === "idle" || skipTraceResult.step === "error") && (
+                <Button
+                  onClick={submitSkipTrace}
+                  disabled={skipTraceLoading}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  {skipTraceLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <UserSearch className="h-4 w-4 mr-2" />
+                      Start Skip Trace ({skipTraceBatchSize} leads)
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
+          </Card>
+        </div>
+      )}
 
       {/* Test Voice Drop Modal */}
       {testVdOpen && (
