@@ -1,0 +1,17 @@
+# Crontab Example for Skip Tracer
+#
+# To install:
+#   crontab -e
+# Then add one of these lines:
+
+# Run every 6 hours (safe, recommended)
+0 */6 * * * /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers/run_skip_tracer.sh >> /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers/cron.log 2>&1
+
+# Run every 12 hours (more conservative)
+0 */12 * * * /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers/run_skip_tracer.sh >> /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers/cron.log 2>&1
+
+# Run once daily at 2 AM
+0 2 * * * /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers/run_skip_tracer.sh >> /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers/cron.log 2>&1
+
+# Run twice daily (8 AM and 8 PM)
+0 8,20 * * * /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers/run_skip_tracer.sh >> /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers/cron.log 2>&1

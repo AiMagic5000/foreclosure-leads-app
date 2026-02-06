@@ -164,6 +164,130 @@ SF_COUNTY_CITIES = {
     "san francisco",
 }
 
+# NYC borough/city name mappings
+NYC_BOROUGHS = {
+    "brooklyn": "BK",
+    "new york": "MN",
+    "manhattan": "MN",
+    "queens": "QN",
+    "bronx": "BX",
+    "the bronx": "BX",
+    "staten island": "SI",
+}
+
+# Philadelphia city names
+PHILADELPHIA_CITIES = {
+    "philadelphia",
+}
+
+# Cook County IL cities (Chicago metro)
+COOK_COUNTY_CITIES = {
+    "chicago", "evanston", "skokie", "cicero", "arlington heights", "schaumburg",
+    "palatine", "des plaines", "mount prospect", "oak lawn", "berwyn",
+    "oak park", "orland park", "tinley park", "niles", "park ridge",
+    "wheeling", "hoffman estates", "glenview", "northbrook", "elk grove village",
+    "aurora", "rockford", "peoria", "joliet", "naperville", "elgin",
+}
+
+# Florida County FIPS codes for the statewide ArcGIS API
+FLORIDA_COUNTY_FIPS = {
+    "miami-dade": "086",
+    "hillsborough": "057",  # Tampa
+    "orange": "095",        # Orlando
+    "duval": "031",         # Jacksonville
+    "broward": "011",       # Fort Lauderdale
+    "palm_beach": "099",
+    "pinellas": "103",      # St Petersburg/Clearwater
+    "lee": "071",           # Fort Myers
+    "polk": "105",          # Lakeland
+    "brevard": "009",       # Melbourne/Space Coast
+    "volusia": "127",       # Daytona Beach
+    "pasco": "101",         # New Port Richey
+    "seminole": "117",      # Sanford
+    "sarasota": "115",
+    "manatee": "081",       # Bradenton
+    "collier": "021",       # Naples
+    "marion": "083",        # Ocala
+    "escambia": "033",      # Pensacola
+    "leon": "073",          # Tallahassee
+    "osceola": "097",       # Kissimmee
+    "st_lucie": "111",      # Port St Lucie
+    "alachua": "001",       # Gainesville
+}
+
+# Florida city to county mapping
+FLORIDA_CITIES = {
+    # Miami-Dade
+    "miami": "miami-dade", "miami beach": "miami-dade", "hialeah": "miami-dade",
+    "coral gables": "miami-dade", "homestead": "miami-dade", "doral": "miami-dade",
+    "kendall": "miami-dade", "miami gardens": "miami-dade", "north miami": "miami-dade",
+    "aventura": "miami-dade", "cutler bay": "miami-dade", "miami lakes": "miami-dade",
+    "sunny isles beach": "miami-dade", "pinecrest": "miami-dade", "key biscayne": "miami-dade",
+    # Broward
+    "fort lauderdale": "broward", "hollywood": "broward", "pembroke pines": "broward",
+    "coral springs": "broward", "pompano beach": "broward", "davie": "broward",
+    "plantation": "broward", "sunrise": "broward", "miramar": "broward",
+    "deerfield beach": "broward", "weston": "broward", "lauderhill": "broward",
+    "tamarac": "broward", "margate": "broward", "coconut creek": "broward",
+    # Palm Beach
+    "west palm beach": "palm_beach", "boca raton": "palm_beach", "boynton beach": "palm_beach",
+    "delray beach": "palm_beach", "palm beach gardens": "palm_beach", "jupiter": "palm_beach",
+    "wellington": "palm_beach", "royal palm beach": "palm_beach", "lake worth": "palm_beach",
+    "palm beach": "palm_beach", "greenacres": "palm_beach", "riviera beach": "palm_beach",
+    # Hillsborough (Tampa)
+    "tampa": "hillsborough", "plant city": "hillsborough", "temple terrace": "hillsborough",
+    "brandon": "hillsborough", "riverview": "hillsborough", "carrollwood": "hillsborough",
+    # Orange (Orlando)
+    "orlando": "orange", "winter park": "orange", "apopka": "orange",
+    "ocoee": "orange", "winter garden": "orange", "maitland": "orange",
+    "altamonte springs": "orange", "casselberry": "orange",
+    # Duval (Jacksonville)
+    "jacksonville": "duval", "jacksonville beach": "duval", "atlantic beach": "duval",
+    "neptune beach": "duval",
+    # Pinellas
+    "st petersburg": "pinellas", "clearwater": "pinellas", "largo": "pinellas",
+    "palm harbor": "pinellas", "dunedin": "pinellas", "tarpon springs": "pinellas",
+    "st pete beach": "pinellas", "pinellas park": "pinellas", "seminole": "pinellas",
+    # Lee (Fort Myers)
+    "fort myers": "lee", "cape coral": "lee", "lehigh acres": "lee",
+    "bonita springs": "lee", "estero": "lee", "sanibel": "lee",
+    # Polk (Lakeland)
+    "lakeland": "polk", "winter haven": "polk", "bartow": "polk",
+    "auburndale": "polk", "haines city": "polk",
+    # Brevard (Space Coast)
+    "melbourne": "brevard", "palm bay": "brevard", "titusville": "brevard",
+    "cocoa": "brevard", "cocoa beach": "brevard", "rockledge": "brevard",
+    "merritt island": "brevard", "satellite beach": "brevard",
+    # Volusia
+    "daytona beach": "volusia", "port orange": "volusia", "deltona": "volusia",
+    "ormond beach": "volusia", "new smyrna beach": "volusia", "debary": "volusia",
+    # Sarasota
+    "sarasota": "sarasota", "venice": "sarasota", "north port": "sarasota",
+    "englewood": "sarasota",
+    # Collier (Naples)
+    "naples": "collier", "marco island": "collier", "immokalee": "collier",
+    # Seminole
+    "sanford": "seminole", "lake mary": "seminole", "longwood": "seminole",
+    "oviedo": "seminole", "winter springs": "seminole",
+    # Osceola
+    "kissimmee": "osceola", "st cloud": "osceola", "celebration": "osceola",
+    # Pasco
+    "new port richey": "pasco", "port richey": "pasco", "land o lakes": "pasco",
+    "wesley chapel": "pasco", "hudson": "pasco", "zephyrhills": "pasco",
+    # Manatee
+    "bradenton": "manatee", "palmetto": "manatee", "lakewood ranch": "manatee",
+    # St Lucie
+    "port st lucie": "st_lucie", "fort pierce": "st_lucie",
+    # Marion
+    "ocala": "marion",
+    # Escambia
+    "pensacola": "escambia", "perdido key": "escambia",
+    # Leon
+    "tallahassee": "leon",
+    # Alachua
+    "gainesville": "alachua",
+}
+
 
 def get_county_for_city(city: str, state_abbr: str) -> Optional[str]:
     """Determine the county for a given city and state."""
@@ -193,6 +317,23 @@ def get_county_for_city(city: str, state_abbr: str) -> Optional[str]:
         if city_lower in SF_COUNTY_CITIES:
             return "san_francisco"
 
+    if state_abbr == "NY":
+        if city_lower in NYC_BOROUGHS:
+            return "nyc"
+
+    if state_abbr == "PA":
+        if city_lower in PHILADELPHIA_CITIES:
+            return "philadelphia"
+
+    if state_abbr == "IL":
+        if city_lower in COOK_COUNTY_CITIES:
+            return "cook"
+
+    if state_abbr == "FL":
+        fl_county = FLORIDA_CITIES.get(city_lower)
+        if fl_county:
+            return f"florida_{fl_county}"
+
     return None
 
 
@@ -214,6 +355,7 @@ def fetch_leads_needing_property(limit=25, state_filter=None):
         f"?square_footage=is.null"
         f"&bedrooms=is.null"
         f"&apn_number=is.null"
+        f"&enrichment_source=not.in.(property_attempted,no_api_available,la_county_assessor)"
         f"&owner_name=neq.Property%20Owner"
         f"&select=id,property_address,city,state,state_abbr,zip_code,owner_name,"
         f"sale_amount,mortgage_amount,estimated_market_value,lat,lng,county,enrichment_source"
@@ -370,6 +512,451 @@ def enrich_via_la_county_api(address: str, city: str, zip_code: str) -> Optional
         return None
     except (json.JSONDecodeError, KeyError, TypeError) as e:
         log.debug(f"  LA County parse error: {e}")
+        return None
+
+
+# ---- NYC PLUTO API (Socrata) ----
+
+def enrich_via_nyc_pluto(address: str, city: str, zip_code: str) -> Optional[Dict]:
+    """
+    Use NYC PLUTO (Primary Land Use Tax Lot Output) Socrata API.
+    Free, no API key required, covers all 5 NYC boroughs.
+    Returns: sqft, lot size, floors, year built, assessed value, owner
+    Does NOT have: bedrooms, bathrooms (PLUTO is land use data, not MLS)
+    """
+    try:
+        # Get borough code
+        city_lower = city.lower().strip()
+        borough_code = NYC_BOROUGHS.get(city_lower)
+        if not borough_code:
+            return None
+
+        # Try searching by address (uppercase) and zipcode
+        addr_upper = address.upper().strip()
+        # Extract street number and name for matching
+        import re
+        match = re.match(r"(\d+)\s+(.+)", addr_upper)
+        if not match:
+            return None
+        street_num = match.group(1)
+        street_name = match.group(2)
+
+        # Search PLUTO by address pattern and borough
+        url = "https://data.cityofnewyork.us/resource/64uk-42ks.json"
+        params = {
+            "$where": f"borough = '{borough_code}' AND upper(address) like '%{street_num}%' AND upper(address) like '%{street_name[:10].replace(' ', '%')}%'",
+            "$limit": 5,
+            "$select": "address,zipcode,bldgarea,lotarea,numfloors,yearbuilt,unitsres,unitstotal,bbl,ownername,assesstot,assessland,bldgclass,landuse"
+        }
+        if zip_code:
+            params["$where"] += f" AND zipcode = '{zip_code}'"
+
+        resp = requests.get(url, params=params, timeout=15, headers={"Accept": "application/json"})
+        resp.raise_for_status()
+        data = resp.json()
+
+        if not data:
+            # Try without street name match
+            params["$where"] = f"borough = '{borough_code}' AND upper(address) like '%{street_num}%'"
+            if zip_code:
+                params["$where"] += f" AND zipcode = '{zip_code}'"
+            resp = requests.get(url, params=params, timeout=15, headers={"Accept": "application/json"})
+            resp.raise_for_status()
+            data = resp.json()
+
+        if not data:
+            return None
+
+        # Find best match
+        best = data[0]
+        for r in data:
+            if r.get("address", "").upper().startswith(street_num):
+                best = r
+                break
+
+        enrichment = {}
+
+        # Building area (sqft)
+        sqft = best.get("bldgarea")
+        if sqft:
+            try:
+                val = int(float(sqft))
+                if val > 0:
+                    enrichment["square_footage"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # Lot area
+        lot = best.get("lotarea")
+        if lot:
+            try:
+                val = int(float(lot))
+                if val > 0:
+                    enrichment["lot_size"] = f"{val:,} sq ft"
+            except (ValueError, TypeError):
+                pass
+
+        # Number of floors/stories
+        floors = best.get("numfloors")
+        if floors:
+            try:
+                val = int(float(floors))
+                if 0 < val < 200:
+                    enrichment["stories"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # Year built
+        year = best.get("yearbuilt")
+        if year:
+            try:
+                yr = int(year)
+                if 1800 < yr < 2027:
+                    enrichment["year_built"] = yr
+            except (ValueError, TypeError):
+                pass
+
+        # Assessed total
+        assessed = best.get("assesstot")
+        if assessed:
+            try:
+                val = int(float(assessed))
+                if val > 0:
+                    enrichment["assessed_value"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # BBL as APN
+        bbl = best.get("bbl")
+        if bbl:
+            enrichment["apn_number"] = str(bbl).replace(".00000000", "")
+
+        # County = NYC borough name
+        borough_names = {"BK": "Brooklyn", "MN": "Manhattan", "QN": "Queens", "BX": "Bronx", "SI": "Staten Island"}
+        enrichment["county"] = borough_names.get(borough_code, "New York City")
+
+        # Property type from building class
+        bldg_class = best.get("bldgclass", "")
+        if bldg_class:
+            # Map common building classes
+            class_map = {
+                "A": "Single Family", "B": "Two Family", "C": "Walk-up Apartment",
+                "D": "Elevator Apartment", "R": "Condo", "S": "Residence (Multiple Use)"
+            }
+            ptype = class_map.get(bldg_class[0].upper() if bldg_class else "", "")
+            if ptype:
+                enrichment["property_type"] = ptype
+
+        if enrichment:
+            enrichment["enrichment_source"] = "nyc_pluto"
+
+        return enrichment if enrichment else None
+
+    except requests.RequestException as e:
+        log.debug(f"  NYC PLUTO API error: {e}")
+        return None
+    except (json.JSONDecodeError, KeyError, TypeError) as e:
+        log.debug(f"  NYC PLUTO parse error: {e}")
+        return None
+
+
+# ---- Philadelphia CARTO API ----
+
+def enrich_via_philadelphia_carto(address: str, city: str, zip_code: str) -> Optional[Dict]:
+    """
+    Use Philadelphia Office of Property Assessment CARTO API.
+    Free, no API key required.
+    Returns: sqft, bedrooms, bathrooms, year built, stories, owner, parcel number
+    """
+    try:
+        # Clean address for SQL query
+        addr_clean = address.upper().strip().replace("'", "''")
+
+        # Query CARTO for property data
+        sql = f"""
+        SELECT * FROM opa_properties_public
+        WHERE upper(location) LIKE '%{addr_clean[:30]}%'
+        LIMIT 5
+        """
+        if zip_code:
+            sql = f"""
+            SELECT * FROM opa_properties_public
+            WHERE zip_code = '{zip_code}' AND upper(location) LIKE '%{addr_clean[:20]}%'
+            LIMIT 5
+            """
+
+        url = "https://phl.carto.com/api/v2/sql"
+        resp = requests.get(url, params={"q": sql}, timeout=15, headers={"Accept": "application/json"})
+        resp.raise_for_status()
+        data = resp.json()
+
+        rows = data.get("rows", [])
+        if not rows:
+            # Try with just zip code
+            if zip_code:
+                sql2 = f"SELECT * FROM opa_properties_public WHERE zip_code = '{zip_code}' LIMIT 1"
+                resp2 = requests.get(url, params={"q": sql2}, timeout=15, headers={"Accept": "application/json"})
+                resp2.raise_for_status()
+                rows = resp2.json().get("rows", [])
+            if not rows:
+                return None
+
+        row = rows[0]
+        enrichment = {}
+
+        # Bedrooms
+        beds = row.get("number_of_bedrooms")
+        if beds:
+            try:
+                val = int(beds)
+                if 0 < val < 50:
+                    enrichment["bedrooms"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # Bathrooms
+        baths = row.get("number_of_bathrooms")
+        if baths:
+            try:
+                val = int(baths)
+                if 0 < val < 30:
+                    enrichment["bathrooms"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # Livable area (sqft)
+        sqft = row.get("total_livable_area") or row.get("total_area")
+        if sqft:
+            try:
+                val = int(float(sqft))
+                if val > 0:
+                    enrichment["square_footage"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # Year built
+        year = row.get("year_built")
+        if year:
+            try:
+                yr = int(year)
+                if 1800 < yr < 2027:
+                    enrichment["year_built"] = yr
+            except (ValueError, TypeError):
+                pass
+
+        # Stories
+        stories = row.get("number_stories")
+        if stories:
+            try:
+                val = int(float(stories))
+                if 0 < val < 100:
+                    enrichment["stories"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # Parcel number as APN
+        parcel = row.get("parcel_number")
+        if parcel:
+            enrichment["apn_number"] = str(parcel)
+
+        # Market value as assessed value
+        market_val = row.get("market_value")
+        if market_val:
+            try:
+                val = int(float(market_val))
+                if val > 0:
+                    enrichment["assessed_value"] = val
+            except (ValueError, TypeError):
+                pass
+
+        enrichment["county"] = "Philadelphia"
+
+        # Property type from category
+        cat = row.get("category_code_description") or row.get("building_code_description")
+        if cat:
+            enrichment["property_type"] = cat[:50]
+
+        if enrichment:
+            enrichment["enrichment_source"] = "philadelphia_carto"
+
+        return enrichment if enrichment else None
+
+    except requests.RequestException as e:
+        log.debug(f"  Philadelphia CARTO API error: {e}")
+        return None
+    except (json.JSONDecodeError, KeyError, TypeError) as e:
+        log.debug(f"  Philadelphia CARTO parse error: {e}")
+        return None
+
+
+# ---- Florida Statewide ArcGIS API ----
+
+def enrich_via_florida_arcgis(address: str, city: str, zip_code: str, county: str) -> Optional[Dict]:
+    """
+    Use Florida Statewide Cadastral ArcGIS API.
+    Free, no API key required, covers all 67 Florida counties.
+
+    Fields available: TOT_LVG_AR (sqft), LND_SQFOOT (lot), ACT_YR_BLT (year built),
+    PARCEL_ID (APN), JV (market value), PHY_ADDR1 (address), OWN_NAME (owner)
+    Does NOT have: bedrooms, bathrooms (land use data, not MLS)
+
+    API: https://services9.arcgis.com/Gh9awoU677aKree0/arcgis/rest/services/Florida_Statewide_Cadastral/FeatureServer/0
+    """
+    try:
+        # Get county FIPS code (strip "florida_" prefix)
+        county_name = county.replace("florida_", "")
+        fips = FLORIDA_COUNTY_FIPS.get(county_name)
+        if not fips:
+            log.debug(f"  Florida: Unknown county {county_name}")
+            return None
+
+        # Clean address for matching
+        addr_upper = address.upper().strip()
+        # Extract street number for better matching
+        match = re.match(r"(\d+)\s+(.+)", addr_upper)
+        if not match:
+            return None
+        street_num = match.group(1)
+        street_rest = match.group(2)[:15].replace(" ", "%")
+
+        # Query Florida statewide parcels
+        url = "https://services9.arcgis.com/Gh9awoU677aKree0/arcgis/rest/services/Florida_Statewide_Cadastral/FeatureServer/0/query"
+
+        # Build WHERE clause
+        where = f"CO_NO={int(fips)} AND PHY_ADDR1 LIKE '%{street_num}%'"
+        if street_rest:
+            where += f" AND PHY_ADDR1 LIKE '%{street_rest}%'"
+
+        params = {
+            "where": where,
+            "outFields": "PHY_ADDR1,PHY_CITY,PHY_ZIPCD,OWN_NAME,PARCEL_ID,TOT_LVG_AR,LND_SQFOOT,ACT_YR_BLT,EFF_YR_BLT,JV,LND_VAL,NO_BULDNG,NO_RES_UNT,CO_NO",
+            "returnGeometry": "false",
+            "resultRecordCount": 5,
+            "f": "json"
+        }
+
+        resp = requests.get(url, params=params, timeout=20, headers={"Accept": "application/json"})
+        resp.raise_for_status()
+        data = resp.json()
+
+        features = data.get("features", [])
+        if not features:
+            # Try broader search with just street number
+            params["where"] = f"CO_NO={int(fips)} AND PHY_ADDR1 LIKE '%{street_num}%'"
+            resp = requests.get(url, params=params, timeout=20, headers={"Accept": "application/json"})
+            resp.raise_for_status()
+            data = resp.json()
+            features = data.get("features", [])
+
+        if not features:
+            log.debug(f"  Florida: No parcels found for {address}")
+            return None
+
+        # Find best match
+        best = features[0]["attributes"]
+        for feat in features:
+            attrs = feat["attributes"]
+            phy_addr = attrs.get("PHY_ADDR1", "").upper()
+            if phy_addr.startswith(street_num):
+                best = attrs
+                break
+
+        enrichment = {}
+
+        # Total living area (sqft)
+        sqft = best.get("TOT_LVG_AR")
+        if sqft:
+            try:
+                val = int(sqft)
+                if 100 < val < 100000:
+                    enrichment["square_footage"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # Land area - convert to more readable format
+        lot = best.get("LND_SQFOOT")
+        if lot:
+            try:
+                val = int(lot)
+                if val > 0:
+                    # Convert large lots to acres
+                    if val > 43560:  # More than 1 acre
+                        acres = val / 43560
+                        enrichment["lot_size"] = f"{acres:.2f} acres"
+                    else:
+                        enrichment["lot_size"] = f"{val:,} sq ft"
+            except (ValueError, TypeError):
+                pass
+
+        # Year built (prefer actual over effective)
+        year = best.get("ACT_YR_BLT") or best.get("EFF_YR_BLT")
+        if year:
+            try:
+                yr = int(year)
+                if 1800 < yr < 2027:
+                    enrichment["year_built"] = yr
+            except (ValueError, TypeError):
+                pass
+
+        # Parcel ID as APN
+        parcel = best.get("PARCEL_ID")
+        if parcel:
+            enrichment["apn_number"] = str(parcel).strip()
+
+        # Just Value as market value / assessed value
+        jv = best.get("JV")
+        if jv:
+            try:
+                val = int(jv)
+                if val > 0:
+                    enrichment["assessed_value"] = val
+            except (ValueError, TypeError):
+                pass
+
+        # Number of buildings
+        buildings = best.get("NO_BULDNG")
+        if buildings:
+            try:
+                val = int(buildings)
+                if 0 < val < 10:
+                    enrichment["stories"] = val  # Approximate
+            except (ValueError, TypeError):
+                pass
+
+        # Map county name
+        county_names = {
+            "miami-dade": "Miami-Dade", "broward": "Broward", "palm_beach": "Palm Beach",
+            "hillsborough": "Hillsborough", "orange": "Orange", "duval": "Duval",
+            "pinellas": "Pinellas", "lee": "Lee", "polk": "Polk", "brevard": "Brevard",
+            "volusia": "Volusia", "sarasota": "Sarasota", "collier": "Collier",
+            "seminole": "Seminole", "osceola": "Osceola", "pasco": "Pasco",
+            "manatee": "Manatee", "st_lucie": "St. Lucie", "marion": "Marion",
+            "escambia": "Escambia", "leon": "Leon", "alachua": "Alachua",
+        }
+        enrichment["county"] = county_names.get(county_name, county_name.replace("_", " ").title())
+
+        # Property type based on residential units
+        res_units = best.get("NO_RES_UNT", 0)
+        try:
+            if res_units == 1:
+                enrichment["property_type"] = "Single Family"
+            elif res_units == 2:
+                enrichment["property_type"] = "Duplex"
+            elif res_units > 2:
+                enrichment["property_type"] = f"Multi-Family ({res_units} units)"
+        except (ValueError, TypeError):
+            pass
+
+        if enrichment:
+            enrichment["enrichment_source"] = "florida_arcgis"
+
+        return enrichment if enrichment else None
+
+    except requests.RequestException as e:
+        log.debug(f"  Florida ArcGIS API error: {e}")
+        return None
+    except (json.JSONDecodeError, KeyError, TypeError) as e:
+        log.debug(f"  Florida ArcGIS parse error: {e}")
         return None
 
 
@@ -570,6 +1157,8 @@ def enrich_single_lead(lead: Dict, dry_run: bool = False, use_crawl4ai: bool = T
 
     # Strategy 1: County Assessor REST APIs (fastest, most reliable)
     county = get_county_for_city(city, state_abbr)
+    # Counties with working REST APIs
+    has_api = county in ("los_angeles", "nyc", "philadelphia", "cook") or (county and county.startswith("florida_"))
 
     if county == "los_angeles":
         data = enrich_via_la_county_api(address, city, zip_code)
@@ -577,6 +1166,33 @@ def enrich_single_lead(lead: Dict, dry_run: bool = False, use_crawl4ai: bool = T
             combined.update(data)
             source = "la_county_assessor"
             log.info(f"  LA County API: {len(data)} fields - {list(data.keys())}")
+
+    elif county == "nyc":
+        data = enrich_via_nyc_pluto(address, city, zip_code)
+        if data:
+            combined.update(data)
+            source = "nyc_pluto"
+            log.info(f"  NYC PLUTO API: {len(data)} fields - {list(data.keys())}")
+
+    elif county == "philadelphia":
+        data = enrich_via_philadelphia_carto(address, city, zip_code)
+        if data:
+            combined.update(data)
+            source = "philadelphia_carto"
+            log.info(f"  Philadelphia CARTO API: {len(data)} fields - {list(data.keys())}")
+
+    elif county and county.startswith("florida_"):
+        data = enrich_via_florida_arcgis(address, city, zip_code, county)
+        if data:
+            combined.update(data)
+            source = "florida_arcgis"
+            log.info(f"  Florida ArcGIS API: {len(data)} fields - {list(data.keys())}")
+
+    # If no API available and not using Crawl4AI, mark as no_api_available
+    if not has_api and not use_crawl4ai:
+        log.info(f"  No county API available for {city}, {state_abbr} (county: {county or 'unknown'})")
+        update_lead_property(lead_id, {"enrichment_source": "no_api_available"}, dry_run)
+        return False, "no_api"
 
     # Strategy 2: Crawl4AI scraping of county/aggregator sites
     if use_crawl4ai and not combined:

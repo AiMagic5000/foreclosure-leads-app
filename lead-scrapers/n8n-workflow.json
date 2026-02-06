@@ -1,0 +1,204 @@
+{
+  "name": "County Surplus Scraper - Daily",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 2 * * *"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "command": "cd /mnt/c/Users/flowc/Documents/foreclosure-leads-app/lead-scrapers && python3 county_surplus_scraper.py"
+      },
+      "id": "execute-scraper",
+      "name": "Execute Scraper",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.exitCode}}",
+              "operation": "equals",
+              "value2": "0"
+            }
+          ]
+        }
+      },
+      "id": "check-success",
+      "name": "Check Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "url": "https://foreclosure-db.alwaysencrypted.com/rest/v1/foreclosure_leads",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "foreclosure_type",
+              "value": "eq.tax-sale-overage"
+            },
+            {
+              "name": "created_at",
+              "value": "gte.{{$now.minus({hours: 24}).toISO()}}"
+            },
+            {
+              "name": "select",
+              "value": "count"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "count-new-leads",
+      "name": "Count New Leads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        850,
+        200
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "supabase-api-key",
+          "name": "Supabase API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@tradelinejet.com",
+        "toEmail": "support@startmybusiness.us",
+        "subject": "County Surplus Scraper - Success ({{$json.count}} new leads)",
+        "text": "The county surplus scraper completed successfully.\n\nNew leads found: {{$json.count}}\nTimestamp: {{$now.toISO()}}\n\nView leads at:\nhttps://foreclosure-studio.alwaysencrypted.com\n\nLogs available at:\n/tmp/county_surplus_scraper.log",
+        "options": {}
+      },
+      "id": "send-success-email",
+      "name": "Send Success Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1050,
+        200
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "hostinger-smtp",
+          "name": "Hostinger SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@tradelinejet.com",
+        "toEmail": "support@startmybusiness.us",
+        "subject": "County Surplus Scraper - FAILED",
+        "text": "The county surplus scraper FAILED.\n\nExit code: {{$json.exitCode}}\nError: {{$json.stderr}}\nTimestamp: {{$now.toISO()}}\n\nCheck logs at:\n/tmp/county_surplus_scraper.log",
+        "options": {}
+      },
+      "id": "send-error-email",
+      "name": "Send Error Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        850,
+        400
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "hostinger-smtp",
+          "name": "Hostinger SMTP"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execute Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Scraper": {
+      "main": [
+        [
+          {
+            "node": "Check Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Success": {
+      "main": [
+        [
+          {
+            "node": "Count New Leads",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Error Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Count New Leads": {
+      "main": [
+        [
+          {
+            "node": "Send Success Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-03T00:00:00.000Z",
+  "versionId": "1"
+}

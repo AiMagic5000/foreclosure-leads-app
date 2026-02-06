@@ -1,0 +1,223 @@
+{
+  "name": "24/7 Lead Scraping Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 */4 * * *"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger-001",
+      "name": "Schedule Trigger (Every 4 Hours)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/coolify/scripts/lead-scrapers && python3 county_surplus_scraper.py 2>&1 | tee /tmp/county_surplus_$(date +%Y%m%d_%H%M%S).log"
+      },
+      "id": "exec-county-surplus-002",
+      "name": "County Surplus Scraper",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "wait-after-county-003",
+      "name": "Wait 30s (After County Surplus)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [740, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/coolify/scripts/lead-scrapers && python3 trustee_sales_scraper.py 2>&1 | tee /tmp/trustee_sales_$(date +%Y%m%d_%H%M%S).log"
+      },
+      "id": "exec-trustee-sales-004",
+      "name": "Trustee Sales Scraper",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "wait-after-trustee-005",
+      "name": "Wait 30s (After Trustee Sales)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1260, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/coolify/scripts/lead-scrapers && python3 skip_tracer.py 2>&1 | tee /tmp/skip_tracer_$(date +%Y%m%d_%H%M%S).log"
+      },
+      "id": "exec-skip-tracer-006",
+      "name": "Skip Tracer",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1520, 300]
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "wait-after-skip-007",
+      "name": "Wait 30s (After Skip Tracer)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/coolify/scripts/lead-scrapers && python3 import_pipeline.py 2>&1 | tee /tmp/import_pipeline_$(date +%Y%m%d_%H%M%S).log"
+      },
+      "id": "exec-import-pipeline-008",
+      "name": "Import Pipeline",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [2040, 300]
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "wait-after-import-009",
+      "name": "Wait 30s (After Import)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2300, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/coolify/scripts/lead-scrapers && python3 geocode_leads.py 2>&1 | tee /tmp/geocode_$(date +%Y%m%d_%H%M%S).log"
+      },
+      "id": "exec-geocode-010",
+      "name": "Geocode New Leads",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [2560, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Every 4 Hours)": {
+      "main": [
+        [
+          {
+            "node": "County Surplus Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "County Surplus Scraper": {
+      "main": [
+        [
+          {
+            "node": "Wait 30s (After County Surplus)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30s (After County Surplus)": {
+      "main": [
+        [
+          {
+            "node": "Trustee Sales Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trustee Sales Scraper": {
+      "main": [
+        [
+          {
+            "node": "Wait 30s (After Trustee Sales)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30s (After Trustee Sales)": {
+      "main": [
+        [
+          {
+            "node": "Skip Tracer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Tracer": {
+      "main": [
+        [
+          {
+            "node": "Wait 30s (After Skip Tracer)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30s (After Skip Tracer)": {
+      "main": [
+        [
+          {
+            "node": "Import Pipeline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Import Pipeline": {
+      "main": [
+        [
+          {
+            "node": "Wait 30s (After Import)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30s (After Import)": {
+      "main": [
+        [
+          {
+            "node": "Geocode New Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

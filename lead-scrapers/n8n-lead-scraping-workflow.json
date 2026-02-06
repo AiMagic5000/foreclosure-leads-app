@@ -1,0 +1,609 @@
+[
+  {
+    "name": "Foreclosure Lead Scraping Pipeline - 24/7",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "hours",
+                "hoursInterval": 4
+              }
+            ]
+          }
+        },
+        "id": "schedule-trigger",
+        "name": "Schedule Trigger (Every 4 Hours)",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [220, 300]
+      },
+      {
+        "parameters": {
+          "command": "python3 /data/coolify/scripts/lead-scrapers/county_surplus_scraper.py 2>&1",
+          "timeout": 1800
+        },
+        "id": "county-surplus-scraper",
+        "name": "County Surplus Scraper",
+        "type": "n8n-nodes-base.executeCommand",
+        "typeVersion": 1,
+        "position": [460, 300],
+        "onError": "continueRegularOutput",
+        "notesInFlow": true,
+        "notes": "Scrapes county surplus funds listings from known county URLs. Stores new leads in Supabase. Timeout: 30 minutes."
+      },
+      {
+        "parameters": {
+          "command": "python3 /data/coolify/scripts/lead-scrapers/trustee_sales_scraper.py 2>&1",
+          "timeout": 1800
+        },
+        "id": "trustee-sales-scraper",
+        "name": "Trustee Sales Scraper",
+        "type": "n8n-nodes-base.executeCommand",
+        "typeVersion": 1,
+        "position": [700, 300],
+        "onError": "continueRegularOutput",
+        "notesInFlow": true,
+        "notes": "Scrapes trustee sale notices and auction results from county recorder sites. Timeout: 30 minutes."
+      },
+      {
+        "parameters": {
+          "command": "python3 /data/coolify/scripts/lead-scrapers/skip_tracer.py 2>&1",
+          "timeout": 1200
+        },
+        "id": "skip-tracer",
+        "name": "Skip Tracer",
+        "type": "n8n-nodes-base.executeCommand",
+        "typeVersion": 1,
+        "position": [940, 300],
+        "onError": "continueRegularOutput",
+        "notesInFlow": true,
+        "notes": "Runs skip tracing on new leads without contact info. Uses public data APIs to find phone, email, mailing address. Timeout: 20 minutes."
+      },
+      {
+        "parameters": {
+          "command": "python3 /data/coolify/scripts/lead-scrapers/geocode_new_leads.py 2>&1",
+          "timeout": 3600
+        },
+        "id": "geocoder",
+        "name": "Geocoder",
+        "type": "n8n-nodes-base.executeCommand",
+        "typeVersion": 1,
+        "position": [1180, 300],
+        "onError": "continueRegularOutput",
+        "notesInFlow": true,
+        "notes": "Geocodes all leads missing lat/lng coordinates. Uses free geocoding APIs with rate limiting. Timeout: 60 minutes."
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://foreclosure-db.alwaysencrypted.com/rest/v1/rpc/get_lead_stats",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "={{ $env.FORECLOSURE_DB_SERVICE_KEY }}"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $env.FORECLOSURE_DB_SERVICE_KEY }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Prefer",
+                "value": "return=representation"
+              }
+            ]
+          },
+          "options": {
+            "timeout": 30000,
+            "allowUnauthorizedCerts": false
+          }
+        },
+        "id": "stats-check",
+        "name": "Stats Check (Supabase)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [1420, 300],
+        "onError": "continueRegularOutput",
+        "notesInFlow": true,
+        "notes": "Calls the get_lead_stats RPC function on the foreclosure Supabase instance to retrieve current lead counts, scrape status, and pipeline metrics."
+      },
+      {
+        "parameters": {
+          "functionCode": "// Collect results from all previous nodes\nconst countyScraper = $node['County Surplus Scraper']?.json || {};\nconst trusteeScraper = $node['Trustee Sales Scraper']?.json || {};\nconst skipTracer = $node['Skip Tracer']?.json || {};\nconst geocoder = $node['Geocoder']?.json || {};\nconst stats = $node['Stats Check (Supabase)']?.json || {};\n\nconst timestamp = new Date().toISOString();\n\nconst summary = {\n  run_timestamp: timestamp,\n  county_scraper: {\n    exit_code: countyScraper.exitCode ?? 'unknown',\n    stdout_length: (countyScraper.stdout || '').length,\n    stderr_length: (countyScraper.stderr || '').length,\n    last_output_line: (countyScraper.stdout || '').split('\\n').filter(l => l.trim()).pop() || 'no output'\n  },\n  trustee_scraper: {\n    exit_code: trusteeScraper.exitCode ?? 'unknown',\n    stdout_length: (trusteeScraper.stdout || '').length,\n    stderr_length: (trusteeScraper.stderr || '').length,\n    last_output_line: (trusteeScraper.stdout || '').split('\\n').filter(l => l.trim()).pop() || 'no output'\n  },\n  skip_tracer: {\n    exit_code: skipTracer.exitCode ?? 'unknown',\n    stdout_length: (skipTracer.stdout || '').length,\n    stderr_length: (skipTracer.stderr || '').length,\n    last_output_line: (skipTracer.stdout || '').split('\\n').filter(l => l.trim()).pop() || 'no output'\n  },\n  geocoder: {\n    exit_code: geocoder.exitCode ?? 'unknown',\n    stdout_length: (geocoder.stdout || '').length,\n    stderr_length: (geocoder.stderr || '').length,\n    last_output_line: (geocoder.stdout || '').split('\\n').filter(l => l.trim()).pop() || 'no output'\n  },\n  lead_stats: stats,\n  pipeline_status: 'completed'\n};\n\nconsole.log('=== FORECLOSURE LEAD SCRAPING PIPELINE SUMMARY ===');\nconsole.log(JSON.stringify(summary, null, 2));\nconsole.log('=== END SUMMARY ===');\n\nreturn [{ json: summary }];"
+        },
+        "id": "summary-logger",
+        "name": "Summary Logger",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [1660, 300],
+        "notesInFlow": true,
+        "notes": "Aggregates results from all scraper nodes and the stats check, then logs a structured summary to the n8n execution log."
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "boolean": [
+              {
+                "value1": "={{ $json.county_scraper.exit_code !== 0 || $json.trustee_scraper.exit_code !== 0 || $json.skip_tracer.exit_code !== 0 || $json.geocoder.exit_code !== 0 }}",
+                "value2": true
+              }
+            ]
+          }
+        },
+        "id": "error-check",
+        "name": "Any Errors?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [1900, 300],
+        "notesInFlow": true,
+        "notes": "Checks if any scraper node returned a non-zero exit code. Routes to error logging if so."
+      },
+      {
+        "parameters": {
+          "functionCode": "const summary = $json;\n\nconst errors = [];\nif (summary.county_scraper?.exit_code !== 0) errors.push('County Surplus Scraper failed (exit ' + summary.county_scraper.exit_code + ')');\nif (summary.trustee_scraper?.exit_code !== 0) errors.push('Trustee Sales Scraper failed (exit ' + summary.trustee_scraper.exit_code + ')');\nif (summary.skip_tracer?.exit_code !== 0) errors.push('Skip Tracer failed (exit ' + summary.skip_tracer.exit_code + ')');\nif (summary.geocoder?.exit_code !== 0) errors.push('Geocoder failed (exit ' + summary.geocoder.exit_code + ')');\n\nconsole.error('=== PIPELINE ERRORS DETECTED ===');\nconsole.error('Timestamp: ' + summary.run_timestamp);\nconsole.error('Errors:');\nerrors.forEach(e => console.error('  - ' + e));\nconsole.error('=== END ERRORS ===');\n\nreturn [{ json: { errors, timestamp: summary.run_timestamp, count: errors.length } }];"
+        },
+        "id": "error-logger",
+        "name": "Error Logger",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [2140, 200],
+        "notesInFlow": true,
+        "notes": "Logs detailed error information when any scraper node fails."
+      },
+      {
+        "parameters": {
+          "functionCode": "console.log('All scraper nodes completed successfully at ' + $json.run_timestamp);\nreturn [{ json: { status: 'all_success', timestamp: $json.run_timestamp } }];"
+        },
+        "id": "success-logger",
+        "name": "Success Logger",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [2140, 400],
+        "notesInFlow": true,
+        "notes": "Logs confirmation when all scrapers complete without errors."
+      }
+    ],
+    "connections": {
+      "Schedule Trigger (Every 4 Hours)": {
+        "main": [
+          [
+            {
+              "node": "County Surplus Scraper",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "County Surplus Scraper": {
+        "main": [
+          [
+            {
+              "node": "Trustee Sales Scraper",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Trustee Sales Scraper": {
+        "main": [
+          [
+            {
+              "node": "Skip Tracer",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Skip Tracer": {
+        "main": [
+          [
+            {
+              "node": "Geocoder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Geocoder": {
+        "main": [
+          [
+            {
+              "node": "Stats Check (Supabase)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Stats Check (Supabase)": {
+        "main": [
+          [
+            {
+              "node": "Summary Logger",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Summary Logger": {
+        "main": [
+          [
+            {
+              "node": "Any Errors?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Any Errors?": {
+        "main": [
+          [
+            {
+              "node": "Error Logger",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Success Logger",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "active": false,
+    "settings": {
+      "executionOrder": "v1",
+      "saveManualExecutions": true,
+      "callerPolicy": "workflowsFromSameOwner",
+      "errorWorkflow": "",
+      "timezone": "America/New_York",
+      "saveDataSuccessExecution": "all",
+      "saveDataErrorExecution": "all"
+    },
+    "versionId": "1",
+    "tags": [
+      {
+        "name": "foreclosure-leads"
+      },
+      {
+        "name": "scraping"
+      },
+      {
+        "name": "automation"
+      }
+    ],
+    "pinData": {}
+  },
+  {
+    "name": "Daily Google Discovery - County Surplus URLs",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 6 * * *"
+              }
+            ]
+          }
+        },
+        "id": "daily-schedule",
+        "name": "Daily 6 AM Trigger",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [220, 300]
+      },
+      {
+        "parameters": {
+          "functionCode": "// Generate search queries for discovering county surplus funds pages\nconst states = [\n  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',\n  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia',\n  'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',\n  'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',\n  'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',\n  'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',\n  'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio',\n  'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',\n  'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',\n  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'\n];\n\nconst queryTemplates = [\n  '\"surplus funds\" \"tax sale\" county {state} site:.gov',\n  '\"excess proceeds\" foreclosure county {state} site:.gov',\n  '\"surplus funds list\" county {state} filetype:pdf',\n  '\"unclaimed funds\" \"tax deed sale\" county {state}',\n  '\"overages\" \"sheriff sale\" county {state} site:.gov',\n  '\"surplus funds\" \"tax lien\" {state} county clerk',\n  '\"excess funds\" \"foreclosure sale\" {state} county treasurer'\n];\n\n// Rotate through states - use day of year to pick 4 states per day\nconst now = new Date();\nconst dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);\nconst statesPerDay = 4;\nconst startIndex = (dayOfYear * statesPerDay) % states.length;\n\nconst todayStates = [];\nfor (let i = 0; i < statesPerDay; i++) {\n  todayStates.push(states[(startIndex + i) % states.length]);\n}\n\n// Pick 2 query templates per state to stay under rate limits\nconst templateIndex = dayOfYear % queryTemplates.length;\n\nconst queries = [];\nfor (const state of todayStates) {\n  for (let t = 0; t < 2; t++) {\n    const tmplIdx = (templateIndex + t) % queryTemplates.length;\n    queries.push({\n      query: queryTemplates[tmplIdx].replace('{state}', state),\n      state: state,\n      template_id: tmplIdx\n    });\n  }\n}\n\nconsole.log('Discovery queries for today (' + todayStates.join(', ') + '): ' + queries.length + ' queries');\n\nreturn queries.map(q => ({ json: q }));"
+        },
+        "id": "query-generator",
+        "name": "Generate Search Queries",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [460, 300],
+        "notesInFlow": true,
+        "notes": "Generates daily Google search queries targeting county surplus funds pages. Rotates through all 50 states so each state is checked every 12-13 days. Produces 8 queries per day (4 states x 2 templates)."
+      },
+      {
+        "parameters": {
+          "batchSize": 1,
+          "options": {
+            "reset": false
+          }
+        },
+        "id": "batch-limiter",
+        "name": "Batch Limiter",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [700, 300],
+        "notesInFlow": true,
+        "notes": "Processes search queries one at a time to respect Google rate limits and avoid IP blocking."
+      },
+      {
+        "parameters": {
+          "command": "=sleep $(shuf -i 5-15 -n 1) && curl -s -L --max-time 30 -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.9' 'https://www.google.com/search?q={{ encodeURIComponent($json.query) }}&num=20' 2>&1 || echo 'SEARCH_FAILED'",
+          "timeout": 60
+        },
+        "id": "google-search",
+        "name": "Google Search (curl)",
+        "type": "n8n-nodes-base.executeCommand",
+        "typeVersion": 1,
+        "position": [940, 300],
+        "onError": "continueRegularOutput",
+        "notesInFlow": true,
+        "notes": "Performs Google search via curl with random 5-15 second delay between requests to avoid rate limiting. Returns raw HTML for parsing."
+      },
+      {
+        "parameters": {
+          "functionCode": "// Parse Google search results HTML to extract URLs\nconst html = $json.stdout || '';\nconst state = $node['Batch Limiter']?.json?.state || 'unknown';\nconst query = $node['Batch Limiter']?.json?.query || '';\n\nif (html.includes('SEARCH_FAILED') || html.length < 100) {\n  console.log('Search failed or empty result for: ' + query);\n  return [{ json: { state, query, urls_found: 0, urls: [], timestamp: new Date().toISOString(), error: 'search_failed' } }];\n}\n\n// Extract URLs from Google search results - look for href attributes\nconst hrefPattern = /href=\"(https?:\\/\\/[^\"]+)\"/gi;\nconst matches = [];\nlet match;\nwhile ((match = hrefPattern.exec(html)) !== null) {\n  matches.push(match[1]);\n}\n\n// Filter for likely surplus funds pages\nconst keywords = ['surplus', 'excess', 'overage', 'unclaimed', 'tax-sale', 'tax_sale', 'foreclosure', 'sheriff-sale', 'sheriff_sale', 'treasurer', 'clerk', 'auction', 'taxdeed', 'tax-deed'];\nconst excludeDomains = ['google.com', 'googleapis.com', 'gstatic.com', 'youtube.com', 'facebook.com', 'twitter.com', 'wikipedia.org', 'bing.com', 'yahoo.com'];\n\nconst relevantUrls = [...new Set(matches)].filter(url => {\n  const lowerUrl = url.toLowerCase();\n  const hasKeyword = keywords.some(kw => lowerUrl.includes(kw));\n  const isExcluded = excludeDomains.some(d => lowerUrl.includes(d));\n  const isGov = lowerUrl.includes('.gov');\n  const isPdf = lowerUrl.endsWith('.pdf');\n  return (hasKeyword || isGov || isPdf) && !isExcluded;\n});\n\nconsole.log('State: ' + state + ' | Query: ' + query.substring(0, 60) + '... | Found ' + relevantUrls.length + ' relevant URLs');\n\nreturn [{\n  json: {\n    state,\n    query,\n    urls_found: relevantUrls.length,\n    urls: relevantUrls.slice(0, 50),\n    timestamp: new Date().toISOString()\n  }\n}];"
+        },
+        "id": "url-extractor",
+        "name": "Extract URLs from Results",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [1180, 300],
+        "onError": "continueRegularOutput",
+        "notesInFlow": true,
+        "notes": "Parses Google search result HTML to extract .gov URLs and PDFs related to surplus funds. Filters using keyword matching and domain exclusion lists."
+      },
+      {
+        "parameters": {
+          "functionCode": "// Check if there are more batches to process\n// The splitInBatches node handles this automatically\n// This node just passes data through to collection\nreturn $input.all();"
+        },
+        "id": "batch-done-check",
+        "name": "Continue Batch",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [1180, 500],
+        "notesInFlow": true,
+        "notes": "Returns to batch limiter for next query until all queries are processed."
+      },
+      {
+        "parameters": {
+          "functionCode": "// Aggregate all discovered URLs from all search queries\nconst items = $input.all();\nconst allDiscovered = {};\nlet totalUrls = 0;\nlet totalQueries = 0;\nconst statesSeen = new Set();\n\nfor (const item of items) {\n  const data = item.json;\n  totalQueries++;\n  if (data.state) statesSeen.add(data.state);\n  if (data.urls && data.urls.length > 0) {\n    if (!allDiscovered[data.state]) {\n      allDiscovered[data.state] = [];\n    }\n    for (const url of data.urls) {\n      if (!allDiscovered[data.state].includes(url)) {\n        allDiscovered[data.state].push(url);\n        totalUrls++;\n      }\n    }\n  }\n}\n\nconst timestamp = new Date().toISOString();\n\nconsole.log('=== DAILY DISCOVERY SUMMARY ===');\nconsole.log('Timestamp: ' + timestamp);\nconsole.log('Queries executed: ' + totalQueries);\nconsole.log('States searched: ' + [...statesSeen].join(', '));\nconsole.log('Total unique URLs discovered: ' + totalUrls);\nfor (const [state, urls] of Object.entries(allDiscovered)) {\n  console.log('  ' + state + ': ' + urls.length + ' URLs');\n  urls.forEach(u => console.log('    - ' + u));\n}\nconsole.log('=== END SUMMARY ===');\n\nreturn [{\n  json: {\n    discovery_date: timestamp,\n    total_urls_found: totalUrls,\n    total_queries: totalQueries,\n    states_searched: [...statesSeen],\n    states_with_results: Object.keys(allDiscovered),\n    discovered_urls: allDiscovered\n  }\n}];"
+        },
+        "id": "aggregate-urls",
+        "name": "Aggregate Discovered URLs",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [1420, 300],
+        "notesInFlow": true,
+        "notes": "Aggregates and deduplicates all discovered URLs across search queries. Groups by state for organized storage."
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $json.total_urls_found }}",
+                "operation": "larger",
+                "value2": 0
+              }
+            ]
+          }
+        },
+        "id": "has-new-urls",
+        "name": "New URLs Found?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [1660, 300],
+        "notesInFlow": true,
+        "notes": "Checks if any new county surplus URLs were discovered today."
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://foreclosure-db.alwaysencrypted.com/rest/v1/discovered_urls",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "={{ $env.FORECLOSURE_DB_SERVICE_KEY }}"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $env.FORECLOSURE_DB_SERVICE_KEY }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Prefer",
+                "value": "resolution=merge-duplicates,return=representation"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify(\n  Object.entries($json.discovered_urls).flatMap(([state, urls]) =>\n    urls.map(url => ({\n      state: state,\n      url: url,\n      discovered_at: $json.discovery_date,\n      source: 'google_discovery',\n      status: 'pending',\n      scraped: false\n    }))\n  )\n) }}",
+          "options": {
+            "timeout": 30000
+          }
+        },
+        "id": "store-urls",
+        "name": "Store URLs in Supabase",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [1900, 200],
+        "onError": "continueRegularOutput",
+        "notesInFlow": true,
+        "notes": "Inserts discovered URLs into the discovered_urls table in Supabase. Uses merge-duplicates to avoid inserting URLs that already exist."
+      },
+      {
+        "parameters": {
+          "functionCode": "console.log('No new county surplus URLs discovered today.');\nconsole.log('This is normal - not every day yields new results.');\nreturn [{ json: { status: 'no_new_urls', timestamp: new Date().toISOString() } }];"
+        },
+        "id": "no-urls-logger",
+        "name": "No New URLs",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [1900, 400],
+        "notesInFlow": true,
+        "notes": "Logs when no new URLs are discovered. This is expected on many days."
+      },
+      {
+        "parameters": {
+          "functionCode": "const stored = $json;\nconsole.log('=== URLS STORED SUCCESSFULLY ===');\nconsole.log('Discovery workflow complete.');\nreturn [{ json: { status: 'urls_stored', timestamp: new Date().toISOString() } }];"
+        },
+        "id": "store-success",
+        "name": "Storage Confirmation",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [2140, 200],
+        "notesInFlow": true,
+        "notes": "Confirms successful URL storage and logs completion."
+      }
+    ],
+    "connections": {
+      "Daily 6 AM Trigger": {
+        "main": [
+          [
+            {
+              "node": "Generate Search Queries",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Search Queries": {
+        "main": [
+          [
+            {
+              "node": "Batch Limiter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Batch Limiter": {
+        "main": [
+          [
+            {
+              "node": "Google Search (curl)",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Aggregate Discovered URLs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Search (curl)": {
+        "main": [
+          [
+            {
+              "node": "Extract URLs from Results",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract URLs from Results": {
+        "main": [
+          [
+            {
+              "node": "Batch Limiter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate Discovered URLs": {
+        "main": [
+          [
+            {
+              "node": "New URLs Found?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "New URLs Found?": {
+        "main": [
+          [
+            {
+              "node": "Store URLs in Supabase",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No New URLs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Store URLs in Supabase": {
+        "main": [
+          [
+            {
+              "node": "Storage Confirmation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "active": false,
+    "settings": {
+      "executionOrder": "v1",
+      "saveManualExecutions": true,
+      "callerPolicy": "workflowsFromSameOwner",
+      "errorWorkflow": "",
+      "timezone": "America/New_York",
+      "saveDataSuccessExecution": "all",
+      "saveDataErrorExecution": "all",
+      "maxConcurrency": 1
+    },
+    "versionId": "1",
+    "tags": [
+      {
+        "name": "foreclosure-leads"
+      },
+      {
+        "name": "discovery"
+      },
+      {
+        "name": "google-search"
+      }
+    ],
+    "pinData": {}
+  }
+]

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  enrichment:
+    build: .
+    container_name: lead-enrichment
+    restart: "no"
+    volumes:
+      - enrichment-logs:/opt/enrichment
+    environment:
+      - SUPABASE_URL=https://foreclosure-db.alwaysencrypted.com
+      - SUPABASE_SERVICE_KEY=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTc3MDA2MjM0MCwiZXhwIjo0OTI1NzM1OTQwLCJyb2xlIjoic2VydmljZV9yb2xlIn0.qIVnMdQCymz03PkiJfOFo3NpndVJoEd3fmhSQjuK9fU
+      - CRAWL4AI_URL=https://crawl4ai.alwaysencrypted.com
+      - TWOCAPTCHA_API_KEY=8a0864545fcb5a34406bc9aa9af38288
+      - BATCH_SIZE=25
+      - DELAY_MIN=3
+      - DELAY_MAX=7
+    networks:
+      - coolify
+
+volumes:
+  enrichment-logs:
+
+networks:
+  coolify:
+    external: true
