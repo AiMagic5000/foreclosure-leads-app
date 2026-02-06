@@ -24,6 +24,9 @@ const NON_JUDICIAL_STATES = new Set([
   'UT', 'VA', 'WA', 'WV', 'WY'
 ]);
 
+// States with $2,500 asset recovery agent fee cap - RED X warning
+const FEE_CAP_2500_STATES = new Set(['AZ', 'NV']);
+
 const STATE_FIPS_TO_CODE: Record<string, string> = {
   '01': 'AL', '02': 'AK', '04': 'AZ', '05': 'AR', '06': 'CA',
   '08': 'CO', '09': 'CT', '10': 'DE', '11': 'DC', '12': 'FL',
@@ -162,7 +165,7 @@ export function CountyMap({
     accentLight: isDark ? '#1e3a5f' : '#dbeafe',
   }), [isDark]);
 
-  // Get color for county based on state type and lead count
+  // Get color for county based on state type, fee cap, and lead count
   const getCountyColor = (geo: { id: string }, isHovered: boolean = false) => {
     const fips = geo.id;
     const stateFips = fips?.toString().slice(0, 2);
@@ -170,9 +173,15 @@ export function CountyMap({
     const leads = leadData[fips] || 0;
 
     const isJudicial = JUDICIAL_STATES.has(stateCode);
+    const isFeeCapped = FEE_CAP_2500_STATES.has(stateCode);
 
     if (isHovered) {
       return isJudicial ? theme.judicialHover : theme.nonJudicialHover;
+    }
+
+    // Fee-capped states get a distinct amber/dark-orange color
+    if (isFeeCapped) {
+      return isDark ? '#78350f' : '#92400e';
     }
 
     if (leads > 0) {
@@ -388,6 +397,15 @@ export function CountyMap({
           />
           <span className="font-semibold" style={{ color: theme.text }}>Hover / Selected (White)</span>
         </div>
+        <div className="flex items-center gap-2">
+          <div
+            className="w-5 h-5 rounded flex items-center justify-center"
+            style={{ backgroundColor: '#92400e', border: '2px solid #78350f' }}
+          >
+            <X size={12} style={{ color: '#ffffff' }} strokeWidth={3} />
+          </div>
+          <span className="font-semibold" style={{ color: theme.text }}>$2,500 Fee Cap (AZ, NV)</span>
+        </div>
       </div>
 
       {/* County Popup */}
@@ -449,6 +467,24 @@ export function CountyMap({
                 </span>
               </div>
             </div>
+
+            {/* Fee Cap Warning */}
+            {FEE_CAP_2500_STATES.has(selectedCounty.state) && (
+              <div
+                className="mt-3 pt-3 border-t flex items-center gap-2"
+                style={{ borderColor: theme.border }}
+              >
+                <div
+                  className="p-1 rounded flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: '#991b1b' }}
+                >
+                  <X size={14} style={{ color: '#ffffff' }} strokeWidth={3} />
+                </div>
+                <span className="text-xs font-semibold" style={{ color: '#dc2626' }}>
+                  $2,500 asset recovery fee cap in {STATE_NAMES[selectedCounty.state]}
+                </span>
+              </div>
+            )}
 
             {/* County Directory Contact Info */}
             {contact && (

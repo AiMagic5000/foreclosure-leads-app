@@ -42,6 +42,9 @@ import {
   Lock,
   CreditCard,
   CheckCircle2,
+  XCircle,
+  Volume2,
+  Loader2,
 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -77,6 +80,13 @@ interface LeadData {
   lat: number
   lng: number
   propertyImageUrl?: string | null
+  dncChecked: boolean
+  onDnc: boolean
+  canContact: boolean
+  dncType: string | null
+  voicemailSent: boolean
+  voicemailSentAt: string | null
+  voicemailError: string | null
   skipTrace: {
     fullName: string
     aliases: string[]
@@ -155,14 +165,28 @@ interface LeadData {
 
 const LEADS_PER_PAGE = 20
 
+function LoadingSkeleton() {
+  return (
+    <div className="space-y-6 animate-pulse">
+      <div className="h-24 bg-muted/50 rounded-lg" />
+      <div className="h-32 bg-muted/50 rounded-lg" />
+      {[1, 2, 3, 4, 5].map((i) => (
+        <div key={i} className="h-32 bg-muted/50 rounded-lg" />
+      ))}
+    </div>
+  )
+}
 
 const statusOptions = [
   { value: "all", label: "All Status" },
   { value: "new", label: "New" },
   { value: "skip_traced", label: "Skip Traced" },
+  { value: "skip_trace_failed", label: "Skip Trace Failed" },
+  { value: "dnc_blocked", label: "DNC Blocked" },
   { value: "contacted", label: "Contacted" },
   { value: "callback", label: "Callback" },
   { value: "converted", label: "Converted" },
+  { value: "dead", label: "Dead" },
 ]
 
 const sortOptions = [
@@ -185,6 +209,74 @@ function BlurredText({ children, className = "", revealed = false }: { children:
     <span className={cn("select-none", className)} style={{ filter: "blur(5px)", WebkitFilter: "blur(5px)" }}>
       {children}
     </span>
+  )
+}
+
+function DncStatusIcon({ lead }: { lead: LeadData }) {
+  if (!lead.primaryPhone) return null
+  if (!lead.dncChecked) {
+    return (
+      <span title="DNC check pending" className="flex items-center">
+        <Clock className="h-3.5 w-3.5 text-yellow-500" />
+      </span>
+    )
+  }
+  if (lead.onDnc) {
+    return (
+      <span title="On Do Not Call list" className="flex items-center">
+        <XCircle className="h-3.5 w-3.5 text-red-500" />
+      </span>
+    )
+  }
+  return (
+    <span title="DNC cleared - OK to contact" className="flex items-center">
+      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+    </span>
+  )
+}
+
+function VoiceDropButton({ lead, sending, onSend }: { lead: LeadData; sending: boolean; onSend: (id: string) => void }) {
+  if (!lead.primaryPhone) return null
+
+  if (lead.voicemailSent) {
+    return (
+      <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 text-xs gap-1">
+        <CheckCircle2 className="h-3 w-3" />
+        Sent
+      </Badge>
+    )
+  }
+
+  if (lead.voicemailError) {
+    return (
+      <Badge className="bg-red-100 text-red-700 border-red-200 text-xs gap-1" title={lead.voicemailError}>
+        <XCircle className="h-3 w-3" />
+        Failed
+      </Badge>
+    )
+  }
+
+  const canSend = lead.canContact && !lead.onDnc && lead.dncChecked
+
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); if (canSend && !sending) onSend(lead.id) }}
+      disabled={!canSend || sending}
+      title={!lead.dncChecked ? "DNC check pending" : lead.onDnc ? "On DNC list" : "Send voice drop"}
+      className={cn(
+        "inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors",
+        canSend && !sending
+          ? "bg-emerald-600 text-white hover:bg-emerald-700 cursor-pointer"
+          : "bg-gray-200 text-gray-400 cursor-not-allowed"
+      )}
+    >
+      {sending ? (
+        <Loader2 className="h-3 w-3 animate-spin" />
+      ) : (
+        <Volume2 className="h-3 w-3" />
+      )}
+      {sending ? "Sending..." : "Voice Drop"}
+    </button>
   )
 }
 
@@ -861,10 +953,10 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
   return {
     id: String(row.id || ""),
     ownerName: String(row.owner_name || "Unknown Owner"),
-    propertyAddress: String(row.property_address || ""),
+    propertyAddress: String(row.property_address || row.mailing_address || ""),
     city: String(row.city || ""),
-    state: String(row.state || ""),
-    stateAbbr: String(row.state_abbr || ""),
+    state: String(row.state || row.state_abbr || ""),
+    stateAbbr: String(row.state_abbr || row.state || ""),
     zipCode: String(row.zip_code || ""),
     county: String(row.county || ""),
     parcelId: apn,
@@ -883,6 +975,13 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
     lat: Number(row.lat) || 0,
     lng: Number(row.lng) || 0,
     propertyImageUrl: row.property_image_url ? String(row.property_image_url) : null,
+    dncChecked: Boolean(row.dnc_checked),
+    onDnc: Boolean(row.on_dnc),
+    canContact: Boolean(row.can_contact),
+    dncType: row.dnc_type ? String(row.dnc_type) : null,
+    voicemailSent: Boolean(row.voicemail_sent),
+    voicemailSentAt: row.voicemail_sent_at ? String(row.voicemail_sent_at) : null,
+    voicemailError: row.voicemail_error ? String(row.voicemail_error) : null,
     skipTrace: {
       fullName: String(row.owner_name || ""),
       aliases: [],
@@ -957,9 +1056,10 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
 function LeadsPageContent() {
   const searchParams = useSearchParams()
   const stateParam = searchParams.get("state")
+  const statusParam = searchParams.get("status")
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedState, setSelectedState] = useState(stateParam || "All States")
-  const [selectedStatus, setSelectedStatus] = useState("all")
+  const [selectedStatus, setSelectedStatus] = useState(statusParam || "all")
   const [sortBy, setSortBy] = useState("fee_high")
   const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
@@ -970,6 +1070,32 @@ function LeadsPageContent() {
   const [mapModal, setMapModal] = useState<{lat: number, lng: number, address: string, propertyType: string} | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
+  const [sendingVoiceDrop, setSendingVoiceDrop] = useState<Record<string, boolean>>({})
+
+  const sendVoiceDrop = useCallback(async (leadId: string) => {
+    setSendingVoiceDrop(prev => ({ ...prev, [leadId]: true }))
+    try {
+      const res = await fetch("/api/voice-drop", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Voice drop failed")
+      setDbLeads(prev => prev.map(l =>
+        l.id === leadId
+          ? { ...l, voicemailSent: true, voicemailSentAt: new Date().toISOString() }
+          : l
+      ))
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Voice drop failed"
+      setDbLeads(prev => prev.map(l =>
+        l.id === leadId ? { ...l, voicemailError: msg } : l
+      ))
+    } finally {
+      setSendingVoiceDrop(prev => ({ ...prev, [leadId]: false }))
+    }
+  }, [])
 
   // Generate satellite image URL from Esri World Imagery (free, no API key)
   const getSatelliteUrl = (lat: number, lng: number, zoom: number = 18) => {
@@ -987,18 +1113,35 @@ function LeadsPageContent() {
     }
   }, [stateParam])
 
+  // Sync URL status param with dropdown
+  useEffect(() => {
+    if (statusParam && statusParam !== selectedStatus) {
+      setSelectedStatus(statusParam)
+    }
+  }, [statusParam])
+
   // Fetch leads from Supabase
   useEffect(() => {
     async function fetchLeads() {
       setLeadsLoading(true)
-      const { data, error } = await supabase
-        .from("foreclosure_leads")
-        .select("id,owner_name,property_address,city,state,state_abbr,zip_code,county,parcel_id,apn_number,sale_date,sale_amount,mortgage_amount,lender_name,foreclosure_type,primary_phone,secondary_phone,primary_email,status,source,scraped_at,lat,lng,property_image_url,mailing_address,associated_names,property_type,year_built,square_footage,lot_size,bedrooms,bathrooms,stories,assessed_value,estimated_market_value,overage_amount,case_number,trustee_name,created_at")
-        .order("primary_phone", { ascending: true, nullsFirst: false })
-        .order("created_at", { ascending: false })
-        .limit(2500) as { data: Record<string, unknown>[] | null; error: unknown }
+      setLoadError(null)
 
-      if (!error && data) {
+      try {
+        const { data, error } = await supabase
+          .from("foreclosure_leads")
+          .select("id,owner_name,property_address,city,state,state_abbr,zip_code,county,parcel_id,apn_number,sale_date,sale_amount,mortgage_amount,lender_name,foreclosure_type,primary_phone,secondary_phone,primary_email,status,source,scraped_at,lat,lng,property_image_url,mailing_address,associated_names,property_type,year_built,square_footage,lot_size,bedrooms,bathrooms,stories,assessed_value,estimated_market_value,overage_amount,case_number,trustee_name,created_at,dnc_checked,on_dnc,can_contact,dnc_type,voicemail_sent,voicemail_sent_at,voicemail_error")
+          .order("primary_phone", { ascending: true, nullsFirst: false })
+          .order("created_at", { ascending: false })
+          .limit(5000) as { data: Record<string, unknown>[] | null; error: unknown }
+
+        if (error) {
+          throw new Error('Failed to load leads from database')
+        }
+
+        if (!data) {
+          throw new Error('No data returned from database')
+        }
+
         // Single pass: map rows and build state set simultaneously
         const mapped: LeadData[] = []
         const stateSet = new Set<string>()
@@ -1009,16 +1152,43 @@ function LeadsPageContent() {
         }
         setDbLeads(mapped)
         setDbStates(["All States", ...Array.from(stateSet).sort()])
+        setLastUpdated(new Date())
+      } catch (err) {
+        console.error('Error fetching leads:', err)
+        setLoadError(err instanceof Error ? err.message : 'Failed to load leads')
+        setDbLeads([])
+      } finally {
+        setLeadsLoading(false)
       }
-      setLeadsLoading(false)
     }
     fetchLeads()
+  }, [])
+
+  // Retry function for error state
+  const retryFetchLeads = useCallback(() => {
+    setLoadError(null)
+    window.location.reload()
   }, [])
 
   const skipTracedCount = useMemo(
     () => dbLeads.filter(l => l.primaryPhone).length,
     [dbLeads]
   )
+
+  // Count leads by status for badges
+  const statusCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    dbLeads.forEach(lead => {
+      counts[lead.status] = (counts[lead.status] || 0) + 1
+    })
+    return counts
+  }, [dbLeads])
+
+  // Track last data update timestamp
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+
+  // Loading error state
+  const [loadError, setLoadError] = useState<string | null>(null)
 
   const toggleHidden = useCallback((id: string) => {
     setHiddenLeads((prev) =>
@@ -1087,10 +1257,10 @@ function LeadsPageContent() {
                     <div className="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-500 to-blue-500" />
                     <div className="flex-1">
                       <div className="font-medium">{lead.ownerName}</div>
-                      <div className="text-sm text-muted-foreground">{lead.city}, {lead.stateAbbr}</div>
+                      <div className="text-sm text-muted-foreground">{lead.county ? `${lead.county} County, ` : ""}{lead.stateAbbr}</div>
                     </div>
                     <div className="text-right">
-                      <div className="font-medium">${lead.saleAmount.toLocaleString()}</div>
+                      <div className="font-medium">{lead.saleAmount > 0 ? `$${lead.saleAmount.toLocaleString()}` : lead.stateAbbr}</div>
                       {lead.foreclosureDetails.estimatedSurplus > 0 && (
                         <div className="text-xs text-emerald-600">${lead.foreclosureDetails.estimatedSurplus.toLocaleString()} surplus</div>
                       )}
@@ -1108,9 +1278,12 @@ function LeadsPageContent() {
   const statusColors = {
     new: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
     skip_traced: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
+    skip_trace_failed: "bg-red-500/10 text-red-600 dark:text-red-400",
+    dnc_blocked: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
     contacted: "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400",
     callback: "bg-green-500/10 text-green-600 dark:text-green-400",
     converted: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    dead: "bg-gray-500/10 text-gray-600 dark:text-gray-400",
   } as const
 
   const filteredLeads = useMemo(() => {
@@ -1121,15 +1294,14 @@ function LeadsPageContent() {
         lead.ownerName.toLowerCase().includes(query) ||
         lead.propertyAddress.toLowerCase().includes(query) ||
         lead.city.toLowerCase().includes(query) ||
+        lead.county.toLowerCase().includes(query) ||
         lead.parcelId.toLowerCase().includes(query)
 
       const matchesState =
         selectedState === "All States" || lead.state === selectedState
 
       const matchesStatus =
-        selectedStatus === "all" ||
-        lead.status === selectedStatus ||
-        (selectedStatus === "skip_traced" && lead.primaryPhone && lead.primaryPhone.length > 0)
+        selectedStatus === "all" || lead.status === selectedStatus
 
       return matchesSearch && matchesState && matchesStatus
     })
@@ -1210,6 +1382,69 @@ function LeadsPageContent() {
     )
   }, [])
 
+  // Export filtered leads to CSV
+  const exportToCSV = useCallback(() => {
+    const leadsToExport = filteredLeads
+    if (leadsToExport.length === 0) {
+      alert('No leads to export')
+      return
+    }
+
+    const headers = [
+      'Owner Name',
+      'Address',
+      'City',
+      'State',
+      'Zip',
+      'Phone',
+      'Email',
+      'Status',
+      'Overage Amount',
+      'Sale Date',
+      'Sale Amount',
+      'County',
+      'Parcel ID'
+    ]
+
+    const rows = leadsToExport.map(lead => [
+      lead.ownerName,
+      lead.propertyAddress,
+      lead.city,
+      lead.stateAbbr,
+      lead.zipCode,
+      lead.primaryPhone || '',
+      lead.primaryEmail || lead.skipTrace?.emails?.[0] || '',
+      lead.status,
+      `$${lead.foreclosureDetails.estimatedSurplus.toLocaleString()}`,
+      lead.saleDate ? new Date(lead.saleDate).toLocaleDateString() : '',
+      `$${lead.saleAmount.toLocaleString()}`,
+      lead.county,
+      lead.parcelId
+    ])
+
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row =>
+        row.map(cell =>
+          // Escape commas and quotes in CSV
+          typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))
+            ? `"${cell.replace(/"/g, '""')}"`
+            : cell
+        ).join(',')
+      )
+    ].join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(blob)
+    link.setAttribute('href', url)
+    link.setAttribute('download', `foreclosure-leads-${new Date().toISOString().split('T')[0]}.csv`)
+    link.style.visibility = 'hidden'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }, [filteredLeads])
+
   const PaginationBar = () => filteredLeads.length > LEADS_PER_PAGE ? (
     <div className="flex items-center justify-between px-2 py-3">
       <p className="text-sm text-muted-foreground">
@@ -1241,6 +1476,34 @@ function LeadsPageContent() {
     </div>
   ) : null
 
+  // Show loading skeleton
+  if (leadsLoading && dbLeads.length === 0) {
+    return <LoadingSkeleton />
+  }
+
+  // Show error state
+  if (loadError) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
+        <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#fef2f2' }}>
+          <ShieldAlert className="h-8 w-8" style={{ color: '#dc2626' }} />
+        </div>
+        <h2 className="text-xl font-bold" style={{ color: '#1E3A5F' }}>Failed to Load Leads</h2>
+        <p className="text-muted-foreground text-center max-w-md">
+          {loadError}
+        </p>
+        <Button
+          onClick={retryFetchLeads}
+          className="mt-4"
+          style={{ backgroundColor: '#1E3A5F', color: '#ffffff' }}
+        >
+          <TrendingUp className="h-4 w-4 mr-2" />
+          Retry Loading
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -1263,11 +1526,27 @@ function LeadsPageContent() {
               </>
             )}
           </p>
+          {lastUpdated && !leadsLoading && (
+            <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1.5">
+              <Clock className="h-3 w-3" />
+              Last updated: {Math.floor((Date.now() - lastUpdated.getTime()) / 60000)} minutes ago
+            </p>
+          )}
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" disabled={selectedLeads.length === 0}>
+          <Button
+            variant="outline"
+            onClick={exportToCSV}
+            disabled={filteredLeads.length === 0}
+            style={{
+              backgroundColor: filteredLeads.length > 0 ? '#1E3A5F' : undefined,
+              color: filteredLeads.length > 0 ? '#ffffff' : undefined,
+              borderColor: '#1E3A5F'
+            }}
+            className="hover:opacity-90 transition-opacity"
+          >
             <Download className="h-4 w-4 mr-2" />
-            Export ({selectedLeads.length})
+            Export CSV ({filteredLeads.length})
           </Button>
         </div>
       </div>
@@ -1279,7 +1558,7 @@ function LeadsPageContent() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search by name, address, city, or APN..."
+                placeholder="Search by name, address, county, or APN..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -1298,14 +1577,27 @@ function LeadsPageContent() {
             </select>
             <select
               value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
+              onChange={(e) => {
+                setSelectedStatus(e.target.value)
+                const params = new URLSearchParams(window.location.search)
+                if (e.target.value === "all") {
+                  params.delete("status")
+                } else {
+                  params.set("status", e.target.value)
+                }
+                const qs = params.toString()
+                window.history.replaceState({}, "", qs ? `?${qs}` : window.location.pathname)
+              }}
               className="h-11 rounded-lg border border-input bg-background px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
             >
-              {statusOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
+              {statusOptions.map((option) => {
+                const count = option.value === 'all' ? dbLeads.length : (statusCounts[option.value] || 0)
+                return (
+                  <option key={option.value} value={option.value}>
+                    {option.label} ({count})
+                  </option>
+                )
+              })}
             </select>
             <select
               value={sortBy}
@@ -1340,10 +1632,60 @@ function LeadsPageContent() {
           <div className="col-span-2">Property Owner</div>
           <div className="col-span-3">Address & Details</div>
           <div className="col-span-2">Sale Info</div>
-          <div className="col-span-2">Contact</div>
+          <div className="col-span-2">
+            <span>Contact</span>
+            <div className="flex items-center gap-2 mt-0.5">
+              <span className="flex items-center gap-0.5 text-[10px]">
+                <CheckCircle2 className="h-2.5 w-2.5 text-emerald-500" />
+                Clear
+              </span>
+              <span className="flex items-center gap-0.5 text-[10px]">
+                <XCircle className="h-2.5 w-2.5 text-red-500" />
+                DNC
+              </span>
+              <span className="flex items-center gap-0.5 text-[10px]">
+                <Clock className="h-2.5 w-2.5 text-yellow-500" />
+                Pending
+              </span>
+            </div>
+          </div>
           <div className="col-span-1">Status</div>
         </div>
       </div>
+
+      {/* Empty State */}
+      {filteredLeads.length === 0 && !leadsLoading && (
+        <div className="flex flex-col items-center justify-center min-h-[40vh] space-y-4 py-12">
+          <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#f0fdf4' }}>
+            <Database className="h-8 w-8" style={{ color: '#10b981' }} />
+          </div>
+          <h2 className="text-xl font-bold" style={{ color: '#1E3A5F' }}>No Leads Found</h2>
+          <p className="text-muted-foreground text-center max-w-md">
+            {searchQuery || selectedState !== 'All States' || selectedStatus !== 'all' ? (
+              <>
+                No leads match your current filters. Try adjusting your search criteria or clearing filters.
+              </>
+            ) : (
+              <>
+                No foreclosure leads are currently available in the database.
+              </>
+            )}
+          </p>
+          {(searchQuery || selectedState !== 'All States' || selectedStatus !== 'all') && (
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSearchQuery('')
+                setSelectedState('All States')
+                setSelectedStatus('all')
+              }}
+              style={{ borderColor: '#1E3A5F', color: '#1E3A5F' }}
+            >
+              Clear All Filters
+            </Button>
+          )}
+        </div>
+      )}
 
       {/* Leads */}
       <div className="space-y-4">
@@ -1362,7 +1704,7 @@ function LeadsPageContent() {
               <CardContent className="p-4">
                 {/* Desktop Row */}
                 <div
-                  className="hidden lg:grid grid-cols-12 gap-4 items-center cursor-pointer"
+                  className="hidden lg:grid grid-cols-12 gap-4 items-start cursor-pointer"
                   onClick={() => toggleExpanded(lead.id)}
                 >
                   <div className="col-span-2 flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
@@ -1389,8 +1731,8 @@ function LeadsPageContent() {
                           <img src={satUrl} alt={lead.propertyAddress} className="w-full h-full object-cover" />
                         </div>
                       ) : (
-                        <div className="w-20 h-20 rounded bg-slate-200 flex items-center justify-center border border-gray-200 flex-shrink-0">
-                          <Home className="h-8 w-8 text-slate-400" />
+                        <div className="w-12 h-12 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-gray-200 dark:border-gray-700 flex-shrink-0">
+                          <Home className="h-5 w-5 text-slate-400" />
                         </div>
                       )
                     })()}
@@ -1419,11 +1761,15 @@ function LeadsPageContent() {
                     <div className="flex items-start gap-2">
                       <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">
-                          <BlurredText revealed={isRevealed}>{lead.propertyAddress}</BlurredText>
-                        </div>
+                        {lead.propertyAddress ? (
+                          <div className="font-medium truncate">
+                            <BlurredText revealed={isRevealed}>{lead.propertyAddress}</BlurredText>
+                          </div>
+                        ) : (
+                          <div className="text-sm text-muted-foreground italic">Address not available</div>
+                        )}
                         <div className="text-sm text-muted-foreground">
-                          {lead.city}, {lead.stateAbbr} {lead.zipCode}
+                          {[lead.city, lead.stateAbbr, lead.zipCode].filter(Boolean).join(", ") || (lead.county ? `${lead.county} County, ${lead.stateAbbr}` : lead.stateAbbr)}
                         </div>
                         {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
                           <div className="flex items-center gap-2 text-xs font-medium text-slate-600 mt-1">
@@ -1462,12 +1808,16 @@ function LeadsPageContent() {
                     </div>
                   </div>
                   <div className="col-span-2">
-                    <div className="flex items-center gap-1">
-                      <DollarSign className="h-4 w-4 text-muted-foreground" />
-                      <span className="font-medium">
-                        ${lead.saleAmount.toLocaleString()}
-                      </span>
-                    </div>
+                    {lead.saleAmount > 0 ? (
+                      <div className="flex items-center gap-1">
+                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        <span className="font-medium">
+                          ${lead.saleAmount.toLocaleString()}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="text-xs text-muted-foreground italic">Sale data pending</div>
+                    )}
                     {lead.taxData.marketValue > 0 && (
                       <div className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400">
                         <TrendingUp className="h-3 w-3" />
@@ -1496,20 +1846,16 @@ function LeadsPageContent() {
                   <div className="col-span-2">
                     {lead.primaryPhone ? (
                       <div className="space-y-1">
-                        <div className="flex items-center gap-1.5">
-                          <Phone className="h-3.5 w-3.5 text-emerald-600" />
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <DncStatusIcon lead={lead} />
+                          <Phone className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                           <a href={isRevealed ? `tel:${lead.primaryPhone}` : '#'} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => { e.stopPropagation(); if (!isRevealed) e.preventDefault() }}>
                             <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                           </a>
+                          <span onClick={(e) => e.stopPropagation()}>
+                            <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
+                          </span>
                         </div>
-                        {lead.secondaryPhone && (
-                          <div className="flex items-center gap-1.5">
-                            <Phone className="h-3 w-3 text-muted-foreground" />
-                            <span className="text-xs text-muted-foreground">
-                              <BlurredText revealed={isRevealed}>{lead.secondaryPhone}</BlurredText>
-                            </span>
-                          </div>
-                        )}
                         {lead.primaryEmail && (
                           <div className="flex items-center gap-1.5">
                             <Mail className="h-3 w-3 text-blue-600" />
@@ -1529,7 +1875,7 @@ function LeadsPageContent() {
                   <div className="col-span-1 flex flex-col items-end gap-1">
                     <div className="flex items-center gap-1">
                       <Badge className={statusColors[lead.status as keyof typeof statusColors]}>
-                        {lead.status.replace("_", " ")}
+                        {lead.status.replaceAll("_", " ")}
                       </Badge>
                       {isExpanded ? (
                         <ChevronUp className="h-4 w-4 text-muted-foreground" />
@@ -1581,8 +1927,8 @@ function LeadsPageContent() {
                             <img src={satUrl} alt={lead.propertyAddress} className="w-full h-full object-cover" />
                           </div>
                         ) : (
-                          <div className="w-20 h-20 rounded bg-slate-200 flex items-center justify-center border border-gray-200 flex-shrink-0">
-                            <Home className="h-8 w-8 text-slate-400" />
+                          <div className="w-12 h-12 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-gray-200 dark:border-gray-700 flex-shrink-0">
+                            <Home className="h-5 w-5 text-slate-400" />
                           </div>
                         )
                       })()}
@@ -1591,7 +1937,7 @@ function LeadsPageContent() {
                           <BlurredText revealed={isRevealed}>{lead.ownerName}</BlurredText>
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          {lead.city}, {lead.stateAbbr}
+                          {[lead.city, lead.stateAbbr].filter(Boolean).join(", ") || (lead.county ? `${lead.county} County` : "")}
                         </div>
                         {lead.parcelId && (
                           <Badge variant="outline" className="text-xs mt-1 bg-blue-50 border-blue-200 text-blue-700">
@@ -1603,7 +1949,7 @@ function LeadsPageContent() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Badge className={statusColors[lead.status as keyof typeof statusColors]}>
-                        {lead.status.replace("_", " ")}
+                        {lead.status.replaceAll("_", " ")}
                       </Badge>
                       {isExpanded ? (
                         <ChevronUp className="h-4 w-4 text-muted-foreground" />
@@ -1616,10 +1962,14 @@ function LeadsPageContent() {
                   <div className="flex items-start gap-2 text-sm">
                     <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="font-medium">
-                        <BlurredText revealed={isRevealed}>{lead.propertyAddress}</BlurredText>
-                      </div>
-                      <div className="text-muted-foreground">{lead.city}, {lead.stateAbbr} {lead.zipCode}</div>
+                      {lead.propertyAddress ? (
+                        <div className="font-medium">
+                          <BlurredText revealed={isRevealed}>{lead.propertyAddress}</BlurredText>
+                        </div>
+                      ) : (
+                        <div className="text-muted-foreground italic">Address not available</div>
+                      )}
+                      <div className="text-muted-foreground">{[lead.city, lead.stateAbbr, lead.zipCode].filter(Boolean).join(", ") || (lead.county ? `${lead.county} County, ${lead.stateAbbr}` : lead.stateAbbr)}</div>
                       {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
                         <div className="flex items-center gap-3 text-xs font-medium text-slate-600 mt-1">
                           {lead.property.bedrooms > 0 && (
@@ -1694,23 +2044,29 @@ function LeadsPageContent() {
                   </div>
 
                   {/* Mobile Contact Info */}
-                  <div className="border-t pt-3">
+                  <div className="border-t pt-3 space-y-2">
                     {lead.primaryPhone ? (
-                      <div className="flex items-center gap-2">
-                        <Phone className="h-4 w-4 text-emerald-600" />
-                        <a href={isRevealed ? `tel:${lead.primaryPhone}` : '#'} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => { e.stopPropagation(); if (!isRevealed) e.preventDefault() }}>
-                          <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
-                        </a>
-                        {lead.primaryEmail && (
-                          <>
-                            <span className="text-muted-foreground">|</span>
-                            <Mail className="h-3.5 w-3.5 text-blue-600" />
-                            <span className="text-xs text-blue-600 truncate">
-                              <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
-                            </span>
-                          </>
-                        )}
-                      </div>
+                      <>
+                        <div className="flex items-center gap-2">
+                          <DncStatusIcon lead={lead} />
+                          <Phone className="h-4 w-4 text-emerald-600" />
+                          <a href={isRevealed ? `tel:${lead.primaryPhone}` : '#'} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => { e.stopPropagation(); if (!isRevealed) e.preventDefault() }}>
+                            <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
+                          </a>
+                          {lead.primaryEmail && (
+                            <>
+                              <span className="text-muted-foreground">|</span>
+                              <Mail className="h-3.5 w-3.5 text-blue-600" />
+                              <span className="text-xs text-blue-600 truncate">
+                                <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
+                              </span>
+                            </>
+                          )}
+                        </div>
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
+                        </div>
+                      </>
                     ) : (
                       <div className="flex items-center gap-2 text-muted-foreground text-sm">
                         <Phone className="h-4 w-4" />

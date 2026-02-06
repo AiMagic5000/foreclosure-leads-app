@@ -47,6 +47,7 @@ export default function StatesPage() {
   }, [])
 
   const AVOID_STATES = new Set(["AR", "CA", "SC"])
+  const FEE_CAP_2500_STATES = new Set(["AZ", "NV"])
 
   const filteredStates = useMemo(() => {
     const query = searchQuery.toLowerCase()
@@ -202,6 +203,12 @@ export default function StatesPage() {
                   {AVOID_STATES.has(state.abbr) && (
                     <div className="flex flex-col items-center -mt-1 mb-1">
                       <span className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-500">AVOID</span>
+                      <X className="h-8 w-8 text-red-600 dark:text-red-500 stroke-[3]" />
+                    </div>
+                  )}
+                  {FEE_CAP_2500_STATES.has(state.abbr) && (
+                    <div className="flex flex-col items-center -mt-1 mb-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-500">$2,500 CAP</span>
                       <X className="h-8 w-8 text-red-600 dark:text-red-500 stroke-[3]" />
                     </div>
                   )}
@@ -377,6 +384,19 @@ export default function StatesPage() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
+
+              {/* Fee Cap Warning */}
+              {FEE_CAP_2500_STATES.has(selectedState) && (
+                <div className="px-5 pt-4 pb-0">
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                    <X className="h-6 w-6 text-red-600 dark:text-red-500 stroke-[3] shrink-0" />
+                    <div>
+                      <p className="text-sm font-bold text-red-600 dark:text-red-500">$2,500 Fee Cap</p>
+                      <p className="text-xs text-muted-foreground">This state caps asset recovery agent fees at $2,500 per claim.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Lead Count Banner */}
               <div className="px-5 pt-4 pb-2">
