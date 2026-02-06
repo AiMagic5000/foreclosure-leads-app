@@ -179,8 +179,9 @@ function LoadingSkeleton() {
 
 const statusOptions = [
   { value: "all", label: "All Status" },
-  { value: "new", label: "New" },
+  { value: "vd_ready", label: "VD Ready" },
   { value: "skip_traced", label: "Skip Traced" },
+  { value: "new", label: "New" },
   { value: "skip_trace_failed", label: "Skip Trace Failed" },
   { value: "dnc_blocked", label: "DNC Blocked" },
   { value: "contacted", label: "Contacted" },
@@ -190,10 +191,11 @@ const statusOptions = [
 ]
 
 const sortOptions = [
-  { value: "newest", label: "Newest First" },
-  { value: "oldest", label: "Oldest First" },
+  { value: "vd_ready_fee", label: "VD Ready + Highest Fee" },
   { value: "fee_high", label: "Highest Fee" },
   { value: "fee_low", label: "Lowest Fee" },
+  { value: "newest", label: "Newest First" },
+  { value: "oldest", label: "Oldest First" },
   { value: "surplus_high", label: "Highest Surplus" },
   { value: "surplus_low", label: "Lowest Surplus" },
   { value: "expiring_soon", label: "Expiring Soon" },
@@ -1178,9 +1180,14 @@ function LeadsPageContent() {
   // Count leads by status for badges
   const statusCounts = useMemo(() => {
     const counts: Record<string, number> = {}
+    let vdReady = 0
     dbLeads.forEach(lead => {
       counts[lead.status] = (counts[lead.status] || 0) + 1
+      if (lead.canContact && lead.dncChecked && !lead.onDnc && lead.primaryPhone) {
+        vdReady++
+      }
     })
+    counts["vd_ready"] = vdReady
     return counts
   }, [dbLeads])
 
@@ -1301,7 +1308,10 @@ function LeadsPageContent() {
         selectedState === "All States" || lead.state === selectedState
 
       const matchesStatus =
-        selectedStatus === "all" || lead.status === selectedStatus
+        selectedStatus === "all" ||
+        (selectedStatus === "vd_ready"
+          ? (lead.canContact && lead.dncChecked && !lead.onDnc && !!lead.primaryPhone)
+          : lead.status === selectedStatus)
 
       return matchesSearch && matchesState && matchesStatus
     })
@@ -1318,6 +1328,12 @@ function LeadsPageContent() {
       const createdB = b.scrapedAt ? new Date(b.scrapedAt).getTime() : 0
 
       switch (sortBy) {
+        case "vd_ready_fee": {
+          const aReady = (a.canContact && a.dncChecked && !a.onDnc && !!a.primaryPhone) ? 1 : 0
+          const bReady = (b.canContact && b.dncChecked && !b.onDnc && !!b.primaryPhone) ? 1 : 0
+          if (bReady !== aReady) return bReady - aReady
+          return feeB - feeA
+        }
         case "fee_high":
           return feeB - feeA
         case "fee_low":
@@ -1633,7 +1649,7 @@ function LeadsPageContent() {
           <div className="col-span-3">Address & Details</div>
           <div className="col-span-2">Sale Info</div>
           <div className="col-span-2">
-            <span>Contact</span>
+            <span>DNC Contact Status</span>
             <div className="flex items-center gap-2 mt-0.5">
               <span className="flex items-center gap-0.5 text-[10px]">
                 <CheckCircle2 className="h-2.5 w-2.5 text-emerald-500" />
@@ -1716,23 +1732,32 @@ function LeadsPageContent() {
                     />
                     {(() => {
                       const satUrl = getSatelliteUrl(lead.lat, lead.lng)
-                      return satUrl ? (
-                        <div
-                          className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all"
-                          title="Click to view property"
-                          onClick={() => setMapModal({
-                            lat: lead.lat,
-                            lng: lead.lng,
-                            address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
-                            propertyType: lead.property.propertyType
-                          })}
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={satUrl} alt={lead.propertyAddress} className="w-full h-full object-cover" />
-                        </div>
-                      ) : (
-                        <div className="w-12 h-12 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-gray-200 dark:border-gray-700 flex-shrink-0">
-                          <Home className="h-5 w-5 text-slate-400" />
+                      if (satUrl) {
+                        return (
+                          <div
+                            className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all"
+                            title="Click to view property"
+                            onClick={() => setMapModal({
+                              lat: lead.lat,
+                              lng: lead.lng,
+                              address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
+                              propertyType: lead.property.propertyType
+                            })}
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={satUrl} alt={lead.propertyAddress} className="w-full h-full object-cover" />
+                          </div>
+                        )
+                      }
+                      const stateColors: Record<string, string> = {
+                        OH: "bg-blue-600", IL: "bg-indigo-600", TX: "bg-red-600",
+                        GA: "bg-amber-600", MD: "bg-orange-600", FL: "bg-emerald-600", WA: "bg-teal-600"
+                      }
+                      const bgColor = stateColors[lead.stateAbbr] || "bg-slate-500"
+                      return (
+                        <div className={`w-14 h-14 rounded-lg ${bgColor} flex flex-col items-center justify-center flex-shrink-0 shadow-sm`}>
+                          <span className="text-white font-bold text-lg leading-none">{lead.stateAbbr || "—"}</span>
+                          <Home className="h-3 w-3 text-white/70 mt-0.5" />
                         </div>
                       )
                     })()}
@@ -1909,26 +1934,35 @@ function LeadsPageContent() {
                       </div>
                       {(() => {
                         const satUrl = getSatelliteUrl(lead.lat, lead.lng)
-                        return satUrl ? (
-                          <div
-                            className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all bg-slate-100"
-                            title="Click to view property"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              setMapModal({
-                                lat: lead.lat,
-                                lng: lead.lng,
-                                address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
-                                propertyType: lead.property.propertyType
-                              })
-                            }}
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={satUrl} alt={lead.propertyAddress} className="w-full h-full object-cover" />
-                          </div>
-                        ) : (
-                          <div className="w-12 h-12 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-gray-200 dark:border-gray-700 flex-shrink-0">
-                            <Home className="h-5 w-5 text-slate-400" />
+                        if (satUrl) {
+                          return (
+                            <div
+                              className="relative w-20 h-20 rounded overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all bg-slate-100"
+                              title="Click to view property"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setMapModal({
+                                  lat: lead.lat,
+                                  lng: lead.lng,
+                                  address: `${lead.propertyAddress}, ${lead.city}, ${lead.stateAbbr} ${lead.zipCode}`,
+                                  propertyType: lead.property.propertyType
+                                })
+                              }}
+                            >
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img src={satUrl} alt={lead.propertyAddress} className="w-full h-full object-cover" />
+                            </div>
+                          )
+                        }
+                        const stateColors: Record<string, string> = {
+                          OH: "bg-blue-600", IL: "bg-indigo-600", TX: "bg-red-600",
+                          GA: "bg-amber-600", MD: "bg-orange-600", FL: "bg-emerald-600", WA: "bg-teal-600"
+                        }
+                        const bgColor = stateColors[lead.stateAbbr] || "bg-slate-500"
+                        return (
+                          <div className={`w-14 h-14 rounded-lg ${bgColor} flex flex-col items-center justify-center flex-shrink-0 shadow-sm`}>
+                            <span className="text-white font-bold text-lg leading-none">{lead.stateAbbr || "—"}</span>
+                            <Home className="h-3 w-3 text-white/70 mt-0.5" />
                           </div>
                         )
                       })()}
