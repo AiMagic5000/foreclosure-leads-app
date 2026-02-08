@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
+import * as tls from "tls"
 
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
-const N8N_WEBHOOK_URL = process.env.N8N_EMAIL_DRAFT_WEBHOOK || ""
 const SENDER_EMAIL = "claim@usforeclosurerecovery.com"
 const SENDER_NAME = "Foreclosure Recovery Inc."
+const IMAP_HOST = "imap.hostinger.com"
+const IMAP_PORT = 993
+const IMAP_USER = SENDER_EMAIL
+const IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword%123"
 
 function formatDate(): string {
   return new Date().toLocaleDateString("en-US", {
@@ -238,6 +242,84 @@ ${deadlineInfo ? `<table style="background-color: ${deadlineInfo.urgency === "cr
   return { subject, html }
 }
 
+function imapAppendDraft(emailContent: string): Promise<{ success: boolean; error?: string }> {
+  return new Promise((resolve) => {
+    const timeout = setTimeout(() => {
+      resolve({ success: false, error: "IMAP connection timed out" })
+    }, 15000)
+
+    let buffer = ""
+    let state = "connecting"
+    let tagCounter = 1
+    let resolved = false
+
+    const done = (result: { success: boolean; error?: string }) => {
+      if (resolved) return
+      resolved = true
+      clearTimeout(timeout)
+      try { socket.destroy() } catch (_e) { /* ignore */ }
+      resolve(result)
+    }
+
+    const socket = tls.connect(
+      { host: IMAP_HOST, port: IMAP_PORT, rejectUnauthorized: false },
+      () => { /* connected */ }
+    )
+
+    socket.setEncoding("utf8")
+
+    socket.on("data", (data: string) => {
+      buffer += data
+      const lines = buffer.split("\r\n")
+      buffer = lines.pop() || ""
+
+      for (const line of lines) {
+        if (state === "connecting" && line.startsWith("* OK")) {
+          state = "login"
+          const tag = "A" + tagCounter++
+          socket.write(`${tag} LOGIN ${IMAP_USER} ${IMAP_PASS}\r\n`)
+        } else if (state === "login" && /^A\d+ OK/.test(line)) {
+          state = "append"
+          const tag = "A" + tagCounter++
+          const size = Buffer.byteLength(emailContent, "utf8")
+          socket.write(`${tag} APPEND "Drafts" (\\Draft \\Seen) {${size}}\r\n`)
+        } else if (state === "login" && /^A\d+ (NO|BAD)/.test(line)) {
+          done({ success: false, error: "IMAP login failed: " + line })
+        } else if (state === "append" && line.startsWith("+")) {
+          state = "appending"
+          socket.write(emailContent + "\r\n")
+        } else if (state === "appending" && /^A\d+ OK/.test(line)) {
+          state = "logout"
+          const tag = "A" + tagCounter++
+          socket.write(`${tag} LOGOUT\r\n`)
+        } else if (state === "appending" && /^A\d+ NO/.test(line)) {
+          state = "append2"
+          const tag = "A" + tagCounter++
+          const size = Buffer.byteLength(emailContent, "utf8")
+          socket.write(`${tag} APPEND "INBOX.Drafts" (\\Draft \\Seen) {${size}}\r\n`)
+        } else if (state === "append2" && line.startsWith("+")) {
+          state = "appending2"
+          socket.write(emailContent + "\r\n")
+        } else if (state === "appending2" && /^A\d+ OK/.test(line)) {
+          state = "logout"
+          const tag = "A" + tagCounter++
+          socket.write(`${tag} LOGOUT\r\n`)
+        } else if (state === "appending2" && /^A\d+ NO/.test(line)) {
+          done({ success: false, error: "Could not append to Drafts: " + line })
+        } else if (state === "logout") {
+          done({ success: true })
+        } else if (/^A\d+ (NO|BAD)/.test(line) && state !== "appending" && state !== "appending2") {
+          done({ success: false, error: "IMAP error: " + line })
+        }
+      }
+    })
+
+    socket.on("error", (err: Error) => {
+      done({ success: false, error: err.message })
+    })
+  })
+}
+
 export async function POST(request: NextRequest) {
   try {
     const user = await currentUser()
@@ -304,31 +386,43 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Create draft mode: send to n8n webhook for IMAP draft creation
+    // Create draft mode: IMAP APPEND directly to Hostinger Drafts folder
     if (action === "create_draft") {
-      if (!N8N_WEBHOOK_URL) {
-        return NextResponse.json({ error: "Email draft webhook not configured" }, { status: 500 })
+      const boundary = "boundary_" + Date.now()
+      const date = new Date().toUTCString()
+      const messageId = `<${Date.now()}.${Math.random().toString(36).substring(2)}@usforeclosurerecovery.com>`
+
+      const emailRaw = [
+        `From: ${SENDER_NAME} <${SENDER_EMAIL}>`,
+        `To: ${recipientEmail}`,
+        `Subject: ${subject}`,
+        `Date: ${date}`,
+        `Message-ID: ${messageId}`,
+        "MIME-Version: 1.0",
+        `Content-Type: multipart/alternative; boundary="${boundary}"`,
+        `X-Lead-ID: ${leadId}`,
+        "",
+        `--${boundary}`,
+        "Content-Type: text/plain; charset=utf-8",
+        "Content-Transfer-Encoding: quoted-printable",
+        "",
+        "Please view this email in an HTML-capable email client.",
+        "",
+        `--${boundary}`,
+        "Content-Type: text/html; charset=utf-8",
+        "Content-Transfer-Encoding: quoted-printable",
+        "",
+        html,
+        "",
+        `--${boundary}--`,
+        "",
+      ].join("\r\n")
+
+      const imapResult = await imapAppendDraft(emailRaw)
+
+      if (!imapResult.success) {
+        return NextResponse.json({ error: `Draft creation failed: ${imapResult.error}` }, { status: 500 })
       }
-
-      const webhookRes = await fetch(N8N_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: recipientEmail,
-          from: `${SENDER_NAME} <${SENDER_EMAIL}>`,
-          subject,
-          html,
-          leadId,
-          ownerName: leadData.owner_name,
-        }),
-      })
-
-      if (!webhookRes.ok) {
-        const errText = await webhookRes.text()
-        return NextResponse.json({ error: `Draft creation failed: ${errText}` }, { status: 500 })
-      }
-
-      const result = await webhookRes.json()
 
       // Update lead record
       await supabaseAdmin
@@ -342,7 +436,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         message: `Draft created in ${SENDER_EMAIL}`,
-        ...result,
+        to: recipientEmail,
+        subject,
       })
     }
 
