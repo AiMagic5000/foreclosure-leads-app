@@ -288,11 +288,18 @@ function imapAppendDraft(emailContent: string): Promise<{ success: boolean; erro
         } else if (state === "append" && line.startsWith("+")) {
           state = "appending"
           socket.write(emailContent + "\r\n")
+        } else if (state === "append" && /^A\d+ NO/.test(line)) {
+          // "Drafts" doesn't exist, try "INBOX.Drafts"
+          state = "append2"
+          const tag = "A" + tagCounter++
+          const size = Buffer.byteLength(emailContent, "utf8")
+          socket.write(`${tag} APPEND "INBOX.Drafts" (\\Draft \\Seen) {${size}}\r\n`)
         } else if (state === "appending" && /^A\d+ OK/.test(line)) {
           state = "logout"
           const tag = "A" + tagCounter++
           socket.write(`${tag} LOGOUT\r\n`)
         } else if (state === "appending" && /^A\d+ NO/.test(line)) {
+          // Shouldn't happen after successful + continuation, but try INBOX.Drafts
           state = "append2"
           const tag = "A" + tagCounter++
           const size = Buffer.byteLength(emailContent, "utf8")
