@@ -9,7 +9,7 @@ const SENDER_NAME = "Foreclosure Recovery Inc."
 const IMAP_HOST = "imap.hostinger.com"
 const IMAP_PORT = 993
 const IMAP_USER = SENDER_EMAIL
-const IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword%123"
+const IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword#123"
 
 function formatDate(): string {
   return new Date().toLocaleDateString("en-US", {
