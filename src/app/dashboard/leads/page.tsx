@@ -1078,6 +1078,51 @@ function LeadsPageContent() {
   const [testVdName, setTestVdName] = useState("")
   const [testVdSending, setTestVdSending] = useState(false)
   const [testVdResult, setTestVdResult] = useState<{ success?: boolean; error?: string; script?: string } | null>(null)
+  const [emailDraftModal, setEmailDraftModal] = useState<{ leadId: string; to: string; ownerName: string } | null>(null)
+  const [emailPreview, setEmailPreview] = useState<{ subject: string; html: string; to: string; from: string } | null>(null)
+  const [emailDraftLoading, setEmailDraftLoading] = useState(false)
+  const [emailDraftResult, setEmailDraftResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
+
+  const openEmailDraft = useCallback(async (leadId: string, to: string, ownerName: string) => {
+    setEmailDraftModal({ leadId, to, ownerName })
+    setEmailPreview(null)
+    setEmailDraftResult(null)
+    setEmailDraftLoading(true)
+    try {
+      const res = await fetch("/api/email-draft", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, action: "preview" }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to load preview")
+      setEmailPreview(data)
+    } catch (err) {
+      setEmailDraftResult({ success: false, error: err instanceof Error ? err.message : "Preview failed" })
+    } finally {
+      setEmailDraftLoading(false)
+    }
+  }, [])
+
+  const createEmailDraft = useCallback(async () => {
+    if (!emailDraftModal) return
+    setEmailDraftLoading(true)
+    setEmailDraftResult(null)
+    try {
+      const res = await fetch("/api/email-draft", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId: emailDraftModal.leadId, action: "create_draft" }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Draft creation failed")
+      setEmailDraftResult({ success: true, message: data.message || "Draft created" })
+    } catch (err) {
+      setEmailDraftResult({ success: false, error: err instanceof Error ? err.message : "Draft creation failed" })
+    } finally {
+      setEmailDraftLoading(false)
+    }
+  }, [emailDraftModal])
 
   const sendTestVoiceDrop = useCallback(async () => {
     if (!testVdPhone || testVdSending) return
@@ -1953,6 +1998,87 @@ Thank you.`}
         </div>
       )}
 
+      {/* Email Draft Preview Modal */}
+      {emailDraftModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setEmailDraftModal(null)}>
+          <Card className="w-full max-w-2xl max-h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2">
+                <Mail className="h-5 w-5 text-blue-600" />
+                Email Draft Preview
+              </CardTitle>
+              <CardDescription>
+                Draft for <strong>{emailDraftModal.ownerName}</strong> &rarr; {emailDraftModal.to}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex-1 overflow-hidden space-y-3">
+              {emailDraftLoading && !emailPreview && (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
+                  <span className="ml-2 text-sm text-muted-foreground">Loading preview...</span>
+                </div>
+              )}
+              {emailPreview && (
+                <>
+                  <div className="flex flex-col gap-1 text-sm border rounded-lg p-3 bg-slate-50">
+                    <div><span className="text-muted-foreground">From:</span> <span className="font-medium">{emailPreview.from}</span></div>
+                    <div><span className="text-muted-foreground">To:</span> <span className="font-medium">{emailPreview.to}</span></div>
+                    <div><span className="text-muted-foreground">Subject:</span> <span className="font-medium">{emailPreview.subject}</span></div>
+                  </div>
+                  <div className="border rounded-lg overflow-auto max-h-[45vh] bg-white">
+                    <iframe
+                      srcDoc={emailPreview.html}
+                      className="w-full min-h-[400px] border-0"
+                      title="Email preview"
+                      sandbox="allow-same-origin"
+                    />
+                  </div>
+                </>
+              )}
+              {emailDraftResult && (
+                <div className={`p-3 rounded-lg text-sm ${emailDraftResult.success ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-red-50 text-red-800 border border-red-200"}`}>
+                  {emailDraftResult.success ? (
+                    <div className="flex items-center gap-1.5 font-medium">
+                      <CheckCircle2 className="h-4 w-4" />
+                      {emailDraftResult.message}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5">
+                      <XCircle className="h-4 w-4" />
+                      {emailDraftResult.error}
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+            <div className="flex justify-end gap-2 p-6 pt-0">
+              <Button variant="outline" onClick={() => { setEmailDraftModal(null); setEmailDraftResult(null) }}>
+                Close
+              </Button>
+              {emailPreview && !emailDraftResult?.success && (
+                <Button
+                  onClick={createEmailDraft}
+                  disabled={emailDraftLoading}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  {emailDraftLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Creating Draft...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="h-4 w-4 mr-2" />
+                      Create Draft in Mailbox
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
+          </Card>
+        </div>
+      )}
+
       {/* Filters */}
       <Card>
         <CardContent className="pt-6">
@@ -2268,12 +2394,16 @@ Thank you.`}
                           <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
                         </div>
                         {lead.primaryEmail && (
-                          <div className="flex items-center gap-1.5">
+                          <button
+                            className="flex items-center gap-1.5 hover:bg-blue-50 rounded px-1 -mx-1 transition-colors"
+                            onClick={(e) => { e.stopPropagation(); if (isRevealed) openEmailDraft(lead.id, lead.primaryEmail!, lead.ownerName) }}
+                            title={isRevealed ? "Create email draft" : ""}
+                          >
                             <Mail className="h-3 w-3 text-blue-600" />
                             <span className="text-xs text-blue-600 truncate max-w-[140px]">
                               <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
                             </span>
-                          </div>
+                          </button>
                         )}
                       </div>
                     ) : (
@@ -2476,10 +2606,16 @@ Thank you.`}
                           {lead.primaryEmail && (
                             <>
                               <span className="text-muted-foreground">|</span>
-                              <Mail className="h-3.5 w-3.5 text-blue-600" />
-                              <span className="text-xs text-blue-600 truncate">
-                                <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
-                              </span>
+                              <button
+                                className="flex items-center gap-1 hover:bg-blue-50 rounded px-1 transition-colors"
+                                onClick={(e) => { e.stopPropagation(); if (isRevealed) openEmailDraft(lead.id, lead.primaryEmail!, lead.ownerName) }}
+                                title={isRevealed ? "Create email draft" : ""}
+                              >
+                                <Mail className="h-3.5 w-3.5 text-blue-600" />
+                                <span className="text-xs text-blue-600 truncate">
+                                  <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
+                                </span>
+                              </button>
                             </>
                           )}
                         </div>
