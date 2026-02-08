@@ -15,21 +15,48 @@ function formatDate(): string {
   })
 }
 
+function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount)
+}
+
+function calculateDeadline(saleDate: string): { daysRemaining: number; deadlineDate: string; urgency: string } | null {
+  if (!saleDate) return null
+  const sale = new Date(saleDate)
+  if (isNaN(sale.getTime())) return null
+  // Most states allow 1-3 years to claim surplus; use 1 year as conservative default
+  const deadline = new Date(sale)
+  deadline.setFullYear(deadline.getFullYear() + 1)
+  const now = new Date()
+  const diffMs = deadline.getTime() - now.getTime()
+  const daysRemaining = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
+  if (daysRemaining < 0) return null
+  const deadlineDate = deadline.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+  const urgency = daysRemaining <= 30 ? "critical" : daysRemaining <= 90 ? "high" : "standard"
+  return { daysRemaining, deadlineDate, urgency }
+}
+
 function populateTemplate(lead: Record<string, string>): {
   subject: string
   html: string
 } {
   const firstName = lead.first_name || lead.owner_name?.split(" ")[0] || "Homeowner"
   const lastName = lead.last_name || lead.owner_name?.split(" ").slice(1).join(" ") || ""
-  const propertyAddress = lead.property_address || "your property"
+  const propertyAddress = lead.property_address || lead.mailing_address || ""
   const city = lead.city || ""
   const state = lead.state || ""
-  const fullAddress = city && state ? `${propertyAddress}, ${city}, ${state}` : propertyAddress
+  const fullAddress = city && state && propertyAddress ? `${propertyAddress}, ${city}, ${state}` : propertyAddress || "your property"
   const county = lead.county || ""
-  const apn = lead.parcel_id || lead.apn_number || ""
+  const apn = lead.apn_number || lead.parcel_id || ""
   const propertyType = lead.property_type || "Residential"
   const caseNumber = lead.case_number || ""
   const recipientEmail = lead.primary_email || ""
+  const estimatedSurplus = parseFloat(lead.estimated_surplus) || 0
+  const deadlineInfo = calculateDeadline(lead.sale_date)
 
   const subject = `Re: Property Equity Distribution -- ${fullAddress}`
 
@@ -75,7 +102,7 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
 <tbody><tr>
 <td align="left" valign="middle" width="55%"><a style="text-decoration: none;" href="https://usforeclosurerecovery.com" target="_blank" rel="noopener"><img style="display: block; max-width: 185px; height: auto;" src="https://cdn.prod.website-files.com/67ec4cfbdf0509c176a8cdfe/67ec5c05ff123f63a8f428c7_us%20foreclosure%20recovery.png" alt="Foreclosure Recovery Inc." width="185" /></a></td>
 <td align="right" valign="middle" width="45%">
-<p style="margin: 0; font-size: 12px; color: #7a8a9e; font-family: 'Inter Tight', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 18px;">${formatDate()}<br /><span style="color: #09274c; font-weight: 600;">Ref: <span style="color: #0a0a0a; font-size: 14px; font-weight: 500;">${caseNumber}</span></span></p>
+<p style="margin: 0; font-size: 12px; color: #7a8a9e; font-family: 'Inter Tight', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 18px;">${formatDate()}${caseNumber ? `<br /><span style="color: #09274c; font-weight: 600;">Ref: <span style="color: #0a0a0a; font-size: 14px; font-weight: 500;">${caseNumber}</span></span>` : ""}</p>
 </td>
 </tr></tbody>
 </table>
@@ -106,10 +133,11 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
 <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
 <tbody>
 <tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">Address:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${fullAddress}</td></tr>
-<tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">County:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${county}</td></tr>
-<tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">APN:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${apn}</td></tr>
+${county ? `<tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">County:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${county}</td></tr>` : ""}
+${apn ? `<tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">APN:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${apn}</td></tr>` : ""}
 <tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">State:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${state}</td></tr>
 <tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">Property Type:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${propertyType}</td></tr>
+${estimatedSurplus > 0 ? `<tr><td style="padding: 8px 0 5px; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top; border-top: 1px solid #e2e6eb;" width="110">Est. Surplus:</td><td style="padding: 8px 0 5px; font-size: 16px; color: #1a7a3a; font-weight: 700; font-family: 'Inter Tight', sans-serif; border-top: 1px solid #e2e6eb;">${formatCurrency(estimatedSurplus)}</td></tr>` : ""}
 </tbody>
 </table>
 </td>
@@ -122,7 +150,14 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
 <tbody><tr>
 <td class="padding-mobile" style="background-color: #ffffff; padding: 24px 40px 0;">
 <p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">To ensure the proceeds are directed to the correct recipient, we need to confirm your <strong style="color: #09274c;">current forwarding address</strong>. This allows us to coordinate distribution once the lending institution has been made whole and the remaining balance is ready for release.</p>
-<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">Please be aware that your state has a statutory window for the former owner to initiate this process. We encourage you to respond at your earliest convenience so we can preserve your position within the applicable timeframe.</p>
+${deadlineInfo ? `<table style="background-color: ${deadlineInfo.urgency === "critical" ? "#fff5f5" : deadlineInfo.urgency === "high" ? "#fffbeb" : "#f0f9ff"}; border-radius: 6px; border-left: 4px solid ${deadlineInfo.urgency === "critical" ? "#D82221" : deadlineInfo.urgency === "high" ? "#d97706" : "#09274c"};" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody><tr><td style="padding: 16px 20px;">
+<p style="margin: 0 0 4px; font-size: 11px; color: ${deadlineInfo.urgency === "critical" ? "#D82221" : "#09274c"}; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight', sans-serif;">${deadlineInfo.urgency === "critical" ? "URGENT" : "IMPORTANT"} -- Statutory Deadline</p>
+<p style="margin: 0 0 6px; font-size: 15px; color: #2c3e50; line-height: 24px; font-family: 'Inter Tight', sans-serif;">Your state's statutory window for claiming surplus funds expires on <strong style="color: #09274c;">${deadlineInfo.deadlineDate}</strong>.</p>
+<p style="margin: 0; font-size: 14px; color: ${deadlineInfo.urgency === "critical" ? "#D82221" : "#5a6d82"}; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${deadlineInfo.daysRemaining} days remaining to initiate your claim</p>
+</td></tr></tbody>
+</table>
+<div style="height: 18px;">&nbsp;</div>` : `<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">Please be aware that your state has a statutory window for the former owner to initiate this process. We encourage you to respond at your earliest convenience so we can preserve your position within the applicable timeframe.</p>`}
 </td>
 </tr></tbody>
 </table>
@@ -183,7 +218,7 @@ a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !im
 <td class="padding-mobile" style="background-color: #ffffff; padding: 20px 40px 30px;">
 <p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight', sans-serif;">Foreclosure Recovery Inc. &middot; 30 N Gould St, Ste R &middot; Sheridan, WY 82801</p>
 <p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight', sans-serif;">This correspondence pertains to the property and individual(s) named above. Recovery of foreclosure surplus proceeds is subject to individual case evaluation and applicable state statutes. Foreclosure Recovery Inc. is not a law firm and does not provide legal counsel. Estimated timelines may vary based on state regulations and third-party response times.</p>
-<p style="margin: 0; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight', sans-serif;">&copy; 2025 Foreclosure Recovery Inc. All rights reserved.&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="https://usforeclosurerecovery.com/privacy-policy">Privacy Policy</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="#">Unsubscribe</a></p>
+<p style="margin: 0; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight', sans-serif;">&copy; 2026 Foreclosure Recovery Inc. All rights reserved.&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="https://usforeclosurerecovery.com/privacy-policy">Privacy Policy</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="#">Unsubscribe</a></p>
 </td>
 </tr></tbody>
 </table>
@@ -238,13 +273,17 @@ export async function POST(request: NextRequest) {
       first_name: String(lead.owner_name || "").split(" ")[0] || "",
       last_name: String(lead.owner_name || "").split(" ").slice(1).join(" ") || "",
       property_address: String(lead.property_address || ""),
+      mailing_address: String(lead.mailing_address || ""),
       city: String(lead.city || ""),
-      state: String(lead.state || ""),
+      state: String(lead.state || lead.state_abbr || ""),
       county: String(lead.county || ""),
-      parcel_id: String(lead.parcel_id || lead.apn_number || ""),
+      apn_number: String(lead.apn_number || ""),
+      parcel_id: String(lead.parcel_id || ""),
       case_number: String(lead.case_number || ""),
       property_type: String(lead.property_type || "Residential"),
       primary_email: recipientEmail,
+      estimated_surplus: String(lead.estimated_surplus || "0"),
+      sale_date: String(lead.sale_date || ""),
     }
 
     const { subject, html } = populateTemplate(leadData)
