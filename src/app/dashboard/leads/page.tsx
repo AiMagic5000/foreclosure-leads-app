@@ -258,13 +258,13 @@ function VoiceDropButton({ lead, sending, onSend }: { lead: LeadData; sending: b
     )
   }
 
-  const canSend = lead.canContact && !lead.onDnc && lead.dncChecked
+  const canSend = lead.status === "skip_traced" && !!lead.primaryPhone
 
   return (
     <button
       onClick={(e) => { e.stopPropagation(); if (canSend && !sending) onSend(lead.id) }}
       disabled={!canSend || sending}
-      title={!lead.dncChecked ? "DNC check pending" : lead.onDnc ? "On DNC list" : "Send voice drop"}
+      title={canSend ? "Send voice drop" : "No phone number available"}
       className={cn(
         "inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors",
         canSend && !sending
