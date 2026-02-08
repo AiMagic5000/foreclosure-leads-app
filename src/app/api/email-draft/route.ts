@@ -92,6 +92,9 @@ function populateTemplate(lead: Record<string, string>): {
   const recipientEmail = lead.primary_email || ""
   const estimatedSurplus = parseFloat(lead.overage_amount) || parseFloat(lead.estimated_surplus) || 0
   const deadlineInfo = calculateDeadline(lead.sale_date, lead.state)
+  const stateKey = (lead.state || "").toUpperCase()
+  const claimYears = STATE_CLAIM_WINDOWS[stateKey] || 1
+  const stateName = stateKey ? getStateName(stateKey) : ""
 
   const subject = `Re: Property Equity Distribution -- ${fullAddress}`
 
@@ -192,7 +195,14 @@ ${deadlineInfo ? `<table style="background-color: ${deadlineInfo.urgency === "cr
 <p style="margin: 0; font-size: 14px; color: ${deadlineInfo.urgency === "critical" ? "#D82221" : "#5a6d82"}; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${deadlineInfo.urgency === "critical" ? "URGENT -- " : ""}${deadlineInfo.daysRemaining} days remaining to initiate your claim</p>
 </td></tr></tbody>
 </table>
-<div style="height: 18px;">&nbsp;</div>` : `<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">Please be aware that your state has a statutory window for the former owner to initiate this process. We encourage you to respond at your earliest convenience so we can preserve your position within the applicable timeframe.</p>`}
+<div style="height: 18px;">&nbsp;</div>` : `<table style="background-color: #fff5f5; border-radius: 6px; border-left: 4px solid #D82221;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody><tr><td style="padding: 16px 20px;">
+<p style="margin: 0 0 4px; font-size: 11px; color: #D82221; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight', sans-serif;">URGENT -- ${stateName || "State"} Statutory Deadline</p>
+<p style="margin: 0 0 6px; font-size: 15px; color: #2c3e50; line-height: 24px; font-family: 'Inter Tight', sans-serif;">Under ${stateName || "state"} law, former property owners have <strong style="color: #09274c;">${claimYears} year${claimYears > 1 ? "s" : ""}</strong> from the date of the foreclosure sale to claim surplus funds. This is a time-sensitive matter and we strongly encourage you to respond at your earliest convenience to preserve your position within the applicable timeframe.</p>
+<p style="margin: 0; font-size: 14px; color: #D82221; font-weight: 600; font-family: 'Inter Tight', sans-serif;">Act now -- your statutory window is limited</p>
+</td></tr></tbody>
+</table>
+<div style="height: 18px;">&nbsp;</div>`}
 </td>
 </tr></tbody>
 </table>
