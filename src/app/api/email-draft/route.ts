@@ -216,7 +216,7 @@ ${deadlineInfo ? `<table style="background-color: ${deadlineInfo.urgency === "cr
 <table style="margin-bottom: 12px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
 <tbody><tr>
 <td style="padding-top: 2px;" valign="top" width="32"><div style="width: 26px; height: 26px; border-radius: 50%; background-color: #09274c; color: #ffffff; text-align: center; line-height: 26px; font-size: 13px;">&#9742;</div></td>
-<td style="padding-left: 10px;"><p style="margin: 0; font-size: 14px; line-height: 22px; font-family: 'Inter Tight', sans-serif;"><strong style="color: #09274c;">By Phone</strong><br /><span style="color: #2c3e50;">Call Allie Pearson directly at </span><a style="color: #09274c; font-weight: 600; text-decoration: none;" href="tel:+18885458007">(888) 545-8007</a></p></td>
+<td style="padding-left: 10px;"><p style="margin: 0; font-size: 14px; line-height: 22px; font-family: 'Inter Tight', sans-serif;"><strong style="color: #09274c;">By Phone</strong><br /><span style="color: #2c3e50;">Call <strong>Allie Pearson</strong> directly at</span><a style="color: #09274c; font-weight: 600; text-decoration: none;" href="tel:+18885458007">(888) 545-8007</a></p></td>
 </tr></tbody>
 </table>
 <table style="margin-bottom: 12px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
