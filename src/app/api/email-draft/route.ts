@@ -46,16 +46,20 @@ function populateTemplate(lead: Record<string, string>): {
 } {
   const firstName = lead.first_name || lead.owner_name?.split(" ")[0] || "Homeowner"
   const lastName = lead.last_name || lead.owner_name?.split(" ").slice(1).join(" ") || ""
-  const propertyAddress = lead.property_address || lead.mailing_address || ""
+  const rawPropertyAddress = lead.property_address || ""
+  const rawMailingAddress = lead.mailing_address || ""
   const city = lead.city || ""
   const state = lead.state || ""
-  const fullAddress = city && state && propertyAddress ? `${propertyAddress}, ${city}, ${state}` : propertyAddress || "your property"
+  // If property_address exists, combine with city/state. If only mailing_address exists, use it as-is (already includes city/state/zip)
+  const fullAddress = rawPropertyAddress
+    ? (city && state ? `${rawPropertyAddress}, ${city}, ${state}` : rawPropertyAddress)
+    : rawMailingAddress || "your property"
   const county = lead.county || ""
   const apn = lead.apn_number || lead.parcel_id || ""
   const propertyType = lead.property_type || "Residential"
   const caseNumber = lead.case_number || ""
   const recipientEmail = lead.primary_email || ""
-  const estimatedSurplus = parseFloat(lead.estimated_surplus) || 0
+  const estimatedSurplus = parseFloat(lead.overage_amount) || parseFloat(lead.estimated_surplus) || 0
   const deadlineInfo = calculateDeadline(lead.sale_date)
 
   const subject = `Re: Property Equity Distribution -- ${fullAddress}`
@@ -282,6 +286,7 @@ export async function POST(request: NextRequest) {
       case_number: String(lead.case_number || ""),
       property_type: String(lead.property_type || "Residential"),
       primary_email: recipientEmail,
+      overage_amount: String(lead.overage_amount || "0"),
       estimated_surplus: String(lead.estimated_surplus || "0"),
       sale_date: String(lead.sale_date || ""),
     }
