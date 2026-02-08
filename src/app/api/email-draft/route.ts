@@ -28,20 +28,47 @@ function formatCurrency(amount: number): string {
   }).format(amount)
 }
 
-function calculateDeadline(saleDate: string): { daysRemaining: number; deadlineDate: string; urgency: string } | null {
+// State-specific statutory windows (years) for claiming foreclosure surplus funds
+const STATE_CLAIM_WINDOWS: Record<string, number> = {
+  AL: 1, AK: 1, AZ: 1, AR: 2, CA: 1, CO: 1, CT: 1, DE: 2, FL: 1, GA: 1,
+  HI: 1, ID: 1, IL: 1, IN: 1, IA: 2, KS: 2, KY: 1, LA: 1, ME: 1, MD: 3,
+  MA: 3, MI: 1, MN: 1, MS: 1, MO: 2, MT: 1, NE: 2, NV: 1, NH: 1, NJ: 2,
+  NM: 1, NY: 5, NC: 1, ND: 2, OH: 2, OK: 2, OR: 2, PA: 2, RI: 1, SC: 1,
+  SD: 1, TN: 1, TX: 2, UT: 1, VT: 1, VA: 1, WA: 1, WV: 1, WI: 1, WY: 1, DC: 2,
+}
+
+function getStateName(abbr: string): string {
+  const names: Record<string, string> = {
+    AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
+    CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia",
+    HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa",
+    KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland",
+    MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri",
+    MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey",
+    NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio",
+    OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina",
+    SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont",
+    VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming", DC: "District of Columbia",
+  }
+  return names[abbr.toUpperCase()] || abbr
+}
+
+function calculateDeadline(saleDate: string, stateAbbr: string): { daysRemaining: number; deadlineDate: string; urgency: string; stateName: string; claimYears: number } | null {
   if (!saleDate) return null
   const sale = new Date(saleDate)
   if (isNaN(sale.getTime())) return null
-  // Most states allow 1-3 years to claim surplus; use 1 year as conservative default
+  const stateKey = (stateAbbr || "").toUpperCase()
+  const claimYears = STATE_CLAIM_WINDOWS[stateKey] || 1
   const deadline = new Date(sale)
-  deadline.setFullYear(deadline.getFullYear() + 1)
+  deadline.setFullYear(deadline.getFullYear() + claimYears)
   const now = new Date()
   const diffMs = deadline.getTime() - now.getTime()
   const daysRemaining = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
   if (daysRemaining < 0) return null
   const deadlineDate = deadline.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
-  const urgency = daysRemaining <= 30 ? "critical" : daysRemaining <= 90 ? "high" : "standard"
-  return { daysRemaining, deadlineDate, urgency }
+  const urgency = daysRemaining <= 60 ? "critical" : daysRemaining <= 120 ? "high" : "standard"
+  const stateName = getStateName(stateKey)
+  return { daysRemaining, deadlineDate, urgency, stateName, claimYears }
 }
 
 function populateTemplate(lead: Record<string, string>): {
@@ -64,7 +91,7 @@ function populateTemplate(lead: Record<string, string>): {
   const caseNumber = lead.case_number || ""
   const recipientEmail = lead.primary_email || ""
   const estimatedSurplus = parseFloat(lead.overage_amount) || parseFloat(lead.estimated_surplus) || 0
-  const deadlineInfo = calculateDeadline(lead.sale_date)
+  const deadlineInfo = calculateDeadline(lead.sale_date, lead.state)
 
   const subject = `Re: Property Equity Distribution -- ${fullAddress}`
 
@@ -160,9 +187,9 @@ ${estimatedSurplus > 0 ? `<tr><td style="padding: 8px 0 5px; font-size: 13px; co
 <p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">To ensure the proceeds are directed to the correct recipient, we need to confirm your <strong style="color: #09274c;">current forwarding address</strong>. This allows us to coordinate distribution once the lending institution has been made whole and the remaining balance is ready for release.</p>
 ${deadlineInfo ? `<table style="background-color: ${deadlineInfo.urgency === "critical" ? "#fff5f5" : deadlineInfo.urgency === "high" ? "#fffbeb" : "#f0f9ff"}; border-radius: 6px; border-left: 4px solid ${deadlineInfo.urgency === "critical" ? "#D82221" : deadlineInfo.urgency === "high" ? "#d97706" : "#09274c"};" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
 <tbody><tr><td style="padding: 16px 20px;">
-<p style="margin: 0 0 4px; font-size: 11px; color: ${deadlineInfo.urgency === "critical" ? "#D82221" : "#09274c"}; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight', sans-serif;">${deadlineInfo.urgency === "critical" ? "URGENT" : "IMPORTANT"} -- Statutory Deadline</p>
-<p style="margin: 0 0 6px; font-size: 15px; color: #2c3e50; line-height: 24px; font-family: 'Inter Tight', sans-serif;">Your state's statutory window for claiming surplus funds expires on <strong style="color: #09274c;">${deadlineInfo.deadlineDate}</strong>.</p>
-<p style="margin: 0; font-size: 14px; color: ${deadlineInfo.urgency === "critical" ? "#D82221" : "#5a6d82"}; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${deadlineInfo.daysRemaining} days remaining to initiate your claim</p>
+<p style="margin: 0 0 4px; font-size: 11px; color: ${deadlineInfo.urgency === "critical" ? "#D82221" : "#09274c"}; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight', sans-serif;">${deadlineInfo.urgency === "critical" ? "URGENT" : "IMPORTANT"} -- ${deadlineInfo.stateName} Statutory Deadline</p>
+<p style="margin: 0 0 6px; font-size: 15px; color: #2c3e50; line-height: 24px; font-family: 'Inter Tight', sans-serif;">Under ${deadlineInfo.stateName} law, former property owners have <strong style="color: #09274c;">${deadlineInfo.claimYears} year${deadlineInfo.claimYears > 1 ? "s" : ""}</strong> from the date of the foreclosure sale to claim surplus funds. Your deadline is <strong style="color: ${deadlineInfo.urgency === "critical" ? "#D82221" : "#09274c"};">${deadlineInfo.deadlineDate}</strong>.</p>
+<p style="margin: 0; font-size: 14px; color: ${deadlineInfo.urgency === "critical" ? "#D82221" : "#5a6d82"}; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${deadlineInfo.urgency === "critical" ? "URGENT -- " : ""}${deadlineInfo.daysRemaining} days remaining to initiate your claim</p>
 </td></tr></tbody>
 </table>
 <div style="height: 18px;">&nbsp;</div>` : `<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">Please be aware that your state has a statutory window for the former owner to initiate this process. We encourage you to respond at your earliest convenience so we can preserve your position within the applicable timeframe.</p>`}
