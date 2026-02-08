@@ -1886,6 +1886,22 @@ function LeadsPageContent() {
                   Name used in the personalized script. Defaults to &quot;John Smith&quot;.
                 </p>
               </div>
+              <details className="text-xs">
+                <summary className="cursor-pointer font-medium text-sm text-muted-foreground">Script preview</summary>
+                <pre className="mt-1 whitespace-pre-wrap bg-slate-50 p-2 rounded text-xs border max-h-40 overflow-y-auto">
+{`This is Corey Pearson from Foreclosure Recovery Inc. This message is specifically for ${testVdName || "John Smith"}, or to any family members, to let ${(testVdName || "John Smith").split(" ")[0]} know:
+
+We are obligated to inform you that the property at [lead address], APN number [lead APN], is going to close out with excess funds associated with the homes equity after the bank has been paid from the foreclosure sale.
+
+We want to make sure that when the funds are distributed, they are sent to the correct address. We need your current forwarding address in order to send the check.
+
+Please contact us at eight, eight, eight, five, four, five, eight, zero, zero, seven or email us at claim at U.S. foreclosure recovery dot com to update your forwarding address, so the funds that are collected after the bank has been made whole from the foreclosure sale can be distributed to you in a timely manner.
+
+Please get a pen and replay this message to take down our phone number so you can call back and talk to Allie your recovery agent at eight, eight, eight, five, four, five, eight, zero, zero, seven.
+
+Thank you.`}
+                </pre>
+              </details>
               {testVdResult && (
                 <div className={`p-3 rounded-lg text-sm ${testVdResult.success ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-red-50 text-red-800 border border-red-200"}`}>
                   {testVdResult.success ? (

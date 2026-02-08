@@ -7,15 +7,17 @@ const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY || ""
 const ELEVENLABS_VOICE_ID = process.env.ELEVENLABS_VOICE_ID || ""
 const SLYBROADCAST_EMAIL = process.env.SLYBROADCAST_EMAIL || ""
 const SLYBROADCAST_PASSWORD = process.env.SLYBROADCAST_PASSWORD || ""
-const CALLBACK_NUMBER = process.env.CALLBACK_NUMBER || "8005551234"
+const CALLBACK_NUMBER = process.env.CALLBACK_NUMBER || "8885458007"
 
-const VOICE_SCRIPT_TEMPLATE = `This voice message is specifically for {owner_name}, or any family members, to let {first_name} know:
+const VOICE_SCRIPT_TEMPLATE = `This is Corey Pearson from Foreclosure Recovery Inc. This message is specifically for {owner_name}, or to any family members, to let {first_name} know:
 
-We are obligated to inform you that the property at {property_address}, APN number {apn_number}, is more than likely going to close out with overages associated with the principal that will be owed to you after the foreclosure sale.
+We are obligated to inform you that the property at {property_address}, APN number {apn_number}, is going to close out with excess funds associated with the homes equity after the bank has been paid from the foreclosure sale.
 
 We want to make sure that when the funds are distributed, they are sent to the correct address. We need your current forwarding address in order to send the check.
 
-Please contact us at {callback_number} to update your forwarding address, so the funds that are collected after the bank has been made whole from the foreclosure sale can be distributed to you in a timely manner.
+Please contact us at eight, eight, eight, five, four, five, eight, zero, zero, seven or email us at claim at U.S. foreclosure recovery dot com to update your forwarding address, so the funds that are collected after the bank has been made whole from the foreclosure sale can be distributed to you in a timely manner.
+
+Please get a pen and replay this message to take down our phone number so you can call back and talk to Allie your recovery agent at eight, eight, eight, five, four, five, eight, zero, zero, seven.
 
 Thank you.`
 
@@ -23,14 +25,16 @@ function generateScript(lead: Record<string, unknown>): string {
   const ownerName = String(lead.owner_name || "Homeowner")
   const firstName = ownerName.split(" ")[0] || "Homeowner"
   const propertyAddress = String(lead.property_address || "your property")
+  const city = String(lead.city || "")
+  const state = String(lead.state || "")
+  const fullAddress = city && state ? `${propertyAddress}, ${city} ${state}` : propertyAddress
   const apnNumber = String(lead.apn_number || lead.parcel_id || "your property")
 
   return VOICE_SCRIPT_TEMPLATE
     .replace(/{owner_name}/g, ownerName)
     .replace(/{first_name}/g, firstName)
-    .replace(/{property_address}/g, propertyAddress)
+    .replace(/{property_address}/g, fullAddress)
     .replace(/{apn_number}/g, apnNumber)
-    .replace(/{callback_number}/g, CALLBACK_NUMBER)
 }
 
 async function generateAudio(script: string): Promise<Buffer> {
@@ -67,32 +71,31 @@ async function generateAudio(script: string): Promise<Buffer> {
 
 async function sendSlyBroadcast(
   phoneNumber: string,
-  audioBase64: string
+  audioUrl: string
 ): Promise<{ success: boolean; campaignId?: string; error?: string }> {
   const formData = new URLSearchParams()
   formData.append("c_uid", SLYBROADCAST_EMAIL)
   formData.append("c_password", SLYBROADCAST_PASSWORD)
-  formData.append("c_option", "text_to_audio")
+  formData.append("c_method", "new_campaign")
   formData.append("c_phone", phoneNumber)
-  formData.append("c_audio", audioBase64)
+  formData.append("c_url", audioUrl)
+  formData.append("c_audio", "mp3")
   formData.append("c_callerID", CALLBACK_NUMBER)
   formData.append("c_date", "now")
-  formData.append("c_audio_type", "mp3")
 
-  const response = await fetch("https://www.mobile-sphere.com/gateway/vmb.php", {
+  const response = await fetch("https://www.slybroadcast.com/gateway/vmb.json.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: formData.toString(),
   })
 
-  const text = await response.text()
+  const data = await response.json()
 
-  if (text.includes("OK") || text.includes("success")) {
-    const campaignMatch = text.match(/campaign_id[=:]?\s*(\w+)/i)
-    return { success: true, campaignId: campaignMatch?.[1] || "unknown" }
+  if (data.session_id || data.campaign_id) {
+    return { success: true, campaignId: String(data.session_id || data.campaign_id) }
   }
 
-  return { success: false, error: text }
+  return { success: false, error: JSON.stringify(data) }
 }
 
 function cleanPhoneNumber(phone: string): string {
