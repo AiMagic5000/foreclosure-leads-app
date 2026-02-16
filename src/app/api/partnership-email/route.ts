@@ -3,7 +3,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as tls from "tls"
 
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
-const SENDER_EMAIL = "partnerships@usforeclosurerecovery.com"
+const SENDER_EMAIL = "claim@usforeclosurerecovery.com"
 const SENDER_NAME = "Foreclosure Recovery Inc."
 const IMAP_HOST = "imap.hostinger.com"
 const IMAP_PORT = 993
@@ -90,7 +90,7 @@ function generateTitleCompanyEmail(lead: PartnershipLeadData): { subject: string
   <p style="font-size:15px;margin:0 0 16px;">Submit 5-10 recent foreclosure files (just names and addresses) and we'll verify surplus eligibility at no cost. If we find recoverable funds, we'll process those cases under our standard 5% referral agreement. Zero risk.</p>
 
   <div style="text-align:center;margin:25px 0;">
-    <a href="mailto:partnerships@usforeclosurerecovery.com?subject=Title Company Partnership Inquiry - ${encodeURIComponent(companyName)}" style="display:inline-block;background:#1a7a3a;color:white;padding:14px 32px;font-size:16px;font-weight:600;text-decoration:none;border-radius:8px;">Schedule a Call</a>
+    <a href="mailto:claim@usforeclosurerecovery.com?subject=Title Company Partnership Inquiry - ${encodeURIComponent(companyName)}" style="display:inline-block;background:#1a7a3a;color:white;padding:14px 32px;font-size:16px;font-weight:600;text-decoration:none;border-radius:8px;">Schedule a Call</a>
   </div>
 
   <p style="font-size:15px;margin:0 0 16px;">Or simply reply to this email with your availability.</p>
@@ -100,7 +100,7 @@ function generateTitleCompanyEmail(lead: PartnershipLeadData): { subject: string
   <p style="font-size:15px;margin:0 0 4px;"><strong style="color:#09274c;">Corey Pearson</strong></p>
   <p style="font-size:13px;color:#5a6d82;margin:0 0 2px;">Director, Strategic Partnerships</p>
   <p style="font-size:13px;color:#5a6d82;margin:0 0 2px;">Foreclosure Recovery Inc.</p>
-  <p style="font-size:13px;margin:0;"><a href="tel:+18885458007" style="color:#1a7a3a;text-decoration:none;">(888) 545-8007</a> | <a href="mailto:partnerships@usforeclosurerecovery.com" style="color:#1a7a3a;text-decoration:none;">partnerships@usforeclosurerecovery.com</a></p>
+  <p style="font-size:13px;margin:0;"><a href="tel:+18885458007" style="color:#1a7a3a;text-decoration:none;">(888) 545-8007</a> | <a href="mailto:claim@usforeclosurerecovery.com" style="color:#1a7a3a;text-decoration:none;">claim@usforeclosurerecovery.com</a></p>
 </div>
 
 <div style="background:#f7f9fb;padding:25px 30px;text-align:center;font-size:12px;color:#7a8a9e;">
@@ -182,7 +182,7 @@ function generateInvestorEmail(lead: PartnershipLeadData): { subject: string; ht
   </p>
 
   <div style="text-align:center;margin:25px 0;">
-    <a href="mailto:partnerships@usforeclosurerecovery.com?subject=Investor Referral Program - ${encodeURIComponent(investorName)}" style="display:inline-block;background:#1a7a3a;color:white;padding:14px 32px;font-size:16px;font-weight:600;text-decoration:none;border-radius:8px;">Join Referral Program</a>
+    <a href="mailto:claim@usforeclosurerecovery.com?subject=Investor Referral Program - ${encodeURIComponent(investorName)}" style="display:inline-block;background:#1a7a3a;color:white;padding:14px 32px;font-size:16px;font-weight:600;text-decoration:none;border-radius:8px;">Join Referral Program</a>
   </div>
 
   <p style="font-size:15px;margin:0 0 16px;">If you buy 2-5 foreclosed properties per month, this could add $8K-$25K to your annual income with almost zero effort.</p>
@@ -194,7 +194,7 @@ function generateInvestorEmail(lead: PartnershipLeadData): { subject: string; ht
   <p style="font-size:15px;margin:0 0 4px;"><strong style="color:#09274c;">Corey Pearson</strong></p>
   <p style="font-size:13px;color:#5a6d82;margin:0 0 2px;">Director, Investor Partnerships</p>
   <p style="font-size:13px;color:#5a6d82;margin:0 0 2px;">Foreclosure Recovery Inc.</p>
-  <p style="font-size:13px;margin:0;">(888) 545-8007 | partnerships@usforeclosurerecovery.com</p>
+  <p style="font-size:13px;margin:0;">(888) 545-8007 | claim@usforeclosurerecovery.com</p>
 </div>
 
 <div style="background:#f7f9fb;padding:25px 30px;text-align:center;font-size:12px;color:#7a8a9e;">
@@ -331,7 +331,7 @@ function generateAttorneyEmail(lead: PartnershipLeadData): { subject: string; ht
       <td style="padding:18px 22px;text-align:center;">
         <p style="margin:0 0 10px;font-size:15px;color:#09274c;font-weight:600;">Ready to add value for your clients?</p>
         <p style="margin:0 0 14px;font-size:14px;color:#2c3e50;line-height:21px;">Let's start with 1-2 test cases -- completely free -- to prove the system works.</p>
-        <a href="mailto:partnerships@usforeclosurerecovery.com?subject=Attorney Partnership Inquiry - ${encodeURIComponent(attorneyName)}" style="display:inline-block;padding:12px 28px;background-color:#09274c;color:#ffffff;text-decoration:none;border-radius:6px;font-size:14px;font-weight:600;">Schedule a Call</a>
+        <a href="mailto:claim@usforeclosurerecovery.com?subject=Attorney Partnership Inquiry - ${encodeURIComponent(attorneyName)}" style="display:inline-block;padding:12px 28px;background-color:#09274c;color:#ffffff;text-decoration:none;border-radius:6px;font-size:14px;font-weight:600;">Schedule a Call</a>
       </td>
     </tr>
   </table>
@@ -345,7 +345,7 @@ function generateAttorneyEmail(lead: PartnershipLeadData): { subject: string; ht
     <p style="margin:0 0 2px;font-size:13px;color:#5a6d82;">Director, Attorney Partnerships</p>
     <p style="margin:0 0 2px;font-size:13px;color:#5a6d82;">Foreclosure Recovery Inc.</p>
     <p style="margin:6px 0 0;font-size:13px;">
-      <a style="color:#09274c;text-decoration:none;" href="tel:+18885458007">(888) 545-8007</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a style="color:#09274c;text-decoration:none;" href="mailto:partnerships@usforeclosurerecovery.com">partnerships@usforeclosurerecovery.com</a>
+      <a style="color:#09274c;text-decoration:none;" href="tel:+18885458007">(888) 545-8007</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a style="color:#09274c;text-decoration:none;" href="mailto:claim@usforeclosurerecovery.com">claim@usforeclosurerecovery.com</a>
     </p>
   </div>
 </div>
@@ -396,7 +396,7 @@ function generateAgreementHtml(type: "title" | "investor" | "attorney", lead: Pa
 <p ${sectionStyle}>2.1 Referral Submission</p>
 <p ${subStyle}>Referring Title Company will provide Company with: former property owner's full legal name(s), property address of foreclosed property, foreclosure sale/closing date, last known contact information (if available), and final sale amount (if readily available).</p>
 <p ${sectionStyle}>2.2 Submission Method</p>
-<p ${subStyle}>Referrals may be submitted via email to partnerships@usforeclosurerecovery.com, secure file upload portal (provided by Company), or direct data integration (if mutually agreed upon).</p>
+<p ${subStyle}>Referrals may be submitted via email to claim@usforeclosurerecovery.com, secure file upload portal (provided by Company), or direct data integration (if mutually agreed upon).</p>
 <p ${sectionStyle}>2.3 Initial Verification</p>
 <p ${subStyle}>Company will verify surplus fund eligibility within 5 business days and notify Referring Title Company of recoverable cases.</p>
 <h2 ${headerStyle}>3. REFERRAL FEE STRUCTURE</h2>
@@ -427,7 +427,7 @@ function generateAgreementHtml(type: "title" | "investor" | "attorney", lead: Pa
 <p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ____________________________</p>
 </td></tr></table>
 <div style="margin-top:30px;padding-top:15px;border-top:1px solid #e2e6eb;font-size:12px;color:#7a8a9e;text-align:center;">
-<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>partnerships@usforeclosurerecovery.com | (888) 545-8007</p>
+<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>claim@usforeclosurerecovery.com | (888) 545-8007</p>
 </div>
 </body></html>`,
     }
@@ -479,7 +479,7 @@ function generateAgreementHtml(type: "title" | "investor" | "attorney", lead: Pa
 <p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ____________________________</p>
 </td></tr></table>
 <div style="margin-top:30px;padding-top:15px;border-top:1px solid #e2e6eb;font-size:12px;color:#7a8a9e;text-align:center;">
-<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>partnerships@usforeclosurerecovery.com | (888) 545-8007</p>
+<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>claim@usforeclosurerecovery.com | (888) 545-8007</p>
 </div>
 </body></html>`,
     }
@@ -537,7 +537,7 @@ function generateAgreementHtml(type: "title" | "investor" | "attorney", lead: Pa
 <p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ____________________________</p>
 </td></tr></table>
 <div style="margin-top:30px;padding-top:15px;border-top:1px solid #e2e6eb;font-size:12px;color:#7a8a9e;text-align:center;">
-<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>partnerships@usforeclosurerecovery.com | (888) 545-8007</p>
+<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>claim@usforeclosurerecovery.com | (888) 545-8007</p>
 <p style="margin-top:8px;font-style:italic;">This is a simple referral agreement. Both parties are encouraged to consult their own legal counsel before signing.</p>
 </div>
 </body></html>`,
@@ -703,7 +703,7 @@ export async function POST(request: NextRequest) {
         ``,
         `A partnership agreement is attached for your review.`,
         ``,
-        `Contact: (888) 545-8007 | partnerships@usforeclosurerecovery.com`,
+        `Contact: (888) 545-8007 | claim@usforeclosurerecovery.com`,
         ``,
         `--${altBoundary}`,
         `Content-Type: text/html; charset=utf-8`,
