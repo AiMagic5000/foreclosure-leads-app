@@ -189,11 +189,18 @@ async def search_web(query: str, crawler: AsyncWebCrawler) -> list[str]:
             actual = re.search(r'uddg=([^&]+)', raw_url)
             if actual:
                 raw_url = unquote(actual.group(1))
+            # Also handle DDG ad redirects (y.js URLs with ad_domain)
+            elif 'duckduckgo.com/y.js' in raw_url:
+                ad_domain = re.search(r'ad_domain=([^&]+)', raw_url)
+                if ad_domain:
+                    raw_url = f"https://{ad_domain.group(1)}"
+                else:
+                    continue  # Skip DDG internal URLs with no domain
             if raw_url.startswith("http") and raw_url not in urls:
-                # Skip social media, directories we handle separately
+                # Skip DDG internal, social media, directories
                 if any(skip in raw_url for skip in [
-                    'facebook.com', 'twitter.com', 'instagram.com',
-                    'linkedin.com/company', 'pinterest.com',
+                    'duckduckgo.com', 'facebook.com', 'twitter.com',
+                    'instagram.com', 'linkedin.com/company', 'pinterest.com',
                     'yelp.com', 'bbb.org', 'yellowpages.com',
                     'mapquest.com', 'tripadvisor.com',
                 ]):
@@ -243,7 +250,7 @@ def _extract_from_text(text: str, html: str) -> dict:
 
 async def extract_contact_info(url: str, crawler: AsyncWebCrawler) -> dict | None:
     """Crawl a business page and extract contact info.
-    If no phone/email found on main page, also tries /contact."""
+    If no email found on main page, tries /contact, /about, /about-us, /team pages."""
     config = CrawlerRunConfig(
         cache_mode=CacheMode.BYPASS,
         wait_until="domcontentloaded",
@@ -260,48 +267,69 @@ async def extract_contact_info(url: str, crawler: AsyncWebCrawler) -> dict | Non
         html = (result.html or "")[:15000]
         info = _extract_from_text(text, html)
 
-        # If no phone AND no email, try the /contact page
-        if not info["phone"] and not info["email"]:
-            # Find contact page link in html
-            contact_url = None
+        # Also extract emails from HTML (mailto links, often not in markdown)
+        if not info["email"]:
+            mailto_matches = re.findall(r'mailto:([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})', html)
+            mailto_matches = [e for e in mailto_matches if 'example.com' not in e.lower()]
+            if mailto_matches:
+                info["email"] = clean_email(mailto_matches[0])
+
+        # If email is STILL missing, aggressively search subpages
+        # Email is the primary outreach channel — we need it
+        if not info["email"]:
+            from urllib.parse import urlparse
+            parsed = urlparse(url)
+            base = f"{parsed.scheme}://{parsed.netloc}"
+
+            # Find contact/about links in HTML
+            subpage_urls = []
             for pattern in [
                 r'href="(/contact[^"]*)"',
                 r'href="(/about[^"]*)"',
-                r'href="(https?://[^"]*contact[^"]*)"',
+                r'href="(/team[^"]*)"',
+                r'href="(/staff[^"]*)"',
+                r'href="(https?://[^"]*(?:contact|about|team)[^"]*)"',
             ]:
-                m = re.search(pattern, html, re.I)
-                if m:
+                for m in re.finditer(pattern, html, re.I):
                     found = m.group(1)
                     if found.startswith("/"):
-                        # Build absolute URL
-                        from urllib.parse import urlparse
-                        parsed = urlparse(url)
-                        contact_url = f"{parsed.scheme}://{parsed.netloc}{found}"
-                    else:
-                        contact_url = found
-                    break
+                        found = base + found
+                    if found.startswith("http") and found not in subpage_urls:
+                        subpage_urls.append(found)
 
-            # Fallback: try common /contact path
-            if not contact_url:
-                from urllib.parse import urlparse
-                parsed = urlparse(url)
-                contact_url = f"{parsed.scheme}://{parsed.netloc}/contact"
+            # Also try common paths as fallback
+            for path in ["/contact", "/contact-us", "/about", "/about-us"]:
+                candidate = base + path
+                if candidate not in subpage_urls:
+                    subpage_urls.append(candidate)
 
-            try:
-                contact_result = await crawler.arun(url=contact_url, config=config)
-                if contact_result.success and contact_result.markdown:
-                    c_text = contact_result.markdown[:8000]
-                    c_html = (contact_result.html or "")[:15000]
-                    c_info = _extract_from_text(c_text, c_html)
-                    # Merge contact info
-                    if c_info["phone"]:
-                        info["phone"] = c_info["phone"]
-                    if c_info["email"]:
-                        info["email"] = c_info["email"]
-                    if c_info["address"] and not info["address"]:
-                        info["address"] = c_info["address"]
-            except Exception:
-                pass
+            # Crawl up to 3 subpages looking for email
+            for sub_url in subpage_urls[:3]:
+                try:
+                    sub_result = await crawler.arun(url=sub_url, config=config)
+                    if sub_result.success and sub_result.markdown:
+                        s_text = sub_result.markdown[:8000]
+                        s_html = (sub_result.html or "")[:15000]
+                        s_info = _extract_from_text(s_text, s_html)
+
+                        # Also check mailto in sub HTML
+                        if not s_info["email"]:
+                            mailto = re.findall(r'mailto:([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})', s_html)
+                            mailto = [e for e in mailto if 'example.com' not in e.lower()]
+                            if mailto:
+                                s_info["email"] = clean_email(mailto[0])
+
+                        if s_info["email"]:
+                            info["email"] = s_info["email"]
+                        if s_info["phone"] and not info["phone"]:
+                            info["phone"] = s_info["phone"]
+                        if s_info["address"] and not info["address"]:
+                            info["address"] = s_info["address"]
+
+                        if info["email"]:
+                            break  # Found email, stop searching
+                except Exception:
+                    pass
 
         if not info["name"] and not info["phone"] and not info["email"]:
             return None
@@ -699,6 +727,138 @@ async def scrape_directories(pipeline: str, crawler: AsyncWebCrawler):
     return total_from_dirs
 
 
+# ── Email enrichment for existing leads ──────────────────────
+
+async def enrich_emails(pipeline: str, crawler: AsyncWebCrawler):
+    """Re-visit leads that have a website but no email. Crawl their site
+    to find email addresses and update the DB."""
+    table_map = {
+        "title": "title_company_leads",
+        "investor": "real_estate_investor_leads",
+        "attorney": "attorney_leads",
+    }
+    table = table_map[pipeline]
+    print(f"\n=== EMAIL ENRICHMENT: {pipeline.upper()} ===")
+
+    # Fetch leads with website but no email
+    url = f"{SUPABASE_URL}/rest/v1/{table}?select=id,website&email=is.null&website=not.is.null&limit=500"
+    headers = {
+        "apikey": SUPABASE_SERVICE_KEY,
+        "Authorization": f"Bearer {SUPABASE_SERVICE_KEY}",
+    }
+
+    async with httpx.AsyncClient(timeout=30) as client:
+        resp = await client.get(url, headers=headers)
+        if resp.status_code != 200:
+            print(f"  Failed to fetch leads: {resp.status_code}")
+            return
+
+        leads = resp.json()
+
+    # Also get leads where email is empty string
+    url2 = f"{SUPABASE_URL}/rest/v1/{table}?select=id,website&email=eq.&website=not.is.null&limit=500"
+    async with httpx.AsyncClient(timeout=30) as client:
+        resp2 = await client.get(url2, headers=headers)
+        if resp2.status_code == 200:
+            leads.extend(resp2.json())
+
+    print(f"  Leads without email: {len(leads)}")
+    if not leads:
+        return
+
+    enriched = 0
+    config = CrawlerRunConfig(
+        cache_mode=CacheMode.BYPASS,
+        wait_until="domcontentloaded",
+        page_timeout=12000,
+        word_count_threshold=10,
+    )
+
+    for lead in leads:
+        website = lead.get("website", "")
+        if not website or "duckduckgo" in website:
+            continue
+
+        lead_id = lead["id"]
+
+        try:
+            # Crawl the website homepage
+            result = await crawler.arun(url=website, config=config)
+            if not result.success:
+                continue
+
+            text = result.markdown[:8000] if result.markdown else ""
+            html = (result.html or "")[:15000]
+
+            # Extract email from page text
+            emails = re.findall(r'[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}', text)
+            emails = [e for e in emails if not any(skip in e.lower() for skip in [
+                'example.com', 'sentry.io', 'wixpress', 'googleapis',
+                'schema.org', 'noreply', 'no-reply', '.png', '.jpg', '.svg',
+                'wix.com', 'squarespace', 'wordpress',
+            ])]
+
+            # Also check mailto links in HTML
+            if not emails:
+                emails = re.findall(r'mailto:([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})', html)
+                emails = [e for e in emails if 'example.com' not in e.lower()]
+
+            # If still no email, try /contact page
+            if not emails:
+                from urllib.parse import urlparse
+                parsed = urlparse(website)
+                for path in ["/contact", "/contact-us", "/about"]:
+                    try:
+                        sub_result = await crawler.arun(
+                            url=f"{parsed.scheme}://{parsed.netloc}{path}",
+                            config=config,
+                        )
+                        if sub_result.success and sub_result.markdown:
+                            sub_text = sub_result.markdown[:8000]
+                            sub_html = (sub_result.html or "")[:15000]
+                            emails = re.findall(
+                                r'[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}',
+                                sub_text
+                            )
+                            emails = [e for e in emails if 'example.com' not in e.lower()]
+                            if not emails:
+                                emails = re.findall(
+                                    r'mailto:([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})',
+                                    sub_html
+                                )
+                            if emails:
+                                break
+                    except Exception:
+                        pass
+
+            if emails:
+                email = clean_email(emails[0])
+                if email:
+                    # Update the lead in Supabase
+                    update_url = f"{SUPABASE_URL}/rest/v1/{table}?id=eq.{lead_id}"
+                    async with httpx.AsyncClient(timeout=15) as client:
+                        resp = await client.patch(
+                            update_url,
+                            headers={
+                                "apikey": SUPABASE_SERVICE_KEY,
+                                "Authorization": f"Bearer {SUPABASE_SERVICE_KEY}",
+                                "Content-Type": "application/json",
+                                "Prefer": "return=minimal",
+                            },
+                            json={"email": email},
+                        )
+                        if resp.status_code in (200, 204):
+                            enriched += 1
+                            print(f"    + {website[:40]} -> {email}")
+
+        except Exception as e:
+            print(f"    [ERR] {website[:40]}: {e}")
+
+        await asyncio.sleep(1)  # Rate limit
+
+    print(f"  Enriched {enriched}/{len(leads)} leads with email addresses")
+
+
 # ── Main ─────────────────────────────────────────────────────
 
 async def main():
@@ -714,10 +874,16 @@ async def main():
         action="store_true",
         help="Only scrape directory sites (faster, more structured)",
     )
+    parser.add_argument(
+        "--enrich",
+        action="store_true",
+        help="Re-visit leads without emails to find email addresses",
+    )
     args = parser.parse_args()
 
     print(f"crawl4ai Partnership Lead Scraper")
     print(f"Pipeline: {args.pipeline}")
+    print(f"Mode: {'enrich' if args.enrich else 'directories-only' if args.directories_only else 'full scrape'}")
     print(f"Target cities: {len(CITIES)}")
     print(f"Started: {datetime.now(timezone.utc).isoformat()}")
 
@@ -725,20 +891,30 @@ async def main():
         headless=True,
         verbose=False,
     ) as crawler:
-        if args.pipeline in ("title", "all"):
-            if not args.directories_only:
-                await scrape_title_companies(crawler)
-            await scrape_directories("title", crawler)
+        if args.enrich:
+            # Enrichment mode: just find emails for existing leads
+            if args.pipeline in ("title", "all"):
+                await enrich_emails("title", crawler)
+            if args.pipeline in ("investor", "all"):
+                await enrich_emails("investor", crawler)
+            if args.pipeline in ("attorney", "all"):
+                await enrich_emails("attorney", crawler)
+        else:
+            # Normal scrape mode
+            if args.pipeline in ("title", "all"):
+                if not args.directories_only:
+                    await scrape_title_companies(crawler)
+                await scrape_directories("title", crawler)
 
-        if args.pipeline in ("investor", "all"):
-            if not args.directories_only:
-                await scrape_real_estate_investors(crawler)
-            await scrape_directories("investor", crawler)
+            if args.pipeline in ("investor", "all"):
+                if not args.directories_only:
+                    await scrape_real_estate_investors(crawler)
+                await scrape_directories("investor", crawler)
 
-        if args.pipeline in ("attorney", "all"):
-            if not args.directories_only:
-                await scrape_attorneys(crawler)
-            await scrape_directories("attorney", crawler)
+            if args.pipeline in ("attorney", "all"):
+                if not args.directories_only:
+                    await scrape_attorneys(crawler)
+                await scrape_directories("attorney", crawler)
 
     print(f"\nCompleted: {datetime.now(timezone.utc).isoformat()}")
 
