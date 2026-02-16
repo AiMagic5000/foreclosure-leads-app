@@ -45,6 +45,8 @@ import {
   XCircle,
   Volume2,
   Loader2,
+  MessageSquare,
+  Send,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -1061,7 +1063,7 @@ function LeadsPageContent() {
   const statusParam = searchParams.get("status")
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedState, setSelectedState] = useState(stateParam || "All States")
-  const [selectedStatus, setSelectedStatus] = useState(statusParam || "all")
+  const [selectedStatus, setSelectedStatus] = useState(statusParam || "skip_traced")
   const [sortBy, setSortBy] = useState("fee_high")
   const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
@@ -1123,6 +1125,55 @@ function LeadsPageContent() {
       setEmailDraftLoading(false)
     }
   }, [emailDraftModal])
+
+  // SMS state
+  const [smsModal, setSmsModal] = useState<{ leadId: string; phone: string; ownerName: string } | null>(null)
+  const [smsPreview, setSmsPreview] = useState<{ phone: string; message: string; charCount: number; segments: number } | null>(null)
+  const [smsLoading, setSmsLoading] = useState(false)
+  const [smsResult, setSmsResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
+  const [smsEditMessage, setSmsEditMessage] = useState("")
+
+  const openSmsPreview = useCallback(async (leadId: string, phone: string, ownerName: string) => {
+    setSmsModal({ leadId, phone, ownerName })
+    setSmsPreview(null)
+    setSmsResult(null)
+    setSmsLoading(true)
+    try {
+      const res = await fetch("/api/send-sms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, action: "preview" }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to load preview")
+      setSmsPreview(data)
+      setSmsEditMessage(data.message)
+    } catch (err) {
+      setSmsResult({ success: false, error: err instanceof Error ? err.message : "Preview failed" })
+    } finally {
+      setSmsLoading(false)
+    }
+  }, [])
+
+  const sendSms = useCallback(async () => {
+    if (!smsModal) return
+    setSmsLoading(true)
+    setSmsResult(null)
+    try {
+      const res = await fetch("/api/send-sms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId: smsModal.leadId, action: "send", customMessage: smsEditMessage }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "SMS send failed")
+      setSmsResult({ success: true, message: data.message || "SMS sent" })
+    } catch (err) {
+      setSmsResult({ success: false, error: err instanceof Error ? err.message : "SMS send failed" })
+    } finally {
+      setSmsLoading(false)
+    }
+  }, [smsModal, smsEditMessage])
 
   const sendTestVoiceDrop = useCallback(async () => {
     if (!testVdPhone || testVdSending) return
@@ -2079,6 +2130,85 @@ Thank you.`}
         </div>
       )}
 
+      {/* SMS Preview Modal */}
+      {smsModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => { setSmsModal(null); setSmsResult(null) }}>
+          <Card className="w-full max-w-lg flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-emerald-600" />
+                SMS Preview
+              </CardTitle>
+              <CardDescription>
+                To <strong>{smsModal.ownerName}</strong> at {smsModal.phone}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {smsLoading && !smsPreview && (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-6 w-6 animate-spin text-emerald-600" />
+                  <span className="ml-2 text-sm text-muted-foreground">Loading preview...</span>
+                </div>
+              )}
+              {smsPreview && (
+                <>
+                  <textarea
+                    className="w-full border rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50"
+                    rows={6}
+                    value={smsEditMessage}
+                    onChange={(e) => setSmsEditMessage(e.target.value)}
+                    disabled={smsLoading || !!smsResult?.success}
+                  />
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{smsEditMessage.length} characters</span>
+                    <span>{Math.ceil(smsEditMessage.length / 160)} SMS segment{Math.ceil(smsEditMessage.length / 160) !== 1 ? "s" : ""}</span>
+                  </div>
+                </>
+              )}
+              {smsResult && (
+                <div className={`p-3 rounded-lg text-sm ${smsResult.success ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-red-50 text-red-800 border border-red-200"}`}>
+                  {smsResult.success ? (
+                    <div className="flex items-center gap-1.5 font-medium">
+                      <CheckCircle2 className="h-4 w-4" />
+                      {smsResult.message}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5">
+                      <XCircle className="h-4 w-4" />
+                      {smsResult.error}
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+            <div className="flex justify-end gap-2 p-6 pt-0">
+              <Button variant="outline" onClick={() => { setSmsModal(null); setSmsResult(null) }}>
+                Close
+              </Button>
+              {smsPreview && !smsResult?.success && (
+                <Button
+                  onClick={sendSms}
+                  disabled={smsLoading || !smsEditMessage.trim()}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                >
+                  {smsLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4 mr-2" />
+                      Approve &amp; Send
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
+          </Card>
+        </div>
+      )}
+
       {/* Filters */}
       <Card>
         <CardContent className="pt-6">
@@ -2386,9 +2516,13 @@ Thank you.`}
                         <div className="flex items-center gap-1.5">
                           <DncStatusIcon lead={lead} />
                           <Phone className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                          <a href={isRevealed ? `tel:${lead.primaryPhone}` : '#'} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => { e.stopPropagation(); if (!isRevealed) e.preventDefault() }}>
+                          <button
+                            className="text-sm font-medium text-emerald-700 hover:underline cursor-pointer"
+                            onClick={(e) => { e.stopPropagation(); if (isRevealed) openSmsPreview(lead.id, lead.primaryPhone, lead.ownerName) }}
+                            title={isRevealed ? "Send SMS" : ""}
+                          >
                             <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
-                          </a>
+                          </button>
                         </div>
                         <div onClick={(e) => e.stopPropagation()}>
                           <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
@@ -2600,9 +2734,13 @@ Thank you.`}
                         <div className="flex items-center gap-2">
                           <DncStatusIcon lead={lead} />
                           <Phone className="h-4 w-4 text-emerald-600" />
-                          <a href={isRevealed ? `tel:${lead.primaryPhone}` : '#'} className="text-sm font-medium text-emerald-700 hover:underline" onClick={(e) => { e.stopPropagation(); if (!isRevealed) e.preventDefault() }}>
+                          <button
+                            className="text-sm font-medium text-emerald-700 hover:underline cursor-pointer"
+                            onClick={(e) => { e.stopPropagation(); if (isRevealed) openSmsPreview(lead.id, lead.primaryPhone, lead.ownerName) }}
+                            title={isRevealed ? "Send SMS" : ""}
+                          >
                             <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
-                          </a>
+                          </button>
                           {lead.primaryEmail && (
                             <>
                               <span className="text-muted-foreground">|</span>

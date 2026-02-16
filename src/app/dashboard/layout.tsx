@@ -22,6 +22,9 @@ import {
   ChevronRight,
   Sun,
   Moon,
+  Building2,
+  TrendingUp,
+  Scale,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -29,10 +32,13 @@ import { PinProvider } from "@/lib/pin-context"
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Leads", href: "/dashboard/leads", icon: Users },
-  { name: "States", href: "/dashboard/states", icon: Map },
+  { name: "Foreclosure Leads", href: "/dashboard/leads", icon: Users },
+  { name: "Title Leads", href: "/dashboard/title-leads", icon: Building2 },
+  { name: "Real Estate Leads", href: "/dashboard/real-estate-leads", icon: TrendingUp },
+  { name: "Attorney Leads", href: "/dashboard/attorney-leads", icon: Scale },
   { name: "Hire a Closer", href: "/dashboard/hire-closer", icon: Briefcase },
   { name: "Contract Admin", href: "/dashboard/contract-admin", icon: ClipboardList },
+  { name: "State Laws", href: "/dashboard/states", icon: Map },
   { name: "Closing Training", href: "/dashboard/closing-training", icon: GraduationCap },
   { name: "Automation", href: "/dashboard/automation", icon: Zap },
   { name: "Export", href: "/dashboard/export", icon: Download },
@@ -148,6 +154,21 @@ export default function DashboardLayout({
                       5%
                     </span>
                   )}
+                  {item.name === "Title Leads" && (
+                    <span className="ml-auto text-xs bg-cyan-500/20 text-cyan-500 px-2 py-0.5 rounded-full">
+                      5%
+                    </span>
+                  )}
+                  {item.name === "Real Estate Leads" && (
+                    <span className="ml-auto text-xs bg-orange-500/20 text-orange-500 px-2 py-0.5 rounded-full">
+                      8%
+                    </span>
+                  )}
+                  {item.name === "Attorney Leads" && (
+                    <span className="ml-auto text-xs bg-violet-500/20 text-violet-500 px-2 py-0.5 rounded-full">
+                      10%
+                    </span>
+                  )}
                   {item.name === "Closing Training" && (
                     <span className="ml-auto text-xs bg-indigo-500/20 text-indigo-500 px-2 py-0.5 rounded-full">
                       New
@@ -163,22 +184,8 @@ export default function DashboardLayout({
             })}
           </nav>
 
-          {/* Upgrade CTAs */}
+          {/* Upgrade CTA */}
           <div className={cn("p-4 border-t space-y-4", borderColor)}>
-            {/* Automation Add-on */}
-            <Link href="/dashboard/automation" className="block">
-              <div className="rounded-lg bg-gradient-to-r from-cyan-600 to-blue-500 p-4 text-white cursor-pointer hover:opacity-90 transition-opacity">
-                <p className="font-semibold text-sm flex items-center gap-1.5">
-                  <Zap className="h-4 w-4" />
-                  Automation
-                </p>
-                <p className="text-xs opacity-90 mt-1">Automated outreach on autopilot</p>
-                <div className="w-full mt-3 bg-white/20 text-white text-center text-xs font-medium py-1.5 px-3 rounded-md">
-                  View Automation
-                </div>
-              </div>
-            </Link>
-
             {/* Full Business Package */}
             <div className="rounded-lg bg-gradient-to-r from-emerald-600 to-green-500 p-4 text-white">
               <p className="font-semibold text-sm">Fully Built Asset Recovery Business</p>
@@ -194,25 +201,6 @@ export default function DashboardLayout({
                   className="w-full mt-3 bg-green-700 text-white hover:bg-green-800 border border-green-400/30"
                 >
                   Upgrade Now
-                </Button>
-              </a>
-            </div>
-
-            {/* Additional State */}
-            <div className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white">
-              <p className="font-semibold text-sm">Need More States?</p>
-              <p className="text-xs opacity-90 mt-1">Add states for $175 each</p>
-              <a
-                href="https://startmybusinessinc.gumroad.com/l/blwra"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <Button
-                  size="sm"
-                  className="w-full mt-3 bg-white text-blue-600 hover:bg-gray-100"
-                >
-                  Add a State
                 </Button>
               </a>
             </div>
