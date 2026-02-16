@@ -561,19 +561,27 @@ export function PartnershipLeadsPage({ config }: { config: PartnershipConfig }) 
                   </p>
                 </div>
 
-                {/* Contact Info */}
-                <div className="hidden md:flex items-center gap-4 text-xs text-muted-foreground">
+                {/* Contact Info - Clickable */}
+                <div className="hidden md:flex items-center gap-4 text-xs" onClick={(e) => e.stopPropagation()}>
                   {lead.email && (
-                    <span className="flex items-center gap-1">
+                    <button
+                      className="flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                      onClick={() => openEmailDraft(lead)}
+                      title="Click to create email draft"
+                    >
                       <Mail className="h-3.5 w-3.5" />
                       <span className="max-w-[180px] truncate">{lead.email}</span>
-                    </span>
+                    </button>
                   )}
                   {lead.phone && (
-                    <span className="flex items-center gap-1">
+                    <button
+                      className="flex items-center gap-1 text-emerald-600 hover:text-emerald-800 hover:underline transition-colors"
+                      onClick={() => openSmsModal(lead)}
+                      title="Click to send SMS"
+                    >
                       <Phone className="h-3.5 w-3.5" />
                       {lead.phone}
-                    </span>
+                    </button>
                   )}
                 </div>
 
@@ -637,7 +645,9 @@ export function PartnershipLeadsPage({ config }: { config: PartnershipConfig }) 
                         {lead.email && (
                           <div className="flex items-center gap-2">
                             <Mail className="h-3.5 w-3.5 text-muted-foreground" />
-                            <a href={`mailto:${lead.email}`} className="text-blue-600 hover:underline">{lead.email}</a>
+                            <button onClick={() => openEmailDraft(lead)} className="text-blue-600 hover:underline text-sm text-left">
+                              {lead.email}
+                            </button>
                           </div>
                         )}
                         {lead.phone && (

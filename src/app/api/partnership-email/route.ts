@@ -369,6 +369,181 @@ function generateAttorneyEmail(lead: PartnershipLeadData): { subject: string; ht
   return { subject, html }
 }
 
+function generateAgreementHtml(type: "title" | "investor" | "attorney", lead: PartnershipLeadData): { filename: string; html: string } {
+  const today = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+  const companyName = lead.companyOrFirm || lead.name
+
+  const headerStyle = `style="font-size:20px;color:#09274c;font-weight:bold;margin:25px 0 10px;border-bottom:2px solid #09274c;padding-bottom:6px;"`
+  const subStyle = `style="font-size:15px;margin:0 0 8px;line-height:1.7;color:#2c3e50;"`
+  const boldStyle = `style="color:#09274c;font-weight:600;"`
+  const sectionStyle = `style="font-size:13px;color:#7a8a9e;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin:20px 0 8px;"`
+
+  if (type === "title") {
+    return {
+      filename: "Title-Company-Referral-Partnership-Agreement.html",
+      html: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Title Company Referral Partnership Agreement</title></head>
+<body style="font-family:'Inter','Segoe UI',sans-serif;max-width:700px;margin:0 auto;padding:40px 30px;color:#2c3e50;line-height:1.6;">
+<div style="text-align:center;margin-bottom:30px;">
+  <img src="${LOGO_URL}" alt="Foreclosure Recovery Inc." style="max-width:200px;" />
+</div>
+<h1 style="text-align:center;font-size:24px;color:#09274c;margin:0 0 5px;">TITLE COMPANY REFERRAL PARTNERSHIP AGREEMENT</h1>
+<p style="text-align:center;font-size:14px;color:#5a6d82;margin:0 0 25px;">Confidential -- For Review Only</p>
+<p ${subStyle}><strong ${boldStyle}>Between:</strong> Foreclosure Recovery Inc. ("Company")<br><strong ${boldStyle}>And:</strong> ${companyName} ("Referring Title Company")</p>
+<p ${subStyle}><strong ${boldStyle}>Effective Date:</strong> ${today}</p>
+<h2 ${headerStyle}>1. PURPOSE</h2>
+<p ${subStyle}>This Agreement establishes a referral partnership whereby Referring Title Company may refer former property owners from foreclosure closings to Company for surplus fund recovery services, earning a referral fee for each successful recovery.</p>
+<h2 ${headerStyle}>2. REFERRAL PROCESS</h2>
+<p ${sectionStyle}>2.1 Referral Submission</p>
+<p ${subStyle}>Referring Title Company will provide Company with: former property owner's full legal name(s), property address of foreclosed property, foreclosure sale/closing date, last known contact information (if available), and final sale amount (if readily available).</p>
+<p ${sectionStyle}>2.2 Submission Method</p>
+<p ${subStyle}>Referrals may be submitted via email to partnerships@usforeclosurerecovery.com, secure file upload portal (provided by Company), or direct data integration (if mutually agreed upon).</p>
+<p ${sectionStyle}>2.3 Initial Verification</p>
+<p ${subStyle}>Company will verify surplus fund eligibility within 5 business days and notify Referring Title Company of recoverable cases.</p>
+<h2 ${headerStyle}>3. REFERRAL FEE STRUCTURE</h2>
+<p ${sectionStyle}>3.1 Commission Rate</p>
+<p ${subStyle}>Referring Title Company will receive <strong ${boldStyle}>5% of the total recovered surplus amount</strong> upon successful fund distribution to the former property owner.</p>
+<p ${sectionStyle}>3.2 Payment Timing</p>
+<p ${subStyle}>Referral fee will be paid within 10 business days after Company receives payment from the state holding entity and distributes client proceeds.</p>
+<p ${sectionStyle}>3.3 No Upfront Costs</p>
+<p ${subStyle}>Referring Title Company has zero financial obligation. All filing fees, research costs, legal fees, and administrative expenses are borne by Company.</p>
+<h2 ${headerStyle}>4. SCOPE & RESPONSIBILITIES</h2>
+<p ${subStyle}>Company will conduct all surplus fund research and verification, locate and contact former property owners, prepare and file all claims, pay all upfront fees and expenses, and remit referral fees promptly.</p>
+<p ${subStyle}>Referring Title Company will provide accurate referral information, submit referrals in a timely manner, and comply with all applicable real estate referral regulations (RESPA, state laws).</p>
+<h2 ${headerStyle}>5. TERM & TERMINATION</h2>
+<p ${subStyle}>This Agreement begins on the Effective Date and continues until terminated by either party with 30 days' written notice. Termination does not affect referral fees for cases already in progress.</p>
+<h2 ${headerStyle}>SIGNATURES</h2>
+<table style="width:100%;border-collapse:collapse;margin:20px 0;">
+<tr><td style="width:50%;padding:15px;vertical-align:top;border-right:1px solid #e2e6eb;">
+<p style="margin:0 0 4px;font-size:13px;color:#7a8a9e;">FORECLOSURE RECOVERY INC.</p>
+<p style="margin:0 0 15px;font-size:14px;"><strong>Corey Pearson</strong>, Director</p>
+<p style="margin:0;font-size:13px;color:#7a8a9e;">Signature: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ${today}</p>
+</td><td style="width:50%;padding:15px;vertical-align:top;">
+<p style="margin:0 0 4px;font-size:13px;color:#7a8a9e;">REFERRING TITLE COMPANY</p>
+<p style="margin:0 0 15px;font-size:14px;"><strong>${companyName}</strong></p>
+<p style="margin:0;font-size:13px;color:#7a8a9e;">Signature: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Name: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Title: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ____________________________</p>
+</td></tr></table>
+<div style="margin-top:30px;padding-top:15px;border-top:1px solid #e2e6eb;font-size:12px;color:#7a8a9e;text-align:center;">
+<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>partnerships@usforeclosurerecovery.com | (888) 545-8007</p>
+</div>
+</body></html>`,
+    }
+  }
+
+  if (type === "investor") {
+    return {
+      filename: "Investor-Referral-Partnership-Agreement.html",
+      html: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Investor Referral Partnership Agreement</title></head>
+<body style="font-family:'Inter','Segoe UI',sans-serif;max-width:700px;margin:0 auto;padding:40px 30px;color:#2c3e50;line-height:1.6;">
+<div style="text-align:center;margin-bottom:30px;">
+  <img src="${LOGO_URL}" alt="Foreclosure Recovery Inc." style="max-width:200px;" />
+</div>
+<h1 style="text-align:center;font-size:24px;color:#09274c;margin:0 0 5px;">INVESTOR REFERRAL PARTNERSHIP AGREEMENT</h1>
+<p style="text-align:center;font-size:14px;color:#5a6d82;margin:0 0 25px;">Confidential -- For Review Only</p>
+<p ${subStyle}><strong ${boldStyle}>Between:</strong> Foreclosure Recovery Inc. ("Company")<br><strong ${boldStyle}>And:</strong> ${lead.name}${companyName !== lead.name ? ` / ${companyName}` : ""} ("Referring Investor")</p>
+<p ${subStyle}><strong ${boldStyle}>Effective Date:</strong> ${today}</p>
+<h2 ${headerStyle}>1. PURPOSE</h2>
+<p ${subStyle}>This Agreement establishes a referral partnership whereby Referring Investor may refer former property owners encountered through real estate investment activities to Company for surplus fund recovery services, earning a referral fee for each successful recovery.</p>
+<h2 ${headerStyle}>2. REFERRAL PROCESS</h2>
+<p ${sectionStyle}>2.1 Referral Submission</p>
+<p ${subStyle}>Referring Investor will provide Company with: former property owner's name and last known contact information, property address of foreclosed property, and approximate foreclosure date (if known).</p>
+<p ${sectionStyle}>2.2 Initial Verification</p>
+<p ${subStyle}>Company will verify surplus fund eligibility within 5 business days and notify Referring Investor of status.</p>
+<h2 ${headerStyle}>3. REFERRAL FEE STRUCTURE</h2>
+<p ${sectionStyle}>3.1 Commission Rate</p>
+<p ${subStyle}>Referring Investor will receive <strong ${boldStyle}>8% of the total recovered surplus amount</strong> upon successful fund distribution to the client.</p>
+<p ${sectionStyle}>3.2 Payment Timing</p>
+<p ${subStyle}>Referral fee will be paid within 10 business days after Company receives payment from the state agency and distributes client proceeds.</p>
+<p ${sectionStyle}>3.3 No Upfront Costs</p>
+<p ${subStyle}>Referring Investor has zero financial obligation. All filing fees, research costs, and recovery expenses are borne by Company.</p>
+<h2 ${headerStyle}>4. SCOPE & RESPONSIBILITIES</h2>
+<p ${subStyle}>Company will conduct all surplus fund research, prepare and file all claims, communicate directly with referred clients, pay all upfront costs, and distribute recovered funds per signed agreements.</p>
+<p ${subStyle}>Referring Investor will provide accurate referral information, not interfere with Company's client relationship, and comply with all applicable laws.</p>
+<h2 ${headerStyle}>5. TERM & TERMINATION</h2>
+<p ${subStyle}>This Agreement begins on the Effective Date and continues until terminated by either party with 30 days' written notice. Termination does not affect referral fees for cases already in progress.</p>
+<h2 ${headerStyle}>SIGNATURES</h2>
+<table style="width:100%;border-collapse:collapse;margin:20px 0;">
+<tr><td style="width:50%;padding:15px;vertical-align:top;border-right:1px solid #e2e6eb;">
+<p style="margin:0 0 4px;font-size:13px;color:#7a8a9e;">FORECLOSURE RECOVERY INC.</p>
+<p style="margin:0 0 15px;font-size:14px;"><strong>Corey Pearson</strong>, Director</p>
+<p style="margin:0;font-size:13px;color:#7a8a9e;">Signature: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ${today}</p>
+</td><td style="width:50%;padding:15px;vertical-align:top;">
+<p style="margin:0 0 4px;font-size:13px;color:#7a8a9e;">REFERRING INVESTOR</p>
+<p style="margin:0 0 15px;font-size:14px;"><strong>${lead.name}</strong></p>
+<p style="margin:0;font-size:13px;color:#7a8a9e;">Signature: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Company: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ____________________________</p>
+</td></tr></table>
+<div style="margin-top:30px;padding-top:15px;border-top:1px solid #e2e6eb;font-size:12px;color:#7a8a9e;text-align:center;">
+<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>partnerships@usforeclosurerecovery.com | (888) 545-8007</p>
+</div>
+</body></html>`,
+    }
+  }
+
+  // attorney
+  return {
+    filename: "Attorney-Referral-Partnership-Agreement.html",
+    html: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Attorney Referral Partnership Agreement</title></head>
+<body style="font-family:'Inter Tight','Segoe UI',sans-serif;max-width:700px;margin:0 auto;padding:40px 30px;color:#2c3e50;line-height:1.6;">
+<div style="text-align:center;margin-bottom:30px;">
+  <img src="${LOGO_URL}" alt="Foreclosure Recovery Inc." style="max-width:200px;" />
+</div>
+<h1 style="text-align:center;font-size:24px;color:#09274c;margin:0 0 5px;">ATTORNEY REFERRAL PARTNERSHIP AGREEMENT</h1>
+<p style="text-align:center;font-size:14px;color:#5a6d82;margin:0 0 25px;">Confidential -- For Review Only</p>
+<p ${subStyle}><strong ${boldStyle}>Between:</strong> Foreclosure Recovery Inc. ("Company")<br><strong ${boldStyle}>And:</strong> ${lead.name}${companyName !== lead.name ? ` / ${companyName}` : ""} ("Referring Attorney")</p>
+<p ${subStyle}><strong ${boldStyle}>Effective Date:</strong> ${today}</p>
+<h2 ${headerStyle}>1. PURPOSE</h2>
+<p ${subStyle}>This Agreement establishes a referral partnership whereby Referring Attorney may refer former clients or contacts who may be eligible for foreclosure surplus fund recovery to Company for professional recovery services.</p>
+<h2 ${headerStyle}>2. REFERRAL PROCESS</h2>
+<p ${sectionStyle}>2.1 Referral Submission</p>
+<p ${subStyle}>Referring Attorney will provide Company with: former homeowner's name and last known contact information, property address of foreclosed property, approximate foreclosure date (if known), and any relevant case number or court filing reference.</p>
+<p ${sectionStyle}>2.2 Initial Verification</p>
+<p ${subStyle}>Company will verify surplus fund eligibility within 5 business days and notify Referring Attorney of status.</p>
+<p ${sectionStyle}>2.3 Client Engagement</p>
+<p ${subStyle}>Company will contact the referred individual directly to explain surplus fund recovery process, obtain signed contingency fee agreement, and handle all paperwork, filings, and state correspondence.</p>
+<h2 ${headerStyle}>3. REFERRAL FEE STRUCTURE</h2>
+<p ${sectionStyle}>3.1 Commission Rate</p>
+<p ${subStyle}>Referring Attorney will receive <strong ${boldStyle}>10% of the total recovered surplus amount</strong> upon successful fund distribution to the client.</p>
+<p ${sectionStyle}>3.2 Payment Timing</p>
+<p ${subStyle}>Referral fee will be paid within 10 business days after Company receives payment from the state agency and distributes client proceeds.</p>
+<p ${sectionStyle}>3.3 No Upfront Costs</p>
+<p ${subStyle}>Referring Attorney has zero financial obligation. All filing fees, research costs, and recovery expenses are borne by Company.</p>
+<h2 ${headerStyle}>4. SCOPE & LIMITATIONS</h2>
+<p ${subStyle}>Company will conduct all surplus fund research and verification, prepare and file all claims with state agencies, communicate directly with clients throughout the process, and pay all upfront fees and costs.</p>
+<p ${subStyle}>Referring Attorney will provide accurate referral information, not interfere with Company's client relationship, and comply with all applicable state bar ethics rules regarding referral fees.</p>
+<p ${subStyle}><strong ${boldStyle}>No Legal Representation:</strong> Company is not a law firm and does not provide legal advice. Referring Attorney is not representing the referred client in connection with surplus fund recovery unless separately retained.</p>
+<h2 ${headerStyle}>5. COMPLIANCE & ETHICS</h2>
+<p ${subStyle}>Both parties acknowledge that referral fees must comply with applicable state bar association rules. Referring Attorney represents that accepting referral fees for non-legal services does not violate their jurisdiction's ethical guidelines. Referred clients will be informed that a referral relationship exists.</p>
+<h2 ${headerStyle}>6. TERM & TERMINATION</h2>
+<p ${subStyle}>This Agreement begins on the Effective Date and continues until terminated by either party with 30 days' written notice. Termination does not affect referral fees for cases already in progress.</p>
+<h2 ${headerStyle}>SIGNATURES</h2>
+<table style="width:100%;border-collapse:collapse;margin:20px 0;">
+<tr><td style="width:50%;padding:15px;vertical-align:top;border-right:1px solid #e2e6eb;">
+<p style="margin:0 0 4px;font-size:13px;color:#7a8a9e;">FORECLOSURE RECOVERY INC.</p>
+<p style="margin:0 0 15px;font-size:14px;"><strong>Corey Pearson</strong>, Director</p>
+<p style="margin:0;font-size:13px;color:#7a8a9e;">Signature: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ${today}</p>
+</td><td style="width:50%;padding:15px;vertical-align:top;">
+<p style="margin:0 0 4px;font-size:13px;color:#7a8a9e;">REFERRING ATTORNEY</p>
+<p style="margin:0 0 15px;font-size:14px;"><strong>${lead.name}</strong></p>
+<p style="margin:0;font-size:13px;color:#7a8a9e;">Signature: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Law Firm: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Bar Number: ____________________________</p>
+<p style="margin:6px 0 0;font-size:13px;color:#7a8a9e;">Date: ____________________________</p>
+</td></tr></table>
+<div style="margin-top:30px;padding-top:15px;border-top:1px solid #e2e6eb;font-size:12px;color:#7a8a9e;text-align:center;">
+<p>Foreclosure Recovery Inc. | 30 N Gould St, Ste R | Sheridan, WY 82801<br>partnerships@usforeclosurerecovery.com | (888) 545-8007</p>
+<p style="margin-top:8px;font-style:italic;">This is a simple referral agreement. Both parties are encouraged to consult their own legal counsel before signing.</p>
+</div>
+</body></html>`,
+  }
+}
+
 function imapAppendDraft(emailContent: string): Promise<{ success: boolean; error?: string }> {
   return new Promise((resolve) => {
     const timeout = setTimeout(() => {
@@ -501,37 +676,57 @@ export async function POST(request: NextRequest) {
     }
 
     if (action === "create_draft") {
-      const boundary = "----=_Part_" + Date.now().toString(36)
+      const mixedBoundary = "----=_Mixed_" + Date.now().toString(36)
+      const altBoundary = "----=_Alt_" + (Date.now() + 1).toString(36)
+
+      const agreement = generateAgreementHtml(type, leadData)
+      const agreementBase64 = Buffer.from(agreement.html, "utf-8").toString("base64")
+      const agreementBase64Lines = agreementBase64.match(/.{1,76}/g)?.join("\r\n") || agreementBase64
+
       const mimeMessage = [
         `From: ${SENDER_NAME} <${SENDER_EMAIL}>`,
         `To: ${leadData.name} <${leadData.email}>`,
         `Subject: ${emailContent.subject}`,
         `MIME-Version: 1.0`,
-        `Content-Type: multipart/alternative; boundary="${boundary}"`,
+        `Content-Type: multipart/mixed; boundary="${mixedBoundary}"`,
         `Date: ${new Date().toUTCString()}`,
         `X-Mailer: USFR Partnership Outreach`,
         ``,
-        `--${boundary}`,
+        `--${mixedBoundary}`,
+        `Content-Type: multipart/alternative; boundary="${altBoundary}"`,
+        ``,
+        `--${altBoundary}`,
         `Content-Type: text/plain; charset=utf-8`,
         `Content-Transfer-Encoding: 7bit`,
         ``,
         `Partnership opportunity from Foreclosure Recovery Inc. Please view the HTML version for full details.`,
         ``,
+        `A partnership agreement is attached for your review.`,
+        ``,
         `Contact: (888) 545-8007 | partnerships@usforeclosurerecovery.com`,
         ``,
-        `--${boundary}`,
+        `--${altBoundary}`,
         `Content-Type: text/html; charset=utf-8`,
         `Content-Transfer-Encoding: 7bit`,
         ``,
         emailContent.html,
         ``,
-        `--${boundary}--`,
+        `--${altBoundary}--`,
+        ``,
+        `--${mixedBoundary}`,
+        `Content-Type: text/html; charset=utf-8; name="${agreement.filename}"`,
+        `Content-Disposition: attachment; filename="${agreement.filename}"`,
+        `Content-Transfer-Encoding: base64`,
+        ``,
+        agreementBase64Lines,
+        ``,
+        `--${mixedBoundary}--`,
       ].join("\r\n")
 
       const result = await imapAppendDraft(mimeMessage)
 
       if (result.success) {
-        return NextResponse.json({ success: true, message: "Draft created in mailbox" })
+        return NextResponse.json({ success: true, message: "Draft created in mailbox with agreement attached" })
       } else {
         return NextResponse.json({ error: result.error || "Failed to create draft" }, { status: 500 })
       }
