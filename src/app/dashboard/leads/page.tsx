@@ -181,6 +181,8 @@ function LoadingSkeleton() {
 
 const statusOptions = [
   { value: "all", label: "All Status" },
+  { value: "diamond", label: "Diamond Leads" },
+  { value: "gold", label: "Gold Leads" },
   { value: "vd_ready", label: "VD Ready" },
   { value: "skip_traced", label: "Skip Traced" },
   { value: "new", label: "New" },
@@ -311,10 +313,9 @@ function FlagBadge({ label, active }: { label: string; active: boolean }) {
 
 function printLead(lead: LeadData) {
   const surplus = lead.foreclosureDetails.estimatedSurplus
-  const serviceFee = surplus * 0.25
-  const closerFee = serviceFee * 0.10
-  const adminFee = serviceFee * 0.05
-  const netRevenue = serviceFee - closerFee - adminFee
+  const serviceFee = surplus * 0.30
+  const partnershipFee = serviceFee * 0.50
+  const companyFee = serviceFee * 0.50
   const today = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
 
   const html = `<!DOCTYPE html>
@@ -450,14 +451,13 @@ table td:nth-child(2) { color: #1a1a1a; }
       <table>
         <tr><td>Sale Amount</td><td>$${lead.saleAmount.toLocaleString()}</td></tr>
         <tr><td>Estimated Surplus</td><td>$${surplus.toLocaleString()}</td></tr>
-        <tr><td>Service Fee (25%)</td><td class="financial-row">$${serviceFee.toLocaleString()}</td></tr>
+        <tr><td>Service Fee (30%)</td><td class="financial-row">$${serviceFee.toLocaleString()}</td></tr>
       </table>
     </div>
     <div>
       <table>
-        <tr><td>Closer Fee (10%)</td><td>-$${closerFee.toLocaleString()}</td></tr>
-        <tr><td>Admin Fee (5%)</td><td>-$${adminFee.toLocaleString()}</td></tr>
-        <tr><td>Net Revenue</td><td class="financial-row">$${netRevenue.toLocaleString()}</td></tr>
+        <tr><td>Partnership Fee (50%)</td><td>$${partnershipFee.toLocaleString()}</td></tr>
+        <tr><td>Company Fee (50%)</td><td>$${companyFee.toLocaleString()}</td></tr>
       </table>
     </div>
   </div>
@@ -546,8 +546,9 @@ ${[1,2,3,4,5].map(n => `
     <span>Date: _____________ &nbsp;&nbsp; Time: _____________ &nbsp;&nbsp; Duration: _____________</span>
   </div>
   <table style="margin-bottom:8px">
-    <tr><td style="width:120px">Spoke With</td><td style="border-bottom:1px dotted #d1d5db">&#160;</td></tr>
-    <tr><td>Phone Used</td><td style="border-bottom:1px dotted #d1d5db">&#160;</td></tr>
+    <tr><td style="width:160px">Spoke With</td><td style="border-bottom:1px dotted #d1d5db">&#160;</td></tr>
+    <tr><td>Agent Phone Number</td><td style="border-bottom:1px dotted #d1d5db">&#160;</td></tr>
+    <tr><td>Client's Phone Number</td><td style="border-bottom:1px dotted #d1d5db">${lead.primaryPhone || "N/A"}</td></tr>
     <tr><td>Outcome</td><td style="border-bottom:1px dotted #d1d5db">&#160;</td></tr>
   </table>
   <div style="font-size:9pt;font-weight:600;color:#6b7280;margin-bottom:4px">Notes:</div>
@@ -1367,7 +1368,7 @@ function LeadsPageContent() {
       try {
         const { data, error } = await supabase
           .from("foreclosure_leads")
-          .select("id,owner_name,property_address,city,state,state_abbr,zip_code,county,parcel_id,apn_number,sale_date,sale_amount,mortgage_amount,lender_name,foreclosure_type,primary_phone,secondary_phone,primary_email,status,source,scraped_at,lat,lng,property_image_url,mailing_address,associated_names,property_type,year_built,square_footage,lot_size,bedrooms,bathrooms,stories,assessed_value,estimated_market_value,overage_amount,case_number,trustee_name,created_at,dnc_checked,on_dnc,can_contact,dnc_type,voicemail_sent,voicemail_sent_at,voicemail_error")
+          .select("id,owner_name,property_address,city,state,state_abbr,zip_code,county,parcel_id,apn_number,sale_date,sale_amount,mortgage_amount,lender_name,foreclosure_type,primary_phone,secondary_phone,primary_email,status,source,scraped_at,lat,lng,property_image_url,mailing_address,associated_names,property_type,year_built,square_footage,lot_size,bedrooms,bathrooms,stories,assessed_value,estimated_market_value,overage_amount,case_number,trustee_name,created_at,dnc_checked,on_dnc,can_contact,dnc_type,voicemail_sent,voicemail_sent_at,voicemail_error,deed_verified,deed_history,foreclosure_confirmed,last_sale_date,last_sale_price,last_buyer_name,mailing_address_verified,pubrec_property_id")
           .order("primary_phone", { ascending: true, nullsFirst: false })
           .order("created_at", { ascending: false })
           .limit(5000) as { data: Record<string, unknown>[] | null; error: unknown }
@@ -1417,13 +1418,24 @@ function LeadsPageContent() {
   const statusCounts = useMemo(() => {
     const counts: Record<string, number> = {}
     let vdReady = 0
+    let goldLeads = 0
+    let diamondLeads = 0
     dbLeads.forEach(lead => {
       counts[lead.status] = (counts[lead.status] || 0) + 1
-      if (lead.canContact && lead.dncChecked && !lead.onDnc && lead.primaryPhone) {
-        vdReady++
+      const dncCleared = lead.canContact && !lead.onDnc && !!lead.primaryPhone
+      if (dncCleared) vdReady++
+      // Diamond = DNC cleared + APN + PubRec deed verified
+      if (dncCleared && lead.parcelId && lead.status === "diamond") {
+        diamondLeads++
+      }
+      // Gold = DNC cleared + APN but NOT diamond
+      if (dncCleared && lead.parcelId && lead.status !== "diamond") {
+        goldLeads++
       }
     })
     counts["vd_ready"] = vdReady
+    counts["gold"] = goldLeads
+    counts["diamond"] = diamondLeads
     return counts
   }, [dbLeads])
 
@@ -1527,6 +1539,8 @@ function LeadsPageContent() {
     callback: "bg-green-500/10 text-green-600 dark:text-green-400",
     converted: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
     dead: "bg-gray-500/10 text-gray-600 dark:text-gray-400",
+    gold: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 font-semibold",
+    diamond: "bg-blue-500/10 text-blue-700 dark:text-blue-300 font-semibold",
   } as const
 
   const filteredLeads = useMemo(() => {
@@ -1544,10 +1558,15 @@ function LeadsPageContent() {
       const matchesState =
         selectedState === "All States" || lead.state === selectedState
 
+      const dncCleared = lead.canContact && !lead.onDnc && !!lead.primaryPhone
       const matchesStatus =
         selectedStatus === "all" ||
-        (selectedStatus === "vd_ready"
-          ? (lead.canContact && lead.dncChecked && !lead.onDnc && !!lead.primaryPhone)
+        (selectedStatus === "diamond"
+          ? (dncCleared && !!lead.parcelId && lead.status === "diamond")
+          : selectedStatus === "gold"
+          ? (dncCleared && !!lead.parcelId && lead.status !== "diamond")
+          : selectedStatus === "vd_ready"
+          ? dncCleared
           : lead.status === selectedStatus)
 
       return matchesSearch && matchesState && matchesStatus
@@ -2391,15 +2410,26 @@ Thank you.`}
                           </div>
                         )
                       }
-                      const stateColors: Record<string, string> = {
-                        OH: "bg-blue-600", IL: "bg-indigo-600", TX: "bg-red-600",
-                        GA: "bg-amber-600", MD: "bg-orange-600", FL: "bg-emerald-600", WA: "bg-teal-600"
-                      }
-                      const bgColor = stateColors[lead.stateAbbr] || "bg-slate-500"
+                      // DNC clearance is the gatekeeper for gold/diamond
+                      const dncCleared = lead.canContact && !lead.onDnc && !!lead.primaryPhone
+                      const hasApn = !!(lead.parcelId)
+                      const isDiamond = dncCleared && hasApn && lead.status === "diamond"
+                      const isGold = dncCleared && hasApn && !isDiamond
+                      const statusBg = isDiamond
+                        ? "status-diamond"
+                        : isGold
+                        ? "status-gold"
+                        : (lead.onDnc || lead.status === "dnc_blocked")
+                        ? "bg-red-600"
+                        : dncCleared
+                        ? "bg-green-600"
+                        : lead.status === "new"
+                        ? "bg-yellow-500"
+                        : "bg-slate-500"
                       return (
-                        <div className={`w-14 h-14 rounded-lg ${bgColor} flex flex-col items-center justify-center flex-shrink-0 shadow-sm`}>
-                          <span className="text-white font-bold text-lg leading-none">{lead.stateAbbr || "—"}</span>
-                          <Home className="h-3 w-3 text-white/70 mt-0.5" />
+                        <div className={`w-14 h-14 rounded-lg ${statusBg} flex flex-col items-center justify-center flex-shrink-0 shadow-sm`}>
+                          <span className={`font-bold text-lg leading-none ${isDiamond ? "text-slate-700" : "text-white"}`}>{lead.stateAbbr || "—"}</span>
+                          <Home className={`h-3 w-3 mt-0.5 ${isDiamond ? "text-slate-600" : "text-white/70"}`} />
                         </div>
                       )
                     })()}
@@ -2604,15 +2634,26 @@ Thank you.`}
                             </div>
                           )
                         }
-                        const stateColors: Record<string, string> = {
-                          OH: "bg-blue-600", IL: "bg-indigo-600", TX: "bg-red-600",
-                          GA: "bg-amber-600", MD: "bg-orange-600", FL: "bg-emerald-600", WA: "bg-teal-600"
-                        }
-                        const bgColor = stateColors[lead.stateAbbr] || "bg-slate-500"
+                        // DNC clearance is the gatekeeper for gold/diamond
+                        const dncCleared = lead.canContact && !lead.onDnc && !!lead.primaryPhone
+                        const hasApn = !!(lead.parcelId)
+                        const isDiamond = dncCleared && hasApn && lead.status === "diamond"
+                        const isGold = dncCleared && hasApn && !isDiamond
+                        const statusBg = isDiamond
+                          ? "status-diamond"
+                          : isGold
+                          ? "status-gold"
+                          : (lead.onDnc || lead.status === "dnc_blocked")
+                          ? "bg-red-600"
+                          : dncCleared
+                          ? "bg-green-600"
+                          : lead.status === "new"
+                          ? "bg-yellow-500"
+                          : "bg-slate-500"
                         return (
-                          <div className={`w-14 h-14 rounded-lg ${bgColor} flex flex-col items-center justify-center flex-shrink-0 shadow-sm`}>
-                            <span className="text-white font-bold text-lg leading-none">{lead.stateAbbr || "—"}</span>
-                            <Home className="h-3 w-3 text-white/70 mt-0.5" />
+                          <div className={`w-14 h-14 rounded-lg ${statusBg} flex flex-col items-center justify-center flex-shrink-0 shadow-sm`}>
+                            <span className={`font-bold text-lg leading-none ${isDiamond ? "text-slate-700" : "text-white"}`}>{lead.stateAbbr || "—"}</span>
+                            <Home className={`h-3 w-3 mt-0.5 ${isDiamond ? "text-slate-600" : "text-white/70"}`} />
                           </div>
                         )
                       })()}
