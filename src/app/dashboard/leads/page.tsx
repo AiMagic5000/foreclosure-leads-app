@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useMemo, useCallback, Suspense } from "react"
+import { AdminGate } from "@/components/admin-gate"
 import Link from "next/link"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
@@ -47,6 +48,7 @@ import {
   Loader2,
   MessageSquare,
   Send,
+  PhoneCall,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -89,6 +91,9 @@ interface LeadData {
   voicemailSent: boolean
   voicemailSentAt: string | null
   voicemailError: string | null
+  aiDisposition: string | null
+  lastAiCallAt: string | null
+  aiCallCount: number
   skipTrace: {
     fullName: string
     aliases: string[]
@@ -282,6 +287,60 @@ function VoiceDropButton({ lead, sending, onSend }: { lead: LeadData; sending: b
         <Volume2 className="h-3 w-3" />
       )}
       {sending ? "Sending..." : "Voice Drop"}
+    </button>
+  )
+}
+
+function AICallButton({ lead, sending, result, onCall }: { lead: LeadData; sending: boolean; result?: { success?: boolean; sessionId?: string; error?: string }; onCall: (id: string) => void }) {
+  if (!lead.primaryPhone) return null
+
+  if (lead.onDnc) {
+    return (
+      <Badge className="bg-red-100 text-red-700 border-red-200 text-xs gap-1" title="On DNC list">
+        <XCircle className="h-3 w-3" />
+        DNC
+      </Badge>
+    )
+  }
+
+  if (result?.success) {
+    return (
+      <Badge className="bg-blue-100 text-blue-700 border-blue-200 text-xs gap-1" title={`Session: ${result.sessionId}`}>
+        <PhoneCall className="h-3 w-3" />
+        Calling...
+      </Badge>
+    )
+  }
+
+  if (result?.error) {
+    return (
+      <Badge className="bg-red-100 text-red-700 border-red-200 text-xs gap-1" title={result.error}>
+        <XCircle className="h-3 w-3" />
+        Failed
+      </Badge>
+    )
+  }
+
+  const canCall = !!lead.primaryPhone && !lead.onDnc
+
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); if (canCall && !sending) onCall(lead.id) }}
+      disabled={!canCall || sending}
+      title={canCall ? "AI live call via Allie" : "Cannot call this lead"}
+      className={cn(
+        "inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors",
+        canCall && !sending
+          ? "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+          : "bg-gray-200 text-gray-400 cursor-not-allowed"
+      )}
+    >
+      {sending ? (
+        <Loader2 className="h-3 w-3 animate-spin" />
+      ) : (
+        <PhoneCall className="h-3 w-3" />
+      )}
+      {sending ? "Dialing..." : "AI Call"}
     </button>
   )
 }
@@ -987,6 +1046,9 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
     voicemailSent: Boolean(row.voicemail_sent),
     voicemailSentAt: row.voicemail_sent_at ? String(row.voicemail_sent_at) : null,
     voicemailError: row.voicemail_error ? String(row.voicemail_error) : null,
+    aiDisposition: row.ai_disposition ? String(row.ai_disposition) : null,
+    lastAiCallAt: row.last_ai_call_at ? String(row.last_ai_call_at) : null,
+    aiCallCount: Number(row.ai_call_count || 0),
     skipTrace: {
       fullName: String(row.owner_name || ""),
       aliases: [],
@@ -1076,6 +1138,8 @@ function LeadsPageContent() {
   const [currentPage, setCurrentPage] = useState(1)
   const { isVerified, statesAccess, isAdmin, isLoading } = usePin()
   const [sendingVoiceDrop, setSendingVoiceDrop] = useState<Record<string, boolean>>({})
+  const [sendingAICall, setSendingAICall] = useState<Record<string, boolean>>({})
+  const [aiCallResult, setAiCallResult] = useState<Record<string, { success?: boolean; sessionId?: string; error?: string }>>({})
   const [testVdOpen, setTestVdOpen] = useState(false)
   const [testVdPhone, setTestVdPhone] = useState("")
   const [testVdName, setTestVdName] = useState("")
@@ -1333,6 +1397,31 @@ function LeadsPageContent() {
       ))
     } finally {
       setSendingVoiceDrop(prev => ({ ...prev, [leadId]: false }))
+    }
+  }, [])
+
+  const sendAICall = useCallback(async (leadId: string) => {
+    setSendingAICall(prev => ({ ...prev, [leadId]: true }))
+    setAiCallResult(prev => ({ ...prev, [leadId]: {} }))
+    try {
+      const res = await fetch("/api/outbound-call", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "AI call failed")
+      setAiCallResult(prev => ({ ...prev, [leadId]: { success: true, sessionId: data.sessionId } }))
+      setDbLeads(prev => prev.map(l =>
+        l.id === leadId
+          ? { ...l, aiDisposition: "in_progress", lastAiCallAt: new Date().toISOString() }
+          : l
+      ))
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "AI call failed"
+      setAiCallResult(prev => ({ ...prev, [leadId]: { error: msg } }))
+    } finally {
+      setSendingAICall(prev => ({ ...prev, [leadId]: false }))
     }
   }, [])
 
@@ -2554,8 +2643,9 @@ Thank you.`}
                             <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                           </button>
                         </div>
-                        <div onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                           <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
+                          <AICallButton lead={lead} sending={!!sendingAICall[lead.id]} result={aiCallResult[lead.id]} onCall={sendAICall} />
                         </div>
                         {lead.primaryEmail && (
                           <button
@@ -2798,8 +2888,9 @@ Thank you.`}
                             </>
                           )}
                         </div>
-                        <div onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                           <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
+                          <AICallButton lead={lead} sending={!!sendingAICall[lead.id]} result={aiCallResult[lead.id]} onCall={sendAICall} />
                         </div>
                       </>
                     ) : (
@@ -2909,8 +3000,10 @@ Thank you.`}
 
 export default function LeadsPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading leads...</div>}>
-      <LeadsPageContent />
-    </Suspense>
+    <AdminGate>
+      <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading leads...</div>}>
+        <LeadsPageContent />
+      </Suspense>
+    </AdminGate>
   )
 }
