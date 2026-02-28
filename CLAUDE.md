@@ -478,19 +478,25 @@ echo "value" | npx vercel env add VAR_NAME production --force
 - Rejects: Spanish text, nav items, document fragments, case numbers, numeric data, URLs, names <3 chars
 - All inserts now pass through validation gate before `insert_leads()`
 
-### State Scraping Priority (SOP + Fee Cap Optimized)
-States ranked by: Easiest operation + Highest allowed recovery fee + Non-judicial process.
+### State Scraping Priority (SOP Difficulty x 50 States Overage Guide Fee Caps)
+Cross-referenced from: SOP `foreclosure-recovery-sop-50-state.docx` + `50 States Overage Guide 10.19.2023.xlsx`
 
-| Priority | States | SOP Difficulty | Fee Cap |
-|----------|--------|---------------|---------|
-| Tier 1 | VA, TN, AL, MS, ID, MT, WY | Very Easy | None (30%) |
-| Tier 2 | CA, AK, MO, OR, NE, WV | Easy | None (30%) |
-| Tier 3 | AR, NV | Easy | 10% tax / $2,500 mortgage |
-| Tier 4 | MI, MN, NH, MA, HI, RI, SD, UT, OK | Moderate | None (30%) |
-| Tier 5 | OH, IL, IN | Judicial | Keep, reduced limits |
-| REMOVED | WA, TX, NC, CO, GA, FL, MD | Various | Unviable caps or barriers |
+| Priority | States | SOP Difficulty | Fee Cap | Notes |
+|----------|--------|---------------|---------|-------|
+| Tier 1 | VA, AL, MS, ID, MT, WY | Very Easy | None (30%) | Non-Judicial, highest priority |
+| Tier 2 | AK, MO, OR, NE, WV | Easy | None (30%) | Non-Judicial, excellent ROI |
+| Tier 3 | MI, MN, NH, MA, RI, SD, UT, OK | Moderate | None (30%) | Non-Judicial, good volume |
+| Tier 4 | OH, IN | Easy Judicial | None (30%) | Requires attorney for filings |
+| Tier 5 | TN, AR, NV, AZ | Easy/Very Easy | 10% or $2,500 | Capped, lower ROI. TN needs PI license |
+| Tier 6 | GA, IL, NY | Hard | None (30%) | Attorney-only, county resistance (GA) |
+| AVOID | WA, CA, NC, FL, CO, TX, MD, CT, VT | Various | Unviable | See reasons below |
 
-**Why removed**: WA (5% cap), TX (non-attorney barred), NC ($1K cap + PI), CO (20% + 2yr blackout), GA (POA refused), FL (12% + PI + $500K insurance), MD (heavy compliance)
+**Why states moved (Feb 28, 2026 correction per Overage Guide):**
+- **TN moved Tier 1 -> Tier 5**: Overage Guide shows 10% fee cap + PI license required
+- **CA removed from Tier 2**: Overage Guide says ILLEGAL to contract for mortgage overage recovery
+- **GA moved from AVOID -> Tier 6**: No fee cap per Overage Guide, Non-Judicial. Hard but $153K avg surplus. Viable with attorney partnership
+
+**AVOID reasons**: WA (5% cap per RCW 63.29.350), CA (ILLEGAL for mortgage consulting), NC ($1,000 cap), FL (12% + PI + $500K insurance), CO (20% + 2yr blackout), TX (20% + non-attorney barred), MD (foreclosure consultant statute), CT/VT (strict foreclosure = no surplus generated)
 
 ### Daily Pipeline Schedule (Updated Feb 28, 2026)
 | Time (UTC) | Step | Script |
@@ -532,9 +538,18 @@ Scoring runs via `score_leads_sql.py` which executes directly against Postgres v
 
 ### PropMix Deed Chain Verification
 - **Account**: `pubrec.propmix.io`
-- **Use**: Diamond + Gold leads only (cost control) -- 306 leads eligible
+- **Use**: Diamond + Gold leads WITH property addresses only
 - **Script**: `/opt/foreclosure-scrapers/propmix_deed_verify.py` (pending)
 - **DB columns**: `deed_verified`, `deed_verified_at`, `deed_chain_data` (already exist)
+
+**PropMix-Ready Leads (have address + county):**
+| Tier | State | Count | Has Address | Total Surplus | Avg Surplus | PropMix Ready? |
+|------|-------|-------|-------------|---------------|-------------|----------------|
+| Diamond | GA | 4 | 4/4 | $250,924 | $62,731 | YES - DO FIRST |
+| Gold | GA | 5 | 5/5 | $766,895 | $153,379 | YES - DO SECOND |
+| Gold | OH | 297 | 0/297 | $5,560,535 | $18,722 | NO - need addresses |
+
+**Action**: Run PropMix on 9 GA leads immediately ($1,017,820 total surplus at stake). OH leads need Cuyahoga County property address enrichment before PropMix can verify deed chain.
 
 ### Content Rules (MANDATORY)
 - **NEVER mention "county"** -- always use "state" instead
