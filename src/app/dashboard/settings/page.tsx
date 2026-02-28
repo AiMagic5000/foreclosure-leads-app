@@ -150,10 +150,10 @@ export default function SettingsPage() {
             <div className="p-4 rounded-lg border border-white/20 bg-white/10">
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <h4 className="font-semibold text-lg text-white">5-State Lead Access</h4>
+                  <h4 className="font-semibold text-lg text-white">Full Access</h4>
                   <p className="text-2xl font-bold text-white">
-                    $495
-                    <span className="text-sm font-normal text-white/70 ml-1">one-time</span>
+                    $4,995
+                    <span className="text-sm font-normal text-white/70 ml-1">platform access</span>
                   </p>
                 </div>
                 <Badge
@@ -165,25 +165,23 @@ export default function SettingsPage() {
                 </Badge>
               </div>
               <p className="text-sm text-white/70">
-                Enter your PIN on the county map or leads page to access your states.
+                All 50 states, skip-traced leads, automation, and full platform features included.
               </p>
             </div>
 
             <div className="p-3 rounded-lg border border-white/20 bg-white/10">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-white">Need More States?</p>
-                  <p className="text-sm text-white/70">$175 per additional state</p>
+                  <p className="font-medium text-white">Monthly Support & Data Service</p>
+                  <p className="text-sm text-white/70">$1,295/mo -- ongoing lead data, platform updates, and dedicated support</p>
                 </div>
-                <a
-                  href="https://startmybusinessinc.gumroad.com/l/blwra"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Badge
+                  variant="outline"
+                  className="bg-emerald-500/20 border-emerald-400 text-emerald-200"
                 >
-                  <Button size="sm" className="bg-white/15 border border-white/30 text-white hover:bg-white/25">
-                    Add State
-                  </Button>
-                </a>
+                  <CheckCircle2 className="mr-1 h-3 w-3" />
+                  Active
+                </Badge>
               </div>
             </div>
 
@@ -192,7 +190,7 @@ export default function SettingsPage() {
                 <div>
                   <p className="font-medium text-white">Full Business Build Out</p>
                   <p className="text-sm text-white/70">
-                    $2,495 regular / $2,120.75 with 15% customer discount
+                    Complete asset recovery business with 45 points of compliance
                   </p>
                 </div>
                 <a
@@ -369,8 +367,8 @@ export default function SettingsPage() {
                   <span className="font-medium">Billed separately</span>
                 </div>
                 <div className="flex justify-between p-2 rounded bg-background border">
-                  <span className="text-muted-foreground">Example: $100K recovery (25% fee)</span>
-                  <span className="font-medium text-emerald-600">You keep $21,250</span>
+                  <span className="text-muted-foreground">Example: $100K recovery (30% fee)</span>
+                  <span className="font-medium text-emerald-600">You keep $25,500</span>
                 </div>
               </div>
             </div>

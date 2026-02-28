@@ -531,8 +531,8 @@ export default function ContractAdminPage() {
               </p>
             </div>
             <div className="shrink-0 text-right">
-              <p className="text-xs text-muted-foreground">Example: $100K recovery at 25% fee</p>
-              <p className="text-sm"><span className="text-muted-foreground">Admin fee:</span> <strong className="text-purple-600">$1,250</strong> <span className="text-muted-foreground">for full-service admin (attorney fees separate)</span></p>
+              <p className="text-xs text-muted-foreground">Example: $100K recovery at 30% fee</p>
+              <p className="text-sm"><span className="text-muted-foreground">Admin fee:</span> <strong className="text-purple-600">$1,500</strong> <span className="text-muted-foreground">for full-service admin (attorney fees separate)</span></p>
             </div>
           </div>
         </CardContent>
@@ -969,8 +969,8 @@ export default function ContractAdminPage() {
                     <span className="font-medium text-foreground">$100,000</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Your Service Fee (25%)</span>
-                    <span className="font-medium text-foreground">$25,000</span>
+                    <span>Your Service Fee (30%)</span>
+                    <span className="font-medium text-foreground">$30,000</span>
                   </div>
                   <div className="flex justify-between border-t pt-1.5">
                     <span>Admin Fee ({selectedAdmin.feePercent}% of service fee)</span>

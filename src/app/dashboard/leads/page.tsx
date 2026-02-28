@@ -59,6 +59,10 @@ import { usePin } from "@/lib/pin-context"
 import { supabase } from "@/lib/supabase"
 import { RecoveryCountdown } from "@/components/recovery-countdown"
 
+function fmt(n: number): string {
+  return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
 interface LeadData {
   id: string
   ownerName: string
@@ -225,17 +229,24 @@ function BlurredText({ children, className = "", revealed = false }: { children:
 
 function DncStatusIcon({ lead }: { lead: LeadData }) {
   if (!lead.primaryPhone) return null
-  if (!lead.dncChecked) {
-    return (
-      <span title="DNC check pending" className="flex items-center">
-        <Clock className="h-3.5 w-3.5 text-yellow-500" />
-      </span>
-    )
-  }
   if (lead.onDnc) {
     return (
       <span title="On Do Not Call list" className="flex items-center">
         <XCircle className="h-3.5 w-3.5 text-red-500" />
+      </span>
+    )
+  }
+  if (lead.canContact && !lead.onDnc) {
+    return (
+      <span title="DNC cleared - OK to contact" className="flex items-center">
+        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+      </span>
+    )
+  }
+  if (!lead.dncChecked) {
+    return (
+      <span title="DNC check pending" className="flex items-center">
+        <Clock className="h-3.5 w-3.5 text-yellow-500" />
       </span>
     )
   }
@@ -267,13 +278,32 @@ function VoiceDropButton({ lead, sending, onSend }: { lead: LeadData; sending: b
     )
   }
 
-  const canSend = lead.status === "skip_traced" && !!lead.primaryPhone
+  const dncBlocked = lead.onDnc || (!lead.dncChecked && !lead.canContact)
+  const canSend = !!lead.primaryPhone && lead.canContact && !lead.onDnc
+
+  if (dncBlocked) {
+    return (
+      <Badge className="bg-red-100 text-red-700 border-red-200 text-xs gap-1" title="On Do Not Call list">
+        <ShieldAlert className="h-3 w-3" />
+        DNC
+      </Badge>
+    )
+  }
+
+  if (!lead.dncChecked && !lead.canContact) {
+    return (
+      <button disabled className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-700 cursor-not-allowed" title="DNC check pending">
+        <Clock className="h-3 w-3" />
+        Pending DNC
+      </button>
+    )
+  }
 
   return (
     <button
       onClick={(e) => { e.stopPropagation(); if (canSend && !sending) onSend(lead.id) }}
       disabled={!canSend || sending}
-      title={canSend ? "Send voice drop" : "No phone number available"}
+      title={canSend ? "Send voice drop" : "DNC check required or no phone"}
       className={cn(
         "inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors",
         canSend && !sending
@@ -494,10 +524,10 @@ table td:nth-child(2) { color: #1a1a1a; }
       <table>
         <tr><td>Auction Date</td><td style="font-weight:700;color:#dc2626">${new Date(lead.foreclosureDetails.auctionDate).toLocaleDateString()}</td></tr>
         <tr><td>Auction Location</td><td>${lead.foreclosureDetails.auctionLocation}</td></tr>
-        <tr><td>Opening Bid</td><td>$${lead.foreclosureDetails.openingBid.toLocaleString()}</td></tr>
-        <tr><td>Default Amount</td><td>$${lead.foreclosureDetails.defaultAmount.toLocaleString()}</td></tr>
+        <tr><td>Opening Bid</td><td>$${fmt(lead.foreclosureDetails.openingBid)}</td></tr>
+        <tr><td>Default Amount</td><td>$${fmt(lead.foreclosureDetails.defaultAmount)}</td></tr>
         <tr><td>Lender</td><td>${lead.lenderName}</td></tr>
-        <tr><td>Mortgage Amount</td><td>$${lead.mortgageAmount.toLocaleString()}</td></tr>
+        <tr><td>Mortgage Amount</td><td>$${fmt(lead.mortgageAmount)}</td></tr>
       </table>
     </div>
   </div>
@@ -508,15 +538,15 @@ table td:nth-child(2) { color: #1a1a1a; }
   <div class="two-col">
     <div>
       <table>
-        <tr><td>Sale Amount</td><td>$${lead.saleAmount.toLocaleString()}</td></tr>
-        <tr><td>Estimated Surplus</td><td>$${surplus.toLocaleString()}</td></tr>
-        <tr><td>Service Fee (30%)</td><td class="financial-row">$${serviceFee.toLocaleString()}</td></tr>
+        <tr><td>Sale Amount</td><td>$${fmt(lead.saleAmount)}</td></tr>
+        <tr><td>Estimated Surplus</td><td>$${fmt(surplus)}</td></tr>
+        <tr><td>Service Fee (30%)</td><td class="financial-row">$${fmt(serviceFee)}</td></tr>
       </table>
     </div>
     <div>
       <table>
-        <tr><td>Partnership Fee (50%)</td><td>$${partnershipFee.toLocaleString()}</td></tr>
-        <tr><td>Company Fee (50%)</td><td>$${companyFee.toLocaleString()}</td></tr>
+        <tr><td>Partnership Fee (50%)</td><td>$${fmt(partnershipFee)}</td></tr>
+        <tr><td>Company Fee (50%)</td><td>$${fmt(companyFee)}</td></tr>
       </table>
     </div>
   </div>
@@ -527,15 +557,15 @@ table td:nth-child(2) { color: #1a1a1a; }
   <div class="two-col">
     <div>
       <table>
-        <tr><td>Assessed Value</td><td>$${lead.taxData.assessedValue.toLocaleString()}</td></tr>
-        <tr><td>Market Value</td><td>$${lead.taxData.marketValue.toLocaleString()}</td></tr>
-        <tr><td>Annual Taxes</td><td>$${lead.taxData.annualTaxes.toLocaleString()}</td></tr>
+        <tr><td>Assessed Value</td><td>$${fmt(lead.taxData.assessedValue)}</td></tr>
+        <tr><td>Market Value</td><td>$${fmt(lead.taxData.marketValue)}</td></tr>
+        <tr><td>Annual Taxes</td><td>$${fmt(lead.taxData.annualTaxes)}</td></tr>
       </table>
     </div>
     <div>
       <table>
         <tr><td>Tax Year</td><td>${lead.taxData.taxYear}</td></tr>
-        <tr><td>Tax Status</td><td>${lead.taxData.taxDelinquent ? "DELINQUENT - $" + lead.taxData.delinquentAmount.toLocaleString() : "Current"}</td></tr>
+        <tr><td>Tax Status</td><td>${lead.taxData.taxDelinquent ? "DELINQUENT - $" + fmt(lead.taxData.delinquentAmount) : "Current"}</td></tr>
         <tr><td>Exemptions</td><td>${lead.taxData.exemptions.join(", ") || "None"}</td></tr>
       </table>
     </div>
@@ -547,7 +577,7 @@ table td:nth-child(2) { color: #1a1a1a; }
   <table class="sale-table">
     <thead><tr><th>Date</th><th>Price</th><th>Type</th><th>Buyer</th><th>Seller</th></tr></thead>
     <tbody>
-      ${lead.saleHistory.map(s => `<tr><td>${new Date(s.date).toLocaleDateString()}</td><td>$${s.price.toLocaleString()}</td><td>${s.type}</td><td>${s.buyer}</td><td>${s.seller}</td></tr>`).join("")}
+      ${lead.saleHistory.map(s => `<tr><td>${new Date(s.date).toLocaleDateString()}</td><td>$${fmt(s.price)}</td><td>${s.type}</td><td>${s.buyer}</td><td>${s.seller}</td></tr>`).join("")}
     </tbody>
   </table>
 </div>
@@ -556,12 +586,12 @@ table td:nth-child(2) { color: #1a1a1a; }
   <div class="section-title">Mortgage Information</div>
   <table>
     <tr><td>Lender</td><td>${lead.mortgageInfo.lender}</td></tr>
-    <tr><td>Original Amount</td><td>$${lead.mortgageInfo.originalAmount.toLocaleString()}</td></tr>
+    <tr><td>Original Amount</td><td>$${fmt(lead.mortgageInfo.originalAmount)}</td></tr>
     <tr><td>Origination Date</td><td>${new Date(lead.mortgageInfo.originationDate).toLocaleDateString()}</td></tr>
     <tr><td>Interest Rate</td><td>${lead.mortgageInfo.interestRate}%</td></tr>
     <tr><td>Loan Type</td><td>${lead.mortgageInfo.loanType}</td></tr>
     <tr><td>Maturity Date</td><td>${new Date(lead.mortgageInfo.maturityDate).toLocaleDateString()}</td></tr>
-    ${lead.mortgageInfo.secondMortgage ? `<tr><td>Second Mortgage</td><td>$${(lead.mortgageInfo.secondAmount || 0).toLocaleString()}</td></tr>` : ""}
+    ${lead.mortgageInfo.secondMortgage ? `<tr><td>Second Mortgage</td><td>$${fmt(lead.mortgageInfo.secondAmount || 0)}</td></tr>` : ""}
   </table>
 </div>
 
@@ -736,22 +766,22 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
             <h4 className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-2">Financial Summary</h4>
             <div className="grid gap-4 sm:grid-cols-4">
               <div className="text-center">
-                <p className="text-xl font-bold text-blue-600">${lead.saleAmount.toLocaleString()}</p>
+                <p className="text-xl font-bold text-blue-600">${fmt(lead.saleAmount)}</p>
                 <p className="text-xs text-muted-foreground">Sale Amount</p>
               </div>
               {lead.taxData.marketValue > 0 && (
                 <div className="text-center">
-                  <p className="text-xl font-bold text-blue-600">${lead.taxData.marketValue.toLocaleString()}</p>
+                  <p className="text-xl font-bold text-blue-600">${fmt(lead.taxData.marketValue)}</p>
                   <p className="text-xs text-muted-foreground">Est. Market Value</p>
                 </div>
               )}
               <div className="text-center">
-                <p className="text-xl font-bold text-emerald-600">${lead.foreclosureDetails.estimatedSurplus.toLocaleString()}</p>
+                <p className="text-xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus)}</p>
                 <p className="text-xs text-muted-foreground">Est. Surplus</p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-bold text-emerald-700">${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()}</p>
-                <p className="text-xs text-muted-foreground">25% Service Fee</p>
+                <p className="text-xl font-bold text-emerald-700">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30)}</p>
+                <p className="text-xs text-muted-foreground">30% Service Fee</p>
               </div>
             </div>
           </div>
@@ -831,13 +861,13 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1 p-3 rounded-lg bg-muted/50 border">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Tax Assessment ({lead.taxData.taxYear})</h4>
-            <DataRow label="Assessed Value" value={`$${lead.taxData.assessedValue.toLocaleString()}`} icon={DollarSign} />
-            <DataRow label="Market Value" value={`$${lead.taxData.marketValue.toLocaleString()}`} icon={DollarSign} />
-            <DataRow label="Annual Taxes" value={`$${lead.taxData.annualTaxes.toLocaleString()}`} icon={Receipt} />
+            <DataRow label="Assessed Value" value={`$${fmt(lead.taxData.assessedValue)}`} icon={DollarSign} />
+            <DataRow label="Market Value" value={`$${fmt(lead.taxData.marketValue)}`} icon={DollarSign} />
+            <DataRow label="Annual Taxes" value={`$${fmt(lead.taxData.annualTaxes)}`} icon={Receipt} />
             <DataRow label="Tax Status" value={lead.taxData.taxStatus} />
             <DataRow label="Last Payment" value={new Date(lead.taxData.lastTaxPayment).toLocaleDateString()} icon={Calendar} />
             {lead.taxData.taxDelinquent && (
-              <DataRow label="Delinquent Amount" value={`$${lead.taxData.delinquentAmount.toLocaleString()}`} />
+              <DataRow label="Delinquent Amount" value={`$${fmt(lead.taxData.delinquentAmount)}`} />
             )}
             {lead.taxData.exemptions.length > 0 && (
               <DataRow label="Exemptions" value={lead.taxData.exemptions.join(", ")} />
@@ -846,13 +876,13 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
           <div className="space-y-1 p-3 rounded-lg bg-muted/50 border">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Mortgage Info</h4>
             <DataRow label="Lender" value={lead.mortgageInfo.lender} icon={Landmark} />
-            <DataRow label="Original Amount" value={`$${lead.mortgageInfo.originalAmount.toLocaleString()}`} icon={DollarSign} />
+            <DataRow label="Original Amount" value={`$${fmt(lead.mortgageInfo.originalAmount)}`} icon={DollarSign} />
             <DataRow label="Origination" value={new Date(lead.mortgageInfo.originationDate).toLocaleDateString()} icon={Calendar} />
             <DataRow label="Interest Rate" value={`${lead.mortgageInfo.interestRate}%`} />
             <DataRow label="Loan Type" value={lead.mortgageInfo.loanType} />
             <DataRow label="Maturity" value={new Date(lead.mortgageInfo.maturityDate).toLocaleDateString()} />
             {lead.mortgageInfo.secondMortgage && (
-              <DataRow label="2nd Mortgage" value={`$${(lead.mortgageInfo.secondAmount || 0).toLocaleString()}`} />
+              <DataRow label="2nd Mortgage" value={`$${fmt(lead.mortgageInfo.secondAmount || 0)}`} />
             )}
           </div>
           <div className="sm:col-span-2 p-3 rounded-lg bg-muted/50 border">
@@ -872,7 +902,7 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
                   {lead.saleHistory.map((sale, i) => (
                     <tr key={i} className="border-b last:border-0">
                       <td className="py-2">{new Date(sale.date).toLocaleDateString()}</td>
-                      <td className="py-2 font-medium">${sale.price.toLocaleString()}</td>
+                      <td className="py-2 font-medium">${fmt(sale.price)}</td>
                       <td className="py-2">{sale.type}</td>
                       <td className="py-2">{sale.buyer}</td>
                       <td className="py-2">{sale.seller}</td>
@@ -901,12 +931,12 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Auction & Financials</h4>
             <DataRow label="Auction Date" value={new Date(lead.foreclosureDetails.auctionDate).toLocaleDateString()} icon={Calendar} />
             <DataRow label="Auction Location" value={lead.foreclosureDetails.auctionLocation} icon={MapPin} />
-            <DataRow label="Opening Bid" value={`$${lead.foreclosureDetails.openingBid.toLocaleString()}`} icon={DollarSign} />
-            <DataRow label="Default Amount" value={`$${lead.foreclosureDetails.defaultAmount.toLocaleString()}`} icon={DollarSign} />
+            <DataRow label="Opening Bid" value={`$${fmt(lead.foreclosureDetails.openingBid)}`} icon={DollarSign} />
+            <DataRow label="Default Amount" value={`$${fmt(lead.foreclosureDetails.defaultAmount)}`} icon={DollarSign} />
             <div className="pt-2 mt-2 border-t">
               <DataRow
                 label="Estimated Surplus"
-                value={`$${lead.foreclosureDetails.estimatedSurplus.toLocaleString()}`}
+                value={`$${fmt(lead.foreclosureDetails.estimatedSurplus)}`}
                 icon={DollarSign}
               />
             </div>
@@ -915,15 +945,15 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
             <h4 className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-2">Recovery Opportunity</h4>
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-600">${lead.foreclosureDetails.estimatedSurplus.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus)}</p>
                 <p className="text-xs text-muted-foreground">Estimated Surplus</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-600">${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()}</p>
-                <p className="text-xs text-muted-foreground">25% Service Fee</p>
+                <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30)}</p>
+                <p className="text-xs text-muted-foreground">30% Service Fee</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-600">${(lead.foreclosureDetails.estimatedSurplus * 0.25 * 0.85).toLocaleString()}</p>
+                <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30 * 0.85)}</p>
                 <p className="text-xs text-muted-foreground">Net (After Closer + Admin)</p>
               </div>
             </div>
@@ -1604,9 +1634,9 @@ function LeadsPageContent() {
                       <div className="text-sm text-muted-foreground">{lead.county ? `${lead.county} County, ` : ""}{lead.stateAbbr}</div>
                     </div>
                     <div className="text-right">
-                      <div className="font-medium">{lead.saleAmount > 0 ? `$${lead.saleAmount.toLocaleString()}` : lead.stateAbbr}</div>
+                      <div className="font-medium">{lead.saleAmount > 0 ? `$${fmt(lead.saleAmount)}` : lead.stateAbbr}</div>
                       {lead.foreclosureDetails.estimatedSurplus > 0 && (
-                        <div className="text-xs text-emerald-600">${lead.foreclosureDetails.estimatedSurplus.toLocaleString()} surplus</div>
+                        <div className="text-xs text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus)} surplus</div>
                       )}
                     </div>
                   </div>
@@ -1663,8 +1693,8 @@ function LeadsPageContent() {
 
     // Sort the filtered leads
     return filtered.sort((a, b) => {
-      const feeA = a.foreclosureDetails.estimatedSurplus * 0.25
-      const feeB = b.foreclosureDetails.estimatedSurplus * 0.25
+      const feeA = a.foreclosureDetails.estimatedSurplus * 0.30
+      const feeB = b.foreclosureDetails.estimatedSurplus * 0.30
       const surplusA = a.foreclosureDetails.estimatedSurplus
       const surplusB = b.foreclosureDetails.estimatedSurplus
       const dateA = a.saleDate ? new Date(a.saleDate).getTime() : 0
@@ -1776,9 +1806,9 @@ function LeadsPageContent() {
       lead.primaryPhone || '',
       lead.primaryEmail || lead.skipTrace?.emails?.[0] || '',
       lead.status,
-      `$${lead.foreclosureDetails.estimatedSurplus.toLocaleString()}`,
+      `$${fmt(lead.foreclosureDetails.estimatedSurplus)}`,
       lead.saleDate ? new Date(lead.saleDate).toLocaleDateString() : '',
-      `$${lead.saleAmount.toLocaleString()}`,
+      `$${fmt(lead.saleAmount)}`,
       lead.county,
       lead.parcelId
     ])
@@ -2587,7 +2617,7 @@ Thank you.`}
                         )}
                         {lead.taxData.assessedValue > 0 && (
                           <div className="text-xs font-medium text-blue-600 mt-1">
-                            Assessed: ${lead.taxData.assessedValue.toLocaleString()}
+                            Assessed: ${fmt(lead.taxData.assessedValue)}
                           </div>
                         )}
                       </div>
@@ -2598,7 +2628,7 @@ Thank you.`}
                       <div className="flex items-center gap-1">
                         <DollarSign className="h-4 w-4 text-muted-foreground" />
                         <span className="font-medium">
-                          ${lead.saleAmount.toLocaleString()}
+                          ${fmt(lead.saleAmount)}
                         </span>
                       </div>
                     ) : (
@@ -2607,19 +2637,19 @@ Thank you.`}
                     {lead.taxData.marketValue > 0 && (
                       <div className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400">
                         <TrendingUp className="h-3 w-3" />
-                        MV: ${lead.taxData.marketValue.toLocaleString()}
+                        MV: ${fmt(lead.taxData.marketValue)}
                       </div>
                     )}
                     {lead.foreclosureDetails.estimatedSurplus > 0 && (
                       <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
                         <DollarSign className="h-3 w-3" />
-                        ${lead.foreclosureDetails.estimatedSurplus.toLocaleString()} surplus
+                        ${fmt(lead.foreclosureDetails.estimatedSurplus)} surplus
                       </div>
                     )}
                     {lead.foreclosureDetails.estimatedSurplus > 0 && (
                       <div className="flex items-center gap-1 text-xs font-bold text-emerald-700">
                         <TrendingUp className="h-3 w-3" />
-                        ${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} fee
+                        ${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30)} fee
                       </div>
                     )}
                     {lead.saleDate && (
@@ -2824,24 +2854,24 @@ Thank you.`}
                   <div className="flex flex-wrap gap-4 text-sm items-center">
                     <div className="flex items-center gap-1">
                       <DollarSign className="h-4 w-4 text-muted-foreground" />
-                      <span className="font-medium">${lead.saleAmount.toLocaleString()}</span>
+                      <span className="font-medium">${fmt(lead.saleAmount)}</span>
                     </div>
                     {lead.taxData.marketValue > 0 && (
                       <div className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400">
                         <TrendingUp className="h-3 w-3" />
-                        MV: ${lead.taxData.marketValue.toLocaleString()}
+                        MV: ${fmt(lead.taxData.marketValue)}
                       </div>
                     )}
                     {lead.foreclosureDetails.estimatedSurplus > 0 && (
                       <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
                         <DollarSign className="h-3 w-3" />
-                        ${lead.foreclosureDetails.estimatedSurplus.toLocaleString()} surplus
+                        ${fmt(lead.foreclosureDetails.estimatedSurplus)} surplus
                       </div>
                     )}
                     {lead.foreclosureDetails.estimatedSurplus > 0 && (
                       <div className="flex items-center gap-1 text-xs font-bold text-emerald-700">
                         <TrendingUp className="h-3 w-3" />
-                        ${(lead.foreclosureDetails.estimatedSurplus * 0.25).toLocaleString()} fee
+                        ${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30)} fee
                       </div>
                     )}
                     {lead.saleDate && (

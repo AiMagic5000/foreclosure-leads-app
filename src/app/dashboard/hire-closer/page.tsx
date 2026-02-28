@@ -615,8 +615,8 @@ export default function HireCloserPage() {
               </p>
             </div>
             <div className="shrink-0 text-right">
-              <p className="text-xs text-muted-foreground">Example: $100K recovery at 25% fee</p>
-              <p className="text-sm"><span className="text-muted-foreground">Closer:</span> <strong>$2,500</strong> &middot; <span className="text-muted-foreground">Admin:</span> <strong>$1,250</strong> &middot; <span className="text-muted-foreground">You keep:</span> <strong className="text-emerald-600">$21,250</strong></p>
+              <p className="text-xs text-muted-foreground">Example: $100K recovery at 30% fee</p>
+              <p className="text-sm"><span className="text-muted-foreground">Closer:</span> <strong>$3,000</strong> &middot; <span className="text-muted-foreground">Admin:</span> <strong>$1,500</strong> &middot; <span className="text-muted-foreground">You keep:</span> <strong className="text-emerald-600">$25,500</strong></p>
             </div>
           </div>
         </CardContent>
@@ -1007,12 +1007,12 @@ export default function HireCloserPage() {
                     <span className="font-medium text-foreground">$100,000</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Your Service Fee (25%)</span>
-                    <span className="font-medium text-foreground">$25,000</span>
+                    <span>Your Service Fee (30%)</span>
+                    <span className="font-medium text-foreground">$30,000</span>
                   </div>
                   <div className="flex justify-between border-t pt-1.5">
                     <span>Closer Fee ({selectedCloser.feePercent}% of service fee)</span>
-                    <span className="font-medium text-emerald-600">$2,500</span>
+                    <span className="font-medium text-emerald-600">$3,000</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Contract Admin (5% of service fee)</span>
