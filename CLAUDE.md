@@ -123,7 +123,7 @@ scripts/
 | secondary_email | TEXT | Alt email |
 | skip_trace_data | JSONB | Full Tracerfy response (phones, emails, addresses, relatives, etc.) |
 
-### DNC Compliance
+### DNC Compliance (via Tracerfy DNC Scrub)
 | Column | Type | Description |
 |--------|------|-------------|
 | dnc_checked | BOOLEAN | Whether DNC check has been run |
@@ -131,6 +131,8 @@ scripts/
 | can_contact | BOOLEAN | DNC-cleared for outreach |
 | dnc_type | TEXT | Type of DNC listing |
 | dnc_checked_at | TIMESTAMPTZ | When DNC was last checked |
+
+**DNC Method**: Tracerfy DNC Scrub at https://tracerfy.com/dashboard/ (1 credit/phone = $0.02/phone). Upload phone lists, get scrubbed results. Do NOT use FTC registry downloads.
 
 ### Outreach Tracking
 | Column | Type | Description |
@@ -185,11 +187,12 @@ scripts/
 
 ### POST /api/voice-drop
 - **Auth**: Clerk (admin only)
-- **Flow**: Generate personalized script -> ElevenLabs TTS -> SlyBroadcast ringless voicemail
-- **ElevenLabs**: Voice Design V3 model, MP3 output
+- **Flow**: Generate personalized script -> MiniMax 2.5 TTS (primary) -> SlyBroadcast ringless voicemail
+- **Primary TTS**: MiniMax 2.5 (`https://api.minimax.io/v1/audio/speech`, model `MiniMax-M2.5`)
+- **Fallback TTS**: ElevenLabs (only when MiniMax unavailable)
 - **SlyBroadcast**: `POST https://www.mobile-sphere.com/gateway/vmb.php`
-- **Voice drop button**: Active on all `skip_traced` leads with phone numbers (regardless of DNC status)
-- **Default Voice ID**: `kPzsL2i3teMYv0FxEYQ6` (set in ELEVENLABS_VOICE_ID env var)
+- **Voice drop button**: Active only when `can_contact=true` AND `on_dnc=false` AND phone exists
+- **DNC check**: Via Tracerfy DNC Scrub (1 credit/phone, $0.02/phone) -- NOT FTC registry
 
 ### POST /api/skip-trace
 - **Skip trace provider**: Tracerfy API (`https://tracerfy.com/v1/api`)
@@ -246,8 +249,9 @@ scripts/
 | NEXT_PUBLIC_SUPABASE_ANON_KEY | Supabase anon key |
 | SUPABASE_SERVICE_ROLE_KEY | Supabase admin key |
 | NEXT_PUBLIC_GOOGLE_MAPS_API_KEY | Google Maps/Street View |
-| ELEVENLABS_API_KEY | ElevenLabs TTS |
-| ELEVENLABS_VOICE_ID | Voice ID for TTS (kPzsL2i3teMYv0FxEYQ6) |
+| MINIMAX_API_KEY | MiniMax 2.5 TTS (PRIMARY - always use this) |
+| ELEVENLABS_API_KEY | ElevenLabs TTS (FALLBACK only) |
+| ELEVENLABS_VOICE_ID | Voice ID for ElevenLabs fallback (kPzsL2i3teMYv0FxEYQ6) |
 | SLYBROADCAST_EMAIL | SlyBroadcast account |
 | SLYBROADCAST_PASSWORD | SlyBroadcast password |
 | CALLBACK_NUMBER | 800 number (8885458007) |
@@ -404,7 +408,7 @@ The email draft template (`src/app/api/email-draft/route.ts`) includes a "Ready 
 The foreclosure pipeline runs on the Dell R730 server:
 - **Scraping scripts**: `/opt/foreclosure-scrapers/` on R730
 - **Daily pipeline**: `/opt/foreclosure-scrapers/daily-foreclosure-pipeline.sh`
-- **DNC checking**: `/opt/foreclosure-scrapers/dnc_check.py` (planned - uses FTC DNC registry data)
+- **DNC checking**: Via Tracerfy DNC Scrub (web dashboard, 1 credit/phone). Legacy script at `/opt/foreclosure-scrapers/dnc_check.py` exists but is NOT the active method.
 - **Database**: Cognabase instance on R730 (foreclosure-db)
 
 ## Deployment
@@ -421,8 +425,117 @@ echo "value" | npx vercel env add VAR_NAME production --force
 ## Business Context
 
 - **Company**: Foreclosure Recovery Inc.
+- **NOT** "US Foreclosure Recovery" or "US Foreclosure Recovery Inc." -- those are WRONG
 - **Service**: Connects foreclosed homeowners with their unclaimed surplus funds
 - **Recovery Agent**: Allie Pearson, (888) 545-8007
 - **Outreach Email**: claim@usforeclosurerecovery.com (Hostinger IMAP)
+- **Report Email**: support@usforeclosureleads.com (all pipeline reports go here)
 - **Sender**: Corey Pearson
-- **Leads**: ~2,054 skip-traced leads with phone numbers as of Feb 2026
+- **Service Fee**: 30% contingency (NOT 25% -- corrected Feb 28, 2026)
+
+## Lead Quality Remediation (Feb 27-28, 2026)
+
+**Reference document**: `C:\Users\flowc\Desktop\USFR-Lead-Quality-Remediation-Plan.md`
+
+### Quality Audit Summary
+- **Total leads**: 14,257
+- **Garbage leads archived**: 1,014 to `status=archived_garbage`
+- **Business entities flagged**: 1,053 to `status=business_entity`
+- **Skip-traced leads quality**: ~83% -> improved with scoring + enrichment
+- **State/address mismatches**: 66 fixed (OH/IL leads with FL/CA/TX addresses)
+
+### Current DB Status Distribution (Feb 28, 2026)
+| Status | Count |
+|--------|-------|
+| new | 9,767 |
+| skip_traced | 2,067 |
+| business_entity | 1,053 |
+| archived_garbage | 1,014 |
+| skip_trace_failed | 339 |
+| diamond | 17 |
+
+### DB Column Reference (CRITICAL - use these exact names)
+- `primary_phone` (NOT `phone`) -- main contact phone
+- `secondary_phone` -- alternate phone
+- `primary_email` (NOT `email`) -- main email
+- `email_addresses` -- JSONB array of all emails
+- `overage_amount` -- numeric, surplus amount
+- `lead_tier` -- TEXT, scoring tier (diamond/gold/silver/bronze/rejected)
+- `apn_number` -- assessor parcel number (from ArcGIS enrichment)
+- `enrichment_source` -- tracks what enrichment has been attempted
+- `deed_verified`, `deed_verified_at`, `deed_chain_data` -- PropMix verification fields
+
+### Pipeline Fixes Applied (Feb 27, 2026)
+1. **Report crash fix**: `foia_processed.json` was 0 bytes -> wrote `{}`
+2. **SMTP fix**: Sender changed to `support@startmybusiness.us` (claim@ password expired)
+3. **Report recipient**: Changed to `support@usforeclosureleads.com`
+4. **Apify skip trace**: Subscription renewed after 403 monthly limit
+5. **DNC fix**: Switched from legacy `dnc_check.py` (empty FTC registry) to `tracerfy_dnc_scrub.py` (API-based, $0.02/phone)
+
+### Scraper Validation (Feb 28, 2026)
+- Added `validate_lead()` function to `government_list_scraper.py`
+- Removed "Unknown Owner" fallback on line 2031
+- Rejects: Spanish text, nav items, document fragments, case numbers, numeric data, URLs, names <3 chars
+- All inserts now pass through validation gate before `insert_leads()`
+
+### State Scraping Priority (SOP + Fee Cap Optimized)
+States ranked by: Easiest operation + Highest allowed recovery fee + Non-judicial process.
+
+| Priority | States | SOP Difficulty | Fee Cap |
+|----------|--------|---------------|---------|
+| Tier 1 | VA, TN, AL, MS, ID, MT, WY | Very Easy | None (30%) |
+| Tier 2 | CA, AK, MO, OR, NE, WV | Easy | None (30%) |
+| Tier 3 | AR, NV | Easy | 10% tax / $2,500 mortgage |
+| Tier 4 | MI, MN, NH, MA, HI, RI, SD, UT, OK | Moderate | None (30%) |
+| Tier 5 | OH, IL, IN | Judicial | Keep, reduced limits |
+| REMOVED | WA, TX, NC, CO, GA, FL, MD | Various | Unviable caps or barriers |
+
+**Why removed**: WA (5% cap), TX (non-attorney barred), NC ($1K cap + PI), CO (20% + 2yr blackout), GA (POA refused), FL (12% + PI + $500K insurance), MD (heavy compliance)
+
+### Daily Pipeline Schedule (Updated Feb 28, 2026)
+| Time (UTC) | Step | Script |
+|------------|------|--------|
+| 6:00 AM | Scrape (non-judicial priority) | `government_list_scraper.py --mode known` |
+| 8:00 AM | Skip trace (tiered by state priority) | `apify_skip_trace.py` |
+| 8:30 AM | Property enrichment (FREE) | `enrich_apn.py` + `enrich_leads.py` |
+| 9:00 AM | DNC scrub (Tracerfy API) | `tracerfy_dnc_scrub.py` |
+| 9:30 AM | Lead scoring (SQL-based) | `score_leads_sql.py` |
+| 10:00 AM | Daily report | `daily_progress_report.py` |
+
+### Tiered Lead Scoring (SQL-based, runs in ~1 second)
+Scoring runs via `score_leads_sql.py` which executes directly against Postgres via `docker exec`. Much faster than API-based approach.
+
+| Tier | Criteria | Count (Feb 28) | PropMix? |
+|------|----------|----------------|----------|
+| Diamond | Person + address + phone + email + surplus >$10K + sale date + DNC clear | 4 | YES |
+| Gold | Person + phone + surplus >$5K + DNC clear | 302 | YES |
+| Silver | Person + phone OR email + any surplus | 1,301 | NO |
+| Bronze | Person name only, missing key fields | 10,240 | NO |
+| Rejected | Business entity, garbage, expired deadline | 2,410 | NO |
+
+**Diamond+Gold by state**: OH: 297 ($18.7K avg surplus) | GA: 9 ($113K avg surplus)
+**PropMix eligible**: 306 leads (Diamond + Gold)
+
+### Key Reference Documents
+| Document | Location |
+|----------|----------|
+| 50-State SOP | `C:\Users\flowc\Desktop\Desktop Files\foreclosure-recovery-sop-50-state.docx` |
+| 50 States Overage Guide | `C:\Users\flowc\Downloads\50 States Overage Guide 10.19.2023 (1) (1).xlsx` |
+| Remediation Plan | `C:\Users\flowc\Desktop\USFR-Lead-Quality-Remediation-Plan.md` |
+| Pipeline scripts | `/opt/foreclosure-scrapers/` on R730 (10.28.28.95) |
+
+### Enrichment Notes
+- **ArcGIS enrichment** (`enrich_apn.py`): Requires county + city data to query the right endpoint. Many leads (especially OH) lack county/city, resulting in 0% enrichment. Fix: scraper should capture county from source URL.
+- **enrich_leads.py**: Runs via Docker at `/opt/enrichment/` every 4 hours. Uses crawl4ai for web scraping county assessor sites.
+- **add_property_images.py**: Google Street View images. Deployed to `/opt/foreclosure-scrapers/`.
+- **Null safety patch applied**: `city.lower()` -> `(city or "").lower()` in `enrich_apn.py` (4 occurrences)
+
+### PropMix Deed Chain Verification
+- **Account**: `pubrec.propmix.io`
+- **Use**: Diamond + Gold leads only (cost control) -- 306 leads eligible
+- **Script**: `/opt/foreclosure-scrapers/propmix_deed_verify.py` (pending)
+- **DB columns**: `deed_verified`, `deed_verified_at`, `deed_chain_data` (already exist)
+
+### Content Rules (MANDATORY)
+- **NEVER mention "county"** -- always use "state" instead
+- **ALWAYS use "we" not "I"** -- company voice, not individual
