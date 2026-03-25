@@ -17,6 +17,10 @@
     {
       "source": "/talks",
       "destination": "/talks/index.html"
+    },
+    {
+      "source": "/talks/",
+      "destination": "/talks/index.html"
     }
   ],
   "headers": [
