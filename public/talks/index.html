@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Communication Guide -- Sensitive Claims | Foreclosure Recovery Inc.</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0c1e3a;
+  --navy-light: #162d52;
+  --gold: #c9952b;
+  --gold-light: #e8be5a;
+  --white: #ffffff;
+  --off-white: #f7f5f0;
+  --light-gray: #e8e4dc;
+  --mid-gray: #8a8578;
+  --dark-text: #1a1a1a;
+  --body-text: #2d2d2d;
+  --sidebar-width: 300px;
+  --red-alert: #b91c1c;
+  --green-go: #166534;
+  --blue-info: #1e40af;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: var(--body-text);
+  background: var(--off-white);
+  line-height: 1.7;
+}
+
+/* ===== SIDEBAR TOC (ALWAYS VISIBLE) ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--navy);
+  color: var(--white);
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 0;
+  border-right: 3px solid var(--gold);
+}
+
+.sidebar-header {
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-light) 100%);
+  padding: 20px 18px 15px;
+  border-bottom: 2px solid var(--gold);
+  text-align: center;
+}
+
+.sidebar-header .company-name {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.sidebar-header .doc-title {
+  font-size: 14px;
+  color: var(--white);
+  font-weight: bold;
+  line-height: 1.3;
+}
+
+.sidebar-header .doc-subtitle {
+  font-size: 11px;
+  color: var(--gold-light);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.toc-label {
+  padding: 12px 18px 6px;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: bold;
+  border-bottom: 1px solid rgba(201, 149, 43, 0.2);
+}
+
+.toc-part {
+  padding: 10px 18px 4px;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 6px;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0 0 10px 0;
+}
+
+.toc-list li a {
+  display: block;
+  padding: 5px 18px 5px 28px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 12.5px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.4;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.toc-list li a:hover {
+  color: var(--white);
+  background: rgba(201, 149, 43, 0.12);
+  border-left-color: var(--gold);
+}
+
+.toc-list li a.active {
+  color: var(--gold);
+  background: rgba(201, 149, 43, 0.08);
+  border-left-color: var(--gold);
+  font-weight: bold;
+}
+
+.sidebar-footer {
+  padding: 12px 18px;
+  border-top: 1px solid rgba(201, 149, 43, 0.2);
+  font-size: 10px;
+  color: var(--mid-gray);
+  text-align: center;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  margin-left: var(--sidebar-width);
+  padding: 0;
+  max-width: 900px;
+}
+
+/* ===== COVER HEADER ===== */
+.cover-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1a3d6e 100%);
+  color: var(--white);
+  padding: 60px 50px 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 50%, rgba(201, 149, 43, 0.08) 100%);
+}
+
+.cover-header .doc-type {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.cover-header h1 {
+  font-size: 32px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.cover-header .subtitle {
+  font-size: 18px;
+  color: var(--gold-light);
+  font-style: italic;
+  margin-bottom: 25px;
+}
+
+.cover-meta {
+  display: flex;
+  gap: 30px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+}
+
+.cover-meta span { display: inline-block; }
+.cover-meta strong { color: var(--gold-light); }
+
+/* ===== SECTION STYLES ===== */
+.section {
+  padding: 40px 50px;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.section:last-child { border-bottom: none; }
+
+.part-divider {
+  background: var(--navy);
+  color: var(--white);
+  padding: 25px 50px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.part-divider .part-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.part-divider .part-title {
+  font-size: 22px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 24px;
+  color: var(--navy);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--gold);
+}
+
+h3 {
+  font-size: 18px;
+  color: var(--navy);
+  margin: 25px 0 12px;
+}
+
+h4 {
+  font-size: 15px;
+  color: var(--navy-light);
+  margin: 20px 0 8px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+p { margin-bottom: 14px; }
+
+/* ===== SCRIPT BLOCKS ===== */
+.script-block {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-left: 4px solid var(--navy);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin: 18px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.script-block .script-label {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.script-block .speaker {
+  font-weight: bold;
+  color: var(--navy);
+}
+
+.script-block .direction {
+  color: var(--mid-gray);
+  font-style: italic;
+  font-size: 13px;
+}
+
+.script-block.alt {
+  border-left-color: var(--gold);
+  background: #fdfbf5;
+}
+
+.script-block.caution {
+  border-left-color: var(--red-alert);
+  background: #fef8f8;
+}
+
+/* ===== ALERT BOXES ===== */
+.alert {
+  padding: 16px 20px;
+  border-radius: 4px;
+  margin: 18px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+}
+
+.alert-critical {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid var(--red-alert);
+  color: #991b1b;
+}
+
+.alert-info {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid var(--blue-info);
+  color: #1e3a5f;
+}
+
+.alert-success {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-left: 4px solid var(--green-go);
+  color: #14532d;
+}
+
+.alert strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ===== TABLES ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+}
+
+thead th {
+  background: var(--navy);
+  color: var(--white);
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--light-gray);
+  vertical-align: top;
+}
+
+tbody tr:nth-child(even) { background: rgba(247, 245, 240, 0.5); }
+tbody tr:hover { background: rgba(201, 149, 43, 0.06); }
+
+/* ===== CHECKLISTS ===== */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.checklist li {
+  padding: 8px 0 8px 32px;
+  position: relative;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.checklist li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 11px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--navy);
+  border-radius: 3px;
+  background: var(--white);
+}
+
+/* ===== DO/DON'T COLUMNS ===== */
+.do-dont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 18px 0;
+}
+
+.do-col, .dont-col {
+  padding: 20px;
+  border-radius: 4px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+}
+
+.do-col {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.dont-col {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.do-col h4, .dont-col h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.do-col h4 { color: var(--green-go); }
+.dont-col h4 { color: var(--red-alert); }
+
+.do-col ul, .dont-col ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.do-col li, .dont-col li {
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+/* ===== DECISION TREE ===== */
+.decision-tree {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
+  padding: 24px;
+  margin: 18px 0;
+}
+
+.decision-tree .dt-question {
+  font-weight: bold;
+  color: var(--navy);
+  font-size: 15px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--gold);
+}
+
+.decision-tree .dt-branch {
+  padding: 8px 0 8px 24px;
+  border-left: 2px solid var(--light-gray);
+  margin-left: 10px;
+}
+
+.decision-tree .dt-if {
+  font-weight: bold;
+  color: var(--navy-light);
+}
+
+.decision-tree .dt-then {
+  color: var(--body-text);
+  margin-left: 10px;
+}
+
+/* ===== NUMBERED STEPS ===== */
+.steps { counter-reset: step-counter; list-style: none; padding: 0; }
+
+.steps li {
+  counter-increment: step-counter;
+  padding: 12px 0 12px 50px;
+  position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.steps li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 34px;
+  height: 34px;
+  background: var(--navy);
+  color: var(--gold);
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== QUICK REF CARD ===== */
+.quick-ref {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  color: var(--white);
+  padding: 24px;
+  border-radius: 4px;
+  margin: 18px 0;
+}
+
+.quick-ref h4 {
+  color: var(--gold);
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+
+.quick-ref ul {
+  padding-left: 18px;
+  color: rgba(255,255,255,0.9);
+}
+
+.quick-ref li { margin-bottom: 6px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 14px; }
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .sidebar { display: none; }
+  .main-content {
+    margin-left: 0;
+    max-width: 100%;
+  }
+  .section { page-break-inside: avoid; }
+  .part-divider { page-break-before: always; }
+  .cover-header { page-break-after: always; }
+  body { font-size: 11pt; }
+}
+
+/* ===== HAMBURGER BUTTON ===== */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 1100;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 6px;
+  background: var(--navy);
+  cursor: pointer;
+  padding: 10px 9px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.hamburger span:last-child { margin-bottom: 0; }
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+.sidebar-overlay.active { display: block; }
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .hamburger { display: block; }
+
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1050;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content { margin-left: 0; }
+  .section { padding: 30px 24px; }
+  .cover-header { padding: 40px 24px 30px; }
+  .do-dont { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HAMBURGER MENU BUTTON (MOBILE ONLY) ===== -->
+<button class="hamburger" id="hamburgerBtn" aria-label="Open navigation menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ===== SIDEBAR TABLE OF CONTENTS (ALWAYS VISIBLE) ===== -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="company-name">Foreclosure Recovery Inc.</div>
+    <div class="doc-title">Agent Communication Guide</div>
+    <div class="doc-subtitle">Sensitive Claims: Deceased & Corporate</div>
+  </div>
+
+  <div class="toc-label">Table of Contents</div>
+
+  <div class="toc-part">Part 1: Foundations</div>
+  <ul class="toc-list">
+    <li><a href="#s1">1. Purpose of This Guide</a></li>
+    <li><a href="#s2">2. Who This Guide Is For</a></li>
+    <li><a href="#s3">3. Core Communication Principles</a></li>
+    <li><a href="#s4">4. The Golden Rules</a></li>
+  </ul>
+
+  <div class="toc-part">Part 2: Deceased Owner Claims</div>
+  <ul class="toc-list">
+    <li><a href="#s5">5. Understanding Deceased Owner Claims</a></li>
+    <li><a href="#s6">6. Identifying the Right Contact</a></li>
+    <li><a href="#s7">7. First Contact Scripts</a></li>
+    <li><a href="#s8">8. Handling Emotional Conversations</a></li>
+    <li><a href="#s9">9. Documents Required -- Deceased Claims</a></li>
+    <li><a href="#s10">10. Probate vs. Non-Probate</a></li>
+    <li><a href="#s11">11. Multiple Heirs</a></li>
+    <li><a href="#s12">12. Common Scenarios & Scripts</a></li>
+  </ul>
+
+  <div class="toc-part">Part 3: Corporate/LLC Claims</div>
+  <ul class="toc-list">
+    <li><a href="#s13">13. Understanding Corporate Claims</a></li>
+    <li><a href="#s14">14. Finding the Authorized Person</a></li>
+    <li><a href="#s15">15. Corporate Outreach Scripts</a></li>
+    <li><a href="#s16">16. Documents Required -- Corporate</a></li>
+    <li><a href="#s17">17. Dissolved vs. Active Companies</a></li>
+    <li><a href="#s18">18. Common Objections & Responses</a></li>
+  </ul>
+
+  <div class="toc-part">Part 4: Communication Toolkit</div>
+  <ul class="toc-list">
+    <li><a href="#s19">19. Objection Handling Framework</a></li>
+    <li><a href="#s20">20. Follow-Up Cadence</a></li>
+    <li><a href="#s21">21. Voicemail Scripts</a></li>
+    <li><a href="#s22">22. Letter & Email Templates</a></li>
+    <li><a href="#s23">23. Do's and Don'ts Quick Reference</a></li>
+    <li><a href="#s24">24. Escalation Procedures</a></li>
+    <li><a href="#s25">25. Pre-Submission QA Checklist</a></li>
+    <li><a href="#s26">26. Quick Reference Card</a></li>
+  </ul>
+
+  <div class="sidebar-footer">
+    SOP-COMM-002 | Version 1.0<br>
+    Effective: March 2026<br>
+    Internal Use Only
+  </div>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="main-content">
+
+  <!-- COVER -->
+  <div class="cover-header">
+    <div class="doc-type">Standard Operating Procedure -- Communication Guide</div>
+    <h1>Sensitive Claims:<br>Deceased Owners & Corporate Entities</h1>
+    <div class="subtitle">A No-Nonsense Field Guide for Asset Recovery Agents</div>
+    <div class="cover-meta">
+      <span><strong>Document ID:</strong> SOP-COMM-002</span>
+      <span><strong>Version:</strong> 1.0</span>
+      <span><strong>Effective:</strong> March 2026</span>
+      <span><strong>Classification:</strong> Internal Use Only</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PART 1: FOUNDATIONS -->
+  <!-- ============================================================ -->
+  <div class="part-divider" id="part1">
+    <div class="part-label">Part 1</div>
+    <div class="part-title">Foundations</div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section" id="s1">
+    <h2>1. Purpose of This Guide</h2>
+    <p>More of the claims coming through the pipeline now involve properties tied to deceased persons or owned by business entities (LLCs, corporations, trusts). These situations are different from a standard owner-of-record claim in two important ways:</p>
+    <ol style="margin: 12px 0 12px 24px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 14px; line-height: 1.8;">
+      <li><strong>The person you are speaking with is not the original owner.</strong> They are a spouse, child, sibling, executor, corporate officer, or authorized agent. The conversation requires a different tone and a different set of questions.</li>
+      <li><strong>The paperwork is heavier.</strong> States require additional documentation to prove the claimant's legal authority to collect. One missing document can delay or kill a claim.</li>
+    </ol>
+    <p>This guide gives you the exact words to say, the exact documents to collect, and the exact steps to follow so that every sensitive claim is handled professionally, respectfully, and successfully.</p>
+
+    <div class="alert alert-critical">
+      <strong>Mandatory Reading</strong>
+      Every agent -- junior, partner, and owner-operator -- must read this guide completely before working any claim involving a deceased property owner or a company-owned property. No exceptions.
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section" id="s2">
+    <h2>2. Who This Guide Is For</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Agent Level</th>
+          <th>Description</th>
+          <th>What You Need From This Guide</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Junior Agent</strong></td>
+          <td>Newly certified. Working first 10 claims. Limited outreach experience.</td>
+          <td>Read everything. Follow the scripts word-for-word until you have closed at least 5 sensitive claims. Then you can adapt the language to your style.</td>
+        </tr>
+        <tr>
+          <td><strong>Partner Recovery Agent</strong></td>
+          <td>Experienced agent working under Foreclosure Recovery Inc. umbrella. Handles own leads.</td>
+          <td>Use the document checklists, decision trees, and escalation procedures. Adapt scripts to your voice but keep the structure.</td>
+        </tr>
+        <tr>
+          <td><strong>Owner-Operator Agent</strong></td>
+          <td>Runs own recovery operation. May have sub-agents. Files high-volume claims.</td>
+          <td>Use this as a training manual for your team. The checklists and QA section at the end are your quality control tools.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section" id="s3">
+    <h2>3. Core Communication Principles</h2>
+    <p>Every call, email, and letter you send reflects on Foreclosure Recovery Inc. and on this entire profession. These five principles are non-negotiable:</p>
+
+    <h3>Principle 1: Lead With Empathy, Follow With Facts</h3>
+    <p>When you reach out to a family that has lost someone, the surplus funds are the last thing on their mind. Acknowledge the human reality before you talk about money. A 10-second pause to express genuine condolence costs you nothing and earns you everything.</p>
+
+    <h3>Principle 2: You Are Not a Salesperson</h3>
+    <p>You are a recovery specialist. You are calling because unclaimed money exists and the state is not going to hand it over voluntarily. Your job is to inform, not to pitch. If someone does not want help, thank them and move on. Pressure tactics destroy credibility and invite complaints.</p>
+
+    <h3>Principle 3: Clarity Over Cleverness</h3>
+    <p>Use plain English. Avoid legal jargon unless you are defining a term for the person you are speaking with. If someone does not understand what "letters testamentary" means, explain it simply: "That is the document the court gives you that says you have the legal authority to handle the estate." Never make someone feel dumb for asking a question.</p>
+
+    <h3>Principle 4: Document Everything</h3>
+    <p>Every call gets a note in the CRM. Every promise you make gets written down. Every document you request gets tracked. If you told someone you would call back Thursday at 2 PM, you call back Thursday at 2 PM. Reliability is your competitive advantage.</p>
+
+    <h3>Principle 5: When In Doubt, Escalate</h3>
+    <p>If a situation feels off -- the heir is hostile, the corporate structure is tangled, there is a potential fraud indicator, or you simply are not sure what to do -- stop and escalate to your team lead or to Foreclosure Recovery Inc. directly at <strong>(888) 545-8007</strong>. There is no penalty for asking. There are consequences for guessing wrong.</p>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section" id="s4">
+    <h2>4. The Golden Rules</h2>
+
+    <div class="alert alert-critical">
+      <strong>Rule 1: Never Say "County"</strong>
+      Always say "state" instead. We say "the state holds the funds" -- never "the county holds the funds." We say "file with the state" -- never "file with the county." This is company policy across all communications. No exceptions.
+    </div>
+
+    <div class="alert alert-critical">
+      <strong>Rule 2: Always Say "We" -- Never "I"</strong>
+      You speak for the company, not for yourself. "We can help you recover these funds" -- never "I can help you." "We handle all the paperwork" -- never "I handle it." This positions us as a professional organization, not a solo operator.
+    </div>
+
+    <div class="alert alert-info">
+      <strong>Rule 3: Never Provide Legal Advice</strong>
+      We are asset recovery specialists, not attorneys. If a claimant asks a question that requires legal interpretation -- inheritance disputes, will contests, corporate dissolution law -- direct them to consult their own attorney. You can say: "That is a legal question that we are not qualified to answer. We would recommend speaking with an attorney who handles estate or business law in your state."
+    </div>
+
+    <div class="alert alert-info">
+      <strong>Rule 4: Verify Before You Speak</strong>
+      Before making any outreach call, confirm the surplus amount, property address, and sale date from your records. Getting basic facts wrong on a call kills your credibility instantly, especially when the person on the other end is grieving.
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PART 2: DECEASED OWNER CLAIMS -->
+  <!-- ============================================================ -->
+  <div class="part-divider" id="part2">
+    <div class="part-label">Part 2</div>
+    <div class="part-title">Deceased Owner Claims</div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="section" id="s5">
+    <h2>5. Understanding Deceased Owner Claims</h2>
+    <p>A deceased owner claim happens when the person who owned the property at the time of the foreclosure sale has passed away. The surplus funds still exist and are still recoverable -- but the original owner is no longer alive to claim them.</p>
+    <p>This creates a chain-of-authority question: <strong>Who has the legal right to claim these funds?</strong></p>
+    <p>The answer depends on whether the estate went through probate, whether a will exists, and the laws of the state where the property was located.</p>
+
+    <h3>Why These Claims Require Extra Care</h3>
+    <ul style="margin: 10px 0 10px 24px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 14px; line-height: 1.8;">
+      <li>You are contacting people during or after a period of grief</li>
+      <li>The person may not know surplus funds exist</li>
+      <li>Family dynamics can be complicated -- siblings may disagree, estranged relatives may surface</li>
+      <li>The documentation burden is higher and mistakes cause delays measured in months</li>
+      <li>Some heirs may be suspicious of unsolicited calls about money connected to a deceased relative</li>
+    </ul>
+
+    <div class="alert alert-success">
+      <strong>The Upside</strong>
+      Deceased owner claims often involve larger surplus amounts because the property may have had significant equity. Heirs who successfully recover these funds are often deeply grateful because they had no idea the money existed. These are some of the most rewarding claims you will work.
+    </div>
+  </div>
+
+  <!-- Section 6 -->
+  <div class="section" id="s6">
+    <h2>6. Identifying the Right Contact</h2>
+    <p>Before you pick up the phone, you need to determine who has the legal standing to authorize a claim. This is the single most important step. Filing a claim with the wrong person's signature wastes everyone's time and can get the claim denied.</p>
+
+    <div class="decision-tree">
+      <div class="dt-question">Decision Tree: Who Do We Contact?</div>
+
+      <div class="dt-branch">
+        <span class="dt-if">Was there a will?</span><br>
+        <div class="dt-branch">
+          <span class="dt-if">YES -- Was probate opened?</span><br>
+          <div class="dt-branch">
+            <span class="dt-if">YES:</span>
+            <span class="dt-then">Contact the <strong>Executor</strong> (named in the will and appointed by the court). They have full authority to act for the estate. This is your ideal contact.</span>
+          </div>
+          <div class="dt-branch">
+            <span class="dt-if">NO (probate was never opened):</span>
+            <span class="dt-then">Contact the person named as executor in the will. They will likely need to open probate or obtain a small estate affidavit before we can file. Guide them on what the state requires.</span>
+          </div>
+        </div>
+        <div class="dt-branch">
+          <span class="dt-if">NO -- No will exists (intestate):</span><br>
+          <div class="dt-branch">
+            <span class="dt-if">Was an administrator appointed by the court?</span><br>
+            <div class="dt-branch">
+              <span class="dt-if">YES:</span>
+              <span class="dt-then">Contact the <strong>Administrator</strong>. They serve the same role as an executor but were appointed by the court because there was no will.</span>
+            </div>
+            <div class="dt-branch">
+              <span class="dt-if">NO:</span>
+              <span class="dt-then">Contact the <strong>next of kin</strong> (spouse first, then children, then siblings -- in that priority order). They will need to either open probate or file a small estate affidavit.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Contact Type</th>
+          <th>Legal Authority</th>
+          <th>Key Document Needed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Executor</strong></td>
+          <td>Named in will, confirmed by court</td>
+          <td>Letters Testamentary</td>
+        </tr>
+        <tr>
+          <td><strong>Administrator</strong></td>
+          <td>Court-appointed (no will)</td>
+          <td>Letters of Administration</td>
+        </tr>
+        <tr>
+          <td><strong>Surviving Spouse</strong></td>
+          <td>Statutory heir (priority #1 in most states)</td>
+          <td>Marriage certificate + Death certificate</td>
+        </tr>
+        <tr>
+          <td><strong>Adult Child</strong></td>
+          <td>Heir (priority #2)</td>
+          <td>Birth certificate + Death certificate</td>
+        </tr>
+        <tr>
+          <td><strong>Sibling</strong></td>
+          <td>Heir (if no spouse/children)</td>
+          <td>Birth certificates showing same parent + Death certificate</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 7 -->
+  <div class="section" id="s7">
+    <h2>7. First Contact Scripts -- Deceased Owner Claims</h2>
+
+    <div class="alert alert-info">
+      <strong>Before You Dial</strong>
+      Confirm the surplus amount, property address, and sale date. Research whether the decedent's name matches the property records. Have the lead record open in front of you. Take a breath. This is a sensitive call.
+    </div>
+
+    <h3>Script A: Cold Call to Potential Heir (You Believe the Owner is Deceased)</h3>
+    <div class="script-block">
+      <span class="script-label">Opening -- Warm & Professional</span>
+      <p><span class="speaker">Agent:</span> "Hi, may I speak with [Heir's Name]?"</p>
+      <p><span class="direction">[Wait for confirmation]</span></p>
+      <p><span class="speaker">Agent:</span> "[Heir's Name], my name is [Your Name] and we are calling from Foreclosure Recovery Inc. We are an asset recovery firm and we have located what appear to be unclaimed surplus funds tied to a property at [Property Address]. The records show [Deceased's Name] as the former owner. Are you familiar with this property?"</p>
+      <p><span class="direction">[Pause -- let them respond. Do NOT rush past this.]</span></p>
+    </div>
+
+    <div class="script-block alt">
+      <span class="script-label">If They Confirm the Owner Has Passed Away</span>
+      <p><span class="speaker">Agent:</span> "We are sorry to hear about the passing of [Deceased's Name]. We certainly do not want to intrude during a difficult time. The reason for the call is that after the property sold, there were surplus funds generated from the sale -- money above and beyond what was owed. Those funds are currently being held by the state, and in our experience they will sit there indefinitely unless someone files a formal claim to recover them."</p>
+      <p><span class="direction">[Pause]</span></p>
+      <p><span class="speaker">Agent:</span> "What we do is handle the entire recovery process for families in this situation. We prepare all the paperwork, file the claim, and follow up until the funds are released. There is no upfront cost -- we only get paid if the recovery is successful. Would you be open to hearing a bit more about how the process works?"</p>
+    </div>
+
+    <div class="script-block caution">
+      <span class="script-label">If They React Emotionally or Seem Upset</span>
+      <p><span class="speaker">Agent:</span> "We completely understand, and please know that we are not trying to add stress to an already difficult situation. These funds belong to [Deceased's Name]'s estate, and by extension to the heirs. We just want to make sure the family is aware that this money exists. If now is not a good time, we are happy to follow up at a time that works better for you. There is no rush and no pressure."</p>
+      <p><span class="direction">[If they want you to call back, get a specific day and time. Write it down. Honor it.]</span></p>
+    </div>
+
+    <div class="script-block">
+      <span class="script-label">If They Are Interested -- Transition to Qualification</span>
+      <p><span class="speaker">Agent:</span> "That is great. Let me ask a few quick questions so we can understand the situation and make sure we can move forward."</p>
+      <p><span class="speaker">Agent:</span> "What was your relationship to [Deceased's Name]?"</p>
+      <p><span class="speaker">Agent:</span> "Do you know if [Deceased's Name]'s estate went through probate?"</p>
+      <p><span class="speaker">Agent:</span> "Was there a will, and if so, was an executor named?"</p>
+      <p><span class="speaker">Agent:</span> "Are there other heirs or family members who might be involved in the estate?"</p>
+      <p><span class="direction">[Record all answers carefully. These determine your document requirements.]</span></p>
+    </div>
+
+    <h3>Script B: Follow-Up Call (They Asked You to Call Back)</h3>
+    <div class="script-block">
+      <span class="script-label">Re-Engagement Script</span>
+      <p><span class="speaker">Agent:</span> "Hi [Heir's Name], this is [Your Name] from Foreclosure Recovery Inc. We spoke on [date] about the surplus funds tied to the property at [Address]. You asked us to follow up today. Is this still a good time to talk?"</p>
+      <p><span class="direction">[If yes, pick up where you left off. If no, reschedule again -- calmly, patiently.]</span></p>
+    </div>
+  </div>
+
+  <!-- Section 8 -->
+  <div class="section" id="s8">
+    <h2>8. Handling Emotional Conversations</h2>
+    <p>You will encounter grief, anger, confusion, and suspicion. Sometimes all in the same call. Here is how to handle each.</p>
+
+    <h3>Grief</h3>
+    <div class="do-dont">
+      <div class="do-col">
+        <h4>Do This</h4>
+        <ul>
+          <li>"We are sorry for your loss."</li>
+          <li>"Take all the time you need."</li>
+          <li>"We can absolutely call back another day."</li>
+          <li>Lower your voice slightly. Slow your pace.</li>
+          <li>Allow silence. Do not try to fill every pause.</li>
+        </ul>
+      </div>
+      <div class="dont-col">
+        <h4>Never Do This</h4>
+        <ul>
+          <li>"I know how you feel." (You do not.)</li>
+          <li>Immediately pivot to the money.</li>
+          <li>Sound rushed or transactional.</li>
+          <li>Say "at least" anything ("at least there is money...")</li>
+          <li>Minimize the loss in any way.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Suspicion / "Is This a Scam?"</h3>
+    <div class="script-block">
+      <span class="script-label">Handling Scam Concerns Directly</span>
+      <p><span class="speaker">Agent:</span> "That is a completely fair question, and honestly, we are glad you asked. There are scammers out there and you should be cautious. Here is how you can verify everything we are telling you:"</p>
+      <p>"First, the surplus funds are a matter of public record. You can look up [Property Address] through the state's records to confirm that excess funds exist from the sale."</p>
+      <p>"Second, Foreclosure Recovery Inc. is a registered company. You can look us up at usforeclosurerecovery.com or call our main office at (888) 545-8007."</p>
+      <p>"Third, we never ask for upfront money. We work on contingency -- if we do not recover the funds, you owe us nothing. There is zero financial risk to you."</p>
+      <p>"Would you like a moment to verify any of that before we continue?"</p>
+    </div>
+
+    <h3>Anger / Hostility</h3>
+    <div class="script-block caution">
+      <span class="script-label">De-Escalation Response</span>
+      <p><span class="speaker">Agent:</span> "We understand this is a difficult situation, and the last thing we want to do is add to that. We are simply reaching out because these funds belong to the estate, and we believe the family should know about them. If you would prefer not to pursue this, that is completely your right. We respect that decision."</p>
+      <p><span class="direction">[If they continue to be hostile, end the call politely: "We appreciate your time. If anything changes, you can reach us at (888) 545-8007. Have a good day." -- Then mark the lead accordingly in the CRM.]</span></p>
+    </div>
+
+    <h3>Confusion / Overwhelmed</h3>
+    <div class="script-block alt">
+      <span class="script-label">Simplification Response</span>
+      <p><span class="speaker">Agent:</span> "Let us simplify this. When the property at [Address] was sold, it sold for more than what was owed. That extra money -- the surplus -- is sitting with the state right now. As an heir, you have a legal right to claim it. What we do is handle all the paperwork and filing so you do not have to figure it out on your own. We only charge a fee if the money is successfully recovered. Does that make sense so far?"</p>
+      <p><span class="direction">[Break the process into small, digestible pieces. Never dump the entire process on someone who is already overwhelmed.]</span></p>
+    </div>
+  </div>
+
+  <!-- Section 9 -->
+  <div class="section" id="s9">
+    <h2>9. Documents Required -- Deceased Owner Claims</h2>
+
+    <div class="alert alert-critical">
+      <strong>Missing Documents = Denied Claims</strong>
+      Do not submit a claim until every required document is in hand. A partially assembled claim package signals to the state that you are unprepared, and some states will reject the claim outright rather than ask for supplemental documents.
+    </div>
+
+    <h3>9.1 Standard Documents (Required for ALL Deceased Owner Claims)</h3>
+    <ul class="checklist">
+      <li>Signed Contingency Agreement between claimant and Foreclosure Recovery Inc.</li>
+      <li>Signed Assignment of Interest OR Limited Power of Attorney</li>
+      <li>Certified Death Certificate of the property owner (must be certified copy, not photocopy)</li>
+      <li>Government-issued photo ID of the claimant (heir, executor, or administrator)</li>
+      <li>Copy of the property deed showing the deceased as owner</li>
+      <li>State-specific claim form (completed and signed)</li>
+    </ul>
+
+    <h3>9.2 Additional Documents by Situation</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Situation</th>
+          <th>Additional Documents Required</th>
+          <th>Where to Get Them</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Will exists + Probate completed</strong></td>
+          <td>Letters Testamentary; Copy of the will; Court order appointing executor</td>
+          <td>Probate court in the jurisdiction where the estate was administered</td>
+        </tr>
+        <tr>
+          <td><strong>Will exists + No probate</strong></td>
+          <td>Copy of the will; Small estate affidavit (if state allows); Notarized affidavit of heirship</td>
+          <td>Family attorney or the probate court clerk's office can provide affidavit forms</td>
+        </tr>
+        <tr>
+          <td><strong>No will + Probate completed</strong></td>
+          <td>Letters of Administration; Court order appointing administrator</td>
+          <td>Probate court</td>
+        </tr>
+        <tr>
+          <td><strong>No will + No probate</strong></td>
+          <td>Notarized Affidavit of Heirship; Proof of relationship (birth certificate, marriage certificate); Small estate affidavit (if state allows and amount qualifies)</td>
+          <td>Notary public + vital records office</td>
+        </tr>
+        <tr>
+          <td><strong>Surviving spouse (community property state)</strong></td>
+          <td>Marriage certificate; Community property documentation; Spousal affidavit</td>
+          <td>Vital records office + county recorder (for property docs)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>9.3 Explaining Documents to the Heir</h3>
+    <p>Most heirs have never heard of "Letters Testamentary" or an "Affidavit of Heirship." Part of your job is explaining what these documents are and where to get them. Here are plain-English explanations you can use:</p>
+
+    <div class="script-block alt">
+      <span class="script-label">Plain-English Document Explanations</span>
+      <p><strong>Letters Testamentary:</strong> "This is a document from the probate court that officially says you are the executor of the estate. It gives you the legal authority to act on behalf of the estate. If probate has already been completed, you or the attorney who handled it should have a copy."</p>
+      <p><strong>Letters of Administration:</strong> "Same idea, but this is for situations where there was no will. The court appoints an administrator, and this document proves it."</p>
+      <p><strong>Affidavit of Heirship:</strong> "This is a sworn, notarized statement that identifies who the legal heirs are. It is used when probate was not opened. A notary public can notarize it -- you can usually find one at a bank, UPS store, or shipping center."</p>
+      <p><strong>Death Certificate:</strong> "We need a certified copy, which is the version with the raised seal or stamp from vital records. A photocopy or printout will not be accepted. Most states charge $10-25 for certified copies, and you can order them from the vital records office in the state where the person passed."</p>
+      <p><strong>Small Estate Affidavit:</strong> "Some states allow a simplified process for smaller estates that skips full probate. If the total estate value is below the state threshold, this affidavit can serve as proof of your authority to claim."</p>
+    </div>
+  </div>
+
+  <!-- Section 10 -->
+  <div class="section" id="s10">
+    <h2>10. Probate vs. Non-Probate Situations</h2>
+    <p>Understanding whether probate has occurred is critical because it determines which documents are available and how the claim gets filed.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Factor</th>
+          <th>Probate Completed</th>
+          <th>No Probate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Authority document</strong></td>
+          <td>Letters Testamentary or Letters of Administration (already issued by court)</td>
+          <td>Affidavit of Heirship (must be created and notarized)</td>
+        </tr>
+        <tr>
+          <td><strong>Ease of filing</strong></td>
+          <td>Simpler -- court has already established authority</td>
+          <td>Harder -- may need to prove relationship and standing</td>
+        </tr>
+        <tr>
+          <td><strong>Timeline</strong></td>
+          <td>Faster (documents already exist)</td>
+          <td>Slower (documents must be assembled, sometimes probate must be opened)</td>
+        </tr>
+        <tr>
+          <td><strong>Your role</strong></td>
+          <td>Collect existing documents and file</td>
+          <td>Guide the heir through the documentation process, recommend they consult an attorney if needed</td>
+        </tr>
+        <tr>
+          <td><strong>Cost to heir</strong></td>
+          <td>Minimal (certified copies only)</td>
+          <td>May vary -- notarization fees, potential attorney fees if probate needs to be opened</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="script-block">
+      <span class="script-label">When Probate Needs to Be Opened</span>
+      <p><span class="speaker">Agent:</span> "Based on what you have told us, it sounds like probate was not opened for [Deceased's Name]'s estate. In some cases, we can work with a small estate affidavit or affidavit of heirship to file the claim. But depending on the amount involved and the state requirements, it may be necessary to open probate first."</p>
+      <p>"We are not attorneys and cannot advise you on whether to open probate. What we can tell you is that the surplus amount is [$ Amount], and in our experience, that is worth pursuing. If you need a referral to a probate attorney, we can point you in the right direction."</p>
+      <p><span class="direction">[Never pressure someone into opening probate. Present the facts and let them decide.]</span></p>
+    </div>
+  </div>
+
+  <!-- Section 11 -->
+  <div class="section" id="s11">
+    <h2>11. Multiple Heirs -- Managing Group Dynamics</h2>
+    <p>When the deceased owner has multiple heirs, things get complicated fast. Siblings disagree. Estranged family members surface. One heir wants to move forward while another stalls. Here is how to handle it.</p>
+
+    <h3>Rule: One Point of Contact</h3>
+    <p>Identify one primary heir to work with. This should be the executor, administrator, or the most organized and cooperative family member. All communications flow through this person. You do not want to get caught in the middle of family disputes.</p>
+
+    <div class="script-block">
+      <span class="script-label">Establishing a Single Point of Contact</span>
+      <p><span class="speaker">Agent:</span> "Since there are multiple heirs involved, what works best is for us to work with one primary contact person who can coordinate with the rest of the family. That keeps things organized and makes sure nothing falls through the cracks. Would you be willing to serve as that point of contact, or is there another family member who would be better suited?"</p>
+    </div>
+
+    <h3>When Heirs Disagree</h3>
+    <div class="script-block caution">
+      <span class="script-label">Navigating Family Conflict</span>
+      <p><span class="speaker">Agent:</span> "We understand that not everyone in the family may be on the same page, and that is completely normal. Our role is to recover the surplus funds for the estate. How the funds are distributed among the heirs is a separate matter that would be handled according to the will or state inheritance law."</p>
+      <p>"What we need to move forward is agreement from the person who has legal authority over the estate -- the executor or administrator. If that authority has not been established yet, that would be the first step."</p>
+      <p><span class="direction">[Do NOT take sides. Do NOT mediate inheritance disputes. If the family cannot agree on who has authority, recommend they consult an attorney.]</span></p>
+    </div>
+
+    <div class="alert alert-critical">
+      <strong>Red Flag: Competing Claims</strong>
+      If two or more heirs each claim to be the rightful claimant and cannot agree, STOP. Do not file anything. Escalate to Foreclosure Recovery Inc. at (888) 545-8007. Filing with the wrong person's authorization can expose the company to liability.
+    </div>
+  </div>
+
+  <!-- Section 12 -->
+  <div class="section" id="s12">
+    <h2>12. Common Deceased Owner Scenarios & Scripts</h2>
+
+    <h3>Scenario A: Owner Passed Recently (Within 6 Months)</h3>
+    <div class="script-block">
+      <span class="script-label">Approach: Extra Gentle, No Urgency</span>
+      <p><span class="speaker">Agent:</span> "We understand this is still a very fresh loss, and we do not want to add to what you are dealing with. We just want the family to know that these funds exist and are available when you are ready. There is no immediate deadline. When the time is right, we are here to help. Would it be okay if we followed up in a few weeks?"</p>
+    </div>
+
+    <h3>Scenario B: Owner Passed Years Ago, Heir Did Not Know About Funds</h3>
+    <div class="script-block alt">
+      <span class="script-label">Approach: Informative, Build Credibility Fast</span>
+      <p><span class="speaker">Agent:</span> "We are reaching out because when the property at [Address] went through foreclosure and was sold, it actually sold for more than what was owed. That difference -- the surplus -- has been sitting with the state since [Year]. Most people have no idea this money exists because the state is not required to notify former owners or their families. The amount we are showing is approximately [$ Amount]. Does this sound like something you would want to look into?"</p>
+    </div>
+
+    <h3>Scenario C: Heir Already Has an Attorney Handling the Estate</h3>
+    <div class="script-block">
+      <span class="script-label">Approach: Collaborative, Not Competitive</span>
+      <p><span class="speaker">Agent:</span> "That is actually good news -- it means a lot of the legal groundwork has already been done. We are not looking to replace your attorney. What we specialize in is the surplus fund recovery process specifically, which is a different track from general estate administration. In many cases, estate attorneys are happy to have a specialist handle this piece. Would you be comfortable connecting us with your attorney, or would you prefer we send you information that you can share with them?"</p>
+    </div>
+
+    <h3>Scenario D: The Heir Is Elderly or Has Limited Mobility</h3>
+    <div class="script-block alt">
+      <span class="script-label">Approach: Patient, Offer Maximum Support</span>
+      <p><span class="speaker">Agent:</span> "We want to make this as easy as possible for you. We can handle everything by mail if that is more comfortable. We will send you pre-filled documents that just need your signature. If you have a family member or someone you trust who can help gather documents, that works too. There is no need to go to any office or make multiple trips anywhere."</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PART 3: CORPORATE/LLC CLAIMS -->
+  <!-- ============================================================ -->
+  <div class="part-divider" id="part3">
+    <div class="part-label">Part 3</div>
+    <div class="part-title">Corporate & LLC Entity Claims</div>
+  </div>
+
+  <!-- Section 13 -->
+  <div class="section" id="s13">
+    <h2>13. Understanding Corporate Entity Claims</h2>
+    <p>When the property owner of record is a company -- an LLC, corporation, partnership, or trust -- the recovery process is different from working with an individual. The company itself is the claimant, but companies do not pick up the phone. You need to find and work with the authorized human being who can act on behalf of that entity.</p>
+
+    <h3>Types of Entities You Will Encounter</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Entity Type</th>
+          <th>Who Has Authority</th>
+          <th>Key Document</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LLC (Active)</strong></td>
+          <td>Managing Member or Manager (per Operating Agreement)</td>
+          <td>Articles of Organization + Operating Agreement</td>
+        </tr>
+        <tr>
+          <td><strong>LLC (Dissolved)</strong></td>
+          <td>Last Managing Member or designated wind-down agent</td>
+          <td>Articles of Dissolution + Operating Agreement</td>
+        </tr>
+        <tr>
+          <td><strong>Corporation (Active)</strong></td>
+          <td>President, CEO, or authorized officer (per corporate resolution)</td>
+          <td>Articles of Incorporation + Corporate Resolution</td>
+        </tr>
+        <tr>
+          <td><strong>Corporation (Dissolved)</strong></td>
+          <td>Last officer or director, or court-appointed representative</td>
+          <td>Articles of Dissolution + Last filed Annual Report</td>
+        </tr>
+        <tr>
+          <td><strong>Partnership</strong></td>
+          <td>General Partner</td>
+          <td>Partnership Agreement</td>
+        </tr>
+        <tr>
+          <td><strong>Trust</strong></td>
+          <td>Trustee (current or successor)</td>
+          <td>Trust Agreement + Trustee Certification</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 14 -->
+  <div class="section" id="s14">
+    <h2>14. Finding the Authorized Person</h2>
+
+    <h3>Step-by-Step Research Process</h3>
+    <ol class="steps">
+      <li><strong>Check the Secretary of State website</strong> for the state where the entity was formed. Search by entity name. This will show you the registered agent, officers/members, formation date, and current status (active, dissolved, revoked, etc.).</li>
+      <li><strong>Pull the entity's filing documents.</strong> Most Secretary of State sites let you download Articles of Organization/Incorporation and Annual Reports for free or a small fee. These name the people involved.</li>
+      <li><strong>Cross-reference names with skip-trace data.</strong> Once you have the names of officers or members, use your skip-trace tools to get current contact information.</li>
+      <li><strong>Check for a registered agent.</strong> If you cannot reach the officers directly, the registered agent is a valid point of contact. They are legally required to accept service and communications on behalf of the entity.</li>
+      <li><strong>Search for the company online.</strong> Sometimes a quick search turns up a company website, LinkedIn profiles of officers, or news articles that give you context about the business and who runs it.</li>
+    </ol>
+
+    <div class="alert alert-info">
+      <strong>Dissolved Does Not Mean Dead</strong>
+      A dissolved LLC or corporation can still file a claim. The company may be administratively dissolved (failed to file annual reports) but the people behind it still exist and still have the right to those surplus funds. Do not skip a lead just because the entity shows as dissolved or revoked.
+    </div>
+  </div>
+
+  <!-- Section 15 -->
+  <div class="section" id="s15">
+    <h2>15. Corporate Outreach Scripts</h2>
+
+    <h3>Script A: Reaching the Business Owner / Managing Member</h3>
+    <div class="script-block">
+      <span class="script-label">Initial Contact -- Business Professional Tone</span>
+      <p><span class="speaker">Agent:</span> "Hi, may I speak with [Name]?"</p>
+      <p><span class="direction">[Wait for confirmation]</span></p>
+      <p><span class="speaker">Agent:</span> "[Name], my name is [Your Name] with Foreclosure Recovery Inc. We are an asset recovery firm, and we have identified surplus funds from a property sale tied to [Company Name]. Our records show the property was located at [Address]. Are you still involved with [Company Name]?"</p>
+      <p><span class="direction">[Let them respond. Their answer tells you a lot -- whether the company is still active, whether they remember the property, and whether they knew about surplus funds.]</span></p>
+    </div>
+
+    <div class="script-block alt">
+      <span class="script-label">If They Confirm Involvement</span>
+      <p><span class="speaker">Agent:</span> "Great. Here is the situation: when the property at [Address] went through foreclosure, it sold for more than what was owed. The difference -- approximately [$ Amount] -- is currently being held by the state as surplus funds. [Company Name] has a legal right to claim those funds, but the state will not release them without a formal filing."</p>
+      <p>"What we do is handle the entire claims process. We prepare and file all the documentation, communicate with the state on your behalf, and we work on contingency -- meaning there is no cost to you or the company unless we successfully recover the funds. Would you like to hear how the process works?"</p>
+    </div>
+
+    <h3>Script B: Reaching a Gatekeeper (Receptionist, Office Manager)</h3>
+    <div class="script-block">
+      <span class="script-label">Getting Through to the Decision-Maker</span>
+      <p><span class="speaker">Agent:</span> "Good morning. My name is [Your Name] with Foreclosure Recovery Inc. We have identified unclaimed funds that belong to [Company Name] from a previous property transaction. We need to speak with whoever handles financial or legal matters for the company. Who would that be?"</p>
+      <p><span class="direction">[Be direct and professional. Do not over-explain to the gatekeeper. Your goal is to get the right name and number.]</span></p>
+    </div>
+
+    <h3>Script C: Reaching Someone Who No Longer Runs the Company</h3>
+    <div class="script-block alt">
+      <span class="script-label">Former Officer / Member</span>
+      <p><span class="speaker">Agent:</span> "We understand you may no longer be actively involved with [Company Name]. The reason we are reaching out is that surplus funds from a property sale are still tied to the company, and someone with authority over the entity would need to authorize the recovery. Do you know who currently manages the company's affairs, or would you still be the right person to speak with about this?"</p>
+    </div>
+  </div>
+
+  <!-- Section 16 -->
+  <div class="section" id="s16">
+    <h2>16. Documents Required -- Corporate/LLC Claims</h2>
+
+    <h3>16.1 Active Company</h3>
+    <ul class="checklist">
+      <li>Signed Contingency Agreement (signed by authorized representative on behalf of the entity)</li>
+      <li>Signed Assignment of Interest OR Limited Power of Attorney (entity as grantor)</li>
+      <li>Articles of Organization (LLC) or Articles of Incorporation (Corp) -- filed with Secretary of State</li>
+      <li>Operating Agreement (LLC) or Corporate Resolution (Corp) authorizing the signatory to act on behalf of the entity</li>
+      <li>Certificate of Good Standing (if state requires it) -- obtained from Secretary of State</li>
+      <li>Government-issued photo ID of the person signing</li>
+      <li>EIN verification letter (IRS Form CP-575 or 147C) -- some states require this</li>
+      <li>State-specific claim form (completed and signed by authorized representative)</li>
+    </ul>
+
+    <h3>16.2 Dissolved Company</h3>
+    <ul class="checklist">
+      <li>Everything listed above for Active Company, plus:</li>
+      <li>Articles of Dissolution (filed with Secretary of State)</li>
+      <li>Most recent Annual Report or Statement of Information</li>
+      <li>Affidavit or declaration from last officer/member confirming they are authorized to wind down the entity's affairs</li>
+      <li>If company was involuntarily dissolved: documentation showing the individual's standing as last known officer/member</li>
+    </ul>
+
+    <h3>16.3 Trust-Owned Property</h3>
+    <ul class="checklist">
+      <li>Full Trust Agreement (or the relevant sections showing trust name, trustee authority, and beneficiaries)</li>
+      <li>Trustee Certification (a notarized statement confirming the trustee's identity and authority)</li>
+      <li>Government-issued photo ID of the trustee</li>
+      <li>If the original trustee has passed: successor trustee documentation and death certificate of original trustee</li>
+      <li>Amendment documents (if the trust has been amended)</li>
+    </ul>
+
+    <div class="script-block alt">
+      <span class="script-label">Explaining Corporate Documents to the Contact</span>
+      <p><strong>Operating Agreement:</strong> "This is the internal document that spells out who owns the LLC and who has the authority to make decisions. You would have signed it when the LLC was formed."</p>
+      <p><strong>Corporate Resolution:</strong> "This is a formal decision by the company's board or officers that authorizes a specific person to sign documents or take action on behalf of the corporation. If you do not have one, your corporate attorney can draft a simple resolution authorizing you to pursue this claim."</p>
+      <p><strong>Certificate of Good Standing:</strong> "This is a document from the Secretary of State that confirms the company is current on its filings and in good standing. You can usually order one online for $10-25."</p>
+      <p><strong>Articles of Dissolution:</strong> "If the company was officially closed, this is the document that was filed with the state to dissolve it. Even if the company is dissolved, the claim can still be filed -- we just need to show documentation of who had authority when the company closed."</p>
+    </div>
+  </div>
+
+  <!-- Section 17 -->
+  <div class="section" id="s17">
+    <h2>17. Dissolved vs. Active Companies -- How to Handle Each</h2>
+
+    <div class="decision-tree">
+      <div class="dt-question">Decision Tree: Company Status</div>
+      <div class="dt-branch">
+        <span class="dt-if">Is the company ACTIVE with the Secretary of State?</span>
+        <div class="dt-branch">
+          <span class="dt-if">YES:</span>
+          <span class="dt-then">Straightforward. Get the authorized person to sign. Collect standard corporate documents. File the claim.</span>
+        </div>
+        <div class="dt-branch">
+          <span class="dt-if">NO -- It is DISSOLVED.</span>
+          <div class="dt-branch">
+            <span class="dt-if">Was it voluntarily dissolved (the owners chose to close it)?</span>
+            <div class="dt-branch">
+              <span class="dt-if">YES:</span>
+              <span class="dt-then">The last officer/member can still file. Get Articles of Dissolution + a signed affidavit confirming their authority to wind down affairs. Some states allow a limited reinstatement solely for the purpose of pursuing claims.</span>
+            </div>
+          </div>
+          <div class="dt-branch">
+            <span class="dt-if">Was it administratively dissolved (failed to file annual reports)?</span>
+            <div class="dt-branch">
+              <span class="dt-if">YES:</span>
+              <span class="dt-then">The company may be able to reinstate by filing back reports and paying fees. If reinstatement is impractical, the last officer/member can file as the representative of the dissolved entity. Get the last Annual Report as proof of their position.</span>
+            </div>
+          </div>
+          <div class="dt-branch">
+            <span class="dt-if">Has the company been dissolved for over 3 years with no identifiable officer?</span>
+            <div class="dt-branch">
+              <span class="dt-if">YES:</span>
+              <span class="dt-then">This is complex. Escalate to Foreclosure Recovery Inc. at (888) 545-8007. Do not attempt to file without guidance.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <span class="script-label">Discussing Reinstatement With a Business Owner</span>
+      <p><span class="speaker">Agent:</span> "It looks like [Company Name] was administratively dissolved by the state, which usually happens when annual reports were not filed. The good news is that many states allow you to reinstate the company by filing the back reports and paying a fee. In some cases, this can be done online in a matter of days."</p>
+      <p>"We can not file the reinstatement for you -- that is something you or your attorney would handle -- but we can tell you that the surplus amount is [$ Amount], and reinstating the company would allow us to move forward with the claim. In our experience, the reinstatement fees are small compared to the recovery amount."</p>
+    </div>
+  </div>
+
+  <!-- Section 18 -->
+  <div class="section" id="s18">
+    <h2>18. Common Corporate Claim Objections & Responses</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:35%">Objection</th>
+          <th>Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"That company has been closed for years."</td>
+          <td>"We understand, and that is actually common in these situations. A dissolved company can still file a claim for surplus funds. The funds belong to the entity that owned the property, and as the last officer or member, you have the authority to pursue them. We handle all the paperwork."</td>
+        </tr>
+        <tr>
+          <td>"I need to check with my business partner."</td>
+          <td>"Absolutely -- that makes sense. We will send you an email summary of what we discussed so you can share it with your partner. When would be a good time for us to follow up?"</td>
+        </tr>
+        <tr>
+          <td>"I do not have those corporate documents anymore."</td>
+          <td>"That happens more often than you would think. Most of the documents we need can be obtained through the Secretary of State's office -- usually online. We can walk you through exactly what to request and where to find it."</td>
+        </tr>
+        <tr>
+          <td>"Why should I trust you with my company's information?"</td>
+          <td>"Fair question. We are a registered asset recovery firm -- you can verify us at usforeclosurerecovery.com or call our main office at (888) 545-8007. We work on contingency with no upfront fees, and our agreements clearly spell out the terms. You are welcome to have your attorney review everything before signing."</td>
+        </tr>
+        <tr>
+          <td>"Can I just file this myself?"</td>
+          <td>"You absolutely can. The process is open to anyone. What we bring is experience with the specific filing requirements, the documentation standards, and the follow-up process. We have handled hundreds of these claims and know exactly what each state expects. Most clients find it saves them significant time and reduces the risk of delays from paperwork errors."</td>
+        </tr>
+        <tr>
+          <td>"What is your fee?"</td>
+          <td>"We work on a contingency basis -- there is no cost upfront. Our fee is a percentage of the recovered amount, and it is clearly laid out in the agreement before you sign anything. If we do not recover the funds, you owe us nothing."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- PART 4: COMMUNICATION TOOLKIT -->
+  <!-- ============================================================ -->
+  <div class="part-divider" id="part4">
+    <div class="part-label">Part 4</div>
+    <div class="part-title">Universal Communication Toolkit</div>
+  </div>
+
+  <!-- Section 19 -->
+  <div class="section" id="s19">
+    <h2>19. Objection Handling Framework</h2>
+    <p>Every objection follows the same pattern. Use this four-step framework regardless of what the person says:</p>
+
+    <div class="quick-ref">
+      <h4>The A.C.E.S. Framework</h4>
+      <ul>
+        <li><strong>A -- Acknowledge.</strong> Validate what they said. "That is a fair point" or "We completely understand."</li>
+        <li><strong>C -- Clarify.</strong> Make sure you understand the real concern. "Just so we are on the same page, is your concern about [X]?"</li>
+        <li><strong>E -- Educate.</strong> Provide the relevant fact or explanation that addresses the concern.</li>
+        <li><strong>S -- Steer.</strong> Move the conversation forward. "Would it help if we sent you [something specific]?" or "What would make you more comfortable moving forward?"</li>
+      </ul>
+    </div>
+
+    <div class="script-block">
+      <span class="script-label">Example: "I Need to Think About It"</span>
+      <p><span class="speaker">Acknowledge:</span> "Of course -- this is not a small decision, and we would not expect you to rush into anything."</p>
+      <p><span class="speaker">Clarify:</span> "Is there a specific part of the process you would like more information about, or do you just need some time?"</p>
+      <p><span class="speaker">Educate:</span> "We can send you a written summary of everything we discussed, including the claim details, our agreement terms, and how the process works. That way you have it in writing to review."</p>
+      <p><span class="speaker">Steer:</span> "Would it be alright if we followed up next week to see where you stand?"</p>
+    </div>
+  </div>
+
+  <!-- Section 20 -->
+  <div class="section" id="s20">
+    <h2>20. Follow-Up Communication Cadence</h2>
+    <p>Persistence wins claims. But there is a line between persistent and pushy. Follow this schedule:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Touchpoint</th>
+          <th>Timing</th>
+          <th>Method</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1st Contact</td>
+          <td>Day 1</td>
+          <td>Phone call</td>
+          <td>Initial outreach using scripts from this guide</td>
+        </tr>
+        <tr>
+          <td>2nd Contact</td>
+          <td>Day 1 (if no answer)</td>
+          <td>Voicemail + Text/Email</td>
+          <td>Leave voicemail, send introductory email or text</td>
+        </tr>
+        <tr>
+          <td>3rd Contact</td>
+          <td>Day 3</td>
+          <td>Phone call</td>
+          <td>Follow-up call, reference voicemail/email</td>
+        </tr>
+        <tr>
+          <td>4th Contact</td>
+          <td>Day 7</td>
+          <td>Letter (mail)</td>
+          <td>Formal letter to physical address (see template in Section 22)</td>
+        </tr>
+        <tr>
+          <td>5th Contact</td>
+          <td>Day 10</td>
+          <td>Phone call</td>
+          <td>"Following up on the letter we sent..."</td>
+        </tr>
+        <tr>
+          <td>6th Contact</td>
+          <td>Day 14</td>
+          <td>Final call + email</td>
+          <td>"We want to make sure you have this opportunity before we close our file..."</td>
+        </tr>
+        <tr>
+          <td>7th Contact</td>
+          <td>Day 30</td>
+          <td>Final letter</td>
+          <td>Last attempt. Polite, no pressure. Include contact info.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-info">
+      <strong>After 7 Touches With No Response</strong>
+      Mark the lead as "unresponsive" in the CRM and move on. Do not continue to call. Revisit in 90 days with one more attempt if the funds are still unclaimed.
+    </div>
+  </div>
+
+  <!-- Section 21 -->
+  <div class="section" id="s21">
+    <h2>21. Voicemail Scripts</h2>
+
+    <h3>Voicemail A: Deceased Owner -- First Attempt</h3>
+    <div class="script-block">
+      <span class="script-label">Keep It Under 30 Seconds</span>
+      <p>"Hi [Name], this is [Your Name] with Foreclosure Recovery Inc. We are reaching out because we have identified unclaimed funds tied to a property at [Address] that was previously owned by [Deceased's Name]. These are legitimate funds being held by the state, and we believe the family may have a right to them. We would appreciate the chance to speak with you. You can reach us at (888) 545-8007 or call me directly at [Your Number]. Again, this is [Your Name] with Foreclosure Recovery. Thank you."</p>
+    </div>
+
+    <h3>Voicemail B: Corporate Entity -- First Attempt</h3>
+    <div class="script-block alt">
+      <span class="script-label">Keep It Under 30 Seconds</span>
+      <p>"Hi [Name], this is [Your Name] with Foreclosure Recovery Inc. We have located surplus funds from a property sale that are tied to [Company Name]. These funds are currently held by the state and require a formal claim to recover. We would like to discuss this with whoever handles financial matters for the company. Please call us back at (888) 545-8007 or reach me at [Your Number]. Thank you."</p>
+    </div>
+
+    <h3>Voicemail C: Follow-Up (Any Type)</h3>
+    <div class="script-block">
+      <span class="script-label">Brief and Specific</span>
+      <p>"Hi [Name], this is [Your Name] again from Foreclosure Recovery Inc. Just following up on the message we left on [date] about unclaimed surplus funds tied to [Address or Company Name]. We want to make sure you have the information you need. Please give us a call at (888) 545-8007 whenever it is convenient. Thank you."</p>
+    </div>
+  </div>
+
+  <!-- Section 22 -->
+  <div class="section" id="s22">
+    <h2>22. Letter & Email Templates</h2>
+
+    <h3>Letter Template: Deceased Owner Heir</h3>
+    <div class="script-block">
+      <span class="script-label">Formal Letter -- Print on Company Letterhead</span>
+      <p>[Date]</p>
+      <p>[Heir's Full Name]<br>[Address]<br>[City, State ZIP]</p>
+      <p>RE: Unclaimed Surplus Funds -- [Property Address]</p>
+      <p>Dear [Heir's Name],</p>
+      <p>We are writing on behalf of Foreclosure Recovery Inc. regarding surplus funds generated from the sale of the property located at [Property Address].</p>
+      <p>Our records indicate that [Deceased Owner's Name] was the owner of record at the time of the sale, and that approximately $[Amount] in surplus funds is currently being held by the state. As a potential heir or representative of the estate, you may have the legal right to claim these funds.</p>
+      <p>Foreclosure Recovery Inc. specializes in helping families recover surplus funds from property sales. We handle all documentation, filing, and follow-up with the state at no upfront cost. Our fee is paid only upon successful recovery.</p>
+      <p>We understand this involves a sensitive family matter and we approach every case with the respect it deserves. If you would like to learn more, please contact us at:</p>
+      <p>Phone: (888) 545-8007<br>Website: usforeclosurerecovery.com<br>Email: claim@usforeclosurerecovery.com</p>
+      <p>We look forward to hearing from you.</p>
+      <p>Respectfully,<br>[Your Name]<br>Asset Recovery Agent<br>Foreclosure Recovery Inc.</p>
+    </div>
+
+    <h3>Email Template: Corporate Entity</h3>
+    <div class="script-block alt">
+      <span class="script-label">Email -- Professional Subject Line</span>
+      <p><strong>Subject:</strong> Unclaimed Surplus Funds -- [Company Name] -- [Property Address]</p>
+      <p>Dear [Name],</p>
+      <p>We are reaching out from Foreclosure Recovery Inc. regarding surplus funds tied to a property previously owned by [Company Name] at [Property Address].</p>
+      <p>Following the sale of the property, approximately $[Amount] in surplus funds was generated and is currently held by the state. As [title -- Managing Member / President / Officer] of [Company Name], you may be authorized to file a claim for these funds.</p>
+      <p>We handle the entire recovery process on a contingency basis -- there is no cost unless we successfully recover the funds.</p>
+      <p>If you are interested or have questions, we are available at (888) 545-8007 or you can reply to this email. We can also send you the complete details in writing for your review.</p>
+      <p>Regards,<br>[Your Name]<br>Asset Recovery Agent<br>Foreclosure Recovery Inc.<br>usforeclosurerecovery.com</p>
+    </div>
+  </div>
+
+  <!-- Section 23 -->
+  <div class="section" id="s23">
+    <h2>23. Do's and Don'ts Quick Reference</h2>
+
+    <div class="do-dont">
+      <div class="do-col">
+        <h4>Always Do</h4>
+        <ul>
+          <li>Say "we" -- never "I"</li>
+          <li>Say "the state" -- never "the county"</li>
+          <li>Verify surplus amount before calling</li>
+          <li>Express condolences for deceased claims</li>
+          <li>Let them verify us independently</li>
+          <li>Explain documents in plain English</li>
+          <li>Log every contact in the CRM</li>
+          <li>Honor callback commitments exactly</li>
+          <li>Offer to send information in writing</li>
+          <li>Escalate when you are unsure</li>
+          <li>Be patient with confused or elderly contacts</li>
+          <li>Have the lead record open during calls</li>
+          <li>Recommend an attorney for legal questions</li>
+        </ul>
+      </div>
+      <div class="dont-col">
+        <h4>Never Do</h4>
+        <ul>
+          <li>Use high-pressure sales tactics</li>
+          <li>Provide legal advice of any kind</li>
+          <li>Make promises about timelines or amounts</li>
+          <li>File a claim with incomplete documents</li>
+          <li>Take sides in family disputes</li>
+          <li>Continue calling after 7 touches with no response</li>
+          <li>Guess at surplus amounts -- verify first</li>
+          <li>Say "I know how you feel" to a grieving person</li>
+          <li>Discuss fees before explaining the process</li>
+          <li>Rush someone who is emotional</li>
+          <li>Leave confidential info on voicemails beyond basics</li>
+          <li>Send documents to unverified email addresses</li>
+          <li>File with the wrong heir's authorization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 24 -->
+  <div class="section" id="s24">
+    <h2>24. Escalation Procedures</h2>
+    <p>Some situations are beyond what a field agent should handle alone. When you hit one of these triggers, stop what you are doing and escalate.</p>
+
+    <h3>Escalation Triggers</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Trigger</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Competing heirs claiming authority with no resolution</td>
+          <td>Stop all filing. Contact Foreclosure Recovery Inc. at (888) 545-8007. Do not pick a side.</td>
+        </tr>
+        <tr>
+          <td>Contact threatens legal action against you or the company</td>
+          <td>End the call politely. Document exactly what was said. Report to (888) 545-8007 immediately.</td>
+        </tr>
+        <tr>
+          <td>Suspected fraud (someone impersonating an heir or officer)</td>
+          <td>Do not proceed. Do not confront the person. Document your concerns and escalate.</td>
+        </tr>
+        <tr>
+          <td>Complex corporate structure (multiple entities, holding companies, foreign registrations)</td>
+          <td>Escalate for guidance before filing. These claims need careful structuring.</td>
+        </tr>
+        <tr>
+          <td>Contact claims another recovery firm is already working the claim</td>
+          <td>Do not pressure them to switch. Document the situation. Inform your team lead.</td>
+        </tr>
+        <tr>
+          <td>State requires documents you are unfamiliar with</td>
+          <td>Do not guess. Call (888) 545-8007 for guidance on that state's specific requirements.</td>
+        </tr>
+        <tr>
+          <td>Heir or officer is a minor</td>
+          <td>A minor cannot sign legal documents. Escalate immediately -- a guardian or court-appointed representative will be needed.</td>
+        </tr>
+        <tr>
+          <td>Property had multiple owners (individual + entity, or two separate entities)</td>
+          <td>Escalate to determine how the surplus should be split and who needs to sign.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 25 -->
+  <div class="section" id="s25">
+    <h2>25. Pre-Submission Quality Assurance Checklist</h2>
+    <p>Before you submit ANY sensitive claim, walk through this entire checklist. Check every item. If anything is missing or unclear, do not submit.</p>
+
+    <h3>25.1 Deceased Owner Claim -- Pre-Submission</h3>
+    <ul class="checklist">
+      <li>Surplus funds verified and amount confirmed</li>
+      <li>Death certificate is a <strong>certified</strong> copy (raised seal or stamp)</li>
+      <li>Relationship between claimant and deceased is documented and verified</li>
+      <li>Correct authority document obtained (Letters Testamentary, Letters of Administration, or Affidavit of Heirship)</li>
+      <li>All authority documents are current (not expired -- some states set expiration dates on letters)</li>
+      <li>Contingency agreement signed by the proper heir/representative</li>
+      <li>Assignment of Interest or Power of Attorney signed</li>
+      <li>Government-issued ID of the claimant is clear and not expired</li>
+      <li>Property deed copy showing deceased as owner</li>
+      <li>State-specific claim form completed in full -- no blank fields</li>
+      <li>All documents are legible (no blurry scans, no cut-off pages)</li>
+      <li>If multiple heirs: all heirs are identified and the signing heir has proper authority</li>
+      <li>No competing claims or unresolved family disputes</li>
+      <li>All names are spelled consistently across all documents</li>
+      <li>CRM notes are complete and up to date</li>
+    </ul>
+
+    <h3>25.2 Corporate/LLC Claim -- Pre-Submission</h3>
+    <ul class="checklist">
+      <li>Surplus funds verified and amount confirmed</li>
+      <li>Entity status confirmed with Secretary of State (active, dissolved, or revoked)</li>
+      <li>Authorized representative identified and verified against corporate documents</li>
+      <li>Articles of Organization/Incorporation obtained</li>
+      <li>Operating Agreement or Corporate Resolution on file</li>
+      <li>If dissolved: Articles of Dissolution and affidavit of authority obtained</li>
+      <li>Contingency agreement signed by authorized representative on behalf of entity</li>
+      <li>Assignment of Interest or Power of Attorney signed</li>
+      <li>Government-issued ID of the signatory is clear and not expired</li>
+      <li>EIN verification (if required by the state)</li>
+      <li>Certificate of Good Standing (if required by the state)</li>
+      <li>State-specific claim form completed in full -- no blank fields</li>
+      <li>Entity name on all documents matches exactly (including punctuation -- "LLC" vs. "L.L.C.")</li>
+      <li>All documents are legible</li>
+      <li>CRM notes are complete and up to date</li>
+    </ul>
+
+    <div class="alert alert-critical">
+      <strong>Zero Tolerance on Incomplete Submissions</strong>
+      If your claim package is missing even one document, the state will either reject it or shelve it indefinitely. An incomplete submission does not just delay the claim -- it signals to the state that you are not a credible filer. Get it right the first time.
+    </div>
+  </div>
+
+  <!-- Section 26 -->
+  <div class="section" id="s26">
+    <h2>26. Quick Reference Card</h2>
+    <p>Print this and keep it next to your phone.</p>
+
+    <div class="quick-ref">
+      <h4>Deceased Owner Claims -- At a Glance</h4>
+      <ul>
+        <li><strong>Step 1:</strong> Verify surplus amount + confirm owner is deceased</li>
+        <li><strong>Step 2:</strong> Identify the right heir (executor > administrator > spouse > child > sibling)</li>
+        <li><strong>Step 3:</strong> Make contact -- lead with empathy, explain the surplus, offer to help</li>
+        <li><strong>Step 4:</strong> Determine probate status -- probated vs. not probated</li>
+        <li><strong>Step 5:</strong> Collect documents (death cert, authority doc, ID, deed, signed agreements)</li>
+        <li><strong>Step 6:</strong> Run pre-submission checklist -- every item checked</li>
+        <li><strong>Step 7:</strong> File claim with the state</li>
+        <li><strong>Step 8:</strong> Follow up with the state every 2-4 weeks until resolved</li>
+      </ul>
+    </div>
+
+    <div class="quick-ref" style="margin-top: 15px;">
+      <h4>Corporate/LLC Claims -- At a Glance</h4>
+      <ul>
+        <li><strong>Step 1:</strong> Verify surplus amount + confirm entity ownership</li>
+        <li><strong>Step 2:</strong> Check Secretary of State for entity status and officers/members</li>
+        <li><strong>Step 3:</strong> Skip-trace the authorized representative</li>
+        <li><strong>Step 4:</strong> Make contact -- professional tone, explain the surplus, offer to help</li>
+        <li><strong>Step 5:</strong> Determine entity status (active vs. dissolved) and address accordingly</li>
+        <li><strong>Step 6:</strong> Collect documents (articles, operating agreement/resolution, ID, signed agreements)</li>
+        <li><strong>Step 7:</strong> Run pre-submission checklist -- every item checked</li>
+        <li><strong>Step 8:</strong> File claim with the state</li>
+        <li><strong>Step 9:</strong> Follow up with the state every 2-4 weeks until resolved</li>
+      </ul>
+    </div>
+
+    <div class="quick-ref" style="margin-top: 15px; background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);">
+      <h4>Emergency Escalation</h4>
+      <ul>
+        <li><strong>Main Line:</strong> (888) 545-8007</li>
+        <li><strong>Email:</strong> claim@usforeclosurerecovery.com</li>
+        <li><strong>When in doubt, stop and call.</strong> There is no penalty for asking. There are consequences for guessing.</li>
+      </ul>
+    </div>
+
+    <div style="text-align: center; padding: 40px 0 20px; color: var(--mid-gray); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px;">
+      <p style="margin-bottom: 6px;">&copy; 2026 Foreclosure Recovery Inc. All rights reserved.</p>
+      <p style="margin-bottom: 6px;">SOP-COMM-002 | Version 1.0 | March 2026</p>
+      <p>Internal Use Only -- Do Not Distribute Outside of Authorized Agent Network</p>
+    </div>
+  </div>
+
+</div><!-- /main-content -->
+
+<!-- ===== SCROLL SPY (highlight active TOC item) ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Hamburger menu toggle
+  var hamburger = document.getElementById('hamburgerBtn');
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+
+  function toggleMenu() {
+    hamburger.classList.toggle('open');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
+  }
+
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Close menu when a TOC link is tapped on mobile
+  document.querySelectorAll('.toc-list a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (window.innerWidth <= 900) closeMenu();
+    });
+  });
+
+  // Scroll spy
+  var links = document.querySelectorAll('.toc-list a');
+  var sections = [];
+  links.forEach(function(link) {
+    var id = link.getAttribute('href').substring(1);
+    var el = document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
+  });
+
+  function onScroll() {
+    var scrollPos = window.scrollY + 120;
+    var current = null;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.offsetTop <= scrollPos) {
+        current = sections[i];
+      }
+    }
+    links.forEach(function(l) { l.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
+  }
+
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+</script>
+
+</body>
+</html>

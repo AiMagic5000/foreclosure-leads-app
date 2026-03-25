@@ -3,6 +3,20 @@
     {
       "path": "/api/cron/scrape",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/webcast/drip",
+      "schedule": "0 6 * * *"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/lander",
+      "destination": "/lander/index.html"
+    },
+    {
+      "source": "/talks",
+      "destination": "/talks/index.html"
     }
   ],
   "headers": [
