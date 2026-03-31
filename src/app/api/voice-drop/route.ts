@@ -40,8 +40,9 @@ function phoneToSpoken(phone: string): string {
 
 function domainToSpoken(domain: string): string {
   return domain
+    .replace(/^https?:\/\//, "")
     .replace(/\./g, " dot ")
-    .replace(/^https?:\/\//, "");
+    .replace(/^usforeclosure/, "U. S. foreclosure");
 }
 
 function generateScript(lead: Record<string, unknown>, config: OperatorConfig): string {
