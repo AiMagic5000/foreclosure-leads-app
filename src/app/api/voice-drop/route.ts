@@ -1,89 +1,94 @@
 import { NextRequest, NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { resolveOperatorConfig, isCommsAuthorized } from "@/lib/operator-config";
+import type { OperatorConfig } from "@/lib/operator-config";
 
-const ADMIN_EMAIL = "coreypearsonemail@gmail.com";
 const MINIMAX_API_KEY = process.env.MINIMAX_API_KEY || "";
 const MINIMAX_BASE_URL = "https://api.minimax.io/v1";
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY || "";
 const ELEVENLABS_VOICE_ID = process.env.ELEVENLABS_VOICE_ID || "";
-const SLYBROADCAST_EMAIL = process.env.SLYBROADCAST_EMAIL || "";
-const SLYBROADCAST_PASSWORD = process.env.SLYBROADCAST_PASSWORD || "";
-const CALLBACK_NUMBER = process.env.CALLBACK_NUMBER || "8885458007";
 
-// Agent voice drop profiles
-interface VoiceAgent {
-  name: string;
-  extensionSpoken: string | null;
-  extensionDigit: string | null;
-  callbackLine: string;
-  emailAddress: string;
-}
-
-const DEFAULT_VOICE_AGENT: VoiceAgent = {
-  name: "Corey Pearson",
-  extensionSpoken: null,
-  extensionDigit: null,
-  callbackLine:
-    "call back and talk to Allie your recovery agent at eight, eight, eight, five, four, five, eight, zero, zero, seven",
-  emailAddress: "claim at U.S. foreclosure recovery dot com",
+const STATE_NAMES: Record<string, string> = {
+  AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
+  CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia",
+  HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa",
+  KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland",
+  MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi",
+  MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire",
+  NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina",
+  ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania",
+  RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee",
+  TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington",
+  WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming", DC: "District of Columbia",
 };
 
-const VOICE_AGENT_PROFILES: Record<string, VoiceAgent> = {
-  "rebecca@usforeclosurerecovery.com": {
-    name: "Rebecca Maguire",
-    extensionSpoken: "extension six",
-    extensionDigit: "6",
-    callbackLine:
-      "call back and ask for Rebecca at eight, eight, eight, five, four, five, eight, zero, zero, seven, extension six",
-    emailAddress: "rebecca at U.S. foreclosure recovery dot com",
-  },
-  "joshua@usforeclosurerecovery.com": {
-    name: "Joshua Goc-ong",
-    extensionSpoken: "extension seven",
-    extensionDigit: "7",
-    callbackLine:
-      "call back and ask for Joshua at eight, eight, eight, five, four, five, eight, zero, zero, seven, extension seven",
-    emailAddress: "joshua at U.S. foreclosure recovery dot com",
-  },
-};
-
-function getVoiceAgent(agentEmail: string | null): VoiceAgent {
-  if (!agentEmail) return DEFAULT_VOICE_AGENT;
-  return VOICE_AGENT_PROFILES[agentEmail.toLowerCase()] || DEFAULT_VOICE_AGENT;
+function stateToFullName(state: string): string {
+  const upper = state.trim().toUpperCase();
+  return STATE_NAMES[upper] || state;
 }
 
-function generateScript(lead: Record<string, unknown>): string {
+function formatDollarForSpeech(amount: number): string {
+  const rounded = Math.round(amount / 1000) * 1000;
+  return `$${rounded.toLocaleString("en-US")}`;
+}
+
+function phoneToSpoken(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  return digits.split("").join(", ");
+}
+
+function domainToSpoken(domain: string): string {
+  return domain
+    .replace(/\./g, " dot ")
+    .replace(/^https?:\/\//, "");
+}
+
+function generateScript(lead: Record<string, unknown>, config: OperatorConfig): string {
   const ownerName = String(lead.owner_name || "Homeowner");
-  const firstName = ownerName.split(" ")[0] || "Homeowner";
   const propertyAddress = String(lead.property_address || "your property");
   const city = String(lead.city || "");
-  const state = String(lead.state || "");
+  const stateRaw = String(lead.state || lead.state_abbr || "");
+  const stateFull = stateToFullName(stateRaw);
   const fullAddress =
-    city && state ? `${propertyAddress}, ${city} ${state}` : propertyAddress;
-  const apnNumber = String(
-    lead.apn_number || lead.parcel_id || "your property"
-  );
-  const agent = getVoiceAgent(
-    lead.agent_email ? String(lead.agent_email) : null
-  );
+    city && stateFull ? `${propertyAddress}, ${city}, ${stateFull}` : propertyAddress;
 
-  const extPart = agent.extensionSpoken ? `, ${agent.extensionSpoken}` : "";
+  const overage = Number(lead.overage_amount) || 0;
+  const statedAmount = overage > 10000 ? overage - 10000 : overage;
+  const surplusLine =
+    statedAmount > 0
+      ? `A forensic audit has identified surplus funds in excess of ${formatDollarForSpeech(statedAmount)} -- also known as overages -- from the equity in your property that exceed the lender's claim from the foreclosure sale.`
+      : `A forensic audit has identified surplus funds -- also known as overages -- from the equity in your property that exceed the lender's claim from the foreclosure sale.`;
 
-  return `This is ${agent.name} from Foreclosure Recovery Inc. This message is specifically for ${ownerName}, or to any family members, to let ${firstName} know:
+  const agentName = config.displayName;
+  const companySpoken = config.companyName;
+  const phoneSpoken = phoneToSpoken(config.phoneDisplay);
+  const websiteSpoken = domainToSpoken(config.websiteUrl);
 
-We are obligated to inform you that the property at ${fullAddress}, APN number ${apnNumber}, is going to close out with excess funds associated with the homes equity after the bank has been paid from the foreclosure sale.
+  return `Hi, this message is for ${ownerName}.
 
-We want to make sure that when the funds are distributed, they are sent to the correct address. We need your current forwarding address in order to send the check.
+My name is ${agentName}, calling on behalf of ${companySpoken}. We are legally required to inform you that a forensic audit has been completed on the property located at ${fullAddress}.
 
-Please contact us at eight, eight, eight, five, four, five, eight, zero, zero, seven${extPart} or email us at ${agent.emailAddress} to update your forwarding address, so the funds that are collected after the bank has been made whole from the foreclosure sale can be distributed to you in a timely manner.
+This is NOT a sales call, and there is no cost or money required from you in connection with this communication.
 
-Please get a pen and replay this message to take down our phone number so you can ${agent.callbackLine}.
+If the person receiving this message is not the primary deed holder but is an heir, successor, or party associated with this property in any way, it is equally important that you respond as soon as possible.
 
-Thank you.`;
+${surplusLine} These funds have not yet been distributed and legally belong to you or your heirs.
+
+If there were any liens or encumbrances on the property at the time of foreclosure, please know that those obligations are accounted for within the surplus -- and there are still remaining funds that require distribution to the primary deed holder or their heirs.
+
+Call as soon as possible so we can begin processing your claim and get those funds distributed as quickly as possible.
+
+Please return this call at your earliest convenience.
+
+To learn more about our process, feel free to visit us at: ${websiteSpoken}.
+
+Again this is ${agentName} -- ${phoneSpoken}.
+
+We look forward to hearing from you.`;
 }
 
-async function generateAudioMiniMax(script: string): Promise<Buffer> {
+async function generateAudioMiniMax(script: string, voiceId: string): Promise<Buffer> {
   const response = await fetch(`${MINIMAX_BASE_URL}/t2a_v2`, {
     method: "POST",
     headers: {
@@ -93,7 +98,7 @@ async function generateAudioMiniMax(script: string): Promise<Buffer> {
     body: JSON.stringify({
       model: "speech-02-hd",
       text: script,
-      voice_setting: { voice_id: "Narrator" },
+      voice_setting: { voice_id: voiceId },
       audio_setting: { format: "mp3", sample_rate: 44100 },
     }),
   });
@@ -145,11 +150,11 @@ async function generateAudioElevenLabs(script: string): Promise<Buffer> {
   return Buffer.from(arrayBuffer);
 }
 
-async function generateAudio(script: string): Promise<Buffer> {
+async function generateAudio(script: string, voiceId: string): Promise<Buffer> {
   // Primary: MiniMax 2.5
   if (MINIMAX_API_KEY) {
     try {
-      return await generateAudioMiniMax(script);
+      return await generateAudioMiniMax(script, voiceId);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error(`MiniMax TTS failed, falling back to ElevenLabs: ${msg}`);
@@ -166,18 +171,37 @@ async function generateAudio(script: string): Promise<Buffer> {
   );
 }
 
+async function uploadAudioToStorage(audioBuffer: Buffer, filename: string): Promise<string> {
+  const bucket = "voicedrops";
+  // Ensure bucket exists (idempotent -- ignores if already created)
+  await supabaseAdmin.storage.createBucket(bucket, { public: true }).catch(() => {});
+
+  const { error } = await supabaseAdmin.storage
+    .from(bucket)
+    .upload(filename, audioBuffer, {
+      contentType: "audio/mpeg",
+      upsert: true,
+    });
+
+  if (error) throw new Error(`Storage upload failed: ${error.message}`);
+
+  const { data } = supabaseAdmin.storage.from(bucket).getPublicUrl(filename);
+  return data.publicUrl;
+}
+
 async function sendSlyBroadcast(
   phoneNumber: string,
-  audioUrl: string
+  audioUrl: string,
+  config: OperatorConfig
 ): Promise<{ success: boolean; campaignId?: string; error?: string }> {
   const formData = new URLSearchParams();
-  formData.append("c_uid", SLYBROADCAST_EMAIL);
-  formData.append("c_password", SLYBROADCAST_PASSWORD);
+  formData.append("c_uid", config.slybroadcastEmail);
+  formData.append("c_password", config.slybroadcastPassword);
   formData.append("c_method", "new_campaign");
   formData.append("c_phone", phoneNumber);
   formData.append("c_url", audioUrl);
   formData.append("c_audio", "mp3");
-  formData.append("c_callerID", CALLBACK_NUMBER);
+  formData.append("c_callerID", config.slyCallbackNumber);
   formData.append("c_date", "now");
 
   const response = await fetch(
@@ -223,24 +247,7 @@ export async function POST(request: NextRequest) {
 
     const userEmail = user.emailAddresses?.[0]?.emailAddress?.toLowerCase();
 
-    // Allow admin and any user with an active partnership+ account
-    let isAuthorized = userEmail === ADMIN_EMAIL.toLowerCase();
-    if (!isAuthorized && userEmail) {
-      const { data: userPin } = await supabaseAdmin
-        .from("user_pins")
-        .select("package_type, is_active")
-        .eq("email", userEmail)
-        .single();
-      if (
-        userPin?.is_active &&
-        ["partnership", "owner_operator", "admin"].includes(
-          userPin.package_type
-        )
-      ) {
-        isAuthorized = true;
-      }
-    }
-    if (!isAuthorized) {
+    if (!userEmail || !(await isCommsAuthorized(userEmail))) {
       return NextResponse.json(
         { error: "Access required - Partnership plan or higher" },
         { status: 403 }
@@ -248,7 +255,23 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { leadId, testPhone, testName } = body;
+    const { leadId, testPhone, testName, operatorPinId } = body;
+
+    const config = await resolveOperatorConfig({
+      clerkEmail: userEmail,
+      operatorPinId: operatorPinId || null,
+      leadId,
+    });
+
+    // Guard: never send voice drops with admin info for non-admin users
+    const ADMIN_EMAIL_LOWER = "coreypearsonemail@gmail.com";
+    if (!config.pinId && userEmail?.toLowerCase() !== ADMIN_EMAIL_LOWER) {
+      console.error("[voice-drop] Blocked: non-admin user resolved to admin defaults", { userEmail, operatorPinId, leadId });
+      return NextResponse.json(
+        { error: "Could not resolve your agent profile. Please refresh the page and try again." },
+        { status: 422 }
+      );
+    }
 
     // TEST MODE: send to any phone number with sample data
     if (testPhone) {
@@ -265,12 +288,13 @@ export async function POST(request: NextRequest) {
         property_address: "123 Main Street",
         parcel_id: "TEST-0001",
       };
-      const script = generateScript(testLead);
+      const script = generateScript(testLead, config);
 
-      const audioBuffer = await generateAudio(script);
-      const audioBase64 = audioBuffer.toString("base64");
+      const audioBuffer = await generateAudio(script, config.voiceId);
+      const audioFilename = `vd-test-${Date.now()}.mp3`;
+      const audioUrl = await uploadAudioToStorage(audioBuffer, audioFilename);
 
-      const result = await sendSlyBroadcast(cleanPhone, audioBase64);
+      const result = await sendSlyBroadcast(cleanPhone, audioUrl, config);
 
       if (!result.success) {
         return NextResponse.json(
@@ -329,15 +353,16 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate personalized script
-    const script = generateScript(lead);
+    const script = generateScript(lead, config);
 
     // Generate audio via MiniMax 2.5 (primary) or ElevenLabs (fallback)
-    const audioBuffer = await generateAudio(script);
-    const audioBase64 = audioBuffer.toString("base64");
+    const audioBuffer = await generateAudio(script, config.voiceId);
+    const audioFilename = `vd-${leadId}-${Date.now()}.mp3`;
+    const audioUrl = await uploadAudioToStorage(audioBuffer, audioFilename);
 
     // Send via SlyBroadcast
     const cleanPhone = cleanPhoneNumber(lead.primary_phone);
-    const result = await sendSlyBroadcast(cleanPhone, audioBase64);
+    const result = await sendSlyBroadcast(cleanPhone, audioUrl, config);
 
     if (!result.success) {
       await supabaseAdmin
