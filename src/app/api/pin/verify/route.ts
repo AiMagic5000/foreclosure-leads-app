@@ -62,6 +62,8 @@ export async function POST(request: NextRequest) {
           valid: true,
           states_access: row.states_access,
           isAdmin: false,
+          role: row.role || 'standard',
+          pinId: row.id,
         })
       }
     }

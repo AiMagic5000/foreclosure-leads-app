@@ -379,7 +379,7 @@ export default function ContractAdminPage() {
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null)
   const pinInputRefs = useRef<(HTMLInputElement | null)[]>([])
 
-  const VALID_PINS = ["45202600", "10004500", "77788800"]
+  const VALID_PINS = ["89169100", "45202600", "10004500", "77788800"]
 
   const requirePin = useCallback((action: () => void) => {
     if (pinUnlocked) {

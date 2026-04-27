@@ -5,10 +5,17 @@ import { useUser } from "@clerk/nextjs"
 
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
 
+type AccountType = 'basic' | 'partnership' | 'owner_operator' | 'admin'
+
 interface PinContextType {
   isVerified: boolean
   statesAccess: string[]
   isAdmin: boolean
+  isOwnerOperator: boolean
+  userRole: 'standard' | 'owner_operator' | 'admin'
+  accountType: AccountType
+  pinEmail: string | null
+  pinId: string | null
   verifyPin: (email: string, pin: string) => Promise<{ valid: boolean; error?: string }>
   clearPin: () => void
   isLoading: boolean
@@ -21,23 +28,72 @@ export function PinProvider({ children }: { children: ReactNode }) {
   const [isVerified, setIsVerified] = useState(false)
   const [statesAccess, setStatesAccess] = useState<string[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isOwnerOperator, setIsOwnerOperator] = useState(false)
+  const [userRole, setUserRole] = useState<'standard' | 'owner_operator' | 'admin'>('standard')
+  const [accountType, setAccountType] = useState<AccountType>('basic')
+  const [pinEmail, setPinEmail] = useState<string | null>(null)
+  const [pinId, setPinId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Auto-verify admin users on mount
+  // Fetch account type from DB for all users on mount
   useEffect(() => {
-    if (!isLoaded) return
+    if (!isLoaded || !user) {
+      if (isLoaded) setIsLoading(false)
+      return
+    }
 
-    const userEmail = user?.emailAddresses?.[0]?.emailAddress?.toLowerCase()
+    const userEmail = user.emailAddresses?.[0]?.emailAddress?.toLowerCase()
 
+    // Auto-verify admin by email
     if (userEmail === ADMIN_EMAIL.toLowerCase()) {
       setIsVerified(true)
       setStatesAccess(["ALL"])
       setIsAdmin(true)
-      setIsLoading(false)
-      return
+      setIsOwnerOperator(false)
+      setUserRole('admin')
+      setAccountType('admin')
+      setPinEmail(userEmail)
     }
 
-    setIsLoading(false)
+    // Fetch account type from DB for ALL users (including admin)
+    fetch("/api/user/role")
+      .then((res) => res.json())
+      .then((data) => {
+        let acctType = (data.accountType || 'basic') as AccountType
+
+        // If user is admin via DB role, override accountType to admin
+        if (data.isAdmin) {
+          acctType = 'admin'
+          setIsAdmin(true)
+          setIsVerified(true)
+          setStatesAccess(["ALL"])
+          setUserRole('admin')
+          setPinEmail(userEmail || null)
+        }
+
+        setAccountType(acctType)
+
+        // If account_type is owner_operator, reflect that
+        if (acctType === 'owner_operator') {
+          setIsOwnerOperator(true)
+        }
+
+        // Set pinId and statesAccess from user_pins lookup
+        if (data.pinId) {
+          setPinId(data.pinId)
+          setIsVerified(true)
+          setPinEmail(userEmail || null)
+        }
+        if (data.statesAccess && data.statesAccess.length > 0) {
+          setStatesAccess(data.statesAccess)
+        }
+      })
+      .catch(() => {
+        // silently fail, defaults are fine
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [user, isLoaded])
 
   const verifyPin = useCallback(async (email: string, pin: string): Promise<{ valid: boolean; error?: string }> => {
@@ -56,6 +112,11 @@ export function PinProvider({ children }: { children: ReactNode }) {
         setIsVerified(true)
         setStatesAccess(data.states_access || [])
         setIsAdmin(data.isAdmin || false)
+        const role = data.role || 'standard'
+        setIsOwnerOperator(role === 'owner_operator')
+        setUserRole(data.isAdmin ? 'admin' : role)
+        setPinEmail(email)
+        setPinId(data.pinId || null)
         return { valid: true }
       }
 
@@ -71,6 +132,10 @@ export function PinProvider({ children }: { children: ReactNode }) {
     setIsVerified(false)
     setStatesAccess([])
     setIsAdmin(false)
+    setIsOwnerOperator(false)
+    setUserRole('standard')
+    setPinEmail(null)
+    setPinId(null)
   }, [])
 
   return (
@@ -79,6 +144,11 @@ export function PinProvider({ children }: { children: ReactNode }) {
         isVerified,
         statesAccess,
         isAdmin,
+        isOwnerOperator,
+        userRole,
+        accountType,
+        pinEmail,
+        pinId,
         verifyPin,
         clearPin,
         isLoading,

@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { email, states, packageType, gumroadSaleId } = await request.json()
+    const { email, states, packageType, gumroadSaleId, role } = await request.json()
 
     if (!email || !states || !Array.isArray(states) || states.length === 0) {
       return NextResponse.json(
@@ -59,6 +59,7 @@ export async function POST(request: NextRequest) {
         package_type: packageType || null,
         gumroad_sale_id: gumroadSaleId || null,
         is_active: true,
+        role: role || 'standard',
       })
       .select("id")
       .single()
@@ -94,7 +95,7 @@ export async function GET() {
 
     const { data: pins, error: queryError } = await supabaseAdmin
       .from("user_pins")
-      .select("id, email, states_access, package_type, gumroad_sale_id, is_active, created_at, last_used_at")
+      .select("id, email, states_access, package_type, gumroad_sale_id, is_active, created_at, last_used_at, role")
       .order("created_at", { ascending: false })
 
     if (queryError) {

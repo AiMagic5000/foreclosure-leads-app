@@ -1,14 +1,16 @@
 "use client"
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   ComposableMap,
   Geographies,
   Geography,
+  Marker,
   ZoomableGroup,
 } from 'react-simple-maps';
-import { Search, RotateCcw, Download, X, MapPin, Phone, Mail, Globe, Users } from 'lucide-react';
+import { Search, RotateCcw, Download, X, MapPin, Phone, Mail, Globe, Users, FileText, Printer, Lock, ShieldAlert } from 'lucide-react';
 import { findCountyContact, type CountyContact } from '@/data/county-directory';
+import { findCountyCourtInfo, type CountyCourtInfo } from '@/data/county-court-directory';
 
 // Judicial foreclosure states (require court process) - BLUE
 const JUDICIAL_STATES = new Set([
@@ -72,10 +74,35 @@ interface CountyMapProps {
   onAddToDashboard?: (stateAbbr: string) => void;
   isPinVerified?: boolean;
   onPinRequired?: () => void;
+  isOwnerOperator?: boolean;
 }
 
 // US counties TopoJSON URL
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json';
+
+// US states TopoJSON URL (for state border overlay)
+const STATES_GEO_URL = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
+
+// Approximate geographic centroids for state abbreviation labels
+const STATE_CENTROIDS: Record<string, [number, number]> = {
+  'AL': [-86.9, 32.8], 'AK': [-153.5, 64.2], 'AZ': [-111.7, 34.2],
+  'AR': [-92.4, 34.8], 'CA': [-119.7, 37.2], 'CO': [-105.5, 39.0],
+  'CT': [-72.7, 41.6], 'DE': [-75.5, 39.0], 'FL': [-81.7, 28.6],
+  'GA': [-83.5, 32.7], 'HI': [-155.5, 20.0], 'ID': [-114.7, 44.4],
+  'IL': [-89.4, 40.0], 'IN': [-86.3, 39.8], 'IA': [-93.5, 42.0],
+  'KS': [-98.3, 38.5], 'KY': [-85.3, 37.8], 'LA': [-91.9, 31.0],
+  'ME': [-69.2, 45.4], 'MD': [-76.6, 39.0], 'MA': [-71.8, 42.2],
+  'MI': [-84.5, 44.3], 'MN': [-94.3, 46.3], 'MS': [-89.7, 32.7],
+  'MO': [-92.5, 38.4], 'MT': [-109.6, 47.0], 'NE': [-99.8, 41.5],
+  'NV': [-116.6, 39.4], 'NH': [-71.6, 43.7], 'NJ': [-74.7, 40.1],
+  'NM': [-106.0, 34.4], 'NY': [-75.5, 42.9], 'NC': [-79.4, 35.5],
+  'ND': [-100.5, 47.5], 'OH': [-82.8, 40.3], 'OK': [-97.5, 35.5],
+  'OR': [-120.5, 44.0], 'PA': [-77.6, 40.9], 'RI': [-71.5, 41.7],
+  'SC': [-80.9, 33.9], 'SD': [-100.2, 44.4], 'TN': [-86.3, 35.8],
+  'TX': [-99.3, 31.5], 'UT': [-111.7, 39.3], 'VT': [-72.6, 44.1],
+  'VA': [-79.4, 37.5], 'WA': [-120.7, 47.4], 'WV': [-80.6, 38.6],
+  'WI': [-89.8, 44.6], 'WY': [-107.5, 43.0], 'DC': [-77.0, 38.9],
+};
 
 export function CountyMap({
   isDark = false,
@@ -83,14 +110,18 @@ export function CountyMap({
   onDownloadLeads,
   onAddToDashboard,
   isPinVerified = false,
-  onPinRequired
+  onPinRequired,
+  isOwnerOperator = false
 }: CountyMapProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCounty, setSelectedCounty] = useState<CountyData | null>(null);
   const [leadData, setLeadData] = useState<Record<string, number>>({});
   const [position, setPosition] = useState({ coordinates: [-96, 38] as [number, number], zoom: 1 });
   const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
+  const [hoveredCountyName, setHoveredCountyName] = useState<string | null>(null);
+  const [hoveredCountyPos, setHoveredCountyPos] = useState<{ x: number; y: number } | null>(null);
   const [totalLeads, setTotalLeads] = useState(0);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
 
   // Fetch lead data from API (with mock fallback)
   useEffect(() => {
@@ -294,7 +325,17 @@ export function CountyMap({
       </div>
 
       {/* Map */}
-      <div className="relative" style={{ height: '400px' }}>
+      <div
+        ref={mapContainerRef}
+        className="relative"
+        style={{ height: '400px' }}
+        onMouseMove={(e) => {
+          if (mapContainerRef.current) {
+            const rect = mapContainerRef.current.getBoundingClientRect();
+            setHoveredCountyPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+          }
+        }}
+      >
         <ComposableMap
           projection="geoAlbersUsa"
           projectionConfig={{ scale: 1000 }}
@@ -305,6 +346,7 @@ export function CountyMap({
             center={position.coordinates}
             onMoveEnd={({ coordinates, zoom }: { coordinates: [number, number]; zoom: number }) => setPosition({ coordinates, zoom })}
           >
+            {/* Layer 1: County fills */}
             <Geographies geography={GEO_URL}>
               {({ geographies }: { geographies: Array<{ id: string; rsmKey: string; properties: Record<string, string> }> }) =>
                 geographies.map((geo) => {
@@ -316,8 +358,15 @@ export function CountyMap({
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
-                      onMouseEnter={() => setHoveredCounty(fips)}
-                      onMouseLeave={() => setHoveredCounty(null)}
+                      onMouseEnter={() => {
+                        setHoveredCounty(fips);
+                        setHoveredCountyName(geo.properties?.name || null);
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredCounty(null);
+                        setHoveredCountyName(null);
+                        setHoveredCountyPos(null);
+                      }}
                       onClick={() => handleCountyClick(geo)}
                       style={{
                         default: {
@@ -346,8 +395,100 @@ export function CountyMap({
                 })
               }
             </Geographies>
+
+            {/* Layer 2: State borders (white, on top of counties) */}
+            <Geographies geography={STATES_GEO_URL}>
+              {({ geographies }: { geographies: Array<{ id: string; rsmKey: string; properties: Record<string, string> }> }) =>
+                geographies.map((geo) => (
+                  <Geography
+                    key={`state-border-${geo.rsmKey}`}
+                    geography={geo}
+                    style={{
+                      default: {
+                        fill: 'none',
+                        stroke: '#ffffff',
+                        strokeWidth: 3 / position.zoom,
+                        outline: 'none',
+                        pointerEvents: 'none',
+                      },
+                      hover: {
+                        fill: 'none',
+                        stroke: '#ffffff',
+                        strokeWidth: 3 / position.zoom,
+                        outline: 'none',
+                        pointerEvents: 'none',
+                      },
+                      pressed: {
+                        fill: 'none',
+                        stroke: '#ffffff',
+                        strokeWidth: 3 / position.zoom,
+                        outline: 'none',
+                        pointerEvents: 'none',
+                      },
+                    }}
+                  />
+                ))
+              }
+            </Geographies>
+
+            {/* Layer 3: State abbreviation labels (fade as zoom increases) */}
+            {Object.entries(STATE_CENTROIDS).map(([stateCode, coords]) => {
+              const labelOpacity = Math.max(0.15, 1 - (position.zoom - 1) / 3);
+              const fontSize = 10 / position.zoom;
+
+              return (
+                <Marker key={`label-${stateCode}`} coordinates={coords}>
+                  <text
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                    style={{
+                      fontSize,
+                      fontWeight: 700,
+                      fontFamily: 'system-ui, sans-serif',
+                      fill: '#ffffff',
+                      opacity: labelOpacity,
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                      textShadow: '0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6)',
+                      paintOrder: 'stroke',
+                      stroke: 'rgba(0,0,0,0.5)',
+                      strokeWidth: 2 / position.zoom,
+                      strokeLinejoin: 'round' as const,
+                    }}
+                  >
+                    {stateCode}
+                  </text>
+                </Marker>
+              );
+            })}
           </ZoomableGroup>
         </ComposableMap>
+
+        {/* County info icon tooltip (visible at zoom > 2) */}
+        {position.zoom > 2 && hoveredCounty && hoveredCountyName && hoveredCountyPos && (
+          <div
+            style={{
+              position: 'absolute',
+              left: hoveredCountyPos.x + 12,
+              top: hoveredCountyPos.y - 32,
+              pointerEvents: 'none',
+              zIndex: 20,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              backgroundColor: 'rgba(15, 23, 42, 0.92)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '6px',
+              padding: '4px 8px',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <span style={{ fontSize: '13px', color: '#93c5fd', lineHeight: 1 }}>&#x2139;</span>
+            <span style={{ fontSize: '11px', color: '#f1f5f9', fontWeight: 600, fontFamily: 'system-ui, sans-serif' }}>
+              {hoveredCountyName} County
+            </span>
+          </div>
+        )}
 
         {/* Zoom Controls */}
         <div
@@ -411,6 +552,7 @@ export function CountyMap({
       {/* County Popup */}
       {selectedCounty && (() => {
         const contact = findCountyContact(selectedCounty.state, selectedCounty.name);
+        const courtInfo = findCountyCourtInfo(selectedCounty.state, selectedCounty.name);
         return (
           <div
             className="absolute bottom-20 left-1/2 transform -translate-x-1/2 rounded-xl p-4 shadow-xl max-w-sm w-full mx-4 z-10"
@@ -486,53 +628,198 @@ export function CountyMap({
               </div>
             )}
 
-            {/* County Directory Contact Info */}
-            {contact && (
-              <div className="mt-3 pt-3 border-t space-y-2" style={{ borderColor: theme.border }}>
-                <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: theme.textSecondary }}>
-                  County Contact
-                </p>
-                {contact.phone && (
-                  <a
-                    href={`tel:${contact.phone.replace(/[^+\d]/g, '')}`}
-                    className="flex items-center gap-2 text-sm hover:underline"
-                    style={{ color: theme.accent }}
-                  >
+            {/* County Directory Contact Info + Court Filing */}
+            {(contact || courtInfo) && !isOwnerOperator ? (
+              <div className="mt-3 pt-3 border-t relative" style={{ borderColor: theme.border }}>
+                {/* Blurred content */}
+                <div style={{ filter: 'blur(5px)' }} className="pointer-events-none select-none space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: theme.textSecondary }}>
+                    County Contact
+                  </p>
+                  <div className="flex items-center gap-2 text-sm" style={{ color: theme.accent }}>
                     <Phone size={14} />
-                    {contact.phone}
-                  </a>
-                )}
-                {contact.email && (
-                  <a
-                    href={`mailto:${contact.email}`}
-                    className="flex items-center gap-2 text-sm hover:underline truncate"
-                    style={{ color: theme.accent }}
+                    (555) 000-0000
+                  </div>
+                  <div className="flex items-center gap-2 text-sm" style={{ color: theme.accent }}>
+                    <Mail size={14} />
+                    contact@county.gov
+                  </div>
+                  <div className="flex items-center gap-2 text-sm" style={{ color: theme.accent }}>
+                    <Globe size={14} />
+                    Visit Website
+                  </div>
+                  <p className="text-xs font-semibold uppercase tracking-wide pt-2" style={{ color: theme.textSecondary }}>
+                    Court Filing
+                  </p>
+                  <div className="flex items-center gap-2 text-sm" style={{ color: '#10b981' }}>
+                    <FileText size={14} />
+                    E-Filing System
+                  </div>
+                  <div className="flex items-center gap-2 text-sm" style={{ color: theme.text }}>
+                    <Printer size={14} />
+                    Fax: (555) 000-0000
+                  </div>
+                </div>
+                {/* Access gate overlay */}
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  style={{ backgroundColor: isDark ? 'rgba(15,23,42,0.75)' : 'rgba(255,255,255,0.75)' }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: isDark ? '#1c1917' : '#fffbeb',
+                      border: `1px solid ${isDark ? '#78350f' : '#fbbf24'}`,
+                      borderRadius: '12px',
+                      padding: '16px',
+                      maxWidth: '260px',
+                      textAlign: 'center',
+                    }}
                   >
-                    <Mail size={14} className="shrink-0" />
-                    <span className="truncate">{contact.email}</span>
-                  </a>
-                )}
-                {contact.website && (
-                  <a
-                    href={contact.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm hover:underline truncate"
-                    style={{ color: theme.accent }}
-                  >
-                    <Globe size={14} className="shrink-0" />
-                    <span className="truncate">Visit Website</span>
-                  </a>
-                )}
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: isDark ? '#78350f' : '#fef3c7',
+                        margin: '0 auto 8px',
+                      }}
+                    >
+                      <ShieldAlert size={20} style={{ color: isDark ? '#fbbf24' : '#b45309' }} />
+                    </div>
+                    <p style={{ fontSize: '13px', fontWeight: 700, color: isDark ? '#fbbf24' : '#92400e', margin: '0 0 4px' }}>
+                      Owner Operator Access Only
+                    </p>
+                    <p style={{ fontSize: '11px', color: isDark ? '#a8a29e' : '#78716c', lineHeight: 1.4, margin: '0 0 10px' }}>
+                      Full county contact data, court filing links, and e-filing access is exclusive to Senior Asset Recovery Agents with a $5,000 Owner Operator investment.
+                    </p>
+                    <a
+                      href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        color: '#ffffff',
+                        backgroundColor: isDark ? '#b45309' : '#d97706',
+                        padding: '6px 14px',
+                        borderRadius: '8px',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <Lock size={12} />
+                      Become an Owner Operator
+                    </a>
+                  </div>
+                </div>
               </div>
-            )}
+            ) : (
+              <>
+                {/* County Directory Contact Info (full access) */}
+                {contact && (
+                  <div className="mt-3 pt-3 border-t space-y-2" style={{ borderColor: theme.border }}>
+                    <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: theme.textSecondary }}>
+                      County Contact
+                    </p>
+                    {contact.phone && (
+                      <a
+                        href={`tel:${contact.phone.replace(/[^+\d]/g, '')}`}
+                        className="flex items-center gap-2 text-sm hover:underline"
+                        style={{ color: theme.accent }}
+                      >
+                        <Phone size={14} />
+                        {contact.phone}
+                      </a>
+                    )}
+                    {contact.email && (
+                      <a
+                        href={`mailto:${contact.email}`}
+                        className="flex items-center gap-2 text-sm hover:underline truncate"
+                        style={{ color: theme.accent }}
+                      >
+                        <Mail size={14} className="shrink-0" />
+                        <span className="truncate">{contact.email}</span>
+                      </a>
+                    )}
+                    {contact.website && (
+                      <a
+                        href={contact.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm hover:underline truncate"
+                        style={{ color: theme.accent }}
+                      >
+                        <Globe size={14} className="shrink-0" />
+                        <span className="truncate">Visit Website</span>
+                      </a>
+                    )}
+                  </div>
+                )}
 
-            {!contact && (
-              <div className="mt-3 pt-3 border-t" style={{ borderColor: theme.border }}>
-                <p className="text-xs" style={{ color: theme.textSecondary }}>
-                  No directory contact info available for this county.
-                </p>
-              </div>
+                {!contact && (
+                  <div className="mt-3 pt-3 border-t" style={{ borderColor: theme.border }}>
+                    <p className="text-xs" style={{ color: theme.textSecondary }}>
+                      No directory contact info available for this county.
+                    </p>
+                  </div>
+                )}
+
+                {/* Court Filing Info (full access) */}
+                {courtInfo && (
+                  <div className="mt-3 pt-3 border-t space-y-2" style={{ borderColor: theme.border }}>
+                    <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: theme.textSecondary }}>
+                      Court Filing
+                    </p>
+                    {(courtInfo.efilingUrl || courtInfo.statewideEfilingUrl) && (
+                      <a
+                        href={courtInfo.efilingUrl || courtInfo.statewideEfilingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm hover:underline"
+                        style={{ color: '#10b981' }}
+                      >
+                        <FileText size={14} />
+                        <span className="truncate">
+                          {courtInfo.efilingSystem || courtInfo.statewideEfilingSystem || 'E-File'}
+                        </span>
+                      </a>
+                    )}
+                    {courtInfo.fax && (
+                      <div className="flex items-center gap-2 text-sm" style={{ color: theme.text }}>
+                        <Printer size={14} style={{ color: theme.textSecondary }} />
+                        <span>Fax: {courtInfo.fax}</span>
+                      </div>
+                    )}
+                    {courtInfo.phone && (
+                      <a
+                        href={`tel:${courtInfo.phone.replace(/[^+\d]/g, '')}`}
+                        className="flex items-center gap-2 text-sm hover:underline"
+                        style={{ color: theme.accent }}
+                      >
+                        <Phone size={14} />
+                        {courtInfo.phone}
+                      </a>
+                    )}
+                    {courtInfo.clerkWebsite && (
+                      <a
+                        href={courtInfo.clerkWebsite}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm hover:underline truncate"
+                        style={{ color: theme.accent }}
+                      >
+                        <Globe size={14} className="shrink-0" />
+                        <span className="truncate">Clerk of Court</span>
+                      </a>
+                    )}
+                  </div>
+                )}
+              </>
             )}
 
             {/* Action Buttons */}

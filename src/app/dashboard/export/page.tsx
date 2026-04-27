@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { AdminGate } from "@/components/admin-gate"
 import { statesData } from "@/data/states"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -15,7 +16,7 @@ import {
   Filter,
 } from "lucide-react"
 
-export default function ExportPage() {
+function ExportPageContent() {
   const [selectedStates, setSelectedStates] = useState<string[]>([])
   const [dateRange, setDateRange] = useState("7")
   const [exportFormat, setExportFormat] = useState<"csv" | "json">("csv")
@@ -317,4 +318,8 @@ export default function ExportPage() {
       </div>
     </div>
   )
+}
+
+export default function ExportPage() {
+  return <AdminGate><ExportPageContent /></AdminGate>
 }

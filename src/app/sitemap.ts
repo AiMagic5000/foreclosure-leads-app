@@ -1,11 +1,9 @@
-import { MetadataRoute } from "next"
-import { statesData } from "@/data/states"
+import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://dashboard.assetrecoverybusiness.com"
+  const baseUrl = "https://usforeclosureleads.com";
 
-  // Static pages
-  const staticPages: MetadataRoute.Sitemap = [
+  return [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -25,26 +23,40 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/sign-in`,
+      url: `${baseUrl}/training`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/compliance`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
-      url: `${baseUrl}/sign-up`,
+      url: `${baseUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     },
-  ]
-
-  // State-specific pages (if we add them later)
-  const statePages: MetadataRoute.Sitemap = statesData.map((state) => ({
-    url: `${baseUrl}/states-guide/${state.abbr.toLowerCase()}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }))
-
-  return [...staticPages, ...statePages]
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.3,
+    },
+  ];
 }

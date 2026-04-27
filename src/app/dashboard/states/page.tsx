@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, Info, Lock, Users, TrendingUp, Gavel, Home, Shield, Banknote, CalendarDays, BookOpen, AlertTriangle } from "lucide-react"
+import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, Info, Lock, Users, TrendingUp, Gavel, Home, Shield, Banknote, CalendarDays, BookOpen, AlertTriangle, Mail, Phone, Building2 } from "lucide-react"
 import { CountyMap } from "@/components/county-map"
 import { useUser } from "@clerk/nextjs"
 import { supabase } from "@/lib/supabase"
@@ -20,15 +20,35 @@ export default function StatesPage() {
   const [selectedType, setSelectedType] = useState<string>("all")
   const [selectedState, setSelectedState] = useState<string | null>(null)
   const [stateLeadCounts, setStateLeadCounts] = useState<Record<string, number>>({})
+  const [foiaContacts, setFoiaContacts] = useState<any[]>([])
+  const [subscriptionTier, setSubscriptionTier] = useState<string>("free")
   const { theme } = useTheme()
   const isDark = theme === "dark"
   const { isSignedIn, user } = useUser()
   const email = user?.primaryEmailAddress?.emailAddress || ""
   const isAdmin = email === "coreypearsonemail@gmail.com"
   const isPaid = isSignedIn === true
+  const isOwnerOperator = isAdmin || subscriptionTier === "owner_operator"
   const selectedStates = isAdmin
     ? ["AL","AR","AZ","CA","CO","DC","FL","GA","IA","ID","IL","IN","KY","LA","MA","MD","MI","MN","MO","MS","NC","NE","NJ","NM","NV","NY","OH","OK","OR","PA","SC","TN","TX","UT","VA","WA","WI"]
     : isPaid ? ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"] : []
+
+  useEffect(() => {
+    async function fetchSubscriptionTier() {
+      try {
+        const res = await fetch("/api/user/role")
+        if (res.ok) {
+          const data = await res.json()
+          if (data.subscriptionTier) {
+            setSubscriptionTier(data.subscriptionTier)
+          }
+        }
+      } catch {
+        // silently fail, default to "free"
+      }
+    }
+    fetchSubscriptionTier()
+  }, [])
 
   useEffect(() => {
     async function fetchLeadCounts() {
@@ -45,6 +65,25 @@ export default function StatesPage() {
     }
     fetchLeadCounts()
   }, [])
+
+  useEffect(() => {
+    if (!selectedState) {
+      setFoiaContacts([])
+      return
+    }
+    const abbr = selectedState
+    async function fetchFoiaContacts() {
+      const { data, error } = await supabase
+        .from("foia_contacts")
+        .select("*")
+        .eq("state_abbr", abbr)
+        .order("county", { ascending: true })
+      if (!error && data) {
+        setFoiaContacts(data)
+      }
+    }
+    fetchFoiaContacts()
+  }, [selectedState])
 
   const AVOID_STATES = new Set(["AR", "CA", "SC"])
   const FEE_CAP_2500_STATES = new Set(["AZ", "NV"])
@@ -162,7 +201,7 @@ export default function StatesPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <CountyMap isDark={isDark} />
+          <CountyMap isDark={isDark} isOwnerOperator={isOwnerOperator} />
         </CardContent>
       </Card>
 
@@ -494,6 +533,121 @@ export default function StatesPage() {
                               <p className="text-muted-foreground">{fi.escheatPeriod}</p>
                             </div>
                           )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* FOIA Contacts & Directory */}
+                    {isAdmin && foiaContacts.length > 0 && (
+                      <div className="p-4 rounded-lg bg-indigo-500/5 border border-indigo-500/20">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Building2 className="h-4 w-4 text-indigo-500" />
+                          <span className="text-sm font-semibold">FOIA Contacts & Directory</span>
+                          <Badge variant="outline" className="text-[10px] ml-auto">
+                            {foiaContacts.length} contact{foiaContacts.length !== 1 ? "s" : ""}
+                          </Badge>
+                        </div>
+                        <div className="space-y-3">
+                          {foiaContacts.map((contact) => (
+                            <div
+                              key={contact.id}
+                              className="p-3 rounded-md bg-background/60 border text-sm space-y-2"
+                            >
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <span className="font-semibold truncate">
+                                    {contact.county} County
+                                  </span>
+                                  <Badge
+                                    variant="outline"
+                                    className={`text-[10px] shrink-0 ${
+                                      contact.response_type === "redirect"
+                                        ? "border-amber-500/50 text-amber-600 dark:text-amber-400"
+                                        : contact.response_type === "no_surplus"
+                                        ? "border-red-500/50 text-red-600 dark:text-red-400"
+                                        : contact.response_type === "content_provided"
+                                        ? "border-green-500/50 text-green-600 dark:text-green-400"
+                                        : "border-muted-foreground/30 text-muted-foreground"
+                                    }`}
+                                  >
+                                    {contact.response_type === "redirect"
+                                      ? "Redirected"
+                                      : contact.response_type === "no_surplus"
+                                      ? "No Surplus"
+                                      : contact.response_type === "content_provided"
+                                      ? "Data Received"
+                                      : contact.response_type === "pending"
+                                      ? "Awaiting Response"
+                                      : contact.response_type || "Contacted"}
+                                  </Badge>
+                                </div>
+                                {contact.is_correct_office && (
+                                  <Badge className="bg-green-600 text-white text-[10px] shrink-0">
+                                    Correct Office
+                                  </Badge>
+                                )}
+                              </div>
+
+                              <div className="text-xs text-muted-foreground">
+                                <span className="font-medium text-foreground">
+                                  {contact.office_name || contact.office_type}
+                                </span>
+                                {contact.contact_name && (
+                                  <span> -- {contact.contact_name}</span>
+                                )}
+                                {contact.contact_title && (
+                                  <span className="italic"> ({contact.contact_title})</span>
+                                )}
+                              </div>
+
+                              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
+                                {contact.email && (
+                                  <a
+                                    href={`mailto:${contact.email}`}
+                                    className="inline-flex items-center gap-1 text-primary hover:underline"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <Mail className="h-3 w-3" />
+                                    {contact.email}
+                                  </a>
+                                )}
+                                {contact.phone && (
+                                  <span className="inline-flex items-center gap-1 text-muted-foreground">
+                                    <Phone className="h-3 w-3" />
+                                    {contact.phone}
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Info tooltip for notes */}
+                              {(contact.notes || contact.surplus_process_notes) && (
+                                <div className="group relative">
+                                  <div className="flex items-center gap-1 text-xs text-indigo-500 cursor-help">
+                                    <Info className="h-3 w-3" />
+                                    <span>Office details</span>
+                                  </div>
+                                  <div className="hidden group-hover:block absolute left-0 bottom-full mb-1 z-10 w-72 p-3 rounded-lg bg-popover border shadow-lg text-xs text-popover-foreground">
+                                    {contact.notes && (
+                                      <p className="mb-1">{contact.notes}</p>
+                                    )}
+                                    {contact.surplus_process_notes && (
+                                      <p className="text-muted-foreground italic">
+                                        {contact.surplus_process_notes}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Redirect info */}
+                              {contact.redirect_to_email && (
+                                <div className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
+                                  <ExternalLink className="h-3 w-3" />
+                                  <span>Redirected to: {contact.redirect_to_office || contact.redirect_to_email}</span>
+                                </div>
+                              )}
+                            </div>
+                          ))}
                         </div>
                       </div>
                     )}

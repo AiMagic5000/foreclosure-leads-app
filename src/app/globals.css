@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Futura Condensed';
+  src: url('/assets/fonts/FuturaLT-CondensedExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/Inter-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: #ffffff;
   --color-foreground: #0a0a0a;
@@ -119,6 +143,30 @@
 @keyframes accordion-up {
   from { height: var(--radix-accordion-content-height); }
   to { height: 0; }
+}
+
+/* Gold lead - rich gold with slow subtle gleam */
+@keyframes gold-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.status-gold {
+  background: linear-gradient(110deg, #a67c00 0%, #bf9b30 35%, #d4af37 50%, #bf9b30 65%, #a67c00 100%);
+  background-size: 400% 100%;
+  animation: gold-shimmer 8s ease-in-out infinite;
+}
+
+/* Diamond lead - opaque crystalline with light sheen */
+@keyframes diamond-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.status-diamond {
+  background: linear-gradient(110deg, #b8c6d4 0%, #cdd8e4 30%, #e8eff5 48%, #f5f8fc 50%, #e8eff5 52%, #cdd8e4 70%, #b8c6d4 100%);
+  background-size: 400% 100%;
+  animation: diamond-shimmer 8s ease-in-out infinite;
 }
 
 /* Mobile-first touch improvements */

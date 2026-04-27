@@ -46,7 +46,7 @@ export function ResourceFolder({
       </div>
 
       {/* File name */}
-      <p className="text-xs text-center font-medium text-muted-foreground line-clamp-2 max-w-[120px] leading-tight">
+      <p className="text-xs text-center font-medium text-muted-foreground leading-tight break-words w-full">
         {displayName}
       </p>
 

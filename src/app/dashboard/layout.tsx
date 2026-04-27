@@ -31,6 +31,8 @@ import {
   Phone,
   Mail,
   Lock,
+  Gavel,
+  MessageSquare,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -71,6 +73,13 @@ const navSections: NavSection[] = [
     ],
   },
   {
+    label: "Communications",
+    tier: "partnership",
+    items: [
+      { name: "SMS Messages", href: "/dashboard/sms-messages", icon: MessageSquare },
+    ],
+  },
+  {
     label: "Business Suite",
     tier: "owner_operator",
     items: [
@@ -88,6 +97,7 @@ const navSections: NavSection[] = [
       { name: "Export", href: "/dashboard/export", icon: Download },
       { name: "Admin", href: "/dashboard/admin", icon: Shield, badge: { text: "Staff", color: "red" } },
       { name: "User Data", href: "/dashboard/user-data", icon: UserCircle, badge: { text: "CRM", color: "teal" } },
+      { name: "Pre-Foreclosure", href: "/dashboard/pre-foreclosure", icon: Gavel, badge: { text: "New", color: "orange" } },
     ],
   },
 ]

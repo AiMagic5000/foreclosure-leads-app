@@ -1103,6 +1103,10 @@ export default function MyLeadsPage() {
   const [emailDraftResult, setEmailDraftResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
 
   const openEmailDraft = useCallback(async (leadId: string, to: string, ownerName: string) => {
+    if (!activePinId) {
+      setEmailDraftResult({ success: false, error: "Your agent profile is still loading. Please wait a moment and try again." })
+      return
+    }
     setEmailDraftModal({ leadId, to, ownerName })
     setEmailPreview(null)
     setEmailPreviewES(null)
@@ -1114,12 +1118,12 @@ export default function MyLeadsPage() {
         fetch("/api/email-draft", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ leadId, action: "preview" }),
+          body: JSON.stringify({ leadId, action: "preview", operatorPinId: activePinId }),
         }),
         fetch("/api/email-draft", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ leadId, action: "preview_es" }),
+          body: JSON.stringify({ leadId, action: "preview_es", operatorPinId: activePinId }),
         }),
       ])
       const enData = await enRes.json()
@@ -1132,17 +1136,21 @@ export default function MyLeadsPage() {
     } finally {
       setEmailDraftLoading(false)
     }
-  }, [])
+  }, [activePinId])
 
   const createEmailDraft = useCallback(async (draftAction: "create_draft_en" | "create_draft_es" | "create_draft_both" = "create_draft_en") => {
     if (!emailDraftModal) return
+    if (!activePinId) {
+      setEmailDraftResult({ success: false, error: "Your agent profile is still loading. Please wait a moment and try again." })
+      return
+    }
     setEmailDraftLoading(true)
     setEmailDraftResult(null)
     try {
       const res = await fetch("/api/email-draft", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: emailDraftModal.leadId, action: draftAction }),
+        body: JSON.stringify({ leadId: emailDraftModal.leadId, action: draftAction, operatorPinId: activePinId }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Draft creation failed")
@@ -1152,18 +1160,19 @@ export default function MyLeadsPage() {
     } finally {
       setEmailDraftLoading(false)
     }
-  }, [emailDraftModal])
+  }, [emailDraftModal, activePinId])
 
   // Voice drop state
   const [sendingVoiceDrop, setSendingVoiceDrop] = useState<Record<string, boolean>>({})
 
   const sendVoiceDrop = useCallback(async (leadId: string) => {
+    if (!activePinId) return
     setSendingVoiceDrop(prev => ({ ...prev, [leadId]: true }))
     try {
       const res = await fetch("/api/voice-drop", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId }),
+        body: JSON.stringify({ leadId, operatorPinId: activePinId }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Voice drop failed")
@@ -1180,7 +1189,7 @@ export default function MyLeadsPage() {
     } finally {
       setSendingVoiceDrop(prev => ({ ...prev, [leadId]: false }))
     }
-  }, [])
+  }, [activePinId])
 
   // SMS state
   const [smsModal, setSmsModal] = useState<{ leadId: string; phone: string; ownerName: string } | null>(null)
@@ -1190,6 +1199,10 @@ export default function MyLeadsPage() {
   const [smsEditMessage, setSmsEditMessage] = useState("")
 
   const openSmsPreview = useCallback(async (leadId: string, phone: string, ownerName: string) => {
+    if (!activePinId) {
+      setSmsResult({ success: false, error: "Your agent profile is still loading. Please wait a moment and try again." })
+      return
+    }
     setSmsModal({ leadId, phone, ownerName })
     setSmsPreview(null)
     setSmsResult(null)
@@ -1198,7 +1211,7 @@ export default function MyLeadsPage() {
       const res = await fetch("/api/send-sms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId, action: "preview" }),
+        body: JSON.stringify({ leadId, action: "preview", operatorPinId: activePinId }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Failed to load preview")
@@ -1209,17 +1222,17 @@ export default function MyLeadsPage() {
     } finally {
       setSmsLoading(false)
     }
-  }, [])
+  }, [activePinId])
 
   const sendSms = useCallback(async () => {
-    if (!smsModal) return
+    if (!smsModal || !activePinId) return
     setSmsLoading(true)
     setSmsResult(null)
     try {
       const res = await fetch("/api/send-sms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: smsModal.leadId, action: "send", customMessage: smsEditMessage }),
+        body: JSON.stringify({ leadId: smsModal.leadId, action: "send", customMessage: smsEditMessage, operatorPinId: activePinId }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "SMS send failed")
@@ -1229,7 +1242,7 @@ export default function MyLeadsPage() {
     } finally {
       setSmsLoading(false)
     }
-  }, [smsModal, smsEditMessage])
+  }, [smsModal, smsEditMessage, activePinId])
 
   // Certified letter state
   const [certLetterModal, setCertLetterModal] = useState<{ leadId: string; ownerName: string; mailingAddress: string } | null>(null)

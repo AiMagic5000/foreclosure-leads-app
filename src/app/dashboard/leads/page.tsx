@@ -58,6 +58,7 @@ import { cn } from "@/lib/utils"
 import { usePin } from "@/lib/pin-context"
 import { supabase } from "@/lib/supabase"
 import { RecoveryCountdown } from "@/components/recovery-countdown"
+import { ZipLocalTime } from "@/components/zip-local-time"
 
 function fmt(n: number): string {
   return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -98,6 +99,10 @@ interface LeadData {
   aiDisposition: string | null
   lastAiCallAt: string | null
   aiCallCount: number
+  assignedAgent: string | null
+  agentExt: string | null
+  agentVolume: string | null
+  agentEmail: string | null
   skipTrace: {
     fullName: string
     aliases: string[]
@@ -190,6 +195,7 @@ function LoadingSkeleton() {
 
 const statusOptions = [
   { value: "all", label: "All Status" },
+  { value: "master", label: "Master Leads" },
   { value: "diamond", label: "Diamond Leads" },
   { value: "gold", label: "Gold Leads" },
   { value: "vd_ready", label: "VD Ready" },
@@ -201,6 +207,7 @@ const statusOptions = [
   { value: "callback", label: "Callback" },
   { value: "converted", label: "Converted" },
   { value: "dead", label: "Dead" },
+  { value: "senior_lead", label: "Senior Agents Only" },
 ]
 
 const sortOptions = [
@@ -1079,6 +1086,10 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
     aiDisposition: row.ai_disposition ? String(row.ai_disposition) : null,
     lastAiCallAt: row.last_ai_call_at ? String(row.last_ai_call_at) : null,
     aiCallCount: Number(row.ai_call_count || 0),
+    assignedAgent: row.assigned_agent ? String(row.assigned_agent) : null,
+    agentExt: row.agent_ext ? String(row.agent_ext) : null,
+    agentVolume: row.agent_volume ? String(row.agent_volume) : null,
+    agentEmail: row.agent_email ? String(row.agent_email) : null,
     skipTrace: {
       fullName: String(row.owner_name || ""),
       aliases: [],
@@ -1157,6 +1168,8 @@ function LeadsPageContent() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedState, setSelectedState] = useState(stateParam || "All States")
   const [selectedStatus, setSelectedStatus] = useState(statusParam || "skip_traced")
+  const [selectedAgent, setSelectedAgent] = useState("All Agents")
+  const [selectedBatch, setSelectedBatch] = useState("All Batches")
   const [sortBy, setSortBy] = useState("fee_high")
   const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
@@ -1176,24 +1189,37 @@ function LeadsPageContent() {
   const [testVdSending, setTestVdSending] = useState(false)
   const [testVdResult, setTestVdResult] = useState<{ success?: boolean; error?: string; script?: string } | null>(null)
   const [emailDraftModal, setEmailDraftModal] = useState<{ leadId: string; to: string; ownerName: string } | null>(null)
-  const [emailPreview, setEmailPreview] = useState<{ subject: string; html: string; to: string; from: string } | null>(null)
+  const [emailPreview, setEmailPreview] = useState<{ subject: string; html: string; to: string; from: string; hispanicDetected?: boolean } | null>(null)
+  const [emailPreviewES, setEmailPreviewES] = useState<{ subject: string; html: string; to: string; from: string } | null>(null)
+  const [emailPreviewLang, setEmailPreviewLang] = useState<"en" | "es">("en")
   const [emailDraftLoading, setEmailDraftLoading] = useState(false)
   const [emailDraftResult, setEmailDraftResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
 
   const openEmailDraft = useCallback(async (leadId: string, to: string, ownerName: string) => {
     setEmailDraftModal({ leadId, to, ownerName })
     setEmailPreview(null)
+    setEmailPreviewES(null)
+    setEmailPreviewLang("en")
     setEmailDraftResult(null)
     setEmailDraftLoading(true)
     try {
-      const res = await fetch("/api/email-draft", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId, action: "preview" }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || "Failed to load preview")
-      setEmailPreview(data)
+      const [enRes, esRes] = await Promise.all([
+        fetch("/api/email-draft", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ leadId, action: "preview" }),
+        }),
+        fetch("/api/email-draft", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ leadId, action: "preview_es" }),
+        }),
+      ])
+      const enData = await enRes.json()
+      if (!enRes.ok) throw new Error(enData.error || "Failed to load preview")
+      setEmailPreview(enData)
+      const esData = await esRes.json()
+      if (esRes.ok) setEmailPreviewES(esData)
     } catch (err) {
       setEmailDraftResult({ success: false, error: err instanceof Error ? err.message : "Preview failed" })
     } finally {
@@ -1201,7 +1227,7 @@ function LeadsPageContent() {
     }
   }, [])
 
-  const createEmailDraft = useCallback(async () => {
+  const createEmailDraft = useCallback(async (draftAction: "create_draft_en" | "create_draft_es" | "create_draft_both" = "create_draft_en") => {
     if (!emailDraftModal) return
     setEmailDraftLoading(true)
     setEmailDraftResult(null)
@@ -1209,7 +1235,7 @@ function LeadsPageContent() {
       const res = await fetch("/api/email-draft", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: emailDraftModal.leadId, action: "create_draft" }),
+        body: JSON.stringify({ leadId: emailDraftModal.leadId, action: draftAction }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Draft creation failed")
@@ -1487,7 +1513,7 @@ function LeadsPageContent() {
       try {
         const { data, error } = await supabase
           .from("foreclosure_leads")
-          .select("id,owner_name,property_address,city,state,state_abbr,zip_code,county,parcel_id,apn_number,sale_date,sale_amount,mortgage_amount,lender_name,foreclosure_type,primary_phone,secondary_phone,primary_email,status,source,scraped_at,lat,lng,property_image_url,mailing_address,associated_names,property_type,year_built,square_footage,lot_size,bedrooms,bathrooms,stories,assessed_value,estimated_market_value,overage_amount,case_number,trustee_name,created_at,dnc_checked,on_dnc,can_contact,dnc_type,voicemail_sent,voicemail_sent_at,voicemail_error,deed_verified,deed_history,foreclosure_confirmed,last_sale_date,last_sale_price,last_buyer_name,mailing_address_verified,pubrec_property_id")
+          .select("id,owner_name,property_address,city,state,state_abbr,zip_code,county,parcel_id,apn_number,sale_date,sale_amount,mortgage_amount,lender_name,foreclosure_type,primary_phone,secondary_phone,primary_email,status,source,scraped_at,lat,lng,property_image_url,mailing_address,associated_names,property_type,year_built,square_footage,lot_size,bedrooms,bathrooms,stories,assessed_value,estimated_market_value,overage_amount,case_number,trustee_name,created_at,dnc_checked,on_dnc,can_contact,dnc_type,voicemail_sent,voicemail_sent_at,voicemail_error,deed_verified,deed_history,foreclosure_confirmed,last_sale_date,last_sale_price,last_buyer_name,mailing_address_verified,pubrec_property_id,assigned_agent,agent_ext,agent_volume,agent_email")
           .order("primary_phone", { ascending: true, nullsFirst: false })
           .order("created_at", { ascending: false })
           .limit(5000) as { data: Record<string, unknown>[] | null; error: unknown }
@@ -1539,10 +1565,15 @@ function LeadsPageContent() {
     let vdReady = 0
     let goldLeads = 0
     let diamondLeads = 0
+    let masterLeads = 0
     dbLeads.forEach(lead => {
       counts[lead.status] = (counts[lead.status] || 0) + 1
       const dncCleared = lead.canContact && !lead.onDnc && !!lead.primaryPhone
       if (dncCleared) vdReady++
+      // Master = tagged master leads from pipeline volumes
+      if (lead.status === "master") {
+        masterLeads++
+      }
       // Diamond = DNC cleared + APN + PubRec deed verified
       if (dncCleared && lead.parcelId && lead.status === "diamond") {
         diamondLeads++
@@ -1552,6 +1583,7 @@ function LeadsPageContent() {
         goldLeads++
       }
     })
+    counts["master"] = masterLeads
     counts["vd_ready"] = vdReady
     counts["gold"] = goldLeads
     counts["diamond"] = diamondLeads
@@ -1660,6 +1692,9 @@ function LeadsPageContent() {
     dead: "bg-gray-500/10 text-gray-600 dark:text-gray-400",
     gold: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 font-semibold",
     diamond: "bg-blue-500/10 text-blue-700 dark:text-blue-300 font-semibold",
+    master: "bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-orange-700 dark:text-orange-300 font-bold",
+    senior_lead: "bg-red-500/10 text-red-600 dark:text-red-400 font-semibold",
+    business_entity: "bg-red-500/10 text-red-600 dark:text-red-400",
   } as const
 
   const filteredLeads = useMemo(() => {
@@ -1680,7 +1715,9 @@ function LeadsPageContent() {
       const dncCleared = lead.canContact && !lead.onDnc && !!lead.primaryPhone
       const matchesStatus =
         selectedStatus === "all" ||
-        (selectedStatus === "diamond"
+        (selectedStatus === "master"
+          ? (lead.status === "master")
+          : selectedStatus === "diamond"
           ? (dncCleared && !!lead.parcelId && lead.status === "diamond")
           : selectedStatus === "gold"
           ? (dncCleared && !!lead.parcelId && lead.status !== "diamond")
@@ -1688,7 +1725,14 @@ function LeadsPageContent() {
           ? dncCleared
           : lead.status === selectedStatus)
 
-      return matchesSearch && matchesState && matchesStatus
+      const matchesAgent =
+        selectedAgent === "All Agents" || lead.assignedAgent === selectedAgent
+
+      const matchesBatch =
+        selectedBatch === "All Batches" ||
+        (selectedBatch === "__browser_use__" ? lead.source.startsWith("browser_use_") : lead.source === selectedBatch)
+
+      return matchesSearch && matchesState && matchesStatus && matchesAgent && matchesBatch
     })
 
     // Sort the filtered leads
@@ -2195,6 +2239,11 @@ Thank you.`}
               <CardTitle className="flex items-center gap-2">
                 <Mail className="h-5 w-5 text-blue-600" />
                 Email Draft Preview
+                {emailPreview?.hispanicDetected && (
+                  <span className="ml-2 px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-800 border border-amber-300 rounded-full">
+                    Hispanic Name Detected
+                  </span>
+                )}
               </CardTitle>
               <CardDescription>
                 Draft for <strong>{emailDraftModal.ownerName}</strong> &rarr; {emailDraftModal.to}
@@ -2209,14 +2258,29 @@ Thank you.`}
               )}
               {emailPreview && (
                 <>
+                  {/* Language toggle tabs */}
+                  <div className="flex gap-1 border rounded-lg p-1 bg-slate-100 w-fit">
+                    <button
+                      className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${emailPreviewLang === "en" ? "bg-white text-blue-700 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
+                      onClick={() => setEmailPreviewLang("en")}
+                    >
+                      English
+                    </button>
+                    <button
+                      className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${emailPreviewLang === "es" ? "bg-white text-blue-700 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
+                      onClick={() => setEmailPreviewLang("es")}
+                    >
+                      Espanol
+                    </button>
+                  </div>
                   <div className="flex flex-col gap-1 text-sm border rounded-lg p-3 bg-slate-50">
-                    <div><span className="text-muted-foreground">From:</span> <span className="font-medium">{emailPreview.from}</span></div>
-                    <div><span className="text-muted-foreground">To:</span> <span className="font-medium">{emailPreview.to}</span></div>
-                    <div><span className="text-muted-foreground">Subject:</span> <span className="font-medium">{emailPreview.subject}</span></div>
+                    <div><span className="text-muted-foreground">From:</span> <span className="font-medium">{(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).from}</span></div>
+                    <div><span className="text-muted-foreground">To:</span> <span className="font-medium">{(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).to}</span></div>
+                    <div><span className="text-muted-foreground">Subject:</span> <span className="font-medium">{(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).subject}</span></div>
                   </div>
                   <div className="border rounded-lg overflow-auto max-h-[45vh] bg-white">
                     <iframe
-                      srcDoc={emailPreview.html}
+                      srcDoc={(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).html}
                       className="w-full min-h-[400px] border-0"
                       title="Email preview"
                       sandbox="allow-same-origin"
@@ -2240,28 +2304,37 @@ Thank you.`}
                 </div>
               )}
             </CardContent>
-            <div className="flex justify-end gap-2 p-6 pt-0">
+            <div className="flex flex-wrap justify-end gap-2 p-6 pt-0">
               <Button variant="outline" onClick={() => { setEmailDraftModal(null); setEmailDraftResult(null) }}>
                 Close
               </Button>
               {emailPreview && !emailDraftResult?.success && (
-                <Button
-                  onClick={createEmailDraft}
-                  disabled={emailDraftLoading}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  {emailDraftLoading ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Creating Draft...
-                    </>
-                  ) : (
-                    <>
-                      <Mail className="h-4 w-4 mr-2" />
-                      Create Draft in Mailbox
-                    </>
-                  )}
-                </Button>
+                <>
+                  <Button
+                    onClick={() => createEmailDraft("create_draft_en")}
+                    disabled={emailDraftLoading}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    {emailDraftLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Mail className="h-4 w-4 mr-2" />}
+                    English Draft
+                  </Button>
+                  <Button
+                    onClick={() => createEmailDraft("create_draft_es")}
+                    disabled={emailDraftLoading}
+                    className="bg-amber-600 hover:bg-amber-700 text-white"
+                  >
+                    {emailDraftLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Mail className="h-4 w-4 mr-2" />}
+                    Spanish Draft
+                  </Button>
+                  <Button
+                    onClick={() => createEmailDraft("create_draft_both")}
+                    disabled={emailDraftLoading}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                  >
+                    {emailDraftLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Mail className="h-4 w-4 mr-2" />}
+                    Send Both
+                  </Button>
+                </>
               )}
             </div>
           </Card>
@@ -2396,6 +2469,32 @@ Thank you.`}
               })}
             </select>
             <select
+              value={selectedAgent}
+              onChange={(e) => { setSelectedAgent(e.target.value); setCurrentPage(1) }}
+              className="h-11 rounded-lg border border-input bg-background px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              <option value="All Agents">All Agents</option>
+              <option value="Rebecca Maguire">Rebecca Maguire</option>
+              <option value="Joshua Goc-ong">Joshua Goc-ong</option>
+              <option value="Allie Pearson">Allie Pearson</option>
+              <option value="Amariyon Sherrod">Amariyon Sherrod</option>
+            </select>
+            <select
+              value={selectedBatch}
+              onChange={(e) => { setSelectedBatch(e.target.value); setCurrentPage(1) }}
+              className="h-11 rounded-lg border border-input bg-background px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              <option value="All Batches">All Batches</option>
+              {Array.from(new Set(dbLeads.map(l => l.source).filter(s => s && s.startsWith("foia_batch_")))).sort().reverse().map(batch => {
+                const label = batch.replace("foia_batch_", "").replace(/-/g, "/") + " FOIA Leads"
+                const count = dbLeads.filter(l => l.source === batch).length
+                return <option key={batch} value={batch}>{label} ({count})</option>
+              })}
+              {Array.from(new Set(dbLeads.map(l => l.source).filter(s => s && s.startsWith("browser_use_")))).length > 0 && (
+                <option value="__browser_use__">Browser Use Scraped</option>
+              )}
+            </select>
+            <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="h-11 rounded-lg border border-input bg-background px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -2457,7 +2556,7 @@ Thank you.`}
           </div>
           <h2 className="text-xl font-bold" style={{ color: '#1E3A5F' }}>No Leads Found</h2>
           <p className="text-muted-foreground text-center max-w-md">
-            {searchQuery || selectedState !== 'All States' || selectedStatus !== 'all' ? (
+            {searchQuery || selectedState !== 'All States' || selectedStatus !== 'all' || selectedBatch !== 'All Batches' ? (
               <>
                 No leads match your current filters. Try adjusting your search criteria or clearing filters.
               </>
@@ -2467,13 +2566,15 @@ Thank you.`}
               </>
             )}
           </p>
-          {(searchQuery || selectedState !== 'All States' || selectedStatus !== 'all') && (
+          {(searchQuery || selectedState !== 'All States' || selectedStatus !== 'all' || selectedBatch !== 'All Batches') && (
             <Button
               variant="outline"
               onClick={() => {
                 setSearchQuery('')
                 setSelectedState('All States')
                 setSelectedStatus('all')
+                setSelectedAgent('All Agents')
+                setSelectedBatch('All Batches')
               }}
               style={{ borderColor: '#1E3A5F', color: '#1E3A5F' }}
             >
@@ -2575,7 +2676,7 @@ Thank you.`}
                   </div>
                   <div className="col-span-3">
                     <div className="flex items-start gap-2">
-                      <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+                      <MapPin className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         {lead.propertyAddress ? (
                           <div className="font-medium truncate">
@@ -2587,6 +2688,7 @@ Thank you.`}
                         <div className="text-sm text-muted-foreground">
                           {[lead.city, lead.stateAbbr, lead.zipCode].filter(Boolean).join(", ") || (lead.county ? `${lead.county} County, ${lead.stateAbbr}` : lead.stateAbbr)}
                         </div>
+                        <ZipLocalTime zipCode={lead.zipCode} stateAbbr={lead.stateAbbr} className="mt-0.5" />
                         {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
                           <div className="flex items-center gap-2 text-xs font-medium text-slate-600 mt-1">
                             {lead.property.bedrooms > 0 && (
@@ -2700,7 +2802,7 @@ Thank you.`}
                   <div className="col-span-1 flex flex-col items-end gap-1">
                     <div className="flex items-center gap-1">
                       <Badge className={statusColors[lead.status as keyof typeof statusColors]}>
-                        {lead.status.replaceAll("_", " ")}
+                        {lead.status === "senior_lead" ? "Senior Agents Only" : lead.status.replaceAll("_", " ")}
                       </Badge>
                       {isExpanded ? (
                         <ChevronUp className="h-4 w-4 text-muted-foreground" />
@@ -2708,6 +2810,12 @@ Thank you.`}
                         <ChevronDown className="h-4 w-4 text-muted-foreground" />
                       )}
                     </div>
+                    {lead.assignedAgent && (
+                      <Badge className="bg-indigo-100 text-indigo-700 border-indigo-200 text-xs">
+                        <Users className="h-3 w-3 mr-1" />
+                        {lead.assignedAgent}{lead.agentExt ? ` x${lead.agentExt}` : ""}
+                      </Badge>
+                    )}
                     <RecoveryCountdown
                       saleDate={lead.saleDate || null}
                       stateAbbr={lead.stateAbbr}
@@ -2794,7 +2902,7 @@ Thank you.`}
                     </div>
                     <div className="flex items-center gap-2">
                       <Badge className={statusColors[lead.status as keyof typeof statusColors]}>
-                        {lead.status.replaceAll("_", " ")}
+                        {lead.status === "senior_lead" ? "Senior Agents Only" : lead.status.replaceAll("_", " ")}
                       </Badge>
                       {isExpanded ? (
                         <ChevronUp className="h-4 w-4 text-muted-foreground" />
@@ -2803,9 +2911,15 @@ Thank you.`}
                       )}
                     </div>
                   </div>
+                  {lead.assignedAgent && (
+                    <Badge className="bg-indigo-100 text-indigo-700 border-indigo-200 text-xs w-fit">
+                      <Users className="h-3 w-3 mr-1" />
+                      {lead.assignedAgent}{lead.agentExt ? ` x${lead.agentExt}` : ""}
+                    </Badge>
+                  )}
 
                   <div className="flex items-start gap-2 text-sm">
-                    <MapPin className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+                    <MapPin className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       {lead.propertyAddress ? (
                         <div className="font-medium">
@@ -2815,6 +2929,7 @@ Thank you.`}
                         <div className="text-muted-foreground italic">Address not available</div>
                       )}
                       <div className="text-muted-foreground">{[lead.city, lead.stateAbbr, lead.zipCode].filter(Boolean).join(", ") || (lead.county ? `${lead.county} County, ${lead.stateAbbr}` : lead.stateAbbr)}</div>
+                      <ZipLocalTime zipCode={lead.zipCode} stateAbbr={lead.stateAbbr} className="mt-0.5" />
                       {(lead.property.sqft > 0 || lead.property.bedrooms > 0) && (
                         <div className="flex items-center gap-3 text-xs font-medium text-slate-600 mt-1">
                           {lead.property.bedrooms > 0 && (

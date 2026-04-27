@@ -141,8 +141,9 @@ export interface Database {
           clerk_id: string
           email: string
           full_name: string | null
-          subscription_tier: 'free' | 'single_state' | 'multi_state'
+          subscription_tier: 'free' | 'single_state' | 'multi_state' | 'owner_operator'
           subscription_status: 'active' | 'canceled' | 'past_due' | 'trialing'
+          account_type: 'basic' | 'partnership' | 'owner_operator' | 'admin'
           stripe_customer_id: string | null
           stripe_subscription_id: string | null
           selected_states: string[]
@@ -154,8 +155,9 @@ export interface Database {
           clerk_id: string
           email: string
           full_name?: string | null
-          subscription_tier?: 'free' | 'single_state' | 'multi_state'
+          subscription_tier?: 'free' | 'single_state' | 'multi_state' | 'owner_operator'
           subscription_status?: 'active' | 'canceled' | 'past_due' | 'trialing'
+          account_type?: 'basic' | 'partnership' | 'owner_operator' | 'admin'
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           selected_states?: string[]
@@ -165,8 +167,9 @@ export interface Database {
           clerk_id?: string
           email?: string
           full_name?: string | null
-          subscription_tier?: 'free' | 'single_state' | 'multi_state'
+          subscription_tier?: 'free' | 'single_state' | 'multi_state' | 'owner_operator'
           subscription_status?: 'active' | 'canceled' | 'past_due' | 'trialing'
+          account_type?: 'basic' | 'partnership' | 'owner_operator' | 'admin'
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           selected_states?: string[]
@@ -303,6 +306,7 @@ export interface Database {
           is_active: boolean
           last_used_at: string | null
           created_by: string
+          role: 'standard' | 'owner_operator'
         }
         Insert: {
           email: string
@@ -313,6 +317,7 @@ export interface Database {
           expires_at?: string | null
           is_active?: boolean
           created_by?: string
+          role?: 'standard' | 'owner_operator'
         }
         Update: {
           id?: string
@@ -326,6 +331,104 @@ export interface Database {
           is_active?: boolean
           last_used_at?: string | null
           created_by?: string
+          role?: 'standard' | 'owner_operator'
+        }
+      }
+      business_onboarding: {
+        Row: {
+          id: string
+          user_pin_id: string | null
+          email: string
+          business_name: string
+          website_url: string | null
+          owner_first_name: string
+          owner_last_name: string
+          ssn_last4: string | null
+          date_of_birth: string | null
+          credit_profile: string
+          business_phone: string | null
+          call_forwarding_phone: string | null
+          current_best_phone: string
+          current_email: string
+          business_address: string | null
+          owner_home_address: string | null
+          business_email_prefix: string | null
+          email_forwarding: string | null
+          terms_agreed: boolean
+          status: string
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          user_pin_id?: string | null
+          email: string
+          business_name: string
+          website_url?: string | null
+          owner_first_name: string
+          owner_last_name: string
+          ssn_last4?: string | null
+          date_of_birth?: string | null
+          credit_profile?: string
+          business_phone?: string | null
+          call_forwarding_phone?: string | null
+          current_best_phone: string
+          current_email: string
+          business_address?: string | null
+          owner_home_address?: string | null
+          business_email_prefix?: string | null
+          email_forwarding?: string | null
+          terms_agreed: boolean
+          status?: string
+          notes?: string | null
+        }
+        Update: {
+          user_pin_id?: string | null
+          email?: string
+          business_name?: string
+          website_url?: string | null
+          owner_first_name?: string
+          owner_last_name?: string
+          ssn_last4?: string | null
+          date_of_birth?: string | null
+          credit_profile?: string
+          business_phone?: string | null
+          call_forwarding_phone?: string | null
+          current_best_phone?: string
+          current_email?: string
+          business_address?: string | null
+          owner_home_address?: string | null
+          business_email_prefix?: string | null
+          email_forwarding?: string | null
+          terms_agreed?: boolean
+          status?: string
+          notes?: string | null
+        }
+      }
+      operator_lead_assignments: {
+        Row: {
+          id: string
+          lead_id: string
+          operator_pin_id: string
+          assigned_by: string
+          assigned_at: string
+          status: string
+          notes: string | null
+        }
+        Insert: {
+          lead_id: string
+          operator_pin_id: string
+          assigned_by: string
+          status?: string
+          notes?: string | null
+        }
+        Update: {
+          lead_id?: string
+          operator_pin_id?: string
+          assigned_by?: string
+          assigned_at?: string
+          status?: string
+          notes?: string | null
         }
       }
       training_modules: {
@@ -419,3 +522,5 @@ export type UserActivity = Database['public']['Tables']['user_activity']['Row']
 export type UserPin = Database['public']['Tables']['user_pins']['Row']
 export type TrainingModule = Database['public']['Tables']['training_modules']['Row']
 export type TrainingResource = Database['public']['Tables']['training_resources']['Row']
+export type BusinessOnboarding = Database['public']['Tables']['business_onboarding']['Row']
+export type OperatorLeadAssignment = Database['public']['Tables']['operator_lead_assignments']['Row']

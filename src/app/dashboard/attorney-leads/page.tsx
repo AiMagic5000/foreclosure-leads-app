@@ -1,5 +1,6 @@
 "use client"
 
+import { AdminGate } from "@/components/admin-gate"
 import { PartnershipLeadsPage, PartnershipLead, PartnershipConfig } from "@/components/dashboard/partnership-leads-page"
 
 function mapAttorneyRow(row: Record<string, unknown>): PartnershipLead {
@@ -49,5 +50,5 @@ const config: PartnershipConfig = {
 }
 
 export default function AttorneyLeadsPage() {
-  return <PartnershipLeadsPage config={config} />
+  return <AdminGate><PartnershipLeadsPage config={config} /></AdminGate>
 }

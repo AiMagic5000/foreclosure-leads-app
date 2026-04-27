@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Header } from "@/components/header";
+import Link from "next/link";
 
 const sections = [
   { id: "information-collected", title: "Information We Collect" },
@@ -904,11 +905,24 @@ export default function PrivacyPage() {
           {/* Footer */}
           <footer className="mt-20 pt-8 border-t border-slate-300">
             <div className="text-center">
+              <div className="flex justify-center gap-6 mb-4 text-sm">
+                <Link href="/terms" className="text-slate-500 hover:text-[#1e3a5f] transition-colors">
+                  Terms of Service
+                </Link>
+                <span className="text-slate-300">|</span>
+                <Link href="/privacy" className="text-slate-500 hover:text-[#1e3a5f] transition-colors">
+                  Privacy Policy
+                </Link>
+                <span className="text-slate-300">|</span>
+                <Link href="/income-disclaimer" className="text-slate-500 hover:text-[#1e3a5f] transition-colors">
+                  Income Disclaimer
+                </Link>
+              </div>
               <p className="text-slate-600 mb-4">
                 This Privacy Policy was last updated on February 1, 2026.
               </p>
               <p className="text-sm text-slate-500">
-                © 2026 Foreclosure Recovery Inc. All rights reserved.
+                &copy; {new Date().getFullYear()} Foreclosure Recovery Inc. All rights reserved.
               </p>
             </div>
           </footer>

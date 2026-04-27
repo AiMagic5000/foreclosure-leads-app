@@ -8,7 +8,7 @@ const SENDER_NAME = "Foreclosure Recovery Inc."
 const IMAP_HOST = "imap.hostinger.com"
 const IMAP_PORT = 993
 const IMAP_USER = "claim@usforeclosurerecovery.com"
-const IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword#123"
+const IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword#1234"
 
 const LOGO_URL = "https://cdn.prod.website-files.com/67ec4cfbdf0509c176a8cdfe/69897785586ae271c69d085e_image%20(1).png"
 
@@ -91,6 +91,10 @@ function generateTitleCompanyEmail(lead: PartnershipLeadData): { subject: string
 
   <div style="text-align:center;margin:25px 0;">
     <a href="mailto:claim@usforeclosurerecovery.com?subject=Title Company Partnership Inquiry - ${encodeURIComponent(companyName)}" style="display:inline-block;background:#1a7a3a;color:white;padding:14px 32px;font-size:16px;font-weight:600;text-decoration:none;border-radius:8px;">Schedule a Call</a>
+  </div>
+
+  <div style="text-align:center;margin:0 0 25px;">
+    <a href="https://www.usforeclosurerecovery.com/title-companies" style="display:inline-block;background:#09274c;color:white;padding:12px 28px;font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;">View Our Title Partnership Program &rarr;</a>
   </div>
 
   <p style="font-size:15px;margin:0 0 16px;">Or simply reply to this email with your availability.</p>
@@ -183,6 +187,10 @@ function generateInvestorEmail(lead: PartnershipLeadData): { subject: string; ht
 
   <div style="text-align:center;margin:25px 0;">
     <a href="mailto:claim@usforeclosurerecovery.com?subject=Investor Referral Program - ${encodeURIComponent(investorName)}" style="display:inline-block;background:#1a7a3a;color:white;padding:14px 32px;font-size:16px;font-weight:600;text-decoration:none;border-radius:8px;">Join Referral Program</a>
+  </div>
+
+  <div style="text-align:center;margin:0 0 25px;">
+    <a href="https://www.usforeclosurerecovery.com/investors" style="display:inline-block;background:#09274c;color:white;padding:12px 28px;font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;">View Our Investor Program &amp; Intro Video &rarr;</a>
   </div>
 
   <p style="font-size:15px;margin:0 0 16px;">If you buy 2-5 foreclosed properties per month, this could add $8K-$25K to your annual income with almost zero effort.</p>
@@ -332,6 +340,9 @@ function generateAttorneyEmail(lead: PartnershipLeadData): { subject: string; ht
         <p style="margin:0 0 10px;font-size:15px;color:#09274c;font-weight:600;">Ready to add value for your clients?</p>
         <p style="margin:0 0 14px;font-size:14px;color:#2c3e50;line-height:21px;">Let's start with 1-2 test cases -- completely free -- to prove the system works.</p>
         <a href="mailto:claim@usforeclosurerecovery.com?subject=Attorney Partnership Inquiry - ${encodeURIComponent(attorneyName)}" style="display:inline-block;padding:12px 28px;background-color:#09274c;color:#ffffff;text-decoration:none;border-radius:6px;font-size:14px;font-weight:600;">Schedule a Call</a>
+        <div style="margin-top:14px;">
+          <a href="https://www.usforeclosurerecovery.com/attorney-partnership-program" style="display:inline-block;padding:10px 24px;background-color:#1a7a3a;color:#ffffff;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600;">View Attorney Partnership Program &rarr;</a>
+        </div>
       </td>
     </tr>
   </table>
