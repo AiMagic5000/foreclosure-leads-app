@@ -15,6 +15,12 @@ import {
   Play,
   TrendingUp,
   DollarSign,
+  FileText,
+  Mail,
+  Mic,
+  GraduationCap,
+  Inbox,
+  HeadphonesIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,6 +36,7 @@ import { ApiDocsPopup } from "@/components/api-docs-popup";
 import { faqs } from "@/data/faqs";
 import { statesData } from "@/data/states";
 import { EmailCaptureForm } from "@/components/landing/EmailCaptureForm";
+import { DashboardSlideshow } from "@/components/landing/DashboardSlideshow";
 
 const STATS = [
   { value: "3,200", label: "Counties Covered" },
@@ -723,6 +730,238 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* See Exactly What You're Getting */}
+        <section className="py-16 sm:py-20 bg-gradient-to-br from-slate-900 to-[#1e3a5f]">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10">
+              <p className="text-sm font-medium text-[#10b981] uppercase tracking-wider mb-3">
+                See Exactly What You're Getting
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+                The Live Platform, MyStateFunds, and the Full Value Stack
+              </h2>
+              <p className="text-base sm:text-lg text-white/75 max-w-2xl mx-auto">
+                Preview the live agent dashboard, see how MyStateFunds processes
+                your closed cases, and review every component included in your
+                $995 partnership.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-6 mb-14 max-w-6xl mx-auto">
+              {/* Recovery Agent Dashboard slideshow */}
+              <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
+                <DashboardSlideshow />
+                <div className="p-5 text-center">
+                  <h3 className="text-lg font-semibold text-[#1e3a5f] mb-1">
+                    Recovery Agent Dashboard
+                  </h3>
+                  <p className="text-gray-500 text-sm mb-4">
+                    Your complete business command center -- training,
+                    documents, leads, and case pipeline.
+                  </p>
+                  <a
+                    href="https://usforeclosureleads.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-gradient-to-r from-red-600 to-red-700 text-white px-5 py-2 rounded-lg text-sm font-bold hover:opacity-90"
+                  >
+                    View Live Dashboard →
+                  </a>
+                </div>
+              </div>
+
+              {/* USForeclosureRecovery platform */}
+              <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
+                <div className="relative aspect-[16/9] bg-slate-900">
+                  <Image
+                    src="https://www.assetrecoverybusiness.com/images/usfr-hero-section.png?v=3"
+                    alt="USForeclosureRecovery.com platform"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
+                    YOUR LANDING PAGE
+                  </div>
+                </div>
+                <div className="p-5 text-center">
+                  <h3 className="text-lg font-semibold text-[#1e3a5f] mb-1">
+                    Access to USForeclosureRecovery.com
+                  </h3>
+                  <p className="text-gray-500 text-sm mb-4">
+                    Direct access to our platform with your own dedicated
+                    landing page, your name, and your contact info.
+                  </p>
+                  <a
+                    href="https://usforeclosurerecovery.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-[#1e3a5f] text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-[#2d4a6f]"
+                  >
+                    Visit Live Site →
+                  </a>
+                </div>
+              </div>
+
+              {/* MyStateFunds video */}
+              <div className="bg-white rounded-2xl overflow-hidden shadow-2xl ring-2 ring-emerald-500">
+                <div className="relative aspect-[16/9] bg-slate-900">
+                  <video
+                    src="https://seafile.alwaysencrypted.com/seafhttp/f/50097824aa6f4be997af/"
+                    poster="https://seafile.alwaysencrypted.com/seafhttp/f/4869d9b8d7584d168432/"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-label="MyStateFunds claim processing"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 px-3 py-1 text-xs font-bold text-white tracking-wide">
+                    <span className="line-through opacity-70 mr-1">$395</span>
+                    INCLUDED
+                  </div>
+                </div>
+                <div className="p-5 text-center">
+                  <h3 className="text-lg font-semibold text-[#1e3a5f] mb-1">
+                    Process Claims via MyStateFunds.com
+                  </h3>
+                  <p className="text-gray-500 text-sm mb-3">
+                    Run every signed contingency through our claim-processing
+                    platform -- the same system we use internally.
+                  </p>
+                  <p className="text-emerald-700 text-xs font-bold mb-4">
+                    ✓ Included free with your $995 Partnership
+                  </p>
+                  <a
+                    href="https://www.mystatefunds.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:opacity-90"
+                  >
+                    Visit MyStateFunds.com →
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Value Stack */}
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  Everything You Get Today
+                </h3>
+                <p className="text-white/70 text-base">
+                  Total stack value <span className="line-through opacity-70">$4,791+</span>{" "}
+                  -- yours for $995
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  {
+                    icon: FileText,
+                    title: "40+ Attorney-Curated Legal Documents",
+                    value: "$1,200",
+                    body:
+                      "Client representation, contingency fee, POA, NDA, surplus claim form, heir affidavit, and more -- attorney-reviewed and valid in all 50 states.",
+                  },
+                  {
+                    icon: Building2,
+                    title: "Access to USForeclosureRecovery.com Platform",
+                    value: "$1,500",
+                    body:
+                      "Your own dedicated landing page on the main site with your name and contact info. Look established from day one.",
+                  },
+                  {
+                    icon: GraduationCap,
+                    title: "Complete Training Dashboard (Video + Audio)",
+                    value: "$997",
+                    body:
+                      "Full training library covering lead finding, contacting owners, filing claims, and collecting commissions.",
+                  },
+                  {
+                    icon: Phone,
+                    title: "Shared 800 Number + Pro Email",
+                    value: "$297",
+                    body:
+                      "Your own extension on our shared 800 inbound line plus a yourname@usforeclosurerecovery.com address.",
+                  },
+                  {
+                    icon: Mic,
+                    title: "Automated Outreach -- RVM, SMS, Email",
+                    value: "$500",
+                    body:
+                      "Ringless voicemail drops, SMS drips, and email campaigns sent automatically with your name and contact info.",
+                  },
+                  {
+                    icon: Mail,
+                    title: "Certified Letters Mailed for You",
+                    value: "$297",
+                    body:
+                      "We mail certified letters with proof of service, jurisdiction-specific language, legal precedent, and a free claims guide.",
+                  },
+                  {
+                    icon: Inbox,
+                    title: "Company Registration Inbox + Lead Tracking",
+                    value: "Included",
+                    body:
+                      "See every registration that comes through our website to verify if any of your clients have signed up or made contact directly.",
+                  },
+                  {
+                    icon: HeadphonesIcon,
+                    title: "Ongoing Support + 50 Exclusive Leads/Week",
+                    value: "Priceless",
+                    body:
+                      "Phone, email, and dashboard support from our team. 50 verified leads per week, exclusive to you -- never shared.",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-5 flex gap-4"
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-[#1e3a5f] to-[#3b82f6] flex items-center justify-center">
+                      <item.icon className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between gap-3 mb-1">
+                        <h4 className="text-white font-semibold text-sm leading-tight">
+                          {item.title}
+                        </h4>
+                        <div className="flex-shrink-0 text-right">
+                          {item.value !== "Included" && item.value !== "Priceless" && (
+                            <span className="text-red-400 line-through text-xs mr-1">
+                              {item.value}
+                            </span>
+                          )}
+                          <span className="text-emerald-400 text-xs font-bold">
+                            Included
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-white/70 text-xs leading-relaxed">
+                        {item.body}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="text-center mt-8 bg-gradient-to-r from-red-600 to-red-700 rounded-xl py-6 px-4">
+                <p className="text-white text-lg font-semibold mb-1">
+                  Total Value <span className="line-through opacity-70">$4,791+</span>
+                </p>
+                <p className="text-white text-3xl font-bold">
+                  You Pay $995
+                </p>
+                <p className="text-white/80 text-sm mt-1">
+                  Or 3 monthly payments of $331 -- in-house 0% financing available
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Pricing Section */}
         <section id="pricing" className="py-12 sm:py-16 md:py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6">
@@ -745,7 +984,7 @@ export default function LandingPage() {
                 Money Back Guarantee
               </a>
             </div>
-            <div className="grid grid-cols-1 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 max-w-4xl mx-auto">
               <div className="relative bg-white rounded-xl p-6 sm:p-8 border-2 border-[#1e3a5f] shadow-xl">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="bg-gradient-to-r from-[#1e3a5f] to-[#3b82f6] text-white text-xs font-medium px-4 py-1 rounded-full whitespace-nowrap">
@@ -777,72 +1016,94 @@ export default function LandingPage() {
                   </p>
                 </div>
 
-                <h4 className="text-sm font-bold text-[#1e3a5f] mt-5 mb-3 uppercase tracking-wide">What's Included</h4>
-                <ul className="space-y-2 sm:space-y-3 mb-6">
-                  {PROGRAM.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 sm:gap-3">
-                      <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-[#10b981] flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-600 text-xs sm:text-sm">
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="grid lg:grid-cols-[1.4fr_1fr] gap-6 mt-6">
+                  {/* LEFT: What's Included + CTAs */}
+                  <div>
+                    <h4 className="text-sm font-bold text-[#1e3a5f] mb-3 uppercase tracking-wide">What's Included</h4>
+                    <ul className="space-y-2 sm:space-y-3 mb-6">
+                      {PROGRAM.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2 sm:gap-3">
+                          <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-[#10b981] flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-600 text-xs sm:text-sm">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
 
-                <h4 className="text-sm font-bold text-[#1e3a5f] mt-5 mb-3 uppercase tracking-wide">Payment Options</h4>
-                <ul className="space-y-3 mb-6">
-                  {PROGRAM.paymentOptions.map((option) => (
-                    <li key={option.label} className="bg-slate-50 rounded-lg p-3 border-l-4 border-[#10b981]">
-                      <p className="font-semibold text-[#1e3a5f] text-sm">{option.label}</p>
-                      <p className="text-gray-600 text-xs mt-1 leading-relaxed">{option.note}</p>
-                    </li>
-                  ))}
-                </ul>
+                    {/* PDF Download */}
+                    <a
+                      href="https://www.assetrecoverybusiness.com/Foreclosure-Recovery-Business-Programs-Guide.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center bg-gradient-to-r from-[#1e3a5f] to-[#3b82f6] text-white py-3 rounded-lg text-sm font-bold mb-3 hover:opacity-90 transition-opacity"
+                    >
+                      Download Program Guide (PDF)
+                    </a>
 
-                {/* Vegas Vacation Client Incentive */}
-                <div className="mb-6 bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-400 rounded-lg p-4">
-                  <p className="text-sm font-bold text-amber-900 mb-2">
-                    Vegas Vacation Client Incentive (built-in closing tool)
-                  </p>
-                  <p className="text-xs text-amber-800 leading-relaxed mb-2">
-                    A complimentary Vegas vacation you can offer to your clients
-                    when they sign their contingency agreement. It is not an
-                    agent reward -- it's a closing tool that drives client
-                    urgency and lifts conversion on outreach.
-                  </p>
-                  <p className="text-xs text-amber-800 leading-relaxed">
-                    <strong>Activation:</strong> Pay-in-Full enrollees can offer
-                    it immediately. Three-Payment and In-House Financing
-                    enrollees can offer it once the final payment is received.
-                    Trip details, fulfillment partners, and travel windows are
-                    determined and communicated by Foreclosure Recovery Inc.
-                    once your client's signed contingency agreement is on file.
-                  </p>
+                    {/* Primary CTA */}
+                    <a href={PROGRAM.href} target="_blank" rel="noopener noreferrer" className="block">
+                      <Button className="w-full text-sm sm:text-base py-2.5 sm:py-3 bg-gradient-to-r from-red-600 to-red-700 hover:opacity-90 text-white font-bold">
+                        {PROGRAM.cta}
+                      </Button>
+                    </a>
+
+                    {/* In-house financing CTA */}
+                    <a href={PROGRAM.callHref} className="block mt-3">
+                      <Button className="w-full text-sm sm:text-base py-2.5 sm:py-3 bg-white hover:bg-gray-50 text-[#1e3a5f] border-2 border-[#1e3a5f]">
+                        Apply for In-House Financing -- (888) 545-8007
+                      </Button>
+                    </a>
+                  </div>
+
+                  {/* RIGHT: Vegas + payment options + guarantee */}
+                  <div className="flex flex-col gap-4">
+                    {/* Vegas Vacation card with image */}
+                    <div className="rounded-2xl overflow-hidden shadow-lg ring-2 ring-red-500">
+                      <div className="relative h-48 bg-cover bg-center" style={{ backgroundImage: "url('https://www.assetrecoverybusiness.com/images/vegas-bonus.jpg')" }}>
+                        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/20 to-slate-900/85" />
+                        <div className="absolute top-3 left-3 inline-block bg-gradient-to-r from-red-600 to-red-700 text-white text-[11px] font-bold px-3 py-1 rounded-full tracking-wide">
+                          🎰 CLOSING TOOL
+                        </div>
+                        <div className="absolute bottom-3 left-3 right-3 text-white">
+                          <div className="text-xl font-extrabold leading-tight">Vegas Vacation</div>
+                          <div className="text-xs opacity-90 mt-0.5">Your clients receive a complimentary Vegas trip when they sign the contingency agreement -- a built-in closing tool.</div>
+                        </div>
+                      </div>
+                      <div className="bg-white p-4">
+                        <p className="text-xs font-bold text-[#1e3a5f] mb-1">When you can offer it:</p>
+                        <ul className="text-xs text-gray-600 space-y-1 list-disc pl-4 leading-snug">
+                          <li>Pay in full → offer it to clients immediately</li>
+                          <li>3-payment plan → offer once final payment received</li>
+                          <li>In-house financing → offer once final payment received</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Payment options */}
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                      <p className="font-bold text-[#1e3a5f] text-sm mb-3">3 ways to pay $995</p>
+                      {PROGRAM.paymentOptions.map((option, k) => (
+                        <div key={option.label} className={`flex gap-2 py-2 ${k < PROGRAM.paymentOptions.length - 1 ? "border-b border-dashed border-slate-200" : ""}`}>
+                          <span className={`flex-shrink-0 w-5 h-5 rounded-full ${k === 2 ? "bg-emerald-500" : "bg-[#1e3a5f]"} text-white text-[11px] font-bold flex items-center justify-center mt-0.5`}>
+                            {k === 2 ? "$" : k + 1}
+                          </span>
+                          <div className="text-xs leading-snug">
+                            <p className="font-semibold text-[#1e3a5f]">{option.label}</p>
+                            <p className="text-gray-600 mt-0.5">{option.note}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Guarantee chip */}
+                    <div className="bg-white border-2 border-emerald-500 rounded-lg p-3 text-center">
+                      <p className="text-xs text-emerald-800 leading-snug">
+                        🛡️ <strong>Money Back Guarantee</strong> -- if you actively participate for 12 months and have not closed a deal, we refund your full $995.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-
-                {/* PDF Download */}
-                <a
-                  href="https://docs.google.com/document/d/1YieU6qg4eFAAhsNSbrhC2Vg43YhHSg_s/export?format=pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center bg-gradient-to-r from-[#1e3a5f] to-[#3b82f6] text-white py-3 rounded-lg text-sm font-bold mb-3 hover:opacity-90 transition-opacity"
-                >
-                  Download Program Guide (PDF)
-                </a>
-
-                {/* Primary CTA */}
-                <a href={PROGRAM.href} target="_blank" rel="noopener noreferrer" className="block">
-                  <Button className="w-full text-sm sm:text-base py-2.5 sm:py-3 bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">
-                    {PROGRAM.cta}
-                  </Button>
-                </a>
-
-                {/* In-house financing CTA */}
-                <a href={PROGRAM.callHref} className="block mt-3">
-                  <Button className="w-full text-sm sm:text-base py-2.5 sm:py-3 bg-white hover:bg-gray-50 text-[#1e3a5f] border-2 border-[#1e3a5f]">
-                    Apply for In-House Financing -- (888) 545-8007
-                  </Button>
-                </a>
 
                 {/* Website Delivery Policy */}
                 <div className="mt-4 bg-amber-50 border border-amber-400 rounded-lg p-3">
