@@ -306,7 +306,7 @@ export default function LandingPage() {
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
                     </span>
                     <span className="text-[11px] sm:text-xs font-bold text-red-700 uppercase tracking-wider">
-                      For Licensed Asset Recovery Agents
+                      Become An Asset Recovery Agent
                     </span>
                   </div>
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight mb-4 sm:mb-6 leading-[1.05]">
