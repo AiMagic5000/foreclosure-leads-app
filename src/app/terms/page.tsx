@@ -2,18 +2,25 @@
 
 import { useState, useEffect } from "react";
 import { Header } from "@/components/header";
+import Link from "next/link";
 
 const sections = [
   { id: "acceptance", title: "Acceptance of Terms" },
   { id: "service", title: "Description of Service" },
+  { id: "program", title: "Asset Recovery Agent Partnership Program" },
   { id: "account", title: "Account Registration & Security" },
   { id: "billing", title: "Pricing & Payments" },
+  { id: "guarantee", title: "Money Back Guarantee" },
   { id: "trial", title: "Trial Policy" },
   { id: "cancellation", title: "Refund Policy" },
+  { id: "lead-delivery", title: "Lead Delivery" },
   { id: "acceptable-use", title: "Acceptable Use Policy" },
   { id: "data-accuracy", title: "Data Accuracy Disclaimer" },
   { id: "compliance", title: "Compliance Obligations" },
   { id: "intellectual-property", title: "Intellectual Property" },
+  { id: "voice-biometric-media", title: "Voice, Biometric Data & Media Release" },
+  { id: "sub-agent", title: "Sub-Agent Provisions (Reserved)" },
+  { id: "white-label", title: "White-Label License (Reserved)" },
   { id: "liability", title: "Limitation of Liability" },
   { id: "indemnification", title: "Indemnification" },
   { id: "dispute-resolution", title: "Dispute Resolution & Arbitration" },
@@ -137,7 +144,7 @@ export default function TermsOfService() {
                 Terms of Service
               </h1>
               <p className="text-slate-600 mb-8">
-                Last Updated: February 3, 2026
+                Last Updated: April 27, 2026
               </p>
 
               <div className="prose prose-slate max-w-none space-y-12">
@@ -219,10 +226,70 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 3 */}
+                {/* Section 3 -- Asset Recovery Agent Partnership Program */}
+                <section id="program">
+                  <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
+                    3. Asset Recovery Agent Partnership Program
+                  </h2>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company offers a single program: the <strong>Asset Recovery Agent Partnership</strong>. Enrollment in the program is governed by these Terms together with the program enrollment confirmation provided at checkout.
+                  </p>
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">3.1 Program Fee and Payment Options</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The total program fee is nine hundred ninety-five dollars (<strong>$995</strong>). Three payment options are available:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-slate-700 mb-4">
+                    <li><strong>Pay-in-Full:</strong> $995 paid in a single transaction at enrollment.</li>
+                    <li><strong>Three Monthly Payments:</strong> Three (3) consecutive monthly payments of $331 each, totaling $995.</li>
+                    <li><strong>In-House Financing:</strong> 0% interest, no third-party credit pull. Available for applicants whose budget does not fit the standard plan or whose credit limits other options. Subject to Company approval. Call (888) 545-8007 to apply.</li>
+                  </ul>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    No third-party "buy now, pay later" services (such as Klarna, Afterpay, or similar) are offered for the program fee.
+                  </p>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">3.2 Commission Structure</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    Recovery fees are split <strong>50/50</strong> between the agent and Foreclosure Recovery Inc. The recovery fee is up to 30% of the recovered surplus, subject to applicable state caps. For example, Texas caps recovery agent fees at 20%. Balance payments to the agent are paid only from cases successfully closed under the program.
+                  </p>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">3.3 What the Program Includes</h3>
+                  <ul className="list-disc pl-6 space-y-2 text-slate-700 mb-4">
+                    <li>Fifty (50) verified, exclusive leads per week. "Exclusive" means each lead is assigned to a single agent and is not shared with other agents.</li>
+                    <li>Certified letters mailed to leads on the agent's behalf, with proof of service, jurisdiction language, and a free claims guide for the homeowner.</li>
+                    <li>Ongoing support via phone, email, and the platform dashboard.</li>
+                    <li>Full training program access (audio, video, and written materials).</li>
+                    <li>Outreach automation, including ringless voicemail drops, SMS drips, and email drips, all loaded with the agent's name and contact information.</li>
+                    <li>A dedicated landing page on USForeclosureRecovery.com.</li>
+                    <li>An assigned personal extension on the Company's shared 800 inbound number.</li>
+                    <li>A professional email address at yourname@usforeclosurerecovery.com.</li>
+                    <li>Dashboard-managed lead outreach.</li>
+                    <li>Access to the company registration inbox and lead-tracking back office, allowing the agent to verify whether any of their clients have signed up or contacted the Company directly.</li>
+                    <li>Free claim processing of every signed contingency through MyStateFunds.com (https://www.mystatefunds.com/), the same claim-processing platform the Company uses internally.</li>
+                  </ul>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">3.4 No Business Entity Required</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    Agents may participate as 1099 independent contractors without forming a business entity. Agents who already operate a business may elect to have the Company bill the business directly and pay case earnings into the business bank account in lieu of a 1099, subject to standard onboarding and tax documentation.
+                  </p>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">3.5 Vegas Vacation Client Incentive</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company provides a complimentary Vegas vacation that the agent may offer to the agent's <em>clients</em> (homeowners) when those clients sign their contingency agreement. This incentive is a closing tool intended to drive client urgency and lift conversion on outreach. It is not an agent reward and is not redeemable by the agent personally. The right to extend the offer to clients activates as follows:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-slate-700 mb-4">
+                    <li><strong>Pay-in-Full enrollees:</strong> may extend the offer to clients immediately upon enrollment.</li>
+                    <li><strong>Three-Payment Plan enrollees:</strong> may extend the offer to clients once the third (final) monthly payment is received.</li>
+                    <li><strong>In-House Financing enrollees:</strong> may extend the offer to clients once the final scheduled payment is received.</li>
+                  </ul>
+                  <p className="text-slate-700 leading-relaxed">
+                    Trip details, fulfillment partners, and travel windows are determined and communicated by Foreclosure Recovery Inc. once the agent's client's signed contingency agreement is on file. The Company reserves the right to modify or substitute the incentive in its sole discretion, provided the substitute is of comparable value.
+                  </p>
+                </section>
+
+                {/* Section 4 */}
                 <section id="account">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    3. Account Registration & Security
+                    4. Account Registration & Security
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     To access the Service, you must create an account by
@@ -262,72 +329,55 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 4 */}
+                {/* Section 5 */}
                 <section id="billing">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    4. Pricing & Payments
+                    5. Pricing & Payments
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    The Service is offered on a one-time purchase basis with the
-                    following pricing:
-                  </p>
-                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-4">
-                    <ul className="space-y-3 text-slate-700">
-                      <li>
-                        <strong className="text-[#1e3a5f]">
-                          5-State Lead Access:
-                        </strong>{" "}
-                        $495.00 (one-time) - Access to foreclosure surplus leads
-                        for five (5) states of your choice, including skip
-                        tracing, DNC compliance, property enrichment, contract
-                        templates, ringless voicemail, and dashboard access.
-                      </li>
-                      <li>
-                        <strong className="text-[#1e3a5f]">
-                          Additional State Access:
-                        </strong>{" "}
-                        $175.00 per state (one-time) - Add any additional US
-                        state to your existing dashboard with the same features.
-                      </li>
-                      <li>
-                        <strong className="text-[#1e3a5f]">
-                          Asset Recovery Business Build Out:
-                        </strong>{" "}
-                        $2,495.00 (one-time, or $2,120.75 with 15% returning
-                        customer discount) - Complete business formation,
-                        website, branding, compliance documentation, and all
-                        features of the 5-State plan.
-                      </li>
-                    </ul>
-                  </div>
-                  <p className="text-slate-700 leading-relaxed mb-4">
-                    All purchases are one-time payments processed by Start My
-                    Business Incorporated (StartMyBusiness.us) on behalf of
-                    Foreclosure Recovery Inc. and its affiliated entities
-                    including Foreclosure Recovery
-                    (usforeclosurerecovery.com) and Asset Recovery Business
-                    (assetrecoverybusiness.com). By providing payment
-                    information, you authorize the payment processor to charge
-                    the applicable fee to your designated payment method.
+                    The current program offering is the Asset Recovery Agent Partnership at a total program fee of $995. Payment options and program inclusions are described in Section 3 (Asset Recovery Agent Partnership Program).
                   </p>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    Fees do not include applicable sales tax, value-added tax
-                    (VAT), or other governmental taxes or fees, which shall be
-                    your responsibility. If your payment method fails, the
-                    Company reserves the right to suspend access to the Service
-                    until payment is received.
+                    Payments are processed by Start My Business Incorporated (StartMyBusiness.us) on behalf of Foreclosure Recovery Inc. and its affiliated entities, including the platforms operating at usforeclosurerecovery.com and assetrecoverybusiness.com. By providing payment information, you authorize the payment processor to charge the applicable fee, and any scheduled installment payments under the three-payment plan or in-house financing option, to your designated payment method on the agreed schedule.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    Third-party "buy now, pay later" services (such as Klarna, Afterpay, or similar) are not offered for the program fee. The only available installment options are the three-payment plan and in-house financing described in Section 3.1.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    Fees do not include applicable sales tax, value-added tax (VAT), or other governmental taxes or fees, which shall be your responsibility. If a scheduled installment payment fails, the Company will attempt to contact you and reattempt collection. The Company reserves the right to suspend access to the Service, including paused activation of the Vegas Vacation Client Incentive described in Section 3.5, until payments are brought current.
                   </p>
                   <p className="text-slate-700 leading-relaxed">
-                    The Company reserves the right to update pricing for future
-                    purchases upon thirty (30) days' written notice. Price
-                    changes will not affect completed purchases.
+                    The Company reserves the right to update pricing for future enrollments upon thirty (30) days' written notice. Price changes do not affect previously completed enrollments or payment plans already in progress.
                   </p>
                 </section>
 
-                {/* Section 5 */}
+                {/* Section 6 -- Money Back Guarantee */}
+                <section id="guarantee">
+                  <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
+                    6. Money Back Guarantee
+                  </h2>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company offers a <strong>Money Back Guarantee</strong> on the Asset Recovery Agent Partnership program. If, after twelve (12) months of active participation, the agent has not closed a deal, the Company will refund the full $995 program payment, subject to the qualification and disqualification standards below.
+                  </p>
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">6.1 Qualification Requirements</h3>
+                  <p className="text-slate-700 leading-relaxed mb-2">To qualify for the refund, the agent must, throughout the twelve-month period:</p>
+                  <ul className="list-disc pl-6 space-y-2 text-slate-700 mb-4">
+                    <li>Complete the training program within sixty (60) days of enrollment.</li>
+                    <li>Work assigned leads each week.</li>
+                    <li>Use the Company's phone system for client outreach (calls are recorded).</li>
+                    <li>Maintain monthly contact with the support team.</li>
+                    <li>Follow the scripts and processes provided in training and the dashboard.</li>
+                    <li>Comply with all program terms and remain in good standing.</li>
+                  </ul>
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">6.2 Disqualification</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">An agent is disqualified from the Money Back Guarantee if the agent does not complete training, does not seek support, fails to document weekly outreach effort, or otherwise materially deviates from program processes.</p>
+                  <p className="text-slate-700 leading-relaxed">The Money Back Guarantee replaces any prior "double your money back" or similar offer. No prior offer remains in effect.</p>
+                </section>
+
+                {/* Section 7 */}
                 <section id="trial">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    5. Trial Policy
+                    7. Trial Policy
                   </h2>
                   <p className="text-slate-700 leading-relaxed">
                     The Company does not currently offer free trials. All access
@@ -337,10 +387,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 6 */}
+                {/* Section 8 */}
                 <section id="cancellation">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    6. Refund Policy
+                    8. Refund Policy
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     Due to the nature of our digital product and the significant
@@ -401,10 +451,29 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 7 */}
+                {/* Section 9 -- Lead Delivery */}
+                <section id="lead-delivery">
+                  <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
+                    9. Lead Delivery
+                  </h2>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    Enrolled agents receive fifty (50) verified leads per week, delivered through the platform dashboard. Each lead is exclusive to the agent to whom it is assigned and is not shared with any other agent. Leads are skip-traced and DNC-scrubbed prior to delivery.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    On the agent's behalf, the Company mails certified letters to the assigned leads, including proof of service, jurisdiction-appropriate language, and a free claims guide for the homeowner. The Company also runs ringless voicemail, SMS, and email drip outreach to the agent's leads using the agent's name and contact information.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company does not guarantee that any specific number of leads will respond, contract, or close. Lead volume targets are commercially reasonable estimates and may vary by week based on data availability, jurisdiction, and seasonal factors. The Company will, in good faith, replace verifiably duplicate or invalid leads.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed">
+                    Agents may not redistribute, resell, or transfer leads to any third party. Lead data is provided for the agent's exclusive use under this Agreement.
+                  </p>
+                </section>
+
+                {/* Section 10 */}
                 <section id="acceptable-use">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    7. Acceptable Use Policy
+                    10. Acceptable Use Policy
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     You agree to use the Service in compliance with all
@@ -461,10 +530,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 8 */}
+                {/* Section 11 */}
                 <section id="data-accuracy">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    8. Data Accuracy Disclaimer
+                    11. Data Accuracy Disclaimer
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     The lead data, contact information, and other information
@@ -511,10 +580,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 9 */}
+                {/* Section 12 */}
                 <section id="compliance">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    9. Compliance Obligations
+                    12. Compliance Obligations
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     You are solely responsible for ensuring that your use of
@@ -572,10 +641,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 10 */}
+                {/* Section 13 */}
                 <section id="intellectual-property">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    10. Intellectual Property
+                    13. Intellectual Property
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     All content, software, code, design, graphics, logos,
@@ -621,13 +690,94 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 11 */}
+                {/* Section 14 */}
+                <section id="voice-biometric-media">
+                  <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
+                    14. Voice, Biometric Data & Media Release
+                  </h2>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">14.1 Call Recording & Voice Collection</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    All telephone calls placed to or received from the Company, its agents, partners, or affiliated phone systems are recorded for quality assurance, training, compliance verification, and dispute resolution purposes. By placing or receiving a call through any Company phone line, extension, or system, you acknowledge and consent to the recording and storage of that call in its entirety, including any voiceprint or biometric voice data captured during the recording.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company collects, processes, and stores biometric identifiers derived from voice recordings, including but not limited to voiceprints, vocal patterns, and speech characteristics. This biometric data may be used for identity verification, quality monitoring, agent training, and system improvement. Biometric data will be retained for the duration of your business relationship with the Company plus seven (7) years, or as required by applicable records retention laws, whichever is longer. Biometric data will be destroyed when it is no longer needed for the purposes described in this section, unless retention is required by law or necessary for the protection of either party in connection with a legal proceeding or dispute.
+                  </p>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">14.2 Use of Recordings for Training & Advertising</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company reserves the right to use call recordings, transcripts, and excerpts from calls for internal training purposes, including but not limited to onboarding new agents, demonstrating sales techniques, compliance training, and improving service delivery. Recordings may be anonymized or used in their original form at the Company's discretion.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company may also use call recordings, excerpts, and related content for marketing, advertising, promotional materials, case studies, and testimonials, provided that such use does not misrepresent the content or context of the original communication. By continuing to use the Service after being notified of this policy, you grant the Company a non-exclusive, royalty-free, worldwide license to use such recordings for the purposes described in this section.
+                  </p>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">14.3 Media Release & Likeness Rights</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    If you agree -- whether verbally (recorded), in writing, or through electronic acceptance -- to participate in any podcast, webinar, live call, live Zoom session, video recording, screen share, or any other media production organized by or affiliated with the Company, you grant the Company and its successors an irrevocable, perpetual, worldwide, royalty-free, fully transferable license to use, reproduce, distribute, display, perform, create derivative works from, and otherwise exploit your name, voice, likeness, image, statements, and any other identifying characteristics captured during such participation, in any and all media formats now known or hereafter developed, in perpetuity (ad infinitum), for any lawful purpose including but not limited to advertising, marketing, training, educational content, social media, broadcast media, and promotional materials.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company shall retain all rights granted under this section to the fullest extent permitted by applicable law. You acknowledge that you will not receive compensation beyond what has already been agreed upon (if any) for the Company's use of your likeness and media participation as described herein.
+                  </p>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">14.4 Removal Requests & Legal Limitations</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company respects individual privacy rights and will comply with all applicable federal and state laws governing biometric data, voice recordings, and likeness rights, including but not limited to the Illinois Biometric Information Privacy Act (BIPA), the California Consumer Privacy Act (CCPA), the Texas Capture or Use of Biometric Identifier Act (CUBI), and any other applicable state biometric privacy statutes.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    You may submit a written request to have your voice recordings, biometric data, or media content removed by contacting the Company at the address provided in the Contact Information section of these Terms. The Company will process removal requests in accordance with applicable law, provided that such removal:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-slate-700 mb-4">
+                    <li>
+                      Does not conflict with any applicable rules of civil procedure, litigation hold obligations, or court orders requiring the preservation of evidence.
+                    </li>
+                    <li>
+                      Does not violate any federal, state, or local records retention requirements applicable to the Company's industry or business operations.
+                    </li>
+                    <li>
+                      Does not compromise the Company's ability to protect its rights or the rights of other parties in connection with any pending or reasonably anticipated legal dispute, investigation, audit, or regulatory proceeding.
+                    </li>
+                    <li>
+                      Does not apply to recordings or materials that have already been incorporated into published training materials, advertisements, or content distributed to third parties prior to the date of the removal request, where recall or deletion is not commercially practicable.
+                    </li>
+                  </ul>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    The Company will acknowledge receipt of any removal request within ten (10) business days and will provide a substantive response, including any applicable limitations or exceptions, within thirty (30) days. Where removal is not possible due to the exceptions listed above, the Company will explain the basis for its determination and, where feasible, offer reasonable alternatives such as anonymization or redaction.
+                  </p>
+
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">14.5 Consent</h3>
+                  <p className="text-slate-700 leading-relaxed">
+                    By registering for an account, using the Service, placing or receiving calls through the Company's phone systems, or participating in any media production as described in this section, you represent and warrant that you have read, understood, and voluntarily consent to the collection, storage, use, and disclosure of your voice data, biometric identifiers, call recordings, and likeness as described herein. If you do not consent to these terms, you must discontinue use of the Service and notify the Company immediately.
+                  </p>
+                </section>
+
+                {/* Section 15 -- Sub-Agent Provisions (Reserved) */}
+                <section id="sub-agent">
+                  <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
+                    15. Sub-Agent Provisions (Reserved)
+                  </h2>
+                  <p className="text-slate-700 leading-relaxed">
+                    This Section is reserved. The Asset Recovery Agent Partnership program does not include sub-agent recruitment, override commissions, or downstream agent management rights. Any future sub-agent program offered by the Company will be governed by a separate written agreement.
+                  </p>
+                </section>
+
+                {/* Section 16 -- White-Label License (Reserved) */}
+                <section id="white-label">
+                  <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
+                    16. White-Label License (Reserved)
+                  </h2>
+                  <p className="text-slate-700 leading-relaxed">
+                    This Section is reserved. The Asset Recovery Agent Partnership program does not include a white-label license, branded website clone, or rights to operate the Company's platform under the agent's own brand. Any future white-label license offered by the Company will be governed by a separate written agreement.
+                  </p>
+                </section>
+
+                {/* Section 17 */}
                 <section id="liability">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    11. Limitation of Liability
+                    17. Limitation of Liability
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4 uppercase font-semibold">
-                    TO THE FULLEST EXTENT PERMITTED BY LAW, US FORECLOSURE
+                    TO THE FULLEST EXTENT PERMITTED BY LAW, FORECLOSURE
                     RECOVERY INC., ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS,
                     AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT,
                     INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES,
@@ -676,13 +826,13 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 12 */}
+                {/* Section 18 */}
                 <section id="indemnification">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    12. Indemnification
+                    18. Indemnification
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    You agree to indemnify, defend, and hold harmless US
+                    You agree to indemnify, defend, and hold harmless
                     Foreclosure Recovery Inc., its officers, directors,
                     employees, agents, affiliates, and licensors from and
                     against any and all claims, liabilities, damages, losses,
@@ -720,10 +870,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 13 */}
+                {/* Section 19 */}
                 <section id="dispute-resolution">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    13. Dispute Resolution & Arbitration
+                    19. Dispute Resolution & Arbitration
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     Any dispute, controversy, or claim arising out of or
@@ -767,10 +917,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 14 */}
+                {/* Section 20 */}
                 <section id="governing-law">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    14. Governing Law
+                    20. Governing Law
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     These Terms and any Disputes arising out of or related to
@@ -786,10 +936,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 15 */}
+                {/* Section 21 */}
                 <section id="modifications">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    15. Modifications to Terms
+                    21. Modifications to Terms
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     The Company reserves the right to modify, amend, or update
@@ -812,10 +962,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 16 */}
+                {/* Section 22 */}
                 <section id="severability">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    16. Severability
+                    22. Severability
                   </h2>
                   <p className="text-slate-700 leading-relaxed">
                     If any provision of these Terms is found to be unlawful,
@@ -827,10 +977,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 17 */}
+                {/* Section 23 */}
                 <section id="entire-agreement">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    17. Entire Agreement
+                    23. Entire Agreement
                   </h2>
                   <p className="text-slate-700 leading-relaxed">
                     These Terms, together with the Privacy Policy and any other
@@ -842,10 +992,10 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
-                {/* Section 18 */}
+                {/* Section 24 */}
                 <section id="contact">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
-                    18. Contact Information
+                    24. Contact Information
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     If you have any questions, concerns, or complaints
@@ -930,13 +1080,26 @@ export default function TermsOfService() {
       {/* Footer */}
       <footer className="bg-[#1e3a5f] text-white py-8 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center gap-6 mb-4 text-sm">
+            <Link href="/terms" className="text-white/70 hover:text-white transition-colors">
+              Terms of Service
+            </Link>
+            <span className="text-white/30">|</span>
+            <Link href="/privacy" className="text-white/70 hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-white/30">|</span>
+            <Link href="/income-disclaimer" className="text-white/70 hover:text-white transition-colors">
+              Income Disclaimer
+            </Link>
+          </div>
           <p className="text-sm">
             &copy; {new Date().getFullYear()} Foreclosure Recovery Inc. in
             partnership with Start My Business Incorporated. All rights
             reserved.
           </p>
           <p className="text-xs text-slate-300 mt-2">
-            Last Updated: February 3, 2026
+            Last Updated: April 27, 2026
           </p>
         </div>
       </footer>

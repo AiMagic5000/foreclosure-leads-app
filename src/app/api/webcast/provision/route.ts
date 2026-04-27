@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     const tempPassword = generateTempPassword();
 
-    // Create preview account (no leads assigned -- leads access requires Junior Partner or Owner Operator tier)
+    // Create preview account (no leads assigned -- leads access requires Asset Recovery Agent Partnership enrollment)
     const { error: pinError } = await supabaseAdmin.from("user_pins").upsert(
       {
         email: lead.email.toLowerCase(),
@@ -90,8 +90,8 @@ export async function POST(request: NextRequest) {
                 <p style="margin:4px 0;"><strong>Email:</strong> ${lead.email}</p>
                 <p style="margin:4px 0;"><strong>Temporary PIN:</strong> ${tempPassword}</p>
               </div>
-              <p><strong>Ready to access live leads?</strong> Junior Partners and Owner Operators get leads assigned directly to their account with full outreach automation. Apply for the partnership program to get started.</p>
-              <p style="margin-top:12px;"><a href="https://usforeclosureleads.com/apply" style="display:inline-block;background:#d4a84b;color:#09274c;padding:12px 28px;text-decoration:none;font-weight:700;border-radius:6px;">APPLY FOR PARTNERSHIP</a></p>
+              <p><strong>Ready to access live leads?</strong> The Asset Recovery Agent Partnership gets you 50 exclusive leads per week, certified letters mailed on your behalf, and full outreach automation pre-configured. $995 total -- pay in full, three monthly payments of $331, or in-house financing.</p>
+              <p style="margin-top:12px;"><a href="https://usforeclosureleads.com/apply" style="display:inline-block;background:#d4a84b;color:#09274c;padding:12px 28px;text-decoration:none;font-weight:700;border-radius:6px;">ENROLL IN THE PARTNERSHIP</a></p>
               <p style="margin-top:20px;">Questions? Call us at <strong>(888) 545-8007</strong></p>
               <p>-- Corey Pearson<br/>Foreclosure Recovery Inc.</p>
             </div>
