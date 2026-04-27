@@ -631,8 +631,8 @@ export default function LandingPage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl order-2 lg:order-1">
                 <Image
-                  src="/happy-family.jpg"
-                  alt="Happy Family Receiving Keys"
+                  src="/foreclosure-surplus-funds-overages-business.jpg"
+                  alt="Foreclosure surplus funds overages business"
                   fill
                   className="object-cover"
                 />
