@@ -316,6 +316,26 @@ export default function LandingPage() {
                       Start Closing Recoveries.
                     </span>
                   </h1>
+                  {/* Mobile-only hero video (positioned right under headline) */}
+                  <div className="lg:hidden mb-5 flex justify-center">
+                    <div className="relative w-full max-w-[320px] rounded-2xl overflow-hidden shadow-2xl border-2 border-white/60 bg-black">
+                      <video
+                        className="w-full h-auto"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        controls
+                        preload="metadata"
+                        poster="/video-poster-foreclosure-dashboard.png"
+                      >
+                        <source
+                          src="https://seafile.alwaysencrypted.com/f/411cff3cc89a4cd7b2d1/?dl=1"
+                          type="video/mp4"
+                        />
+                      </video>
+                    </div>
+                  </div>
                   <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-5 max-w-2xl leading-relaxed px-2 lg:px-0 mx-auto lg:mx-0">
                     Verified surplus funds leads delivered to your dashboard every
                     24 hours -- skip-traced, DNC-scrubbed, and ready for outreach.
@@ -379,8 +399,8 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {/* Right 1/3 - Hero Video (aligned to left edge of column, 25% smaller) */}
-              <div className="w-[280px] sm:w-[300px] lg:w-1/3 flex-shrink-0 flex justify-center lg:justify-start">
+              {/* Right 1/3 - Hero Video (desktop only — mobile shows it under headline) */}
+              <div className="hidden lg:flex lg:w-1/3 flex-shrink-0 lg:justify-start">
                 <div className="relative w-[75%] rounded-2xl overflow-hidden shadow-2xl border-2 border-white/60 bg-black">
                   <video
                     className="w-full h-auto"
