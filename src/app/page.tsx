@@ -495,23 +495,7 @@ export default function LandingPage() {
 
             {/* Featured Image Section */}
             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-              <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://seafile.alwaysencrypted.com/f/ed91a1ea66a041c09263/?dl=1"
-                  alt="Asset Recovery Leads Dashboard"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <span className="inline-block px-3 py-1 bg-[#10b981] text-white text-sm font-medium rounded-full mb-2">
-                    Live Data
-                  </span>
-                  <h3 className="text-xl font-bold text-white">
-                    Real-Time Analytics Dashboard
-                  </h3>
-                </div>
-              </div>
+              <DashboardSlideshow />
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   Track Every Lead, Every Deal
