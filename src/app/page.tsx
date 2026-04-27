@@ -310,10 +310,10 @@ export default function LandingPage() {
                     </span>
                   </div>
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight mb-4 sm:mb-6 leading-[1.05]">
-                    Stop Hunting Leads.
+                    Stop Hunting Leads &amp; Start
                     <br />
                     <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
-                      Start Closing Recoveries.
+                      Closing Surplus Equity Claims.
                     </span>
                   </h1>
                   {/* Mobile-only hero video (positioned right under headline) */}
