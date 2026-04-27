@@ -600,8 +600,8 @@ export default function LandingPage() {
               <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/dashboard-preview.png"
-                  alt="Asset Recovery Dashboard with Live Leads and Outreach Automation"
+                  src="/fri-march-payouts.jpg"
+                  alt="Foreclosure Recovery Inc. March agent payouts"
                   className="w-full h-auto"
                 />
               </div>
