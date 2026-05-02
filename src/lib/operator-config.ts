@@ -45,6 +45,7 @@ export interface OperatorConfig {
   slybroadcastPassword: string
   slyCallbackNumber: string
   voiceId: string
+  voicedropAudioUrl: string | null
   websiteUrl: string
   logoUrl: string
   privacyPolicyUrl: string
@@ -198,6 +199,7 @@ export async function resolveOperatorConfig(opts: {
     slybroadcastPassword: String(r.slybroadcast_password || ADMIN_DEFAULTS.slybroadcast_password),
     slyCallbackNumber: String(r.sly_callback_number || ADMIN_DEFAULTS.sly_callback_number),
     voiceId: String(r.voice_id || ADMIN_DEFAULTS.voice_id),
+    voicedropAudioUrl: r.voicedrop_audio_url ? String(r.voicedrop_audio_url) : null,
     websiteUrl: String(r.website_url || ADMIN_DEFAULTS.website_url),
     logoUrl: String(r.logo_url || ADMIN_DEFAULTS.logo_url),
     privacyPolicyUrl: `https://${String(r.website_url || ADMIN_DEFAULTS.website_url)}/privacy-policy`,

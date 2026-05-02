@@ -291,9 +291,14 @@ export async function POST(request: NextRequest) {
       };
       const script = generateScript(testLead, config);
 
-      const audioBuffer = await generateAudio(script, config.voiceId);
-      const audioFilename = `vd-test-${Date.now()}.mp3`;
-      const audioUrl = await uploadAudioToStorage(audioBuffer, audioFilename);
+      let audioUrl: string;
+      if (config.voicedropAudioUrl) {
+        audioUrl = config.voicedropAudioUrl;
+      } else {
+        const audioBuffer = await generateAudio(script, config.voiceId);
+        const audioFilename = `vd-test-${Date.now()}.mp3`;
+        audioUrl = await uploadAudioToStorage(audioBuffer, audioFilename);
+      }
 
       const result = await sendSlyBroadcast(cleanPhone, audioUrl, config);
 
@@ -353,13 +358,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate personalized script
+    // Generate personalized script (still recorded even if static audio is used)
     const script = generateScript(lead, config);
 
-    // Generate audio via MiniMax 2.5 (primary) or ElevenLabs (fallback)
-    const audioBuffer = await generateAudio(script, config.voiceId);
-    const audioFilename = `vd-${leadId}-${Date.now()}.mp3`;
-    const audioUrl = await uploadAudioToStorage(audioBuffer, audioFilename);
+    // Per-operator static audio override -- skip TTS + upload
+    let audioUrl: string;
+    if (config.voicedropAudioUrl) {
+      audioUrl = config.voicedropAudioUrl;
+    } else {
+      const audioBuffer = await generateAudio(script, config.voiceId);
+      const audioFilename = `vd-${leadId}-${Date.now()}.mp3`;
+      audioUrl = await uploadAudioToStorage(audioBuffer, audioFilename);
+    }
 
     // Send via SlyBroadcast
     const cleanPhone = cleanPhoneNumber(lead.primary_phone);
