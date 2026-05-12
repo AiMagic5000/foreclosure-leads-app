@@ -85,9 +85,13 @@ export function EmailCaptureForm({
   return (
     <form onSubmit={handleSubmit} className="w-full">
       {variant === "hero" && (
-        <p className="text-xs font-semibold text-[#1e3a5f] uppercase tracking-wider mb-3 flex items-center gap-1.5">
-          <Download className="h-3.5 w-3.5" />
-          Free Download — Surplus Funds Overages Guide - Become an Asset Recovery Agent
+        <p className="text-xs font-semibold text-[#1e3a5f] uppercase tracking-wider mb-3 flex items-start gap-1.5">
+          <Download className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+          <span>
+            Free Download — Surplus Funds Overages Guide
+            <br />
+            Become an Asset Recovery Agent
+          </span>
         </p>
       )}
       <div className="flex flex-col gap-2">
