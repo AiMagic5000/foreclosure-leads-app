@@ -306,7 +306,9 @@ function WebcastLiveContent() {
   // treat it as the very start of a session (offset=0). This handles the
   // edge case where the redirect from /webcast arrives a split-second
   // before the boundary.
-  const rawOffset = getSessionOffset()
+  // When prospects arrive via form (autoplay=1), start from the beginning so they
+  // never land on dead time. Otherwise compute the wall-clock offset for live feel.
+  const rawOffset = autoplay ? 0 : getSessionOffset()
   const initialOffset = useRef(rawOffset >= SESSION_DURATION - 5 ? 0 : rawOffset).current
 
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -437,25 +439,18 @@ function WebcastLiveContent() {
     }
   }, [initialOffset])
 
-  // Detect video end / session end
+  // Continuous loop -- when video ends, restart at 0 and keep playing.
+  // No "session ended" overlay; the stream is treated as a 24/7 broadcast.
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
-    const handleEnded = () => setSessionEnded(true)
+    const handleEnded = () => {
+      video.currentTime = 0
+      video.play().catch(() => {})
+    }
     video.addEventListener('ended', handleEnded)
     return () => video.removeEventListener('ended', handleEnded)
   }, [])
-
-  // Also check session end via countdown reaching 0
-  useEffect(() => {
-    const remaining = SESSION_DURATION - initialOffset
-    if (remaining <= 0) {
-      setSessionEnded(true)
-      return
-    }
-    const timer = setTimeout(() => setSessionEnded(true), remaining * 1000)
-    return () => clearTimeout(timer)
-  }, [initialOffset])
 
   // Disable right-click on video
   useEffect(() => {
@@ -677,6 +672,7 @@ function WebcastLiveContent() {
             playsInline
             muted
             autoPlay
+            loop
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
           />

@@ -353,7 +353,7 @@ function WebcastLandingContent() {
         setError(data.error || 'Something went wrong')
         return
       }
-      router.push(`/waiting-room?leadId=${data.leadId}&session=${data.sessionTime}`)
+      router.push(`/webcast/live?leadId=${data.leadId}&autoplay=1`)
     } catch {
       setError('Network error. Please try again.')
     } finally {
