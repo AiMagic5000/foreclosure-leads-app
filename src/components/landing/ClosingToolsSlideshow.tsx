@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
@@ -13,12 +13,36 @@ const IMAGES = [
   "/closing-tools/tool-vegas.webp",
 ];
 
+const VEGAS_INDEX = IMAGES.indexOf("/closing-tools/tool-vegas.webp");
 const AUTO_INTERVAL_MS = 3500;
 
 export function ClosingToolsSlideshow() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const snappedToVegasRef = useRef(false);
+
+  // First time the slideshow scrolls into view, snap to the Vegas frame
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || snappedToVegasRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !snappedToVegasRef.current) {
+            snappedToVegasRef.current = true;
+            setIndex(VEGAS_INDEX);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const next = useCallback(() => setIndex((i) => (i + 1) % IMAGES.length), []);
   const prev = useCallback(() => setIndex((i) => (i - 1 + IMAGES.length) % IMAGES.length), []);
@@ -44,6 +68,7 @@ export function ClosingToolsSlideshow() {
   return (
     <>
       <div
+        ref={containerRef}
         className="relative h-48 overflow-hidden bg-slate-900 group cursor-zoom-in"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
