@@ -51,36 +51,44 @@ function buildWelcomeEmail(name: string): string {
   </tr></tbody></table>
 
   <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:24px 40px 0;">
-      <h2 style="margin:0 0 16px;color:#09274c;font-size:20px;font-weight:bold;">${firstName}, your guide is ready</h2>
-      <p style="margin:0 0 20px;color:#2c3e50;font-size:15px;line-height:26px;">Thanks for signing up. We put together a free resource to help you get started in surplus fund recovery right away.</p>
+    <td style="background-color:#ffffff;padding:18px 40px 0;">
+      <p style="margin:0 0 6px;font-size:11px;color:#1a7a3a;text-transform:uppercase;letter-spacing:1.2px;font-weight:600;">Your Guide Is Ready</p>
+      <h1 style="margin:0 0 24px;font-size:22px;color:#09274c;font-weight:bold;line-height:30px;">Surplus Funds Overages Guide<br>&mdash; Become an Asset Recovery Agent</h1>
+      <p style="margin:0 0 18px;font-size:15px;color:#2c3e50;line-height:26px;">Hello ${firstName},</p>
+      <p style="margin:0 0 18px;font-size:15px;color:#2c3e50;line-height:26px;">Thanks for signing up. We put together a free resource to help you get started in surplus fund recovery right away &mdash; a complete breakdown of the <strong style="color:#09274c;">Asset Recovery Agent Partnership</strong> and exactly how the business works.</p>
+      <p style="margin:0 0 18px;font-size:15px;color:#2c3e50;line-height:26px;">Inside the guide: <strong style="color:#1a7a3a;">$995 total</strong> program fee, what's included, the <strong style="color:#1a7a3a;">50/50 commission split</strong> on every recovery, and three payment options (pay in full, three monthly payments of $331, or in-house financing).</p>
     </td>
   </tr></tbody></table>
 
   <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:0 40px 0;">
-      <table style="background-color:#f0f4ff;border:1px solid #09274c;border-radius:8px;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
-        <td style="padding:20px 24px;">
-          <h3 style="margin:0 0 8px;color:#09274c;font-size:16px;font-weight:bold;">Program Guide (PDF Download)</h3>
-          <p style="margin:0 0 14px;color:#2c3e50;font-size:14px;line-height:22px;">Full breakdown of the Asset Recovery Agent Partnership &mdash; $995 total, what's included, commission structure (50/50 on the recovery fee), payment options (pay in full, three monthly payments of $331, or in-house financing), and how to get started.</p>
-          <table cellpadding="0" cellspacing="0"><tbody><tr>
-            <td style="background-color:#09274c;border-radius:6px;padding:12px 28px;">
-              <a style="color:#ffffff;font-weight:700;font-size:15px;text-decoration:none;" href="${PDF_GUIDE_URL}" target="_blank" rel="noopener noreferrer">Download Program Guide (PDF)</a>
-            </td>
-          </tr></tbody></table>
+    <td style="background-color:#ffffff;padding:0 40px 24px;">
+      <table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
+        <td align="center">
+          <a style="display:inline-block;padding:14px 32px;background-color:#1a7a3a;color:#ffffff;text-decoration:none;border-radius:6px;font-size:15px;font-weight:600;text-align:center;" href="${PDF_GUIDE_URL}" target="_blank" rel="noopener noreferrer">&#9660;&nbsp; Download Program Guide (PDF)</a>
         </td>
       </tr></tbody></table>
     </td>
   </tr></tbody></table>
 
   <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:20px 40px 0;">
-      <p style="margin:0;color:#2c3e50;font-size:15px;line-height:26px;">We provide daily-updated, skip-traced surplus fund leads across 30+ non-judicial states, ready for outreach. Every lead comes with phone numbers, emails, and mailing addresses already verified.</p>
+    <td style="background-color:#ffffff;padding:0 40px;">
+      <table style="background-color:#f0fff4;border-radius:6px;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
+        <td style="padding:14px 18px;">
+          <p style="margin:0;font-size:13px;color:#09274c;line-height:20px;"><strong>&#9989; Inside the Platform:</strong> We provide <strong style="color:#1a7a3a;">daily-updated, skip-traced surplus fund leads</strong> across 30+ non-judicial states &mdash; phone numbers, emails, and mailing addresses already verified and ready for outreach.</p>
+        </td>
+      </tr></tbody></table>
     </td>
   </tr></tbody></table>
 
   <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:20px 40px 0;">
+    <td style="background-color:#ffffff;padding:28px 40px 0;">
+      <h2 style="margin:0 0 8px;font-size:17px;color:#09274c;font-weight:bold;">See the Business Model in Action</h2>
+      <p style="margin:0 0 18px;font-size:15px;color:#2c3e50;line-height:26px;">Join a live training session to watch the full recovery workflow &mdash; lead generation, outreach automation, contingency signing, and case payout &mdash; from start to finish.</p>
+    </td>
+  </tr></tbody></table>
+
+  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
+    <td style="background-color:#ffffff;padding:0 40px 0;">
       <table style="background-color:#fffbeb;border:2px solid #d4a84b;border-radius:8px;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
         <td style="padding:20px 24px;text-align:center;">
           <p style="margin:0 0 12px;color:#09274c;font-size:15px;font-weight:700;">Want to see the business model in action?</p>
@@ -90,6 +98,50 @@ function buildWelcomeEmail(name: string): string {
             </td>
           </tr></tbody></table>
           <p style="margin:10px 0 0;color:#92400e;font-size:12px;">Sessions run every 30 minutes, 24/7</p>
+        </td>
+      </tr></tbody></table>
+    </td>
+  </tr></tbody></table>
+
+  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
+    <td style="background-color:#ffffff;padding:24px 40px 0;">
+      <table style="border:1px solid #dce1e8;border-radius:6px;border-left:4px solid #1a7a3a;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
+        <td style="padding:22px 24px;">
+          <p style="margin:0 0 14px;font-size:11px;color:#1a7a3a;text-transform:uppercase;letter-spacing:1.5px;font-weight:bold;">Your Next Steps</p>
+          <table style="width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody>
+            <tr>
+              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">1</div></td>
+              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Download the Program Guide</strong> using the button above and read it cover-to-cover</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">2</div></td>
+              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Join a Live Training Session</strong> &mdash; see how leads, outreach, and case-flow work in real time</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">3</div></td>
+              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Pick a payment option</strong>: pay in full ($995), three monthly payments of $331, or in-house financing</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">4</div></td>
+              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Reply to this email or call</strong> (888) 545-8007 with any questions</td>
+            </tr>
+          </tbody></table>
+        </td>
+      </tr></tbody></table>
+    </td>
+  </tr></tbody></table>
+
+  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
+    <td style="background-color:#ffffff;padding:24px 40px 0;">
+      <table style="border:1px solid #dce1e8;border-radius:6px;border-left:4px solid #09274c;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
+        <td style="padding:22px 24px;">
+          <p style="margin:0 0 12px;font-size:11px;color:#09274c;text-transform:uppercase;letter-spacing:1.5px;font-weight:bold;">Ready to Lock In Your Spot?</p>
+          <p style="margin:0 0 14px;font-size:14px;color:#2c3e50;line-height:22px;">When you're ready to activate your partnership and start receiving leads, visit the link below and <strong style="color:#09274c;">scroll down</strong> to the <strong style="color:#1a7a3a;">Asset Recovery Agent Partnership Package</strong>.</p>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
+            <td style="padding-top:4px;" align="center">
+              <a style="display:inline-block;padding:12px 28px;background-color:#09274c;color:#ffffff;text-decoration:none;border-radius:6px;font-size:14px;font-weight:600;" href="${PARTNERSHIP_URL}" target="_blank" rel="noopener noreferrer">&#128179;&nbsp; View Partnership Packages</a>
+            </td>
+          </tr></tbody></table>
         </td>
       </tr></tbody></table>
     </td>
