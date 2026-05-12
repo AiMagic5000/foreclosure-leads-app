@@ -10,6 +10,7 @@ const IMAGES = [
   "/closing-tools/tool-2.webp",
   "/closing-tools/tool-4.webp",
   "/closing-tools/tool-5.webp",
+  "/closing-tools/tool-vegas.webp",
 ];
 
 const AUTO_INTERVAL_MS = 3500;
@@ -68,7 +69,7 @@ export function ClosingToolsSlideshow() {
         <div className="absolute bottom-3 left-3 right-3 text-white z-10 pointer-events-none">
           <div className="text-xl font-extrabold leading-tight">Vegas Vacation</div>
           <div className="text-xs opacity-90 mt-0.5">
-            Your clients receive a complimentary Vegas trip when they sign the contingency agreement -- a built-in closing tool.
+            Your clients receive complimentary incentives when they sign the contingency agreement -- a built-in closing tool.
           </div>
         </div>
 

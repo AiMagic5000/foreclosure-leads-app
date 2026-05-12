@@ -422,9 +422,11 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Email Capture — inline hero */}
-            <div className="mt-10 pt-8 border-t border-gray-200/60 max-w-2xl">
-              <EmailCaptureForm source="hero_form" variant="hero" />
+            {/* Email Capture -- isolated card */}
+            <div className="mt-10 max-w-2xl">
+              <div className="rounded-2xl bg-white/95 backdrop-blur-sm border border-gray-200 shadow-2xl ring-1 ring-black/5 p-5 sm:p-6">
+                <EmailCaptureForm source="hero_form" variant="hero" />
+              </div>
             </div>
           </div>
         </section>
