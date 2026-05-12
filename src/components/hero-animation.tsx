@@ -138,19 +138,6 @@ export function HeroAnimation() {
       </svg>
 
       {/* Image Nodes - Positioned with CSS */}
-      {/* NODE 1: LEADS - Server (bottom left) */}
-      <div className="absolute left-[5%] bottom-[15%] flex flex-col items-center animate-pulse" style={{ zIndex: 2 }}>
-        <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-[#1e3a5f]/20 bg-[#1e3a5f]/10 shadow-lg">
-          <Image
-            src="/hero-images/leads-server.png"
-            alt="Enterprise data server for foreclosure leads"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <span className="mt-2 text-xs md:text-sm font-semibold text-[#1e3a5f]">LEADS</span>
-      </div>
-
 
       {/* NODE 3: CONVERSIONS - Bar Chart (top center) */}
       <div className="absolute left-1/2 -translate-x-1/2 top-[5%] flex flex-col items-center" style={{ zIndex: 2 }}>

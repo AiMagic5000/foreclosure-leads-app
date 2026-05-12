@@ -36,6 +36,7 @@ import { ApiDocsPopup } from "@/components/api-docs-popup";
 import { faqs } from "@/data/faqs";
 import { statesData } from "@/data/states";
 import { EmailCaptureForm } from "@/components/landing/EmailCaptureForm";
+import { ClosingToolsSlideshow } from "@/components/landing/ClosingToolsSlideshow";
 import { DashboardSlideshow } from "@/components/landing/DashboardSlideshow";
 import { AnimatedFeatures } from "@/components/landing/AnimatedFeatures";
 import { Footer } from "@/components/footer";
@@ -1047,18 +1048,9 @@ export default function LandingPage() {
 
                   {/* RIGHT: Vegas + payment options + guarantee */}
                   <div className="flex flex-col gap-4">
-                    {/* Vegas Vacation card with image */}
+                    {/* Closing Tools slideshow */}
                     <div className="rounded-2xl overflow-hidden shadow-lg ring-2 ring-red-500">
-                      <div className="relative h-48 bg-cover bg-center" style={{ backgroundImage: "url('https://www.assetrecoverybusiness.com/images/vegas-bonus.jpg')" }}>
-                        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/20 to-slate-900/85" />
-                        <div className="absolute top-3 left-3 inline-block bg-gradient-to-r from-red-600 to-red-700 text-white text-[11px] font-bold px-3 py-1 rounded-full tracking-wide">
-                          🎰 CLOSING TOOL
-                        </div>
-                        <div className="absolute bottom-3 left-3 right-3 text-white">
-                          <div className="text-xl font-extrabold leading-tight">Vegas Vacation</div>
-                          <div className="text-xs opacity-90 mt-0.5">Your clients receive a complimentary Vegas trip when they sign the contingency agreement -- a built-in closing tool.</div>
-                        </div>
-                      </div>
+                      <ClosingToolsSlideshow />
                       <div className="bg-white p-4">
                         <p className="text-xs font-bold text-[#1e3a5f] mb-1">When you can offer it:</p>
                         <ul className="text-xs text-gray-600 space-y-1 list-disc pl-4 leading-snug">
