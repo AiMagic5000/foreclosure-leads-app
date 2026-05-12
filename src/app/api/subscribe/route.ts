@@ -153,7 +153,7 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: NextRequest) {
-  let body: { name?: string; email?: string; phone?: string; source?: string };
+  let body: { name?: string; email?: string; phone?: string; consent?: boolean; source?: string };
   try {
     body = await request.json();
   } catch {
@@ -163,10 +163,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { name = "", email = "", phone = "", source = "hero_form" } = body;
+  const { name = "", email = "", phone = "", consent = false, source = "hero_form" } = body;
   const trimmedEmail = email.trim().toLowerCase();
   const trimmedName = name.trim();
   const trimmedPhone = phone.trim();
+  const consentedAt = consent ? new Date().toISOString() : null;
 
   if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
     return NextResponse.json(
@@ -176,8 +177,9 @@ export async function POST(request: NextRequest) {
   }
 
   // Upsert subscriber (ignore duplicate)
-  const subRow: Record<string, string> = { email: trimmedEmail, name: trimmedName, source };
+  const subRow: Record<string, string | null> = { email: trimmedEmail, name: trimmedName, source };
   if (trimmedPhone) subRow.phone = trimmedPhone;
+  if (consentedAt) subRow.consented_at = consentedAt;
   const { error: dbError } = await supabaseAdmin
     .from("email_subscribers")
     .upsert(subRow, { onConflict: "email", ignoreDuplicates: true });
@@ -225,7 +227,7 @@ export async function POST(request: NextRequest) {
       from: `"USFL Signup Alert" <${SMTP_USER}>`,
       to: "xscore10@protonmail.com",
       subject: `New signup: ${trimmedName || "No name"} (${source})`,
-      text: `Name: ${trimmedName || "Not provided"}\nEmail: ${trimmedEmail}\nPhone: ${trimmedPhone || "Not provided"}\nSource: ${source}\nTime: ${new Date().toISOString()}`,
+      text: `Name: ${trimmedName || "Not provided"}\nEmail: ${trimmedEmail}\nPhone: ${trimmedPhone || "Not provided"}\nConsent (SMS/voicemail/calls + Terms + Privacy): ${consent ? `YES @ ${consentedAt}` : "NO"}\nSource: ${source}\nTime: ${new Date().toISOString()}`,
     });
   } catch (notifyErr) {
     console.error("Admin notification error:", notifyErr);

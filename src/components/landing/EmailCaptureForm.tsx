@@ -19,6 +19,7 @@ export function EmailCaptureForm({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -27,6 +28,11 @@ export function EmailCaptureForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim()) return;
+    if (!consent) {
+      setErrorMsg("Please agree to the Terms and Privacy Policy to continue.");
+      setStatus("error");
+      return;
+    }
 
     setStatus("loading");
     setErrorMsg("");
@@ -39,6 +45,7 @@ export function EmailCaptureForm({
           name: name.trim(),
           email: email.trim(),
           phone: phone.trim(),
+          consent,
           source,
         }),
       });
@@ -142,6 +149,36 @@ export function EmailCaptureForm({
           </Button>
         </div>
       </div>
+      <label className="flex items-start gap-2 mt-3 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-[#1e3a5f]"
+          required
+        />
+        <span className="text-[11px] text-gray-600 leading-snug">
+          I agree to receive marketing emails, SMS, ringless voicemails, and phone calls from Foreclosure Recovery Inc. at the number and email provided. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to opt out. By submitting I accept the{" "}
+          <a
+            href="https://usforeclosurerecovery.com/terms-and-conditions"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#1e3a5f] underline"
+          >
+            Terms
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://usforeclosurerecovery.com/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#1e3a5f] underline"
+          >
+            Privacy Policy
+          </a>
+          .
+        </span>
+      </label>
       {status === "error" && (
         <p className="text-red-600 text-xs mt-2">{errorMsg}</p>
       )}
