@@ -313,7 +313,7 @@ export default function LandingPage() {
                     Stop Hunting Leads &amp; Start
                     <br />
                     <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
-                      Closing Surplus Equity Claims.
+                      Closing Foreclosure Surplus Overages.
                     </span>
                   </h1>
                   {/* Mobile-only hero video (positioned right under headline) */}
@@ -374,7 +374,7 @@ export default function LandingPage() {
                         className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full shadow-lg border border-gray-200"
                       >
                         <Play className="mr-2 h-4 w-4" />
-                        Watch 2-Min Demo
+                        Watch 20-Min Demo
                       </Button>
                     </Link>
                   </div>

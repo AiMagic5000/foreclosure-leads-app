@@ -18,6 +18,7 @@ export function EmailCaptureForm({
 }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -37,6 +38,7 @@ export function EmailCaptureForm({
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
+          phone: phone.trim(),
           source,
         }),
       });
@@ -87,39 +89,53 @@ export function EmailCaptureForm({
           Free Download — 50 States Surplus Funds Guide
         </p>
       )}
-      <div className="flex flex-col sm:flex-row gap-2">
-        <Input
-          type="text"
-          placeholder="First name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={`flex-1 min-w-0 ${
-            variant === "hero" ? "h-11 bg-white border-gray-300" : "h-11"
-          }`}
-          disabled={status === "loading"}
-        />
-        <Input
-          type="email"
-          placeholder="Email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className={`flex-[2] min-w-0 ${
-            variant === "hero" ? "h-11 bg-white border-gray-300" : "h-11"
-          }`}
-          disabled={status === "loading"}
-        />
-        <Button
-          type="submit"
-          disabled={status === "loading" || !email.trim()}
-          className="h-11 bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white font-semibold px-5 whitespace-nowrap shrink-0"
-        >
-          {status === "loading" ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            "Get Free Guide"
-          )}
-        </Button>
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Input
+            type="text"
+            placeholder="First name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={`flex-1 min-w-0 ${
+              variant === "hero" ? "h-11 bg-white border-gray-300" : "h-11"
+            }`}
+            disabled={status === "loading"}
+          />
+          <Input
+            type="tel"
+            placeholder="Phone number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className={`flex-1 min-w-0 ${
+              variant === "hero" ? "h-11 bg-white border-gray-300" : "h-11"
+            }`}
+            disabled={status === "loading"}
+          />
+        </div>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className={`flex-[2] min-w-0 ${
+              variant === "hero" ? "h-11 bg-white border-gray-300" : "h-11"
+            }`}
+            disabled={status === "loading"}
+          />
+          <Button
+            type="submit"
+            disabled={status === "loading" || !email.trim()}
+            className="h-11 bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white font-semibold px-5 whitespace-nowrap shrink-0"
+          >
+            {status === "loading" ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Get Free Guide"
+            )}
+          </Button>
+        </div>
       </div>
       {status === "error" && (
         <p className="text-red-600 text-xs mt-2">{errorMsg}</p>

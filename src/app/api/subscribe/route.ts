@@ -128,7 +128,7 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: NextRequest) {
-  let body: { name?: string; email?: string; source?: string };
+  let body: { name?: string; email?: string; phone?: string; source?: string };
   try {
     body = await request.json();
   } catch {
@@ -138,9 +138,10 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { name = "", email = "", source = "hero_form" } = body;
+  const { name = "", email = "", phone = "", source = "hero_form" } = body;
   const trimmedEmail = email.trim().toLowerCase();
   const trimmedName = name.trim();
+  const trimmedPhone = phone.trim();
 
   if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
     return NextResponse.json(
@@ -150,12 +151,11 @@ export async function POST(request: NextRequest) {
   }
 
   // Upsert subscriber (ignore duplicate)
+  const subRow: Record<string, string> = { email: trimmedEmail, name: trimmedName, source };
+  if (trimmedPhone) subRow.phone = trimmedPhone;
   const { error: dbError } = await supabaseAdmin
     .from("email_subscribers")
-    .upsert(
-      { email: trimmedEmail, name: trimmedName, source },
-      { onConflict: "email", ignoreDuplicates: true }
-    );
+    .upsert(subRow, { onConflict: "email", ignoreDuplicates: true });
 
   if (dbError) {
     console.error("Subscribe DB error:", dbError);
@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
       from: `"USFL Signup Alert" <${SMTP_USER}>`,
       to: "xscore10@protonmail.com",
       subject: `New signup: ${trimmedName || "No name"} (${source})`,
-      text: `Name: ${trimmedName || "Not provided"}\nEmail: ${trimmedEmail}\nSource: ${source}\nTime: ${new Date().toISOString()}`,
+      text: `Name: ${trimmedName || "Not provided"}\nEmail: ${trimmedEmail}\nPhone: ${trimmedPhone || "Not provided"}\nSource: ${source}\nTime: ${new Date().toISOString()}`,
     });
   } catch (notifyErr) {
     console.error("Admin notification error:", notifyErr);
