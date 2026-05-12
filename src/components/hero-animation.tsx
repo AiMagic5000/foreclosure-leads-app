@@ -149,7 +149,7 @@ export function HeroAnimation() {
             className="object-cover"
           />
         </div>
-        <span className="mt-2 text-xs md:text-sm font-semibold text-emerald-500">CONVERSIONS</span>
+        <span className="mt-2 text-xs md:text-sm font-semibold text-emerald-500">DNC COMPLIANT</span>
       </div>
 
       {/* NODE 4: HAPPY CLIENTS - Family (upper right arc) */}
