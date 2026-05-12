@@ -51,89 +51,45 @@ function buildWelcomeEmail(name: string): string {
   </tr></tbody></table>
 
   <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:18px 40px 0;">
-      <p style="margin:0 0 6px;font-size:11px;color:#1a7a3a;text-transform:uppercase;letter-spacing:1.2px;font-weight:600;">Your Guide Is Ready</p>
-      <h1 style="margin:0 0 20px;font-size:22px;color:#09274c;font-weight:bold;line-height:30px;">Surplus Funds Overages Guide<br>&mdash; Become an Asset Recovery Agent</h1>
-      <p style="margin:0 0 16px;font-size:15px;color:#2c3e50;line-height:26px;">Hello ${firstName},</p>
-      <p style="margin:0 0 16px;font-size:15px;color:#2c3e50;line-height:26px;">Thanks for grabbing the free guide. It walks you through how surplus funds recovery works, the Asset Recovery Agent Partnership ($995 total, 50/50 commission on every recovery), payment options, and exactly how to start closing claims.</p>
-      <p style="margin:0 0 18px;font-size:15px;color:#2c3e50;line-height:26px;">Download the PDF below, then take five minutes to create your free training account on the dashboard.</p>
-    </td>
-  </tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:0 40px 20px;" align="center">
-      <table border="0" cellspacing="0" cellpadding="0"><tbody><tr>
-        <td style="background-color:#1a7a3a;border-radius:6px;padding:14px 32px;" align="center">
-          <a style="display:inline-block;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;" href="${PDF_GUIDE_URL}" target="_blank" rel="noopener noreferrer">
-            &#9660;&nbsp; Download Your Guide (PDF)
-          </a>
-        </td>
-      </tr></tbody></table>
-    </td>
-  </tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:0 40px;">
-      <table style="background-color:#f0fff4;border-radius:6px;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
-        <td style="padding:14px 18px;">
-          <p style="margin:0;font-size:13px;color:#09274c;line-height:20px;"><strong>&#9989; Next Step:</strong> Create your free account at <a style="color:#1a7a3a;text-decoration:underline;" href="${SIGNUP_URL}" target="_blank" rel="noopener noreferrer">usforeclosureleads.com</a> &mdash; use <strong style="color:#1a7a3a;">Sign in with Google</strong> for one-click access. You will be on your dashboard in seconds.</p>
-        </td>
-      </tr></tbody></table>
-    </td>
-  </tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:28px 40px 0;">
-      <h2 style="margin:0 0 10px;font-size:17px;color:#09274c;font-weight:bold;">Once You Are In: Start Closing Training</h2>
-      <p style="margin:0 0 18px;font-size:15px;color:#2c3e50;line-height:26px;">After you land on your dashboard, look at the <strong style="color:#09274c;">left-side menu</strong> and click <strong style="color:#1a7a3a;">"Closing Training"</strong>. Everything you need before you start working cases lives there.</p>
-    </td>
-  </tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
-    <td style="background-color:#ffffff;padding:0 40px 4px;">
-      <table style="border:1px solid #dce1e8;border-radius:6px;border-left:4px solid #1a7a3a;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
-        <td style="padding:22px 24px;">
-          <p style="margin:0 0 14px;font-size:11px;color:#1a7a3a;text-transform:uppercase;letter-spacing:1.5px;font-weight:bold;">Your Quick-Start Checklist</p>
-          <table style="width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody>
-            <tr>
-              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">1</div></td>
-              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Download the guide</strong> using the button above</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">2</div></td>
-              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Create your free account</strong> at <a style="color:#1a7a3a;text-decoration:underline;" href="${SIGNUP_URL}" target="_blank" rel="noopener noreferrer">usforeclosureleads.com</a> (Google one-click)</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">3</div></td>
-              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Click "Closing Training"</strong> in the left-side menu</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">4</div></td>
-              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Complete each training module</strong> and mark them as finished</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0;width:30px;" valign="top"><div style="width:22px;height:22px;border-radius:50%;background-color:#09274c;color:#ffffff;text-align:center;line-height:22px;font-size:12px;font-weight:bold;">5</div></td>
-              <td style="padding:6px 0 6px 10px;font-size:14px;color:#2c3e50;line-height:21px;"><strong style="color:#09274c;">Book your live training call</strong> to finalize onboarding</td>
-            </tr>
-          </tbody></table>
-        </td>
-      </tr></tbody></table>
-    </td>
-  </tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
     <td style="background-color:#ffffff;padding:24px 40px 0;">
-      <table style="border:1px solid #dce1e8;border-radius:6px;border-left:4px solid #09274c;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
-        <td style="padding:22px 24px;">
-          <p style="margin:0 0 12px;font-size:11px;color:#09274c;text-transform:uppercase;letter-spacing:1.5px;font-weight:bold;">Ready to Activate Your Partnership?</p>
-          <p style="margin:0 0 14px;font-size:14px;color:#2c3e50;line-height:22px;">When you are ready to lock in your spot and start receiving leads, visit the link below and <strong style="color:#09274c;">scroll down</strong> to the <strong style="color:#1a7a3a;">Asset Recovery Agent Partnership Package</strong>.</p>
-          <table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
-            <td style="padding-top:4px;" align="center">
-              <a style="display:inline-block;padding:12px 28px;background-color:#09274c;color:#ffffff;text-decoration:none;border-radius:6px;font-size:14px;font-weight:600;" href="${PARTNERSHIP_URL}" target="_blank" rel="noopener noreferrer">
-                &#128179;&nbsp; View Partnership Packages
-              </a>
+      <h2 style="margin:0 0 16px;color:#09274c;font-size:20px;font-weight:bold;">${firstName}, your guide is ready</h2>
+      <p style="margin:0 0 20px;color:#2c3e50;font-size:15px;line-height:26px;">Thanks for signing up. We put together a free resource to help you get started in surplus fund recovery right away.</p>
+    </td>
+  </tr></tbody></table>
+
+  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
+    <td style="background-color:#ffffff;padding:0 40px 0;">
+      <table style="background-color:#f0f4ff;border:1px solid #09274c;border-radius:8px;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
+        <td style="padding:20px 24px;">
+          <h3 style="margin:0 0 8px;color:#09274c;font-size:16px;font-weight:bold;">Program Guide (PDF Download)</h3>
+          <p style="margin:0 0 14px;color:#2c3e50;font-size:14px;line-height:22px;">Full breakdown of the Asset Recovery Agent Partnership &mdash; $995 total, what's included, commission structure (50/50 on the recovery fee), payment options (pay in full, three monthly payments of $331, or in-house financing), and how to get started.</p>
+          <table cellpadding="0" cellspacing="0"><tbody><tr>
+            <td style="background-color:#09274c;border-radius:6px;padding:12px 28px;">
+              <a style="color:#ffffff;font-weight:700;font-size:15px;text-decoration:none;" href="${PDF_GUIDE_URL}" target="_blank" rel="noopener noreferrer">Download Program Guide (PDF)</a>
             </td>
           </tr></tbody></table>
+        </td>
+      </tr></tbody></table>
+    </td>
+  </tr></tbody></table>
+
+  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
+    <td style="background-color:#ffffff;padding:20px 40px 0;">
+      <p style="margin:0;color:#2c3e50;font-size:15px;line-height:26px;">We provide daily-updated, skip-traced surplus fund leads across 30+ non-judicial states, ready for outreach. Every lead comes with phone numbers, emails, and mailing addresses already verified.</p>
+    </td>
+  </tr></tbody></table>
+
+  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
+    <td style="background-color:#ffffff;padding:20px 40px 0;">
+      <table style="background-color:#fffbeb;border:2px solid #d4a84b;border-radius:8px;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
+        <td style="padding:20px 24px;text-align:center;">
+          <p style="margin:0 0 12px;color:#09274c;font-size:15px;font-weight:700;">Want to see the business model in action?</p>
+          <table cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr>
+            <td style="background-color:#d4a84b;border-radius:6px;padding:14px 32px;">
+              <a style="color:#09274c;font-weight:700;font-size:15px;text-decoration:none;" href="https://usforeclosureleads.com/webcast" target="_blank" rel="noopener noreferrer">Join a Live Training Session</a>
+            </td>
+          </tr></tbody></table>
+          <p style="margin:10px 0 0;color:#92400e;font-size:12px;">Sessions run every 30 minutes, 24/7</p>
         </td>
       </tr></tbody></table>
     </td>
@@ -157,8 +113,7 @@ function buildWelcomeEmail(name: string): string {
       <table style="border-top:1px solid #e2e6eb;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr>
         <td style="padding-top:20px;">
           <p style="margin:0 0 2px;font-size:15px;color:#09274c;font-weight:bold;">Corey Pearson</p>
-          <p style="margin:0 0 2px;font-size:13px;color:#5a6d82;">Director, Recovery Agent Partnerships</p>
-          <p style="margin:0 0 2px;font-size:13px;color:#5a6d82;">Foreclosure Recovery Inc.</p>
+          <p style="margin:0 0 2px;font-size:13px;color:#5a6d82;">Founder, Foreclosure Recovery Inc.</p>
           <p style="margin:8px 0 0;font-size:13px;"><a style="color:#09274c;text-decoration:none;" href="tel:+18885458007" target="_blank" rel="noopener noreferrer">(888) 545-8007</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a style="color:#09274c;text-decoration:none;" href="mailto:support@usforeclosureleads.com">support@usforeclosureleads.com</a></p>
         </td>
       </tr></tbody></table>
