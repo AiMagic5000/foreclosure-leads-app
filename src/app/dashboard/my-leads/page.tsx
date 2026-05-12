@@ -1006,6 +1006,8 @@ export default function MyLeadsPage() {
 
   // Upgrade popup
   const [showUpgradePopup, setShowUpgradePopup] = useState(false)
+  // Basic-tier lead-request upgrade modal
+  const [showBasicUpgradeModal, setShowBasicUpgradeModal] = useState(false)
 
   // Admin view-as-user
   const [allUsers, setAllUsers] = useState<{ id: string; email: string; package_type: string; account_type: string; is_active: boolean }[]>([])
@@ -1388,7 +1390,15 @@ export default function MyLeadsPage() {
           </p>
         </div>
         <Button
-          onClick={() => { setShowRequestModal(true); setRequestSuccess(false) }}
+          onClick={() => {
+            const basicTiers = ["basic", "free_webcast", "free"]
+            if (basicTiers.includes(activeAccountType)) {
+              setShowBasicUpgradeModal(true)
+            } else {
+              setShowRequestModal(true)
+              setRequestSuccess(false)
+            }
+          }}
           className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
         >
           <Send className="h-4 w-4 mr-2" />
@@ -1438,6 +1448,41 @@ export default function MyLeadsPage() {
             )}
           </CardContent>
         </Card>
+      )}
+
+      {/* Basic-tier lead-request upgrade modal */}
+      {showBasicUpgradeModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+          onClick={() => setShowBasicUpgradeModal(false)}
+        >
+          <div
+            className="bg-white dark:bg-slate-900 rounded-xl border shadow-2xl w-full max-w-md p-6 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-100 to-amber-200 ring-4 ring-amber-200/50">
+              <Lock className="h-7 w-7 text-amber-600" />
+            </div>
+            <h3 className="text-lg font-bold mb-3">Lead Delivery Not Included</h3>
+            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+              Heads up &mdash; your account is currently on the <strong>Basic tier</strong>, which doesn&apos;t include lead delivery. To unlock leads, you&apos;ll need to grab the Asset Recovery Agent Partnership Package from our site:
+            </p>
+            <a
+              href="https://usforeclosureleads.com/#partnership-package"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 font-semibold shadow-md text-sm mb-3 w-full justify-center"
+            >
+              View Partnership Package
+            </a>
+            <button
+              onClick={() => setShowBasicUpgradeModal(false)}
+              className="text-sm text-muted-foreground hover:text-foreground mt-2"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       )}
 
       {/* Upgrade Popup */}
