@@ -5,9 +5,9 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const IMAGES = [
+  "/closing-tools/tool-3.webp",
   "/closing-tools/tool-1.webp",
   "/closing-tools/tool-2.webp",
-  "/closing-tools/tool-3.webp",
   "/closing-tools/tool-4.webp",
   "/closing-tools/tool-5.webp",
 ];

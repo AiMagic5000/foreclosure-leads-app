@@ -338,7 +338,7 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-5 max-w-2xl leading-relaxed px-2 lg:px-0 mx-auto lg:mx-0">
-                    Verified surplus funds leads delivered to your dashboard every
+                    Verified foreclosure surplus overages leads delivered to your dashboard every
                     24 hours -- skip-traced, DNC-scrubbed, and ready for outreach.
                     Trusted by 500+ recovery agents across all 50 states.
                   </p>
