@@ -68,14 +68,15 @@ export function EmailCaptureForm({
         </div>
         <p className="font-semibold text-gray-900 text-lg">Check your email!</p>
         <p className="text-gray-600 text-sm max-w-xs">
-          Your free 50 States Guide is on its way. Check your inbox (and spam
-          folder just in case).
+          Your free Surplus Funds Overages Guide is on its way. Check your inbox (and spam folder just in case).
         </p>
         <a
-          href="/states-guide"
+          href="https://www.assetrecoverybusiness.com/Foreclosure-Recovery-Business-Programs-Guide.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-sm font-medium text-[#1e3a5f] underline underline-offset-2"
         >
-          Or view it instantly online &rarr;
+          Or download the PDF now &rarr;
         </a>
       </div>
     );
@@ -86,7 +87,7 @@ export function EmailCaptureForm({
       {variant === "hero" && (
         <p className="text-xs font-semibold text-[#1e3a5f] uppercase tracking-wider mb-3 flex items-center gap-1.5">
           <Download className="h-3.5 w-3.5" />
-          Free Download — 50 States Surplus Funds Guide
+          Free Download — Surplus Funds Overages Guide - Become an Asset Recovery Agent
         </p>
       )}
       <div className="flex flex-col gap-2">
