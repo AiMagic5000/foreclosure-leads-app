@@ -1463,7 +1463,7 @@ export default function MyLeadsPage() {
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-100 to-amber-200 ring-4 ring-amber-200/50">
               <Lock className="h-7 w-7 text-amber-600" />
             </div>
-            <h3 className="text-lg font-bold mb-3">Lead Delivery Not Included</h3>
+            <h3 className="text-lg font-bold mb-3 text-white">Lead Delivery Not Included</h3>
             <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
               Heads up &mdash; your account is currently on the <strong>Basic tier</strong>, which doesn&apos;t include lead delivery. To unlock leads, you&apos;ll need to grab the Asset Recovery Agent Partnership Package from our site:
             </p>
@@ -1477,7 +1477,7 @@ export default function MyLeadsPage() {
             </a>
             <button
               onClick={() => setShowBasicUpgradeModal(false)}
-              className="text-sm text-muted-foreground hover:text-foreground mt-2"
+              className="text-sm text-white hover:text-slate-200 mt-2"
             >
               Close
             </button>
