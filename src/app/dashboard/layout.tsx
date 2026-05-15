@@ -33,6 +33,7 @@ import {
   Lock,
   Gavel,
   MessageSquare,
+  Activity,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -96,6 +97,7 @@ const navSections: NavSection[] = [
       { name: "Attorney Leads", href: "/dashboard/attorney-leads", icon: Scale, badge: { text: "10%", color: "violet" } },
       { name: "Export", href: "/dashboard/export", icon: Download },
       { name: "Admin", href: "/dashboard/admin", icon: Shield, badge: { text: "Staff", color: "red" } },
+      { name: "Pipeline Monitor", href: "/dashboard/admin/pipeline", icon: Activity, badge: { text: "Live", color: "emerald" } },
       { name: "User Data", href: "/dashboard/user-data", icon: UserCircle, badge: { text: "CRM", color: "teal" } },
       { name: "Pre-Foreclosure", href: "/dashboard/pre-foreclosure", icon: Gavel, badge: { text: "New", color: "orange" } },
     ],
