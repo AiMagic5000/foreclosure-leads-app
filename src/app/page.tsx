@@ -621,22 +621,21 @@ export default function LandingPage() {
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl order-2 lg:order-1">
-                <Image
-                  src="/foreclosure-surplus-funds-overages-business.jpg"
-                  alt="Foreclosure surplus funds overages business"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
-                <div className="absolute bottom-6 left-6">
-                  <span className="inline-block px-3 py-1 bg-[#f59e0b] text-white text-sm font-medium rounded-full mb-2">
-                    Success Story
-                  </span>
-                  <h3 className="text-xl font-bold text-white">
-                    Helping Families Recover Their Funds
-                  </h3>
-                </div>
+              <div className="relative aspect-video rounded-2xl overflow-hidden shadow-xl order-2 lg:order-1 bg-black">
+                <video
+                  className="w-full h-full object-cover"
+                  controls
+                  preload="metadata"
+                  playsInline
+                  poster="/videos/surplus-funds-recovery-overview-poster.jpg"
+                  aria-label="Foreclosure surplus funds recovery overview"
+                >
+                  <source
+                    src="/videos/surplus-funds-recovery-overview.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support embedded video.
+                </video>
               </div>
               <div className="order-1 lg:order-2">
                 <p className="text-sm font-medium text-[#1e3a5f] uppercase tracking-wider mb-3">
