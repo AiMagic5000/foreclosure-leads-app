@@ -43,7 +43,8 @@ export default function SettingsPage() {
     setAccountType(ctxAccountType || "")
   }, [ctxAccountType])
   const isOwnerOperator = ["owner_operator", "admin"].includes(accountType)
-  const isFreeUser = !accountType || ["basic", "partnership", "junior_owner_operator"].includes(accountType)
+  const isAgent = ["partnership", "junior_owner_operator"].includes(accountType)
+  const isFreeTier = !isOwnerOperator && !isAgent
   // When admin is viewing-as another account, show that account's identity here.
   const displayName = impersonating?.name || user?.fullName || "User"
   const displayEmail = impersonating?.email || user?.primaryEmailAddress?.emailAddress || ""
@@ -172,32 +173,56 @@ export default function SettingsPage() {
             <CardDescription className="text-white/70">Your lead access and PIN information</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {/* Tier — base Asset Recovery Agent, or upgraded Owner Operator */}
+            {/* Tier — reflects the account's real package: Free, Asset Recovery Agent, or Owner Operator */}
             <div className="p-4 rounded-lg border border-white/20 bg-white/10">
               <div className="flex items-center justify-between mb-3">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-emerald-300 mb-1">Your Tier</p>
                   <h4 className="font-semibold text-lg text-white">
-                    {isOwnerOperator ? "Owner Operator — Full Access" : "Asset Recovery Agent"}
+                    {isOwnerOperator ? "Owner Operator — Full Access" : isAgent ? "Asset Recovery Agent" : "Free Tier"}
                   </h4>
                   <p className="text-2xl font-bold text-white">
-                    {isOwnerOperator ? "$5,200" : "$995"}
-                    <span className="text-sm font-normal text-white/70 ml-1">{isOwnerOperator ? "platform access" : "agent program"}</span>
+                    {isOwnerOperator ? "$5,200" : isAgent ? "$995" : "Free"}
+                    {(isOwnerOperator || isAgent) && (
+                      <span className="text-sm font-normal text-white/70 ml-1">{isOwnerOperator ? "platform access" : "agent program"}</span>
+                    )}
                   </p>
                 </div>
-                <Badge variant="outline" className="bg-emerald-500/20 border-emerald-400 text-emerald-200">
+                <Badge variant="outline" className={isFreeTier ? "bg-white/10 border-white/30 text-white/80" : "bg-emerald-500/20 border-emerald-400 text-emerald-200"}>
                   <CheckCircle2 className="mr-1 h-3 w-3" />
-                  Active
+                  {isFreeTier ? "Free" : "Active"}
                 </Badge>
               </div>
               <p className="text-sm text-white/70">
                 {isOwnerOperator
                   ? "All 50 states, skip-traced leads, automation, and the full business build-out are included — the complete platform."
-                  : "50 exclusive DNC-scrubbed leads every week, certified letters mailed for you, RVM / SMS / email automation under your name, and your dedicated landing page."}
+                  : isAgent
+                  ? "50 exclusive DNC-scrubbed leads every week, certified letters mailed for you, RVM / SMS / email automation under your name, and your dedicated landing page."
+                  : "You have free access to browse the platform and preview leads. Upgrade to a paid program to unlock weekly exclusive leads and outreach under your name."}
               </p>
             </div>
 
-            {/* Business Build Out — included for Owner Operators, the upgrade for agents */}
+            {/* Free tier — upgrade to the $995 Asset Recovery Agent program */}
+            {isFreeTier && (
+              <div className="p-3 rounded-lg border border-emerald-400/40 bg-emerald-500/10">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="font-medium text-white">Upgrade: Asset Recovery Agent</p>
+                    <p className="text-sm text-white/70">$995 — weekly exclusive leads, certified mail, and outreach automation.</p>
+                  </div>
+                  <a
+                    href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex flex-none items-center justify-center rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600"
+                  >
+                    Upgrade
+                  </a>
+                </div>
+              </div>
+            )}
+
+            {/* Business Build Out — included for Owner Operators, the upgrade for everyone else */}
             <div className={`p-3 rounded-lg border ${isOwnerOperator ? "border-white/20 bg-white/10" : "border-emerald-400/40 bg-emerald-500/10"}`}>
               <div className="flex items-center justify-between gap-3">
                 <div>
