@@ -60,15 +60,35 @@ export default function OwnerOperatorPage() {
               </a>
             </div>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-            <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Everything in Partnership, plus</p>
-            <ul className="mt-3 space-y-2.5">
-              {HEADLINE_INCLUDES.map((it) => (
-                <li key={it.label} className="flex items-center gap-2.5 text-sm font-medium text-[#0f172a]">
-                  <it.icon className="h-4 w-4 flex-none text-[#2563eb]" /> {it.label}
-                </li>
-              ))}
-            </ul>
+          <div className="flex flex-col gap-4">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Everything in Partnership, plus</p>
+              <ul className="mt-3 space-y-2.5">
+                {HEADLINE_INCLUDES.map((it) => (
+                  <li key={it.label} className="flex items-center gap-2.5 text-sm font-medium text-[#0f172a]">
+                    <it.icon className="h-4 w-4 flex-none text-[#2563eb]" /> {it.label}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Build-out is delivered by Start My Business Inc. */}
+            <a
+              href="https://www.startmybusiness.us/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-auto block overflow-hidden rounded-xl border border-slate-200 shadow-sm transition hover:shadow-md"
+            >
+              <img
+                src="/images/build-your-exit-start-my-business.webp"
+                alt="We build your exit — business build-out by Start My Business Inc"
+                width={720}
+                height={402}
+                className="w-full"
+              />
+              <span className="block bg-white px-3 py-2 text-xs font-medium text-slate-500 group-hover:text-[#2563eb]">
+                Build-out delivered by Start My Business Inc &middot; startmybusiness.us
+              </span>
+            </a>
           </div>
         </div>
       </div>
