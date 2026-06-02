@@ -40,6 +40,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { DashboardSectionVideo } from "@/components/dashboard-section-video"
 import { ImpersonationBanner } from "@/components/impersonation-banner"
+import { FreeUpgradeBanner } from "@/components/free-upgrade-banner"
 import { cn } from "@/lib/utils"
 import { PinProvider, usePin } from "@/lib/pin-context"
 
@@ -69,6 +70,15 @@ const navSections: NavSection[] = [
     ],
   },
   {
+    label: "Business Suite",
+    tier: "basic",
+    items: [
+      { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
+      { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Free", color: "emerald" } },
+      { name: "White Label", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
+    ],
+  },
+  {
     label: "Recovery Tools",
     tier: "basic",
     items: [
@@ -83,15 +93,6 @@ const navSections: NavSection[] = [
     items: [
       { name: "Ringless Drips", href: "/dashboard/ringless-drips", icon: Voicemail, badge: { text: "New", color: "red" } },
       { name: "SMS Messages", href: "/dashboard/sms-messages", icon: MessageSquare },
-    ],
-  },
-  {
-    label: "Business Suite",
-    tier: "basic",
-    items: [
-      { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
-      { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Free", color: "emerald" } },
-      { name: "White Label", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
     ],
   },
   {
@@ -435,6 +436,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
 
         <main className="p-4 lg:p-6">
           <ImpersonationBanner />
+          <FreeUpgradeBanner />
           <DashboardSectionVideo />
           {children}
         </main>

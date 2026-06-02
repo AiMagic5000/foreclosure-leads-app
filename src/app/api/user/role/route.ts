@@ -35,7 +35,9 @@ export async function GET(req: NextRequest) {
       .select('role, subscription_tier, account_type')
       .ilike('email', target.email)
       .single()
-    const effectiveAccountType = target.packageType || tUser?.account_type || 'basic'
+    // users.account_type is the source of truth (what the admin sets + what the User Data
+    // table shows). The pin's package_type can be stale, so prefer the users row.
+    const effectiveAccountType = tUser?.account_type || target.packageType || 'basic'
     const effectiveIsAdmin = effectiveAccountType === 'admin' || tUser?.role === 1
     return NextResponse.json({
       isAdmin: effectiveIsAdmin,

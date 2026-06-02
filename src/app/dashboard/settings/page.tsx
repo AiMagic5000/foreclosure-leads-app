@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { UpgradeButton } from "@/components/upgrade-button"
 import { IntegrationsSettings } from "@/components/integrations-settings"
+import { usePin } from "@/lib/pin-context"
 import {
   User,
   CreditCard,
@@ -37,15 +38,17 @@ export default function SettingsPage() {
   const [profileImage, setProfileImage] = useState<string>(DEFAULT_AVATAR)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [accountType, setAccountType] = useState<string>("")
+  const { accountType: ctxAccountType, impersonating } = usePin()
   useEffect(() => {
-    fetch("/api/user/role")
-      .then((r) => r.json())
-      .then((d) => setAccountType(d.accountType || ""))
-      .catch(() => {})
-  }, [])
+    setAccountType(ctxAccountType || "")
+  }, [ctxAccountType])
   const isOwnerOperator = ["owner_operator", "admin"].includes(accountType)
+  const isFreeUser = !accountType || ["basic", "partnership", "junior_owner_operator"].includes(accountType)
+  // When admin is viewing-as another account, show that account's identity here.
+  const displayName = impersonating?.name || user?.fullName || "User"
+  const displayEmail = impersonating?.email || user?.primaryEmailAddress?.emailAddress || ""
   // Prefer a freshly uploaded image, otherwise the Google/Clerk profile photo, then the fallback.
-  const avatarSrc = profileImage !== DEFAULT_AVATAR ? profileImage : (user?.imageUrl || DEFAULT_AVATAR)
+  const avatarSrc = impersonating ? DEFAULT_AVATAR : (profileImage !== DEFAULT_AVATAR ? profileImage : (user?.imageUrl || DEFAULT_AVATAR))
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -114,10 +117,10 @@ export default function SettingsPage() {
               </div>
               <div>
                 <p className="font-medium">
-                  {user?.fullName || "User"}
+                  {displayName}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {user?.primaryEmailAddress?.emailAddress || "email@example.com"}
+                  {displayEmail || "email@example.com"}
                 </p>
                 <button
                   type="button"
@@ -132,12 +135,13 @@ export default function SettingsPage() {
             <div className="pt-4 border-t space-y-3">
               <div className="grid gap-2">
                 <label className="text-sm font-medium">Full Name</label>
-                <Input defaultValue={user?.fullName || ""} />
+                <Input key={displayName} defaultValue={displayName === "User" ? "" : displayName} />
               </div>
               <div className="grid gap-2">
                 <label className="text-sm font-medium">Email</label>
                 <Input
-                  defaultValue={user?.primaryEmailAddress?.emailAddress || ""}
+                  key={displayEmail}
+                  defaultValue={displayEmail}
                   disabled
                 />
                 <p className="text-xs text-muted-foreground">

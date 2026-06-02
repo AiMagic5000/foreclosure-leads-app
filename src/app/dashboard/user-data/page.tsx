@@ -143,6 +143,28 @@ export default function UserDataPage() {
     setSavingId(null)
   }
 
+  // View as any account — provision a pin on the fly if the user never had one.
+  const viewAs = async (u: UserRecord) => {
+    let pinId = u.pin_id
+    if (!pinId) {
+      try {
+        const res = await fetch("/api/admin/users/ensure-pin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: u.email, accountType: u.account_type || "basic" }),
+        })
+        const d = await res.json()
+        if (!res.ok || !d.pinId) throw new Error(d.error || "Could not create a session for this account")
+        pinId = d.pinId as string
+      } catch (e) {
+        alert(e instanceof Error ? e.message : "Could not view as this account")
+        return
+      }
+    }
+    setImpersonation(pinId as string)
+    router.push("/dashboard")
+  }
+
   const updateSubscriptionTier = async (userId: string, tier: string) => {
     setSavingId(userId)
     try {
@@ -493,16 +515,12 @@ export default function UserDataPage() {
                             : "--"}
                         </td>
                         <td className="py-3 px-2">
-                          {u.pin_id ? (
-                            <button
-                              onClick={() => { setImpersonation(u.pin_id as string); router.push("/dashboard") }}
-                              className="inline-flex items-center gap-1 rounded-md border border-[#1E3A5F] px-2 py-1 text-xs font-medium text-[#1E3A5F] transition hover:bg-[#1E3A5F] hover:text-white"
-                            >
-                              View as
-                            </button>
-                          ) : (
-                            <span className="text-xs text-muted-foreground">--</span>
-                          )}
+                          <button
+                            onClick={() => viewAs(u)}
+                            className="inline-flex items-center gap-1 rounded-md border border-[#1E3A5F] px-2 py-1 text-xs font-medium text-[#1E3A5F] transition hover:bg-[#1E3A5F] hover:text-white"
+                          >
+                            View as
+                          </button>
                         </td>
                       </tr>
                     )
