@@ -13,6 +13,7 @@ import {
   Download,
   Zap,
   Briefcase,
+  Gift,
   ClipboardList,
   GraduationCap,
   Shield,
@@ -87,6 +88,7 @@ const navSections: NavSection[] = [
     tier: "basic",
     items: [
       { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
+      { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Free", color: "emerald" } },
       { name: "White Label", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
     ],
   },
