@@ -41,6 +41,7 @@ import { Button } from "@/components/ui/button"
 import { DashboardSectionVideo } from "@/components/dashboard-section-video"
 import { ImpersonationBanner } from "@/components/impersonation-banner"
 import { FreeUpgradeBanner } from "@/components/free-upgrade-banner"
+import { ChatWidget } from "@/components/chat-widget"
 import { cn } from "@/lib/utils"
 import { PinProvider, usePin } from "@/lib/pin-context"
 
@@ -117,8 +118,9 @@ const navSections: NavSection[] = [
 const TIER_ORDER: Record<string, number> = {
   basic: 0,
   partnership: 1,
-  owner_operator: 2,
-  admin: 3,
+  junior_owner_operator: 2,
+  owner_operator: 3,
+  admin: 4,
 }
 
 function tierAccess(userTier: string, sectionTier: string): boolean {
@@ -441,6 +443,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
+      <ChatWidget />
     </div>
   )
 }

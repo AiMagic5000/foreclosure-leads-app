@@ -140,6 +140,27 @@ export default function OwnerOperatorPage() {
         </div>
       </div>
 
+      {/* Next step: finish the Communications setup */}
+      <div className="rounded-2xl border border-[#1a7a3a]/30 bg-white p-6 shadow-sm sm:p-8">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#1a7a3a]">Next step</p>
+        <h2 className="mt-1 text-xl font-bold text-[#0f172a]">Finish setting up your Communications</h2>
+        <p className="mt-1 text-sm text-slate-600">
+          Connect your outreach so ringless voicemails and texts send under your own name. Record your voice for drips
+          and add your SlyBroadcast + TextBee logins on My Account.
+        </p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <a href="/dashboard/ringless-drips" className="inline-flex items-center gap-2 rounded-xl bg-[#1a7a3a] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90">
+            <Phone className="h-4 w-4" /> Set up Ringless Drips
+          </a>
+          <a href="/dashboard/sms-messages" className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90">
+            Set up SMS Messages
+          </a>
+          <a href="/dashboard/settings#slybroadcast" className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-[#1E3A5F] transition hover:bg-slate-50">
+            Add my logins in My Account
+          </a>
+        </div>
+      </div>
+
       {/* Final CTA */}
       <div className="rounded-2xl bg-[#0f172a] p-6 text-center sm:p-8">
         <h2 className="text-2xl font-bold text-white">Ready to own the whole business?</h2>
