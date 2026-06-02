@@ -96,8 +96,9 @@ export async function resolveOperatorConfig(opts: {
   clerkEmail: string | null
   operatorPinId?: string | null
   leadId?: string | null
+  requesterIsAdmin?: boolean
 }): Promise<OperatorConfig> {
-  const { clerkEmail, operatorPinId, leadId } = opts
+  const { clerkEmail, operatorPinId, leadId, requesterIsAdmin = false } = opts
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let pinRow: Record<string, any> | null = null
   let resolvedVia = "admin_defaults"
@@ -114,8 +115,15 @@ export async function resolveOperatorConfig(opts: {
       console.error("[resolveOperatorConfig] Step 1 failed (pinId lookup):", { operatorPinId, error: error.message })
     }
     if (data) {
-      pinRow = data
-      resolvedVia = `pin_id:${operatorPinId}`
+      // SECURITY: only honor a supplied pin if the caller is an admin (impersonation)
+      // OR the pin belongs to the caller. Stops a non-admin from sending comms AS another user.
+      const ownsPin = !!clerkEmail && String(data.email || "").toLowerCase() === clerkEmail.toLowerCase()
+      if (requesterIsAdmin || ownsPin) {
+        pinRow = data
+        resolvedVia = `pin_id:${operatorPinId}`
+      } else {
+        console.error("[resolveOperatorConfig] BLOCKED: non-admin supplied a pin they do not own", { operatorPinId, clerkEmail })
+      }
     }
   }
 

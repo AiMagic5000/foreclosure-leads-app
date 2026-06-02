@@ -84,8 +84,9 @@ const navSections: NavSection[] = [
   },
   {
     label: "Business Suite",
-    tier: "owner_operator",
+    tier: "basic",
     items: [
+      { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
       { name: "White Label", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
     ],
   },
@@ -313,7 +314,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
               <p className="font-semibold text-sm">Fully Built Asset Recovery Business</p>
               <p className="text-xs opacity-90 mt-1">45 Points of Compliance</p>
               <a
-                href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
+                href="/dashboard/owner-operator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"

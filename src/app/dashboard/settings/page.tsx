@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import { UpgradeButton } from "@/components/upgrade-button"
 import {
   User,
   CreditCard,
@@ -24,8 +25,6 @@ import {
   ArrowRight,
   TrendingUp,
   Camera,
-  Phone,
-  X,
 } from "lucide-react"
 
 const DEFAULT_AVATAR = "/avatars/default-shield.jpg"
@@ -37,7 +36,6 @@ export default function SettingsPage() {
   const [profileImage, setProfileImage] = useState<string>(DEFAULT_AVATAR)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [accountType, setAccountType] = useState<string>("")
-  const [showUpgrade, setShowUpgrade] = useState(false)
   useEffect(() => {
     fetch("/api/user/role")
       .then((r) => r.json())
@@ -200,9 +198,7 @@ export default function SettingsPage() {
                     Included
                   </Badge>
                 ) : (
-                  <Button size="sm" onClick={() => setShowUpgrade(true)} className="flex-none bg-emerald-500 text-white hover:bg-emerald-600">
-                    Upgrade
-                  </Button>
+                  <UpgradeButton label="Upgrade" className="inline-flex flex-none items-center justify-center rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600" />
                 )}
               </div>
             </div>
@@ -511,46 +507,6 @@ export default function SettingsPage() {
       </div>
 
       {/* Upgrade-to-Owner-Operator call popup */}
-      {showUpgrade && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/70 p-4"
-          onClick={() => setShowUpgrade(false)}
-        >
-          <div
-            className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setShowUpgrade(false)}
-              aria-label="Close"
-              className="absolute right-4 top-4 text-slate-400 transition hover:text-slate-700"
-            >
-              <X className="h-5 w-5" />
-            </button>
-            <div className="h-1 w-12 rounded" style={{ background: "linear-gradient(90deg,#2563eb,#D82221)" }} />
-            <h3 className="mt-3 text-xl font-bold text-slate-900">Upgrade to Owner Operator</h3>
-            <p className="mt-1.5 text-sm text-slate-600">
-              Unlock the complete asset-recovery business build-out &mdash; 45 points of compliance, the
-              full platform, and dedicated support. Call us and we&apos;ll get you set up.
-            </p>
-            <a
-              href="tel:+18885458007"
-              className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#D82221] px-4 py-3 text-lg font-bold text-white transition hover:opacity-90"
-            >
-              <Phone className="h-5 w-5" /> (888) 545-8007
-            </a>
-            <p className="mt-2 text-center text-xs text-slate-400">Call to upgrade &mdash; our team walks you through it.</p>
-            <a
-              href="https://usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 flex items-center justify-center gap-1 text-sm font-medium text-[#2563eb] hover:underline"
-            >
-              See everything you get <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-      )}
 
     </div>
   )

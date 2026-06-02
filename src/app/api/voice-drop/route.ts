@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { resolveOperatorConfig, isCommsAuthorized } from "@/lib/operator-config";
 import type { OperatorConfig } from "@/lib/operator-config";
+import { isRequestAdmin } from "@/lib/admin-guard";
 
 const MINIMAX_API_KEY = process.env.MINIMAX_API_KEY || "";
 const MINIMAX_BASE_URL = "https://api.minimax.io/v1";
@@ -258,7 +259,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { leadId, testPhone, testName, operatorPinId } = body;
 
+    const requesterIsAdmin = await isRequestAdmin()
     const config = await resolveOperatorConfig({
+      requesterIsAdmin,
       clerkEmail: userEmail,
       operatorPinId: operatorPinId || null,
       leadId,

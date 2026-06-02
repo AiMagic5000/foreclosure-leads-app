@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveOperatorConfig, isCommsAuthorized, configToAgentProfile } from "@/lib/operator-config"
+import { isRequestAdmin } from "@/lib/admin-guard"
 import type { AgentProfile } from "@/lib/operator-config"
 import { getStateRule } from "@/lib/surplus/state-rules"
 import { buildMergeContext } from "@/lib/surplus/merge-context"
@@ -671,7 +672,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Lead has no email address" }, { status: 400 })
     }
 
+    const requesterIsAdmin = await isRequestAdmin()
     const config = await resolveOperatorConfig({
+      requesterIsAdmin,
       clerkEmail: userEmail,
       operatorPinId: operatorPinId || null,
       leadId,

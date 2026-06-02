@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveOperatorConfig, isCommsAuthorized } from "@/lib/operator-config"
+import { isRequestAdmin } from "@/lib/admin-guard"
 
 const TEXTBEE_BASE_URL = "https://api.textbee.dev/api/v1/gateway/devices"
 const SMS_GATEWAY_SEND_PATH = "/api/v1/send"
@@ -15,6 +16,11 @@ function buildSmsMessage(lead: Record<string, unknown>, config: { displayName: s
   const ext = (config.extension && !config.phoneDisplay.includes("ext")) ? ` ext. ${config.extension}` : ""
 
   return `${firstName}, this is ${config.displayName} from ${config.companyName}. Our forensic audit has identified funds that are owed to you from the foreclosure of your property at ${propertyAddress}. Check your email for full details. To claim these funds, please call ${config.displayName} at ${config.phoneDisplay}${ext} or reply to this message. Time is limited under ${state} law. https://${config.websiteUrl}/`
+}
+
+function buildMeetAgentSms(lead: Record<string, unknown>, config: { displayName: string; companyName: string; phoneDisplay: string; meetAgentUrl: string }): string {
+  const firstName = String(lead.owner_name || "").split(" ")[0] || "Homeowner"
+  return `${firstName}, this is ${config.displayName} from ${config.companyName}. I recorded a short video about the funds owed to you from your foreclosure and how we help you claim them. Watch it here: ${config.meetAgentUrl} -- Questions? Call me at ${config.phoneDisplay}.`
 }
 
 function formatPhone(phone: string): string {
@@ -37,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { leadId, action, customMessage, operatorPinId } = body
+    const { leadId, action, customMessage, operatorPinId, variant } = body
 
     if (!leadId) {
       return NextResponse.json({ error: "leadId is required" }, { status: 400 })
@@ -64,7 +70,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Resolve operator config from DB (handles admin view-as, email lookup, lead assignment fallback)
+    const requesterIsAdmin = await isRequestAdmin()
     const config = await resolveOperatorConfig({
+      requesterIsAdmin,
       clerkEmail: userEmail,
       operatorPinId: operatorPinId || null,
       leadId,
@@ -80,7 +88,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const message = customMessage || buildSmsMessage(lead, config)
+    const message = customMessage
+      || (variant === "meet_agent" ? buildMeetAgentSms(lead, config) : buildSmsMessage(lead, config))
 
     // Preview mode
     if (action === "preview") {
