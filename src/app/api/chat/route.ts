@@ -5,10 +5,10 @@ import nodemailer from "nodemailer"
 export const dynamic = "force-dynamic"
 export const maxDuration = 30
 
-const SMTP_HOST = "smtp.hostinger.com"
-const SMTP_PORT = 465
-const SMTP_USER = "support@usforeclosurerecovery.com"
-const SMTP_PASS = process.env.IMAP_SUPPORT_PASSWORD || "Thepassword#1234"
+const SMTP_HOST = process.env.SMTP_HOST || "smtp.hostinger.com"
+const SMTP_PORT = Number(process.env.SMTP_PORT || 465)
+const SMTP_USER = process.env.SMTP_USER || "support@usforeclosurerecovery.com"
+const SMTP_PASS = process.env.SMTP_PASS || process.env.SMTP_SUPPORT_PASSWORD || process.env.IMAP_SUPPORT_PASSWORD || "Thepassword#1234"
 
 // Transcript recipients — site support inbox + owner's monitoring inbox.
 const TRANSCRIPT_TO = ["support@usforeclosureleads.com", "xscore10@protonmail.me"]
