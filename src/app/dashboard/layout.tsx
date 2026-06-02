@@ -322,7 +322,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                   size="sm"
                   className="w-full mt-3 bg-blue-800 text-white hover:bg-blue-900 border border-blue-400/30"
                 >
-                  Become a Senior Agent
+                  Become an Owner Operator
                 </Button>
               </a>
             </div>
