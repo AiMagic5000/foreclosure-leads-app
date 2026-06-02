@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { SectionVideo } from "@/components/section-video"
 import {
   Users,
   TrendingUp,
@@ -200,6 +201,13 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      <SectionVideo
+        src="/videos/dashboard-16x9.mp4"
+        poster="/videos/dashboard-poster.jpg"
+        title="New here? Take the 60-second dashboard tour"
+        subtitle="How surplus funds work, and how to turn your leads into recovered money."
+        storageKey="video-dismissed-dashboard"
+      />
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback, Suspense } from "react"
 import { AdminGate } from "@/components/admin-gate"
+import { SectionVideo } from "@/components/section-video"
 import Link from "next/link"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
@@ -49,6 +50,7 @@ import {
   MessageSquare,
   Send,
   PhoneCall,
+  Video,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -1247,6 +1249,53 @@ function LeadsPageContent() {
     }
   }, [emailDraftModal])
 
+  // Video email state ("Meet Your Agents" GIF email)
+  const [videoEmailModal, setVideoEmailModal] = useState<{ leadId: string; to: string; ownerName: string } | null>(null)
+  const [videoEmailPreview, setVideoEmailPreview] = useState<{ subject: string; html: string; to: string; from: string; gender?: string } | null>(null)
+  const [videoEmailLoading, setVideoEmailLoading] = useState(false)
+  const [videoEmailResult, setVideoEmailResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
+
+  const openVideoEmail = useCallback(async (leadId: string, to: string, ownerName: string) => {
+    setVideoEmailModal({ leadId, to, ownerName })
+    setVideoEmailPreview(null)
+    setVideoEmailResult(null)
+    setVideoEmailLoading(true)
+    try {
+      const res = await fetch("/api/video-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, action: "preview" }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to load preview")
+      setVideoEmailPreview(data)
+    } catch (err) {
+      setVideoEmailResult({ success: false, error: err instanceof Error ? err.message : "Preview failed" })
+    } finally {
+      setVideoEmailLoading(false)
+    }
+  }, [])
+
+  const createVideoEmailDraft = useCallback(async () => {
+    if (!videoEmailModal) return
+    setVideoEmailLoading(true)
+    setVideoEmailResult(null)
+    try {
+      const res = await fetch("/api/video-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId: videoEmailModal.leadId, action: "create_draft" }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Draft creation failed")
+      setVideoEmailResult({ success: true, message: data.message || "Video email draft created" })
+    } catch (err) {
+      setVideoEmailResult({ success: false, error: err instanceof Error ? err.message : "Draft creation failed" })
+    } finally {
+      setVideoEmailLoading(false)
+    }
+  }, [videoEmailModal])
+
   // SMS state
   const [smsModal, setSmsModal] = useState<{ leadId: string; phone: string; ownerName: string } | null>(null)
   const [smsPreview, setSmsPreview] = useState<{ phone: string; message: string; charCount: number; segments: number } | null>(null)
@@ -1941,6 +1990,13 @@ function LeadsPageContent() {
 
   return (
     <div className="space-y-6">
+      <SectionVideo
+        src="/videos/foreclosure-leads-16x9.mp4"
+        poster="/videos/foreclosure-leads-poster.jpg"
+        title="How to work the leads board"
+        subtitle="Open a lead, read the surplus, skip-trace, and reach out — all in one place."
+        storageKey="video-dismissed-leads"
+      />
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -2341,6 +2397,83 @@ Thank you.`}
         </div>
       )}
 
+      {/* Video Email Modal ("Meet Your Agents") */}
+      {videoEmailModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => { setVideoEmailModal(null); setVideoEmailResult(null) }}>
+          <Card className="w-full max-w-2xl max-h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2">
+                <Video className="h-5 w-5 text-purple-600" />
+                Video Email Preview
+                {videoEmailPreview?.gender && (
+                  <span className="ml-2 px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-800 border border-purple-300 rounded-full">
+                    {videoEmailPreview.gender === "female" ? "Allie avatar" : "Corey avatar"}
+                  </span>
+                )}
+              </CardTitle>
+              <CardDescription>
+                Draft for <strong>{videoEmailModal.ownerName}</strong> &rarr; {videoEmailModal.to}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex-1 overflow-hidden space-y-3">
+              {videoEmailLoading && !videoEmailPreview && (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-6 w-6 animate-spin text-purple-600" />
+                  <span className="ml-2 text-sm text-muted-foreground">Loading preview...</span>
+                </div>
+              )}
+              {videoEmailPreview && (
+                <>
+                  <div className="flex flex-col gap-1 text-sm border rounded-lg p-3 bg-slate-50">
+                    <div><span className="text-muted-foreground">From:</span> <span className="font-medium">{videoEmailPreview.from}</span></div>
+                    <div><span className="text-muted-foreground">To:</span> <span className="font-medium">{videoEmailPreview.to}</span></div>
+                    <div><span className="text-muted-foreground">Subject:</span> <span className="font-medium">{videoEmailPreview.subject}</span></div>
+                  </div>
+                  <div className="border rounded-lg overflow-auto max-h-[45vh] bg-white">
+                    <iframe
+                      srcDoc={videoEmailPreview.html}
+                      className="w-full min-h-[400px] border-0"
+                      title="Video email preview"
+                      sandbox="allow-same-origin"
+                    />
+                  </div>
+                </>
+              )}
+              {videoEmailResult && (
+                <div className={`p-3 rounded-lg text-sm ${videoEmailResult.success ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-red-50 text-red-800 border border-red-200"}`}>
+                  {videoEmailResult.success ? (
+                    <div className="flex items-center gap-1.5 font-medium">
+                      <CheckCircle2 className="h-4 w-4" />
+                      {videoEmailResult.message}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5">
+                      <XCircle className="h-4 w-4" />
+                      {videoEmailResult.error}
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+            <div className="flex flex-wrap justify-end gap-2 p-6 pt-0">
+              <Button variant="outline" onClick={() => { setVideoEmailModal(null); setVideoEmailResult(null) }}>
+                Close
+              </Button>
+              {videoEmailPreview && !videoEmailResult?.success && (
+                <Button
+                  onClick={createVideoEmailDraft}
+                  disabled={videoEmailLoading}
+                  className="bg-purple-600 hover:bg-purple-700 text-white"
+                >
+                  {videoEmailLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Video className="h-4 w-4 mr-2" />}
+                  Create Draft in Mailbox
+                </Button>
+              )}
+            </div>
+          </Card>
+        </div>
+      )}
+
       {/* SMS Preview Modal */}
       {smsModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => { setSmsModal(null); setSmsResult(null) }}>
@@ -2363,6 +2496,28 @@ Thank you.`}
               )}
               {smsPreview && (
                 <>
+                  <button
+                    type="button"
+                    disabled={smsLoading || !!smsResult?.success}
+                    className="flex items-center gap-1.5 text-xs font-medium text-purple-700 hover:bg-purple-50 border border-purple-200 rounded-lg px-2.5 py-1.5 transition-colors disabled:opacity-50"
+                    onClick={async () => {
+                      if (!smsModal) return
+                      setSmsLoading(true)
+                      try {
+                        const res = await fetch("/api/send-sms", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ leadId: smsModal.leadId, action: "preview", variant: "meet_agent" }),
+                        })
+                        const data = await res.json()
+                        if (res.ok) setSmsEditMessage(data.message)
+                      } finally {
+                        setSmsLoading(false)
+                      }
+                    }}
+                  >
+                    <Video className="h-3.5 w-3.5" /> Use &ldquo;Meet Your Agents&rdquo; video link
+                  </button>
                   <textarea
                     className="w-full border rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50"
                     rows={6}
@@ -2791,6 +2946,16 @@ Thank you.`}
                             </span>
                           </button>
                         )}
+                        {lead.primaryEmail && (
+                          <button
+                            className="flex items-center gap-1.5 hover:bg-purple-50 rounded px-1 -mx-1 transition-colors"
+                            onClick={(e) => { e.stopPropagation(); if (isRevealed) openVideoEmail(lead.id, lead.primaryEmail!, lead.ownerName) }}
+                            title={isRevealed ? "Send video email (Meet Your Agents)" : ""}
+                          >
+                            <Video className="h-3 w-3 text-purple-600" />
+                            <span className="text-xs text-purple-600">Video email</span>
+                          </button>
+                        )}
                       </div>
                     ) : (
                       <div className="flex items-center gap-1.5 text-muted-foreground">
@@ -3029,6 +3194,15 @@ Thank you.`}
                                 <span className="text-xs text-blue-600 truncate">
                                   <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
                                 </span>
+                              </button>
+                              <span className="text-muted-foreground">|</span>
+                              <button
+                                className="flex items-center gap-1 hover:bg-purple-50 rounded px-1 transition-colors"
+                                onClick={(e) => { e.stopPropagation(); if (isRevealed) openVideoEmail(lead.id, lead.primaryEmail!, lead.ownerName) }}
+                                title={isRevealed ? "Send video email (Meet Your Agents)" : ""}
+                              >
+                                <Video className="h-3.5 w-3.5 text-purple-600" />
+                                <span className="text-xs text-purple-600">Video</span>
                               </button>
                             </>
                           )}
