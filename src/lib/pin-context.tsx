@@ -5,13 +5,14 @@ import { useUser } from "@clerk/nextjs"
 
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
 
-type AccountType = 'basic' | 'partnership' | 'owner_operator' | 'admin'
+type AccountType = 'basic' | 'partnership' | 'junior_owner_operator' | 'owner_operator' | 'admin'
 
 interface PinContextType {
   isVerified: boolean
   statesAccess: string[]
   isAdmin: boolean
   isOwnerOperator: boolean
+  isFullOwnerOperator: boolean
   userRole: 'standard' | 'owner_operator' | 'admin'
   accountType: AccountType
   pinEmail: string | null
@@ -29,6 +30,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
   const [statesAccess, setStatesAccess] = useState<string[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
   const [isOwnerOperator, setIsOwnerOperator] = useState(false)
+  const [isFullOwnerOperator, setIsFullOwnerOperator] = useState(false)
   const [userRole, setUserRole] = useState<'standard' | 'owner_operator' | 'admin'>('standard')
   const [accountType, setAccountType] = useState<AccountType>('basic')
   const [pinEmail, setPinEmail] = useState<string | null>(null)
@@ -50,6 +52,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
       setStatesAccess(["ALL"])
       setIsAdmin(true)
       setIsOwnerOperator(false)
+      setIsFullOwnerOperator(true)
       setUserRole('admin')
       setAccountType('admin')
       setPinEmail(userEmail)
@@ -65,6 +68,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
         if (data.isAdmin) {
           acctType = 'admin'
           setIsAdmin(true)
+          setIsFullOwnerOperator(true)
           setIsVerified(true)
           setStatesAccess(["ALL"])
           setUserRole('admin')
@@ -73,8 +77,12 @@ export function PinProvider({ children }: { children: ReactNode }) {
 
         setAccountType(acctType)
 
-        // If account_type is owner_operator, reflect that
+        // Owner Operator (and Junior) get full resource access; only full Owner Operators
+        // get closers + contract-admin services (isFullOwnerOperator).
         if (acctType === 'owner_operator') {
+          setIsOwnerOperator(true)
+          setIsFullOwnerOperator(true)
+        } else if (acctType === 'junior_owner_operator') {
           setIsOwnerOperator(true)
         }
 
@@ -114,6 +122,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
         setIsAdmin(data.isAdmin || false)
         const role = data.role || 'standard'
         setIsOwnerOperator(role === 'owner_operator')
+        setIsFullOwnerOperator(role === 'owner_operator' || (data.isAdmin || false))
         setUserRole(data.isAdmin ? 'admin' : role)
         setPinEmail(email)
         setPinId(data.pinId || null)
@@ -133,6 +142,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
     setStatesAccess([])
     setIsAdmin(false)
     setIsOwnerOperator(false)
+    setIsFullOwnerOperator(false)
     setUserRole('standard')
     setPinEmail(null)
     setPinId(null)
@@ -145,6 +155,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
         statesAccess,
         isAdmin,
         isOwnerOperator,
+        isFullOwnerOperator,
         userRole,
         accountType,
         pinEmail,

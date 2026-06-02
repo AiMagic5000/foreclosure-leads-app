@@ -257,8 +257,8 @@ const mockCallRecords: CallRecord[] = [
 ]
 
 export default function HireCloserPage() {
-  const { isOwnerOperator, accountType } = usePin()
-  const ooAccess = isOwnerOperator || accountType === "admin"
+  const { isFullOwnerOperator } = usePin()
+  const ooAccess = isFullOwnerOperator
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCloser, setSelectedCloser] = useState<CloserProfile | null>(null)
   const [showCallLog, setShowCallLog] = useState(true)

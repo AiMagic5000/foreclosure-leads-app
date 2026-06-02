@@ -133,7 +133,7 @@ export async function PATCH(req: NextRequest) {
   }
 
   // Support new account_type field
-  if (accountType && ['basic', 'partnership', 'owner_operator', 'admin'].includes(accountType)) {
+  if (accountType && ['basic', 'partnership', 'junior_owner_operator', 'owner_operator', 'admin'].includes(accountType)) {
     updateData.account_type = accountType
   }
 

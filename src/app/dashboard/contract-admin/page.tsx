@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { UpgradeButton } from "@/components/upgrade-button"
+import { usePin } from "@/lib/pin-context"
 import {
   Star,
   MapPin,
@@ -311,6 +312,7 @@ const mockTasks: TaskRecord[] = [
 ]
 
 export default function ContractAdminPage() {
+  const { isFullOwnerOperator } = usePin()
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedAdmin, setSelectedAdmin] = useState<AdminProfile | null>(null)
   const [showTaskLog, setShowTaskLog] = useState(false)
@@ -484,23 +486,26 @@ export default function ContractAdminPage() {
         <p>Agent last names are abbreviated to protect their privacy. Full identity is disclosed after hiring.</p>
       </div>
 
-      {/* Upgrade Gate */}
-      <Card className="border-emerald-500/50 bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-950/30 dark:to-green-950/30">
-        <CardContent className="flex flex-col md:flex-row items-center justify-between gap-4 py-6">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-full bg-emerald-500/20">
-              <Lock className="h-6 w-6 text-emerald-600" />
+      {/* Upgrade Gate — only for accounts without full Owner Operator (Junior OO + below) */}
+      {!isFullOwnerOperator && (
+        <Card className="border-emerald-500/50 bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-950/30 dark:to-green-950/30">
+          <CardContent className="flex flex-col md:flex-row items-center justify-between gap-4 py-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-full bg-emerald-500/20">
+                <Lock className="h-6 w-6 text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Owner Operator Upgrade Required</h3>
+                <p className="text-sm text-muted-foreground">
+                  Contract administration is a full Owner Operator service. You can browse this page, but managing
+                  contracts requires upgrading from your current tier.
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold">Owner Operator Upgrade Required</h3>
-              <p className="text-sm text-muted-foreground">
-                Contract administration is part of the Owner Operator tier &mdash; the full asset-recovery business build-out. Upgrade your account to unlock it.
-              </p>
-            </div>
-          </div>
-          <UpgradeButton label="Upgrade Now" className="inline-flex shrink-0 items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700" />
-        </CardContent>
-      </Card>
+            <UpgradeButton label="Upgrade Now" className="inline-flex shrink-0 items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700" />
+          </CardContent>
+        </Card>
+      )}
 
       {/* Search */}
       <div className="relative">

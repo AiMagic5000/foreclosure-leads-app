@@ -22,6 +22,8 @@ const ADMIN_DEFAULTS = {
   website_url: "usforeclosurerecovery.com",
   logo_url: "https://cdn.prod.website-files.com/67ec4cfbdf0509c176a8cdfe/69897785586ae271c69d085e_image%20(1).png",
   privacy_policy_url: "https://usforeclosurerecovery.com/privacy-policy",
+  gender: "male",
+  meet_agent_url: "https://usforeclosurerecovery.com/meet-your-agents",
 }
 
 export interface OperatorConfig {
@@ -49,6 +51,8 @@ export interface OperatorConfig {
   websiteUrl: string
   logoUrl: string
   privacyPolicyUrl: string
+  gender: "male" | "female"
+  meetAgentUrl: string
   packageType: string
   role: string
 }
@@ -203,6 +207,8 @@ export async function resolveOperatorConfig(opts: {
     websiteUrl: String(r.website_url || ADMIN_DEFAULTS.website_url),
     logoUrl: String(r.logo_url || ADMIN_DEFAULTS.logo_url),
     privacyPolicyUrl: `https://${String(r.website_url || ADMIN_DEFAULTS.website_url)}/privacy-policy`,
+    gender: (r.gender === "female" ? "female" : "male"),
+    meetAgentUrl: String(r.meet_agent_url || ADMIN_DEFAULTS.meet_agent_url),
     packageType: String(r.package_type || "basic"),
     role: String(r.role || "standard"),
   }
@@ -217,7 +223,7 @@ export async function isCommsAuthorized(clerkEmail: string): Promise<boolean> {
     .eq("is_active", true)
     .single()
   if (!data) return false
-  return ["partnership", "owner_operator", "admin"].includes(data.package_type)
+  return ["partnership", "junior_owner_operator", "owner_operator", "admin"].includes(data.package_type)
 }
 
 export function configToAgentProfile(config: OperatorConfig): AgentProfile {

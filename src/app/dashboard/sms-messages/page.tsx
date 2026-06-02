@@ -41,7 +41,7 @@ function formatDateTime(iso: string): string {
 export default function SmsMessagesPage() {
   const { user, isLoaded } = useUser()
   const { accountType } = usePin()
-  const hasAccess = accountType === "partnership" || accountType === "owner_operator" || accountType === "admin"
+  const hasAccess = accountType === "partnership" || accountType === "junior_owner_operator" || accountType === "owner_operator" || accountType === "admin"
 
   interface TbState { connected: boolean; deviceId: string; apiKeyMasked: string; messages: { id: string; sender: string; message: string; receivedAt: string }[] }
   const [tb, setTb] = useState<TbState>({ connected: false, deviceId: "", apiKeyMasked: "", messages: [] })
