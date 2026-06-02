@@ -157,5 +157,26 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
+  // Keep user_pins.package_type in SYNC with account_type. The operator config,
+  // isCommsAuthorized(), lead delivery, and the My Leads tier gate all key off
+  // user_pins.package_type — not users.account_type. Without this, an account set
+  // to "owner_operator" in User Data still reads as basic/free everywhere else.
+  if (accountType) {
+    const { data: u } = await supabaseAdmin
+      .from('users')
+      .select('email')
+      .eq('id', userId)
+      .single()
+    if (u?.email) {
+      const { error: pinErr } = await supabaseAdmin
+        .from('user_pins')
+        .update({ package_type: accountType })
+        .ilike('email', u.email)
+      if (pinErr) {
+        console.error('[admin/users PATCH] package_type sync failed', { email: u.email, error: pinErr.message })
+      }
+    }
+  }
+
   return NextResponse.json({ success: true })
 }
