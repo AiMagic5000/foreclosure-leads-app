@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { UpgradeButton } from "@/components/upgrade-button"
+import { DocumentUploader } from "@/components/document-uploader"
 import {
   FolderKanban,
   AlertTriangle,
@@ -532,15 +533,11 @@ export default function WhiteLabelPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium">Multiple File Upload</label>
-                <Input
-                  type="file"
-                  multiple
-                  className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
-                />
+                <label className="text-sm font-medium">Business documents</label>
                 <p className="text-[11px] text-muted-foreground">
                   Provide any files or documents you feel are necessary to help us successfully manage your new business start-up. For example when registering with Duns and Bradstreet they request the articles of organization and another document associated with the business and business owner. Provide us any business documents that can help us continue building out your business if you have already started some of the duties required for your new business.
                 </p>
+                <DocumentUploader folder="white-label" />
               </div>
             </CardContent>
           </Card>

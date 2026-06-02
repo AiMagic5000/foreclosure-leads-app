@@ -20,7 +20,7 @@ const MAP: Record<string, { id: string; title: string; subtitle: string }> = {
   "/dashboard/white-label": { id: "white-label", title: "Run it under your own brand", subtitle: "Your name, your site — our recovery engine behind the scenes." },
   "/dashboard/owner-operator": { id: "owner-operator", title: "The Owner Operator program", subtitle: "Your brand, your LLC, the full 45-point build-out — and 100% of your fee." },
   "/dashboard/ringless-drips": { id: "ringless-drips", title: "Turn your voice into closed deals", subtitle: "Record once — we drip ringless voicemails to your claimants." },
-  "/dashboard/contingency-incentives": { id: "contingency-incentives", title: "Close more deals with incentives", subtitle: "Free certificate credits to hand homeowners a reason to say yes." },
+  "/dashboard/contingency-incentives": { id: "contingency-incentives", title: "Close more deals with incentives", subtitle: "Complimentary certificate credits to hand homeowners a reason to say yes." },
   "/dashboard/admin/compliance": { id: "compliance", title: "How the compliance gate protects every claim", subtitle: "The 15 checks, shadow mode, and verifying states before enforce." },
   "/dashboard/admin/state-rules": { id: "state-rules", title: "The legal backbone, verified", subtitle: "Non-attorney rules, fee caps, deadlines, and statutes per state." },
 }

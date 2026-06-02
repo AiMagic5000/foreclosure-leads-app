@@ -3,14 +3,14 @@
 import { Gift, MessageSquare, Mail, Phone, Ticket, ArrowUpRight, Check } from "lucide-react"
 
 const USE_CASES = [
-  { icon: MessageSquare, title: "In your SMS", body: "Drop your incentive link in a text. A free Vegas getaway as a thank-you gives the homeowner a reason to reply and sign now." },
+  { icon: MessageSquare, title: "In your SMS", body: "Drop your incentive link in a text. A complimentary Vegas getaway as a thank-you gives the homeowner a reason to reply and sign now." },
   { icon: Mail, title: "In your email draft", body: "Add the incentive link to your outreach email. It turns a cold claim notice into a warm, can't-lose offer." },
   { icon: Phone, title: "In your voice drop", body: "Mention the complimentary travel certificate in your ringless voicemail. It boosts callbacks and closes." },
 ]
 
 const WHY = [
-  "High perceived value — a Las Vegas hotel-casino getaway, free to the homeowner",
-  "Costs you nothing per certificate — start with free credits",
+  "High perceived value — a Las Vegas hotel-casino getaway, complimentary to the homeowner",
+  "Costs you nothing per certificate — start with complimentary credits",
   "Gives the claimant a reason to sign your agreement today, not later",
   "Works on every channel: SMS, email, and voice drop",
 ]
@@ -26,17 +26,16 @@ export default function ContingencyIncentivesPage() {
             <Gift className="h-3.5 w-3.5" /> Contingency Incentives
           </span>
           <h1 className="mt-3 font-serif text-3xl font-bold text-[#0f172a] sm:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
-            Close more deals with a free incentive to offer.
+            Close more deals with a complimentary incentive to offer.
           </h1>
           <p className="mt-3 max-w-2xl text-slate-600">
-            Sign up free with <strong className="text-[#0f172a]">Sales Incentive Network</strong> and get
-            <strong className="text-[#0f172a]"> free certificate credits</strong>. Hand homeowners a complimentary
-            travel certificate when you reach out &mdash; it gives them a reason to sign your contingency agreement now,
+            Sign up with <strong className="text-[#0f172a]">Sales Incentive Network</strong> and get
+            <strong className="text-[#0f172a]"> complimentary certificate credits</strong>. Hand homeowners a complimentary travel certificate when you reach out &mdash; it gives them a reason to sign your contingency agreement now,
             and pushes the needle on more closed deals.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a href="https://salesincentivenetwork.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-5 py-3 text-base font-bold text-white transition hover:opacity-90">
-              Sign Up Free &amp; Get Certificate Credits <ArrowUpRight className="h-5 w-5" />
+              Sign Up &amp; Get Complimentary Certificate Credits <ArrowUpRight className="h-5 w-5" />
             </a>
             <a href="https://salesincentivenetwork.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-base font-semibold text-[#1E3A5F] transition hover:bg-slate-50">
               Become an Affiliate
@@ -120,7 +119,7 @@ export default function ContingencyIncentivesPage() {
 
       {/* CTA */}
       <div className="rounded-2xl bg-[#0f172a] p-6 text-center sm:p-8">
-        <h2 className="text-2xl font-bold text-white">Get your free certificate credits</h2>
+        <h2 className="text-2xl font-bold text-white">Get your complimentary certificate credits</h2>
         <p className="mx-auto mt-2 max-w-xl text-sm text-slate-300">
           Sign up with Sales Incentive Network, grab your affiliate incentive links, and start handing homeowners
           a reason to say yes. No inventory, no experience needed.
