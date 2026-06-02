@@ -44,8 +44,8 @@ export default function OwnerOperatorPage() {
             </p>
             <div className="mt-5 flex flex-wrap items-end gap-x-6 gap-y-2">
               <div>
-                <div className="text-3xl font-bold text-[#0f172a]">$6,995</div>
-                <div className="text-sm text-slate-500">or 4 payments of $1,995</div>
+                <div className="text-3xl font-bold text-[#0f172a]">$5,200</div>
+                <div className="text-sm text-slate-500">or 4 payments of $1,300</div>
               </div>
               <div className="rounded-lg bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-700">
                 Keep 100% of your recovery fee
@@ -94,19 +94,19 @@ export default function OwnerOperatorPage() {
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h3 className="font-bold text-[#0f172a]">Already a Partner?</h3>
           <p className="mt-1 text-sm text-slate-600">
-            Upgrade to Owner Operator for just <strong className="text-[#0f172a]">$2,100</strong> (the difference).
+            Upgrade to Owner Operator for just <strong className="text-[#0f172a]">$4,205</strong> (the difference).
             Payment plans must be completed first. <strong>Already have an LLC?</strong> Save $500.
           </p>
           <div className="mt-4 grid grid-cols-2 gap-3 text-center">
             <div className="rounded-lg border border-slate-200 p-3">
               <div className="text-xs font-semibold uppercase text-slate-500">Partnership</div>
-              <div className="text-lg font-bold text-[#0f172a]">$2,895</div>
-              <div className="text-xs text-slate-500">3 x $965</div>
+              <div className="text-lg font-bold text-[#0f172a]">$995</div>
+              <div className="text-xs text-slate-500">agent program</div>
             </div>
             <div className="rounded-lg border-2 border-[#D82221] p-3">
               <div className="text-xs font-semibold uppercase text-[#D82221]">Owner Operator</div>
-              <div className="text-lg font-bold text-[#0f172a]">$6,995</div>
-              <div className="text-xs text-slate-500">4 x $1,995</div>
+              <div className="text-lg font-bold text-[#0f172a]">$5,200</div>
+              <div className="text-xs text-slate-500">4 x $1,300</div>
             </div>
           </div>
         </div>

@@ -167,7 +167,7 @@ export default function SettingsPage() {
                     {isOwnerOperator ? "Owner Operator — Full Access" : "Asset Recovery Agent"}
                   </h4>
                   <p className="text-2xl font-bold text-white">
-                    {isOwnerOperator ? "$4,995" : "$995"}
+                    {isOwnerOperator ? "$5,200" : "$995"}
                     <span className="text-sm font-normal text-white/70 ml-1">{isOwnerOperator ? "platform access" : "agent program"}</span>
                   </p>
                 </div>
