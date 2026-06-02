@@ -1,0 +1,100 @@
+import { NextRequest, NextResponse } from "next/server"
+import { currentUser } from "@clerk/nextjs/server"
+import { supabaseAdmin } from "@/lib/supabase"
+
+// Browser UA required — api.textbee.dev is behind Cloudflare (default UA => 1010/403).
+const BROWSER_UA =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+const TEXTBEE_BASE = "https://api.textbee.dev/api/v1/gateway/devices"
+
+export const dynamic = "force-dynamic"
+
+async function pinForUser(email: string) {
+  const { data } = await supabaseAdmin
+    .from("user_pins")
+    .select("id, email, textbee_api_key, textbee_device_id")
+    .ilike("email", email)
+    .eq("is_active", true)
+    .single()
+  return data
+}
+
+// GET — current agent's TextBee connection status + recent inbound messages
+export async function GET() {
+  const user = await currentUser()
+  const email = user?.emailAddresses?.[0]?.emailAddress
+  if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+  const pin = await pinForUser(email)
+  const apiKey = pin?.textbee_api_key || ""
+  const deviceId = pin?.textbee_device_id || ""
+  const connected = !!(apiKey && deviceId)
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let messages: any[] = []
+  if (connected) {
+    try {
+      const res = await fetch(`${TEXTBEE_BASE}/${deviceId}/get-received-sms?page=1`, {
+        headers: { "x-api-key": apiKey, "User-Agent": BROWSER_UA },
+      })
+      if (res.ok) {
+        const data = await res.json()
+        const rows = data?.data || data?.messages || []
+        messages = rows.slice(0, 10).map((m: Record<string, unknown>) => ({
+          id: (m._id || m.id || "") as string,
+          sender: (m.sender || m.from || "") as string,
+          message: (m.message || m.body || m.text || "") as string,
+          receivedAt: (m.receivedAt || m.createdAt || "") as string,
+        }))
+      }
+    } catch {
+      // inbound fetch is best-effort
+    }
+  }
+
+  return NextResponse.json({
+    connected,
+    deviceId: deviceId ? `…${deviceId.slice(-6)}` : "",
+    apiKeyMasked: apiKey ? `${apiKey.slice(0, 4)}…${apiKey.slice(-4)}` : "",
+    messages,
+  })
+}
+
+// POST — save the agent's own TextBee credentials to their pin
+export async function POST(req: NextRequest) {
+  const user = await currentUser()
+  const email = user?.emailAddresses?.[0]?.emailAddress
+  if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+  const body = await req.json()
+  const apiKey = String(body?.apiKey || "").trim()
+  const deviceId = String(body?.deviceId || "").trim()
+  if (!apiKey || !deviceId) {
+    return NextResponse.json({ error: "Both API key and Device ID are required" }, { status: 400 })
+  }
+
+  const pin = await pinForUser(email)
+  if (!pin) {
+    return NextResponse.json({ error: "No active operator profile found for your account. Contact support." }, { status: 404 })
+  }
+
+  // Validate the credentials against TextBee before saving.
+  try {
+    const test = await fetch(`${TEXTBEE_BASE}/${deviceId}/get-received-sms?page=1`, {
+      headers: { "x-api-key": apiKey, "User-Agent": BROWSER_UA },
+    })
+    if (test.status === 401 || test.status === 403) {
+      return NextResponse.json({ error: "TextBee rejected those credentials. Double-check the API key and Device ID." }, { status: 400 })
+    }
+  } catch {
+    // network hiccup — allow save, the page status will reflect reality
+  }
+
+  const { error } = await supabaseAdmin
+    .from("user_pins")
+    .update({ textbee_api_key: apiKey, textbee_device_id: deviceId })
+    .eq("id", pin.id)
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  return NextResponse.json({ success: true })
+}
