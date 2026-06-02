@@ -13,157 +13,227 @@
   @font-face { font-family: "Fraunces"; src: url("fonts/Fraunces-600.woff2") format("woff2"); font-weight: 600; font-display: block; }
   @font-face { font-family: "Fraunces"; src: url("fonts/Fraunces-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
 
+  /* ===== BRAND THEME (matches dashboard UI) ===== */
+  /* navy #1e3a5f · deep #0f172a · blue #3b82f6 · green #10b981 · gold #f59e0b/#bf9b30 · text #f1f5f9 */
   [data-composition-id="dashboard"] {
     position: absolute; inset: 0; width: 100%; height: 100%;
-    background: #06182f; color: #F4F1E9;
+    background: #0f172a; color: #f1f5f9;
     font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
     overflow: hidden; font-size: clamp(14px, 1.45vw, 30px);
   }
-
-  /* full-bleed AI poster + navy scrim */
   #bg { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; }
   #scrim { position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(90deg, rgba(6,24,47,0.94) 0%, rgba(6,24,47,0.80) 48%, rgba(6,24,47,0.40) 100%); }
-  #grain { position: absolute; inset: 0; z-index: 2; pointer-events: none;
-    background: radial-gradient(120% 120% at 30% 40%, rgba(200,168,75,0.08) 0%, rgba(6,24,47,0) 55%); }
+    background: linear-gradient(110deg, rgba(15,23,42,0.96) 0%, rgba(30,58,95,0.86) 50%, rgba(30,58,95,0.45) 100%); }
+  #glow { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: radial-gradient(120% 120% at 28% 42%, rgba(59,130,246,0.12) 0%, rgba(15,23,42,0) 55%); }
+  #logo { position: absolute; top: 6.5%; left: 9%; z-index: 5; height: 4.6em; opacity: 0.5; }
 
   .scene { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column;
-    justify-content: center; padding: 8% 9%; box-sizing: border-box; }
+    justify-content: center; padding: 9% 9%; box-sizing: border-box; }
 
-  .chip { display: inline-block; align-self: flex-start; background: rgba(200,168,75,0.16);
-    color: #E8D48A; border: 1px solid rgba(200,168,75,0.45); font-size: 1.0em; font-weight: 700;
-    letter-spacing: 0.28em; text-transform: uppercase; padding: 0.5em 1.1em; border-radius: 999px; }
-  .display { font-family: "Fraunces", Georgia, serif; line-height: 1.03; font-weight: 700; color: #F4F1E9; }
-  .gold { color: #C8A84B; }
+  .chip { display: inline-block; align-self: flex-start; background: rgba(59,130,246,0.18);
+    color: #93c5fd; border: 1px solid rgba(59,130,246,0.5); font-size: 1.0em; font-weight: 700;
+    letter-spacing: 0.26em; text-transform: uppercase; padding: 0.5em 1.1em; border-radius: 999px; }
+  .display { font-family: "Fraunces", Georgia, serif; line-height: 1.04; font-weight: 700; color: #f1f5f9; }
+  .gold { color: #f59e0b; } .blue { color: #3b82f6; } .green { color: #10b981; }
   .sweep { position: relative; display: inline-block; }
   .sweep .ink { position: absolute; left: 0; bottom: -0.08em; height: 0.10em; width: 100%;
-    background: #C8A84B; border-radius: 4px; transform-origin: left center; }
+    background: #f59e0b; border-radius: 4px; transform-origin: left center; }
 
-  /* S1 */
-  #s1 .h1 { font-size: 4.6em; max-width: 13em; margin-top: 0.5em; }
-  #s1 .intro { font-size: 1.6em; max-width: 22em; margin-top: 0.7em; color: #A9B6C7; line-height: 1.45; }
-  #s1 .logo { position: absolute; top: 7%; right: 9%; font-family:"Fraunces",serif; font-weight:700;
-    font-size: 1.3em; color:#E8D48A; letter-spacing:0.02em; z-index: 4; }
+  /* S1 educational hook */
+  #s1 .eye { font-size: 1.05em; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 700; color: #f59e0b; }
+  #s1 .h1 { font-size: 3.7em; max-width: 18em; margin-top: 0.5em; }
+  #s1 .sub { font-size: 1.5em; max-width: 24em; margin-top: 0.8em; color: #b8c6d4; line-height: 1.45; }
 
-  /* S2 stat cards */
-  #s2 { justify-content: center; }
-  #s2 .h2 { font-family:"Fraunces",serif; font-size: 2.9em; font-weight: 700; max-width: 14em; }
-  #s2 .cards { display: flex; gap: 1.4em; margin-top: 1.4em; max-width: 1450px; }
-  #s2 .card { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(200,168,75,0.32);
-    border-radius: 16px; padding: 1.4em 1.5em; backdrop-filter: blur(4px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
-  #s2 .card.hot { background: linear-gradient(135deg, rgba(200,168,75,0.20), rgba(200,168,75,0.06));
-    border-color: rgba(200,168,75,0.6); }
-  #s2 .klab { font-size: 0.95em; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: #C8A84B; }
-  #s2 .kval { font-family:"Fraunces",serif; font-size: 2.6em; font-weight: 700; margin-top: 0.25em; color: #F4F1E9; }
-  #s2 .kbody { font-size: 1.05em; color: #A9B6C7; margin-top: 0.35em; }
+  /* S2 title */
+  #s2 { opacity: 0; justify-content: center; }
+  #s2 .chip { margin-bottom: 0.6em; }
+  #s2 .h2 { font-family:"Fraunces",serif; font-size: 5.0em; font-weight: 700; }
+  #s2 .h2 .small { display:block; font-size: 0.42em; color:#b8c6d4; font-family:"Inter",sans-serif; font-weight:500; margin-top:0.6em; letter-spacing:0.01em; }
 
-  /* S3 close */
-  #s3 { justify-content: center; opacity: 0; }
-  #s3 .h3 { font-family:"Fraunces",serif; font-size: 4.0em; font-weight: 700; max-width: 13em; }
-  #s3 .tag { font-size: 1.7em; color: #C8A84B; margin-top: 0.6em; font-weight: 600; }
-  #s3 .phone { margin-top: 1.3em; font-size: 1.3em; color: #F4F1E9; font-weight: 600; letter-spacing: 0.02em; }
-  #s3 .phone .pill { display:inline-block; background:#D82221; color:#fff; font-weight:700; padding:0.25em 0.8em;
-    border-radius: 999px; margin-left: 0.4em; }
+  /* S3 four live stat cards */
+  #s3 { opacity: 0; justify-content: center; }
+  #s3 .h3 { font-family:"Fraunces",serif; font-size: 2.6em; font-weight: 700; max-width: 16em; }
+  #s3 .sub { font-size: 1.25em; color:#b8c6d4; margin-top:0.3em; }
+  #s3 .cards { display: flex; gap: 1.1em; margin-top: 1.3em; }
+  #s3 .card { flex: 1; background: rgba(30,58,95,0.45); border: 1px solid rgba(148,163,184,0.25);
+    border-radius: 14px; padding: 1.2em 1.2em; box-shadow: 0 18px 44px rgba(0,0,0,0.4); }
+  #s3 .card .klab { font-size: 0.85em; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color:#93c5fd; }
+  #s3 .card .kval { font-family:"Fraunces",serif; font-size: 2.4em; font-weight: 700; margin-top: 0.2em; }
+  #s3 .card .kfoot { font-size: 0.95em; color:#8aa0b6; margin-top: 0.3em; }
+  #s3 .card.g .kval { color:#10b981; } #s3 .card.b .kval { color:#3b82f6; }
+  #s3 .card.gold .kval { color:#f59e0b; } #s3 .card .kval.cream { color:#f1f5f9; }
 
-  #blackout { position: absolute; inset: 0; z-index: 60; background: #06182f; opacity: 0; pointer-events: none; }
+  /* S4 map + top states */
+  #s4 { opacity: 0; }
+  #s4 .h4 { font-family:"Fraunces",serif; font-size: 2.8em; font-weight:700; max-width:14em; }
+  #s4 .sub { font-size: 1.3em; color:#b8c6d4; margin-top:0.4em; max-width: 22em; line-height:1.4; }
+  #s4 .states { display:flex; gap:0.7em; margin-top:1.2em; flex-wrap:wrap; }
+  #s4 .pill { background: rgba(59,130,246,0.16); border:1px solid rgba(59,130,246,0.4); color:#dbe9ff;
+    padding:0.5em 1.0em; border-radius:999px; font-weight:600; font-size:1.1em; }
+  #s4 .pill b { color:#f59e0b; }
 
-  /* portrait 9:16 */
+  /* S5 recent leads */
+  #s5 { opacity: 0; }
+  #s5 .h5 { font-family:"Fraunces",serif; font-size: 2.8em; font-weight:700; }
+  #s5 .sub { font-size:1.25em; color:#b8c6d4; margin-top:0.3em; }
+  #s5 .rows { margin-top:1.2em; display:flex; flex-direction:column; gap:0.6em; max-width: 30em; }
+  #s5 .row { display:flex; align-items:center; gap:0.9em; background:rgba(30,58,95,0.4);
+    border:1px solid rgba(148,163,184,0.2); border-radius:12px; padding:0.8em 1.1em; }
+  #s5 .row .dot { width:0.7em; height:0.7em; border-radius:50%; background:#10b981; flex:none; }
+  #s5 .row .nm { font-weight:600; font-size:1.15em; } #s5 .row .mt { color:#8aa0b6; font-size:0.95em; margin-left:auto; }
+
+  /* S6 close */
+  #s6 { opacity: 0; justify-content:center; }
+  #s6 .h6 { font-family:"Fraunces",serif; font-size: 4.2em; font-weight:700; max-width:13em; }
+  #s6 .tag { font-size:1.5em; color:#b8c6d4; margin-top:0.6em; }
+  #s6 .phone { margin-top:1.2em; font-size:1.3em; font-weight:600; }
+  #s6 .phone .pill { display:inline-block; background:#10b981; color:#04210f; font-weight:700;
+    padding:0.25em 0.8em; border-radius:999px; margin-left:0.4em; }
+
+  #blackout { position:absolute; inset:0; z-index:60; background:#0f172a; opacity:0; pointer-events:none; }
+
   @media (max-aspect-ratio: 1/1) {
     [data-composition-id="dashboard"] { font-size: clamp(14px, 2.9vw, 36px); }
-    [data-composition-id="dashboard"] .scene { padding: 13% 8%; }
-    [data-composition-id="dashboard"] #scrim { background: linear-gradient(180deg, rgba(6,24,47,0.92) 0%, rgba(6,24,47,0.7) 45%, rgba(6,24,47,0.92) 100%); }
-    [data-composition-id="dashboard"] #s1 .h1 { font-size: 3.7em; }
-    [data-composition-id="dashboard"] #s2 .cards { flex-direction: column; gap: 0.9em; }
-    [data-composition-id="dashboard"] #s2 .kval { font-size: 2.1em; }
-    [data-composition-id="dashboard"] #s3 .h3 { font-size: 3.2em; }
+    [data-composition-id="dashboard"] .scene { padding: 14% 8%; }
+    [data-composition-id="dashboard"] #scrim { background: linear-gradient(180deg, rgba(15,23,42,0.94) 0%, rgba(30,58,95,0.72) 45%, rgba(15,23,42,0.94) 100%); }
+    [data-composition-id="dashboard"] #logo { height: 3.6em; top: 5%; }
+    [data-composition-id="dashboard"] #s1 .h1 { font-size: 3.0em; }
+    [data-composition-id="dashboard"] #s2 .h2 { font-size: 3.6em; }
+    [data-composition-id="dashboard"] #s3 .cards { flex-direction: column; gap: 0.7em; }
+    [data-composition-id="dashboard"] #s3 .card .kval { font-size: 2.0em; }
+    [data-composition-id="dashboard"] #s6 .h6 { font-size: 3.2em; }
   }
-  /* square 1:1 */
   @media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 13/12) {
     [data-composition-id="dashboard"] { font-size: clamp(14px, 2.0vw, 30px); }
     [data-composition-id="dashboard"] .scene { padding: 9% 8%; }
-    [data-composition-id="dashboard"] #s1 .h1 { font-size: 3.8em; }
-    [data-composition-id="dashboard"] #s2 .cards { gap: 1.0em; }
-    [data-composition-id="dashboard"] #s3 .h3 { font-size: 3.4em; }
+    [data-composition-id="dashboard"] #s3 .cards { flex-wrap: wrap; }
+    [data-composition-id="dashboard"] #s3 .card { flex: 1 1 40%; }
+    [data-composition-id="dashboard"] #s2 .h2 { font-size: 4.0em; }
+    [data-composition-id="dashboard"] #s6 .h6 { font-size: 3.4em; }
   }
 </style>
 </head>
 <body>
-  <div data-composition-id="dashboard" data-start="0" data-duration="13.6" data-width="1080" data-height="1080">
+  <div data-composition-id="dashboard" data-start="0" data-duration="56.5" data-width="1080" data-height="1080">
     <img id="bg" src="dashboard-bg.png" alt="" />
     <div id="scrim"></div>
-    <div id="grain"></div>
-    <div class="logo">Foreclosure Recovery Inc.</div>
+    <div id="glow"></div>
+    <img id="logo" src="logo.png" alt="Foreclosure Recovery Inc." />
 
-    <!-- S1 -->
+    <!-- S1 educational hook (0-15) -->
     <div class="scene" id="s1">
-      <div class="chip" id="s1-chip">Agent Dashboard</div>
-      <div class="display h1" id="s1-h1">Your <span class="sweep gold">command center<span class="ink"></span></span>.</div>
-      <div class="intro" id="s1-intro">Every surplus recovery you are working &mdash; on one screen.</div>
+      <div class="eye" id="s1-eye">Surplus Funds Recovery</div>
+      <div class="display h1" id="s1-h1">When a home sells for more than the debt, the <span class="gold">extra money</span> belongs to the former owner.</div>
+      <div class="sub" id="s1-sub">Most never know it exists. Your job: find them &mdash; and reach them first.</div>
     </div>
 
-    <!-- S2 -->
-    <div class="scene" id="s2" style="opacity:0">
-      <div class="h2" id="s2-h2">At a glance, you see what matters today.</div>
+    <!-- S2 title (15-18) -->
+    <div class="scene" id="s2">
+      <div class="chip" id="s2-chip">Agent Dashboard</div>
+      <div class="display h2" id="s2-h2">This is where it starts.<span class="small">Everything you need, the moment you log in.</span></div>
+    </div>
+
+    <!-- S3 live stats (18-35) -->
+    <div class="scene" id="s3">
+      <div class="h3" id="s3-h3">Your numbers, live.</div>
+      <div class="sub" id="s3-sub">The health of your territory at a glance.</div>
       <div class="cards">
-        <div class="card" id="s2-c1"><div class="klab">Active Leads</div><div class="kval">48</div><div class="kbody">Exclusive, skip-traced, yours.</div></div>
-        <div class="card hot" id="s2-c2"><div class="klab">Pipeline</div><div class="kval">$312K</div><div class="kbody">Surplus in motion.</div></div>
-        <div class="card" id="s2-c3"><div class="klab">Needs Attention</div><div class="kval">7</div><div class="kbody">Deadlines closing in.</div></div>
+        <div class="card" id="s3-c1"><div class="klab">Total Leads</div><div class="kval cream">13,326</div><div class="kfoot">In your territory</div></div>
+        <div class="card b" id="s3-c2"><div class="klab">Skip Traced</div><div class="kval">2,067</div><div class="kfoot">Real contact info</div></div>
+        <div class="card gold" id="s3-c3"><div class="klab">With Phone</div><div class="kval">1,840</div><div class="kfoot">Ready to dial</div></div>
+        <div class="card g" id="s3-c4"><div class="klab">DNC Cleared</div><div class="kval">1,512</div><div class="kfoot">Safe to call</div></div>
       </div>
     </div>
 
-    <!-- S3 -->
-    <div class="scene" id="s3">
-      <div class="display h3" id="s3-h3">Everything starts <span class="gold">right here</span>.</div>
-      <div class="tag" id="s3-tag">Foreclosure Recovery Inc.</div>
-      <div class="phone" id="s3-phone">Questions? Always ask <span class="pill">(888) 545-8007</span></div>
+    <!-- S4 map + top states (35-43) -->
+    <div class="scene" id="s4">
+      <div class="h4" id="s4-h4">See where the <span class="blue">opportunity</span> is heaviest.</div>
+      <div class="sub" id="s4-sub">The distribution map and your top states rank themselves automatically.</div>
+      <div class="states">
+        <div class="pill" id="s4-p1">Ohio <b>2,964</b></div>
+        <div class="pill" id="s4-p2">Georgia <b>1,210</b></div>
+        <div class="pill" id="s4-p3">Michigan <b>980</b></div>
+        <div class="pill" id="s4-p4">Virginia <b>742</b></div>
+      </div>
+    </div>
+
+    <!-- S5 recent leads (43-49) -->
+    <div class="scene" id="s5">
+      <div class="h5" id="s5-h5">Fresh leads, in <span class="green">real time</span>.</div>
+      <div class="sub" id="s5-sub">New homeowners land the moment the pipeline finds them.</div>
+      <div class="rows">
+        <div class="row" id="s5-r1"><span class="dot"></span><span class="nm">New foreclosure surplus &mdash; Cuyahoga, OH</span><span class="mt">just now</span></div>
+        <div class="row" id="s5-r2"><span class="dot"></span><span class="nm">Skip-traced + DNC cleared &mdash; Fulton, GA</span><span class="mt">2m ago</span></div>
+        <div class="row" id="s5-r3"><span class="dot"></span><span class="nm">Phone verified &mdash; Wayne, MI</span><span class="mt">6m ago</span></div>
+      </div>
+    </div>
+
+    <!-- S6 close (49-56.5) -->
+    <div class="scene" id="s6">
+      <div class="display h6" id="s6-h6">Turn public records into <span class="gold">recovered money</span>.</div>
+      <div class="tag" id="s6-tag">One click takes you to the full leads board.</div>
+      <div class="phone" id="s6-phone">Questions? Always ask <span class="pill">(888) 545-8007</span></div>
     </div>
 
     <div id="blackout"></div>
-
-    <!-- voiceover -->
-    <audio id="vo" src="vo.mp3" data-start="0" data-duration="12.356" data-track-index="9" data-volume="1"></audio>
+    <audio id="vo" src="vo.mp3" data-start="0" data-duration="55.249" data-track-index="9" data-volume="1"></audio>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script>
     window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
-    const E_OUT = "power3.out", E_EXPO = "expo.out", E_BACK = "back.out(1.6)";
-    const S1 = 0.0, S2 = 4.6, S3 = 10.2, XF = 0.5;
+    const E_OUT = "power3.out", E_EXPO = "expo.out", E_BACK = "back.out(1.5)";
+    const S1=0.0, S2=15.0, S3=18.2, S4=35.0, S5=43.0, S6=49.0, XF=0.6, END=56.5;
 
-    tl.set("#s2,#s3", { opacity: 0 }, 0);
-
-    // slow Ken-Burns on the poster for the whole piece
-    tl.from("#bg", { scale: 1.09, xPercent: -2, duration: 13.6, ease: "none" }, 0);
-    tl.from(".logo", { opacity: 0, y: -14, duration: 0.6, ease: E_OUT }, 0.2);
+    tl.set("#s2,#s3,#s4,#s5,#s6", { opacity: 0 }, 0);
+    tl.from("#bg", { scale: 1.12, xPercent: -3, duration: END, ease: "none" }, 0);
+    tl.from("#logo", { opacity: 0, duration: 0.8, ease: E_OUT }, 0.2);
 
     /* S1 */
-    tl.from("#s1-chip",  { y: 22, opacity: 0, duration: 0.55, ease: E_BACK }, S1 + 0.25);
-    tl.from("#s1-h1",    { y: 48, opacity: 0, duration: 0.85, ease: E_OUT }, S1 + 0.5);
-    tl.from("#s1-intro", { y: 28, opacity: 0, duration: 0.6, ease: E_EXPO }, S1 + 1.0);
-    tl.from(".sweep .ink", { scaleX: 0, duration: 0.7, ease: "power2.inOut" }, S1 + 1.4);
+    tl.from("#s1-eye", { y: 16, opacity: 0, duration: 0.5, ease: E_OUT }, 0.3);
+    tl.from("#s1-h1",  { y: 44, opacity: 0, duration: 0.9, ease: E_OUT }, 0.6);
+    tl.from("#s1-sub", { y: 26, opacity: 0, duration: 0.7, ease: E_EXPO }, 6.5);
+    tl.from(".sweep .ink", { scaleX: 0, duration: 0.7, ease: "power2.inOut" }, 1.5);
 
-    /* S1 -> S2 */
-    tl.to("#s1", { opacity: 0, duration: XF, ease: "power1.inOut" }, S2 - XF);
-    tl.to("#s2", { opacity: 1, duration: XF, ease: "power1.inOut" }, S2 - XF);
-
+    tl.to("#s1", { opacity: 0, duration: XF }, S2-XF); tl.to("#s2", { opacity: 1, duration: XF }, S2-XF);
     /* S2 */
-    tl.from("#s2-h2", { y: 30, opacity: 0, duration: 0.6, ease: E_EXPO }, S2 + 0.2);
-    tl.from("#s2-c1", { y: 44, opacity: 0, duration: 0.55, ease: E_BACK }, S2 + 1.4);
-    tl.from("#s2-c2", { y: 44, opacity: 0, scale: 0.96, duration: 0.55, ease: E_BACK }, S2 + 2.1);
-    tl.from("#s2-c3", { y: 44, opacity: 0, duration: 0.55, ease: E_BACK }, S2 + 2.8);
-    tl.to("#s2-c2", { scale: 1.04, duration: 0.4, ease: "power2.out", yoyo: true, repeat: 1 }, S2 + 3.8);
+    tl.from("#s2-chip", { y: 20, opacity: 0, duration: 0.5, ease: E_BACK }, S2+0.2);
+    tl.from("#s2-h2",   { y: 40, opacity: 0, duration: 0.8, ease: E_OUT }, S2+0.4);
 
-    /* S2 -> S3 */
-    tl.to("#s2", { opacity: 0, duration: XF, ease: "power1.inOut" }, S3 - XF);
-    tl.to("#s3", { opacity: 1, duration: XF, ease: "power1.inOut" }, S3 - XF);
+    tl.to("#s2", { opacity: 0, duration: XF }, S3-XF); tl.to("#s3", { opacity: 1, duration: XF }, S3-XF);
+    /* S3 stats land on the spoken beat */
+    tl.from("#s3-h3",  { y: 26, opacity: 0, duration: 0.6, ease: E_EXPO }, S3+0.2);
+    tl.from("#s3-sub", { y: 18, opacity: 0, duration: 0.5, ease: E_OUT }, S3+0.5);
+    tl.from("#s3-c1", { y: 40, opacity: 0, duration: 0.5, ease: E_BACK }, S3+3.0);
+    tl.from("#s3-c2", { y: 40, opacity: 0, duration: 0.5, ease: E_BACK }, S3+6.5);
+    tl.from("#s3-c3", { y: 40, opacity: 0, duration: 0.5, ease: E_BACK }, S3+9.5);
+    tl.from("#s3-c4", { y: 40, opacity: 0, duration: 0.5, ease: E_BACK }, S3+12.5);
 
-    /* S3 */
-    tl.from("#s3-h3",    { y: 40, opacity: 0, duration: 0.8, ease: E_OUT }, S3 + 0.2);
-    tl.from("#s3-tag",   { y: 22, opacity: 0, duration: 0.55, ease: E_EXPO }, S3 + 0.8);
-    tl.from("#s3-phone", { y: 22, opacity: 0, duration: 0.55, ease: E_BACK }, S3 + 1.2);
-    tl.to("#blackout", { opacity: 0.5, duration: 0.7, ease: "power1.in" }, 13.6 - 0.7);
+    tl.to("#s3", { opacity: 0, duration: XF }, S4-XF); tl.to("#s4", { opacity: 1, duration: XF }, S4-XF);
+    /* S4 */
+    tl.from("#s4-h4",  { y: 30, opacity: 0, duration: 0.7, ease: E_OUT }, S4+0.2);
+    tl.from("#s4-sub", { y: 20, opacity: 0, duration: 0.55, ease: E_OUT }, S4+0.6);
+    tl.from("#s4-p1", { y: 22, opacity: 0, duration: 0.4, ease: E_BACK }, S4+3.4);
+    tl.from("#s4-p2", { y: 22, opacity: 0, duration: 0.4, ease: E_BACK }, S4+3.8);
+    tl.from("#s4-p3", { y: 22, opacity: 0, duration: 0.4, ease: E_BACK }, S4+4.2);
+    tl.from("#s4-p4", { y: 22, opacity: 0, duration: 0.4, ease: E_BACK }, S4+4.6);
+
+    tl.to("#s4", { opacity: 0, duration: XF }, S5-XF); tl.to("#s5", { opacity: 1, duration: XF }, S5-XF);
+    /* S5 */
+    tl.from("#s5-h5",  { y: 28, opacity: 0, duration: 0.6, ease: E_OUT }, S5+0.2);
+    tl.from("#s5-sub", { y: 18, opacity: 0, duration: 0.5, ease: E_OUT }, S5+0.5);
+    tl.from("#s5-r1", { x: -26, opacity: 0, duration: 0.45, ease: E_OUT }, S5+1.4);
+    tl.from("#s5-r2", { x: -26, opacity: 0, duration: 0.45, ease: E_OUT }, S5+2.0);
+    tl.from("#s5-r3", { x: -26, opacity: 0, duration: 0.45, ease: E_OUT }, S5+2.6);
+
+    tl.to("#s5", { opacity: 0, duration: XF }, S6-XF); tl.to("#s6", { opacity: 1, duration: XF }, S6-XF);
+    /* S6 */
+    tl.from("#s6-h6",    { y: 40, opacity: 0, duration: 0.9, ease: E_OUT }, S6+0.2);
+    tl.from("#s6-tag",   { y: 22, opacity: 0, duration: 0.6, ease: E_EXPO }, S6+1.0);
+    tl.from("#s6-phone", { y: 22, opacity: 0, duration: 0.55, ease: E_BACK }, S6+1.6);
+    tl.to("#blackout", { opacity: 0.5, duration: 0.8, ease: "power1.in" }, END-0.8);
 
     window.__timelines["dashboard"] = tl;
   </script>

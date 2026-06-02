@@ -15,7 +15,7 @@
 
   /* ===== BRAND THEME (matches dashboard UI) ===== */
   /* navy #1e3a5f · deep #0f172a · blue #3b82f6 · green #10b981 · gold #f59e0b/#bf9b30 · text #f1f5f9 */
-  [data-composition-id="dashboard"] {
+  [data-composition-id="compliance"] {
     position: absolute; inset: 0; width: 100%; height: 100%;
     background: #0f172a; color: #f1f5f9;
     font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
@@ -94,90 +94,90 @@
   #blackout { position:absolute; inset:0; z-index:60; background:#0f172a; opacity:0; pointer-events:none; }
 
   @media (max-aspect-ratio: 1/1) {
-    [data-composition-id="dashboard"] { font-size: clamp(14px, 2.9vw, 36px); }
-    [data-composition-id="dashboard"] .scene { padding: 14% 8%; }
-    [data-composition-id="dashboard"] #scrim { background: linear-gradient(180deg, rgba(15,23,42,0.94) 0%, rgba(30,58,95,0.72) 45%, rgba(15,23,42,0.94) 100%); }
-    [data-composition-id="dashboard"] #logo { height: 3.6em; top: 5%; }
-    [data-composition-id="dashboard"] #s1 .h1 { font-size: 3.0em; }
-    [data-composition-id="dashboard"] #s2 .h2 { font-size: 3.6em; }
-    [data-composition-id="dashboard"] #s3 .cards { flex-direction: column; gap: 0.7em; }
-    [data-composition-id="dashboard"] #s3 .card .kval { font-size: 2.0em; }
-    [data-composition-id="dashboard"] #s6 .h6 { font-size: 3.2em; }
+    [data-composition-id="compliance"] { font-size: clamp(14px, 2.9vw, 36px); }
+    [data-composition-id="compliance"] .scene { padding: 14% 8%; }
+    [data-composition-id="compliance"] #scrim { background: linear-gradient(180deg, rgba(15,23,42,0.94) 0%, rgba(30,58,95,0.72) 45%, rgba(15,23,42,0.94) 100%); }
+    [data-composition-id="compliance"] #logo { height: 3.6em; top: 5%; }
+    [data-composition-id="compliance"] #s1 .h1 { font-size: 3.0em; }
+    [data-composition-id="compliance"] #s2 .h2 { font-size: 3.6em; }
+    [data-composition-id="compliance"] #s3 .cards { flex-direction: column; gap: 0.7em; }
+    [data-composition-id="compliance"] #s3 .card .kval { font-size: 2.0em; }
+    [data-composition-id="compliance"] #s6 .h6 { font-size: 3.2em; }
   }
   @media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 13/12) {
-    [data-composition-id="dashboard"] { font-size: clamp(14px, 2.0vw, 30px); }
-    [data-composition-id="dashboard"] .scene { padding: 9% 8%; }
-    [data-composition-id="dashboard"] #s3 .cards { flex-wrap: wrap; }
-    [data-composition-id="dashboard"] #s3 .card { flex: 1 1 40%; }
-    [data-composition-id="dashboard"] #s2 .h2 { font-size: 4.0em; }
-    [data-composition-id="dashboard"] #s6 .h6 { font-size: 3.4em; }
+    [data-composition-id="compliance"] { font-size: clamp(14px, 2.0vw, 30px); }
+    [data-composition-id="compliance"] .scene { padding: 9% 8%; }
+    [data-composition-id="compliance"] #s3 .cards { flex-wrap: wrap; }
+    [data-composition-id="compliance"] #s3 .card { flex: 1 1 40%; }
+    [data-composition-id="compliance"] #s2 .h2 { font-size: 4.0em; }
+    [data-composition-id="compliance"] #s6 .h6 { font-size: 3.4em; }
   }
 </style>
 </head>
 <body>
-  <div data-composition-id="dashboard" data-start="0" data-duration="56.5" data-width="1080" data-height="1920">
-    <img id="bg" src="dashboard-bg.png" alt="" />
+  <div data-composition-id="compliance" data-start="0" data-duration="59.6" data-width="1080" data-height="1080">
+    <img id="bg" src="bg.png" alt="" />
     <div id="scrim"></div>
     <div id="glow"></div>
     <img id="logo" src="logo.png" alt="Foreclosure Recovery Inc." />
 
     <!-- S1 educational hook (0-15) -->
     <div class="scene" id="s1">
-      <div class="eye" id="s1-eye">Surplus Funds Recovery</div>
-      <div class="display h1" id="s1-h1">When a home sells for more than the debt, the <span class="gold">extra money</span> belongs to the former owner.</div>
-      <div class="sub" id="s1-sub">Most never know it exists. Your job: find them &mdash; and reach them first.</div>
+      <div class="eye" id="s1-eye">Compliance Gate</div>
+      <div class="display h1" id="s1-h1">The rules are <span class="gold">unforgiving</span>.</div>
+      <div class="sub" id="s1-sub">One wrong figure, one wrong state, one missing disclosure &mdash; and a claim falls apart.</div>
     </div>
 
     <!-- S2 title (15-18) -->
     <div class="scene" id="s2">
-      <div class="chip" id="s2-chip">Agent Dashboard</div>
-      <div class="display h2" id="s2-h2">This is where it starts.<span class="small">Everything you need, the moment you log in.</span></div>
+      <div class="chip" id="s2-chip">Your Safety Net</div>
+      <div class="display h2" id="s2-h2">Fifteen checks.<span class="small">Run on every document, before it ever sends.</span></div>
     </div>
 
     <!-- S3 live stats (18-35) -->
     <div class="scene" id="s3">
-      <div class="h3" id="s3-h3">Your numbers, live.</div>
-      <div class="sub" id="s3-sub">The health of your territory at a glance.</div>
+      <div class="h3" id="s3-h3">What it verifies.</div>
+      <div class="sub" id="s3-sub">Nothing ships that should not.</div>
       <div class="cards">
-        <div class="card" id="s3-c1"><div class="klab">Total Leads</div><div class="kval cream">13,326</div><div class="kfoot">In your territory</div></div>
-        <div class="card b" id="s3-c2"><div class="klab">Skip Traced</div><div class="kval">2,067</div><div class="kfoot">Real contact info</div></div>
-        <div class="card gold" id="s3-c3"><div class="klab">With Phone</div><div class="kval">1,840</div><div class="kfoot">Ready to dial</div></div>
-        <div class="card g" id="s3-c4"><div class="klab">DNC Cleared</div><div class="kval">1,512</div><div class="kfoot">Safe to call</div></div>
+        <div class="card" id="s3-c1"><div class="klab">State</div><div class="kval cream" style="font-size:1.5em">Verified</div><div class="kfoot">Rules per jurisdiction</div></div>
+        <div class="card b" id="s3-c2"><div class="klab">Amount</div><div class="kval" style="font-size:1.5em">Matched</div><div class="kfoot">Same on every doc</div></div>
+        <div class="card gold" id="s3-c3"><div class="klab">Venue + Deadline</div><div class="kval" style="font-size:1.3em">Correct</div><div class="kfoot">Set by state law</div></div>
+        <div class="card g" id="s3-c4"><div class="klab">Disclosures</div><div class="kval g" style="font-size:1.5em">Present</div><div class="kfoot">Legally required</div></div>
       </div>
     </div>
 
     <!-- S4 map + top states (35-43) -->
     <div class="scene" id="s4">
-      <div class="h4" id="s4-h4">See where the <span class="blue">opportunity</span> is heaviest.</div>
-      <div class="sub" id="s4-sub">The distribution map and your top states rank themselves automatically.</div>
+      <div class="h4" id="s4-h4">If it does not pass, it tells you <span class="blue">exactly what to fix</span>.</div>
+      <div class="sub" id="s4-sub">In plain language &mdash; so you fix the data, not the gate.</div>
       <div class="states">
-        <div class="pill" id="s4-p1">Ohio <b>2,964</b></div>
-        <div class="pill" id="s4-p2">Georgia <b>1,210</b></div>
-        <div class="pill" id="s4-p3">Michigan <b>980</b></div>
-        <div class="pill" id="s4-p4">Virginia <b>742</b></div>
+        <div class="pill" id="s4-p1">State match</div>
+        <div class="pill" id="s4-p2">Amount parity</div>
+        <div class="pill" id="s4-p3">Real unsubscribe</div>
+        <div class="pill" id="s4-p4">No leftover tokens</div>
       </div>
     </div>
 
     <!-- S5 recent leads (43-49) -->
     <div class="scene" id="s5">
-      <div class="h5" id="s5-h5">Fresh leads, in <span class="green">real time</span>.</div>
-      <div class="sub" id="s5-sub">New homeowners land the moment the pipeline finds them.</div>
+      <div class="h5" id="s5-h5">Running in <span class="green">shadow mode</span>.</div>
+      <div class="sub" id="s5-sub">Watching and logging every document &mdash; without blocking.</div>
       <div class="rows">
-        <div class="row" id="s5-r1"><span class="dot"></span><span class="nm">New foreclosure surplus &mdash; Cuyahoga, OH</span><span class="mt">just now</span></div>
-        <div class="row" id="s5-r2"><span class="dot"></span><span class="nm">Skip-traced + DNC cleared &mdash; Fulton, GA</span><span class="mt">2m ago</span></div>
-        <div class="row" id="s5-r3"><span class="dot"></span><span class="nm">Phone verified &mdash; Wayne, MI</span><span class="mt">6m ago</span></div>
+        <div class="row" id="s5-r1"><span class="dot"></span><span class="nm">Document evaluated &mdash; would pass</span><span class="mt">logged</span></div>
+        <div class="row" id="s5-r2"><span class="dot"></span><span class="nm">Verify a state with counsel</span><span class="mt">then flip</span></div>
+        <div class="row" id="s5-r3"><span class="dot"></span><span class="nm">Gate switches to enforcing</span><span class="mt">protected</span></div>
       </div>
     </div>
 
     <!-- S6 close (49-56.5) -->
     <div class="scene" id="s6">
-      <div class="display h6" id="s6-h6">Turn public records into <span class="gold">recovered money</span>.</div>
-      <div class="tag" id="s6-tag">One click takes you to the full leads board.</div>
+      <div class="display h6" id="s6-h6">Protect every agent, every <span class="gold">claim</span>.</div>
+      <div class="tag" id="s6-tag">Verify your states. Flip the switch. Stay protected.</div>
       <div class="phone" id="s6-phone">Questions? Always ask <span class="pill">(888) 545-8007</span></div>
     </div>
 
     <div id="blackout"></div>
-    <audio id="vo" src="vo.mp3" data-start="0" data-duration="55.249" data-track-index="9" data-volume="1"></audio>
+    <audio id="vo" src="vo.mp3" data-start="0" data-duration="58.122" data-track-index="9" data-volume="1"></audio>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -185,7 +185,7 @@
     window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
     const E_OUT = "power3.out", E_EXPO = "expo.out", E_BACK = "back.out(1.5)";
-    const S1=0.0, S2=15.0, S3=18.2, S4=35.0, S5=43.0, S6=49.0, XF=0.6, END=56.5;
+    const S1=0.0, S2=15.0, S3=18.2, S4=35.0, S5=43.0, S6=49.0, XF=0.6, END=59.6;
 
     tl.set("#s2,#s3,#s4,#s5,#s6", { opacity: 0 }, 0);
     tl.from("#bg", { scale: 1.12, xPercent: -3, duration: END, ease: "none" }, 0);
@@ -235,7 +235,7 @@
     tl.from("#s6-phone", { y: 22, opacity: 0, duration: 0.55, ease: E_BACK }, S6+1.6);
     tl.to("#blackout", { opacity: 0.5, duration: 0.8, ease: "power1.in" }, END-0.8);
 
-    window.__timelines["dashboard"] = tl;
+    window.__timelines["compliance"] = tl;
   </script>
 </body>
 </html>
