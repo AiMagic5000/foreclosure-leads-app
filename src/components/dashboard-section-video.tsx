@@ -18,6 +18,8 @@ const MAP: Record<string, { id: string; title: string; subtitle: string }> = {
   "/dashboard/automation": { id: "automation", title: "Put your follow-up on autopilot", subtitle: "Sequenced email, text, and voicemail under your name." },
   "/dashboard/sms-messages": { id: "sms-messages", title: "Every text in one inbox", subtitle: "Replies route to you, threaded by homeowner, in real time." },
   "/dashboard/white-label": { id: "white-label", title: "Run it under your own brand", subtitle: "Your name, your site — our recovery engine behind the scenes." },
+  "/dashboard/owner-operator": { id: "owner-operator", title: "The Owner Operator program", subtitle: "Your brand, your LLC, the full 45-point build-out — and 100% of your fee." },
+  "/dashboard/contingency-incentives": { id: "contingency-incentives", title: "Close more deals with incentives", subtitle: "Free certificate credits to hand homeowners a reason to say yes." },
   "/dashboard/admin/compliance": { id: "compliance", title: "How the compliance gate protects every claim", subtitle: "The 15 checks, shadow mode, and verifying states before enforce." },
   "/dashboard/admin/state-rules": { id: "state-rules", title: "The legal backbone, verified", subtitle: "Non-attorney rules, fee caps, deadlines, and statutes per state." },
 }

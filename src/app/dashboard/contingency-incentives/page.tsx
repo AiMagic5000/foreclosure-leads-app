@@ -45,6 +45,24 @@ export default function ContingencyIncentivesPage() {
         </div>
       </div>
 
+      {/* Incentive gallery — the actual closing-tool certificates */}
+      <div>
+        <h2 className="text-xl font-bold text-[#0f172a]">The incentives you can offer</h2>
+        <p className="mt-1 text-sm text-slate-600">Real certificates from Sales Incentive Network &mdash; the closing tools you hand to homeowners.</p>
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {["tool-vegas", "tool-1", "tool-2", "tool-3", "tool-4", "tool-5"].map((img) => (
+            <a key={img} href="https://salesincentivenetwork.com/" target="_blank" rel="noopener noreferrer" className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
+              <img
+                src={`/images/incentives/${img}.webp`}
+                alt="Sales Incentive Network closing-tool certificate"
+                className="aspect-[16/10] w-full object-cover transition group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+
       {/* How agents use it */}
       <div>
         <h2 className="text-xl font-bold text-[#0f172a]">How to use it in your outreach</h2>
