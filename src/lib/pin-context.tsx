@@ -17,6 +17,10 @@ interface PinContextType {
   accountType: AccountType
   pinEmail: string | null
   pinId: string | null
+  isRealAdmin: boolean
+  impersonating: { pinId: string; email: string; name: string } | null
+  setImpersonation: (pinId: string) => void
+  clearImpersonation: () => void
   verifyPin: (email: string, pin: string) => Promise<{ valid: boolean; error?: string }>
   clearPin: () => void
   isLoading: boolean
@@ -35,6 +39,11 @@ export function PinProvider({ children }: { children: ReactNode }) {
   const [accountType, setAccountType] = useState<AccountType>('basic')
   const [pinEmail, setPinEmail] = useState<string | null>(null)
   const [pinId, setPinId] = useState<string | null>(null)
+  const [impersonatePinId, setImpersonatePinId] = useState<string | null>(() =>
+    typeof window !== "undefined" ? localStorage.getItem("impersonate_pin_id") : null
+  )
+  const [isRealAdmin, setIsRealAdmin] = useState(false)
+  const [impersonating, setImpersonating] = useState<{ pinId: string; email: string; name: string } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   // Fetch account type from DB for all users on mount
@@ -47,7 +56,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
     const userEmail = user.emailAddresses?.[0]?.emailAddress?.toLowerCase()
 
     // Auto-verify admin by email
-    if (userEmail === ADMIN_EMAIL.toLowerCase()) {
+    if (userEmail === ADMIN_EMAIL.toLowerCase() && !impersonatePinId) {
       setIsVerified(true)
       setStatesAccess(["ALL"])
       setIsAdmin(true)
@@ -59,50 +68,37 @@ export function PinProvider({ children }: { children: ReactNode }) {
     }
 
     // Fetch account type from DB for ALL users (including admin)
-    fetch("/api/user/role")
+    const url = "/api/user/role" + (impersonatePinId ? `?asPinId=${encodeURIComponent(impersonatePinId)}` : "")
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        let acctType = (data.accountType || 'basic') as AccountType
-
-        // If user is admin via DB role, override accountType to admin
-        if (data.isAdmin) {
-          acctType = 'admin'
-          setIsAdmin(true)
-          setIsFullOwnerOperator(true)
-          setIsVerified(true)
-          setStatesAccess(["ALL"])
-          setUserRole('admin')
-          setPinEmail(userEmail || null)
+        const acctType = (data.accountType || 'basic') as AccountType
+        setIsRealAdmin(!!data.isRealAdmin)
+        setImpersonating(data.impersonating || null)
+        // Asked to impersonate but server denied (not admin / bad pin) -> drop it.
+        if (impersonatePinId && !data.impersonating) {
+          try { localStorage.removeItem("impersonate_pin_id") } catch {}
+          setImpersonatePinId(null)
         }
-
+        // Effective identity (self, or the impersonated user) drives every flag.
         setAccountType(acctType)
-
-        // Owner Operator (and Junior) get full resource access; only full Owner Operators
-        // get closers + contract-admin services (isFullOwnerOperator).
-        if (acctType === 'owner_operator') {
-          setIsOwnerOperator(true)
-          setIsFullOwnerOperator(true)
-        } else if (acctType === 'junior_owner_operator') {
-          setIsOwnerOperator(true)
-        }
-
-        // Set pinId and statesAccess from user_pins lookup
+        setIsAdmin(!!data.isAdmin)
+        setIsOwnerOperator(acctType === 'owner_operator' || acctType === 'junior_owner_operator')
+        setIsFullOwnerOperator(acctType === 'owner_operator' || acctType === 'admin' || !!data.isAdmin)
+        setUserRole(data.isAdmin ? 'admin' : ((acctType === 'owner_operator' || acctType === 'junior_owner_operator') ? 'owner_operator' : 'standard'))
         if (data.pinId) {
           setPinId(data.pinId)
           setIsVerified(true)
-          setPinEmail(userEmail || null)
+          setPinEmail(data.email || userEmail || null)
         }
-        if (data.statesAccess && data.statesAccess.length > 0) {
-          setStatesAccess(data.statesAccess)
-        }
+        if (data.statesAccess && data.statesAccess.length > 0) setStatesAccess(data.statesAccess)
+        else if (acctType === 'admin') setStatesAccess(["ALL"])
       })
-      .catch(() => {
-        // silently fail, defaults are fine
-      })
+      .catch(() => {})
       .finally(() => {
         setIsLoading(false)
       })
-  }, [user, isLoaded])
+  }, [user, isLoaded, impersonatePinId])
 
   const verifyPin = useCallback(async (email: string, pin: string): Promise<{ valid: boolean; error?: string }> => {
     setIsLoading(true)
@@ -148,6 +144,16 @@ export function PinProvider({ children }: { children: ReactNode }) {
     setPinId(null)
   }, [])
 
+  const setImpersonation = useCallback((targetPinId: string) => {
+    try { localStorage.setItem("impersonate_pin_id", targetPinId) } catch {}
+    setImpersonatePinId(targetPinId)
+  }, [])
+
+  const clearImpersonation = useCallback(() => {
+    try { localStorage.removeItem("impersonate_pin_id") } catch {}
+    setImpersonatePinId(null)
+  }, [])
+
   return (
     <PinContext.Provider
       value={{
@@ -160,6 +166,10 @@ export function PinProvider({ children }: { children: ReactNode }) {
         accountType,
         pinEmail,
         pinId,
+        isRealAdmin,
+        impersonating,
+        setImpersonation,
+        clearImpersonation,
         verifyPin,
         clearPin,
         isLoading,

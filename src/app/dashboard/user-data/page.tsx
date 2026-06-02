@@ -1,7 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { useAdmin } from "@/lib/use-admin"
+import { usePin } from "@/lib/pin-context"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -40,6 +42,7 @@ interface UserRecord {
   last_sign_in: string | null
   phone: string | null
   image_url: string | null
+  pin_id?: string | null
 }
 
 const tierLabels: Record<string, string> = {
@@ -83,6 +86,8 @@ type SortField = "created_at" | "email" | "subscription_tier" | "account_type"
 
 export default function UserDataPage() {
   const { isAdmin, loading: adminLoading } = useAdmin()
+  const { setImpersonation } = usePin()
+  const router = useRouter()
   const [users, setUsers] = useState<UserRecord[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
@@ -399,6 +404,7 @@ export default function UserDataPage() {
                         <Clock className="h-3.5 w-3.5" /> Last Sign In
                       </span>
                     </th>
+                    <th className="text-left py-3 px-2 font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -485,6 +491,18 @@ export default function UserDataPage() {
                                 year: "numeric",
                               })
                             : "--"}
+                        </td>
+                        <td className="py-3 px-2">
+                          {u.pin_id ? (
+                            <button
+                              onClick={() => { setImpersonation(u.pin_id as string); router.push("/dashboard") }}
+                              className="inline-flex items-center gap-1 rounded-md border border-[#1E3A5F] px-2 py-1 text-xs font-medium text-[#1E3A5F] transition hover:bg-[#1E3A5F] hover:text-white"
+                            >
+                              View as
+                            </button>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">--</span>
+                          )}
                         </td>
                       </tr>
                     )

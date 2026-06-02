@@ -1,10 +1,11 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { currentUser } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { PRIMARY_ADMIN_EMAIL, resolveImpersonationTarget } from '@/lib/admin-guard'
 
-const PRIMARY_ADMIN_EMAIL = 'coreypearsonemail@gmail.com'
+export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const user = await currentUser()
   if (!user) {
     return NextResponse.json({ isAdmin: false, isPrimaryAdmin: false }, { status: 401 })
@@ -15,28 +16,61 @@ export async function GET() {
     return NextResponse.json({ isAdmin: false, isPrimaryAdmin: false })
   }
 
-  const isPrimaryAdmin = email === PRIMARY_ADMIN_EMAIL
+  const realIsPrimaryAdmin = email === PRIMARY_ADMIN_EMAIL
+  const [{ data: realUser }, { data: realPin }] = await Promise.all([
+    supabaseAdmin.from('users').select('role').ilike('email', email).single(),
+    supabaseAdmin.from('user_pins').select('role').ilike('email', email).eq('is_active', true).single(),
+  ])
+  const realIsAdmin = realIsPrimaryAdmin || (realUser?.role === 1) || (realPin?.role === 'admin')
 
-  const [{ data }, { data: pinData }] = await Promise.all([
-    supabaseAdmin
+  // Admin impersonation override (?asPinId=). Only honored when the real caller is admin.
+  const asPinId = req.nextUrl.searchParams.get('asPinId')
+  if (asPinId) {
+    const target = await resolveImpersonationTarget(asPinId)
+    if (!target) {
+      return NextResponse.json({ error: 'Not authorized to impersonate, or pin not found' }, { status: 403 })
+    }
+    const { data: tUser } = await supabaseAdmin
       .from('users')
       .select('role, subscription_tier, account_type')
-      .ilike('email', email)
-      .single(),
-    supabaseAdmin
-      .from('user_pins')
-      .select('id, package_type, states_access, is_active, role')
-      .ilike('email', email)
-      .eq('is_active', true)
-      .single(),
+      .ilike('email', target.email)
+      .single()
+    const effectiveAccountType = target.packageType || tUser?.account_type || 'basic'
+    const effectiveIsAdmin = effectiveAccountType === 'admin' || tUser?.role === 1
+    return NextResponse.json({
+      isAdmin: effectiveIsAdmin,
+      isPrimaryAdmin: false,
+      isRealAdmin: true,
+      impersonating: { pinId: target.pinId, email: target.email, name: target.name },
+      email: target.email,
+      subscriptionTier: tUser?.subscription_tier || 'free',
+      accountType: effectiveAccountType,
+      pinId: target.pinId,
+      statesAccess: target.statesAccess,
+    })
+  }
+
+  // Normal (self) resolution.
+  const [{ data }, { data: pinData }] = await Promise.all([
+    supabaseAdmin.from('users').select('role, subscription_tier, account_type').ilike('email', email).single(),
+    supabaseAdmin.from('user_pins').select('id, package_type, states_access, is_active, role').ilike('email', email).eq('is_active', true).single(),
   ])
 
-  const isAdmin = isPrimaryAdmin || (data?.role === 1) || (pinData?.role === 'admin')
+  const isAdmin = realIsAdmin
   const subscriptionTier = data?.subscription_tier || 'free'
-  // Prefer user_pins.package_type over users.account_type
   const accountType = pinData?.package_type || data?.account_type || 'basic'
   const pinId = pinData?.id || null
   const statesAccess = pinData?.states_access || []
 
-  return NextResponse.json({ isAdmin, isPrimaryAdmin, email, subscriptionTier, accountType, pinId, statesAccess })
+  return NextResponse.json({
+    isAdmin,
+    isPrimaryAdmin: realIsPrimaryAdmin,
+    isRealAdmin: realIsAdmin,
+    impersonating: null,
+    email,
+    subscriptionTier,
+    accountType,
+    pinId,
+    statesAccess,
+  })
 }

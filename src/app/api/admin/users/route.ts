@@ -43,6 +43,13 @@ export async function GET() {
 
   const dbMap = new Map((dbUsers || []).map((u) => [u.clerk_id, u]))
 
+  // Operator pin id by email, so an admin can "view as" any user.
+  const { data: allPins } = await supabaseAdmin
+    .from('user_pins')
+    .select('id, email')
+    .eq('is_active', true)
+  const pinByEmail = new Map((allPins || []).map((p) => [String(p.email || '').toLowerCase(), p.id]))
+
   // Auto-sync: insert any Clerk users not in DB
   const missingUsers = clerkUsers.filter((cu) => !dbMap.has(cu.id))
   if (missingUsers.length > 0) {
@@ -93,6 +100,7 @@ export async function GET() {
       last_sign_in: cu.lastSignInAt ? new Date(cu.lastSignInAt).toISOString() : null,
       phone: cu.phoneNumbers?.[0]?.phoneNumber || null,
       image_url: cu.imageUrl || null,
+      pin_id: pinByEmail.get(primaryEmail.toLowerCase()) || null,
     }
   })
 
@@ -106,6 +114,7 @@ export async function GET() {
       last_sign_in: null,
       phone: null,
       image_url: null,
+      pin_id: pinByEmail.get(String(u.email || '').toLowerCase()) || null,
     }))
 
   return NextResponse.json({ users: [...mergedUsers, ...dbOnlyUsers] })

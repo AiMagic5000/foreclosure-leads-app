@@ -37,6 +37,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DashboardSectionVideo } from "@/components/dashboard-section-video"
+import { ImpersonationBanner } from "@/components/impersonation-banner"
 import { cn } from "@/lib/utils"
 import { PinProvider, usePin } from "@/lib/pin-context"
 
@@ -428,6 +429,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
         </header>
 
         <main className="p-4 lg:p-6">
+          <ImpersonationBanner />
           <DashboardSectionVideo />
           {children}
         </main>
