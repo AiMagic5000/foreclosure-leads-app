@@ -837,7 +837,7 @@ export default function LandingPage() {
             </div>
 
             {/* Value Stack */}
-            <div className="max-w-6xl mx-auto">
+            <div id="everything-you-get" className="max-w-6xl mx-auto scroll-mt-24">
               <div className="text-center mb-8">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
                   Everything You Get Today

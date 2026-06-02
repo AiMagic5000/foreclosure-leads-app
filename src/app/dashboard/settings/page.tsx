@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -24,6 +24,8 @@ import {
   ArrowRight,
   TrendingUp,
   Camera,
+  Phone,
+  X,
 } from "lucide-react"
 
 const DEFAULT_AVATAR = "/avatars/default-shield.jpg"
@@ -34,6 +36,17 @@ export default function SettingsPage() {
   const [emailDigest, setEmailDigest] = useState("daily")
   const [profileImage, setProfileImage] = useState<string>(DEFAULT_AVATAR)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [accountType, setAccountType] = useState<string>("")
+  const [showUpgrade, setShowUpgrade] = useState(false)
+  useEffect(() => {
+    fetch("/api/user/role")
+      .then((r) => r.json())
+      .then((d) => setAccountType(d.accountType || ""))
+      .catch(() => {})
+  }, [])
+  const isOwnerOperator = ["owner_operator", "admin"].includes(accountType)
+  // Prefer a freshly uploaded image, otherwise the Google/Clerk profile photo, then the fallback.
+  const avatarSrc = profileImage !== DEFAULT_AVATAR ? profileImage : (user?.imageUrl || DEFAULT_AVATAR)
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -72,7 +85,7 @@ export default function SettingsPage() {
             <div className="flex items-center gap-4">
               <div className="relative group">
                 <img
-                  src={profileImage}
+                  src={avatarSrc}
                   alt="Profile"
                   className="h-20 w-20 rounded-full object-cover border-2 border-background shadow-md"
                 />
@@ -147,61 +160,65 @@ export default function SettingsPage() {
             <CardDescription className="text-white/70">Your lead access and PIN information</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* Tier — base Asset Recovery Agent, or upgraded Owner Operator */}
             <div className="p-4 rounded-lg border border-white/20 bg-white/10">
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <h4 className="font-semibold text-lg text-white">Full Access</h4>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-emerald-300 mb-1">Your Tier</p>
+                  <h4 className="font-semibold text-lg text-white">
+                    {isOwnerOperator ? "Owner Operator — Full Access" : "Asset Recovery Agent"}
+                  </h4>
                   <p className="text-2xl font-bold text-white">
-                    $4,995
-                    <span className="text-sm font-normal text-white/70 ml-1">platform access</span>
+                    {isOwnerOperator ? "$4,995" : "$995"}
+                    <span className="text-sm font-normal text-white/70 ml-1">{isOwnerOperator ? "platform access" : "agent program"}</span>
                   </p>
                 </div>
-                <Badge
-                  variant="outline"
-                  className="bg-emerald-500/20 border-emerald-400 text-emerald-200"
-                >
+                <Badge variant="outline" className="bg-emerald-500/20 border-emerald-400 text-emerald-200">
                   <CheckCircle2 className="mr-1 h-3 w-3" />
                   Active
                 </Badge>
               </div>
               <p className="text-sm text-white/70">
-                All 50 states, skip-traced leads, automation, and full platform features included.
+                {isOwnerOperator
+                  ? "All 50 states, skip-traced leads, automation, and the full business build-out are included — the complete platform."
+                  : "50 exclusive DNC-scrubbed leads every week, certified letters mailed for you, RVM / SMS / email automation under your name, and your dedicated landing page."}
               </p>
             </div>
 
-            <div className="p-3 rounded-lg border border-white/20 bg-white/10">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-white">Monthly Support & Data Service</p>
-                  <p className="text-sm text-white/70">$1,295/mo -- ongoing lead data, platform updates, and dedicated support</p>
+            {isOwnerOperator && (
+              <div className="p-3 rounded-lg border border-white/20 bg-white/10">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-white">Monthly Support & Data Service</p>
+                    <p className="text-sm text-white/70">$1,295/mo &mdash; ongoing lead data, platform updates, and dedicated support</p>
+                  </div>
+                  <Badge variant="outline" className="bg-emerald-500/20 border-emerald-400 text-emerald-200">
+                    <CheckCircle2 className="mr-1 h-3 w-3" />
+                    Active
+                  </Badge>
                 </div>
-                <Badge
-                  variant="outline"
-                  className="bg-emerald-500/20 border-emerald-400 text-emerald-200"
-                >
-                  <CheckCircle2 className="mr-1 h-3 w-3" />
-                  Active
-                </Badge>
               </div>
-            </div>
+            )}
 
-            <div className="p-3 rounded-lg border border-white/20 bg-white/10">
-              <div className="flex items-center justify-between">
+            {/* Business Build Out — included for Owner Operators, the upgrade for agents */}
+            <div className={`p-3 rounded-lg border ${isOwnerOperator ? "border-white/20 bg-white/10" : "border-emerald-400/40 bg-emerald-500/10"}`}>
+              <div className="flex items-center justify-between gap-3">
                 <div>
-                  <p className="font-medium text-white">Full Business Build Out</p>
+                  <p className="font-medium text-white">{isOwnerOperator ? "Full Business Build Out" : "Upgrade: Complete Business Build Out"}</p>
                   <p className="text-sm text-white/70">
-                    Complete asset recovery business with 45 points of compliance
+                    Complete asset-recovery business with 45 points of compliance{isOwnerOperator ? "" : " — the Owner Operator tier"}
                   </p>
                 </div>
-                <a
-                  href="https://assetrecoverybusiness.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button size="sm" className="bg-white/15 border border-white/30 text-white hover:bg-white/25">
-                    Learn More
+                {isOwnerOperator ? (
+                  <Badge variant="outline" className="bg-emerald-500/20 border-emerald-400 text-emerald-200">
+                    <CheckCircle2 className="mr-1 h-3 w-3" />
+                    Included
+                  </Badge>
+                ) : (
+                  <Button size="sm" onClick={() => setShowUpgrade(true)} className="flex-none bg-emerald-500 text-white hover:bg-emerald-600">
+                    Upgrade
                   </Button>
-                </a>
+                )}
               </div>
             </div>
           </CardContent>
@@ -507,6 +524,48 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Upgrade-to-Owner-Operator call popup */}
+      {showUpgrade && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/70 p-4"
+          onClick={() => setShowUpgrade(false)}
+        >
+          <div
+            className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowUpgrade(false)}
+              aria-label="Close"
+              className="absolute right-4 top-4 text-slate-400 transition hover:text-slate-700"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <div className="h-1 w-12 rounded" style={{ background: "linear-gradient(90deg,#2563eb,#D82221)" }} />
+            <h3 className="mt-3 text-xl font-bold text-slate-900">Upgrade to Owner Operator</h3>
+            <p className="mt-1.5 text-sm text-slate-600">
+              Unlock the complete asset-recovery business build-out &mdash; 45 points of compliance, the
+              full platform, and dedicated support. Call us and we&apos;ll get you set up.
+            </p>
+            <a
+              href="tel:+18885458007"
+              className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#D82221] px-4 py-3 text-lg font-bold text-white transition hover:opacity-90"
+            >
+              <Phone className="h-5 w-5" /> (888) 545-8007
+            </a>
+            <p className="mt-2 text-center text-xs text-slate-400">Call to upgrade &mdash; our team walks you through it.</p>
+            <a
+              href="https://usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 flex items-center justify-center gap-1 text-sm font-medium text-[#2563eb] hover:underline"
+            >
+              See everything you get <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      )}
 
     </div>
   )
