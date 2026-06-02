@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import { UpgradeButton } from "@/components/upgrade-button"
 import {
   Star,
   MapPin,
@@ -491,18 +492,13 @@ export default function ContractAdminPage() {
               <Lock className="h-6 w-6 text-emerald-600" />
             </div>
             <div>
-              <h3 className="font-semibold">Fully Built Asset Recovery Business Required</h3>
+              <h3 className="font-semibold">Owner Operator Upgrade Required</h3>
               <p className="text-sm text-muted-foreground">
-                Contract administration is exclusively available to clients who have purchased the Fully Built Asset Recovery Business package from usforeclosureleads.com.
+                Contract administration is part of the Owner Operator tier &mdash; the full asset-recovery business build-out. Upgrade your account to unlock it.
               </p>
             </div>
           </div>
-          <a href="https://assetrecoverybusiness.com/" target="_blank" rel="noopener noreferrer">
-            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shrink-0">
-              Upgrade Now
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </a>
+          <UpgradeButton label="Upgrade Now" className="inline-flex shrink-0 items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700" />
         </CardContent>
       </Card>
 

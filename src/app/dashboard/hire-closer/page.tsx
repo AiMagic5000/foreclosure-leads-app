@@ -4,6 +4,8 @@ import { useState, useRef, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { usePin } from "@/lib/pin-context"
+import { UpgradeButton } from "@/components/upgrade-button"
 import { Input } from "@/components/ui/input"
 import {
   Star,
@@ -255,6 +257,8 @@ const mockCallRecords: CallRecord[] = [
 ]
 
 export default function HireCloserPage() {
+  const { isOwnerOperator, accountType } = usePin()
+  const ooAccess = isOwnerOperator || accountType === "admin"
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCloser, setSelectedCloser] = useState<CloserProfile | null>(null)
   const [showCallLog, setShowCallLog] = useState(true)
@@ -427,6 +431,17 @@ export default function HireCloserPage() {
 
   return (
     <div className="space-y-6">
+      {!ooAccess && (
+        <div className="flex flex-col gap-3 rounded-xl border border-emerald-300 bg-emerald-50 p-4 sm:flex-row sm:items-center sm:justify-between dark:border-emerald-800 dark:bg-emerald-950/30">
+          <div>
+            <h3 className="font-semibold text-emerald-900 dark:text-emerald-200">Hire a Closer is an Owner Operator service</h3>
+            <p className="text-sm text-emerald-800/80 dark:text-emerald-300/80">
+              Done-for-you closing is part of the Owner Operator tier. Upgrade to assign your leads to a vetted closer.
+            </p>
+          </div>
+          <UpgradeButton label="Upgrade to Unlock" className="inline-flex shrink-0 items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700" />
+        </div>
+      )}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Hire a Closer</h1>

@@ -185,21 +185,6 @@ export default function SettingsPage() {
               </p>
             </div>
 
-            {isOwnerOperator && (
-              <div className="p-3 rounded-lg border border-white/20 bg-white/10">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-white">Monthly Support & Data Service</p>
-                    <p className="text-sm text-white/70">$1,295/mo &mdash; ongoing lead data, platform updates, and dedicated support</p>
-                  </div>
-                  <Badge variant="outline" className="bg-emerald-500/20 border-emerald-400 text-emerald-200">
-                    <CheckCircle2 className="mr-1 h-3 w-3" />
-                    Active
-                  </Badge>
-                </div>
-              </div>
-            )}
-
             {/* Business Build Out — included for Owner Operators, the upgrade for agents */}
             <div className={`p-3 rounded-lg border ${isOwnerOperator ? "border-white/20 bg-white/10" : "border-emerald-400/40 bg-emerald-500/10"}`}>
               <div className="flex items-center justify-between gap-3">

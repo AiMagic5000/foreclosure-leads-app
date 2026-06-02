@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import { UpgradeButton } from "@/components/upgrade-button"
 import {
   Phone,
   MessageSquare,
@@ -127,10 +128,11 @@ export default function AutomationPage() {
               </p>
             </div>
           </div>
-          <Button>
-            Upgrade Now
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          <UpgradeButton
+            label="Upgrade Now"
+            title="Add Automation"
+            subtitle="Hands-free voicemail, SMS, and email delivery to every lead — under your name. Call us to add automation to your account."
+          />
         </CardContent>
       </Card>
 

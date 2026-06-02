@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { UpgradeButton } from "@/components/upgrade-button"
 import {
   FolderKanban,
   AlertTriangle,
@@ -154,8 +155,16 @@ export default function WhiteLabelPage() {
             <AlertTriangle className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
             <h2 className="text-xl font-bold mb-2">Owner Operator Access Required</h2>
             <p className="text-muted-foreground">
-              The White Label business onboarding is available to Owner Operator program members.
+              White Label business onboarding is part of the Owner Operator tier. Upgrade your account to
+              run the operation under your own brand.
             </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              If a team member asked you to fill this out, you&apos;ve been granted a manual White Label
+              upgrade &mdash; refresh, and this form will open.
+            </p>
+            <div className="mt-5 flex justify-center">
+              <UpgradeButton />
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -289,6 +298,14 @@ export default function WhiteLabelPage() {
       {/* Onboarding Form */}
       <form onSubmit={handleSubmit}>
         <div className="space-y-6">
+          <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm dark:border-blue-900 dark:bg-blue-950/30">
+            <p className="font-semibold text-blue-900 dark:text-blue-200">You have White Label access (manual upgrade)</p>
+            <p className="mt-1 text-blue-800/80 dark:text-blue-300/80">
+              Completing this form sets up your White Label brand. Note: this manual upgrade does <strong>not</strong> include
+              the full business build-out components &mdash; to add the complete build-out, upgrade to Owner Operator.
+              The SSN and date of birth below are optional; placeholder numbers are fine.
+            </p>
+          </div>
           {/* Business Information */}
           <Card>
             <CardHeader>
@@ -358,7 +375,7 @@ export default function WhiteLabelPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Business Owner SSN <span className="text-red-500">*</span>
+                  Business Owner SSN <span className="text-muted-foreground font-normal">(optional)</span>
                 </label>
                 <Input
                   placeholder="***-**-****"
@@ -366,13 +383,13 @@ export default function WhiteLabelPage() {
                   onChange={(e) => setSsnLast4(e.target.value.replace(/[^\d-]/g, "").slice(0, 11))}
                 />
                 <p className="text-[11px] text-muted-foreground">
-                  Regardless if we're using a Credit Privacy File or your SSN Credit Profile as the Personal Guarantor, the Businesses EIN will still need to be established with your (the business owners) SSN
+                  Not required to submit &mdash; you may enter placeholder/dummy numbers here. When we establish the business EIN later, we&apos;ll collect the real SSN (or use a Credit Privacy File) at that step.
                 </p>
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Business Owner Date of Birth <span className="text-red-500">*</span>
+                  Business Owner Date of Birth <span className="text-muted-foreground font-normal">(optional)</span>
                 </label>
                 <Input
                   placeholder="January 1st 1980"
@@ -380,7 +397,7 @@ export default function WhiteLabelPage() {
                   onChange={(e) => setDateOfBirth(e.target.value)}
                 />
                 <p className="text-[11px] text-muted-foreground">
-                  Please format your date of birth like: January 1st 1980
+                  Not required to submit &mdash; a placeholder date is fine. Format like: January 1st 1980.
                 </p>
               </div>
 
