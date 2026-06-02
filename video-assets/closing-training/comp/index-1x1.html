@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Dashboard — Foreclosure Recovery Inc.</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @font-face { font-family: "Inter"; src: url("fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("fonts/Inter-500.woff2") format("woff2"); font-weight: 500; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("fonts/Inter-600.woff2") format("woff2"); font-weight: 600; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+  @font-face { font-family: "Fraunces"; src: url("fonts/Fraunces-600.woff2") format("woff2"); font-weight: 600; font-display: block; }
+  @font-face { font-family: "Fraunces"; src: url("fonts/Fraunces-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+
+  /* ===== WHITE THEME: white bg · red #D82221 + blue #2563eb accents · dark text ===== */
+  [data-composition-id="closing-training"] {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    background: #ffffff; color: #0f172a;
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden; font-size: clamp(14px, 1.45vw, 30px);
+  }
+  #wash { position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(60% 55% at 12% 8%, rgba(37,99,235,0.08) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(60% 55% at 92% 96%, rgba(216,34,33,0.07) 0%, rgba(255,255,255,0) 60%),
+      #ffffff; }
+  #toprule { position:absolute; top:0; left:0; right:0; height:6px; z-index:6;
+    background: linear-gradient(90deg, #2563eb 0%, #2563eb 50%, #D82221 50%, #D82221 100%); }
+  #logo { position:absolute; top:6.5%; left:9%; z-index:5; height:4.4em; opacity:0.5; }
+
+  .scene { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column;
+    justify-content:center; padding:9% 9%; box-sizing:border-box; }
+
+  .chip { display:inline-block; align-self:flex-start; background:rgba(37,99,235,0.10);
+    color:#2563eb; border:1px solid rgba(37,99,235,0.35); font-size:1.0em; font-weight:700;
+    letter-spacing:0.26em; text-transform:uppercase; padding:0.5em 1.1em; border-radius:999px; }
+  .display { font-family:"Fraunces", Georgia, serif; line-height:1.04; font-weight:700; color:#0f172a; }
+  .red { color:#D82221; } .blue { color:#2563eb; }
+  .sweep { position:relative; display:inline-block; }
+  .sweep .ink { position:absolute; left:0; bottom:-0.08em; height:0.10em; width:100%;
+    background:#D82221; border-radius:4px; transform-origin:left center; }
+
+  /* S1 hook */
+  #s1 .eye { font-size:1.05em; letter-spacing:0.28em; text-transform:uppercase; font-weight:700; color:#D82221; }
+  #s1 .h1 { font-size:3.7em; max-width:18em; margin-top:0.5em; }
+  #s1 .sub { font-size:1.5em; max-width:24em; margin-top:0.8em; color:#475569; line-height:1.45; }
+
+  /* S2 title */
+  #s2 { opacity:0; justify-content:center; }
+  #s2 .chip { margin-bottom:0.6em; }
+  #s2 .h2 { font-family:"Fraunces",serif; font-size:5.0em; font-weight:700; }
+  #s2 .h2 .small { display:block; font-size:0.42em; color:#475569; font-family:"Inter",sans-serif; font-weight:500; margin-top:0.6em; }
+
+  /* S3 stat cards */
+  #s3 { opacity:0; justify-content:center; }
+  #s3 .h3 { font-family:"Fraunces",serif; font-size:2.6em; font-weight:700; max-width:16em; }
+  #s3 .sub { font-size:1.25em; color:#475569; margin-top:0.3em; }
+  #s3 .cards { display:flex; gap:1.1em; margin-top:1.3em; }
+  #s3 .card { flex:1; background:#ffffff; border:1px solid #e2e8f0; border-radius:14px;
+    padding:1.2em 1.2em; box-shadow:0 14px 34px rgba(15,23,42,0.08); border-top:3px solid #2563eb; }
+  #s3 .card.red { border-top-color:#D82221; }
+  #s3 .card .klab { font-size:0.85em; letter-spacing:0.16em; text-transform:uppercase; font-weight:700; color:#64748b; }
+  #s3 .card .kval { font-family:"Fraunces",serif; font-size:2.4em; font-weight:700; margin-top:0.2em; color:#0f172a; }
+  #s3 .card.b .kval { color:#2563eb; } #s3 .card.r .kval { color:#D82221; }
+  #s3 .card .kfoot { font-size:0.95em; color:#94a3b8; margin-top:0.3em; }
+
+  /* S4 states */
+  #s4 { opacity:0; }
+  #s4 .h4 { font-family:"Fraunces",serif; font-size:2.8em; font-weight:700; max-width:14em; }
+  #s4 .sub { font-size:1.3em; color:#475569; margin-top:0.4em; max-width:22em; line-height:1.4; }
+  #s4 .states { display:flex; gap:0.7em; margin-top:1.2em; flex-wrap:wrap; }
+  #s4 .pill { background:#fff; border:1px solid #dbe4f0; color:#1e293b; padding:0.5em 1.0em;
+    border-radius:999px; font-weight:600; font-size:1.1em; box-shadow:0 6px 16px rgba(15,23,42,0.06); }
+  #s4 .pill b { color:#2563eb; }
+
+  /* S5 recent leads */
+  #s5 { opacity:0; }
+  #s5 .h5 { font-family:"Fraunces",serif; font-size:2.8em; font-weight:700; }
+  #s5 .sub { font-size:1.25em; color:#475569; margin-top:0.3em; }
+  #s5 .rows { margin-top:1.2em; display:flex; flex-direction:column; gap:0.6em; max-width:30em; }
+  #s5 .row { display:flex; align-items:center; gap:0.9em; background:#fff; border:1px solid #e2e8f0;
+    border-radius:12px; padding:0.8em 1.1em; box-shadow:0 8px 20px rgba(15,23,42,0.05); }
+  #s5 .row .dot { width:0.7em; height:0.7em; border-radius:50%; background:#D82221; flex:none; }
+  #s5 .row .nm { font-weight:600; font-size:1.15em; } #s5 .row .mt { color:#94a3b8; font-size:0.95em; margin-left:auto; }
+
+  /* S6 close */
+  #s6 { opacity:0; justify-content:center; }
+  #s6 .h6 { font-family:"Fraunces",serif; font-size:4.2em; font-weight:700; max-width:13em; }
+  #s6 .tag { font-size:1.5em; color:#475569; margin-top:0.6em; }
+  #s6 .phone { margin-top:1.2em; font-size:1.3em; font-weight:600; color:#0f172a; }
+  #s6 .phone .pill { display:inline-block; background:#D82221; color:#fff; font-weight:700;
+    padding:0.25em 0.8em; border-radius:999px; margin-left:0.4em; }
+
+  #blackout { position:absolute; inset:0; z-index:60; background:#ffffff; opacity:0; pointer-events:none; }
+
+  @media (max-aspect-ratio: 1/1) {
+    [data-composition-id="closing-training"] { font-size: clamp(14px, 2.9vw, 36px); }
+    [data-composition-id="closing-training"] .scene { padding: 14% 8%; }
+    [data-composition-id="closing-training"] #logo { height:3.6em; top:5%; }
+    [data-composition-id="closing-training"] #s1 .h1 { font-size:3.0em; }
+    [data-composition-id="closing-training"] #s2 .h2 { font-size:3.6em; }
+    [data-composition-id="closing-training"] #s3 .cards { flex-direction:column; gap:0.7em; }
+    [data-composition-id="closing-training"] #s3 .card .kval { font-size:2.0em; }
+    [data-composition-id="closing-training"] #s6 .h6 { font-size:3.2em; }
+  }
+  @media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 13/12) {
+    [data-composition-id="closing-training"] { font-size: clamp(14px, 2.0vw, 30px); }
+    [data-composition-id="closing-training"] .scene { padding: 9% 8%; }
+    [data-composition-id="closing-training"] #s3 .cards { flex-wrap:wrap; }
+    [data-composition-id="closing-training"] #s3 .card { flex:1 1 40%; }
+    [data-composition-id="closing-training"] #s2 .h2 { font-size:4.0em; }
+    [data-composition-id="closing-training"] #s6 .h6 { font-size:3.4em; }
+  }
+</style>
+</head>
+<body>
+  <div data-composition-id="closing-training" data-start="0" data-duration="34.29" data-width="1080" data-height="1080">
+    <div id="wash"></div><div id="toprule"></div>
+    <img id="logo" src="logo.png" alt="Foreclosure Recovery Inc." />
+    <div class="scene" id="s1">
+      <div class="eye" id="s1-eye">Closing Training</div>
+      <div class="display h1" id="s1-h1">Finding them is half. <span class="red">Closing</span> gets everyone paid.</div>
+      <div class="sub" id="s1-sub">The conversations that turn a skeptical homeowner into a signed agreement.</div>
+    </div>
+    <div class="scene" id="s2">
+      <div class="chip" id="s2-chip">Win The Call</div>
+      <div class="display h2" id="s2-h2">Learn to close.<span class="small">The exact words that win trust &mdash; and signatures.</span></div>
+    </div>
+    <div class="scene" id="s3">
+      <div class="h3" id="s3-h3">What you will learn.</div><div class="sub" id="s3-sub">Open, explain, answer, and close.</div>
+      <div class="cards">
+        <div class="card " id="s3-c1"><div class="klab">Open</div><div class="kval" style="font-size:1.5em">With trust</div><div class="kfoot">First 10 seconds</div></div>
+        <div class="card b" id="s3-c2"><div class="klab">Explain</div><div class="kval" style="font-size:1.5em">Plain words</div><div class="kfoot">No jargon</div></div>
+        <div class="card r red" id="s3-c3"><div class="klab">Objections</div><div class="kval" style="font-size:1.5em">Handled</div><div class="kfoot">Every question</div></div>
+        <div class="card b" id="s3-c4"><div class="klab">Close</div><div class="kval" style="font-size:1.5em">No pressure</div><div class="kfoot">Guide to sign</div></div>
+      </div>
+    </div>
+    <div class="scene" id="s4">
+      <div class="h4" id="s4-h4">Turn a voicemail into a <span class="blue">signed contingency</span>.</div><div class="sub" id="s4-sub">Hear the real scripts that move homeowners to yes.</div>
+      <div class="states">
+        <div class="pill" id="s4-p1">Build trust</div>
+        <div class="pill" id="s4-p2">Explain simply</div>
+        <div class="pill" id="s4-p3">Answer fears</div>
+        <div class="pill" id="s4-p4">Ask for the sign</div>
+      </div>
+    </div>
+    <div class="scene" id="s5">
+      <div class="h5" id="s5-h5">Watch once, then watch your <span class="red">close rate climb</span>.</div><div class="sub" id="s5-sub">The better you are on the phone, the more families you help.</div>
+      <div class="rows">
+        <div class="row" id="s5-r1"><span class="dot"></span><span class="nm">Open with trust</span><span class="mt">step 1</span></div>
+        <div class="row" id="s5-r2"><span class="dot"></span><span class="nm">Handle the objection</span><span class="mt">step 2</span></div>
+        <div class="row" id="s5-r3"><span class="dot"></span><span class="nm">Guide them to sign</span><span class="mt">step 3</span></div>
+      </div>
+    </div>
+    <div class="scene" id="s6">
+      <div class="display h6" id="s6-h6">More closes. More <span class="red">families helped</span>.</div>
+      <div class="tag" id="s6-tag">Get better on the phone, earn more.</div>
+      <div class="phone" id="s6-phone">Questions? Always ask <span class="pill">(888) 545-8007</span></div>
+    </div>
+    <div id="blackout"></div>
+    <audio id="vo" src="vo.mp3" data-start="0" data-duration="32.993" data-track-index="9" data-volume="1"></audio>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines=window.__timelines||{};
+    const tl=gsap.timeline({paused:true});
+    const EO="power3.out",EE="expo.out",EB="back.out(1.5)";
+    const S1=0,S2=7.92,S3=9.9,S4=19.8,S5=24.74,S6=28.7,XF=0.55,END=34.29;
+    tl.set("#s2,#s3,#s4,#s5,#s6",{opacity:0},0);
+    tl.from("#logo",{opacity:0,duration:0.7,ease:EO},0.2);
+    tl.from("#toprule",{scaleX:0,transformOrigin:"left center",duration:0.8,ease:EO},0.1);
+    tl.from("#s1-eye",{y:16,opacity:0,duration:0.5,ease:EO},0.3);
+    tl.from("#s1-h1",{y:44,opacity:0,duration:0.85,ease:EO},0.6);
+    tl.from("#s1-sub",{y:26,opacity:0,duration:0.65,ease:EE},Math.min(5.5,S2-1.5));
+    tl.from(".sweep .ink",{scaleX:0,duration:0.7,ease:"power2.inOut"},1.4);
+    tl.to("#s1",{opacity:0,duration:XF},S2-XF); tl.to("#s2",{opacity:1,duration:XF},S2-XF);
+    tl.from("#s2-chip",{y:20,opacity:0,duration:0.5,ease:EB},S2+0.2);
+    tl.from("#s2-h2",{y:40,opacity:0,duration:0.8,ease:EO},S2+0.4);
+    tl.to("#s2",{opacity:0,duration:XF},S3-XF); tl.to("#s3",{opacity:1,duration:XF},S3-XF);
+    tl.from("#s3-h3",{y:26,opacity:0,duration:0.55,ease:EE},S3+0.2);
+    tl.from("#s3-sub",{y:18,opacity:0,duration:0.45,ease:EO},S3+0.45);
+    tl.from("#s3-c1",{y:36,opacity:0,duration:0.45,ease:EB},10.5);
+    tl.from("#s3-c2",{y:36,opacity:0,duration:0.45,ease:EB},12.6);
+    tl.from("#s3-c3",{y:36,opacity:0,duration:0.45,ease:EB},14.7);
+    tl.from("#s3-c4",{y:36,opacity:0,duration:0.45,ease:EB},16.8);
+    tl.to("#s3",{opacity:0,duration:XF},S4-XF); tl.to("#s4",{opacity:1,duration:XF},S4-XF);
+    tl.from("#s4-h4",{y:30,opacity:0,duration:0.65,ease:EO},S4+0.2);
+    tl.from("#s4-sub",{y:20,opacity:0,duration:0.5,ease:EO},S4+0.5);
+    tl.from("#s4-p1",{y:22,opacity:0,duration:0.4,ease:EB},20.4);
+    tl.from("#s4-p2",{y:22,opacity:0,duration:0.4,ease:EB},20.8);
+    tl.from("#s4-p3",{y:22,opacity:0,duration:0.4,ease:EB},21.2);
+    tl.from("#s4-p4",{y:22,opacity:0,duration:0.4,ease:EB},21.6);
+    tl.to("#s4",{opacity:0,duration:XF},S5-XF); tl.to("#s5",{opacity:1,duration:XF},S5-XF);
+    tl.from("#s5-h5",{y:28,opacity:0,duration:0.55,ease:EO},S5+0.2);
+    tl.from("#s5-sub",{y:18,opacity:0,duration:0.45,ease:EO},S5+0.45);
+    tl.from("#s5-r1",{x:-26,opacity:0,duration:0.4,ease:EO},25.24);
+    tl.from("#s5-r2",{x:-26,opacity:0,duration:0.4,ease:EO},25.84);
+    tl.from("#s5-r3",{x:-26,opacity:0,duration:0.4,ease:EO},26.44);
+    tl.to("#s5",{opacity:0,duration:XF},S6-XF); tl.to("#s6",{opacity:1,duration:XF},S6-XF);
+    tl.from("#s6-h6",{y:40,opacity:0,duration:0.85,ease:EO},S6+0.2);
+    tl.from("#s6-tag",{y:22,opacity:0,duration:0.6,ease:EE},S6+0.9);
+    tl.from("#s6-phone",{y:22,opacity:0,duration:0.55,ease:EB},S6+1.4);
+    window.__timelines["closing-training"]=tl;
+  </script>
+</body>
+</html>

@@ -5,7 +5,6 @@ import { useUser } from "@clerk/nextjs"
 import { Shield, RefreshCw, AlertTriangle, CheckCircle2, XCircle, Loader2, FileText, Gavel } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { SectionVideo } from "@/components/section-video"
 
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
 
@@ -80,14 +79,6 @@ export default function CompliancePage() {
           <RefreshCw className="h-4 w-4" /> Refresh
         </button>
       </div>
-
-      <SectionVideo
-        src="/videos/compliance-16x9.mp4"
-        poster="/videos/compliance-poster.jpg"
-        title="How the compliance gate protects every claim"
-        subtitle="The 15 checks, shadow mode, and verifying states before enforce."
-        storageKey="video-dismissed-compliance"
-      />
 
       {err && <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{err} — has migration 005 been applied to the database?</div>}
 

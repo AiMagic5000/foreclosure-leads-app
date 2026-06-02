@@ -114,36 +114,29 @@
 </style>
 </head>
 <body>
-  <div data-composition-id="foreclosure-leads" data-start="0" data-duration="59.5" data-width="1920" data-height="1080">
-    <div id="wash"></div>
-    <div id="toprule"></div>
+  <div data-composition-id="foreclosure-leads" data-start="0" data-duration="54.69" data-width="1920" data-height="1080">
+    <div id="wash"></div><div id="toprule"></div>
     <img id="logo" src="logo.png" alt="Foreclosure Recovery Inc." />
-
     <div class="scene" id="s1">
       <div class="eye" id="s1-eye">The Leads Board</div>
       <div class="display h1" id="s1-h1">Where the <span class="red">work</span> happens.</div>
       <div class="sub" id="s1-sub">Every row is a real homeowner with surplus funds waiting to be claimed.</div>
     </div>
-
     <div class="scene" id="s2">
       <div class="chip" id="s2-chip">Confidential &middot; PIN Protected</div>
       <div class="display h2" id="s2-h2">The full picture.<span class="small">Open a lead &mdash; everything is right there.</span></div>
     </div>
-
     <div class="scene" id="s3">
-      <div class="h3" id="s3-h3">One lead, the whole story.</div>
-      <div class="sub" id="s3-sub">Property, auction, surplus, and financials.</div>
+      <div class="h3" id="s3-h3">One lead, the whole story.</div><div class="sub" id="s3-sub">Property, auction, surplus, and financials.</div>
       <div class="cards">
-        <div class="card" id="s3-c1"><div class="klab">Property</div><div class="kval" style="font-size:1.5em">Full record</div><div class="kfoot">Address, photos, details</div></div>
+        <div class="card " id="s3-c1"><div class="klab">Property</div><div class="kval" style="font-size:1.5em">Full record</div><div class="kfoot">Address, photos</div></div>
         <div class="card b" id="s3-c2"><div class="klab">Auction</div><div class="kval" style="font-size:1.5em">Sale data</div><div class="kfoot">Date, amount, case</div></div>
         <div class="card r red" id="s3-c3"><div class="klab">Est. Surplus</div><div class="kval" style="font-size:1.5em">The payoff</div><div class="kfoot">What is at stake</div></div>
         <div class="card b" id="s3-c4"><div class="klab">Financials</div><div class="kval" style="font-size:1.5em">Summary</div><div class="kfoot">Liens and equity</div></div>
       </div>
     </div>
-
     <div class="scene" id="s4">
-      <div class="h4" id="s4-h4">Reach the people who are <span class="blue">owed</span>.</div>
-      <div class="sub" id="s4-sub">Skip-tracing fills in what public records leave out &mdash; all DNC-checked.</div>
+      <div class="h4" id="s4-h4">Reach the people who are <span class="blue">owed</span>.</div><div class="sub" id="s4-sub">Skip-tracing fills in what public records leave out &mdash; all DNC-checked.</div>
       <div class="states">
         <div class="pill" id="s4-p1">Phones</div>
         <div class="pill" id="s4-p2">Emails</div>
@@ -151,76 +144,63 @@
         <div class="pill" id="s4-p4">Relatives</div>
       </div>
     </div>
-
     <div class="scene" id="s5">
-      <div class="h5" id="s5-h5">Reach out without <span class="red">leaving the page</span>.</div>
-      <div class="sub" id="s5-sub">Email, text, or ringless voicemail &mdash; all under your name.</div>
+      <div class="h5" id="s5-h5">Reach out without <span class="red">leaving the page</span>.</div><div class="sub" id="s5-sub">Email, text, or ringless voicemail &mdash; all under your name.</div>
       <div class="rows">
         <div class="row" id="s5-r1"><span class="dot"></span><span class="nm">Personalized email draft</span><span class="mt">1 click</span></div>
         <div class="row" id="s5-r2"><span class="dot"></span><span class="nm">Text message via gateway</span><span class="mt">1 click</span></div>
         <div class="row" id="s5-r3"><span class="dot"></span><span class="nm">Ringless voicemail drop</span><span class="mt">1 click</span></div>
       </div>
     </div>
-
     <div class="scene" id="s6">
       <div class="display h6" id="s6-h6">From lead to <span class="red">recovered</span>.</div>
       <div class="tag" id="s6-tag">Log every call. Track every status. This is your engine.</div>
       <div class="phone" id="s6-phone">Questions? Always ask <span class="pill">(888) 545-8007</span></div>
     </div>
-
     <div id="blackout"></div>
-    <audio id="vo" src="vo.mp3" data-start="0" data-duration="58.044" data-track-index="9" data-volume="1"></audio>
+    <audio id="vo" src="vo.mp3" data-start="0" data-duration="53.394" data-track-index="9" data-volume="1"></audio>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script>
-    window.__timelines = window.__timelines || {};
-    const tl = gsap.timeline({ paused: true });
-    const E_OUT = "power3.out", E_EXPO = "expo.out", E_BACK = "back.out(1.5)";
-    const S1=0.0, S2=14.0, S3=17.0, S4=32.7, S5=40.2, S6=45.8, XF=0.6, END=59.5;
-
-    tl.set("#s2,#s3,#s4,#s5,#s6", { opacity: 0 }, 0);
-    tl.from("#logo", { opacity: 0, duration: 0.8, ease: E_OUT }, 0.2);
-    tl.from("#toprule", { scaleX: 0, transformOrigin: "left center", duration: 0.9, ease: E_OUT }, 0.1);
-
-    tl.from("#s1-eye", { y:16, opacity:0, duration:0.5, ease:E_OUT }, 0.3);
-    tl.from("#s1-h1",  { y:44, opacity:0, duration:0.9, ease:E_OUT }, 0.6);
-    tl.from("#s1-sub", { y:26, opacity:0, duration:0.7, ease:E_EXPO }, 6.0);
-    tl.from(".sweep .ink", { scaleX:0, duration:0.7, ease:"power2.inOut" }, 1.5);
-
+    window.__timelines=window.__timelines||{};
+    const tl=gsap.timeline({paused:true});
+    const EO="power3.out",EE="expo.out",EB="back.out(1.5)";
+    const S1=0,S2=12.81,S3=16.02,S4=32.04,S5=40.05,S6=46.45,XF=0.55,END=54.69;
+    tl.set("#s2,#s3,#s4,#s5,#s6",{opacity:0},0);
+    tl.from("#logo",{opacity:0,duration:0.7,ease:EO},0.2);
+    tl.from("#toprule",{scaleX:0,transformOrigin:"left center",duration:0.8,ease:EO},0.1);
+    tl.from("#s1-eye",{y:16,opacity:0,duration:0.5,ease:EO},0.3);
+    tl.from("#s1-h1",{y:44,opacity:0,duration:0.85,ease:EO},0.6);
+    tl.from("#s1-sub",{y:26,opacity:0,duration:0.65,ease:EE},Math.min(5.5,S2-1.5));
+    tl.from(".sweep .ink",{scaleX:0,duration:0.7,ease:"power2.inOut"},1.4);
     tl.to("#s1",{opacity:0,duration:XF},S2-XF); tl.to("#s2",{opacity:1,duration:XF},S2-XF);
-    tl.from("#s2-chip", { y:20, opacity:0, duration:0.5, ease:E_BACK }, S2+0.2);
-    tl.from("#s2-h2",   { y:40, opacity:0, duration:0.8, ease:E_OUT }, S2+0.4);
-
+    tl.from("#s2-chip",{y:20,opacity:0,duration:0.5,ease:EB},S2+0.2);
+    tl.from("#s2-h2",{y:40,opacity:0,duration:0.8,ease:EO},S2+0.4);
     tl.to("#s2",{opacity:0,duration:XF},S3-XF); tl.to("#s3",{opacity:1,duration:XF},S3-XF);
-    tl.from("#s3-h3",  { y:26, opacity:0, duration:0.6, ease:E_EXPO }, S3+0.2);
-    tl.from("#s3-sub", { y:18, opacity:0, duration:0.5, ease:E_OUT }, S3+0.5);
-    tl.from("#s3-c1", { y:40, opacity:0, duration:0.5, ease:E_BACK }, S3+2.8);
-    tl.from("#s3-c2", { y:40, opacity:0, duration:0.5, ease:E_BACK }, S3+6.0);
-    tl.from("#s3-c3", { y:40, opacity:0, duration:0.5, ease:E_BACK }, S3+9.0);
-    tl.from("#s3-c4", { y:40, opacity:0, duration:0.5, ease:E_BACK }, S3+11.8);
-
+    tl.from("#s3-h3",{y:26,opacity:0,duration:0.55,ease:EE},S3+0.2);
+    tl.from("#s3-sub",{y:18,opacity:0,duration:0.45,ease:EO},S3+0.45);
+    tl.from("#s3-c1",{y:36,opacity:0,duration:0.45,ease:EB},16.62);
+    tl.from("#s3-c2",{y:36,opacity:0,duration:0.45,ease:EB},20.25);
+    tl.from("#s3-c3",{y:36,opacity:0,duration:0.45,ease:EB},23.88);
+    tl.from("#s3-c4",{y:36,opacity:0,duration:0.45,ease:EB},27.51);
     tl.to("#s3",{opacity:0,duration:XF},S4-XF); tl.to("#s4",{opacity:1,duration:XF},S4-XF);
-    tl.from("#s4-h4",  { y:30, opacity:0, duration:0.7, ease:E_OUT }, S4+0.2);
-    tl.from("#s4-sub", { y:20, opacity:0, duration:0.55, ease:E_OUT }, S4+0.6);
-    tl.from("#s4-p1", { y:22, opacity:0, duration:0.4, ease:E_BACK }, S4+3.0);
-    tl.from("#s4-p2", { y:22, opacity:0, duration:0.4, ease:E_BACK }, S4+3.4);
-    tl.from("#s4-p3", { y:22, opacity:0, duration:0.4, ease:E_BACK }, S4+3.8);
-    tl.from("#s4-p4", { y:22, opacity:0, duration:0.4, ease:E_BACK }, S4+4.2);
-
+    tl.from("#s4-h4",{y:30,opacity:0,duration:0.65,ease:EO},S4+0.2);
+    tl.from("#s4-sub",{y:20,opacity:0,duration:0.5,ease:EO},S4+0.5);
+    tl.from("#s4-p1",{y:22,opacity:0,duration:0.4,ease:EB},32.64);
+    tl.from("#s4-p2",{y:22,opacity:0,duration:0.4,ease:EB},33.04);
+    tl.from("#s4-p3",{y:22,opacity:0,duration:0.4,ease:EB},33.44);
+    tl.from("#s4-p4",{y:22,opacity:0,duration:0.4,ease:EB},33.84);
     tl.to("#s4",{opacity:0,duration:XF},S5-XF); tl.to("#s5",{opacity:1,duration:XF},S5-XF);
-    tl.from("#s5-h5",  { y:28, opacity:0, duration:0.6, ease:E_OUT }, S5+0.2);
-    tl.from("#s5-sub", { y:18, opacity:0, duration:0.5, ease:E_OUT }, S5+0.5);
-    tl.from("#s5-r1", { x:-26, opacity:0, duration:0.45, ease:E_OUT }, S5+1.3);
-    tl.from("#s5-r2", { x:-26, opacity:0, duration:0.45, ease:E_OUT }, S5+1.9);
-    tl.from("#s5-r3", { x:-26, opacity:0, duration:0.45, ease:E_OUT }, S5+2.5);
-
+    tl.from("#s5-h5",{y:28,opacity:0,duration:0.55,ease:EO},S5+0.2);
+    tl.from("#s5-sub",{y:18,opacity:0,duration:0.45,ease:EO},S5+0.45);
+    tl.from("#s5-r1",{x:-26,opacity:0,duration:0.4,ease:EO},40.55);
+    tl.from("#s5-r2",{x:-26,opacity:0,duration:0.4,ease:EO},41.15);
+    tl.from("#s5-r3",{x:-26,opacity:0,duration:0.4,ease:EO},41.75);
     tl.to("#s5",{opacity:0,duration:XF},S6-XF); tl.to("#s6",{opacity:1,duration:XF},S6-XF);
-    tl.from("#s6-h6",    { y:40, opacity:0, duration:0.9, ease:E_OUT }, S6+0.2);
-    tl.from("#s6-tag",   { y:22, opacity:0, duration:0.6, ease:E_EXPO }, S6+1.0);
-    tl.from("#s6-phone", { y:22, opacity:0, duration:0.55, ease:E_BACK }, S6+1.6);
-
-    window.__timelines["foreclosure-leads"] = tl;
+    tl.from("#s6-h6",{y:40,opacity:0,duration:0.85,ease:EO},S6+0.2);
+    tl.from("#s6-tag",{y:22,opacity:0,duration:0.6,ease:EE},S6+0.9);
+    tl.from("#s6-phone",{y:22,opacity:0,duration:0.55,ease:EB},S6+1.4);
+    window.__timelines["foreclosure-leads"]=tl;
   </script>
 </body>
 </html>

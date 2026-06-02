@@ -36,6 +36,7 @@ import {
   Activity,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { DashboardSectionVideo } from "@/components/dashboard-section-video"
 import { cn } from "@/lib/utils"
 import { PinProvider, usePin } from "@/lib/pin-context"
 
@@ -426,7 +427,10 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <main className="p-4 lg:p-6">{children}</main>
+        <main className="p-4 lg:p-6">
+          <DashboardSectionVideo />
+          {children}
+        </main>
       </div>
     </div>
   )

@@ -114,36 +114,29 @@
 </style>
 </head>
 <body>
-  <div data-composition-id="compliance" data-start="0" data-duration="58.6" data-width="1920" data-height="1080">
-    <div id="wash"></div>
-    <div id="toprule"></div>
+  <div data-composition-id="compliance" data-start="0" data-duration="54.15" data-width="1920" data-height="1080">
+    <div id="wash"></div><div id="toprule"></div>
     <img id="logo" src="logo.png" alt="Foreclosure Recovery Inc." />
-
     <div class="scene" id="s1">
       <div class="eye" id="s1-eye">Compliance Gate</div>
       <div class="display h1" id="s1-h1">The rules are <span class="red">unforgiving</span>.</div>
       <div class="sub" id="s1-sub">One wrong figure, one wrong state, one missing disclosure &mdash; and a claim falls apart.</div>
     </div>
-
     <div class="scene" id="s2">
       <div class="chip" id="s2-chip">Your Safety Net</div>
       <div class="display h2" id="s2-h2">Fifteen checks.<span class="small">Run on every document, before it ever sends.</span></div>
     </div>
-
     <div class="scene" id="s3">
-      <div class="h3" id="s3-h3">What it verifies.</div>
-      <div class="sub" id="s3-sub">Nothing ships that should not.</div>
+      <div class="h3" id="s3-h3">What it verifies.</div><div class="sub" id="s3-sub">Nothing ships that should not.</div>
       <div class="cards">
-        <div class="card" id="s3-c1"><div class="klab">State</div><div class="kval" style="font-size:1.5em">Verified</div><div class="kfoot">Rules per jurisdiction</div></div>
+        <div class="card " id="s3-c1"><div class="klab">State</div><div class="kval" style="font-size:1.5em">Verified</div><div class="kfoot">Per jurisdiction</div></div>
         <div class="card b" id="s3-c2"><div class="klab">Amount</div><div class="kval" style="font-size:1.5em">Matched</div><div class="kfoot">Same on every doc</div></div>
-        <div class="card r red" id="s3-c3"><div class="klab">Venue + Deadline</div><div class="kval" style="font-size:1.3em">Correct</div><div class="kfoot">Set by state law</div></div>
+        <div class="card r red" id="s3-c3"><div class="klab">Venue + Deadline</div><div class="kval" style="font-size:1.5em">Correct</div><div class="kfoot">Set by state law</div></div>
         <div class="card b" id="s3-c4"><div class="klab">Disclosures</div><div class="kval" style="font-size:1.5em">Present</div><div class="kfoot">Legally required</div></div>
       </div>
     </div>
-
     <div class="scene" id="s4">
-      <div class="h4" id="s4-h4">If it does not pass, it tells you <span class="blue">exactly what to fix</span>.</div>
-      <div class="sub" id="s4-sub">In plain language &mdash; so you fix the data, not the gate.</div>
+      <div class="h4" id="s4-h4">If it does not pass, it tells you <span class="blue">what to fix</span>.</div><div class="sub" id="s4-sub">In plain language &mdash; so you fix the data, not the gate.</div>
       <div class="states">
         <div class="pill" id="s4-p1">State match</div>
         <div class="pill" id="s4-p2">Amount parity</div>
@@ -151,76 +144,63 @@
         <div class="pill" id="s4-p4">No leftover tokens</div>
       </div>
     </div>
-
     <div class="scene" id="s5">
-      <div class="h5" id="s5-h5">Running in <span class="blue">shadow mode</span>.</div>
-      <div class="sub" id="s5-sub">Watching and logging every document &mdash; without blocking.</div>
+      <div class="h5" id="s5-h5">Running in <span class="blue">shadow mode</span>.</div><div class="sub" id="s5-sub">Watching and logging every document &mdash; without blocking.</div>
       <div class="rows">
         <div class="row" id="s5-r1"><span class="dot"></span><span class="nm">Document evaluated &mdash; would pass</span><span class="mt">logged</span></div>
         <div class="row" id="s5-r2"><span class="dot"></span><span class="nm">Verify a state with counsel</span><span class="mt">then flip</span></div>
         <div class="row" id="s5-r3"><span class="dot"></span><span class="nm">Gate switches to enforcing</span><span class="mt">protected</span></div>
       </div>
     </div>
-
     <div class="scene" id="s6">
       <div class="display h6" id="s6-h6">Protect every agent, every <span class="red">claim</span>.</div>
       <div class="tag" id="s6-tag">Verify your states. Flip the switch. Stay protected.</div>
       <div class="phone" id="s6-phone">Questions? Always ask <span class="pill">(888) 545-8007</span></div>
     </div>
-
     <div id="blackout"></div>
-    <audio id="vo" src="vo.mp3" data-start="0" data-duration="57.156" data-track-index="9" data-volume="1"></audio>
+    <audio id="vo" src="vo.mp3" data-start="0" data-duration="52.846" data-track-index="9" data-volume="1"></audio>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script>
-    window.__timelines = window.__timelines || {};
-    const tl = gsap.timeline({ paused: true });
-    const E_OUT = "power3.out", E_EXPO = "expo.out", E_BACK = "back.out(1.5)";
-    const S1=0.0, S2=14.0, S3=17.0, S4=32.7, S5=40.2, S6=45.8, XF=0.6, END=58.6;
-
-    tl.set("#s2,#s3,#s4,#s5,#s6", { opacity: 0 }, 0);
-    tl.from("#logo", { opacity: 0, duration: 0.8, ease: E_OUT }, 0.2);
-    tl.from("#toprule", { scaleX: 0, transformOrigin: "left center", duration: 0.9, ease: E_OUT }, 0.1);
-
-    tl.from("#s1-eye", { y:16, opacity:0, duration:0.5, ease:E_OUT }, 0.3);
-    tl.from("#s1-h1",  { y:44, opacity:0, duration:0.9, ease:E_OUT }, 0.6);
-    tl.from("#s1-sub", { y:26, opacity:0, duration:0.7, ease:E_EXPO }, 6.0);
-    tl.from(".sweep .ink", { scaleX:0, duration:0.7, ease:"power2.inOut" }, 1.5);
-
+    window.__timelines=window.__timelines||{};
+    const tl=gsap.timeline({paused:true});
+    const EO="power3.out",EE="expo.out",EB="back.out(1.5)";
+    const S1=0,S2=12.68,S3=15.85,S4=31.71,S5=39.63,S6=45.98,XF=0.55,END=54.15;
+    tl.set("#s2,#s3,#s4,#s5,#s6",{opacity:0},0);
+    tl.from("#logo",{opacity:0,duration:0.7,ease:EO},0.2);
+    tl.from("#toprule",{scaleX:0,transformOrigin:"left center",duration:0.8,ease:EO},0.1);
+    tl.from("#s1-eye",{y:16,opacity:0,duration:0.5,ease:EO},0.3);
+    tl.from("#s1-h1",{y:44,opacity:0,duration:0.85,ease:EO},0.6);
+    tl.from("#s1-sub",{y:26,opacity:0,duration:0.65,ease:EE},Math.min(5.5,S2-1.5));
+    tl.from(".sweep .ink",{scaleX:0,duration:0.7,ease:"power2.inOut"},1.4);
     tl.to("#s1",{opacity:0,duration:XF},S2-XF); tl.to("#s2",{opacity:1,duration:XF},S2-XF);
-    tl.from("#s2-chip", { y:20, opacity:0, duration:0.5, ease:E_BACK }, S2+0.2);
-    tl.from("#s2-h2",   { y:40, opacity:0, duration:0.8, ease:E_OUT }, S2+0.4);
-
+    tl.from("#s2-chip",{y:20,opacity:0,duration:0.5,ease:EB},S2+0.2);
+    tl.from("#s2-h2",{y:40,opacity:0,duration:0.8,ease:EO},S2+0.4);
     tl.to("#s2",{opacity:0,duration:XF},S3-XF); tl.to("#s3",{opacity:1,duration:XF},S3-XF);
-    tl.from("#s3-h3",  { y:26, opacity:0, duration:0.6, ease:E_EXPO }, S3+0.2);
-    tl.from("#s3-sub", { y:18, opacity:0, duration:0.5, ease:E_OUT }, S3+0.5);
-    tl.from("#s3-c1", { y:40, opacity:0, duration:0.5, ease:E_BACK }, S3+2.8);
-    tl.from("#s3-c2", { y:40, opacity:0, duration:0.5, ease:E_BACK }, S3+6.0);
-    tl.from("#s3-c3", { y:40, opacity:0, duration:0.5, ease:E_BACK }, S3+9.0);
-    tl.from("#s3-c4", { y:40, opacity:0, duration:0.5, ease:E_BACK }, S3+11.8);
-
+    tl.from("#s3-h3",{y:26,opacity:0,duration:0.55,ease:EE},S3+0.2);
+    tl.from("#s3-sub",{y:18,opacity:0,duration:0.45,ease:EO},S3+0.45);
+    tl.from("#s3-c1",{y:36,opacity:0,duration:0.45,ease:EB},16.45);
+    tl.from("#s3-c2",{y:36,opacity:0,duration:0.45,ease:EB},20.04);
+    tl.from("#s3-c3",{y:36,opacity:0,duration:0.45,ease:EB},23.63);
+    tl.from("#s3-c4",{y:36,opacity:0,duration:0.45,ease:EB},27.22);
     tl.to("#s3",{opacity:0,duration:XF},S4-XF); tl.to("#s4",{opacity:1,duration:XF},S4-XF);
-    tl.from("#s4-h4",  { y:30, opacity:0, duration:0.7, ease:E_OUT }, S4+0.2);
-    tl.from("#s4-sub", { y:20, opacity:0, duration:0.55, ease:E_OUT }, S4+0.6);
-    tl.from("#s4-p1", { y:22, opacity:0, duration:0.4, ease:E_BACK }, S4+3.0);
-    tl.from("#s4-p2", { y:22, opacity:0, duration:0.4, ease:E_BACK }, S4+3.4);
-    tl.from("#s4-p3", { y:22, opacity:0, duration:0.4, ease:E_BACK }, S4+3.8);
-    tl.from("#s4-p4", { y:22, opacity:0, duration:0.4, ease:E_BACK }, S4+4.2);
-
+    tl.from("#s4-h4",{y:30,opacity:0,duration:0.65,ease:EO},S4+0.2);
+    tl.from("#s4-sub",{y:20,opacity:0,duration:0.5,ease:EO},S4+0.5);
+    tl.from("#s4-p1",{y:22,opacity:0,duration:0.4,ease:EB},32.31);
+    tl.from("#s4-p2",{y:22,opacity:0,duration:0.4,ease:EB},32.71);
+    tl.from("#s4-p3",{y:22,opacity:0,duration:0.4,ease:EB},33.11);
+    tl.from("#s4-p4",{y:22,opacity:0,duration:0.4,ease:EB},33.51);
     tl.to("#s4",{opacity:0,duration:XF},S5-XF); tl.to("#s5",{opacity:1,duration:XF},S5-XF);
-    tl.from("#s5-h5",  { y:28, opacity:0, duration:0.6, ease:E_OUT }, S5+0.2);
-    tl.from("#s5-sub", { y:18, opacity:0, duration:0.5, ease:E_OUT }, S5+0.5);
-    tl.from("#s5-r1", { x:-26, opacity:0, duration:0.45, ease:E_OUT }, S5+1.3);
-    tl.from("#s5-r2", { x:-26, opacity:0, duration:0.45, ease:E_OUT }, S5+1.9);
-    tl.from("#s5-r3", { x:-26, opacity:0, duration:0.45, ease:E_OUT }, S5+2.5);
-
+    tl.from("#s5-h5",{y:28,opacity:0,duration:0.55,ease:EO},S5+0.2);
+    tl.from("#s5-sub",{y:18,opacity:0,duration:0.45,ease:EO},S5+0.45);
+    tl.from("#s5-r1",{x:-26,opacity:0,duration:0.4,ease:EO},40.13);
+    tl.from("#s5-r2",{x:-26,opacity:0,duration:0.4,ease:EO},40.73);
+    tl.from("#s5-r3",{x:-26,opacity:0,duration:0.4,ease:EO},41.33);
     tl.to("#s5",{opacity:0,duration:XF},S6-XF); tl.to("#s6",{opacity:1,duration:XF},S6-XF);
-    tl.from("#s6-h6",    { y:40, opacity:0, duration:0.9, ease:E_OUT }, S6+0.2);
-    tl.from("#s6-tag",   { y:22, opacity:0, duration:0.6, ease:E_EXPO }, S6+1.0);
-    tl.from("#s6-phone", { y:22, opacity:0, duration:0.55, ease:E_BACK }, S6+1.6);
-
-    window.__timelines["compliance"] = tl;
+    tl.from("#s6-h6",{y:40,opacity:0,duration:0.85,ease:EO},S6+0.2);
+    tl.from("#s6-tag",{y:22,opacity:0,duration:0.6,ease:EE},S6+0.9);
+    tl.from("#s6-phone",{y:22,opacity:0,duration:0.55,ease:EB},S6+1.4);
+    window.__timelines["compliance"]=tl;
   </script>
 </body>
 </html>

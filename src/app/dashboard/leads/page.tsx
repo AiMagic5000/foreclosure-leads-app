@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo, useCallback, Suspense } from "react"
 import { AdminGate } from "@/components/admin-gate"
-import { SectionVideo } from "@/components/section-video"
 import Link from "next/link"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
@@ -1990,13 +1989,6 @@ function LeadsPageContent() {
 
   return (
     <div className="space-y-6">
-      <SectionVideo
-        src="/videos/foreclosure-leads-16x9.mp4"
-        poster="/videos/foreclosure-leads-poster.jpg"
-        title="How to work the leads board"
-        subtitle="Open a lead, read the surplus, skip-trace, and reach out — all in one place."
-        storageKey="video-dismissed-leads"
-      />
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
