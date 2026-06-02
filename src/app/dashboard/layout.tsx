@@ -98,6 +98,8 @@ const navSections: NavSection[] = [
       { name: "Export", href: "/dashboard/export", icon: Download },
       { name: "Admin", href: "/dashboard/admin", icon: Shield, badge: { text: "Staff", color: "red" } },
       { name: "Pipeline Monitor", href: "/dashboard/admin/pipeline", icon: Activity, badge: { text: "Live", color: "emerald" } },
+      { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Legal", color: "orange" } },
+      { name: "Compliance", href: "/dashboard/admin/compliance", icon: Shield, badge: { text: "Gate", color: "red" } },
       { name: "User Data", href: "/dashboard/user-data", icon: UserCircle, badge: { text: "CRM", color: "teal" } },
       { name: "Pre-Foreclosure", href: "/dashboard/pre-foreclosure", icon: Gavel, badge: { text: "New", color: "orange" } },
     ],
