@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
+import { resolveImpersonationTarget } from "@/lib/admin-guard"
 
 // Browser UA required — api.textbee.dev is behind Cloudflare (default UA => 1010/403).
 const BROWSER_UA =
@@ -19,13 +20,25 @@ async function pinForUser(email: string) {
   return data
 }
 
-// GET — current agent's TextBee connection status + recent inbound messages
-export async function GET() {
+async function pinById(id: string) {
+  const { data } = await supabaseAdmin
+    .from("user_pins")
+    .select("id, email, textbee_api_key, textbee_device_id")
+    .eq("id", id)
+    .single()
+  return data
+}
+
+// GET — current agent's (or, for an admin, the impersonated user's) TextBee status + inbound
+export async function GET(req: NextRequest) {
   const user = await currentUser()
   const email = user?.emailAddresses?.[0]?.emailAddress
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
-  const pin = await pinForUser(email)
+  const asPinId = req.nextUrl.searchParams.get("asPinId")
+  const target = asPinId ? await resolveImpersonationTarget(asPinId) : null
+  if (asPinId && !target) return NextResponse.json({ error: "Not authorized" }, { status: 403 })
+  const pin = target ? await pinById(target.pinId) : await pinForUser(email)
   const apiKey = pin?.textbee_api_key || ""
   const deviceId = pin?.textbee_device_id || ""
   const connected = !!(apiKey && deviceId)
@@ -73,7 +86,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Both API key and Device ID are required" }, { status: 400 })
   }
 
-  const pin = await pinForUser(email)
+  const asPinId = String(body?.asPinId || "")
+  const target = asPinId ? await resolveImpersonationTarget(asPinId) : null
+  if (asPinId && !target) return NextResponse.json({ error: "Not authorized" }, { status: 403 })
+  const pin = target ? await pinById(target.pinId) : await pinForUser(email)
   if (!pin) {
     return NextResponse.json({ error: "No active operator profile found for your account. Contact support." }, { status: 404 })
   }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { sendEmail, sendAdminNotification } from "@/lib/email"
+import { resolveImpersonationTarget } from "@/lib/admin-guard"
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "coreypearsonemail@gmail.com"
 
@@ -66,7 +67,14 @@ export async function GET(request: NextRequest) {
 
   const emailFilter = request.nextUrl.searchParams.get("email")
 
-  const selectFields = isAdmin
+  // Admin impersonation: scope to the impersonated user's submissions only.
+  const asPinId = request.nextUrl.searchParams.get("asPinId")
+  const target = asPinId ? await resolveImpersonationTarget(asPinId) : null
+  if (asPinId && !target) {
+    return NextResponse.json({ error: "Not authorized" }, { status: 403 })
+  }
+
+  const selectFields = (isAdmin || target)
     ? "*"
     : "id, business_name, owner_first_name, owner_last_name, current_email, status, created_at"
 
@@ -75,7 +83,9 @@ export async function GET(request: NextRequest) {
     .select(selectFields)
     .order("created_at", { ascending: false })
 
-  if (!isAdmin && emailFilter) {
+  if (target) {
+    query = query.eq("email", target.email)
+  } else if (!isAdmin && emailFilter) {
     query = query.eq("email", emailFilter)
   }
 

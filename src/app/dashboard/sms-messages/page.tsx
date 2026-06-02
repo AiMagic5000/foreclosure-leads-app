@@ -40,7 +40,7 @@ function formatDateTime(iso: string): string {
 
 export default function SmsMessagesPage() {
   const { user, isLoaded } = useUser()
-  const { accountType } = usePin()
+  const { accountType, impersonating } = usePin()
   const hasAccess = accountType === "partnership" || accountType === "junior_owner_operator" || accountType === "owner_operator" || accountType === "admin"
 
   interface TbState { connected: boolean; deviceId: string; apiKeyMasked: string; messages: { id: string; sender: string; message: string; receivedAt: string }[] }
@@ -57,11 +57,11 @@ export default function SmsMessagesPage() {
       const res = await fetch("/api/user/textbee", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ apiKey: apiKeyInput.trim(), deviceId: deviceIdInput.trim() }),
+        body: JSON.stringify({ apiKey: apiKeyInput.trim(), deviceId: deviceIdInput.trim(), asPinId: impersonating?.pinId }),
       })
       const d = await res.json()
       if (!res.ok) throw new Error(d.error || "Save failed")
-      const st = await (await fetch("/api/user/textbee")).json()
+      const st = await (await fetch("/api/user/textbee" + (impersonating ? `?asPinId=${impersonating.pinId}` : ""))).json()
       setTb(st); setApiKeyInput(""); setDeviceIdInput("")
     } catch (e) {
       setSaveErr(e instanceof Error ? e.message : "Save failed")
@@ -75,7 +75,7 @@ export default function SmsMessagesPage() {
       setLoading(false)
       return
     }
-    fetch("/api/user/textbee")
+    fetch("/api/user/textbee" + (impersonating ? `?asPinId=${impersonating.pinId}` : ""))
       .then((r) => r.json())
       .then((d) => { if (d && !d.error) setTb(d) })
       .catch(() => {})

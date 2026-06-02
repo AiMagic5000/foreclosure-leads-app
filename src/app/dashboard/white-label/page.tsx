@@ -45,7 +45,7 @@ interface OnboardingSubmission {
 }
 
 export default function WhiteLabelPage() {
-  const { isAdmin, isOwnerOperator, pinEmail, pinId } = usePin()
+  const { isAdmin, isOwnerOperator, pinEmail, pinId, impersonating } = usePin()
   const hasAccess = isAdmin || isOwnerOperator
 
   const [submitting, setSubmitting] = useState(false)
@@ -86,7 +86,9 @@ export default function WhiteLabelPage() {
 
     const fetchSubmissions = async () => {
       try {
-        const url = isAdmin
+        const url = impersonating
+          ? `/api/onboarding?asPinId=${impersonating.pinId}`
+          : isAdmin
           ? "/api/onboarding"
           : `/api/onboarding?email=${encodeURIComponent(pinEmail || "")}`
         const res = await fetch(url)
