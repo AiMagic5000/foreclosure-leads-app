@@ -99,7 +99,7 @@ export default function ClosingTrainingPage() {
   const { user } = useUser()
   const userEmail = user?.emailAddresses?.[0]?.emailAddress?.toLowerCase() || ""
   const isAdmin = userEmail === ADMIN_EMAIL.toLowerCase()
-  const { accountType } = usePin()
+  const { accountType, trainingUnlocked } = usePin()
   const [modules, setModules] = useState<TrainingModule[]>([])
   const [selectedModule, setSelectedModule] = useState<TrainingModule | null>(null)
   const [resources, setResources] = useState<TrainingResource[]>([])
@@ -259,7 +259,7 @@ export default function ClosingTrainingPage() {
 
   // Check if user's tier has access to a module's content (video + resources)
   function hasContentAccess(mod: TrainingModule): boolean {
-    if (isAdmin) return true
+    if (isAdmin || trainingUnlocked) return true
     const tier = (accountType || "basic") as AccountTier
     const levels = mod.access_level || ["basic", "partnership", "owner_operator", "admin"]
     return levels.includes(tier)

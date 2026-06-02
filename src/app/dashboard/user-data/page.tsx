@@ -37,6 +37,7 @@ interface UserRecord {
   account_type: string | null
   selected_states: string[] | null
   automation_enabled: boolean | null
+  training_unlocked?: boolean | null
   created_at: string
   updated_at: string | null
   last_sign_in: string | null
@@ -163,6 +164,23 @@ export default function UserDataPage() {
     }
     setImpersonation(pinId as string)
     router.push("/dashboard")
+  }
+
+  const updateTrainingUnlocked = async (userId: string, value: boolean) => {
+    setSavingId(userId)
+    try {
+      const res = await fetch("/api/admin/users", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, trainingUnlocked: value }),
+      })
+      if (res.ok) {
+        setUsers((prev) => prev.map((u) => (u.id === userId ? { ...u, training_unlocked: value } : u)))
+      }
+    } catch {
+      // silently fail
+    }
+    setSavingId(null)
   }
 
   const updateSubscriptionTier = async (userId: string, tier: string) => {
@@ -410,6 +428,7 @@ export default function UserDataPage() {
                       </button>
                     </th>
                     <th className="text-left py-3 px-2 font-medium">Status</th>
+                    <th className="text-left py-3 px-2 font-medium">Training</th>
                     <th className="text-left py-3 px-2 font-medium">
                       <span className="flex items-center gap-1">
                         <Phone className="h-3.5 w-3.5" /> Phone
@@ -494,6 +513,21 @@ export default function UserDataPage() {
                           <Badge className={`text-xs ${statusColors[status] || statusColors.active}`}>
                             {status}
                           </Badge>
+                        </td>
+                        <td className="py-3 px-2">
+                          <button
+                            onClick={() => updateTrainingUnlocked(u.id, !u.training_unlocked)}
+                            disabled={isSaving}
+                            title="Grant access to ALL training videos + resources"
+                            className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition ${
+                              u.training_unlocked
+                                ? "border-emerald-400 bg-emerald-50 text-emerald-700"
+                                : "border-slate-300 bg-transparent text-slate-500 hover:border-emerald-400"
+                            }`}
+                          >
+                            <span className={`h-2 w-2 rounded-full ${u.training_unlocked ? "bg-emerald-500" : "bg-slate-300"}`} />
+                            {u.training_unlocked ? "All access" : "Tier only"}
+                          </button>
                         </td>
                         <td className="py-3 px-2 text-xs text-muted-foreground">
                           {u.phone || "--"}
