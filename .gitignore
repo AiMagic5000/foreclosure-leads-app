@@ -57,3 +57,10 @@ PRODUCTION-IMPROVEMENTS.md
 10-leads/
 automations/
 enrichment/
+
+# video production binaries (kept on disk, not in git)
+video-assets/_posters/
+video-assets/_fonts/
+video-assets/**/*.mp4
+video-assets/**/*.mp3
+video-assets/**/*.png
