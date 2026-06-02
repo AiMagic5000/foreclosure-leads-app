@@ -1,0 +1,232 @@
+<!--
+=====================================================================
+FORECLOSURE RECOVERY INC. — SURPLUS FUNDS OUTREACH EMAIL (TEMPLATE)
+=====================================================================
+This is a MERGE TEMPLATE. Every variable is a [[FIELD]] token.
+
+MERGE FIELDS:
+  [[CLAIMANT_NAME]]        Full name of the former owner of record
+  [[PROPERTY_ADDRESS]]     Full property address (street, city, ST, ZIP)
+  [[PROPERTY_STATE]]       2-letter state — MUST match the state inside PROPERTY_ADDRESS
+  [[PROPERTY_TYPE]]        e.g., Residential / Condominium / Land
+  [[SALE_DATE]]            Date of the foreclosure / tax sale
+  [[ESTIMATED_SURPLUS]]    Preliminary estimate — MUST be identical to the figure in the Contingency Agreement
+  [[STATE_DEADLINE_CLAUSE]] Jurisdiction-specific claim-deadline sentence for PROPERTY_STATE (NOT a generic/other state)
+  [[FEE_PCT]]              Contingency rate, capped to PROPERTY_STATE max (default "up to 30%")
+  [[REP_NAME]]             Sending rep / agent name (e.g., Corey Pearson)
+  [[REP_TITLE]]            e.g., Director / Recovery Agent
+  [[REP_EMAIL]]            On-brand address (claim@usforeclosurerecovery.com or rep@usforeclosurerecovery.com)
+  [[REP_PHONE]]            (888) 545-8007 or rep extension
+  [[ONLINE_CLAIM_URL]]     https://usforeclosurerecovery.com/claim-foreclosure-surplus-funds
+  [[UNSUBSCRIBE_URL]]      LIVE, working one-click opt-out URL (NOT "#")
+  [[SEND_DATE]]            Date the email is sent
+
+PRE-SEND VALIDATION (block render if any fail):
+  1. PROPERTY_STATE == state parsed from PROPERTY_ADDRESS
+  2. STATE_DEADLINE_CLAUSE is the statute/timeframe for PROPERTY_STATE
+  3. ESTIMATED_SURPLUS matches the Contingency Agreement figure exactly
+  4. UNSUBSCRIBE_URL resolves to a working opt-out
+  5. Subject line contains NO "Re:" / "Fwd:" unless a genuine prior thread exists
+  6. No claim of prior contact (voicemail/call) unless it actually occurred
+
+SUBJECT LINE (honest — no fake "Re:"):
+  Surplus funds may be owed to you from the sale of [[PROPERTY_ADDRESS]]
+=====================================================================
+-->
+<style type="text/css">
+  body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+  img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+  body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; }
+  a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+  @media only screen and (max-width: 620px) {
+    .v1email-container { width: 100% !important; max-width: 100% !important; }
+    .v1padding-mobile { padding-left: 20px !important; padding-right: 20px !important; }
+    .v1property-box { padding: 18px 16px !important; }
+  }
+</style>
+<center style="width: 100%; background-color: #f4f5f7;">
+<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">Public records indicate surplus proceeds may be available to you from the foreclosure sale of [[PROPERTY_ADDRESS]]. You may claim these funds yourself, or hire us on a no-upfront-cost basis.</div>
+<div class="v1email-container" style="max-width: 600px; margin: 0 auto;">
+
+  <!-- top rule -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td style="background-color: #09274c; height: 4px; font-size: 0; line-height: 0;">&nbsp;</td></tr>
+  </tbody></table>
+
+  <!-- header -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 28px 40px 20px;">
+      <table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
+        <td align="left" valign="middle" width="55%">
+          <a style="text-decoration: none;" href="https://usforeclosurerecovery.com" target="_blank" rel="noopener noreferrer">
+            <img style="display: block; max-width: 185px; height: auto;" src="https://cdn.prod.website-files.com/67ec4cfbdf0509c176a8cdfe/69897785586ae271c69d085e_image%20(1).png" alt="Foreclosure Recovery Inc." width="185" />
+          </a>
+        </td>
+        <td align="right" valign="middle" width="45%">
+          <p style="margin: 0; font-size: 12px; color: #7a8a9e; font-family: 'Inter Tight','Segoe UI',Tahoma,Geneva,Verdana,sans-serif; line-height: 18px;">[[SEND_DATE]]</p>
+        </td>
+      </tr></tbody></table>
+    </td></tr>
+  </tbody></table>
+
+  <!-- divider -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 0 40px;"><div style="border-top: 1px solid #e2e6eb;">&nbsp;</div></td></tr>
+  </tbody></table>
+
+  <!-- intro -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 10px 40px 0;">
+      <p style="margin: 0 0 6px; font-size: 11px; color: #7a8a9e; text-transform: uppercase; letter-spacing: 1.2px; font-family: 'Inter Tight','Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-weight: 600;">Foreclosure Surplus Proceeds</p>
+      <h1 style="margin: 0 0 24px; font-size: 21px; color: #09274c; font-weight: bold; font-family: 'Inter Tight','Segoe UI',Tahoma,Geneva,Verdana,sans-serif; line-height: 28px;">You May Be Owed Surplus Funds<br />From a Past Property Sale</h1>
+      <p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">Dear [[CLAIMANT_NAME]],</p>
+      <p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">My name is <strong style="color: #09274c;">[[REP_NAME]]</strong>, [[REP_TITLE]] at <strong style="color: #09274c;">Foreclosure Recovery Inc.</strong> We help former property owners recover <strong style="color: #09274c;">surplus funds</strong> &mdash; the money left over when a property sells at a foreclosure or tax sale for more than the total amount owed.</p>
+      <p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">When that happens, the extra money does <strong style="color: #09274c;">not</strong> belong to the lender or the government &mdash; it belongs to the former owner of record. A preliminary review of public records for the property below indicates a surplus <strong style="color: #09274c;">may be available to you</strong>.</p>
+    </td></tr>
+  </tbody></table>
+
+  <!-- property box -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 0 40px;">
+      <table style="border: 1px solid #dce1e8; border-radius: 6px; border-left: 4px solid #09274C;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody>
+        <tr><td class="v1property-box" style="padding: 22px 24px;">
+          <p style="margin: 0 0 12px; font-size: 11px; color: #09274c; text-transform: uppercase; letter-spacing: 1.5px; font-weight: bold; font-family: 'Inter Tight','Segoe UI',sans-serif;">Property on Record</p>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody>
+            <tr>
+              <td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight',sans-serif; vertical-align: top;" width="120">Address:</td>
+              <td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight',sans-serif;">[[PROPERTY_ADDRESS]]</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight',sans-serif; vertical-align: top;" width="120">State:</td>
+              <td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight',sans-serif;">[[PROPERTY_STATE]]</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight',sans-serif; vertical-align: top;" width="120">Property Type:</td>
+              <td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight',sans-serif;">[[PROPERTY_TYPE]]</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight',sans-serif; vertical-align: top;" width="120">Sale Date:</td>
+              <td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight',sans-serif;">[[SALE_DATE]]</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0 5px; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight',sans-serif; vertical-align: top; border-top: 1px solid #e2e6eb;" width="120">Est. Surplus:</td>
+              <td style="padding: 8px 0 5px; font-size: 16px; color: #1a7a3a; font-weight: bold; font-family: 'Inter Tight',sans-serif; border-top: 1px solid #e2e6eb;">[[ESTIMATED_SURPLUS]]</td>
+            </tr>
+          </tbody></table>
+          <p style="margin: 12px 0 0; font-size: 11px; color: #8a96a5; line-height: 16px; font-family: 'Inter Tight',sans-serif; font-style: italic;">Preliminary estimate based on public records and subject to verification. The actual recoverable amount may be higher or lower.</p>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+  </tbody></table>
+
+  <!-- deadline notice (accurate, jurisdiction-specific) -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 24px 40px 0;">
+      <table style="background-color: #fff5f5; border-radius: 6px; border-left: 4px solid #D82221;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody>
+        <tr><td style="padding: 16px 20px;">
+          <p style="margin: 0 0 4px; font-size: 11px; color: #d82221; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight',sans-serif;">Time-Sensitive &mdash; [[PROPERTY_STATE]] Claim Deadline</p>
+          <p style="margin: 0; font-size: 15px; color: #2c3e50; line-height: 24px; font-family: 'Inter Tight',sans-serif;">[[STATE_DEADLINE_CLAUSE]] Because these deadlines are set by state law and run from the date of sale, we encourage you to look into this promptly so your right to claim is preserved.</p>
+        </td></tr>
+      </tbody></table>
+      <div style="height: 6px;">&nbsp;</div>
+    </td></tr>
+  </tbody></table>
+
+  <!-- KEY CONSUMER DISCLOSURE -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 16px 40px 0;">
+      <table style="background-color: #f7f9fb; border: 1px solid #dce1e8; border-radius: 6px;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody>
+        <tr><td style="padding: 18px 22px;">
+          <p style="margin: 0 0 8px; font-size: 12px; color: #09274c; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; font-family: 'Inter Tight',sans-serif;">Your Options &mdash; In Plain Terms</p>
+          <p style="margin: 0 0 10px; font-size: 14px; color: #2c3e50; line-height: 22px; font-family: 'Inter Tight',sans-serif;">You have the right to pursue this claim <strong style="color:#09274c;">on your own</strong> &mdash; including by contacting the court or government office holding the funds directly &mdash; and you may be able to do so at little or no cost. You are never required to use us.</p>
+          <p style="margin: 0; font-size: 14px; color: #2c3e50; line-height: 22px; font-family: 'Inter Tight',sans-serif;">If you&rsquo;d rather we handle everything, we work on a <strong style="color:#09274c;">contingency basis</strong>: no upfront cost, and our fee ([[FEE_PCT]], never more than your state&rsquo;s legal limit) comes only out of funds we actually recover. <strong style="color:#09274c;">If we recover nothing, you owe us nothing.</strong></p>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+  </tbody></table>
+
+  <!-- how to respond -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 20px 40px 0;">
+      <table style="background-color: #ffffff; border: 1px solid #e2e6eb; border-radius: 6px;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody>
+        <tr><td style="padding: 22px 24px;">
+          <p style="margin: 0 0 14px; font-size: 13px; color: #09274c; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight',sans-serif;">How to Reach Us</p>
+          <table style="margin-bottom: 12px;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
+            <td style="padding-top: 2px;" valign="top" width="32"><div style="width: 26px; height: 26px; border-radius: 50%; background-color: #09274c; color: #ffffff; text-align: center; line-height: 26px; font-size: 13px;">&#9742;</div></td>
+            <td style="padding-left: 10px;"><p style="margin: 0; font-size: 14px; line-height: 22px; font-family: 'Inter Tight',sans-serif;"><strong style="color: #09274c;">By Phone</strong><br /><span style="color: #2c3e50;">Call [[REP_NAME]] at <a style="color: #09274c; font-weight: 600; text-decoration: none;" href="tel:[[REP_PHONE]]">[[REP_PHONE]]</a></span></p></td>
+          </tr></tbody></table>
+          <table style="margin-bottom: 12px;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
+            <td style="padding-top: 2px;" valign="top" width="32"><div style="width: 26px; height: 26px; border-radius: 50%; background-color: #09274c; color: #ffffff; text-align: center; line-height: 26px; font-size: 13px;">&#9993;</div></td>
+            <td style="padding-left: 10px;"><p style="margin: 0; font-size: 14px; line-height: 22px; font-family: 'Inter Tight',sans-serif;"><strong style="color: #09274c;">By Email</strong><br /><span style="color: #2c3e50;">Reply to this email or write to </span><a style="color: #09274c; font-weight: 600; text-decoration: none;" href="mailto:[[REP_EMAIL]]">[[REP_EMAIL]]</a></p></td>
+          </tr></tbody></table>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
+            <td style="padding-top: 2px;" valign="top" width="32"><div style="width: 26px; height: 26px; border-radius: 50%; background-color: #09274c; color: #ffffff; text-align: center; line-height: 26px; font-size: 13px;">&#9635;</div></td>
+            <td style="padding-left: 10px;"><p style="margin: 0; font-size: 14px; line-height: 22px; font-family: 'Inter Tight',sans-serif;"><strong style="color: #09274c;">Online</strong><br /><a style="color: #09274c; font-weight: 600; text-decoration: none;" href="[[ONLINE_CLAIM_URL]]" target="_blank" rel="noopener noreferrer">usforeclosurerecovery.com</a></p></td>
+          </tr></tbody></table>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+  </tbody></table>
+
+  <!-- get started -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 22px 40px 0;">
+      <table style="background-color: #fef9f0; border: 1px solid #C8A84B; border-radius: 6px;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody>
+        <tr><td style="padding: 22px 24px;">
+          <p style="margin: 0 0 10px; font-size: 13px; color: #09274c; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight',sans-serif;">If You&rsquo;d Like Us to Begin</p>
+          <p style="margin: 0 0 12px; font-size: 14px; color: #2c3e50; line-height: 22px; font-family: 'Inter Tight',sans-serif;">We&rsquo;ve attached our <strong style="color: #09274c;">Contingency Fee Agreement</strong> for your review. There is no obligation, and you have a <strong style="color: #09274c;">5-business-day right to cancel</strong> after signing.</p>
+          <p style="margin: 0 0 12px; font-size: 14px; color: #2c3e50; line-height: 22px; font-family: 'Inter Tight',sans-serif;">To get started, review the agreement, sign the <strong style="color: #09274c;">signature page</strong>, take a photo, and return it by replying to this email or texting it to <strong style="color: #09274c;">[[REP_PHONE]]</strong>. We&rsquo;ll confirm receipt and begin verifying your claim.</p>
+          <p style="margin: 0; font-size: 13px; color: #5a6d82; line-height: 20px; font-family: 'Inter Tight',sans-serif;">No upfront costs. No risk to you. We are paid only if you are.</p>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+  </tbody></table>
+
+  <!-- standardized CTA block -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 24px 40px 0;">
+      <table style="background-color: #111111; border-radius: 6px; border-left: 4px solid #C8A84B;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody>
+        <tr><td style="padding: 18px 24px; text-align: center;">
+          <p style="margin: 0; font-size: 15px; color: #C8A84B; font-weight: bold; letter-spacing: 2px; font-family: 'Inter Tight',sans-serif;">ANY QUESTIONS ALWAYS ASK</p>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+  </tbody></table>
+
+  <!-- sign-off -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 26px 40px 12px;">
+      <p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">If you are not [[CLAIMANT_NAME]] or received this in error, please disregard this message or let us know so we can correct our records.</p>
+      <p style="margin: 0 0 24px; font-size: 15px; color: #2c3e50; line-height: 26px;">Regards,</p>
+      <table style="border-top: 1px solid #e2e6eb;" border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
+        <td style="padding-top: 20px;">
+          <p style="margin: 0 0 2px; font-size: 15px; color: #09274c; font-weight: bold; font-family: 'Inter Tight',sans-serif;">[[REP_NAME]]</p>
+          <p style="margin: 0 0 2px; font-size: 13px; color: #5a6d82; font-family: 'Inter Tight',sans-serif;">[[REP_TITLE]], Foreclosure Recovery Inc.</p>
+          <p style="margin: 8px 0 0; font-size: 13px; font-family: 'Inter Tight',sans-serif;"><a style="color: #09274c; text-decoration: none;" href="tel:[[REP_PHONE]]">[[REP_PHONE]]</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a style="color: #09274c; text-decoration: none;" href="mailto:[[REP_EMAIL]]">[[REP_EMAIL]]</a></p>
+        </td>
+      </tr></tbody></table>
+    </td></tr>
+  </tbody></table>
+
+  <!-- accent rule -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 0 40px;"><div style="border-top: 2px solid #D82221; width: 60px;">&nbsp;</div></td></tr>
+  </tbody></table>
+
+  <!-- footer / disclosures -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 20px 40px 30px;">
+      <p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight',sans-serif;">Foreclosure Recovery Inc. &middot; 30 N Gould St, Ste R &middot; Sheridan, WY 82801 &middot; [[REP_PHONE]]</p>
+      <p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight',sans-serif;">This message concerns the property and individual named above. Recovery of foreclosure surplus proceeds is subject to individual case evaluation and applicable state law; deadlines, fee limits, and procedures vary by state. Estimated amounts are preliminary and based on public records. Foreclosure Recovery Inc. is not a law firm and does not provide legal advice; where required, we engage licensed professionals at our own expense. We do not guarantee recovery, and results vary. You may pursue this claim yourself, potentially at no cost.</p>
+      <p style="margin: 0; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight',sans-serif;">&copy; 2026 Foreclosure Recovery Inc. All rights reserved.&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="https://usforeclosurerecovery.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="[[UNSUBSCRIBE_URL]]">Unsubscribe</a></p>
+    </td></tr>
+  </tbody></table>
+
+  <!-- bottom rule -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
+    <tr><td style="background-color: #09274c; height: 4px; font-size: 0; line-height: 0;">&nbsp;</td></tr>
+  </tbody></table>
+
+</div>
+</center>

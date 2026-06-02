@@ -3,6 +3,11 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveOperatorConfig, isCommsAuthorized, configToAgentProfile } from "@/lib/operator-config"
 import type { AgentProfile } from "@/lib/operator-config"
+import { getStateRule } from "@/lib/surplus/state-rules"
+import { buildMergeContext } from "@/lib/surplus/merge-context"
+import { runGate } from "@/lib/surplus/validation-gate"
+import { logGateResult } from "@/lib/surplus/gate-logger"
+import type { MergeContext } from "@/lib/surplus/types"
 import * as tls from "tls"
 import * as fs from "fs"
 import * as path from "path"
@@ -13,9 +18,14 @@ const IMAP_HOST = "imap.hostinger.com"
 const IMAP_PORT = 993
 const DEFAULT_IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword#1234"
 
-// Template paths
-const AGREEMENT_EN_PATH = path.join(process.cwd(), "documents", "Contingency-Fee-Agreement-V1.docx")
+// Compliance gate posture: shadow (log, never block) until counsel verifies states. See migration 005.
+const GATE_MODE = (process.env.SURPLUS_GATE_MODE as "shadow" | "soft" | "enforce") || "shadow"
+const UNSUBSCRIBE_URL = process.env.FRI_UNSUBSCRIBE_URL || "mailto:claim@usforeclosurerecovery.com?subject=Unsubscribe"
+
+// Template paths -- NEW merge-safe templates (FRI handoff 2026-06-01).
+const AGREEMENT_EN_PATH = path.join(process.cwd(), "templates", "FRI-Contingency-Fee-Agreement-TEMPLATE.docx")
 const AGREEMENT_ES_PATH = path.join(process.cwd(), "documents", "Acuerdo-de-Honorarios-Contingentes-ES.docx")
+const OUTREACH_EMAIL_EN_PATH = path.join(process.cwd(), "templates", "FRI-Surplus-Outreach-Email-Template.html")
 
 // Hispanic/Latino surname detection
 const HISPANIC_SURNAMES = new Set([
@@ -65,34 +75,74 @@ function isHispanicName(ownerName: string): boolean {
   return false
 }
 
-function generateFilledAgreementEN(leadData: Record<string, string>): Buffer {
-  const fullName = [leadData.first_name, leadData.last_name].filter(Boolean).join(" ") || leadData.owner_name || ""
-  const address = leadData.property_address || leadData.mailing_address || ""
-  const city = leadData.city || ""
-  const state = leadData.state || ""
-  const zip = leadData.zip_code || ""
-  const cityStateZip = [city, state].filter(Boolean).join(", ") + (zip ? `  ${zip}` : "")
-  const phone = leadData.primary_phone || ""
-  const overage = parseFloat(leadData.overage_amount) || parseFloat(leadData.estimated_surplus) || 0
-  const formattedOverage = "$" + new Intl.NumberFormat("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(overage)
+// Fills the NEW merge-safe contingency agreement (templates/FRI-Contingency-Fee-Agreement-TEMPLATE.docx).
+// Every claimant-facing value comes from the single-source MergeContext so the agreement can never
+// disagree with the outreach email (same surplus, same state, venue = property state).
+function generateFilledAgreementEN(ctx: MergeContext): Buffer {
+  const venue = ctx.rule?.venue_text || (ctx.propertyState ? `the courts of ${ctx.rule?.state_name || ctx.propertyState}` : "the courts of the property's state")
 
   const content = fs.readFileSync(AGREEMENT_EN_PATH)
   const zip_ = new PizZip(content)
   const doc = new Docxtemplater(zip_, {
-    delimiters: { start: "[", end: "]" },
+    delimiters: { start: "[[", end: "]]" },
     paragraphLoop: true,
     linebreaks: true,
   })
 
   doc.render({
-    "Claimant Full Name": fullName,
-    "Street Address": address,
-    "City, State  ZIP": cityStateZip,
-    "Phone Number": phone,
-    "$XX,XXX": formattedOverage,
+    CLAIMANT_NAME: ctx.claimantName,
+    CLAIMANT_ADDRESS: ctx.claimantAddress,
+    CLAIMANT_PHONE: ctx.claimantPhone || "(on file)",
+    PROPERTY_ADDRESS: ctx.propertyAddress,
+    PROPERTY_STATE: ctx.propertyState,
+    SALE_DATE: ctx.saleDate ? formatDateValue(ctx.saleDate) : "Not specified",
+    ESTIMATED_SURPLUS: ctx.estimatedSurplusFormatted,
+    FEE_PCT: `up to ${ctx.feePct}%`,
+    VENUE_COUNTY: venue,
   })
 
   return doc.getZip().generate({ type: "nodebuffer" }) as Buffer
+}
+
+// Renders the NEW merge-safe outreach email (templates/FRI-Surplus-Outreach-Email-Template.html).
+// Strips the leading documentation comment, then merges every [[TOKEN]] from the shared context.
+function renderOutreachEmailEN(ctx: MergeContext, agent: AgentProfile, senderEmail: string): { subject: string; html: string } {
+  let tpl = fs.readFileSync(OUTREACH_EMAIL_EN_PATH, "utf8")
+  // Drop the leading <!-- ... --> documentation block (contains [[FIELD]] sample + validation notes).
+  tpl = tpl.replace(/^\s*<!--[\s\S]*?-->\s*/, "")
+
+  const stateName = ctx.rule?.state_name || ctx.propertyState
+  const deadlineClause = ctx.claimDeadlineText ||
+    `Surplus-fund claims in ${stateName} are subject to a statutory deadline that runs from the date of the sale.`
+
+  const tokens: Record<string, string> = {
+    CLAIMANT_NAME: ctx.claimantName || "Property Owner",
+    PROPERTY_ADDRESS: ctx.propertyAddress || "your property",
+    PROPERTY_STATE: ctx.propertyState,
+    PROPERTY_TYPE: ctx.propertyType || "Residential",
+    SALE_DATE: ctx.saleDate ? formatDateValue(ctx.saleDate) : "Not specified",
+    ESTIMATED_SURPLUS: ctx.estimatedSurplusFormatted,
+    STATE_DEADLINE_CLAUSE: deadlineClause,
+    FEE_PCT: `up to ${ctx.feePct}%`,
+    REP_NAME: agent.name,
+    REP_TITLE: agent.title,
+    REP_EMAIL: senderEmail,
+    REP_PHONE: agent.phoneDisplay,
+    ONLINE_CLAIM_URL: agent.claimPageUrl,
+    UNSUBSCRIBE_URL: UNSUBSCRIBE_URL,
+    SEND_DATE: formatDate(),
+  }
+
+  const html = tpl.replace(/\[\[([A-Z0-9_]+)\]\]/g, (m, key) => (key in tokens ? tokens[key] : m))
+  const subject = `Surplus funds may be owed to you from the sale of ${ctx.propertyAddress || "your former property"}`
+  return { subject, html }
+}
+
+// Format a date string for claimant-facing documents.
+function formatDateValue(raw: string): string {
+  const d = new Date(raw)
+  if (isNaN(d.getTime())) return raw
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
 }
 
 function generateFilledAgreementES(leadData: Record<string, string>): Buffer {
@@ -313,125 +363,6 @@ function buildFooter(senderEmail: string, a: AgentProfile): string {
 </center>
 </body>
 </html>`
-}
-
-function populateTemplate(lead: Record<string, string>, senderEmail: string, agent: AgentProfile): { subject: string; html: string } {
-  const v = buildLeadVars(lead)
-  const a = agent
-  const subject = `Re: Property Equity Distribution -- ${v.fullAddress}`
-  const html = `${buildEmailHead()}
-<body>
-<center style="width: 100%; background-color: #f4f5f7;">
-<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">Re: Forwarding address needed -- Property at ${v.fullAddress} -- Please respond at your earliest convenience.</div>
-<div class="email-container" style="max-width: 600px; margin: 0 auto;">
-<!--[if mso]><table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"><tr><td><![endif]-->
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr><td style="background-color: #09274c; height: 4px; font-size: 0; line-height: 0;">&nbsp;</td></tr></tbody>
-</table>
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr>
-<td class="padding-mobile" style="background-color: #ffffff; padding: 28px 40px 20px;">
-<table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
-<tbody><tr>
-<td align="left" valign="middle" width="55%"><a style="text-decoration: none;" href="${a.websiteUrl}" target="_blank" rel="noopener"><img style="display: block; max-width: 185px; height: auto;" src="${a.logoUrl}" alt="${a.logoAlt}" width="185" /></a></td>
-<td align="right" valign="middle" width="45%">
-<p style="margin: 0; font-size: 12px; color: #7a8a9e; font-family: 'Inter Tight', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 18px;">${formatDate()}${v.caseNumber ? `<br /><span style="color: #09274c; font-weight: 600;">Ref: <span style="color: #0a0a0a; font-size: 14px; font-weight: 500;">${v.caseNumber}</span></span>` : ""}</p>
-</td>
-</tr></tbody>
-</table>
-</td>
-</tr></tbody>
-</table>
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr><td class="padding-mobile" style="background-color: #ffffff; padding: 0 40px;"><div style="border-top: 1px solid #e2e6eb;">&nbsp;</div></td></tr></tbody>
-</table>
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr>
-<td class="padding-mobile" style="background-color: #ffffff; padding: 10px 40px 0;">
-<p style="margin: 0 0 6px; font-size: 11px; color: #7a8a9e; text-transform: uppercase; letter-spacing: 1.2px; font-family: 'Inter Tight', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 600;">Re: Property Equity Distribution</p>
-<h1 style="margin: 0 0 24px; font-size: 21px; color: #09274c; font-weight: bold; font-family: 'Inter Tight', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 28px;">Forwarding Address Required for<br />Fund Distribution</h1>
-<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">Dear ${v.firstName} ${v.lastName},</p>
-<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">I recently left a voicemail regarding this matter and wanted to follow up in writing. ${a.introEN}</p>
-<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">We are writing to inform you that the property referenced below has been identified as having <strong style="color: #09274c;">excess equity proceeds</strong> associated with the <strong style="color: #09274c;">foreclosure sale</strong>. After the lending institution has been satisfied from the auction, the remaining balance is to be distributed to the former owner of record.</p>
-</td>
-</tr></tbody>
-</table>
-${buildPropertyBox(v)}
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr>
-<td class="padding-mobile" style="background-color: #ffffff; padding: 24px 40px 0;">
-<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">To ensure the proceeds are directed to the correct recipient, we need to confirm your <strong style="color: #09274c;">current forwarding address</strong>. This allows us to coordinate distribution once the lending institution has been made whole and the remaining balance is ready for release.</p>
-${buildDeadlineBox(v, "en")}
-</td>
-</tr></tbody>
-</table>
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr>
-<td class="padding-mobile" style="background-color: #ffffff; padding: 0 40px;">
-<table style="background-color: #f7f9fb; border-radius: 6px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
-<tbody><tr>
-<td style="padding: 22px 24px;">
-<p style="margin: 0 0 14px; font-size: 13px; color: #09274c; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight', sans-serif;">How to Respond</p>
-<table style="margin-bottom: 12px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
-<tbody><tr>
-<td style="padding-top: 2px;" valign="top" width="32"><div style="width: 26px; height: 26px; border-radius: 50%; background-color: #09274c; color: #ffffff; text-align: center; line-height: 26px; font-size: 13px;">&#9742;</div></td>
-<td style="padding-left: 10px;"><p style="margin: 0; font-size: 14px; line-height: 22px; font-family: 'Inter Tight', sans-serif;"><strong style="color: #09274c;">By Phone</strong><br /><span style="color: #2c3e50;">${a.byPhoneEN}</span></p></td>
-</tr></tbody>
-</table>
-<table style="margin-bottom: 12px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
-<tbody><tr>
-<td style="padding-top: 2px;" valign="top" width="32"><div style="width: 26px; height: 26px; border-radius: 50%; background-color: #09274c; color: #ffffff; text-align: center; line-height: 26px; font-size: 13px;">&#9993;</div></td>
-<td style="padding-left: 10px;"><p style="margin: 0; font-size: 14px; line-height: 22px; font-family: 'Inter Tight', sans-serif;"><strong style="color: #09274c;">By Email</strong><br /><span style="color: #2c3e50;">Reply to this email or write to </span><a style="color: #09274c; font-weight: 600; text-decoration: none;" href="mailto:${senderEmail}">${senderEmail}</a></p></td>
-</tr></tbody>
-</table>
-<table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
-<tbody><tr>
-<td style="padding-top: 2px;" valign="top" width="32"><div style="width: 26px; height: 26px; border-radius: 50%; background-color: #09274c; color: #ffffff; text-align: center; line-height: 26px; font-size: 13px;">&#9635;</div></td>
-<td style="padding-left: 10px;"><p style="margin: 0; font-size: 14px; line-height: 22px; font-family: 'Inter Tight', sans-serif;"><strong style="color: #09274c;">Online</strong><br /><a style="color: #09274c; font-weight: 600; text-decoration: none;" href="${a.claimPageUrl}">${a.websiteDisplay}</a></p></td>
-</tr></tbody>
-</table>
-</td>
-</tr></tbody>
-</table>
-</td>
-</tr></tbody>
-</table>
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr>
-<td class="padding-mobile" style="background-color: #ffffff; padding: 22px 40px 0;">
-<table style="background-color: #fef9f0; border: 1px solid #f0e0c0; border-radius: 6px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
-<tbody><tr>
-<td style="padding: 22px 24px;">
-<p style="margin: 0 0 10px; font-size: 13px; color: #09274c; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; font-family: 'Inter Tight', sans-serif;">Ready to Get Started?</p>
-<p style="margin: 0 0 12px; font-size: 14px; color: #2c3e50; line-height: 22px; font-family: 'Inter Tight', sans-serif;">We have attached our <strong style="color: #09274c;">Contingency Fee Agreement</strong> for your review. This is a no-risk, no-upfront-cost arrangement -- you only pay if we successfully recover your funds.</p>
-<p style="margin: 0 0 12px; font-size: 14px; color: #2c3e50; line-height: 22px; font-family: 'Inter Tight', sans-serif;">If you would like to get started right away, simply <strong style="color: #09274c;">print page 5</strong> of the attached agreement, sign it, take a photo, and send it back to us by replying to this email or texting it to <strong style="color: #09274c;">${a.phoneDisplay}</strong>. We will begin working on your claim immediately.</p>
-<p style="margin: 0; font-size: 13px; color: #5a6d82; line-height: 20px; font-family: 'Inter Tight', sans-serif;">No upfront costs. No risk to you. We only get paid when you do.</p>
-</td>
-</tr></tbody>
-</table>
-</td>
-</tr></tbody>
-</table>
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr>
-<td class="padding-mobile" style="background-color: #ffffff; padding: 28px 40px 12px;">
-<p style="margin: 0 0 18px; font-size: 15px; color: #2c3e50; line-height: 26px;">If this message has reached a family member or someone at this address, we kindly ask that you pass this information along to ${v.firstName} ${v.lastName} as soon as possible.</p>
-<p style="margin: 0 0 24px; font-size: 15px; color: #2c3e50; line-height: 26px;">We appreciate your prompt attention to this matter.</p>
-<table style="border-top: 1px solid #e2e6eb; padding-top: 20px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
-<tbody><tr>
-<td style="padding-top: 20px;">
-<p style="margin: 0 0 2px; font-size: 15px; color: #09274c; font-weight: bold; font-family: 'Inter Tight', sans-serif;">${a.name}</p>
-<p style="margin: 0 0 2px; font-size: 13px; color: #5a6d82; font-family: 'Inter Tight', sans-serif;">${a.signatureTitleEN}</p>
-${a.onBehalfEN ? `<p style="margin: 0 0 2px; font-size: 13px; color: #5a6d82; font-family: 'Inter Tight', sans-serif;">${a.onBehalfEN}</p>` : ""}
-<p style="margin: 8px 0 0; font-size: 13px; font-family: 'Inter Tight', sans-serif;"><a style="color: #09274c; text-decoration: none;" href="${a.phoneHref}">${a.phoneDisplay}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a style="color: #09274c; text-decoration: none;" href="mailto:${senderEmail}">${senderEmail}</a></p>
-</td>
-</tr></tbody>
-</table>
-</td>
-</tr></tbody>
-</table>
-${buildFooter(senderEmail, a)}`
-  return { subject, html }
 }
 
 function populateTemplateES(lead: Record<string, string>, senderEmail: string, agent: AgentProfile): { subject: string; html: string } {
@@ -795,10 +726,39 @@ export async function POST(request: NextRequest) {
     const firstName = leadData.first_name || "Claimant"
     const lastName = leadData.last_name || ""
 
-    // Preview English
+    // Single-source merge context: one surplus figure, venue = property state, state-derived
+    // deadline/fee pulled from surplus_state_rules. Feeds BOTH the email and the agreement.
+    const stateRule = await getStateRule(String(lead.state || lead.state_abbr || ""))
+    const mergeCtx = buildMergeContext(lead, stateRule)
+    const actor = config.pinId ? `agent:${config.pinId}` : (userEmail || "house")
+
+    // Run the compliance gate on a rendered EN pair and log the result (shadow: never blocks).
+    async function runShadowGate(doc: { subject: string; html: string }, agreementText: string) {
+      try {
+        const result = runGate({
+          ctx: mergeCtx,
+          mode: GATE_MODE,
+          channel: "email",
+          emailHtml: doc.html,
+          subject: doc.subject,
+          agreementText,
+        })
+        await logGateResult({ ctx: mergeCtx, result, docType: "email", actor })
+        return result
+      } catch (e) {
+        console.error("[email-draft] gate error", e instanceof Error ? e.message : e)
+        return null
+      }
+    }
+
+    // Preview English (NEW merge-safe outreach template)
     if (action === "preview") {
-      const { subject, html } = populateTemplate(leadData, senderEmail, agentProfile)
-      return NextResponse.json({ success: true, subject, html, to: recipientEmail, from: senderEmail, hispanicDetected })
+      const { subject, html } = renderOutreachEmailEN(mergeCtx, agentProfile, senderEmail)
+      const gate = await runShadowGate({ subject, html }, "")
+      return NextResponse.json({
+        success: true, subject, html, to: recipientEmail, from: senderEmail, hispanicDetected,
+        gate: gate ? { passed: gate.passed, mode: gate.mode, fails: gate.fails, warnings: gate.warnings } : null,
+      })
     }
 
     // Preview Spanish
@@ -807,14 +767,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, subject, html, to: recipientEmail, from: senderEmail, hispanicDetected })
     }
 
-    // Create English draft
+    // Create English draft (NEW merge-safe templates + shadow compliance gate)
     if (action === "create_draft" || action === "create_draft_en") {
-      const { subject, html } = populateTemplate(leadData, senderEmail, agentProfile)
+      const { subject, html } = renderOutreachEmailEN(mergeCtx, agentProfile, senderEmail)
       let agreementBuf: Buffer
       try {
-        agreementBuf = generateFilledAgreementEN(leadData)
+        agreementBuf = generateFilledAgreementEN(mergeCtx)
       } catch (e) {
         return NextResponse.json({ error: `Agreement generation failed: ${e instanceof Error ? e.message : "Unknown"}` }, { status: 500 })
+      }
+      const gate = await runShadowGate({ subject, html }, "")
+      if (gate?.blocked) {
+        return NextResponse.json({ error: "Blocked by compliance gate", gate: { fails: gate.fails } }, { status: 422 })
       }
 
       const attachmentFilename = `Contingency-Fee-Agreement-${firstName}-${lastName}.docx`.replace(/\s+/g, "-")
@@ -869,11 +833,12 @@ export async function POST(request: NextRequest) {
 
     // Create both English + Spanish drafts (two separate emails in Drafts)
     if (action === "create_draft_both") {
-      const enResult = populateTemplate(leadData, senderEmail, agentProfile)
+      const enResult = renderOutreachEmailEN(mergeCtx, agentProfile, senderEmail)
       const esResult = populateTemplateES(leadData, senderEmail, agentProfile)
+      await runShadowGate({ subject: enResult.subject, html: enResult.html }, "")
       let enAgreement: Buffer, esAgreement: Buffer
       try {
-        enAgreement = generateFilledAgreementEN(leadData)
+        enAgreement = generateFilledAgreementEN(mergeCtx)
         esAgreement = generateFilledAgreementES(leadData)
       } catch (e) {
         return NextResponse.json({ error: `Agreement generation failed: ${e instanceof Error ? e.message : "Unknown"}` }, { status: 500 })
