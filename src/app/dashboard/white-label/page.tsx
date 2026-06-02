@@ -385,7 +385,7 @@ export default function WhiteLabelPage() {
                   onChange={(e) => setSsnLast4(e.target.value.replace(/[^\d-]/g, "").slice(0, 11))}
                 />
                 <p className="text-[11px] text-muted-foreground">
-                  Not required to submit &mdash; you may enter placeholder/dummy numbers here. When we establish the business EIN later, we&apos;ll collect the real SSN (or use a Credit Privacy File) at that step.
+                  Not required to submit &mdash; you may enter placeholder/dummy numbers here. We&apos;ll collect the real SSN when we establish the business EIN later.
                 </p>
               </div>
 
@@ -413,8 +413,8 @@ export default function WhiteLabelPage() {
                   className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
                 >
                   <option value="not_sure">Please choose one</option>
-                  <option value="ssn">SSN (Social Security Number)</option>
-                  <option value="cpf">Credit Privacy File</option>
+                  <option value="myself">Myself</option>
+                  <option value="business_partner">Business Partner</option>
                 </select>
                 <p className="text-[11px] text-muted-foreground">
                   Even though there will be multiple options to be able to get access to business credit & accounts without a personal guarantor we still need to understand which credit profile you will use for managing the company in the future
