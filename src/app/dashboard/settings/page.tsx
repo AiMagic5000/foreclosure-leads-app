@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { UpgradeButton } from "@/components/upgrade-button"
+import { IntegrationsSettings } from "@/components/integrations-settings"
 import {
   User,
   CreditCard,
@@ -67,6 +68,15 @@ export default function SettingsPage() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">My Account</h1>
         <p className="text-muted-foreground">Manage your account and subscription</p>
+      </div>
+
+      {/* Outreach integrations — agents add their own SlyBroadcast + TextBee credentials */}
+      <div className="space-y-3">
+        <div>
+          <h2 className="text-lg font-bold tracking-tight">Outreach Integrations</h2>
+          <p className="text-sm text-muted-foreground">Connect your ringless voicemail and SMS accounts so your drips and texts send under your own name.</p>
+        </div>
+        <IntegrationsSettings />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">

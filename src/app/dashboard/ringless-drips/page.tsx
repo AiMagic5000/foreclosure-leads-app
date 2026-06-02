@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { usePin } from "@/lib/pin-context"
-import { Mic, Square, Upload, Trash2, Phone, Loader2, Voicemail, CheckCircle2 } from "lucide-react"
+import { Mic, Square, Upload, Trash2, Phone, Loader2, Voicemail, CheckCircle2, ArrowRight } from "lucide-react"
 
 interface Recording { name: string; label: string; url: string; created: string | null; size: number }
 
@@ -156,8 +156,11 @@ export default function RinglessDripsPage() {
         <ol className="mt-3 space-y-2 text-sm text-slate-700">
           <li><strong className="text-[#0f172a]">1.</strong> Create an account at <a href="https://www.slybroadcast.com/signup.php" target="_blank" rel="noopener noreferrer" className="font-medium text-[#1a7a3a] underline">slybroadcast.com/signup.php</a>.</li>
           <li><strong className="text-[#0f172a]">2.</strong> Add a payment method and deposit $10 to activate the service.</li>
-          <li><strong className="text-[#0f172a]">3.</strong> Send us the login so we can wire your recordings into your drip campaigns &mdash; reply to your onboarding email or call us.</li>
+          <li><strong className="text-[#0f172a]">3.</strong> Add your SlyBroadcast login on your <strong className="text-[#0f172a]">My Account</strong> page so we can wire your recordings into your drip campaigns.</li>
         </ol>
+        <a href="/dashboard/settings#slybroadcast" className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#1a7a3a] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90">
+          Add my SlyBroadcast login <ArrowRight className="h-4 w-4" />
+        </a>
       </div>
 
       {/* How drips work */}

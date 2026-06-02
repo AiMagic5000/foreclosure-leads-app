@@ -183,6 +183,9 @@ export default function SmsMessagesPage() {
               <a href="https://app.textbee.dev/dashboard" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-[#2563eb] hover:underline">
                 Open TextBee dashboard <ExternalLink className="inline h-3.5 w-3.5" />
               </a>
+              <a href="/dashboard/settings#textbee" className="text-sm font-medium text-slate-500 hover:underline">
+                Manage in My Account
+              </a>
             </div>
           </CardContent>
         </Card>

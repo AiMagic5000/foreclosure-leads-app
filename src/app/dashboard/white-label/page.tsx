@@ -300,10 +300,10 @@ export default function WhiteLabelPage() {
       {/* Onboarding Form */}
       <form onSubmit={handleSubmit}>
         <div className="space-y-6">
-          <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm dark:border-blue-900 dark:bg-blue-950/30">
-            <p className="font-semibold text-blue-900 dark:text-blue-200">You have White Label access (manual upgrade)</p>
-            <p className="mt-1 text-blue-800/80 dark:text-blue-300/80">
-              Completing this form sets up your White Label brand. Note: this manual upgrade does <strong>not</strong> include
+          <div className="rounded-xl border-l-4 border-blue-600 bg-white p-4 text-sm shadow-sm">
+            <p className="font-bold text-[#0f172a]">You have White Label access (manual upgrade)</p>
+            <p className="mt-1 text-slate-700">
+              Completing this form sets up your White Label brand. Note: this manual upgrade does <strong className="text-[#0f172a]">not</strong> include
               the full business build-out components &mdash; to add the complete build-out, upgrade to Owner Operator.
               The SSN and date of birth below are optional; placeholder numbers are fine.
             </p>
