@@ -30,6 +30,7 @@ import {
   FolderKanban,
   FileStack,
   Phone,
+  Voicemail,
   Mail,
   Lock,
   Gavel,
@@ -64,7 +65,7 @@ const navSections: NavSection[] = [
       { name: "My Leads", href: "/dashboard/my-leads", icon: FileStack, badge: { text: "New", color: "emerald" } },
       { name: "State Laws", href: "/dashboard/states", icon: Map },
       { name: "Closing Training", href: "/dashboard/closing-training", icon: GraduationCap, badge: { text: "New", color: "indigo" } },
-      { name: "Settings", href: "/dashboard/settings", icon: Settings },
+      { name: "My Account", href: "/dashboard/settings", icon: Settings },
     ],
   },
   {
@@ -80,6 +81,7 @@ const navSections: NavSection[] = [
     label: "Communications",
     tier: "partnership",
     items: [
+      { name: "Ringless Drips", href: "/dashboard/ringless-drips", icon: Voicemail, badge: { text: "New", color: "red" } },
       { name: "SMS Messages", href: "/dashboard/sms-messages", icon: MessageSquare },
     ],
   },

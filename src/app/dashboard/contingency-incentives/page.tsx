@@ -17,7 +17,7 @@ const WHY = [
 
 export default function ContingencyIncentivesPage() {
   return (
-    <div className="mx-auto max-w-5xl space-y-8 pb-12">
+    <div className="max-w-5xl space-y-8 pb-12">
       {/* Hero */}
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="h-1.5 w-full" style={{ background: "linear-gradient(90deg,#2563eb 0%,#2563eb 50%,#D82221 50%,#D82221 100%)" }} />
