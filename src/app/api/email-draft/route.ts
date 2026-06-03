@@ -15,9 +15,21 @@ import * as path from "path"
 import PizZip from "pizzip"
 import Docxtemplater from "docxtemplater"
 
-const IMAP_HOST = "imap.hostinger.com"
+const DEFAULT_IMAP_HOST = "imap.hostinger.com"
 const IMAP_PORT = 993
 const DEFAULT_IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword#1234"
+
+// Per-mailbox IMAP host. Mailboxes already migrated to MXRoute resolve to redbull;
+// everyone else falls back to Hostinger. During the full usforeclosurerecovery.com
+// MX cutover, move rebecca/joshua/claim entries here (or flip DEFAULT_IMAP_HOST).
+const IMAP_HOST_MAP: Record<string, string> = {
+  "ira@usforeclosurerecovery.com": "redbull.mxrouting.net",
+  "marie@usforeclosurerecovery.com": "redbull.mxrouting.net",
+}
+
+function resolveImapHost(senderEmail: string): string {
+  return IMAP_HOST_MAP[senderEmail.toLowerCase()] || DEFAULT_IMAP_HOST
+}
 
 // Compliance gate posture: shadow (log, never block) until counsel verifies states. See migration 005.
 const GATE_MODE = (process.env.SURPLUS_GATE_MODE as "shadow" | "soft" | "enforce") || "shadow"
@@ -485,7 +497,7 @@ ${buildFooter(senderEmail, a)}`
   return { subject, html }
 }
 
-function imapAppendDraft(emailContent: string, imapUser: string, imapPass: string): Promise<{ success: boolean; error?: string }> {
+function imapAppendDraft(emailContent: string, imapUser: string, imapPass: string, imapHost: string = DEFAULT_IMAP_HOST): Promise<{ success: boolean; error?: string }> {
   return new Promise((resolve) => {
     const timeout = setTimeout(() => {
       resolve({ success: false, error: "IMAP connection timed out" })
@@ -505,7 +517,7 @@ function imapAppendDraft(emailContent: string, imapUser: string, imapPass: strin
     }
 
     const socket = tls.connect(
-      { host: IMAP_HOST, port: IMAP_PORT, rejectUnauthorized: false },
+      { host: imapHost, port: IMAP_PORT, rejectUnauthorized: false },
       () => { /* connected */ }
     )
 
@@ -702,6 +714,7 @@ export async function POST(request: NextRequest) {
     }
     const IMAP_USER = senderEmail
     const IMAP_PASS = IMAP_PASSWORD_MAP[senderEmail] || config.imapPassword || DEFAULT_IMAP_PASS
+    const IMAP_HOST_RESOLVED = resolveImapHost(senderEmail)
     const agentProfile = configToAgentProfile(config)
 
     const leadData: Record<string, string> = {
@@ -795,7 +808,7 @@ export async function POST(request: NextRequest) {
         attachments: [{ filename: attachmentFilename, base64Lines: toBase64Lines(agreementBuf) }],
       })
 
-      const imapResult = await imapAppendDraft(emailRaw, IMAP_USER, IMAP_PASS)
+      const imapResult = await imapAppendDraft(emailRaw, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
       if (!imapResult.success) {
         return NextResponse.json({ error: `Draft creation failed: ${imapResult.error}` }, { status: 500 })
       }
@@ -825,7 +838,7 @@ export async function POST(request: NextRequest) {
         attachments: [{ filename: attachmentFilename, base64Lines: toBase64Lines(agreementBuf) }],
       })
 
-      const imapResult = await imapAppendDraft(emailRaw, IMAP_USER, IMAP_PASS)
+      const imapResult = await imapAppendDraft(emailRaw, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
       if (!imapResult.success) {
         return NextResponse.json({ error: `Spanish draft creation failed: ${imapResult.error}` }, { status: 500 })
       }
@@ -856,7 +869,7 @@ export async function POST(request: NextRequest) {
         senderName: config.companyName,
         attachments: [{ filename: enFilename, base64Lines: toBase64Lines(enAgreement) }],
       })
-      const enImap = await imapAppendDraft(enEmail, IMAP_USER, IMAP_PASS)
+      const enImap = await imapAppendDraft(enEmail, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
       if (!enImap.success) {
         return NextResponse.json({ error: `English draft failed: ${enImap.error}` }, { status: 500 })
       }
@@ -867,7 +880,7 @@ export async function POST(request: NextRequest) {
         senderName: config.companyName,
         attachments: [{ filename: esFilename, base64Lines: toBase64Lines(esAgreement) }],
       })
-      const esImap = await imapAppendDraft(esEmail, IMAP_USER, IMAP_PASS)
+      const esImap = await imapAppendDraft(esEmail, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
       if (!esImap.success) {
         return NextResponse.json({ error: `Spanish draft failed: ${esImap.error}` }, { status: 500 })
       }
