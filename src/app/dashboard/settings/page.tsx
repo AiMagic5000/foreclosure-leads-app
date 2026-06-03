@@ -174,6 +174,19 @@ export default function SettingsPage() {
                 )}
               </div>
             </div>
+
+            {/* Team brand image — under the upgrade tiers */}
+            <div className="overflow-hidden rounded-lg border border-white/10">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/foreclosure-recovery-team-the-work-you-do-matters.webp"
+                alt="Foreclosure Recovery Inc team — the work you do matters"
+                width={1320}
+                height={566}
+                loading="lazy"
+                className="w-full"
+              />
+            </div>
           </CardContent>
         </Card>
 
