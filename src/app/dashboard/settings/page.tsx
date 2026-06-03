@@ -117,6 +117,24 @@ export default function SettingsPage() {
               </p>
             </div>
 
+            {/* Free tier — partial training access: start the closer training now */}
+            {isFreeTier && (
+              <div className="p-3 rounded-lg border border-white/20 bg-white/10">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="font-medium text-white">Free access: Closing Training</p>
+                    <p className="text-sm text-white/70">You have partial access to the closer training videos and resource docs. Start learning now.</p>
+                  </div>
+                  <Link
+                    href="/dashboard/closing-training"
+                    className="inline-flex flex-none items-center justify-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#0f172a] transition hover:bg-white/90"
+                  >
+                    Start your training
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {/* Free tier — upgrade to the $995 Asset Recovery Agent program */}
             {isFreeTier && (
               <div className="p-3 rounded-lg border border-emerald-400/40 bg-emerald-500/10">
@@ -133,24 +151,6 @@ export default function SettingsPage() {
                   >
                     Upgrade
                   </a>
-                </div>
-              </div>
-            )}
-
-            {/* Free tier — partial training access: start the closer training now */}
-            {isFreeTier && (
-              <div className="p-3 rounded-lg border border-white/20 bg-white/10">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="font-medium text-white">Free access: Closing Training</p>
-                    <p className="text-sm text-white/70">You have partial access to the closer training videos and resource docs. Start learning now.</p>
-                  </div>
-                  <Link
-                    href="/dashboard/closing-training"
-                    className="inline-flex flex-none items-center justify-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#0f172a] transition hover:bg-white/90"
-                  >
-                    Start your training
-                  </Link>
                 </div>
               </div>
             )}

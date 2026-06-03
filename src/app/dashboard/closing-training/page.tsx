@@ -289,15 +289,27 @@ export default function ClosingTrainingPage() {
     fetchModules()
   }
 
-  // Full access to play a video / download resources: the tier must allow it AND a phone
-  // number must be on file. Admins / manually-unlocked accounts bypass both.
-  function hasContentAccess(mod: TrainingModule | null): boolean {
+  // WATCHING a video is gated by TIER only. Free users can play every video that is NOT
+  // "OO+A"-tagged (i.e. whose access level includes basic). No phone required to watch.
+  function hasVideoAccess(mod: TrainingModule | null): boolean {
+    if (!mod) return false
+    return isFreePreview(mod) || effectiveIsAdmin || trainingUnlocked || tierAllowed(mod)
+  }
+
+  // DOWNLOADING resources additionally requires a phone number on file (for the tiers that
+  // are allowed). The free preview's resources are free.
+  function hasResourceAccess(mod: TrainingModule | null): boolean {
     if (!mod) return false
     if (isFreePreview(mod) || effectiveIsAdmin || trainingUnlocked) return true
     return tierAllowed(mod) && hasPhone
   }
 
-  // Decide which popup to show when a blocked module is clicked.
+  // Popup when a blocked VIDEO is clicked — only reason a video is blocked is tier.
+  function videoBlockedPopup() {
+    setShowAccessPopup("TIER")
+  }
+
+  // Popup when a blocked RESOURCE is clicked — tier first, then phone.
   function showBlockedPopup(mod: TrainingModule | null) {
     if (!mod) return
     if (!tierAllowed(mod)) setShowAccessPopup("TIER")
@@ -528,7 +540,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handleDownload(resource: TrainingResource) {
-    if (!hasContentAccess(selectedModule)) { showBlockedPopup(selectedModule); return }
+    if (!hasResourceAccess(selectedModule)) { showBlockedPopup(selectedModule); return }
     const a = document.createElement("a")
     a.href = resource.file_url
     a.download = resource.file_name
@@ -539,7 +551,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handlePrint(resource: TrainingResource) {
-    if (!hasContentAccess(selectedModule)) { showBlockedPopup(selectedModule); return }
+    if (!hasResourceAccess(selectedModule)) { showBlockedPopup(selectedModule); return }
     window.open(resource.file_url, "_blank")
   }
 
@@ -730,8 +742,8 @@ export default function ClosingTrainingPage() {
                                 className="absolute inset-0 rounded-xl overflow-hidden cursor-pointer"
                                 onClick={() => {
                                   if (!selectedModule.video_url) return
-                                  if (!hasContentAccess(selectedModule)) {
-                                    showBlockedPopup(selectedModule)
+                                  if (!hasVideoAccess(selectedModule)) {
+                                    videoBlockedPopup()
                                     return
                                   }
                                   setPlayingVideoId(selectedModule.id)
@@ -749,16 +761,16 @@ export default function ClosingTrainingPage() {
                                   <div className="flex flex-col items-center gap-2 text-white/90">
                                     <div className={cn(
                                       "flex items-center justify-center h-14 w-14 rounded-full text-white shadow-xl",
-                                      hasContentAccess(selectedModule) ? "bg-indigo-600/90 shadow-indigo-600/30" : "bg-slate-600/90 shadow-slate-600/30"
+                                      hasVideoAccess(selectedModule) ? "bg-indigo-600/90 shadow-indigo-600/30" : "bg-slate-600/90 shadow-slate-600/30"
                                     )}>
-                                      {hasContentAccess(selectedModule) ? (
+                                      {hasVideoAccess(selectedModule) ? (
                                         <Play className="h-6 w-6 ml-0.5" />
                                       ) : (
                                         <Lock className="h-5 w-5" />
                                       )}
                                     </div>
                                     <span className="text-xs font-medium">
-                                      {!selectedModule.video_url ? "No video yet" : hasContentAccess(selectedModule) ? "Play" : "Restricted"}
+                                      {!selectedModule.video_url ? "No video yet" : hasVideoAccess(selectedModule) ? "Play" : "Restricted"}
                                     </span>
                                   </div>
                                 </div>
@@ -774,7 +786,7 @@ export default function ClosingTrainingPage() {
                         </div>
 
                         {/* Mark Complete / Completed */}
-                        {hasContentAccess(selectedModule) && !userCompletedModules.has(selectedModule.id) && isModuleAccessible() && (
+                        {hasVideoAccess(selectedModule) && !userCompletedModules.has(selectedModule.id) && isModuleAccessible() && (
                           <Button
                             onClick={() => markModuleComplete(selectedModule.id)}
                             disabled={markingComplete}
@@ -804,7 +816,7 @@ export default function ClosingTrainingPage() {
                         {/* Resources */}
                         {(resources.length > 0 || isAdmin) && (
                           <div className="relative">
-                            <div className={cn(!hasContentAccess(selectedModule) && "blur-sm pointer-events-none select-none")}>
+                            <div className={cn(!hasResourceAccess(selectedModule) && "blur-sm pointer-events-none select-none")}>
                               <div className="flex items-center gap-2 mb-3">
                                 <FolderOpen className="h-4 w-4 text-indigo-500" />
                                 <span className="text-sm font-semibold">Resources</span>
@@ -837,7 +849,7 @@ export default function ClosingTrainingPage() {
                                 </p>
                               )}
                             </div>
-                            {!hasContentAccess(selectedModule) && resources.length > 0 && (
+                            {!hasResourceAccess(selectedModule) && resources.length > 0 && (
                               <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="bg-background/80 backdrop-blur-sm rounded-lg px-4 py-2 border shadow-sm">
                                   <p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
@@ -1082,8 +1094,8 @@ export default function ClosingTrainingPage() {
                       className={cn("absolute inset-0 overflow-hidden", selectedModule.video_url && "cursor-pointer")}
                       onClick={() => {
                         if (!selectedModule.video_url) return
-                        if (!hasContentAccess(selectedModule)) {
-                          showBlockedPopup(selectedModule)
+                        if (!hasVideoAccess(selectedModule)) {
+                          videoBlockedPopup()
                           return
                         }
                         setPlayingVideoId(selectedModule.id)
@@ -1101,7 +1113,7 @@ export default function ClosingTrainingPage() {
 
                       {/* Play Button or Lock */}
                       <div className="absolute inset-0 flex items-center justify-center">
-                        {!hasContentAccess(selectedModule) ? (
+                        {!hasVideoAccess(selectedModule) ? (
                           <div className="flex flex-col items-center gap-2 text-white/80">
                             <div className="flex items-center justify-center h-20 w-20 rounded-full bg-slate-600/90 text-white shadow-xl shadow-slate-600/30">
                               <Lock className="h-8 w-8" />
@@ -1318,7 +1330,7 @@ export default function ClosingTrainingPage() {
                           </Button>
                         </>
                       )}
-                      {!editing && selectedModule.video_url && hasContentAccess(selectedModule) && (
+                      {!editing && selectedModule.video_url && hasVideoAccess(selectedModule) && (
                         <Button
                           className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/25"
                           onClick={() => {
@@ -1338,7 +1350,7 @@ export default function ClosingTrainingPage() {
               </Card>
 
               {/* Mark as Complete / Completed Badge */}
-              {selectedModule && hasContentAccess(selectedModule) && !userCompletedModules.has(selectedModule.id) && (
+              {selectedModule && hasVideoAccess(selectedModule) && !userCompletedModules.has(selectedModule.id) && (
                 <Button
                   onClick={() => markModuleComplete(selectedModule.id)}
                   disabled={markingComplete}
@@ -1368,7 +1380,7 @@ export default function ClosingTrainingPage() {
               {/* Resources Section */}
               {(resources.length > 0 || isAdmin) && (
                 <Card className="relative">
-                  <div className={cn(!hasContentAccess(selectedModule) && "blur-sm pointer-events-none select-none")}>
+                  <div className={cn(!hasResourceAccess(selectedModule) && "blur-sm pointer-events-none select-none")}>
                     <CardHeader>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -1438,7 +1450,7 @@ export default function ClosingTrainingPage() {
                       )}
                     </CardContent>
                   </div>
-                  {!hasContentAccess(selectedModule) && resources.length > 0 && (
+                  {!hasResourceAccess(selectedModule) && resources.length > 0 && (
                     <div className="absolute inset-0 flex items-center justify-center rounded-xl">
                       <div className="bg-background/90 backdrop-blur-sm rounded-lg px-6 py-3 border shadow-lg">
                         <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
