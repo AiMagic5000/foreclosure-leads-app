@@ -152,7 +152,9 @@ function renderOutreachEmailEN(ctx: MergeContext, agent: AgentProfile, senderEma
     REP_NAME: agent.name,
     REP_TITLE: agent.title,
     REP_EMAIL: senderEmail,
-    REP_PHONE: agent.phoneDisplay,
+    // Display phone includes the agent's extension; the tel: links use the clean number.
+    REP_PHONE: agent.phoneDisplay + (agent.extension ? ` ext. ${agent.extension}` : ""),
+    REP_PHONE_HREF: agent.phoneHref.replace(/^tel:/, ""),
     ONLINE_CLAIM_URL: agent.claimPageUrl,
     UNSUBSCRIBE_URL: UNSUBSCRIBE_URL,
     SEND_DATE: formatDate(),
@@ -821,7 +823,7 @@ export async function POST(request: NextRequest) {
         subject,
         html,
         leadId,
-        senderName: config.companyName,
+        senderName: config.displayName,
         attachments: [{ filename: attachmentFilename, base64Lines: toBase64Lines(agreementBuf) }],
       })
 
@@ -851,7 +853,7 @@ export async function POST(request: NextRequest) {
         subject,
         html,
         leadId,
-        senderName: config.companyName,
+        senderName: config.displayName,
         attachments: [{ filename: attachmentFilename, base64Lines: toBase64Lines(agreementBuf) }],
       })
 
@@ -883,7 +885,7 @@ export async function POST(request: NextRequest) {
       // English draft
       const enEmail = buildMimeEmail({
         from: senderEmail, to: recipientEmail, subject: enResult.subject, html: enResult.html, leadId,
-        senderName: config.companyName,
+        senderName: config.displayName,
         attachments: [{ filename: enFilename, base64Lines: toBase64Lines(enAgreement) }],
       })
       const enImap = await imapAppendDraft(enEmail, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
@@ -894,7 +896,7 @@ export async function POST(request: NextRequest) {
       // Spanish draft
       const esEmail = buildMimeEmail({
         from: senderEmail, to: recipientEmail, subject: esResult.subject, html: esResult.html, leadId,
-        senderName: config.companyName,
+        senderName: config.displayName,
         attachments: [{ filename: esFilename, base64Lines: toBase64Lines(esAgreement) }],
       })
       const esImap = await imapAppendDraft(esEmail, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
