@@ -18,6 +18,7 @@ const MAP: Record<string, { id: string; title: string; subtitle: string }> = {
   "/dashboard/automation": { id: "automation", title: "Put your follow-up on autopilot", subtitle: "Sequenced email, text, and voicemail under your name." },
   "/dashboard/sms-messages": { id: "sms-messages", title: "Every text in one inbox", subtitle: "Replies route to you, threaded by homeowner, in real time." },
   "/dashboard/white-label": { id: "white-label", title: "Run it under your own brand", subtitle: "Your name, your site — our recovery engine behind the scenes." },
+  "/dashboard/settings": { id: "my-account", title: "Your account, explained", subtitle: "Every tier, what each one unlocks, and how to set up your tools." },
   "/dashboard/owner-operator": { id: "owner-operator", title: "The Owner Operator program", subtitle: "Your brand, your LLC, the full 45-point build-out — and 100% of your fee." },
   "/dashboard/ringless-drips": { id: "ringless-drips", title: "Turn your voice into closed deals", subtitle: "Record once — we drip ringless voicemails to your claimants." },
   "/dashboard/contingency-incentives": { id: "contingency-incentives", title: "Close more deals with incentives", subtitle: "Complimentary certificate credits to hand homeowners a reason to say yes." },

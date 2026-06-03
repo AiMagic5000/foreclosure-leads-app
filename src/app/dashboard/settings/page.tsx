@@ -27,6 +27,7 @@ import {
   ArrowRight,
   TrendingUp,
   Camera,
+  Mail,
 } from "lucide-react"
 
 const DEFAULT_AVATAR = "/avatars/default-shield.jpg"
@@ -134,6 +135,24 @@ export default function SettingsPage() {
               </div>
             )}
 
+            {/* Free tier — partial training access: start the closer training now */}
+            {isFreeTier && (
+              <div className="p-3 rounded-lg border border-white/20 bg-white/10">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="font-medium text-white">Free access: Closing Training</p>
+                    <p className="text-sm text-white/70">You have partial access to the closer training videos and resource docs. Start learning now.</p>
+                  </div>
+                  <Link
+                    href="/dashboard/closing-training"
+                    className="inline-flex flex-none items-center justify-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#0f172a] transition hover:bg-white/90"
+                  >
+                    Start your training
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {/* Business Build Out — included for Owner Operators, the upgrade for everyone else */}
             <div className={`p-3 rounded-lg border ${isOwnerOperator ? "border-white/20 bg-white/10" : "border-emerald-400/40 bg-emerald-500/10"}`}>
               <div className="flex items-center justify-between gap-3">
@@ -237,6 +256,16 @@ export default function SettingsPage() {
 
         {/* Outreach integrations — full width, under the account containers */}
         <div className="lg:col-span-2 space-y-3">
+          {!isFreeTier && (
+            <div className="flex items-start gap-3 rounded-xl border-l-4 border-amber-500 bg-amber-50 p-4">
+              <Mail className="mt-0.5 h-5 w-5 flex-none text-amber-600" />
+              <p className="text-sm text-amber-900">
+                <strong>Action needed:</strong> Complete your Outreach Integrations below so we can issue your business
+                email &mdash; <strong>firstname@usforeclosurerecovery.com</strong>. Your ringless voicemail and SMS must be
+                connected before your mailbox is provisioned.
+              </p>
+            </div>
+          )}
           <div>
             <h2 className="text-lg font-bold tracking-tight">Outreach Integrations</h2>
             <p className="text-sm text-muted-foreground">Connect your ringless voicemail and SMS accounts so your drips and texts send under your own name.</p>
@@ -271,7 +300,10 @@ export default function SettingsPage() {
                     )}
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground">Automated voicemail drops, lead follow-up sequences, and smart scheduling on autopilot.</p>
+                <p className="text-xs text-muted-foreground">Don&apos;t want to do manual outreach? For <strong>$299/mo</strong> we run your voicemail drops, follow-up sequences, and scheduling on autopilot &mdash; in <strong>your own cloned voice</strong>.</p>
+                <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-2 py-1.5">
+                  Requires a voice sample: record about a minute in the <Link href="/dashboard/ringless-drips" className="font-semibold underline">Ringless Drips</Link> section so we can clone your voice.
+                </p>
                 <Link href="/dashboard/automation">
                   <Button variant="outline" size="sm" className="w-full">
                     {subscription.automationAddon ? "Manage" : "Add to Plan"}
@@ -289,13 +321,16 @@ export default function SettingsPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">Hire a Closer</h4>
-                    <Badge variant="outline" className="text-[10px]">10% of Service Fee</Badge>
+                    <div className="flex flex-wrap gap-1">
+                      <Badge variant="outline" className="text-[10px]">10% of Service Fee</Badge>
+                      <Badge variant="outline" className="text-[10px] bg-red-50 border-red-300 text-red-700">Owner Operator</Badge>
+                    </div>
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground">Vetted recovery agents who close leads on recorded lines with full transcripts and training tools.</p>
-                <Link href="/dashboard/hire-closer">
+                <p className="text-xs text-muted-foreground">Vetted recovery agents who close leads on recorded lines with full transcripts and training tools. Available to Owner Operators.</p>
+                <Link href={isOwnerOperator ? "/dashboard/hire-closer" : "/dashboard/owner-operator"}>
                   <Button variant="outline" size="sm" className="w-full">
-                    Browse 12 Agents
+                    {isOwnerOperator ? "Browse 12 Agents" : "Owner Operator feature"}
                     <ArrowRight className="ml-2 h-3.5 w-3.5" />
                   </Button>
                 </Link>
@@ -310,13 +345,16 @@ export default function SettingsPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm">Contract Admin</h4>
-                    <Badge variant="outline" className="text-[10px]">5% of Service Fee</Badge>
+                    <div className="flex flex-wrap gap-1">
+                      <Badge variant="outline" className="text-[10px]">5% of Service Fee</Badge>
+                      <Badge variant="outline" className="text-[10px] bg-red-50 border-red-300 text-red-700">Owner Operator</Badge>
+                    </div>
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground">Administrators handle attorneys, notaries, client follow-up, and document filing. Attorney fees separate.</p>
-                <Link href="/dashboard/contract-admin">
+                <p className="text-xs text-muted-foreground">Administrators handle attorneys, notaries, client follow-up, and document filing. Attorney fees separate. Available to Owner Operators.</p>
+                <Link href={isOwnerOperator ? "/dashboard/contract-admin" : "/dashboard/owner-operator"}>
                   <Button variant="outline" size="sm" className="w-full">
-                    Browse 12 Admins
+                    {isOwnerOperator ? "Browse 12 Admins" : "Owner Operator feature"}
                     <ArrowRight className="ml-2 h-3.5 w-3.5" />
                   </Button>
                 </Link>
