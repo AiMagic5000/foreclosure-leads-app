@@ -516,7 +516,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handleDownload(resource: TrainingResource) {
-    if (!isAdmin && !trainingUnlocked && !hasPhone) { showBlockedPopup(selectedModule); return }
+    if (!hasContentAccess(selectedModule)) { showBlockedPopup(selectedModule); return }
     const a = document.createElement("a")
     a.href = resource.file_url
     a.download = resource.file_name
@@ -527,7 +527,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handlePrint(resource: TrainingResource) {
-    if (!isAdmin && !trainingUnlocked && !hasPhone) { showBlockedPopup(selectedModule); return }
+    if (!hasContentAccess(selectedModule)) { showBlockedPopup(selectedModule); return }
     window.open(resource.file_url, "_blank")
   }
 
