@@ -6,6 +6,7 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { UserButton } from "@clerk/nextjs"
 import {
+  Inbox,
   LayoutDashboard,
   Users,
   Map,
@@ -107,6 +108,7 @@ const navSections: NavSection[] = [
       { name: "User Activity", href: "/dashboard/admin/user-activity", icon: Activity, badge: { text: "Live", color: "blue" } },
       { name: "Pipeline Monitor", href: "/dashboard/admin/pipeline", icon: Activity, badge: { text: "Live", color: "emerald" } },
       // Lead sources
+      { name: "Fresh Leads", href: "/dashboard/admin/fresh-leads", icon: Inbox, badge: { text: "Issue", color: "emerald" } },
       { name: "Foreclosure Leads", href: "/dashboard/leads", icon: Users },
       { name: "Pre-Foreclosure", href: "/dashboard/pre-foreclosure", icon: Gavel, badge: { text: "New", color: "orange" } },
       { name: "Title Leads", href: "/dashboard/title-leads", icon: Building2, badge: { text: "5%", color: "cyan" } },
