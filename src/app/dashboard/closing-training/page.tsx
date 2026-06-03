@@ -665,7 +665,7 @@ export default function ClosingTrainingPage() {
                         <span className="text-xs text-muted-foreground">{mod.duration}</span>
                       </div>
                       <div className="shrink-0 flex items-center gap-1.5">
-                        {isAdmin && (
+                        {effectiveIsAdmin && (
                           <span className="flex flex-col leading-none mr-0.5">
                             <span
                               role="button"
