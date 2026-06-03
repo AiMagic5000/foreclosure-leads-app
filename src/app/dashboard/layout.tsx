@@ -369,6 +369,14 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           <div className="flex-1" />
 
           <div className="flex items-center gap-2">
+            <a
+              href="tel:+18885458007"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[#1E3A5F] px-2.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-[#2d4a6f] sm:px-3 sm:text-sm"
+              title="Call us — (888) 545-8007"
+            >
+              <Phone className="h-4 w-4 flex-none" />
+              <span className="whitespace-nowrap">(888) 545-8007</span>
+            </a>
             <button
               onClick={toggleTheme}
               className={cn(
