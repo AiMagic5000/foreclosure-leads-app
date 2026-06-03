@@ -97,3 +97,35 @@ export async function sendAdminNotification(
 
   return { success: false, error: "All admin notification emails failed" }
 }
+
+// Notify admins when a user uploads a file or adds data anywhere in their account.
+// Best-effort and fire-and-forget — never block the user action on email delivery.
+export async function notifyAccountActivity(
+  email: string,
+  action: string,
+  detail?: string
+): Promise<void> {
+  try {
+    const when = new Date().toLocaleString("en-US", {
+      year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", timeZoneName: "short",
+    })
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #1E3A5F, #2563eb); padding: 18px 24px; border-radius: 10px 10px 0 0; text-align: center;">
+          <h2 style="color: #ffffff; margin: 0; font-size: 18px;">Account Activity</h2>
+          <p style="color: #bfdbfe; margin: 6px 0 0; font-size: 13px;">usforeclosureleads.com</p>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 10px 10px; padding: 20px 24px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px; width: 90px;">User</td><td style="padding: 6px 0; color: #111827; font-size: 14px; font-weight: 600;">${email}</td></tr>
+            <tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px;">Action</td><td style="padding: 6px 0; color: #111827; font-size: 14px;">${action}</td></tr>
+            ${detail ? `<tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px;">Detail</td><td style="padding: 6px 0; color: #111827; font-size: 14px;">${detail}</td></tr>` : ""}
+            <tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px;">Time</td><td style="padding: 6px 0; color: #111827; font-size: 14px;">${when}</td></tr>
+          </table>
+        </div>
+      </div>`
+    await sendAdminNotification(`Account activity: ${action} — ${email}`, html)
+  } catch {
+    // never throw from a notification
+  }
+}

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
+import { notifyAccountActivity } from "@/lib/email"
 
 export const dynamic = "force-dynamic"
 
@@ -60,6 +61,7 @@ export async function POST(req: NextRequest) {
 
   // Enroll the number in the SMS drip + fire the welcome text immediately (idempotent by phone).
   await enrollDrip(phone, email as string)
+  await notifyAccountActivity(email as string, "Added phone number", phone)
 
   return NextResponse.json({ success: true, hasPhone: true, phone })
 }

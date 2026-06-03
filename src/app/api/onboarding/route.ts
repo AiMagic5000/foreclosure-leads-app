@@ -3,6 +3,7 @@ import { auth, currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { sendEmail, sendAdminNotification } from "@/lib/email"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
+import { notifyAccountActivity } from "@/lib/email"
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "coreypearsonemail@gmail.com"
 
@@ -200,5 +201,6 @@ export async function POST(request: NextRequest) {
   )
   console.log(`[ONBOARDING] Welcome email to ${currentEmail}: ${welcomeResult.success ? "SENT" : "FAILED"} - ${welcomeResult.error || welcomeResult.messageId}`)
 
+  await notifyAccountActivity(currentEmail || "unknown", "Submitted White Label onboarding", businessName || undefined)
   return NextResponse.json({ success: true, id: data.id })
 }

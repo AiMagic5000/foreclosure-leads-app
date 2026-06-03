@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
+import { notifyAccountActivity } from "@/lib/email"
 
 export const dynamic = "force-dynamic"
 
@@ -70,5 +71,6 @@ export async function POST(req: NextRequest) {
     .eq("id", pin.id)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
+  await notifyAccountActivity(email, "Connected SlyBroadcast")
   return NextResponse.json({ success: true })
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
+import { notifyAccountActivity } from "@/lib/email"
 
 // Browser UA required — api.textbee.dev is behind Cloudflare (default UA => 1010/403).
 const BROWSER_UA =
@@ -112,5 +113,6 @@ export async function POST(req: NextRequest) {
     .eq("id", pin.id)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
+  await notifyAccountActivity(email || "unknown", "Connected TextBee")
   return NextResponse.json({ success: true })
 }

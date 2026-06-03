@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
+import { notifyAccountActivity } from "@/lib/email"
 
 export const dynamic = "force-dynamic"
 const BUCKET = "agent-voice"
@@ -81,6 +82,8 @@ export async function POST(req: NextRequest) {
     upsert: false,
   })
   if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 })
+  const actor = (await currentUser())?.emailAddresses?.[0]?.emailAddress || "unknown"
+  await notifyAccountActivity(actor, "Uploaded a voice sample", label)
   return NextResponse.json({ success: true, path })
 }
 
