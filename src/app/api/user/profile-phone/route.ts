@@ -72,10 +72,19 @@ export async function POST(req: NextRequest) {
 const WELCOME_SMS =
   "Welcome to the team! We're here for you -- any questions, always ask. Corey Pearson https://usforeclosureleads.com/ Reply STOP to opt out."
 
+// TextBee needs E.164 — bare 10-digit US numbers don't deliver.
+function toE164(p: string): string {
+  const d = (p || "").replace(/\D/g, "")
+  if (d.length === 10) return "+1" + d
+  if (d.length === 11 && d[0] === "1") return "+" + d
+  return d ? "+" + d : ""
+}
+
 async function sendTextbee(phone: string, message: string) {
   const apiKey = process.env.TEXTBEE_API_KEY
   const deviceId = process.env.TEXTBEE_DEVICE_ID
-  if (!apiKey || !deviceId) return
+  const to = toE164(phone)
+  if (!apiKey || !deviceId || !to) return
   try {
     await fetch(`https://api.textbee.dev/api/v1/gateway/devices/${deviceId}/send-sms`, {
       method: "POST",
@@ -85,7 +94,7 @@ async function sendTextbee(phone: string, message: string) {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ recipients: [phone], message }),
+      body: JSON.stringify({ recipients: [to], message }),
     })
   } catch {
     // best-effort; the R740xd drip engine retries the sequence
