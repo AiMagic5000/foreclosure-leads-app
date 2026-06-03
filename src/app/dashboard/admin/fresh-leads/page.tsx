@@ -269,10 +269,14 @@ export default function FreshLeadsPage() {
               <div className="flex items-center gap-2"><AlertTriangle className="w-5 h-5 text-amber-500" /><h2 className="font-semibold">Confirm transfer — {selected.size} lead(s) → {agent.name}</h2></div>
               <button onClick={() => setShowConfirm(false)}><X className="w-5 h-5 text-gray-400" /></button>
             </div>
-            <div className="px-5 py-3 text-sm text-gray-600 border-b">Review each lead below. Once issued, these become {agent.name}&apos;s exclusively and leave this list. Total surplus: <strong>{money(totalSurplus)}</strong>.</div>
+            <div className="px-5 py-3 text-sm text-gray-600 border-b">Review each lead below. Once issued, these become {agent.name}&apos;s exclusively and leave this list. Total surplus: <strong>{money(totalSurplus)}</strong>.
+              {selectedLeads.some((l) => !(l.dnc_checked && l.can_contact && !l.on_dnc)) && (
+                <span className="block mt-1 text-amber-700"><AlertTriangle className="w-4 h-4 inline -mt-0.5" /> Some selected leads are not DNC-cleared (see DNC column). The agent must DNC-scrub before any call/SMS/voicemail.</span>
+              )}
+            </div>
             <div className="overflow-auto px-5 py-3 flex-1">
               <table className="w-full text-xs">
-                <thead className="text-gray-500"><tr><th className="text-left p-1">Owner</th><th className="text-left p-1">Property</th><th className="text-left p-1">St</th><th className="text-left p-1">County</th><th className="text-right p-1">Surplus</th><th className="text-left p-1">Phone</th><th className="text-left p-1">Source</th><th className="text-center p-1">Deed</th></tr></thead>
+                <thead className="text-gray-500"><tr><th className="text-left p-1">Owner</th><th className="text-left p-1">Property</th><th className="text-left p-1">St</th><th className="text-left p-1">County</th><th className="text-right p-1">Surplus</th><th className="text-left p-1">Phone</th><th className="text-left p-1">Source</th><th className="text-center p-1">DNC</th><th className="text-center p-1">Deed</th></tr></thead>
                 <tbody>
                   {selectedLeads.map((l) => (
                     <tr key={l.id} className="border-t">
@@ -281,6 +285,7 @@ export default function FreshLeadsPage() {
                       <td className="p-1">{l.state_abbr || "—"}</td><td className="p-1">{l.county || "—"}</td>
                       <td className="p-1 text-right">{money(l.overage_amount)}</td><td className="p-1">{l.primary_phone || "—"}</td>
                       <td className="p-1 text-gray-500">{l.source || "—"}</td>
+                      <td className="p-1 text-center">{l.on_dnc ? <span className="text-red-600 font-semibold">DNC</span> : l.dnc_checked && l.can_contact ? <span className="text-emerald-600">clear</span> : <span className="text-amber-500">unchk</span>}</td>
                       <td className="p-1 text-center">{l.deed_verified ? "✓" : "—"}</td>
                     </tr>
                   ))}
