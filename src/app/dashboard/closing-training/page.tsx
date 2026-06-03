@@ -1340,7 +1340,7 @@ export default function ClosingTrainingPage() {
               {/* Resources Section */}
               {(resources.length > 0 || isAdmin) && (
                 <Card className="relative">
-                  <div className={cn(!hasContentAccess(selectedModule) && !isAdmin && "blur-sm pointer-events-none select-none")}>
+                  <div className={cn(!hasContentAccess(selectedModule) && "blur-sm pointer-events-none select-none")}>
                     <CardHeader>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -1410,7 +1410,7 @@ export default function ClosingTrainingPage() {
                       )}
                     </CardContent>
                   </div>
-                  {!hasContentAccess(selectedModule) && !isAdmin && resources.length > 0 && (
+                  {!hasContentAccess(selectedModule) && resources.length > 0 && (
                     <div className="absolute inset-0 flex items-center justify-center rounded-xl">
                       <div className="bg-background/90 backdrop-blur-sm rounded-lg px-6 py-3 border shadow-lg">
                         <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
