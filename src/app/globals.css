@@ -184,3 +184,18 @@
 .safe-top {
   padding-top: env(safe-area-inset-top, 0);
 }
+
+/* Brand scrollbars -- match the active menu-tab green (emerald-500) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #10b981 transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background-color: #10b981;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover { background-color: #059669; }

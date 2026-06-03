@@ -73,12 +73,11 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    label: "Business Suite",
-    tier: "basic",
+    label: "Communications",
+    tier: "partnership",
     items: [
-      { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
-      { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Comp.", color: "emerald" } },
-      { name: "White Label", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
+      { name: "Ringless Drips", href: "/dashboard/ringless-drips", icon: Voicemail, badge: { text: "New", color: "red" } },
+      { name: "SMS Messages", href: "/dashboard/sms-messages", icon: MessageSquare },
     ],
   },
   {
@@ -91,11 +90,12 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    label: "Communications",
-    tier: "partnership",
+    label: "Business Suite",
+    tier: "basic",
     items: [
-      { name: "Ringless Drips", href: "/dashboard/ringless-drips", icon: Voicemail, badge: { text: "New", color: "red" } },
-      { name: "SMS Messages", href: "/dashboard/sms-messages", icon: MessageSquare },
+      { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
+      { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Comp.", color: "emerald" } },
+      { name: "White Label", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
     ],
   },
   {
