@@ -365,7 +365,7 @@ export default function LandingPage() {
                         size="lg"
                         className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full shadow-lg shadow-[#1e3a5f]/20"
                       >
-                        Get Instant Dashboard Access
+                        Sign Up Free Now
                         <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                       </Button>
                     </Link>
@@ -665,7 +665,7 @@ export default function LandingPage() {
                     size="lg"
                     className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white"
                   >
-                    Start Recovering Funds
+                    Sign Up Free Now
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>

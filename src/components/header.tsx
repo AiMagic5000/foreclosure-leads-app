@@ -142,7 +142,7 @@ export function Header() {
             <Link href="/sign-up">
               <button className="group relative inline-flex h-10 items-center gap-2 overflow-hidden rounded-md bg-gradient-to-b from-[#1e3a5f] to-[#0B1A2E] px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.2),0_8px_24px_-12px_rgba(30,58,95,0.5)] transition-all hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_2px_4px_rgba(15,23,42,0.25),0_12px_32px_-10px_rgba(30,58,95,0.6)] hover:-translate-y-[1px] active:translate-y-0">
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                Request Access
+                Sign Up Free
                 <ArrowRight className="relative h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </button>
             </Link>
@@ -224,7 +224,7 @@ export function Header() {
           <div className="absolute bottom-0 left-0 right-0 px-5 py-6 border-t border-white/10 bg-black/20 backdrop-blur space-y-4">
             <Link href="/sign-up" onClick={() => setMobileMenuOpen(false)}>
               <button className="group relative w-full inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-md bg-gradient-to-b from-red-600 to-red-700 px-5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_8px_24px_-8px_rgba(220,38,38,0.5)]">
-                Request Access
+                Sign Up Free
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </button>
             </Link>
