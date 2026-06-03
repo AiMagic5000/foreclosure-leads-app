@@ -12,6 +12,7 @@ import { IntegrationsSettings } from "@/components/integrations-settings"
 import { usePin } from "@/lib/pin-context"
 import { PhoneUnlock } from "@/components/phone-unlock"
 import { DocumentUploader } from "@/components/document-uploader"
+import { ReferralSection } from "@/components/dashboard/referral-section"
 import {
   User,
   CreditCard,
@@ -301,6 +302,9 @@ export default function SettingsPage() {
             <DocumentUploader folder="contingency-agreements" accept="image/*,video/*,application/pdf" />
           </CardContent>
         </Card>
+
+        {/* Refer & Earn — $100 on signup, $500 on payout */}
+        <ReferralSection />
 
         {/* Upgrades & Add-ons */}
         <Card className="lg:col-span-2 shadow-lg">
