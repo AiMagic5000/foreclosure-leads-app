@@ -99,8 +99,10 @@ function getEmbedUrl(url: string): string {
 export default function ClosingTrainingPage() {
   const { user } = useUser()
   const userEmail = user?.emailAddresses?.[0]?.emailAddress?.toLowerCase() || ""
+  // Real admin (Clerk identity) drives the edit/upload UI. The CONTENT gate uses the
+  // impersonation-aware admin from pin-context, so "View as" a free user enforces locks.
   const isAdmin = userEmail === ADMIN_EMAIL.toLowerCase()
-  const { accountType, trainingUnlocked, hasPhone } = usePin()
+  const { accountType, trainingUnlocked, hasPhone, isAdmin: effectiveIsAdmin } = usePin()
   const router = useRouter()
   const [modules, setModules] = useState<TrainingModule[]>([])
   const [selectedModule, setSelectedModule] = useState<TrainingModule | null>(null)
@@ -259,12 +261,29 @@ export default function ClosingTrainingPage() {
     vid.onerror = () => vid.remove()
   }
 
-  // Access to a module's video + resources requires a phone number on file
-  // (admins and manually-unlocked accounts always pass). Everyone can SEE every
-  // module; playback and downloads are what the phone unlocks.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function hasContentAccess(_mod: TrainingModule): boolean {
-    return isAdmin || trainingUnlocked || hasPhone
+  // Does the user's TIER permit this module? "OO+A"-tagged modules exclude basic/free.
+  // Junior Owner Operator is treated as a full paid tier for access purposes.
+  function tierAllowed(mod: TrainingModule | null): boolean {
+    if (!mod) return false
+    if (effectiveIsAdmin || trainingUnlocked) return true
+    const tier = (accountType === "junior_owner_operator" ? "owner_operator" : (accountType || "basic")) as AccountTier
+    const levels = mod.access_level || ["basic", "partnership", "owner_operator", "admin"]
+    return levels.includes(tier)
+  }
+
+  // Full access to play a video / download resources: the tier must allow it AND a phone
+  // number must be on file. Admins / manually-unlocked accounts bypass both.
+  function hasContentAccess(mod: TrainingModule | null): boolean {
+    if (!mod) return false
+    if (effectiveIsAdmin || trainingUnlocked) return true
+    return tierAllowed(mod) && hasPhone
+  }
+
+  // Decide which popup to show when a blocked module is clicked.
+  function showBlockedPopup(mod: TrainingModule | null) {
+    if (!mod) return
+    if (!tierAllowed(mod)) setShowAccessPopup("TIER")
+    else setShowAccessPopup("PHONE")
   }
 
   // Get the display label for required tiers
@@ -491,7 +510,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handleDownload(resource: TrainingResource) {
-    if (!isAdmin && !trainingUnlocked && !hasPhone) { setShowAccessPopup("PHONE"); return }
+    if (!isAdmin && !trainingUnlocked && !hasPhone) { showBlockedPopup(selectedModule); return }
     const a = document.createElement("a")
     a.href = resource.file_url
     a.download = resource.file_name
@@ -502,7 +521,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handlePrint(resource: TrainingResource) {
-    if (!isAdmin && !trainingUnlocked && !hasPhone) { setShowAccessPopup("PHONE"); return }
+    if (!isAdmin && !trainingUnlocked && !hasPhone) { showBlockedPopup(selectedModule); return }
     window.open(resource.file_url, "_blank")
   }
 
@@ -678,7 +697,7 @@ export default function ClosingTrainingPage() {
                                 onClick={() => {
                                   if (!selectedModule.video_url) return
                                   if (!hasContentAccess(selectedModule)) {
-                                    setShowAccessPopup("PHONE")
+                                    showBlockedPopup(selectedModule)
                                     return
                                   }
                                   setPlayingVideoId(selectedModule.id)
@@ -789,7 +808,7 @@ export default function ClosingTrainingPage() {
                                 <div className="bg-background/80 backdrop-blur-sm rounded-lg px-4 py-2 border shadow-sm">
                                   <p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
                                     <Lock className="h-3.5 w-3.5" />
-                                    Add your phone number to unlock
+                                    {!tierAllowed(selectedModule) ? "Paid members only" : "Add your phone number to unlock"}
                                   </p>
                                 </div>
                               </div>
@@ -1030,7 +1049,7 @@ export default function ClosingTrainingPage() {
                       onClick={() => {
                         if (!selectedModule.video_url) return
                         if (!hasContentAccess(selectedModule)) {
-                          setShowAccessPopup("PHONE")
+                          showBlockedPopup(selectedModule)
                           return
                         }
                         setPlayingVideoId(selectedModule.id)
@@ -1390,7 +1409,7 @@ export default function ClosingTrainingPage() {
                       <div className="bg-background/90 backdrop-blur-sm rounded-lg px-6 py-3 border shadow-lg">
                         <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                           <Lock className="h-4 w-4" />
-                          Add your phone number to unlock these resources
+                          {!tierAllowed(selectedModule) ? "Paid members only" : "Add your phone number to unlock these resources"}
                         </p>
                       </div>
                     </div>
@@ -1497,16 +1516,34 @@ export default function ClosingTrainingPage() {
             <div className="mx-auto w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mb-4">
               <Lock className="h-6 w-6 text-amber-600 dark:text-amber-400" />
             </div>
-            <h3 className="text-lg font-semibold mb-2">Add your phone number to unlock</h3>
-            <p className="text-sm text-muted-foreground mb-5">
-              Add your phone number to your account profile to unlock the training videos and downloadable resources.
-            </p>
-            <Button
-              onClick={() => { setShowAccessPopup(null); router.push("/dashboard/settings?flash=phone") }}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
-            >
-              Unlock Training
-            </Button>
+            {showAccessPopup === "TIER" ? (
+              <>
+                <h3 className="text-lg font-semibold mb-2">Paid members only</h3>
+                <p className="text-sm text-muted-foreground mb-5">
+                  This lesson is part of the <span className="font-medium text-foreground">Owner Operator &amp; Agent</span> training.
+                  Upgrade to an Asset Recovery Agent or Owner Operator program to unlock it.
+                </p>
+                <Button
+                  onClick={() => { setShowAccessPopup(null); router.push("/dashboard/owner-operator") }}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
+                >
+                  See upgrade options
+                </Button>
+              </>
+            ) : (
+              <>
+                <h3 className="text-lg font-semibold mb-2">Add your phone number to unlock</h3>
+                <p className="text-sm text-muted-foreground mb-5">
+                  Add your phone number to your account profile to unlock the training videos and downloadable resources.
+                </p>
+                <Button
+                  onClick={() => { setShowAccessPopup(null); router.push("/dashboard/settings?flash=phone") }}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
+                >
+                  Unlock Training
+                </Button>
+              </>
+            )}
             <button
               onClick={() => setShowAccessPopup(null)}
               className="text-sm text-muted-foreground hover:text-foreground mt-1"
