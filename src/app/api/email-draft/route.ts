@@ -19,6 +19,13 @@ const DEFAULT_IMAP_HOST = "imap.hostinger.com"
 const IMAP_PORT = 993
 const DEFAULT_IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword#1234"
 
+// The entire usforeclosurerecovery.com domain moved Hostinger -> MXRoute on
+// 2026-06-03 (MX = redbull.mxrouting.net). Any mailbox on that domain MUST use
+// MXRoute for IMAP, so a newly-added agent never silently hits dead Hostinger.
+const MXROUTE_HOST = "redbull.mxrouting.net"
+const MXROUTE_DOMAIN = "@usforeclosurerecovery.com"
+const MXROUTE_DEFAULT_PASS = "Thepassword#123"
+
 // Per-mailbox IMAP host. Mailboxes already migrated to MXRoute resolve to redbull;
 // everyone else falls back to Hostinger. During the full usforeclosurerecovery.com
 // MX cutover, move rebecca/joshua/claim entries here (or flip DEFAULT_IMAP_HOST).
@@ -30,7 +37,10 @@ const IMAP_HOST_MAP: Record<string, string> = {
 }
 
 function resolveImapHost(senderEmail: string): string {
-  return IMAP_HOST_MAP[senderEmail.toLowerCase()] || DEFAULT_IMAP_HOST
+  const e = senderEmail.toLowerCase()
+  if (IMAP_HOST_MAP[e]) return IMAP_HOST_MAP[e]
+  if (e.endsWith(MXROUTE_DOMAIN)) return MXROUTE_HOST
+  return DEFAULT_IMAP_HOST
 }
 
 // Compliance gate posture: shadow (log, never block) until counsel verifies states. See migration 005.
@@ -715,7 +725,12 @@ export async function POST(request: NextRequest) {
       "contact@premiersurplusclaims.com": process.env.IMAP_AMARIYON_PASSWORD || config.imapPassword || "Amariyonpass$100",
     }
     const IMAP_USER = senderEmail
-    const IMAP_PASS = IMAP_PASSWORD_MAP[senderEmail] || config.imapPassword || DEFAULT_IMAP_PASS
+    // Domain-aware fallback: usforeclosurerecovery.com mailboxes are on MXRoute,
+    // so their default password is the MXRoute one, never the old Hostinger default.
+    const domainDefaultPass = senderEmail.toLowerCase().endsWith(MXROUTE_DOMAIN)
+      ? MXROUTE_DEFAULT_PASS
+      : DEFAULT_IMAP_PASS
+    const IMAP_PASS = IMAP_PASSWORD_MAP[senderEmail] || config.imapPassword || domainDefaultPass
     const IMAP_HOST_RESOLVED = resolveImapHost(senderEmail)
     const agentProfile = configToAgentProfile(config)
 
