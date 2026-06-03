@@ -165,8 +165,9 @@ export default function ClosingTrainingPage() {
       if (json.data) {
         setModules(json.data)
         if (!selectedModule) {
-          const current = json.data.find((m: TrainingModule) => m.status === "current") || json.data[0]
-          setSelectedModule(current)
+          // Default to video #1 — the free preview everyone can play.
+          const first = json.data.find((m: TrainingModule) => m.module_number === 1) || json.data[0]
+          setSelectedModule(first)
         }
       }
     } catch {
@@ -271,11 +272,16 @@ export default function ClosingTrainingPage() {
     return levels.includes(tier)
   }
 
+  // Video #1 is a free preview — playable by anyone, no tier or phone required.
+  function isFreePreview(mod: TrainingModule | null): boolean {
+    return mod?.module_number === 1
+  }
+
   // Full access to play a video / download resources: the tier must allow it AND a phone
   // number must be on file. Admins / manually-unlocked accounts bypass both.
   function hasContentAccess(mod: TrainingModule | null): boolean {
     if (!mod) return false
-    if (effectiveIsAdmin || trainingUnlocked) return true
+    if (isFreePreview(mod) || effectiveIsAdmin || trainingUnlocked) return true
     return tierAllowed(mod) && hasPhone
   }
 
