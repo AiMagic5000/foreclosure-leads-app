@@ -17,6 +17,8 @@ interface PinContextType {
   accountType: AccountType
   trainingUnlocked: boolean
   hasPhone: boolean
+  hasSlybroadcast: boolean
+  hasTextbee: boolean
   banned: boolean
   banReason: string | null
   pinEmail: string | null
@@ -43,6 +45,8 @@ export function PinProvider({ children }: { children: ReactNode }) {
   const [accountType, setAccountType] = useState<AccountType>('basic')
   const [trainingUnlocked, setTrainingUnlocked] = useState(false)
   const [hasPhone, setHasPhone] = useState(false)
+  const [hasSlybroadcast, setHasSlybroadcast] = useState(false)
+  const [hasTextbee, setHasTextbee] = useState(false)
   const [banned, setBanned] = useState(false)
   const [banReason, setBanReason] = useState<string | null>(null)
   const [pinEmail, setPinEmail] = useState<string | null>(null)
@@ -92,6 +96,8 @@ export function PinProvider({ children }: { children: ReactNode }) {
         setAccountType(acctType)
         setTrainingUnlocked(!!data.trainingUnlocked || !!data.isAdmin)
         setHasPhone(!!data.hasPhone)
+        setHasSlybroadcast(!!data.hasSlybroadcast)
+        setHasTextbee(!!data.hasTextbee)
         setBanned(!!data.banned)
         setBanReason(data.banReason || null)
         setIsAdmin(!!data.isAdmin)
@@ -178,6 +184,8 @@ export function PinProvider({ children }: { children: ReactNode }) {
         accountType,
         trainingUnlocked,
         hasPhone,
+        hasSlybroadcast,
+        hasTextbee,
         banned,
         banReason,
         pinEmail,

@@ -389,8 +389,22 @@ function ActionButton({ icon: Icon, label, color, onShowUpgrade }: { icon: React
   )
 }
 
-function VoiceDropBtn({ lead, sending, onSend }: { lead: LeadData; sending: boolean; onSend: (id: string) => void }) {
+function VoiceDropBtn({ lead, sending, onSend, hasSlybroadcast, onNeedCreds }: { lead: LeadData; sending: boolean; onSend: (id: string) => void; hasSlybroadcast?: boolean; onNeedCreds?: () => void }) {
   if (!lead.primaryPhone) return null
+
+  // Ringless voicemail runs under the agent's own SlyBroadcast account — inactive until connected.
+  if (!hasSlybroadcast) {
+    return (
+      <button
+        onClick={(e) => { e.stopPropagation(); onNeedCreds?.() }}
+        title="Connect SlyBroadcast in My Account to activate"
+        className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-gray-200 text-gray-500 hover:bg-gray-300 cursor-pointer"
+      >
+        <Volume2 className="h-3 w-3" />
+        Voice Drop
+      </button>
+    )
+  }
 
   if (lead.voicemailSent) {
     return (
@@ -570,7 +584,7 @@ function transformDbRow(row: Record<string, unknown>): LeadData {
 
 /* ===== LEAD DROPDOWN (Matches Admin Leads Page) ===== */
 
-function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, onSms, onCertifiedLetter, voiceDropSending, onVoiceDrop }: { lead: LeadData; revealed: boolean; onReveal: () => void; onShowUpgrade: () => void; onEmailDraft?: () => void; onSms?: () => void; onCertifiedLetter?: () => void; voiceDropSending?: boolean; onVoiceDrop?: (id: string) => void }) {
+function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, onSms, onCertifiedLetter, voiceDropSending, onVoiceDrop, hasSlybroadcast, hasTextbee, onNeedCreds }: { lead: LeadData; revealed: boolean; onReveal: () => void; onShowUpgrade: () => void; onEmailDraft?: () => void; onSms?: () => void; onCertifiedLetter?: () => void; voiceDropSending?: boolean; onVoiceDrop?: (id: string) => void; hasSlybroadcast?: boolean; hasTextbee?: boolean; onNeedCreds?: (channel: "voice" | "sms") => void }) {
   const [activeTab, setActiveTab] = useState<"property" | "skipTrace" | "tax" | "foreclosure" | "map">("property")
 
   const tabs = [
@@ -634,14 +648,18 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
       ) : (
         <div className="flex flex-wrap gap-1.5">
           {onVoiceDrop ? (
-            <VoiceDropBtn lead={lead} sending={!!voiceDropSending} onSend={onVoiceDrop} />
+            <VoiceDropBtn lead={lead} sending={!!voiceDropSending} onSend={onVoiceDrop} hasSlybroadcast={hasSlybroadcast} onNeedCreds={() => onNeedCreds?.("voice")} />
           ) : (
             <ActionButton icon={Volume2} label="Voice Drop" color="emerald" onShowUpgrade={onShowUpgrade} />
           )}
           {onSms ? (
             <button
-              onClick={(e) => { e.stopPropagation(); onSms() }}
-              className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-violet-600 text-white hover:bg-violet-700 cursor-pointer transition-colors"
+              onClick={(e) => { e.stopPropagation(); if (hasTextbee) { onSms() } else { onNeedCreds?.("sms") } }}
+              title={hasTextbee ? "Send SMS" : "Connect TextBee in My Account to activate"}
+              className={cn(
+                "inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors",
+                hasTextbee ? "bg-violet-600 text-white hover:bg-violet-700 cursor-pointer" : "bg-gray-200 text-gray-500 hover:bg-gray-300 cursor-pointer"
+              )}
             >
               <MessageSquare className="h-3 w-3" />
               SMS
@@ -979,7 +997,8 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
 /* ===== MAIN PAGE ===== */
 
 export default function MyLeadsPage() {
-  const { isAdmin, pinId, accountType, isLoading: pinLoading } = usePin()
+  const { isAdmin, pinId, accountType, isLoading: pinLoading, hasSlybroadcast, hasTextbee } = usePin()
+  const [commsGate, setCommsGate] = useState<null | "voice" | "sms">(null)
   const [leads, setLeads] = useState<LeadData[]>([])
   const [loading, setLoading] = useState(true)
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
@@ -1899,7 +1918,7 @@ export default function MyLeadsPage() {
                             ) : (
                               <button
                                 className="text-sm font-medium text-emerald-700 hover:underline cursor-pointer"
-                                onClick={(e) => { e.stopPropagation(); if (isRevealed) openSmsPreview(lead.id, lead.primaryPhone, lead.ownerName) }}
+                                onClick={(e) => { e.stopPropagation(); if (!isRevealed) return; if (hasTextbee) { openSmsPreview(lead.id, lead.primaryPhone, lead.ownerName) } else { setCommsGate("sms") } }}
                               >
                                 <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                               </button>
@@ -1999,6 +2018,9 @@ export default function MyLeadsPage() {
                       onCertifiedLetter={lead.mailingAddress && lead.mailingAddress.toLowerCase().trim() !== lead.propertyAddress.toLowerCase().trim() && isRevealed ? () => openCertLetterModal(lead.id, lead.ownerName, lead.mailingAddress) : undefined}
                       voiceDropSending={sendingVoiceDrop[lead.id]}
                       onVoiceDrop={sendVoiceDrop}
+                      hasSlybroadcast={hasSlybroadcast}
+                      hasTextbee={hasTextbee}
+                      onNeedCreds={(ch) => setCommsGate(ch)}
                     />
                   )}
                 </CardContent>
@@ -2159,6 +2181,31 @@ export default function MyLeadsPage() {
                 </>
               )}
             </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Outreach not-connected popup */}
+      {commsGate && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setCommsGate(null)}>
+          <Card className="w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2 text-base">
+                {commsGate === "voice" ? <Volume2 className="h-5 w-5 text-emerald-600" /> : <MessageSquare className="h-5 w-5 text-violet-600" />}
+                {commsGate === "voice" ? "Ringless voicemail not connected" : "SMS not connected"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                This button activates once you connect your {commsGate === "voice" ? "SlyBroadcast (ringless voicemail)" : "TextBee (SMS)"} account.
+                Go to <strong>My Account &rarr; Outreach Integrations</strong> and save your credentials to turn it on for every lead.
+                Until then you can still call and text manually, and create email drafts.
+              </p>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setCommsGate(null)}>Close</Button>
+                <Button onClick={() => { setCommsGate(null); window.location.href = "/dashboard/settings" }}>Go to My Account</Button>
+              </div>
+            </CardContent>
           </Card>
         </div>
       )}

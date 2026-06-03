@@ -5,6 +5,22 @@ import { PRIMARY_ADMIN_EMAIL, resolveImpersonationTarget } from '@/lib/admin-gua
 
 export const dynamic = 'force-dynamic'
 
+// Whether an operator pin has the outreach credentials saved. Voice-drop needs
+// SlyBroadcast; SMS needs TextBee. Buttons stay inactive until these are true.
+async function credFlags(pinId: string | null): Promise<{ hasSlybroadcast: boolean; hasTextbee: boolean }> {
+  if (!pinId) return { hasSlybroadcast: false, hasTextbee: false }
+  const { data } = await supabaseAdmin
+    .from('user_pins')
+    .select('slybroadcast_email, slybroadcast_password, textbee_api_key, textbee_device_id')
+    .eq('id', pinId)
+    .maybeSingle()
+  const p = (data || {}) as Record<string, string | null>
+  return {
+    hasSlybroadcast: !!(p.slybroadcast_email && p.slybroadcast_password),
+    hasTextbee: !!(p.textbee_api_key && p.textbee_device_id),
+  }
+}
+
 export async function GET(req: NextRequest) {
   const user = await currentUser()
   if (!user) {
@@ -40,7 +56,9 @@ export async function GET(req: NextRequest) {
     // table shows). The pin's package_type can be stale, so prefer the users row.
     const effectiveAccountType = tUser?.account_type || target.packageType || 'basic'
     const effectiveIsAdmin = effectiveAccountType === 'admin' || tUser?.role === 1
+    const tFlags = await credFlags(target.pinId)
     return NextResponse.json({
+      ...tFlags,
       isAdmin: effectiveIsAdmin,
       isPrimaryAdmin: false,
       isRealAdmin: true,
@@ -68,8 +86,10 @@ export async function GET(req: NextRequest) {
   const accountType = pinData?.package_type || data?.account_type || 'basic'
   const pinId = pinData?.id || null
   const statesAccess = pinData?.states_access || []
+  const selfFlags = await credFlags(pinId)
 
   return NextResponse.json({
+    ...selfFlags,
     isAdmin,
     isPrimaryAdmin: realIsPrimaryAdmin,
     isRealAdmin: realIsAdmin,
