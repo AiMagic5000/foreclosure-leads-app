@@ -289,27 +289,17 @@ export default function ClosingTrainingPage() {
     fetchModules()
   }
 
-  // WATCHING a video is gated by TIER only. Free users can play every video that is NOT
-  // "OO+A"-tagged (i.e. whose access level includes basic). No phone required to watch.
+  // Watching a video AND downloading resources both require: the TIER allows the module
+  // (free = non-"OO+A" only) AND a phone number is on file. Video #1 is a free preview, and
+  // admins / manually-unlocked accounts bypass both.
   function hasVideoAccess(mod: TrainingModule | null): boolean {
-    if (!mod) return false
-    return isFreePreview(mod) || effectiveIsAdmin || trainingUnlocked || tierAllowed(mod)
-  }
-
-  // DOWNLOADING resources additionally requires a phone number on file (for the tiers that
-  // are allowed). The free preview's resources are free.
-  function hasResourceAccess(mod: TrainingModule | null): boolean {
     if (!mod) return false
     if (isFreePreview(mod) || effectiveIsAdmin || trainingUnlocked) return true
     return tierAllowed(mod) && hasPhone
   }
+  const hasResourceAccess = hasVideoAccess
 
-  // Popup when a blocked VIDEO is clicked — only reason a video is blocked is tier.
-  function videoBlockedPopup() {
-    setShowAccessPopup("TIER")
-  }
-
-  // Popup when a blocked RESOURCE is clicked — tier first, then phone.
+  // Popup when a blocked module is clicked: tier-locked (paid only) vs needs-phone.
   function showBlockedPopup(mod: TrainingModule | null) {
     if (!mod) return
     if (!tierAllowed(mod)) setShowAccessPopup("TIER")
@@ -743,7 +733,7 @@ export default function ClosingTrainingPage() {
                                 onClick={() => {
                                   if (!selectedModule.video_url) return
                                   if (!hasVideoAccess(selectedModule)) {
-                                    videoBlockedPopup()
+                                    showBlockedPopup(selectedModule)
                                     return
                                   }
                                   setPlayingVideoId(selectedModule.id)
@@ -1095,7 +1085,7 @@ export default function ClosingTrainingPage() {
                       onClick={() => {
                         if (!selectedModule.video_url) return
                         if (!hasVideoAccess(selectedModule)) {
-                          videoBlockedPopup()
+                          showBlockedPopup(selectedModule)
                           return
                         }
                         setPlayingVideoId(selectedModule.id)
