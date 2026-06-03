@@ -13,6 +13,7 @@ export function PhoneUnlock() {
   const q = pinId ? `?asPinId=${pinId}` : ""
 
   const [phone, setPhone] = useState("")
+  const [country, setCountry] = useState("US")
   const [verified, setVerified] = useState(false)
   const [consent, setConsent] = useState(false)
   const [stage, setStage] = useState<"enter" | "code">("enter")
@@ -48,7 +49,7 @@ export function PhoneUnlock() {
     try {
       const res = await fetch("/api/user/phone-verify", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "send", phone: phone.trim(), consent, asPinId: pinId }),
+        body: JSON.stringify({ action: "send", phone: phone.trim(), country, consent, asPinId: pinId }),
       })
       const d = await res.json()
       if (!res.ok) throw new Error(d.error || "Could not send code")
@@ -99,7 +100,19 @@ export function PhoneUnlock() {
         </div>
       ) : stage === "enter" ? (
         <>
-          <Input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="(555) 123-4567" className="mt-2 bg-white" />
+          <div className="mt-2 flex gap-2">
+            <select
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="rounded-md border border-slate-300 bg-white px-2 text-sm"
+              aria-label="Country"
+            >
+              <option value="US">🇺🇸 US +1</option>
+              <option value="CA">🇨🇦 Canada +1</option>
+              <option value="GB">🇬🇧 UK +44</option>
+            </select>
+            <Input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={country === "GB" ? "7700 900000" : "(555) 123-4567"} className="flex-1 bg-white" />
+          </div>
           <label className="mt-3 flex items-start gap-2 text-[11px] leading-snug text-slate-600">
             <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5 h-3.5 w-3.5 flex-none" />
             <span>

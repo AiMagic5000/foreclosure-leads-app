@@ -11,10 +11,15 @@ const TEXTBEE_KEY = process.env.TEXTBEE_API_KEY
 const TEXTBEE_DEVICE = process.env.TEXTBEE_DEVICE_ID
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 
-function toE164(p: string): string {
-  const d = (p || "").replace(/\D/g, "")
-  if (d.length === 10) return "+1" + d
+// Supports US/Canada (+1) and UK (+44). Country is the ISO code from the form.
+function toE164(p: string, country?: string): string {
+  const raw = (p || "").trim()
+  if (raw.startsWith("+")) return "+" + raw.replace(/\D/g, "")
+  const d = raw.replace(/\D/g, "")
+  if (country === "GB") return "+44" + d.replace(/^0+/, "")
+  // Default US/Canada (NANP, +1)
   if (d.length === 11 && d[0] === "1") return "+" + d
+  if (d.length === 10) return "+1" + d
   return d ? "+" + d : ""
 }
 
@@ -58,18 +63,24 @@ export async function POST(req: NextRequest) {
   const phone = String(body?.phone || "").trim()
   const digits = phone.replace(/\D/g, "")
 
+  const country = String(body?.country || "US")
+  const e164 = toE164(phone, country)
+
   if (action === "send") {
-    if (digits.length < 10) return NextResponse.json({ error: "Enter a valid phone number." }, { status: 400 })
+    if (digits.length < 10 || e164.replace(/\D/g, "").length < 11) {
+      return NextResponse.json({ error: "Enter a valid phone number for the selected country." }, { status: 400 })
+    }
     if (body?.consent !== true) return NextResponse.json({ error: "Please agree to the communications consent." }, { status: 400 })
 
     const code = String(crypto.randomInt(100000, 1000000))
     const expires = new Date(Date.now() + 10 * 60_000).toISOString()
+    // Store the E.164 form so the drip engine + later sends use the correct country code.
     const { error: upErr } = await supabaseAdmin
       .from("phone_verifications")
-      .upsert({ email, phone, code, attempts: 0, expires_at: expires, created_at: new Date().toISOString() }, { onConflict: "email" })
+      .upsert({ email, phone: e164, code, attempts: 0, expires_at: expires, created_at: new Date().toISOString() }, { onConflict: "email" })
     if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 })
 
-    const ok = await sendSms(phone, `Your Foreclosure Recovery verification code is ${code}. It expires in 10 minutes.`)
+    const ok = await sendSms(e164, `Your Foreclosure Recovery verification code is ${code}. It expires in 10 minutes.`)
     if (!ok) return NextResponse.json({ error: "Couldn't send the code. Check the number and try again." }, { status: 502 })
     return NextResponse.json({ sent: true })
   }
