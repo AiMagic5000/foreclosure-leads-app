@@ -1,0 +1,1322 @@
+[
+  {
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "statewide_efiling_system": "PACFile",
+    "statewide_efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Beverly Boyd",
+        "phone": "717-337-9834",
+        "fax": "717-334-0532",
+        "address": "117 Baltimore Street, Room 104, Gettysburg, PA 17325",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Allegheny",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Michael McGeever",
+        "phone": "412-350-4200",
+        "fax": "412-350-5260",
+        "address": "436 Grant Street, Room 114, Pittsburgh, PA 15219",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Armstrong",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Annette C. Bowser",
+        "phone": "724-548-3251",
+        "fax": "724-548-3351",
+        "address": "500 East Market Street, Suite 103, Kittanning, PA 16201",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Beaver",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jodi Janicki Jones",
+        "phone": "724-770-4570",
+        "fax": "724-728-3360",
+        "address": "810 Third Street, Beaver, PA 15009",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Bedford",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Sheri Lowery",
+        "phone": "814-623-4833",
+        "fax": "814-623-4831",
+        "address": "200 South Juliana Street, Bedford, PA 15522",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Berks",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jonathan K. Del Collo",
+        "phone": "610-478-6970",
+        "fax": "610-478-6969",
+        "address": "633 Court Street, 2nd Floor, Reading, PA 19601",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Blair",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Robin G. Patton",
+        "phone": "814-693-3080",
+        "fax": "814-317-1600",
+        "address": "423 Allegheny Street, Hollidaysburg, PA 16648",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Bradford",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Tammy Hart",
+        "phone": "570-265-1705",
+        "fax": "570-265-1735",
+        "address": "301 Main Street, Towanda, PA 18848",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Bucks",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Coleen Christian",
+        "phone": "215-348-6191",
+        "fax": "215-348-6184",
+        "address": "100 North Main Street, Doylestown, PA 18901",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Butler",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Kelly L. Ferrari",
+        "phone": "724-284-5214",
+        "fax": "724-284-0011",
+        "address": "124 West Diamond Street, Butler, PA 16001",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Cambria",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Lisa Pudliner Crynock",
+        "phone": "814-472-1638",
+        "fax": "814-472-5632",
+        "address": "200 South Center Street, Ebensburg, PA 15931",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Cameron",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Mary Grace Olay",
+        "phone": "814-486-3349",
+        "fax": "814-486-0464",
+        "address": "20 East Fifth Street, Emporium, PA 15834",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Carbon",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Kayla Semmel",
+        "phone": "570-325-2481",
+        "fax": "570-325-8047",
+        "address": "PO Box 130, Jim Thorpe, PA 18229",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Centre",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jeremy S. Breon",
+        "phone": "814-355-6796",
+        "fax": "814-355-8686",
+        "address": "102 South Allegheny Street, Bellefonte, PA 16823",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Chester",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Kristen E. Hume",
+        "phone": "610-344-6300",
+        "fax": "610-344-5903",
+        "address": "201 West Market Street, Suite 1425, West Chester, PA 19380",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Clarion",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jeffery A. Himes",
+        "phone": "814-226-1119",
+        "fax": "814-227-2501",
+        "address": "421 Main Street, Clarion, PA 16214",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Clearfield",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Brian K. Spencer",
+        "phone": "814-765-2641",
+        "fax": "814-765-7659",
+        "address": "230 East Market Street, PO Box 549, Clearfield, PA 16830",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Cindy Love",
+        "phone": "570-893-4007",
+        "fax": "570-893-4288",
+        "address": "230 East Water Street, Lock Haven, PA 17745",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Columbia",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Stephanie Stroup",
+        "phone": "570-389-5614",
+        "fax": "570-389-5620",
+        "address": "35 West Main Street, PO Box 380, Bloomsburg, PA 17815",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Emmy Arnett",
+        "phone": "814-333-7324",
+        "fax": "814-337-5416",
+        "address": "359 East Center Street, Meadville, PA 16335",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Cumberland",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Dale E. Sabadish",
+        "phone": "717-240-6195",
+        "fax": "717-240-6573",
+        "address": "1 Courthouse Square, Carlisle, PA 17013",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Dauphin",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Matthew Krupp",
+        "phone": "717-780-6520",
+        "fax": "717-780-6477",
+        "address": "101 Market Street, Harrisburg, PA 17101",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Delaware",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Mary J. Walk",
+        "phone": "610-891-4224",
+        "fax": "",
+        "address": "201 West Front Street, Media, PA 19063",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Elk",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Susanne Straub Schneider",
+        "phone": "814-776-5343",
+        "fax": "814-776-5303",
+        "address": "240 Main Street, PO Box 237, Ridgway, PA 15853",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Erie",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Aubrea Haynes",
+        "phone": "814-451-6221",
+        "fax": "814-451-6420",
+        "address": "140 West Sixth Street, Erie, PA 16501",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Nina Frankhouser",
+        "phone": "724-430-1272",
+        "fax": "724-430-4555",
+        "address": "61 East Main Street, Uniontown, PA 15401",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Forest",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Mariah L. Tkach",
+        "phone": "814-755-3526",
+        "fax": "814-755-8837",
+        "address": "526 Elm Street, #2, Tionesta, PA 16353",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Timothy S. Sponseller",
+        "phone": "717-261-3858",
+        "fax": "717-264-6772",
+        "address": "14 N Main Street, Chambersburg, PA 17201",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Fulton",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Patty Suders Fix",
+        "phone": "717-485-4212",
+        "fax": "717-485-5568",
+        "address": "201 North Second Street, McConnellsburg, PA 17233",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Greene",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jennifer Maas",
+        "phone": "724-852-5289",
+        "fax": "724-852-5353",
+        "address": "10 East High Street, Waynesburg, PA 15370",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Huntingdon",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Sarah Snare",
+        "phone": "814-643-1610",
+        "fax": "814-643-4271",
+        "address": "223 Penn Street, PO Box 39, Huntingdon, PA 16652",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Indiana",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Randy Degenkolb",
+        "phone": "724-465-3855",
+        "fax": "724-465-3968",
+        "address": "825 Philadelphia Street, Indiana, PA 15701",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Tonya S. Geist",
+        "phone": "814-849-1606",
+        "fax": "814-849-1625",
+        "address": "200 Main Street, Brookville, PA 15825",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Juniata",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Lori A. Ferry",
+        "phone": "717-436-7715",
+        "fax": "717-436-7734",
+        "address": "Bridge & Main Streets, PO Box 68, Mifflintown, PA 17059",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lackawanna",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Mauri Kelly",
+        "phone": "570-963-6723",
+        "fax": "570-963-6387",
+        "address": "200 North Washington Avenue, Scranton, PA 18503",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lancaster",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Andrew E. Spade",
+        "phone": "717-299-8282",
+        "fax": "717-293-7210",
+        "address": "50 North Duke Street, PO Box 83480, Lancaster, PA 17608",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jodi Esoldo",
+        "phone": "724-656-2143",
+        "fax": "724-656-1988",
+        "address": "430 Court Street, New Castle, PA 16101",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lebanon",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Barbara A. Smith",
+        "phone": "717-228-4418",
+        "fax": "717-228-4467",
+        "address": "400 South Eighth Street, Lebanon, PA 17042",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lehigh",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Michelle Graupner",
+        "phone": "610-782-3148",
+        "fax": "610-871-2895",
+        "address": "455 Hamilton Street, Allentown, PA 18101",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Luzerne",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Michelle Bednar",
+        "phone": "570-825-1745",
+        "fax": "570-825-1757",
+        "address": "200 North River Street, Wilkes-Barre, PA 18711",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lycoming",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Thomas D. Heap",
+        "phone": "570-327-2256",
+        "fax": "570-327-2505",
+        "address": "48 West Third Street, Williamsport, PA 17701",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "McKean",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Vicky Madine",
+        "phone": "814-887-3270",
+        "fax": "814-887-3219",
+        "address": "500 West Main Street, Smethport, PA 16749",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Mercer",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Tanya Williams",
+        "phone": "724-662-7561",
+        "fax": "724-662-2021",
+        "address": "103 North Diamond Street, Mercer, PA 16137",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Mifflin",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Tammy Stuck",
+        "phone": "717-248-8146",
+        "fax": "717-248-5275",
+        "address": "20 North Wayne Street, Lewistown, PA 17044",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "George J. Warden",
+        "phone": "570-517-3390",
+        "fax": "570-420-3582",
+        "address": "610 Monroe Street, Stroudsburg, PA 18360",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Noah Marlier",
+        "phone": "610-278-3360",
+        "fax": "610-278-5994",
+        "address": "PO Box 311, Norristown, PA 19404",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Montour",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Susan M. Kauwell",
+        "phone": "570-271-3010",
+        "fax": "570-271-3089",
+        "address": "253 Mill Street, Danville, PA 17821",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Northampton",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Holly Ruggiero",
+        "phone": "610-559-3060",
+        "fax": "610-559-3710",
+        "address": "669 Washington Street, Easton, PA 18042",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Northumberland",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jamie Saleski",
+        "phone": "570-988-4148",
+        "fax": "570-988-4153",
+        "address": "201 Market Street, Sunbury, PA 17801",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Perry",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Zoe Burd",
+        "phone": "717-582-2131",
+        "fax": "717-582-5167",
+        "address": "PO Box 325, New Bloomfield, PA 17068",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Philadelphia",
+        "clerk_office_title": "Director, Office of Judicial Records",
+        "clerk_name": "Eric Feder",
+        "phone": "215-686-6652",
+        "fax": "",
+        "address": "284 City Hall, Philadelphia, PA 19107",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Pike",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Yvonne Merrill",
+        "phone": "570-296-7231",
+        "fax": "570-296-1931",
+        "address": "412 Broad Street, Milford, PA 18337",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Potter",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Ashley Gledhill",
+        "phone": "814-274-9740",
+        "fax": "814-274-3361",
+        "address": "One East Second Street, Room 23, Coudersport, PA 16915",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Schuylkill",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Bridget Miller",
+        "phone": "570-628-1270",
+        "fax": "570-628-1261",
+        "address": "401 North Second Street, Pottsville, PA 17901",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Snyder",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Stephanie Wolf",
+        "phone": "570-837-4202",
+        "fax": "570-837-4275",
+        "address": "9 West Market Street, PO Box 217, Middleburg, PA 17842",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Somerset",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "C. Jeannie Custer",
+        "phone": "814-445-1428",
+        "fax": "814-444-9270",
+        "address": "111 East Union Street, Suite 165, Somerset, PA 15501",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Sullivan",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Kellie Carpenter",
+        "phone": "570-946-7351",
+        "fax": "570-946-7105",
+        "address": "245 Muncy Street, Suite 100, Laporte, PA 18626",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Susquehanna",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jan Krupinski",
+        "phone": "570-278-4600",
+        "fax": "570-278-9268",
+        "address": "105 Maple Street, PO Box 218, Montrose, PA 18801",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Tioga",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Marie Y. Seymour",
+        "phone": "570-724-9281",
+        "fax": "570-724-2986",
+        "address": "116 Main Street, Wellsboro, PA 16901",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Union",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Diane Miller",
+        "phone": "570-524-8751",
+        "fax": "570-524-8628",
+        "address": "103 South Second Street, Lewisburg, PA 17837",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Venango",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Lana Linden",
+        "phone": "814-432-9577",
+        "fax": "814-432-9579",
+        "address": "1168 Liberty Street, Franklin, PA 16323",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Warren",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Jennifer Phillips",
+        "phone": "814-728-3440",
+        "fax": "814-728-3459",
+        "address": "204 Fourth Avenue, Warren, PA 16365",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Laura Hough",
+        "phone": "724-228-6770",
+        "fax": "724-229-5913",
+        "address": "1 South Main Street, Washington, PA 15301",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Edward G. Sandercock",
+        "phone": "570-253-5970",
+        "fax": "570-253-0687",
+        "address": "925 Court Street, Honesdale, PA 18431",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Westmoreland",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Gina O'Barto",
+        "phone": "724-830-3502",
+        "fax": "724-830-3517",
+        "address": "2 North Main Street, Suite 501, Greensburg, PA 15601",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Wyoming",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Cindy L. Adams",
+        "phone": "570-996-2232",
+        "fax": "570-996-0193",
+        "address": "One Courthouse Square, Tunkhannock, PA 18657",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "York",
+        "clerk_office_title": "Prothonotary",
+        "clerk_name": "Diane Platts",
+        "phone": "717-771-9611",
+        "fax": "717-771-4629",
+        "address": "45 North George Street, York, PA 17401",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/",
+        "research_status": "COMPLETE"
+      }
+    ]
+  },
+  {
+    "state_abbr": "CO",
+    "state_name": "Colorado",
+    "statewide_efiling_system": "Colorado Courts E-Filing",
+    "statewide_efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(303) 659-1161",
+        "fax": "",
+        "address": "1100 Judicial Center Dr., Brighton, CO 80601",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Alamosa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 589-4996",
+        "fax": "",
+        "address": "702 Fourth Street, Alamosa, CO 81101",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Arapahoe",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(303) 649-6355",
+        "fax": "",
+        "address": "7325 S. Potomac St., Centennial, CO 80112",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Archuleta",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 264-8160",
+        "fax": "970-264-8161",
+        "address": "449 San Juan St., Pagosa Springs, CO 81147",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Baca",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 523-4555",
+        "fax": "719-523-4552",
+        "address": "741 Main Street Suite 5, Springfield, CO 81073",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Bent",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 456-1353",
+        "fax": "719-456-0040",
+        "address": "725 Bent Avenue, Las Animas, CO 81054",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Boulder",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(303) 441-3750",
+        "fax": "303-441-4750",
+        "address": "1777 Sixth Street, Boulder, CO 80302",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Broomfield",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "303-464-5020",
+        "fax": "",
+        "address": "17 Descombes Drive, Broomfield, CO 80020",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Chaffee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 539-2561",
+        "fax": "719-530-7017",
+        "address": "142 Crestone Avenue, Salida, CO 81201",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Cheyenne",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 767-5649",
+        "fax": "719-767-5671",
+        "address": "51 S. 1st Street, Cheyenne Wells, CO 80810",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Clear Creek",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(303) 679-4220",
+        "fax": "303-569-3274",
+        "address": "405 Argentine, Georgetown, CO 80444",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Conejos",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 376-5465",
+        "fax": "",
+        "address": "6683 County Road 13, Conejos, CO 81129",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Costilla",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 672-3681",
+        "fax": "",
+        "address": "304 Main Street, San Luis, CO 81152",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Crowley",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 267-4468",
+        "fax": "719-267-3753",
+        "address": "110 East 6th Room 303, Ordway, CO 81063",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Custer",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 783-2274",
+        "fax": "719-783-2995",
+        "address": "205 S 6th Street, Westcliffe, CO 81252",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Denver County",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(720) 337-0410",
+        "fax": "",
+        "address": "520 W Colfax Avenue, Denver, CO 80204",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Dolores",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 677-2258",
+        "fax": "970-677-4156",
+        "address": "409 N Main, Dove Creek, CO 81324",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(720) 437-6200",
+        "fax": "303-688-1962",
+        "address": "4000 Justice Way STE 2009, Castle Rock, CO 80109",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Eagle",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 328-6373",
+        "fax": "970-328-6328",
+        "address": "885 Chambers Avenue, Eagle, CO 81631",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "El Paso",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 452-5000",
+        "fax": "719-452-5006",
+        "address": "270 S Tejon Street, Colorado Springs, CO 80903",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Elbert",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(303) 621-2131",
+        "fax": "",
+        "address": "751 Ute Avenue, Kiowa, CO 80117",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Fremont",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 269-0100",
+        "fax": "719-204-2275",
+        "address": "136 Justice Center Road, Canon City, CO 81212",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Garfield",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 928-3065",
+        "fax": "970-928-3067",
+        "address": "109 8th Street Suite 104, Glenwood Springs, CO 81601",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Gilpin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(303) 582-5522",
+        "fax": "303-582-3112",
+        "address": "2960 Dory Hill Road Suite 200, Black Hawk, CO 80422",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Grand",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 725-3357",
+        "fax": "",
+        "address": "307 Moffat Avenue, Hot Sulphur Springs, CO 80451",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Gunnison",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 642-8300",
+        "fax": "970-642-8350",
+        "address": "200 E. Virginia Avenue, Gunnison, CO 81230",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Hinsdale",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 944-2227",
+        "fax": "970-944-2289",
+        "address": "317 Henson, Lake City, CO 81235",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Huerfano",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 738-1040",
+        "fax": "719-738-1267",
+        "address": "401 Main St, Walsenburg, CO 81089",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 723-4363",
+        "fax": "970-723-4337",
+        "address": "396 Lafever Street, Walden, CO 80480",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(720) 772-2500",
+        "fax": "",
+        "address": "100 Jefferson County Parkway, Golden, CO 80401",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Kiowa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 438-5558",
+        "fax": "719-438-5300",
+        "address": "1305 Geoff Street, Eads, CO 81036",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Kit Carson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 346-5524",
+        "fax": "719-346-7805",
+        "address": "251 16th St. Suite 301, Burlington, CO 80807",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "La Plata",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 247-2304",
+        "fax": "970-247-4348",
+        "address": "1060 E. 2nd Avenue, Durango, CO 81301",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 293-8100",
+        "fax": "719-486-5006",
+        "address": "505 Harrison Avenue, Leadville, CO 80461",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Larimer",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 494-3500",
+        "fax": "970-494-3580",
+        "address": "201 La Porte Avenue Suite 100, Fort Collins, CO 80521",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Las Animas",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 846-3316",
+        "fax": "719-497-8267",
+        "address": "200 E. 1st Street Suite 304, Trinidad, CO 81082",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 743-2455",
+        "fax": "",
+        "address": "103 3rd Ave, Hugo, CO 80821",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 522-6565",
+        "fax": "970-542-3436",
+        "address": "110 N. Riverview Road, Sterling, CO 80751",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Mesa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 257-3640",
+        "fax": "",
+        "address": "125 North Spruce St, Grand Junction, CO 81501",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Mineral",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 658-2575",
+        "fax": "",
+        "address": "1201 N Main, Creede, CO 81130",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Moffat",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 824-8254",
+        "fax": "",
+        "address": "221 W. Victory Way Suite 300, Craig, CO 81625",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Montezuma",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 565-7580",
+        "fax": "970-565-8798",
+        "address": "601 N Mildred Rd, Cortez, CO 81321",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Montrose",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 252-4300",
+        "fax": "970-252-4309",
+        "address": "1200 N. Grand Ave., Montrose, CO 81401",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 542-3435",
+        "fax": "970-542-3436",
+        "address": "400 Warner Street, Fort Morgan, CO 80701",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Otero",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 384-4951",
+        "fax": "719-384-4991",
+        "address": "13 W. 3rd St. Suite 207, La Junta, CO 81050",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Ouray",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 325-4405",
+        "fax": "970-325-7364",
+        "address": "541 4th Street, Ouray, CO 81427",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Park",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 836-2940",
+        "fax": "719-836-2892",
+        "address": "300 4th St, Fairplay, CO 80440",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Phillips",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 854-3279",
+        "fax": "970-854-3179",
+        "address": "221 S. Interocean, Holyoke, CO 80734",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Pitkin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 925-7635",
+        "fax": "970-925-6349",
+        "address": "506 E Main Suite 300, Aspen, CO 81611",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Prowers",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 336-7424",
+        "fax": "719-336-8976",
+        "address": "301 S. Main Suite 300, Lamar, CO 81052",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Pueblo",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 404-8700",
+        "fax": "",
+        "address": "501 N. Elizabeth, Pueblo, CO 81003",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Rio Blanco",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 878-5622",
+        "fax": "970-878-4295",
+        "address": "455 Main Street, Meeker, CO 81641",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Rio Grande",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 657-3394",
+        "fax": "",
+        "address": "925 6th Street Room 204, Del Norte, CO 81132",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Routt",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 879-5020",
+        "fax": "",
+        "address": "1955 Shield Drive #200, Steamboat Springs, CO 80487",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Saguache",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 655-2522",
+        "fax": "",
+        "address": "501 Christy Avenue, Saguache, CO 81149",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "San Juan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 387-5790",
+        "fax": "970-387-0295",
+        "address": "1557 Greene Street, Silverton, CO 81433",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "San Miguel",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 369-3300",
+        "fax": "970-728-6216",
+        "address": "305 W. Colorado Avenue, Telluride, CO 81435",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Sedgwick",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 474-3627",
+        "fax": "970-474-2026",
+        "address": "315 Cedar Street, Julesburg, CO 80737",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Summit",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 453-2272",
+        "fax": "970-453-1134",
+        "address": "501 N. Park Avenue, Breckenridge, CO 80424",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Teller",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(719) 689-2574",
+        "fax": "719-686-8000",
+        "address": "101 W. Bennett Avenue, Cripple Creek, CO 80813",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Weld",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 475-2400",
+        "fax": "",
+        "address": "915 10th Street, Greeley, CO 80631",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 345-2756",
+        "fax": "970-345-2829",
+        "address": "26861 Highway 34, Akron, CO 80720",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Yuma",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(970) 332-4118",
+        "fax": "970-332-4119",
+        "address": "310 Ash Street, Wray, CO 80758",
+        "research_status": "PARTIAL"
+      }
+    ]
+  }
+]

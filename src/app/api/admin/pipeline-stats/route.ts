@@ -64,7 +64,7 @@ async function fetchTracerfyBalance(): Promise<{
   try {
     const ctrl = new AbortController()
     const timer = setTimeout(() => ctrl.abort(), 5000)
-    const res = await fetch(`${TRACERFY_BASE}/account/`, {
+    const res = await fetch(`${TRACERFY_BASE}/analytics/`, {
       headers: { Authorization: `Bearer ${TRACERFY_KEY}` },
       signal: ctrl.signal,
     })
@@ -80,6 +80,68 @@ async function fetchTracerfyBalance(): Promise<{
     const msg = e instanceof Error ? e.message : String(e)
     return { ok: false, balance: null, detail: msg.slice(0, 80) }
   }
+}
+
+interface SourceAudit {
+  source: string
+  total: number
+  unique_surplus: number
+  unique_pct: number
+  dead_count: number
+  trust: "TRUST" | "SUSPECT" | "QUARANTINED"
+}
+
+async function fetchSourceUniqueness(): Promise<SourceAudit[]> {
+  // Use the RPC pattern -- but supabase-js can't run raw SQL. Build via batched queries.
+  // Pull aggregate via PostgREST: select source, count, dead aggregates by group is hard.
+  // Use distinct sources and per-source counts.
+  const { data: leads } = await supabaseAdmin
+    .from("foreclosure_leads")
+    .select("source, status, overage_amount")
+    .limit(50000)
+
+  const byCount: Record<string, { total: number; dead: number; surplus: Set<number> }> = {}
+  for (const lead of leads || []) {
+    const src = lead.source && lead.source.trim() ? lead.source : "(empty)"
+    if (!byCount[src]) byCount[src] = { total: 0, dead: 0, surplus: new Set<number>() }
+    byCount[src].total += 1
+    if (lead.status === "dead") byCount[src].dead += 1
+    if (lead.overage_amount != null) {
+      byCount[src].surplus.add(Number(lead.overage_amount))
+    }
+  }
+
+  const audits: SourceAudit[] = []
+  for (const [src, info] of Object.entries(byCount)) {
+    if (info.total < 5) continue
+    const surplusCount = info.surplus.size
+    const totalWithSurplus = info.total - 0 // overage_amount nulls aren't in surplus set; approximate
+    const uniquePct = totalWithSurplus > 0 ? (surplusCount / totalWithSurplus) * 100 : 0
+    const deadShare = info.dead / info.total
+    let trust: SourceAudit["trust"] = "TRUST"
+    if (deadShare > 0.7) trust = "QUARANTINED"
+    else if (uniquePct < 70) trust = "SUSPECT"
+    audits.push({
+      source: src,
+      total: info.total,
+      unique_surplus: surplusCount,
+      unique_pct: Math.round(uniquePct * 10) / 10,
+      dead_count: info.dead,
+      trust,
+    })
+  }
+
+  audits.sort((a, b) => {
+    // SUSPECT first (most actionable), then QUARANTINED, then TRUST
+    const order: Record<SourceAudit["trust"], number> = {
+      SUSPECT: 0,
+      QUARANTINED: 1,
+      TRUST: 2,
+    }
+    if (order[a.trust] !== order[b.trust]) return order[a.trust] - order[b.trust]
+    return b.total - a.total
+  })
+  return audits
 }
 
 export async function GET() {
@@ -109,24 +171,24 @@ export async function GET() {
     .gte("scraped_at", todayIso)
 
   // ── $5K+ unassigned reachable in Amariyon states ─────────────
-  const { data: unassignedRows } = await supabaseAdmin
-    .from("foreclosure_leads")
-    .select("state_abbr, primary_email, primary_phone, dnc_checked, on_dnc, overage_amount")
-    .gte("overage_amount", 5000)
-    .in("state_abbr", AMARIYON_STATES)
-    .in("status", ["new", "skip_traced", "contacted", "master", "diamond", "skip_trace_failed"])
-    .limit(20000)
-
   const { data: assignedIdRows } = await supabaseAdmin
     .from("operator_lead_assignments")
     .select("lead_id")
     .eq("status", "active")
   const assignedSet = new Set((assignedIdRows || []).map((r) => r.lead_id))
-  void assignedSet // (lead.id not selected to keep payload small)
+
+  const { data: unassignedRows } = await supabaseAdmin
+    .from("foreclosure_leads")
+    .select("id, state_abbr, primary_email, primary_phone, dnc_checked, on_dnc, overage_amount")
+    .gte("overage_amount", 5000)
+    .in("state_abbr", AMARIYON_STATES)
+    .in("status", ["new", "skip_traced", "contacted", "master", "diamond", "skip_trace_failed"])
+    .limit(20000)
 
   const reachableByState: Record<string, number> = {}
   let reachableTotal = 0
   for (const lead of unassignedRows || []) {
+    if (assignedSet.has(lead.id)) continue
     const reachable =
       (lead.primary_email && lead.primary_email.trim() !== "") ||
       (lead.primary_phone && lead.dnc_checked && !lead.on_dnc)
@@ -166,10 +228,11 @@ export async function GET() {
     .order("email_sent_at", { ascending: false, nullsFirst: false })
     .limit(10)
 
-  // ── External probes ──────────────────────────────────────────
-  const [camofox, tracerfy] = await Promise.all([
+  // ── External probes + source audit ───────────────────────────
+  const [camofox, tracerfy, sourceAudit] = await Promise.all([
     fetchCamofox(),
     fetchTracerfyBalance(),
+    fetchSourceUniqueness(),
   ])
 
   return NextResponse.json({
@@ -192,6 +255,7 @@ export async function GET() {
       camofox,
       tracerfy,
     },
+    sourceAudit,
     recent: {
       leads: recentLeads || [],
       outreach: recentOutreach || [],

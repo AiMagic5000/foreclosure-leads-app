@@ -155,15 +155,15 @@ async function processSmsDrip() {
 // GET: Cron-triggered drip processor (call every 5 minutes)
 export async function GET() {
   try {
-    const [emailResult, smsResult] = await Promise.all([
-      processEmailDrip(),
-      processSmsDrip(),
-    ])
+    // SMS drip DISABLED 2026-05-05 — gateway reliability issues
+    void processSmsDrip
+    const emailResult = await processEmailDrip()
 
     return NextResponse.json({
       success: true,
       ...emailResult,
-      ...smsResult,
+      smsSent: 0,
+      smsDisabled: true,
       processedAt: new Date().toISOString(),
     })
   } catch (err) {

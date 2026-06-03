@@ -1,0 +1,1242 @@
+[
+  {
+    "state_abbr": "CA",
+    "state_name": "California",
+    "statewide_efiling_system": "Odyssey eFileCA",
+    "statewide_efiling_url": "https://www.odysseyefileca.com/",
+    "counties": [
+      {
+        "county_name": "Alameda",
+        "phone": "510-891-6000",
+        "fax": "510-690-2555",
+        "address": "1225 Fallon Street, Oakland, CA 94612",
+        "clerk_website": "https://www.alameda.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Alpine",
+        "phone": "530-694-2113",
+        "fax": "",
+        "address": "14777 State Route 89, Markleeville, CA 96120",
+        "clerk_website": "https://www.alpine.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Amador",
+        "phone": "209-257-2660",
+        "fax": "",
+        "address": "500 Argonaut Lane, Jackson, CA 95642",
+        "clerk_website": "https://www.amadorcourt.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Butte",
+        "phone": "530-532-7009",
+        "fax": "",
+        "address": "1775 Concord Avenue, Chico, CA 95928",
+        "clerk_website": "https://www.buttecourt.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Calaveras",
+        "phone": "209-754-9800",
+        "fax": "",
+        "address": "400 Government Center Drive, San Andreas, CA 95249",
+        "clerk_website": "https://www.calaveras.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Colusa",
+        "phone": "530-458-5149",
+        "fax": "",
+        "address": "532 Oak Street, Colusa, CA 95932",
+        "clerk_website": "https://www.colusa.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Contra Costa",
+        "phone": "925-608-1000",
+        "fax": "",
+        "address": "725 Court Street, Martinez, CA 94553",
+        "clerk_website": "https://www.cc-courts.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Del Norte",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.delnortecourt.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "El Dorado",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.eldorado.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Fresno",
+        "phone": "559-445-5491",
+        "fax": "559-445-5769",
+        "address": "2424 Ventura Street, Fresno, CA 93721",
+        "clerk_website": "https://www.fresno.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Glenn",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.glenn.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Humboldt",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.humboldt.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Imperial",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.imperial.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Inyo",
+        "phone": "760-872-3038",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.inyo.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Kern",
+        "phone": "661-610-7300",
+        "fax": "",
+        "address": "1122 Jefferson Street, Delano, CA 93215",
+        "clerk_website": "https://www.kern.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Kings",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.kings.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lake",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.lake.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lassen",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.lassen.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Los Angeles",
+        "phone": "213-830-7000",
+        "fax": "213-897-2430",
+        "address": "300 South Spring Street, Floor 2 North Tower, Los Angeles, CA 90013",
+        "clerk_website": "https://www.lacourt.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Madera",
+        "phone": "559-901-3212",
+        "fax": "559-674-6593",
+        "address": "120 North Lake Street, Madera, CA 93638",
+        "clerk_website": "https://www.madera.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Marin",
+        "phone": "415-444-7000",
+        "fax": "",
+        "address": "3501 Civic Center Drive, San Rafael, CA 94903",
+        "clerk_website": "https://www.marin.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Mariposa",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.mariposa.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Mendocino",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.mendocino.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Merced",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.merced.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Modoc",
+        "phone": "530-233-6516",
+        "fax": "",
+        "address": "205 South East Street, Alturas, CA 96101",
+        "clerk_website": "https://www.modoc.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Mono",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.mono.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Monterey",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.monterey.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Napa",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.napacourt.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Nevada",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.nevadacourt.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Orange",
+        "phone": "657-622-6878",
+        "fax": "714-664-0897",
+        "address": "601 West Santa Ana Boulevard, Santa Ana, CA 92701",
+        "clerk_website": "https://www.occourts.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Placer",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.placer.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Plumas",
+        "phone": "530-283-6305",
+        "fax": "530-283-6415",
+        "address": "520 Main Street, Room 104, Quincy, CA 95971",
+        "clerk_website": "https://www.plumas.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Riverside",
+        "phone": "951-777-3147",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.riverside.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sacramento",
+        "phone": "916-654-0209",
+        "fax": "",
+        "address": "914 Capitol Mall, 4th Floor, Sacramento, CA 95814",
+        "clerk_website": "https://www.saccourt.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "San Benito",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.sanbenito.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "San Bernardino",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.sb-court.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "San Diego",
+        "phone": "619-844-2700",
+        "fax": "619-645-2495",
+        "address": "1100 Union Street, San Diego, CA 92101",
+        "clerk_website": "https://www.sdcourt.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "San Francisco",
+        "phone": "415-551-3808",
+        "fax": "",
+        "address": "400 McAllister Street, Room 103, San Francisco, CA 94102",
+        "clerk_website": "https://sf.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "San Joaquin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.sjcourts.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "San Luis Obispo",
+        "phone": "805-706-3600",
+        "fax": "",
+        "address": "1050 Monterey Street, Room 220, San Luis Obispo, CA 93408",
+        "clerk_website": "https://www.slo.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "San Mateo",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.sanmateocourt.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Santa Barbara",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.sbcourt.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Santa Clara",
+        "phone": "408-277-1004",
+        "fax": "",
+        "address": "333 West Santa Clara Street, Suite 1060, San Jose, CA 95113",
+        "clerk_website": "https://www.scscourt.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Santa Cruz",
+        "phone": "831-420-2200",
+        "fax": "",
+        "address": "701 Ocean Street, Santa Cruz, CA 95060",
+        "clerk_website": "https://www.santacruz.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Shasta",
+        "phone": "530-245-6900",
+        "fax": "",
+        "address": "1500 Court Street, Redding, CA 96001",
+        "clerk_website": "https://www.shasta.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sierra",
+        "phone": "530-289-3698",
+        "fax": "530-289-0205",
+        "address": "100 Courthouse Square, Downieville, CA 95936",
+        "clerk_website": "https://www.sierra.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Siskiyou",
+        "phone": "530-842-0411",
+        "fax": "",
+        "address": "411 Fourth Street, Yreka, CA 96097",
+        "clerk_website": "https://www.siskiyou.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Solano",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.solano.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sonoma",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.sonomacourt.org/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Stanislaus",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.stanislaus.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sutter",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.sutter.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Tehama",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.tehama.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Trinity",
+        "phone": "530-623-1208",
+        "fax": "530-623-8397",
+        "address": "11 Court Street, Weaverville, CA 96093",
+        "clerk_website": "https://www.trinity.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Tulare",
+        "phone": "559-595-6400",
+        "fax": "",
+        "address": "640 South Alta Avenue, Dinuba, CA 93618",
+        "clerk_website": "https://www.tulare.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Tuolumne",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.tuolumne.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Ventura",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.ventura.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Yolo",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.yolo.courts.ca.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Yuba",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "https://www.yuba.courts.ca.gov/",
+        "efiling_url": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "TN",
+    "state_name": "Tennessee",
+    "statewide_efiling_system": "eFileTN",
+    "statewide_efiling_url": "https://efileanytime.com/",
+    "counties": [
+      {
+        "county_name": "Anderson",
+        "phone": "865-254-1700",
+        "fax": "",
+        "address": "100 N. Main Street Suite 301, Clinton, TN 37716",
+        "clerk_website": "https://andersoncountytn.gov/circuit-court-clerk/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bedford",
+        "phone": "931-684-3223",
+        "fax": "",
+        "address": "108 North Creek Drive, Suite 6, Shelbyville, TN 37160",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Benton",
+        "phone": "731-584-6711",
+        "fax": "731-584-2081",
+        "address": "1 Court Square Room 207, Camden, TN 38320",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bledsoe",
+        "phone": "423-447-6488",
+        "fax": "",
+        "address": "P.O. Box 455, Pikeville, TN 37367",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Blount",
+        "phone": "865-273-5400",
+        "fax": "",
+        "address": "926 E Lamar Alexander Parkway, Maryville, TN 37804",
+        "clerk_website": "https://www.blounttn.gov/1003/Circuit-Court-Clerk",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bradley",
+        "phone": "423-728-7214",
+        "fax": "",
+        "address": "P.O. Box 1167, Cleveland, TN 37311",
+        "clerk_website": "https://bradleycountytn.gov/county-government/circuit-criminal-court-clerk/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Campbell",
+        "phone": "423-562-2624",
+        "fax": "",
+        "address": "P.O. Box 26, Jacksboro, TN 37757",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cannon",
+        "phone": "615-563-4461",
+        "fax": "",
+        "address": "200 West Main Street, Woodbury, TN 37164",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Carroll",
+        "phone": "731-986-1932",
+        "fax": "",
+        "address": "99 Court Square, Suite 103, Huntingdon, TN 38344",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Carter",
+        "phone": "423-542-1825",
+        "fax": "",
+        "address": "900 E. Elk Ave, Elizabethton, TN 37643",
+        "clerk_website": "https://www.cartercountytn.gov/government/elected_officials/circuit_court_clerk.php",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cheatham",
+        "phone": "615-792-3272",
+        "fax": "",
+        "address": "100 Public Square, Suite 225, Ashland City, TN 37015",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Chester",
+        "phone": "731-989-2454",
+        "fax": "",
+        "address": "333 Eric Bell Drive, Suite D, Henderson, TN 38340",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Claiborne",
+        "phone": "423-626-3334",
+        "fax": "",
+        "address": "415 Straight Creek Road, New Tazewell, TN 37825",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Clay",
+        "phone": "931-243-2557",
+        "fax": "",
+        "address": "P.O. Box 749, Celina, TN 38551",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cocke",
+        "phone": "423-623-6124",
+        "fax": "",
+        "address": "111 Court Avenue, Room 201, Newport, TN 37821",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Coffee",
+        "phone": "931-723-5110",
+        "fax": "931-723-5116",
+        "address": "P.O. Box 629, Manchester, TN 37355",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Crockett",
+        "phone": "731-696-5462",
+        "fax": "731-696-2605",
+        "address": "1 South Bell Street, Suite 6, Alamo, TN 38541",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cumberland",
+        "phone": "931-484-6647",
+        "fax": "",
+        "address": "60 Justice Center Drive, Suite 300, Crossville, TN 38555",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Davidson",
+        "phone": "615-862-5181",
+        "fax": "",
+        "address": "#1 Public Square, Suite 302, Nashville, TN 37201",
+        "clerk_website": "https://circuitclerk.nashville.gov/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Decatur",
+        "phone": "731-852-3125",
+        "fax": "",
+        "address": "P.O. Box 488, Decaturville, TN 38329",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "DeKalb",
+        "phone": "615-597-5711",
+        "fax": "",
+        "address": "1 Public Square, Room 201, Smithville, TN 37166",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Dickson",
+        "phone": "615-789-7010",
+        "fax": "615-789-7018",
+        "address": "P.O. Box 70, Charlotte, TN 37036",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Dyer",
+        "phone": "731-286-7809",
+        "fax": "731-288-7862",
+        "address": "P.O. Box 1360, Dyersburg, TN 38024",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Fayette",
+        "phone": "901-465-5205",
+        "fax": "901-465-5229",
+        "address": "P.O. Box 670, Somerville, TN 38068",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Fentress",
+        "phone": "931-879-7919",
+        "fax": "",
+        "address": "140 Justice Center Drive Suite 126, Jamestown, TN 38556",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Franklin",
+        "phone": "931-967-2923",
+        "fax": "",
+        "address": "440 George Fraley Parkway Room #157, Winchester, TN 37398",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Gibson",
+        "phone": "731-855-7615",
+        "fax": "731-855-7676",
+        "address": "P.O. Box 147, Trenton, TN 38382",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Giles",
+        "phone": "931-363-5311",
+        "fax": "",
+        "address": "P.O. Box 678, Pulaski, TN 38478",
+        "clerk_website": "https://gilescountytn.gov/courts-2/circuit-court/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Grainger",
+        "phone": "865-828-3605",
+        "fax": "865-828-3458",
+        "address": "P.O. Box 157, Rutledge, TN 37861",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Greene",
+        "phone": "",
+        "fax": "",
+        "address": "101 South Main Street, Courthouse, Greeneville, TN 37743",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Grundy",
+        "phone": "931-692-3368",
+        "fax": "",
+        "address": "P.O. Box 161, Altamont, TN 37301",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hamblen",
+        "phone": "423-586-5640",
+        "fax": "423-585-2764",
+        "address": "510 Allison Street, Morristown, TN 37814",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hamilton",
+        "phone": "423-209-6700",
+        "fax": "",
+        "address": "625 Georgia Avenue, Chattanooga, TN 37402",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hancock",
+        "phone": "423-733-2954",
+        "fax": "",
+        "address": "1237 Main Street, Sneedville, TN 37869",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hardeman",
+        "phone": "731-609-4883",
+        "fax": "",
+        "address": "505 South Main, Suite A, Bolivar, TN 38008",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hardin",
+        "phone": "731-925-1000",
+        "fax": "",
+        "address": "465 Main Street, Savannah, TN 38372",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hawkins",
+        "phone": "423-272-3397",
+        "fax": "",
+        "address": "115 Justice Center Dr Suite 1237, Rogersville, TN 37857",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Haywood",
+        "phone": "731-772-1112",
+        "fax": "",
+        "address": "100 South Dupree, County Justice Complex, Brownsville, TN 38012",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Henderson",
+        "phone": "731-968-2031",
+        "fax": "731-967-9441",
+        "address": "170 Justice Center Drive, Lexington, TN 38351",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Henry",
+        "phone": "731-642-0461",
+        "fax": "731-642-6531",
+        "address": "P.O. Box 429, Paris, TN 38242",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hickman",
+        "phone": "931-729-2211",
+        "fax": "931-729-6141",
+        "address": "104 College Avenue, Suite 204, Centerville, TN 37033",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Houston",
+        "phone": "",
+        "fax": "",
+        "address": "P.O. Box 414, Erin, TN 37061",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Humphreys",
+        "phone": "",
+        "fax": "",
+        "address": "100 North Court Square, Room 106, Waverly, TN 37185",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jackson",
+        "phone": "931-268-9314",
+        "fax": "931-268-4555",
+        "address": "P.O. Box 205, Gainesboro, TN 38549",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "phone": "865-397-2786",
+        "fax": "",
+        "address": "765 Justice Center Drive, Suite 2, Dandridge, TN 37725",
+        "clerk_website": "https://www.jeffersoncircuit.com/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Johnson",
+        "phone": "423-727-9012",
+        "fax": "",
+        "address": "222 West Main St., Mountain City, TN 37683",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Knox",
+        "phone": "865-776-3949",
+        "fax": "",
+        "address": "400 Main Street, Suite M-30, Knoxville, TN 37902",
+        "clerk_website": "https://www.knoxcounty.org/circuit/",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lake",
+        "phone": "731-253-7137",
+        "fax": "",
+        "address": "229 Church Street, Box 11, Tiptonville, TN 38079",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lauderdale",
+        "phone": "731-635-0101",
+        "fax": "",
+        "address": "675 Highway 51 South, Ripley, TN 38063",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lawrence",
+        "phone": "931-762-4398",
+        "fax": "",
+        "address": "240 West Gaines Street, NBU 12, Lawrenceburg, TN 38464",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lewis",
+        "phone": "931-796-3724",
+        "fax": "",
+        "address": "29 West Main St, Hohenwald, TN 38462",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "phone": "931-433-2334",
+        "fax": "",
+        "address": "112 Main Avenue South, Room 203, Fayetteville, TN 37334",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Loudon",
+        "phone": "865-458-2042",
+        "fax": "",
+        "address": "P.O. Box 280, Loudon, TN 37774",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Macon",
+        "phone": "615-666-2354",
+        "fax": "",
+        "address": "904 Highway 52 Bypass East, Lafayette, TN 37083",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Madison",
+        "phone": "731-423-6035",
+        "fax": "731-988-3007",
+        "address": "515 S. Liberty, Jackson, TN 38301",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Marion",
+        "phone": "423-942-2134",
+        "fax": "",
+        "address": "P.O. Box 789, Jasper, TN 37347",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Marshall",
+        "phone": "931-359-0536",
+        "fax": "",
+        "address": "302 Commerce Street, Lewisburg, TN 37091",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Maury",
+        "phone": "931-375-1100",
+        "fax": "",
+        "address": "1115 South Main St, 2nd Floor, Columbia, TN 38401",
+        "clerk_website": "https://www.maurycounty-tn.gov/206/Circuit-Court",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "McMinn",
+        "phone": "423-745-1923",
+        "fax": "",
+        "address": "1317 South White Street, Athens, TN 37303",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "McNairy",
+        "phone": "731-645-1015",
+        "fax": "",
+        "address": "300 Industrial Drive, Selmer, TN 38375",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Meigs",
+        "phone": "423-334-5821",
+        "fax": "",
+        "address": "P.O. Box 205, Decatur, TN 37322",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Monroe",
+        "phone": "423-442-2396",
+        "fax": "423-442-9538",
+        "address": "5400 New Highway 68, Suite 4, Madisonville, TN 37354",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "phone": "931-648-7680",
+        "fax": "",
+        "address": "2 Millennium Plaza, Suite 115, Clarksville, TN 37040",
+        "clerk_website": "https://montgomerytn.gov/circuit",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Moore",
+        "phone": "931-759-7208",
+        "fax": "",
+        "address": "P.O. Box 8185, Lynchburg, TN 37352",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Morgan",
+        "phone": "423-346-3503",
+        "fax": "",
+        "address": "P.O. Box 324, Wartburg, TN 37887",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Obion",
+        "phone": "731-507-0999",
+        "fax": "731-885-7922",
+        "address": "P.O. Box 606, Union City, TN 38261",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Overton",
+        "phone": "931-823-2312",
+        "fax": "",
+        "address": "1000 JT Poindexter Drive, Livingston, TN 38570",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Perry",
+        "phone": "931-589-2218",
+        "fax": "",
+        "address": "121 E. Main Street, Linden, TN 37096",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pickett",
+        "phone": "931-864-3958",
+        "fax": "",
+        "address": "1 Courthouse Square, Suite 100, Byrdstown, TN 38549",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Polk",
+        "phone": "423-338-4525",
+        "fax": "",
+        "address": "P.O. Box 256, Benton, TN 37307",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Putnam",
+        "phone": "931-528-1508",
+        "fax": "",
+        "address": "421 East Spring Street, Room 1C49A, Cookeville, TN 38501",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Rhea",
+        "phone": "423-775-7818",
+        "fax": "",
+        "address": "7824 Rhea County Hwy STE 432, Dayton, TN 37321",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Roane",
+        "phone": "865-376-2390",
+        "fax": "",
+        "address": "200 East Race Street, Suite 11, Kingston, TN 37763",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Robertson",
+        "phone": "615-384-7864",
+        "fax": "615-382-2283",
+        "address": "501 S. Main Street, Room 109, Springfield, TN 37172",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Rutherford",
+        "phone": "615-533-6721",
+        "fax": "",
+        "address": "116 W. Lytle Street, Murfreesboro, TN 37130",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Scott",
+        "phone": "423-663-2440",
+        "fax": "",
+        "address": "575 Scott High Drive, Huntsville, TN 37756",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sequatchie",
+        "phone": "423-949-2618",
+        "fax": "",
+        "address": "351 Fredonia Road, Suite B, Dunlap, TN 37327",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sevier",
+        "phone": "865-453-5536",
+        "fax": "",
+        "address": "125 Court Avenue, Suite 207E, Sevierville, TN 37862",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Shelby",
+        "phone": "901-222-3800",
+        "fax": "",
+        "address": "140 Adams Street, Room 324, Memphis, TN 38103",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Smith",
+        "phone": "615-735-0500",
+        "fax": "",
+        "address": "28 Racoon Branch, Hickman, TN 38567",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Stewart",
+        "phone": "931-232-7042",
+        "fax": "",
+        "address": "P.O. Box 193, Dover, TN 37058",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sullivan",
+        "phone": "423-279-2752",
+        "fax": "",
+        "address": "P.O. Box 585, Blountville, TN 37617",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sumner",
+        "phone": "615-452-4367",
+        "fax": "",
+        "address": "100 Public Square, County Courthouse, Gallatin, TN 37066",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Tipton",
+        "phone": "901-475-3310",
+        "fax": "",
+        "address": "1801 S. College, Suite 102, Covington, TN 38019",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Trousdale",
+        "phone": "615-374-3411",
+        "fax": "",
+        "address": "303 E Main, Ste 1, Hartsville, TN 37074",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Unicoi",
+        "phone": "423-743-3541",
+        "fax": "423-743-1118",
+        "address": "P.O. Box 2000, Erwin, TN 37650",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Union",
+        "phone": "865-992-5493",
+        "fax": "",
+        "address": "901 Main Street, Suite 220, Maynardville, TN 37807",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Van Buren",
+        "phone": "931-946-2153",
+        "fax": "",
+        "address": "179 Veterans Square, Spencer, TN 38585",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Warren",
+        "phone": "931-473-2373",
+        "fax": "",
+        "address": "P.O. Box 639, McMinnville, TN 37110",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Washington",
+        "phone": "423-753-1736",
+        "fax": "",
+        "address": "108 West Jackson Blvd., Suite 1212, Jonesborough, TN 37659",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wayne",
+        "phone": "931-722-5519",
+        "fax": "",
+        "address": "1016 Andrew Jackson Dr., Suite 202, Waynesboro, TN 38485",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Weakley",
+        "phone": "731-364-3455",
+        "fax": "",
+        "address": "116 West Main St Room 203, Dresden, TN 38225",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "White",
+        "phone": "931-836-3205",
+        "fax": "",
+        "address": "111 Depot Street, Suite 1, Sparta, TN 38583",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Williamson",
+        "phone": "615-790-5454",
+        "fax": "",
+        "address": "135 4th Avenue South, Franklin, TN 37064",
+        "clerk_website": "https://www.williamsoncounty-tn.gov/243/Circuit-Court-Clerk",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wilson",
+        "phone": "615-444-2042",
+        "fax": "",
+        "address": "134 South College Street, Lebanon, TN 37087",
+        "clerk_website": "",
+        "efiling_url": ""
+      }
+    ]
+  }
+]

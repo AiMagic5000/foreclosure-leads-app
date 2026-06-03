@@ -44,6 +44,17 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ agents })
   }
 
+  // Pending agent lead-requests queue.
+  if (searchParams.has('requests')) {
+    const { data, error } = await supabaseAdmin
+      .from('lead_requests')
+      .select('id, user_email, user_name, account_type, requested_count, state_preference, operator_pin_id, created_at')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: true })
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ requests: data || [] })
+  }
+
   // States list for the filter chips.
   if (searchParams.has('states')) {
     const { data, error } = await supabaseAdmin.from('fresh_unassigned_leads').select('state_abbr')
@@ -78,13 +89,13 @@ export async function POST(req: NextRequest) {
   const gate = await requireAdmin()
   if (gate.error) return gate.error
 
-  let body: { leadIds?: string[]; pinId?: string; agentName?: string }
+  let body: { leadIds?: string[]; pinId?: string; agentName?: string; requestId?: string }
   try {
     body = await req.json()
   } catch {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
-  const { leadIds, pinId, agentName } = body
+  const { leadIds, pinId, agentName, requestId } = body
   if (!Array.isArray(leadIds) || leadIds.length === 0 || !pinId) {
     return NextResponse.json({ error: 'leadIds[] and pinId are required' }, { status: 400 })
   }
@@ -113,6 +124,25 @@ export async function POST(req: NextRequest) {
       .from('foreclosure_leads')
       .update({ assigned_agent: agentName || null, assigned_date: now, last_updated: now })
       .in('id', claimed)
+  }
+
+  // If fulfilling a specific agent request, advance/close it.
+  if (requestId && claimed.length > 0) {
+    const { data: reqRow } = await supabaseAdmin
+      .from('lead_requests')
+      .select('requested_count, fulfilled_count')
+      .eq('id', requestId)
+      .maybeSingle()
+    const prev = (reqRow as { requested_count?: number; fulfilled_count?: number } | null) || {}
+    const newFulfilled = (prev.fulfilled_count || 0) + claimed.length
+    await supabaseAdmin
+      .from('lead_requests')
+      .update({
+        fulfilled_count: newFulfilled,
+        status: newFulfilled >= (prev.requested_count || 0) ? 'fulfilled' : 'pending',
+        fulfilled_at: new Date().toISOString(),
+      })
+      .eq('id', requestId)
   }
 
   return NextResponse.json({

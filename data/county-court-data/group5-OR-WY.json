@@ -1,0 +1,2690 @@
+[
+  {
+    "state_abbr": "OR",
+    "state_name": "Oregon",
+    "statewide_efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+    "statewide_efiling_system": "OJD eFile (Odyssey File & Serve)",
+    "clerk_directory_url": "https://www.courts.oregon.gov/courts/pages/default.aspx",
+    "statewide_e_filing_info": "24/7 access for registered users. Free to use but statutory filing fees may apply. Help Desk: 503-986-5582 (Mon-Fri, 7am-5pm)",
+    "counties": [
+      {
+        "county_name": "Baker",
+        "clerk_website": "https://www.courts.oregon.gov/courts/baker/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Benton",
+        "clerk_website": "https://www.courts.oregon.gov/courts/benton/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clackamas",
+        "clerk_website": "https://www.courts.oregon.gov/courts/clackamas/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clatsop",
+        "clerk_website": "https://www.courts.oregon.gov/courts/clatsop/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Columbia",
+        "clerk_website": "https://www.courts.oregon.gov/courts/columbia/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Coos",
+        "clerk_website": "https://www.courts.oregon.gov/courts/coos/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crook",
+        "clerk_website": "https://www.courts.oregon.gov/courts/crook/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Curry",
+        "clerk_website": "https://www.courts.oregon.gov/courts/curry/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Deschutes",
+        "clerk_website": "https://www.courts.oregon.gov/courts/deschutes/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "https://www.courts.oregon.gov/courts/douglas/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gilliam",
+        "clerk_website": "https://www.courts.oregon.gov/courts/gilliam/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "https://www.courts.oregon.gov/courts/grant/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harney",
+        "clerk_website": "https://harneycountyor.gov/harney-county-court/",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hood River",
+        "clerk_website": "https://www.courts.oregon.gov/courts/hood-river/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "https://www.courts.oregon.gov/courts/jackson/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "https://www.courts.oregon.gov/courts/jefferson/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Josephine",
+        "clerk_website": "https://www.courts.oregon.gov/courts/josephine/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Klamath",
+        "clerk_website": "https://www.courts.oregon.gov/courts/klamath/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "https://www.courts.oregon.gov/courts/lake/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lane",
+        "clerk_website": "https://www.courts.oregon.gov/courts/lane/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "https://www.courts.oregon.gov/courts/lincoln/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Linn",
+        "clerk_website": "https://www.courts.oregon.gov/courts/linn/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Malheur",
+        "clerk_website": "https://www.courts.oregon.gov/courts/malheur/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "https://www.courts.oregon.gov/courts/marion/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morrow",
+        "clerk_website": "https://www.courts.oregon.gov/courts/morrow/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Multnomah",
+        "clerk_website": "https://www.courts.oregon.gov/courts/multnomah/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "https://www.courts.oregon.gov/courts/polk/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sherman",
+        "clerk_website": "https://www.courts.oregon.gov/courts/sherman/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tillamook",
+        "clerk_website": "https://www.tillamookcounty.gov/circuit-court",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "(503) 842-2597",
+        "phone": "(503) 842-2596",
+        "address": "201 Laurel Ave, Tillamook, OR 97141"
+      },
+      {
+        "county_name": "Umatilla",
+        "clerk_website": "https://www.courts.oregon.gov/courts/umatilla/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "https://www.courts.oregon.gov/courts/union/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wallowa",
+        "clerk_website": "https://www.co.wallowa.or.us/district-attorney/page/how-do-i-contact-court",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "541-426-4992",
+        "phone": "541-426-4991",
+        "address": "101 S. River Street, Rm. 204, Enterprise, OR 97828"
+      },
+      {
+        "county_name": "Wasco",
+        "clerk_website": "https://www.courts.oregon.gov/courts/wasco/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "https://www.courts.oregon.gov/courts/washington/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wheeler",
+        "clerk_website": "https://www.courts.oregon.gov/courts/wheeler/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yamhill",
+        "clerk_website": "https://www.courts.oregon.gov/courts/yamhill/pages/default.aspx",
+        "efiling_url": "https://oregon.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "statewide_efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+    "statewide_efiling_system": "PACFile (Unified Judicial System)",
+    "clerk_directory_url": "https://www.papcca.org/public-officials",
+    "statewide_e_filing_info": "Electronic filing of documents available for Supreme, Superior, Commonwealth, and Common Pleas courts. Accepts Visa, MasterCard, Discover, American Express, and ATM cards for fees.",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Allegheny",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Armstrong",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Beaver",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Bedford",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Berks",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Blair",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Bradford",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Bucks",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Butler",
+        "clerk_website": "https://www.butlercountypa.gov/393/Clerk-of-Courts",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Cambria",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Cameron",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Carbon",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Centre",
+        "clerk_website": "https://centrecountypa.gov/384/Prothonotary-Clerk-of-Courts",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Chester",
+        "clerk_website": "https://www.chesco.org/202/Clerk-of-Courts",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Clarion",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Clearfield",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_website": "https://www.clintoncountypa.gov/government/prothonotary",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Columbia",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Cumberland",
+        "clerk_website": "https://www.cumberlandcountypa.gov/1129/Clerk-of-Courts",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Dauphin",
+        "clerk_website": "https://www.dauphincounty.gov/government/publicly-elected-officials/clerk-of-courts",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Delaware",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Elk",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Erie",
+        "clerk_website": "https://courts.eriecountypa.gov/index.php/departments/clerk-of-records/prothonotary-civil-records/",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Forest",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Fulton",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Huntingdon",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Indiana",
+        "clerk_website": "https://www.indianacountypa.gov/departments/prothonotary-clerk-of-courts/",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "https://www.jeffersoncountypa.gov/departments/prothonotary/",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Juniata",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Lackawanna",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Lancaster",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Lebanon",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Lehigh",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Luzerne",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Lycoming",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "McKean",
+        "clerk_website": "https://www.mckeancountypa.gov/government/other_elected_officials/prothonotary___clerk_of_courts/index.php",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Mercer",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Mifflin",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "https://www.monroepacourts.us/news/news/2023/electronic-filing",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "https://www.montgomerycountypa.gov/307/Clerk-of-Courts",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Montour",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Northampton",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Northumberland",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Philadelphia",
+        "clerk_website": "https://www.courts.phila.gov/",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Potter",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Schuylkill",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Snyder",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Somerset",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Sullivan",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Susquehanna",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Tioga",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Venango",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "https://warrencountypa.gov/1222/Prothonotary-Clerk-of-Courts",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "https://www.washingtoncourts.us/188/Clerk-of-Courts",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Westmoreland",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "Wyoming",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      },
+      {
+        "county_name": "York",
+        "clerk_website": "",
+        "efiling_url": "https://ujsportal.pacourts.us/PACFile/Overview",
+        "fax": "",
+        "phone": "",
+        "address": "See PAPCCA directory"
+      }
+    ]
+  },
+  {
+    "state_abbr": "RI",
+    "state_name": "Rhode Island",
+    "statewide_efiling_url": "https://rhodeisland.tylertech.cloud/ofsweb",
+    "statewide_efiling_system": "Rhode Island Odyssey File and Serve",
+    "clerk_directory_url": "https://www.courts.ri.gov/about/Pages/contact-the-court.aspx",
+    "statewide_e_filing_info": "Mandatory for attorneys; optional for self-represented parties. 24/7 access. Odyssey File & Serve product by Tyler Technologies.",
+    "counties": [
+      {
+        "county_name": "Providence",
+        "clerk_website": "https://www.courts.ri.gov/courts/superiorcourt/Pages/default.aspx",
+        "efiling_url": "https://rhodeisland.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "(401) 822-6865",
+        "address": "Licht Judicial Complex, Providence, RI (Providence/Bristol combined)"
+      },
+      {
+        "county_name": "Bristol",
+        "clerk_website": "https://www.courts.ri.gov/courts/superiorcourt/Pages/default.aspx",
+        "efiling_url": "https://rhodeisland.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "(401) 822-6865",
+        "address": "Licht Judicial Complex, Providence, RI (Providence/Bristol combined)"
+      },
+      {
+        "county_name": "Kent",
+        "clerk_website": "https://www.courts.ri.gov/courts/superiorcourt/Pages/default.aspx",
+        "efiling_url": "https://rhodeisland.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "(401) 822-6900",
+        "address": "Noel Judicial Complex, Warwick, RI"
+      },
+      {
+        "county_name": "Newport",
+        "clerk_website": "https://www.courts.ri.gov/courts/superiorcourt/Pages/default.aspx",
+        "efiling_url": "https://rhodeisland.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "(401) 841-8330",
+        "address": "Murray Judicial Complex, Newport, RI"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "https://www.courts.ri.gov/courts/superiorcourt/Pages/default.aspx",
+        "efiling_url": "https://rhodeisland.tylertech.cloud/ofsweb",
+        "fax": "",
+        "phone": "(401) 782-4121",
+        "address": "McGrath Judicial Complex, Wakefield, RI"
+      }
+    ]
+  },
+  {
+    "state_abbr": "SC",
+    "state_name": "South Carolina",
+    "statewide_efiling_url": "https://portal.fccms.dss.sc.gov/",
+    "statewide_efiling_system": "South Carolina Judicial Department Portal (FCCMS)",
+    "clerk_directory_url": "https://www.scaccesstojustice.org/clerks-of-court",
+    "statewide_e_filing_info": "South Carolina has 46 counties. Clerks of Court are popularly elected for four-year terms and serve both Circuit Court and Family Court.",
+    "counties": [
+      {
+        "county_name": "Abbeville",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Aiken",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Allendale",
+        "clerk_website": "https://www.darcosc.com/government/clerk_of_the_court/index.php",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Anderson",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bamberg",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Barnwell",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Beaufort",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Berkeley",
+        "clerk_website": "https://berkeleycountysc.gov/dept/coc/",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Charleston",
+        "clerk_website": "https://clerkofcourt.charlestoncounty.org/",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "(843) 958-5000",
+        "address": "100 Broad Street, Suite 106, Charleston, SC 29401-2258"
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chester",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chesterfield",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clarendon",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Colleton",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Darlington",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "843-398-4330",
+        "phone": "843-398-4330",
+        "address": "110 N. Main Street, Darlington, SC 29532"
+      },
+      {
+        "county_name": "Dillon",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dorchester",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Edgefield",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fairfield",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Florence",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Georgetown",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greenville",
+        "clerk_website": "https://www.greenvillecounty.org/ClerkOfCourt/",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greenwood",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hampton",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Horry",
+        "clerk_website": "https://www.horrycountysc.gov/departments/clerk-of-court/",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kershaw",
+        "clerk_website": "https://www.kershaw.sc.gov/government/departments-a-g/clerk-of-court",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lancaster",
+        "clerk_website": "https://www.lancastercountysc.gov/195/Clerk-of-Court",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Laurens",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lexington",
+        "clerk_website": "https://lex-co.sc.gov/departments/clerk-court",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marlboro",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "McCormick",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Newberry",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oconee",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Orangeburg",
+        "clerk_website": "https://www.orangeburgcounty.org/169/Clerk-of-Court",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pickens",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Richland",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Saluda",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Spartanburg",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sumter",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Williamsburg",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "York",
+        "clerk_website": "",
+        "efiling_url": "https://portal.fccms.dss.sc.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "SD",
+    "state_name": "South Dakota",
+    "statewide_efiling_url": "https://ecourts.sd.gov/Default.aspx",
+    "statewide_efiling_system": "South Dakota eCourts (Odyssey File & Serve)",
+    "clerk_directory_url": "https://ujs.sd.gov/court-finder/",
+    "statewide_e_filing_info": "South Dakota Unified Judicial System uses Odyssey File & Serve. All documents must be filed in black and white. Documents cost $0.10 per page ($3.00 max) for images.",
+    "counties": [
+      {
+        "county_name": "Aurora",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Beadle",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Bennett",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Bon Homme",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Brookings",
+        "clerk_website": "https://www.brookingscountysd.gov/413/Courthouse",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Brown",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Brule",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Buffalo",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Butte",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Campbell",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Charles Mix",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Codington",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Custer",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Davison",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Day",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Deuel",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Dewey",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Edmunds",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Fall River",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Faulk",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Gregory",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Haakon",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Hamlin",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Hand",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Hanson",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Harding",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Hughes",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Hutchinson",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Hyde",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Jerauld",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Jones",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Kingsbury",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Lyman",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "McCook",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "McPherson",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Meade",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Mellette",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Miner",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Minnehaha",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Moody",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Pennington",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Perkins",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Potter",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Roberts",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Sanborn",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Shannon",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Spink",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Stanley",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Sully",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Todd",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Tripp",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Turner",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Walworth",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Yankton",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      },
+      {
+        "county_name": "Ziebach",
+        "clerk_website": "",
+        "efiling_url": "https://ecourts.sd.gov/Default.aspx",
+        "fax": "",
+        "phone": "",
+        "address": "See South Dakota UJS Court Finder"
+      }
+    ]
+  },
+  {
+    "state_abbr": "TN",
+    "state_name": "Tennessee",
+    "statewide_efiling_url": "http://www.odysseyefiletn.com/",
+    "statewide_efiling_system": "eFileTN (Odyssey File & Serve)",
+    "clerk_directory_url": "https://www.tncourts.gov/courts/circuit-criminal-chancery-courts/clerks",
+    "statewide_e_filing_info": "Tennessee has 95 counties organized into 31 judicial districts. E-filing available through eFileTN and county-specific portals (Tybera, ImageSoft). Appellate E-Filing also available.",
+    "counties": [
+      {
+        "county_name": "Anderson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bedford",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Benton",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bledsoe",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Blount",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bradley",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Campbell",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cannon",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carter",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cheatham",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chester",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Claiborne",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cocke",
+        "clerk_website": "https://www.cockecountytn.gov/circuit-court-clerk",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Coffee",
+        "clerk_website": "https://www.coffeecountytn.gov/349/E-Filing",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crockett",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cumberland",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Davidson",
+        "clerk_website": "https://circuitclerk.nashville.gov/",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Decatur",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "DeKalb",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dickson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dyer",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fentress",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "https://franklincountycircuitcourtclerk.org/circuit-court-2/",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gibson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Giles",
+        "clerk_website": "https://gilescountytn.gov/courts-2/circuit-court/",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grainger",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grundy",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hamblen",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hancock",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hardeman",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hardin",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harris",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hart",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Haywood",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henderson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hickman",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Houston",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Humphreys",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Knox",
+        "clerk_website": "https://www.knoxcounty.org/circuit/",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lauderdale",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lewis",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Loudon",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Macon",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Maury",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "McMinn",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "McNairy",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Meigs",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Moore",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Obion",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Overton",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pickett",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Putnam",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rhea",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Roane",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Robertson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rutherford",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "https://scottcounty.com/government/circuit-court/",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sequatchie",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sevier",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Smith",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stewart",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sullivan",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sumner",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tipton",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Trousdale",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Unicoi",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Van Buren",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Weakley",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "White",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Williamson",
+        "clerk_website": "https://www.williamsoncounty-tn.gov/243/Circuit-Court-Clerk",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wilson",
+        "clerk_website": "",
+        "efiling_url": "http://www.odysseyefiletn.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "statewide_efiling_url": "https://www.efiletexas.gov/",
+    "statewide_efiling_system": "eFileTexas (Official E-Filing System for Texas Courts)",
+    "clerk_directory_url": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+    "statewide_e_filing_info": "E-filing is mandatory for all attorneys filing civil, family, probate, or criminal cases in the Supreme Court, Court of Criminal Appeals, Courts of Appeals, and all district and county courts. Non-attorney filers encouraged but not required. Texas has 254 counties.",
+    "counties": [
+      {
+        "county_name": "Anderson",
+        "clerk_name": "Mark Staples",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(903) 723-4625",
+        "phone": "(903) 723-7430",
+        "address": "500 N. Church Street, #10, Palestine, TX 75801"
+      },
+      {
+        "county_name": "Andrews",
+        "clerk_name": "Vicki Scott",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(432) 524-1464",
+        "phone": "(432) 524-1426",
+        "address": "P.O. Box 727, Andrews, TX 79714"
+      },
+      {
+        "county_name": "Angelina",
+        "clerk_name": "Amy Fincher",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(936) 634-5915",
+        "phone": "(936) 634-8339",
+        "address": "P.O. Box 908, Lufkin, TX 75902"
+      },
+      {
+        "county_name": "Aransas",
+        "clerk_name": "Misty R.F. Kimbrough",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(361) 790-0119",
+        "phone": "(361) 790-0122",
+        "address": "2840 Hwy 35 N, Rockport, TX 78383"
+      },
+      {
+        "county_name": "Archer",
+        "clerk_name": "Karren Winter",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(940) 574-2876",
+        "phone": "(940) 574-4302",
+        "address": "P.O. Box 427, Archer City, TX 76351"
+      },
+      {
+        "county_name": "Armstrong",
+        "clerk_name": "Tawnee Irene Blodgett",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(806) 553-5980",
+        "phone": "(806) 553-2861",
+        "address": "P.O. Box 309, Claude, TX 79019"
+      },
+      {
+        "county_name": "Atascosa",
+        "clerk_name": "Theresa Carrasco",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(830) 769-1021",
+        "phone": "(830) 767-2511",
+        "address": "#1 Courthouse Circle, Ste. 102, Jourdanton, TX 78026"
+      },
+      {
+        "county_name": "Austin",
+        "clerk_name": "Diane Day",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(979) 865-0336",
+        "phone": "(979) 227-3144",
+        "address": "265 N. Chesley Street, Suite 7, Bellville, TX 77418"
+      },
+      {
+        "county_name": "Bailey",
+        "clerk_name": "Irene Espinoza",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(806) 272-3538",
+        "phone": "(806) 272-3044",
+        "address": "300 South First St., Ste. 200, Muleshoe, TX 79347"
+      },
+      {
+        "county_name": "Bandera",
+        "clerk_name": "Tandie Mansfield",
+        "clerk_website": "",
+        "efiling_url": "https://www.efiletexas.gov/",
+        "fax": "(830) 796-8323",
+        "phone": "(830) 796-3332",
+        "address": "P.O. Box 823, Bandera, TX 78003"
+      }
+    ]
+  }
+]

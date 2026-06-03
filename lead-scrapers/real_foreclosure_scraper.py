@@ -63,68 +63,883 @@ USER_AGENTS = [
 # ============================================================================
 
 COUNTY_EXCESS_FUNDS_URLS = {
-    # Georgia - Aggregator with 158 counties
+    # ========================================================================
+    # GEORGIA - Aggregator with 158 counties
+    # ========================================================================
     "georgia_all": {
         "url": "https://www.ealbertlaw.com/blog/excess-funds-list-georgia-counties",
-        "type": "aggregator"
+        "type": "aggregator",
+        "state": "GA"
     },
     "fulton_ga": {
         "url": "https://fultonassessor.org/wp-content/uploads/sites/50/2021/01/unclaimedfunds.pdf",
-        "type": "pdf"
+        "type": "pdf",
+        "state": "GA"
     },
     "gwinnett_ga": {
         "url": "https://www.gwinnetttaxcommissioner.com/property-tax/tax-sale-excess-funds",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "GA"
     },
     "dekalb_ga": {
         "url": "https://www.dekalbcountyga.gov/tax-commissioner/excess-funds",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "GA"
     },
-    # California
+    # ========================================================================
+    # CALIFORNIA (excluded from expansion but keeping existing entries)
+    # ========================================================================
     "los_angeles_ca": {
         "url": "https://ttc.lacounty.gov/excess-proceeds/",
-        "type": "pdf_list"
+        "type": "pdf_list",
+        "state": "CA"
     },
     "orange_ca": {
         "url": "https://www.ocgov.com/gov/ttc/proptax/excessproceeds",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "CA"
     },
     "san_diego_ca": {
         "url": "https://www.sdttc.com/content/ttc/en/tax-collection/excess-proceeds.html",
-        "type": "pdf_list"
+        "type": "pdf_list",
+        "state": "CA"
     },
-    # Florida
+    # ========================================================================
+    # FLORIDA
+    # ========================================================================
     "miami_dade_fl": {
         "url": "https://www.miamidade.gov/global/finance/taxdeeds/excess-funds.page",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "FL"
     },
     "broward_fl": {
         "url": "https://www.broward.org/RecordsTaxesTreasury/ExcessFunds/Pages/default.aspx",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "FL"
     },
     "hillsborough_fl": {
         "url": "https://www.hillsclerk.com/Records-and-Tax-Services/Tax-Deeds/Tax-Deed-Surplus",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "FL"
     },
-    # Texas
+    # ========================================================================
+    # TEXAS
+    # ========================================================================
     "harris_tx": {
         "url": "https://www.hctx.net/constables/pct1/excessfunds.aspx",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "TX"
     },
     "dallas_tx": {
         "url": "https://www.dallascounty.org/departments/tax/excess-proceeds.php",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "TX"
     },
-    # Arizona
+    "tarrant_tx": {
+        "url": "https://www.tarrantcounty.com/en/tax/tax-sale/excess-proceeds.html",
+        "type": "html_table",
+        "state": "TX"
+    },
+    # ========================================================================
+    # ARIZONA
+    # ========================================================================
     "maricopa_az": {
         "url": "https://treasurer.maricopa.gov/excess-proceeds/",
-        "type": "html_table"
+        "type": "html_table",
+        "state": "AZ"
     },
-    # Illinois
+    "pima_az": {
+        "url": "https://www.pima.gov/1866/Tax-Lien-Sale",
+        "type": "html_table",
+        "state": "AZ"
+    },
+    "pinal_az": {
+        "url": "https://www.pinalcountyaz.gov/Treasurer/Pages/TaxLienSale.aspx",
+        "type": "html_table",
+        "state": "AZ"
+    },
+    # ========================================================================
+    # ILLINOIS
+    # ========================================================================
     "cook_il": {
         "url": "https://www.cookcountytreasurer.com/scavengersales.aspx",
-        "type": "html_table"
-    }
+        "type": "html_table",
+        "state": "IL"
+    },
+    "dupage_il": {
+        "url": "https://www.dupagecounty.gov/treasurer/tax_sale.php",
+        "type": "html_table",
+        "state": "IL"
+    },
+    "lake_il": {
+        "url": "https://www.lakecountyil.gov/4394/Annual-Tax-Sale",
+        "type": "html_table",
+        "state": "IL"
+    },
+    # ========================================================================
+    # ALABAMA (AL)
+    # ========================================================================
+    "jefferson_al": {
+        "url": "https://www.jccal.org/Default.asp?ID=2350&pg=Tax",
+        "type": "html_table",
+        "state": "AL"
+    },
+    "mobile_al": {
+        "url": "https://www.mobilecountyal.gov/government/departments/revenue/tax-sales/",
+        "type": "html_table",
+        "state": "AL"
+    },
+    "madison_al": {
+        "url": "https://www.madisoncountyal.gov/departments/tax-collector/tax-sale",
+        "type": "html_table",
+        "state": "AL"
+    },
+    # ========================================================================
+    # ALASKA (AK)
+    # ========================================================================
+    "anchorage_ak": {
+        "url": "https://www.muni.org/Departments/finance/treasury/Pages/TaxForeclosure.aspx",
+        "type": "html_table",
+        "state": "AK"
+    },
+    "fairbanks_ak": {
+        "url": "https://www.fnsb.gov/291/Foreclosure",
+        "type": "html_table",
+        "state": "AK"
+    },
+    "matanuska_susitna_ak": {
+        "url": "https://www.matsugov.us/finance/property-tax-foreclosure",
+        "type": "html_table",
+        "state": "AK"
+    },
+    # ========================================================================
+    # COLORADO (CO)
+    # ========================================================================
+    "denver_co": {
+        "url": "https://denver.prelive.opencities.com/files/assets/public/v/7/clerk-and-recorder/documents/foreclosures/forms/4001_pt_excessfundsclaimform.pdf",
+        "type": "pdf",
+        "state": "CO"
+    },
+    "arapahoe_co": {
+        "url": "https://www.arapahoeco.gov/your_county/county_departments/public_trustee/foreclosures/overbid_information.php",
+        "type": "html_table",
+        "state": "CO"
+    },
+    "el_paso_co": {
+        "url": "https://treasurer.elpasoco.com/tax-lien-sale/",
+        "type": "html_table",
+        "state": "CO"
+    },
+    # ========================================================================
+    # CONNECTICUT (CT)
+    # ========================================================================
+    "fairfield_ct": {
+        "url": "https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx",
+        "type": "html_table",
+        "state": "CT"
+    },
+    "hartford_ct": {
+        "url": "https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx",
+        "type": "html_table",
+        "state": "CT"
+    },
+    "new_haven_ct": {
+        "url": "https://sso.eservices.jud.ct.gov/foreclosures/Public/PendPostbyTownList.aspx",
+        "type": "html_table",
+        "state": "CT"
+    },
+    # ========================================================================
+    # DELAWARE (DE)
+    # ========================================================================
+    "new_castle_de": {
+        "url": "https://www.nccde.org/389/Sheriff-Sales",
+        "type": "html_table",
+        "state": "DE"
+    },
+    "kent_de": {
+        "url": "https://www.co.kent.de.us/sheriff/sales.aspx",
+        "type": "html_table",
+        "state": "DE"
+    },
+    "sussex_de": {
+        "url": "https://sussexcountyde.gov/sheriff-sales",
+        "type": "html_table",
+        "state": "DE"
+    },
+    # ========================================================================
+    # DISTRICT OF COLUMBIA (DC)
+    # ========================================================================
+    "dc_dc": {
+        "url": "https://otr.cfo.dc.gov/page/real-property-tax-sale",
+        "type": "html_table",
+        "state": "DC"
+    },
+    # ========================================================================
+    # HAWAII (HI)
+    # ========================================================================
+    "honolulu_hi": {
+        "url": "https://www.honolulu.gov/budget/realproperty/rp-tax-sale.html",
+        "type": "html_table",
+        "state": "HI"
+    },
+    "hawaii_hi": {
+        "url": "https://www.hawaiicounty.gov/departments/finance/real-property-tax/tax-sale",
+        "type": "html_table",
+        "state": "HI"
+    },
+    "maui_hi": {
+        "url": "https://www.mauicounty.gov/1889/Tax-Sale",
+        "type": "html_table",
+        "state": "HI"
+    },
+    # ========================================================================
+    # IDAHO (ID)
+    # ========================================================================
+    "ada_id": {
+        "url": "https://adacounty.id.gov/treasurer/tax-deed-sales/",
+        "type": "html_table",
+        "state": "ID"
+    },
+    "canyon_id": {
+        "url": "https://www.canyoncounty.id.gov/elected-officials/treasurer/tax-deed-sales",
+        "type": "html_table",
+        "state": "ID"
+    },
+    "kootenai_id": {
+        "url": "https://www.kcgov.us/departments/treasurer/tax-deed-sales",
+        "type": "html_table",
+        "state": "ID"
+    },
+    # ========================================================================
+    # INDIANA (IN)
+    # ========================================================================
+    "marion_in": {
+        "url": "https://www.indy.gov/activity/prepare-for-a-tax-sale",
+        "type": "html_table",
+        "state": "IN"
+    },
+    "lake_in": {
+        "url": "https://www.lakecountyin.org/departments/auditor/tax_sale.php",
+        "type": "html_table",
+        "state": "IN"
+    },
+    "hamilton_in": {
+        "url": "https://www.hamiltoncounty.in.gov/452/Real-Property-Tax-Sale",
+        "type": "html_table",
+        "state": "IN"
+    },
+    # ========================================================================
+    # IOWA (IA)
+    # ========================================================================
+    "polk_ia": {
+        "url": "https://www.polkcountyiowa.gov/treasurer/tax-sale/",
+        "type": "html_table",
+        "state": "IA"
+    },
+    "linn_ia": {
+        "url": "https://www.linncountyiowa.gov/434/Tax-Sale",
+        "type": "html_table",
+        "state": "IA"
+    },
+    "scott_ia": {
+        "url": "https://www.scottcountyiowa.gov/treasurer/tax-sale",
+        "type": "html_table",
+        "state": "IA"
+    },
+    # ========================================================================
+    # KANSAS (KS)
+    # ========================================================================
+    "johnson_ks": {
+        "url": "https://www.jocogov.org/dept/treasury-and-financial-management/tax-sale",
+        "type": "html_table",
+        "state": "KS"
+    },
+    "sedgwick_ks": {
+        "url": "https://www.sedgwickcounty.org/treasurer/tax-sales/",
+        "type": "html_table",
+        "state": "KS"
+    },
+    "wyandotte_ks": {
+        "url": "https://www.wycokck.org/Departments/Treasurer/Tax-Sale",
+        "type": "html_table",
+        "state": "KS"
+    },
+    # ========================================================================
+    # KENTUCKY (KY)
+    # ========================================================================
+    "jefferson_ky": {
+        "url": "https://www.jeffersoncountyclerk.org/2022-jefferson-county-delinquent-property-listing/",
+        "type": "html_table",
+        "state": "KY"
+    },
+    "fayette_ky": {
+        "url": "https://www.fayettecountypay.com/tax-sales.html",
+        "type": "html_table",
+        "state": "KY"
+    },
+    "kenton_ky": {
+        "url": "https://kentoncountykyclerk.com/delinquent-property-tax/",
+        "type": "html_table",
+        "state": "KY"
+    },
+    # ========================================================================
+    # LOUISIANA (LA)
+    # ========================================================================
+    "east_baton_rouge_la": {
+        "url": "https://www.brla.gov/455/Adjudicated-Property",
+        "type": "html_table",
+        "state": "LA"
+    },
+    "jefferson_la": {
+        "url": "https://www.jeffparish.gov/337/Surplus-Property-Division",
+        "type": "html_table",
+        "state": "LA"
+    },
+    "orleans_la": {
+        "url": "https://www.nolaassessor.com/",
+        "type": "html_table",
+        "state": "LA"
+    },
+    # ========================================================================
+    # MAINE (ME)
+    # ========================================================================
+    "cumberland_me": {
+        "url": "https://www.cumberlandcounty.org/388/Tax-Acquired-Property",
+        "type": "html_table",
+        "state": "ME"
+    },
+    "york_me": {
+        "url": "https://www.yorkcountymaine.gov/departments/tax_collector/index.php",
+        "type": "html_table",
+        "state": "ME"
+    },
+    "penobscot_me": {
+        "url": "https://www.penobscot-county.net/treasurer",
+        "type": "html_table",
+        "state": "ME"
+    },
+    # ========================================================================
+    # MARYLAND (MD)
+    # ========================================================================
+    "baltimore_county_md": {
+        "url": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-sale",
+        "type": "html_table",
+        "state": "MD"
+    },
+    "montgomery_md": {
+        "url": "https://www.montgomerycountymd.gov/Finance/TaxSale-general.html",
+        "type": "html_table",
+        "state": "MD"
+    },
+    "prince_georges_md": {
+        "url": "https://www.princegeorgescountymd.gov/435/Tax-Sale",
+        "type": "html_table",
+        "state": "MD"
+    },
+    # ========================================================================
+    # MASSACHUSETTS (MA)
+    # ========================================================================
+    "middlesex_ma": {
+        "url": "https://www.mass.gov/info-details/massachusetts-law-about-mortgage-foreclosure",
+        "type": "html_table",
+        "state": "MA"
+    },
+    "worcester_ma": {
+        "url": "https://www.worcesterma.gov/finance/liens-auctions/public-auctions/tax-foreclosures",
+        "type": "html_table",
+        "state": "MA"
+    },
+    "suffolk_ma": {
+        "url": "https://www.cityofboston.gov/treasury/collecting/",
+        "type": "html_table",
+        "state": "MA"
+    },
+    # ========================================================================
+    # MICHIGAN (MI)
+    # ========================================================================
+    "wayne_mi": {
+        "url": "https://www.waynecounty.com/elected/treasurer/property-tax-auction.aspx",
+        "type": "html_table",
+        "state": "MI"
+    },
+    "oakland_mi": {
+        "url": "https://www.oakgov.com/government/oakland-county-treasurer-s-office/property-taxes/property-tax-foreclosure-surplus-claims",
+        "type": "html_table",
+        "state": "MI"
+    },
+    "macomb_mi": {
+        "url": "https://www.macombgov.org/departments/treasurers-office/tax-foreclosure/auction-and-claims",
+        "type": "html_table",
+        "state": "MI"
+    },
+    # ========================================================================
+    # MINNESOTA (MN)
+    # ========================================================================
+    "hennepin_mn": {
+        "url": "https://www.hennepin.us/residents/property/tax-forfeited-land",
+        "type": "html_table",
+        "state": "MN"
+    },
+    "ramsey_mn": {
+        "url": "https://www.ramseycounty.us/residents/property-home/property-taxes/tax-forfeited-properties",
+        "type": "html_table",
+        "state": "MN"
+    },
+    "dakota_mn": {
+        "url": "https://www.co.dakota.mn.us/HomeProperty/PropertyTaxes/TaxForfeiture/Pages/default.aspx",
+        "type": "html_table",
+        "state": "MN"
+    },
+    # ========================================================================
+    # MISSISSIPPI (MS)
+    # ========================================================================
+    "hinds_ms": {
+        "url": "https://www.hindscountyms.com/departments/tax-collector/tax-sale",
+        "type": "html_table",
+        "state": "MS"
+    },
+    "harrison_ms": {
+        "url": "https://www.co.harrison.ms.us/departments/tax-collector",
+        "type": "html_table",
+        "state": "MS"
+    },
+    "desoto_ms": {
+        "url": "https://www.desotocountyms.gov/departments/tax-collector/tax-sale",
+        "type": "html_table",
+        "state": "MS"
+    },
+    # ========================================================================
+    # MISSOURI (MO)
+    # ========================================================================
+    "jackson_mo": {
+        "url": "https://www.16thcircuit.org/excess-proceeds",
+        "type": "html_table",
+        "state": "MO"
+    },
+    "st_louis_county_mo": {
+        "url": "https://revenue.stlouisco.com/Collection/Delinquent-Tax-Sale/",
+        "type": "html_table",
+        "state": "MO"
+    },
+    "st_charles_mo": {
+        "url": "https://www.sccmo.org/689/Tax-Sales",
+        "type": "html_table",
+        "state": "MO"
+    },
+    # ========================================================================
+    # MONTANA (MT)
+    # ========================================================================
+    "yellowstone_mt": {
+        "url": "https://www.yellowstonecountymt.gov/treasurer/tax_lien_sales.asp",
+        "type": "html_table",
+        "state": "MT"
+    },
+    "missoula_mt": {
+        "url": "https://www.missoulacounty.us/government/administration/treasurer/tax-lien-sale",
+        "type": "html_table",
+        "state": "MT"
+    },
+    "gallatin_mt": {
+        "url": "https://gallatincomt.virtualtownhall.net/treasurer/tax-lien-sale",
+        "type": "html_table",
+        "state": "MT"
+    },
+    # ========================================================================
+    # NEBRASKA (NE)
+    # ========================================================================
+    "douglas_ne": {
+        "url": "https://www.douglascounty-ne.gov/government/departments/treasurer/tax-sale",
+        "type": "html_table",
+        "state": "NE"
+    },
+    "lancaster_ne": {
+        "url": "https://www.lancaster.ne.gov/363/Tax-Sale",
+        "type": "html_table",
+        "state": "NE"
+    },
+    "sarpy_ne": {
+        "url": "https://www.sarpy.gov/260/Tax-Sale",
+        "type": "html_table",
+        "state": "NE"
+    },
+    # ========================================================================
+    # NEVADA (NV)
+    # ========================================================================
+    "clark_nv": {
+        "url": "https://www.clarkcountynv.gov/government/elected_officials/county_treasurer/excess-proceeds",
+        "type": "html_table",
+        "state": "NV"
+    },
+    "washoe_nv": {
+        "url": "https://www.washoecounty.gov/treas/TaxSale.php",
+        "type": "html_table",
+        "state": "NV"
+    },
+    "nye_nv": {
+        "url": "https://www.nyecountynv.gov/1037/Excess-Proceeds",
+        "type": "html_table",
+        "state": "NV"
+    },
+    # ========================================================================
+    # NEW HAMPSHIRE (NH)
+    # ========================================================================
+    "hillsborough_nh": {
+        "url": "https://www.manchesternh.gov/Departments/Tax-Collector",
+        "type": "html_table",
+        "state": "NH"
+    },
+    "rockingham_nh": {
+        "url": "https://www.co.rockingham.nh.us/departments/registry_of_deeds/index.php",
+        "type": "html_table",
+        "state": "NH"
+    },
+    "merrimack_nh": {
+        "url": "https://www.concordnh.gov/241/Tax-Collector",
+        "type": "html_table",
+        "state": "NH"
+    },
+    # ========================================================================
+    # NEW JERSEY (NJ)
+    # ========================================================================
+    "bergen_nj": {
+        "url": "https://www.njcourts.gov/sites/default/files/courts/superior-court-clerks-office/superiorcourttrustfund.pdf",
+        "type": "pdf",
+        "state": "NJ"
+    },
+    "essex_nj": {
+        "url": "https://www.essexsheriff.com/sheriffs-sale/",
+        "type": "html_table",
+        "state": "NJ"
+    },
+    "hudson_nj": {
+        "url": "https://www.hudsoncountynj.org/sheriff/sheriffs-sales",
+        "type": "html_table",
+        "state": "NJ"
+    },
+    # ========================================================================
+    # NEW MEXICO (NM)
+    # ========================================================================
+    "bernalillo_nm": {
+        "url": "https://www.bernco.gov/property-tax/delinquent-property-tax/",
+        "type": "html_table",
+        "state": "NM"
+    },
+    "dona_ana_nm": {
+        "url": "https://www.donaanacounty.org/treasurer/delinquent-property-tax",
+        "type": "html_table",
+        "state": "NM"
+    },
+    "santa_fe_nm": {
+        "url": "https://www.santafecountynm.gov/treasurer/delinquent_taxes",
+        "type": "html_table",
+        "state": "NM"
+    },
+    # ========================================================================
+    # NEW YORK (NY)
+    # ========================================================================
+    "kings_ny": {
+        "url": "https://ww2.nycourts.gov/courts/2jd/kingsclerk/surplus.shtml",
+        "type": "html_table",
+        "state": "NY"
+    },
+    "queens_ny": {
+        "url": "https://ww2.nycourts.gov/courts/11jd/queensclerk/surplus.shtml",
+        "type": "html_table",
+        "state": "NY"
+    },
+    "suffolk_ny": {
+        "url": "https://www.sullivanny.gov/Departments/Treasurer/Foreclosures",
+        "type": "html_table",
+        "state": "NY"
+    },
+    # ========================================================================
+    # NORTH CAROLINA (NC)
+    # ========================================================================
+    "mecklenburg_nc": {
+        "url": "https://www.mecknc.gov/FinanceDept/TaxCollections/Pages/TaxSale.aspx",
+        "type": "html_table",
+        "state": "NC"
+    },
+    "wake_nc": {
+        "url": "https://www.wake.gov/departments-government/tax-administration/tax-foreclosure",
+        "type": "html_table",
+        "state": "NC"
+    },
+    "guilford_nc": {
+        "url": "https://www.guilfordcountync.gov/our-county/tax/delinquent-taxes-foreclosure",
+        "type": "html_table",
+        "state": "NC"
+    },
+    # ========================================================================
+    # NORTH DAKOTA (ND)
+    # ========================================================================
+    "cass_nd": {
+        "url": "https://www.casscountynd.gov/departments/auditor/tax-sale",
+        "type": "html_table",
+        "state": "ND"
+    },
+    "burleigh_nd": {
+        "url": "https://www.burleighco.com/departments/auditor/tax-sale/",
+        "type": "html_table",
+        "state": "ND"
+    },
+    "grand_forks_nd": {
+        "url": "https://www.gfcounty.nd.gov/departments/auditor/tax-sale",
+        "type": "html_table",
+        "state": "ND"
+    },
+    # ========================================================================
+    # OHIO (OH)
+    # ========================================================================
+    "cuyahoga_oh": {
+        "url": "https://cuyahogacounty.gov/coc/excess-funds",
+        "type": "html_table",
+        "state": "OH"
+    },
+    "franklin_oh": {
+        "url": "https://clerk.franklincountyohio.gov/onlineResources/Obtain-Excess-Funds-in-Foreclosure-Cases",
+        "type": "html_table",
+        "state": "OH"
+    },
+    "hamilton_oh": {
+        "url": "https://www.courtclerk.org/forms-filings/excess-funds-forms/",
+        "type": "html_table",
+        "state": "OH"
+    },
+    # ========================================================================
+    # OKLAHOMA (OK)
+    # ========================================================================
+    "oklahoma_ok": {
+        "url": "https://docs.oklahomacounty.org/treasurer/CountyOwnedList.asp",
+        "type": "html_table",
+        "state": "OK"
+    },
+    "tulsa_ok": {
+        "url": "https://assessor.tulsacounty.org/",
+        "type": "html_table",
+        "state": "OK"
+    },
+    "cleveland_ok": {
+        "url": "https://www.clevelandcountyok.com/290/Tax-Sale",
+        "type": "html_table",
+        "state": "OK"
+    },
+    # ========================================================================
+    # OREGON (OR)
+    # ========================================================================
+    "multnomah_or": {
+        "url": "https://multco.us/info/surplus-funds-claims-form",
+        "type": "html_table",
+        "state": "OR"
+    },
+    "washington_or": {
+        "url": "https://www.washingtoncountyor.gov/at/tax-foreclosure",
+        "type": "html_table",
+        "state": "OR"
+    },
+    "clackamas_or": {
+        "url": "https://www.clackamas.us/property",
+        "type": "html_table",
+        "state": "OR"
+    },
+    # ========================================================================
+    # PENNSYLVANIA (PA)
+    # ========================================================================
+    "philadelphia_pa": {
+        "url": "https://phillysheriff.com/wp-content/uploads/2023/11/Benders-Questions-Procedure-for-Excess-Proceeds-and-Escheatment.pdf",
+        "type": "pdf",
+        "state": "PA"
+    },
+    "allegheny_pa": {
+        "url": "https://www.alleghenycounty.us/real-estate/property-tax/tax-sale",
+        "type": "html_table",
+        "state": "PA"
+    },
+    "montgomery_pa": {
+        "url": "https://www.montgomerycountypa.gov/2596/Outstanding-Surplus-Checks",
+        "type": "html_table",
+        "state": "PA"
+    },
+    # ========================================================================
+    # RHODE ISLAND (RI)
+    # ========================================================================
+    "providence_ri": {
+        "url": "https://www.providenceri.gov/finance/tax-sale/",
+        "type": "html_table",
+        "state": "RI"
+    },
+    "kent_ri": {
+        "url": "https://www.warwickri.gov/tax-collector",
+        "type": "html_table",
+        "state": "RI"
+    },
+    "washington_ri": {
+        "url": "https://www.southkingstownri.com/268/Tax-Collector",
+        "type": "html_table",
+        "state": "RI"
+    },
+    # ========================================================================
+    # SOUTH DAKOTA (SD)
+    # ========================================================================
+    "minnehaha_sd": {
+        "url": "https://www.minnehahacounty.org/dept/au/taxdeed/tax_deed.aspx",
+        "type": "html_table",
+        "state": "SD"
+    },
+    "pennington_sd": {
+        "url": "https://www.pennco.org/317/Tax-Deed-Sales",
+        "type": "html_table",
+        "state": "SD"
+    },
+    "lincoln_sd": {
+        "url": "https://www.lincolncountysd.org/259/Tax-Deed-Sales",
+        "type": "html_table",
+        "state": "SD"
+    },
+    # ========================================================================
+    # TENNESSEE (TN)
+    # ========================================================================
+    "shelby_tn": {
+        "url": "https://shelbycountytrustee.com/158/Excess-Proceeds",
+        "type": "html_table",
+        "state": "TN"
+    },
+    "davidson_tn": {
+        "url": "https://www.nashville.gov/departments/finance/trustee/delinquent-taxes",
+        "type": "html_table",
+        "state": "TN"
+    },
+    "knox_tn": {
+        "url": "https://www.knoxcounty.org/trustee/tax_sale.php",
+        "type": "html_table",
+        "state": "TN"
+    },
+    # ========================================================================
+    # UTAH (UT)
+    # ========================================================================
+    "salt_lake_ut": {
+        "url": "https://www.saltlakecounty.gov/treasurer/refunds--excess-funds/find-excess-funds/",
+        "type": "html_table",
+        "state": "UT"
+    },
+    "utah_ut": {
+        "url": "https://www.utahcounty.gov/taxsale/ExcessFunds.html",
+        "type": "html_table",
+        "state": "UT"
+    },
+    "davis_ut": {
+        "url": "https://www.daviscountyutah.gov/auditor/tax-administration-group/tax-sale/delinquent-tax-sale",
+        "type": "html_table",
+        "state": "UT"
+    },
+    # ========================================================================
+    # VERMONT (VT)
+    # ========================================================================
+    "chittenden_vt": {
+        "url": "https://www.burlingtonvt.gov/Assessor/Tax-Sale",
+        "type": "html_table",
+        "state": "VT"
+    },
+    "rutland_vt": {
+        "url": "https://www.rutlandcity.org/departments/tax-collector",
+        "type": "html_table",
+        "state": "VT"
+    },
+    "washington_vt": {
+        "url": "https://montpelier-vt.org/286/Tax-Sale",
+        "type": "html_table",
+        "state": "VT"
+    },
+    # ========================================================================
+    # VIRGINIA (VA)
+    # ========================================================================
+    "fairfax_va": {
+        "url": "https://www.fairfaxcounty.gov/taxes/pay/auction-real-property",
+        "type": "html_table",
+        "state": "VA"
+    },
+    "virginia_beach_va": {
+        "url": "https://www.vbgov.com/government/departments/real-estate-assessor/Pages/default.aspx",
+        "type": "html_table",
+        "state": "VA"
+    },
+    "prince_william_va": {
+        "url": "https://www.pwcgov.org/government/dept/finance/Pages/Tax-Sale.aspx",
+        "type": "html_table",
+        "state": "VA"
+    },
+    # ========================================================================
+    # WASHINGTON (WA)
+    # ========================================================================
+    "king_wa": {
+        "url": "https://kingcounty.gov/en/dept/executive-services/buildings-property/treasury-operations/tax-foreclosures/excess-auction-money/excess-funds-data",
+        "type": "html_table",
+        "state": "WA"
+    },
+    "pierce_wa": {
+        "url": "https://www.piercecountywa.gov/6652/Surplus",
+        "type": "html_table",
+        "state": "WA"
+    },
+    "snohomish_wa": {
+        "url": "https://snohomishcountywa.gov/220/Tax-Foreclosures",
+        "type": "html_table",
+        "state": "WA"
+    },
+    # ========================================================================
+    # WEST VIRGINIA (WV)
+    # ========================================================================
+    "kanawha_wv": {
+        "url": "https://www.kanawha.us/sheriff/tax-sales/",
+        "type": "html_table",
+        "state": "WV"
+    },
+    "berkeley_wv": {
+        "url": "https://www.berkeleycountycomm.org/index.php/sheriff/tax-sales",
+        "type": "html_table",
+        "state": "WV"
+    },
+    "cabell_wv": {
+        "url": "https://www.cabellcounty.org/sheriff/tax-sales/",
+        "type": "html_table",
+        "state": "WV"
+    },
+    # ========================================================================
+    # WISCONSIN (WI)
+    # ========================================================================
+    "milwaukee_wi": {
+        "url": "https://county.milwaukee.gov/EN/Treasurer/Foreclosed-Property-Sales",
+        "type": "html_table",
+        "state": "WI"
+    },
+    "dane_wi": {
+        "url": "https://www.danecountylandinfo.com/delinquent_taxes.htm",
+        "type": "html_table",
+        "state": "WI"
+    },
+    "waukesha_wi": {
+        "url": "https://www.waukeshacounty.gov/treasurer/tax-delinquent-sales/",
+        "type": "html_table",
+        "state": "WI"
+    },
+    # ========================================================================
+    # WYOMING (WY)
+    # ========================================================================
+    "laramie_wy": {
+        "url": "https://www.laramiecounty.com/416/Tax-Sale",
+        "type": "html_table",
+        "state": "WY"
+    },
+    "natrona_wy": {
+        "url": "https://www.natronacounty-wy.gov/263/Tax-Sale",
+        "type": "html_table",
+        "state": "WY"
+    },
+    "campbell_wy": {
+        "url": "https://www.ccgov.net/319/Tax-Sale",
+        "type": "html_table",
+        "state": "WY"
+    },
 }
 
 
@@ -346,6 +1161,37 @@ def scrape_auction_com_via_crawl4ai(state: str, limit: int = 100) -> List[Dict]:
 # COUNTY EXCESS FUNDS SCRAPER
 # ============================================================================
 
+def get_state_name(abbr: str) -> str:
+    """Convert state abbreviation to full name."""
+    state_names = {
+        "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas",
+        "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware",
+        "DC": "District of Columbia", "FL": "Florida", "GA": "Georgia", "HI": "Hawaii",
+        "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa",
+        "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine",
+        "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota",
+        "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska",
+        "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico",
+        "NY": "New York", "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio",
+        "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island",
+        "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas",
+        "UT": "Utah", "VT": "Vermont", "VA": "Virginia", "WA": "Washington",
+        "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming",
+    }
+    return state_names.get(abbr, abbr)
+
+
+def get_counties_for_state(state_abbr: str) -> List[str]:
+    """Get all county keys configured for a given state abbreviation."""
+    matches = []
+    for county_key, config in COUNTY_EXCESS_FUNDS_URLS.items():
+        config_state = config.get("state", "")
+        # Also check the suffix convention (e.g., _ca, _fl)
+        if config_state == state_abbr or county_key.endswith(f"_{state_abbr.lower()}"):
+            matches.append(county_key)
+    return matches
+
+
 def scrape_county_excess_funds(county_key: str) -> List[Dict]:
     """
     Scrape excess funds list from a county website.
@@ -359,12 +1205,13 @@ def scrape_county_excess_funds(county_key: str) -> List[Dict]:
     config = COUNTY_EXCESS_FUNDS_URLS[county_key]
     url = config["url"]
     page_type = config["type"]
+    state_abbr = config.get("state", county_key.split("_")[-1].upper())
 
     leads = []
     session = get_session()
 
     try:
-        log.info(f"Scraping {county_key} excess funds from {url}")
+        log.info(f"Scraping {county_key} ({state_abbr}) excess funds from {url}")
 
         resp = session.get(url, timeout=30)
         resp.raise_for_status()
@@ -372,7 +1219,7 @@ def scrape_county_excess_funds(county_key: str) -> List[Dict]:
         soup = BeautifulSoup(resp.text, "html.parser")
 
         if page_type == "html_table":
-            leads = parse_html_table_excess_funds(soup, county_key)
+            leads = parse_html_table_excess_funds(soup, county_key, state_abbr)
         elif page_type == "pdf_list":
             # Find PDF links and download/parse them
             pdf_links = soup.find_all("a", href=re.compile(r"\.pdf", re.I))
@@ -381,12 +1228,14 @@ def scrape_county_excess_funds(county_key: str) -> List[Dict]:
                 if not pdf_url.startswith("http"):
                     pdf_url = url.rsplit("/", 1)[0] + "/" + pdf_url
                 leads.extend(scrape_pdf_excess_funds(pdf_url, county_key))
+        elif page_type == "pdf":
+            leads.extend(scrape_pdf_excess_funds(url, county_key))
 
         log.info(f"Found {len(leads)} excess funds leads from {county_key}")
         return leads
 
     except Exception as e:
-        log.error(f"County excess funds scrape error: {e}")
+        log.error(f"County excess funds scrape error for {county_key}: {e}")
         return []
 
 
@@ -563,9 +1412,16 @@ def scrape_county_page_for_excess_funds(url: str, county_name: str) -> List[Dict
     return leads
 
 
-def parse_html_table_excess_funds(soup: BeautifulSoup, county_key: str) -> List[Dict]:
+def parse_html_table_excess_funds(soup: BeautifulSoup, county_key: str, state_abbr: str = "") -> List[Dict]:
     """Parse HTML table of excess funds."""
     leads = []
+
+    if not state_abbr:
+        state_abbr = county_key.split("_")[-1].upper()
+
+    # Derive county name from key (remove state suffix)
+    parts = county_key.rsplit("_", 1)
+    county_name = parts[0].replace("_", " ").title() if len(parts) > 1 else county_key.replace("_", " ").title()
 
     # Find tables with excess funds data
     tables = soup.find_all("table")
@@ -584,16 +1440,61 @@ def parse_html_table_excess_funds(soup: BeautifulSoup, county_key: str) -> List[
             if len(cells) >= 3:
                 data = {headers[i]: cells[i].get_text(strip=True) for i in range(min(len(headers), len(cells)))}
 
-                # Map common field names
+                # Map common field names (expanded for different state formats)
                 lead = {
-                    "property_address": data.get("property address", data.get("address", data.get("property", ""))),
-                    "parcel_id": data.get("parcel", data.get("parcel number", data.get("apn", ""))),
-                    "owner_name": data.get("owner", data.get("owner name", data.get("defendant", ""))),
-                    "overage_amount": parse_money(data.get("excess", data.get("surplus", data.get("amount", "0")))),
-                    "sale_date": data.get("sale date", data.get("date", "")),
-                    "case_number": data.get("case", data.get("case number", data.get("tax sale number", ""))),
-                    "county": county_key.replace("_", " ").title().rsplit(" ", 1)[0],
-                    "state_abbr": county_key.split("_")[-1].upper(),
+                    "property_address": (
+                        data.get("property address", "") or
+                        data.get("address", "") or
+                        data.get("property", "") or
+                        data.get("property location", "") or
+                        data.get("situs address", "") or
+                        data.get("site address", "")
+                    ),
+                    "parcel_id": (
+                        data.get("parcel", "") or
+                        data.get("parcel number", "") or
+                        data.get("apn", "") or
+                        data.get("parcel id", "") or
+                        data.get("tax id", "") or
+                        data.get("pin", "")
+                    ),
+                    "owner_name": (
+                        data.get("owner", "") or
+                        data.get("owner name", "") or
+                        data.get("defendant", "") or
+                        data.get("former owner", "") or
+                        data.get("property owner", "") or
+                        data.get("taxpayer", "") or
+                        data.get("name", "")
+                    ),
+                    "overage_amount": parse_money(
+                        data.get("excess", "") or
+                        data.get("surplus", "") or
+                        data.get("amount", "") or
+                        data.get("excess proceeds", "") or
+                        data.get("surplus funds", "") or
+                        data.get("overbid", "") or
+                        data.get("overage", "") or
+                        data.get("excess amount", "0")
+                    ),
+                    "sale_date": (
+                        data.get("sale date", "") or
+                        data.get("date", "") or
+                        data.get("auction date", "") or
+                        data.get("date of sale", "") or
+                        data.get("foreclosure date", "")
+                    ),
+                    "case_number": (
+                        data.get("case", "") or
+                        data.get("case number", "") or
+                        data.get("tax sale number", "") or
+                        data.get("case #", "") or
+                        data.get("case no", "") or
+                        data.get("docket", "")
+                    ),
+                    "county": county_name,
+                    "state": get_state_name(state_abbr),
+                    "state_abbr": state_abbr,
                     "foreclosure_type": "tax_sale",
                     "source": f"county_{county_key}",
                 }
@@ -812,14 +1713,18 @@ def save_leads_to_db(leads: List[Dict], dry_run: bool = False) -> int:
         try:
             # Clean and prepare data (match existing DB schema)
             # Get values with fallbacks
-            state_val = lead.get("state", "")
             state_abbr_val = lead.get("state_abbr", "")[:2] if lead.get("state_abbr") else ""
+            state_val = lead.get("state", "")
+            if not state_val and state_abbr_val:
+                state_val = get_state_name(state_abbr_val)
             county_val = lead.get("county", "")
 
-            # Derive county from state if not provided (for IL it's usually Cook)
+            # Derive county from state if not provided
             if not county_val and state_abbr_val == "IL":
-                county_val = "Cook"  # Default for Illinois - most foreclosures
+                county_val = "Cook"
             if not county_val and state_abbr_val == "GA":
+                county_val = "Unknown"
+            if not county_val:
                 county_val = "Unknown"
 
             payload = {
@@ -879,18 +1784,50 @@ def save_leads_to_db(leads: List[Dict], dry_run: bool = False) -> int:
 # MAIN
 # ============================================================================
 
+def get_all_configured_states() -> List[str]:
+    """Get unique list of all states that have county configurations."""
+    states = set()
+    for county_key, config in COUNTY_EXCESS_FUNDS_URLS.items():
+        state = config.get("state", "")
+        if not state:
+            # Fallback to suffix convention
+            parts = county_key.rsplit("_", 1)
+            if len(parts) > 1 and len(parts[1]) == 2:
+                state = parts[1].upper()
+        if state:
+            states.add(state)
+    return sorted(states)
+
+
+# States to exclude from scraping
+EXCLUDED_STATES = {"AR", "SC"}
+
+
 def main():
     parser = argparse.ArgumentParser(description="Scrape real foreclosure leads from free sources")
     parser.add_argument("--source", choices=["auction", "county", "trustee", "georgia", "all"], default="all")
-    parser.add_argument("--state", default="CA", help="State abbreviation")
+    parser.add_argument("--state", default="ALL", help="State abbreviation or ALL for all states")
     parser.add_argument("--county", help="County key (e.g., los_angeles_ca)")
     parser.add_argument("--trustee", choices=["judicial_sales", "stox"], help="Trustee source")
     parser.add_argument("--limit", type=int, default=100)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--list-states", action="store_true", help="List all configured states and exit")
     args = parser.parse_args()
+
+    if args.list_states:
+        states = get_all_configured_states()
+        log.info(f"Configured states ({len(states)}): {', '.join(states)}")
+        for st in states:
+            counties = get_counties_for_state(st)
+            log.info(f"  {st} ({get_state_name(st)}): {', '.join(counties)}")
+        return 0
 
     log.info(f"=== Real Foreclosure Scraper started at {datetime.now(timezone.utc).isoformat()} ===")
     log.info(f"Source: {args.source}, State: {args.state}, Limit: {args.limit}")
+
+    configured_states = get_all_configured_states()
+    log.info(f"Total configured states: {len(configured_states)}")
+    log.info(f"Excluded states: {', '.join(sorted(EXCLUDED_STATES))}")
 
     all_leads = []
 
@@ -899,18 +1836,50 @@ def main():
         all_leads.extend(leads)
 
     if args.source in ("auction", "all"):
-        leads = scrape_auction_com(args.state, args.limit)
-        all_leads.extend(leads)
+        if args.state == "ALL":
+            # Run auction.com for major states
+            for state in ["CA", "FL", "TX", "AZ", "IL", "GA", "OH", "NY", "PA", "MI", "NJ", "NC", "VA", "WA"]:
+                if state not in EXCLUDED_STATES:
+                    leads = scrape_auction_com(state, args.limit)
+                    all_leads.extend(leads)
+                    time.sleep(random.uniform(2, 4))
+        else:
+            leads = scrape_auction_com(args.state, args.limit)
+            all_leads.extend(leads)
 
     if args.source in ("county", "all"):
         if args.county:
             leads = scrape_county_excess_funds(args.county)
+            all_leads.extend(leads)
+        elif args.state == "ALL":
+            # Scrape all configured counties across all states
+            total_counties = len(COUNTY_EXCESS_FUNDS_URLS)
+            processed = 0
+            for county_key, config in COUNTY_EXCESS_FUNDS_URLS.items():
+                state = config.get("state", "")
+                if state in EXCLUDED_STATES:
+                    continue
+                if county_key == "georgia_all":
+                    continue  # Georgia aggregator handled separately
+
+                processed += 1
+                log.info(f"[{processed}/{total_counties}] Processing {county_key} ({state})...")
+
+                leads = scrape_county_excess_funds(county_key)
+                all_leads.extend(leads)
+
+                # Rate limit between counties
+                time.sleep(random.uniform(1, 3))
         else:
-            # Scrape all counties for the state
-            for county_key in COUNTY_EXCESS_FUNDS_URLS:
-                if county_key.endswith(f"_{args.state.lower()}"):
-                    leads = scrape_county_excess_funds(county_key)
-                    all_leads.extend(leads)
+            # Scrape all counties for a specific state
+            county_keys = get_counties_for_state(args.state)
+            log.info(f"Found {len(county_keys)} counties for {args.state}: {', '.join(county_keys)}")
+            for county_key in county_keys:
+                if county_key == "georgia_all":
+                    continue
+                leads = scrape_county_excess_funds(county_key)
+                all_leads.extend(leads)
+                time.sleep(random.uniform(1, 3))
 
     if args.source in ("trustee", "all"):
         if args.trustee == "judicial_sales" or args.source == "all":
@@ -918,10 +1887,24 @@ def main():
             all_leads.extend(leads)
 
         if args.trustee == "stox" or args.source == "all":
-            leads = scrape_stox_quickbase(args.state, args.limit)
-            all_leads.extend(leads)
+            if args.state == "ALL":
+                for state in ["CA", "AZ", "NV", "WA", "OR"]:
+                    leads = scrape_stox_quickbase(state, args.limit)
+                    all_leads.extend(leads)
+                    time.sleep(random.uniform(2, 4))
+            else:
+                leads = scrape_stox_quickbase(args.state, args.limit)
+                all_leads.extend(leads)
 
     log.info(f"\n=== Total leads found: {len(all_leads)} ===")
+
+    # Summary by state
+    state_counts = {}
+    for lead in all_leads:
+        st = lead.get("state_abbr", "??")
+        state_counts[st] = state_counts.get(st, 0) + 1
+    for st in sorted(state_counts.keys()):
+        log.info(f"  {st}: {state_counts[st]} leads")
 
     if all_leads:
         saved = save_leads_to_db(all_leads, args.dry_run)

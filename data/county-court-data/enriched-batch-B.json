@@ -1,0 +1,2781 @@
+[
+  {
+    "state_abbr": "ND",
+    "state_name": "North Dakota",
+    "statewide_efiling_system": "Odyssey File & Serve",
+    "statewide_efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/adams-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 567-2460",
+        "fax": "(701) 567-2910",
+        "address": "602 Adams Avenue, Suite 202, Hettinger, ND 58639",
+        "clerk_name": "Sheri Uecker"
+      },
+      {
+        "county_name": "Barnes",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/barnes-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 845-8525",
+        "fax": "",
+        "address": "230 4th St. NW, Valley City, ND 58072",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Benson",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/benson-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 473-5345",
+        "fax": "(701) 473-5571",
+        "address": "311 B Ave. S., Minnewaukan, ND 58351",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Billings",
+        "clerk_website": "https://www.billingscountynd.gov/156/County-Recorder-Clerk-of-Court",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 623-4492",
+        "fax": "(701) 623-4896",
+        "address": "495 4th St., Medora, ND 58645",
+        "clerk_name": "Juliana Hammerstrom"
+      },
+      {
+        "county_name": "Bottineau",
+        "clerk_website": "https://www.bottineauco.com/clerkofcourt",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 228-3983",
+        "fax": "(701) 228-2336",
+        "address": "314 5th St W Suite 12, Bottineau, ND 58318-1204",
+        "clerk_name": "Tammy Knudson"
+      },
+      {
+        "county_name": "Bowman",
+        "clerk_website": "https://bowmannd.com/county/departments/clerk-of-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 523-3130",
+        "fax": "",
+        "address": "104 1st St NW, Bowman, ND 58623",
+        "clerk_name": "Jan Werre"
+      },
+      {
+        "county_name": "Burke",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/burke-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Bowbells, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Burleigh",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/burleigh-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Bismarck, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "https://www.casscountynd.gov/Home/Components/FacilityDirectory/FacilityDirectory/1061/318",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 451-6900",
+        "fax": "",
+        "address": "PO Box 2806, Fargo, ND 58108-2806",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Cavalier",
+        "clerk_website": "https://cavaliercounty.us/clerk-of-district-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 256-2124",
+        "fax": "(701) 256-3468",
+        "address": "901 3rd St., Langdon, ND 58249",
+        "clerk_name": "Anita Beauchamp"
+      },
+      {
+        "county_name": "Dickey",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/dickey-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Ellendale, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Divide",
+        "clerk_website": "https://dividecountynd.hosted.civiclive.com/county_government/county_offices/clerk_of_court",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 965-6831",
+        "fax": "(701) 965-6943",
+        "address": "200 N. Main St., PO Box 68, Crosby, ND 58730",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Dunn",
+        "clerk_website": "https://www.dunncountynd.org/clerk-of-court",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 573-4447",
+        "fax": "(701) 573-4444",
+        "address": "205 Owens Street, Manning, ND 58642",
+        "clerk_name": "Lisa Guenther"
+      },
+      {
+        "county_name": "Eddy",
+        "clerk_website": "https://eddycountynd.org/departments/clerk-of-district-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 947-2434",
+        "fax": "",
+        "address": "New Rockford, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Emmons",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/emmons-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Linton, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Foster",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/foster-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 652-1001",
+        "fax": "",
+        "address": "Carrington, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Golden Valley",
+        "clerk_website": "https://www.goldenvalleycounty.org/departments/clerk-of-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 872-3713",
+        "fax": "(701) 872-4383",
+        "address": "150 1st Ave SE, Beach, ND 58621",
+        "clerk_name": "Rachel Keohane"
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/grant-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Carson, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Griggs",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/griggs-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Cooperstown, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Hettinger",
+        "clerk_website": "https://hettingercountynd.com/nav/new_page/clerk_of_court_recorder.php",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 824-2645",
+        "fax": "(701) 824-2717",
+        "address": "336 Pacific Ave, Mott, ND 58646",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Kidder",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/kidder-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Steele, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "LaMoure",
+        "clerk_website": "https://lamourecountynd.com/clerk-of-court",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 883-6053",
+        "fax": "",
+        "address": "LaMoure, ND",
+        "clerk_name": "Billi Jo Warcken"
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "https://logancountynd.com/clerk-of-court",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 754-2751",
+        "fax": "",
+        "address": "301 Broadway, Napoleon, ND 58561",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "McHenry",
+        "clerk_website": "https://www.mchenrycountynd.com/departments/district-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 537-5729",
+        "fax": "(701) 537-5969",
+        "address": "407 Main St. S, Rm 203, Towner, ND 58788",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "McIntosh",
+        "clerk_website": "https://www.mcintoshnd.com/county-offices/clerk-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Ashley, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "McKenzie",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/mckenzie-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "201 5th St NW, Watford City, ND 58854",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "McLean",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/mclean-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Washburn, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Mercer",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/mercer-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Stanton, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Morton",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/morton-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Mandan, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Mountrail",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/mountrail-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Stanley, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Nelson",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/nelson-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "210 B Avenue W, Lakota, ND 58344",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Oliver",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/oliver-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Center, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Pembina",
+        "clerk_website": "https://www.pembinacountynd.gov/county/departments/270/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Cavalier, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Pierce",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/pierce-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 776-6161",
+        "fax": "",
+        "address": "Rugby, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Ramsey",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/ramsey-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 662-1309",
+        "fax": "",
+        "address": "Devils Lake, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Ransom",
+        "clerk_website": "https://ransomcountynd.net/clerk-of-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 683-6120",
+        "fax": "",
+        "address": "Lisbon, ND",
+        "clerk_name": "Heather Bergemann"
+      },
+      {
+        "county_name": "Renville",
+        "clerk_website": "https://www.renvillecountynd.org/department/clerk-of-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Mohall, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Richland",
+        "clerk_website": "https://www.co.richland.nd.us/contact/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 642-7700",
+        "fax": "(701) 642-7701",
+        "address": "418 2nd Ave N, Wahpeton, ND 58075",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Rolette",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/rolette-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Rolla, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Sargent",
+        "clerk_website": "https://sargentnd.com/dept_clerk_courts.php",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "355 Main Street, Forman, ND 58032",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Sheridan",
+        "clerk_website": "https://www.co.sheridan.nd.us/departments/contacts/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "McClusky, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Sioux",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/sioux-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Fort Yates, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Slope",
+        "clerk_website": "https://slopecountynd.gov/government/district_clerk_of_court/index.php",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 227-3184",
+        "fax": "(701) 227-3185",
+        "address": "206 Main St., Amidon, ND 58620",
+        "clerk_name": "Cindy A. Ornsbey"
+      },
+      {
+        "county_name": "Stark",
+        "clerk_website": "https://www.starkcountynd.gov/departments",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 227-3184",
+        "fax": "(701) 227-3185",
+        "address": "51 3rd St. E., Dickinson, ND 58601",
+        "clerk_name": "Kimberly L. Schwartz"
+      },
+      {
+        "county_name": "Steele",
+        "clerk_website": "https://steelecountynd.gov/court",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Finley, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Stutsman",
+        "clerk_website": "https://www.stutsmancounty.gov/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 253-6249",
+        "fax": "",
+        "address": "511 2nd Ave. SE, Jamestown, ND 58401",
+        "clerk_name": "Wanda Auka"
+      },
+      {
+        "county_name": "Towner",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/towner-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Cando, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Traill",
+        "clerk_website": "https://www.traillcountynd.gov/164/Clerk-of-Court",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "PO Box 429, Hillsboro, ND 58045",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Valley",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/valley-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Valley City, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Walsh",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/walsh-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "(701) 352-0350",
+        "fax": "",
+        "address": "Dunseith, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Ward",
+        "clerk_website": "https://www.co.ward.nd.us/Directory.aspx?did=168",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Minot, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Wells",
+        "clerk_website": "https://www.ndcourts.gov/court-locations/wells-county",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "Fessenden, ND",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Williams",
+        "clerk_website": "https://www.williamsnd.com/clerk-of-district-court/",
+        "efiling_url": "https://northdakota.tylerhost.net/ofsweb",
+        "phone": "",
+        "fax": "",
+        "address": "205 E Broadway, Williston, ND 58802",
+        "clerk_name": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "statewide_efiling_system": "eFileTexas",
+    "statewide_efiling_url": "https://efiletexas.gov/",
+    "counties": [
+      {
+        "county_name": "Anderson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7430",
+        "fax": "(903) 723-4625",
+        "address": "500 N. Church Street #10 Palestine TX 75801",
+        "clerk_name": "Mark Staples"
+      },
+      {
+        "county_name": "Andrews",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 524-1426",
+        "fax": "(432) 524-1464",
+        "address": "P.O. Box 727 Andrews TX 79714",
+        "clerk_name": "Vicki Scott"
+      },
+      {
+        "county_name": "Angelina",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 634-8339",
+        "fax": "(936) 634-5915",
+        "address": "P.O. Box 908 Lufkin TX 75902",
+        "clerk_name": "Amy Fincher"
+      },
+      {
+        "county_name": "Aransas",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 790-0122",
+        "fax": "(361) 790-0119",
+        "address": "2840 Hwy 35 N. Rockport TX 78383",
+        "clerk_name": "\"Misty\" R.F. Kimbrough"
+      },
+      {
+        "county_name": "Archer",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 574-4302",
+        "fax": "(940) 574-2876",
+        "address": "P.O. Box 427 Archer City TX 76351",
+        "clerk_name": "Karren Winter"
+      },
+      {
+        "county_name": "Armstrong",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 226-2611",
+        "fax": "(806) 226-2704",
+        "address": "P.O. Box 149 Claude TX 79019",
+        "clerk_name": "Mischelle Molder"
+      },
+      {
+        "county_name": "Atascosa",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 769-3005",
+        "fax": "(830) 769-3029",
+        "address": "1 Civic Center Drive Jourdanton TX 78026",
+        "clerk_name": "Carol Ann Doughty"
+      },
+      {
+        "county_name": "Austin",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 865-3911",
+        "fax": "(979) 865-4649",
+        "address": "1 Main Street Bellville TX 77418",
+        "clerk_name": "Cheri Basore"
+      },
+      {
+        "county_name": "Bailey",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 272-4606",
+        "fax": "(806) 272-4608",
+        "address": "P.O. Box 517 Muleshoe TX 79347",
+        "clerk_name": "Tanya M. Gass"
+      },
+      {
+        "county_name": "Bandera",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 796-3332",
+        "fax": "(830) 796-8122",
+        "address": "P.O. Box 823 Bandera TX 78003",
+        "clerk_name": "Suzanne Scott"
+      },
+      {
+        "county_name": "Bastrop",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(512) 303-6609",
+        "fax": "(512) 303-6629",
+        "address": "P.O. Box 577 Bastrop TX 78602",
+        "clerk_name": "Maria Montoya"
+      },
+      {
+        "county_name": "Baylor",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 889-3322",
+        "fax": "(940) 889-3323",
+        "address": "P.O. Box 201 Seymour TX 76380",
+        "clerk_name": "Anna Goss"
+      },
+      {
+        "county_name": "Bee",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 362-2810",
+        "fax": "(361) 362-7346",
+        "address": "105 W Corpus Christi Street Beeville TX 78102",
+        "clerk_name": "Vivian Gamez"
+      },
+      {
+        "county_name": "Bell",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 933-5000",
+        "fax": "(254) 933-5067",
+        "address": "415 N Main Street Waco TX 76701",
+        "clerk_name": "Cecilia Brown"
+      },
+      {
+        "county_name": "Bexar",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(210) 335-2381",
+        "fax": "(210) 335-2392",
+        "address": "P.O. Box 940 San Antonio TX 78204",
+        "clerk_name": "Xavier Urrutia"
+      },
+      {
+        "county_name": "Blanco",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 868-7357",
+        "fax": "(830) 868-7382",
+        "address": "300 S Walnut Street Johnson City TX 78636",
+        "clerk_name": "Sheila Kelly"
+      },
+      {
+        "county_name": "Borden",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 756-4314",
+        "fax": "(806) 756-4392",
+        "address": "501 Main Street Gail TX 79738",
+        "clerk_name": "Tammi Bradshaw"
+      },
+      {
+        "county_name": "Bosque",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 435-2201",
+        "fax": "(254) 435-2815",
+        "address": "P.O. Box 617 Meridian TX 76566",
+        "clerk_name": "Sharon L. Forrest"
+      },
+      {
+        "county_name": "Bowie",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 628-6644",
+        "fax": "(903) 628-4144",
+        "address": "P.O. Box 248 Boston TX 75570",
+        "clerk_name": "Betty Perkins"
+      },
+      {
+        "county_name": "Brazoria",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 864-1565",
+        "fax": "(979) 864-1732",
+        "address": "111 E Locust Street Lake Jackson TX 77566",
+        "clerk_name": "Jacquelyn Ruffino"
+      },
+      {
+        "county_name": "Brazos",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 361-4285",
+        "fax": "(979) 361-4286",
+        "address": "202 Church Street Bryan TX 77803",
+        "clerk_name": "Trudy Hancock"
+      },
+      {
+        "county_name": "Brewster",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 837-7490",
+        "fax": "(432) 837-5041",
+        "address": "P.O. Box 250 Alpine TX 79830",
+        "clerk_name": "Yolanda E. Gomez"
+      },
+      {
+        "county_name": "Briscoe",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 823-2134",
+        "fax": "(806) 823-2164",
+        "address": "415 Main Street Silverton TX 79257",
+        "clerk_name": "Margaret Moody"
+      },
+      {
+        "county_name": "Brooks",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 592-4560",
+        "fax": "(361) 592-4563",
+        "address": "P.O. Box 427 Kingsville TX 78364",
+        "clerk_name": "Maggie Alvarado"
+      },
+      {
+        "county_name": "Brown",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 646-0557",
+        "fax": "(325) 646-0566",
+        "address": "200 S Oaks Street Brownwood TX 76801",
+        "clerk_name": "Alicia Weaver"
+      },
+      {
+        "county_name": "Burleson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 567-2318",
+        "fax": "(979) 567-2331",
+        "address": "P.O. Box 219 Caldwell TX 77836",
+        "clerk_name": "Andrea Fowler"
+      },
+      {
+        "county_name": "Burnet",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(512) 756-5408",
+        "fax": "(512) 756-5413",
+        "address": "220 S Pierce Street Burnet TX 78611",
+        "clerk_name": "Cecilia J. Carter"
+      },
+      {
+        "county_name": "Caldwell",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(512) 398-1809",
+        "fax": "(512) 398-1932",
+        "address": "P.O. Box 906 Lockhart TX 78644",
+        "clerk_name": "Ruth Alcala"
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 552-9604",
+        "fax": "(361) 552-8911",
+        "address": "211 S Mesquite Port Lavaca TX 77979",
+        "clerk_name": "Kelly Etter"
+      },
+      {
+        "county_name": "Callahan",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 854-1217",
+        "fax": "(325) 854-1340",
+        "address": "P.O. Box 1087 Baird TX 79504",
+        "clerk_name": "Ginna Mather"
+      },
+      {
+        "county_name": "Cameron",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(956) 544-0840",
+        "fax": "(956) 544-0869",
+        "address": "P.O. Box 2178 Brownsville TX 78522",
+        "clerk_name": "Javier Villalobos"
+      },
+      {
+        "county_name": "Camp",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7432",
+        "fax": "(903) 723-7427",
+        "address": "126 Church Street Pittsburg TX 75686",
+        "clerk_name": "Shayla Bush"
+      },
+      {
+        "county_name": "Carson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 537-3873",
+        "fax": "(806) 537-3863",
+        "address": "P.O. Box 487 Panhandle TX 79068",
+        "clerk_name": "Melisa Matheson"
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 756-5081",
+        "fax": "(903) 756-0659",
+        "address": "405 E Main Street Linden TX 75563",
+        "clerk_name": "Eddith Walden"
+      },
+      {
+        "county_name": "Castro",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 647-3338",
+        "fax": "(806) 647-5523",
+        "address": "P.O. Box 530 Dimmitt TX 79027",
+        "clerk_name": "Vanessa Serrano"
+      },
+      {
+        "county_name": "Chambers",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 267-2344",
+        "fax": "(409) 267-2350",
+        "address": "P.O. Box 728 Anahuac TX 77514",
+        "clerk_name": "Christine Ragsdale"
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 683-2835",
+        "fax": "(903) 683-5046",
+        "address": "P.O. Box 420 Rusk TX 75785",
+        "clerk_name": "Kathy Kennedy"
+      },
+      {
+        "county_name": "Childress",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 937-6143",
+        "fax": "(940) 937-2330",
+        "address": "P.O. Box 330 Childress TX 79201",
+        "clerk_name": "Keith Patton"
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 538-4751",
+        "fax": "(940) 538-5102",
+        "address": "P.O. Box 229 Henrietta TX 76365",
+        "clerk_name": "Marilyn Gordon"
+      },
+      {
+        "county_name": "Cochran",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 266-5450",
+        "fax": "(806) 266-5648",
+        "address": "P.O. Box 176 Morton TX 79346",
+        "clerk_name": "Judy Kinnison"
+      },
+      {
+        "county_name": "Coke",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 453-2772",
+        "fax": "(325) 453-2774",
+        "address": "P.O. Box 150 Robert Lee TX 76945",
+        "clerk_name": "Linda P. Martin"
+      },
+      {
+        "county_name": "Coleman",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 625-2889",
+        "fax": "(325) 625-3770",
+        "address": "100 W Live Oak Street Coleman TX 76834",
+        "clerk_name": "Helen Boyce"
+      },
+      {
+        "county_name": "Collin",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(972) 548-4645",
+        "fax": "(972) 548-4778",
+        "address": "2100 Bloomdale Road Suite 2100 McKinney TX 75071",
+        "clerk_name": "Yvonne Tomlinson"
+      },
+      {
+        "county_name": "Collingsworth",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 447-2408",
+        "fax": "(806) 447-2411",
+        "address": "415 Main Street Wellington TX 79095",
+        "clerk_name": "Melanie Hardin"
+      },
+      {
+        "county_name": "Colorado",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 732-2604",
+        "fax": "(979) 732-8066",
+        "address": "P.O. Box 168 Columbus TX 78934",
+        "clerk_name": "Rhonda Rehor"
+      },
+      {
+        "county_name": "Comal",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 393-7321",
+        "fax": "(830) 393-7336",
+        "address": "P.O. Box 549 New Braunfels TX 78131",
+        "clerk_name": "Patricia Villeneuve"
+      },
+      {
+        "county_name": "Comanche",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 356-1391",
+        "fax": "(325) 356-2882",
+        "address": "P.O. Box 176 Comanche TX 76442",
+        "clerk_name": "Michal Allred"
+      },
+      {
+        "county_name": "Concho",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 732-4391",
+        "fax": "(325) 732-3319",
+        "address": "P.O. Box 28 Paint Rock TX 76866",
+        "clerk_name": "Doylene Sanchez"
+      },
+      {
+        "county_name": "Cooke",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 668-5450",
+        "fax": "(940) 668-5451",
+        "address": "P.O. Box 128 Gainesville TX 76240",
+        "clerk_name": "Joyce Tinnin"
+      },
+      {
+        "county_name": "Coryell",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 865-8541",
+        "fax": "(254) 865-2838",
+        "address": "P.O. Box 426 Gatesville TX 76528",
+        "clerk_name": "Stacy Richter"
+      },
+      {
+        "county_name": "Cottle",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 492-3623",
+        "fax": "(806) 492-3625",
+        "address": "P.O. Box 717 Paducah TX 79248",
+        "clerk_name": "Margaret Williamson"
+      },
+      {
+        "county_name": "Crane",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 558-3322",
+        "fax": "(432) 558-3351",
+        "address": "P.O. Box 278 Crane TX 79731",
+        "clerk_name": "Lari Smith"
+      },
+      {
+        "county_name": "Crockett",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 392-2022",
+        "fax": "(325) 392-2091",
+        "address": "P.O. Box 1184 Ozona TX 76943",
+        "clerk_name": "Robert Martinez"
+      },
+      {
+        "county_name": "Crosby",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 675-2334",
+        "fax": "(806) 675-2336",
+        "address": "201 W Main Street Crosbyton TX 79322",
+        "clerk_name": "Cynthia Soto"
+      },
+      {
+        "county_name": "Culberson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 283-2058",
+        "fax": "(432) 283-2178",
+        "address": "P.O. Box 249 Van Horn TX 79855",
+        "clerk_name": "Diane Alliotte"
+      },
+      {
+        "county_name": "Dallam",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 249-4753",
+        "fax": "(806) 249-8255",
+        "address": "P.O. Box 245 Dalhart TX 79022",
+        "clerk_name": "Margaret Hinton"
+      },
+      {
+        "county_name": "Dallas",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(214) 653-7099",
+        "fax": "(214) 653-7176",
+        "address": "509 Main St. Suite 300 Dallas TX 75202",
+        "clerk_name": "John F. Warren"
+      },
+      {
+        "county_name": "Dawson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 872-3778",
+        "fax": "(806) 872-4470",
+        "address": "P.O. Box 1268 Lamesa TX 79331",
+        "clerk_name": "Micah Wilkins"
+      },
+      {
+        "county_name": "DeWitt",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 275-0864",
+        "fax": "(361) 275-0866",
+        "address": "307 North Gonzales Street, Cuero, TX 77954",
+        "clerk_name": "Natalie Carson"
+      },
+      {
+        "county_name": "Deaf Smith",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 363-7077",
+        "fax": "(806) 363-7035",
+        "address": "235 E 3rd Street Hereford TX 79045",
+        "clerk_name": "Jill Culwell"
+      },
+      {
+        "county_name": "Delta",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 395-4400",
+        "fax": "(903) 395-4901",
+        "address": "P.O. Box 248 Cooper TX 75432",
+        "clerk_name": "Charlotte Lary"
+      },
+      {
+        "county_name": "Denton",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 349-2750",
+        "fax": "(940) 349-2751",
+        "address": "1450 E McKinney Street Denton TX 76209",
+        "clerk_name": "Niki LayRasmussen"
+      },
+      {
+        "county_name": "Dickens",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 623-5324",
+        "fax": "(806) 623-5324",
+        "address": "P.O. Box 180 Dickens TX 79229",
+        "clerk_name": "Shelly Rorie"
+      },
+      {
+        "county_name": "Dimmit",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 876-1200",
+        "fax": "(830) 876-1283",
+        "address": "P.O. Box 340 Carrizo Springs TX 78834",
+        "clerk_name": "Herlinda Gutierrez"
+      },
+      {
+        "county_name": "Donley",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 874-3625",
+        "fax": "(806) 874-3628",
+        "address": "P.O. Box 968 Clarendon TX 79226",
+        "clerk_name": "Dalton Dykstra"
+      },
+      {
+        "county_name": "Duval",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 279-3322",
+        "fax": "(361) 279-6710",
+        "address": "P.O. Box 248 San Diego TX 78384",
+        "clerk_name": "Mary Jayne Villarreal-Bonoan"
+      },
+      {
+        "county_name": "Eastland",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 629-1583",
+        "fax": "(254) 629-2807",
+        "address": "P.O. Box 110 Eastland TX 76448",
+        "clerk_name": "Mary King"
+      },
+      {
+        "county_name": "Ector",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 498-4100",
+        "fax": "(432) 498-4101",
+        "address": "P.O. Box 60400 Odessa TX 79760",
+        "clerk_name": "Kathryn Mathers"
+      },
+      {
+        "county_name": "Edwards",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 683-2235",
+        "fax": "(830) 683-2235",
+        "address": "P.O. Box 184 Rocksprings TX 78880",
+        "clerk_name": "Peggy Mott"
+      },
+      {
+        "county_name": "El Paso",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(915) 546-2030",
+        "fax": "(915) 546-2111",
+        "address": "PO Box 3550 El Paso TX 79960",
+        "clerk_name": "Bill Shaver"
+      },
+      {
+        "county_name": "Ellis",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(972) 923-5012",
+        "fax": "(972) 923-5017",
+        "address": "101 W Main Street Waxahachie TX 75165",
+        "clerk_name": "Sherri Srygley"
+      },
+      {
+        "county_name": "Erath",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 965-1406",
+        "fax": "(254) 965-0645",
+        "address": "403 W Main Street Stephenville TX 76401",
+        "clerk_name": "Gina Garner"
+      },
+      {
+        "county_name": "Falls",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 883-1408",
+        "fax": "(254) 883-1406",
+        "address": "P.O. Box 458, Marlin, TX 76661",
+        "clerk_name": "Linda Watkins"
+      },
+      {
+        "county_name": "Fannin",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 583-7556",
+        "fax": "(903) 583-2099",
+        "address": "203 N Main Street Bonham TX 75418",
+        "clerk_name": "Tammy L. Garrett"
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 968-8848",
+        "fax": "(979) 968-8863",
+        "address": "151 N Main Street La Grange TX 78945",
+        "clerk_name": "Dianne Bachhuber"
+      },
+      {
+        "county_name": "Fisher",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 776-2614",
+        "fax": "(325) 776-2614",
+        "address": "P.O. Box 6 Fisher TX 79501",
+        "clerk_name": "Coy Tate"
+      },
+      {
+        "county_name": "Floyd",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 983-2970",
+        "fax": "(806) 983-2956",
+        "address": "P.O. Box 175 Floydada TX 79235",
+        "clerk_name": "Yvonne Pena"
+      },
+      {
+        "county_name": "Foard",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 684-1465",
+        "fax": "(940) 684-1464",
+        "address": "P.O. Box 520 Crowell TX 79227",
+        "clerk_name": "Charlene Strickland"
+      },
+      {
+        "county_name": "Fort Bend",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(281) 633-7788",
+        "fax": "(281) 633-7899",
+        "address": "1 Mission Drive Rosenberg TX 77471",
+        "clerk_name": "Trisha Pearson"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7432",
+        "fax": "(903) 723-7433",
+        "address": "P.O. Box 68 Mount Pleasant TX 75456",
+        "clerk_name": "Vickie Goodwin"
+      },
+      {
+        "county_name": "Freestone",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7439",
+        "fax": "(903) 723-7441",
+        "address": "P.O. Box 1 Fairfield TX 75840",
+        "clerk_name": "Brenda Eddins"
+      },
+      {
+        "county_name": "Frio",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 393-6321",
+        "fax": "(830) 393-6340",
+        "address": "P.O. Box 1 Dilley TX 78017",
+        "clerk_name": "Olivia Gonzalez"
+      },
+      {
+        "county_name": "Gaines",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 758-4611",
+        "fax": "(432) 758-4611",
+        "address": "P.O. Box 196 Seminole TX 79360",
+        "clerk_name": "Shaun Monds"
+      },
+      {
+        "county_name": "Galveston",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 766-2100",
+        "fax": "(409) 766-2265",
+        "address": "P.O. Box 8000 Galveston TX 77553",
+        "clerk_name": "Cheryl Johnson"
+      },
+      {
+        "county_name": "Garza",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 495-4173",
+        "fax": "(806) 495-4175",
+        "address": "P.O. Box 578 Post TX 79356",
+        "clerk_name": "Iva Ruth Kendrick"
+      },
+      {
+        "county_name": "Gillespie",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 990-8250",
+        "fax": "(830) 990-8255",
+        "address": "101 W Main Street Fredericksburg TX 78624",
+        "clerk_name": "Susan Holley"
+      },
+      {
+        "county_name": "Glasscock",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 354-2371",
+        "fax": "(432) 354-2371",
+        "address": "P.O. Box 307 Garden City TX 79739",
+        "clerk_name": "Donna Hatton"
+      },
+      {
+        "county_name": "Goliad",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 645-3348",
+        "fax": "(361) 645-3347",
+        "address": "127 N Courthouse Goliad TX 77963",
+        "clerk_name": "Pat Huff"
+      },
+      {
+        "county_name": "Gonzales",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 672-6931",
+        "fax": "(830) 672-6932",
+        "address": "1213 Church Street Gonzales TX 78629",
+        "clerk_name": "Linda P. Riedel"
+      },
+      {
+        "county_name": "Gray",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 669-8007",
+        "fax": "(806) 669-8005",
+        "address": "P.O. Box 836 Pampa TX 79066",
+        "clerk_name": "Tammy Choctaw"
+      },
+      {
+        "county_name": "Grayson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 813-4700",
+        "fax": "(903) 813-4701",
+        "address": "P.O. Box 209 Sherman TX 75091",
+        "clerk_name": "Carolyn Musselman"
+      },
+      {
+        "county_name": "Gregg",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 236-8400",
+        "fax": "(903) 236-8401",
+        "address": "P.O. Box 3047 Longview TX 75606",
+        "clerk_name": "Karen Rhodes"
+      },
+      {
+        "county_name": "Grimes",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 873-4410",
+        "fax": "(936) 873-4402",
+        "address": "P.O. Box 209 Navasota TX 77868",
+        "clerk_name": "Judy Hebert"
+      },
+      {
+        "county_name": "Guadalupe",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 379-8500",
+        "fax": "(830) 379-8501",
+        "address": "P.O. Box 9 Seguin TX 78155",
+        "clerk_name": "Rhonda Laird"
+      },
+      {
+        "county_name": "Hale",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 291-5201",
+        "fax": "(806) 291-5202",
+        "address": "P.O. Box 526 Plainview TX 79072",
+        "clerk_name": "Jacqueline Boyle"
+      },
+      {
+        "county_name": "Hall",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 259-2627",
+        "fax": "(806) 259-3034",
+        "address": "P.O. Box 16 Memphis TX 79245",
+        "clerk_name": "Linda K. Kuyper"
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 386-1700",
+        "fax": "(254) 386-1701",
+        "address": "1001 W Main Street Hamilton TX 76531",
+        "clerk_name": "Kay Pridemore"
+      },
+      {
+        "county_name": "Hansford",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 659-4600",
+        "fax": "(806) 659-4602",
+        "address": "P.O. Box 367 Spearman TX 79081",
+        "clerk_name": "LaDonna Springer"
+      },
+      {
+        "county_name": "Hardeman",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 663-2901",
+        "fax": "(940) 663-2905",
+        "address": "P.O. Box 30 Quanah TX 79252",
+        "clerk_name": "Annette Haynes"
+      },
+      {
+        "county_name": "Hardin",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 246-5150",
+        "fax": "(409) 246-5163",
+        "address": "1200 Old Highway 90 Kountze TX 77719",
+        "clerk_name": "Tommy Sears"
+      },
+      {
+        "county_name": "Harris",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(713) 274-8600",
+        "fax": "(713) 755-4977",
+        "address": "PO Box 1525 Houston TX 77251-1525",
+        "clerk_name": "Teneshia Hudspeth"
+      },
+      {
+        "county_name": "Harrison",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 938-8760",
+        "fax": "(903) 938-8759",
+        "address": "P.O. Box 2120 Marshall TX 75672",
+        "clerk_name": "Susan Goodwin"
+      },
+      {
+        "county_name": "Hartley",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 235-3880",
+        "fax": "(806) 235-3881",
+        "address": "P.O. Box 428 Channing TX 79018",
+        "clerk_name": "Wendy Hodge"
+      },
+      {
+        "county_name": "Haskell",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 864-8555",
+        "fax": "(325) 864-8615",
+        "address": "P.O. Box 130 Haskell TX 79521",
+        "clerk_name": "Debbie Pigg"
+      },
+      {
+        "county_name": "Hays",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(512) 393-8000",
+        "fax": "(512) 393-8001",
+        "address": "1515 Old Ranch Road 12 San Marcos TX 78666",
+        "clerk_name": "Elaine H. Peters"
+      },
+      {
+        "county_name": "Hemphill",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 323-6401",
+        "fax": "(806) 323-6409",
+        "address": "P.O. Box 1658 Canadian TX 79014",
+        "clerk_name": "Debra Odom"
+      },
+      {
+        "county_name": "Henderson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7436",
+        "fax": "(903) 723-7437",
+        "address": "P.O. Box 1706 Athens TX 75751",
+        "clerk_name": "Cindy Thompson"
+      },
+      {
+        "county_name": "Hidalgo",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(956) 292-7600",
+        "fax": "(956) 292-7616",
+        "address": "P.O. Box 58 Edinburg TX 78540",
+        "clerk_name": "Arturo \"Art\" Diaz Jr."
+      },
+      {
+        "county_name": "Hill",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 582-2161",
+        "fax": "(254) 582-2162",
+        "address": "P.O. Box 460 Hillsboro TX 76645",
+        "clerk_name": "Pam Howell"
+      },
+      {
+        "county_name": "Hockley",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 894-2170",
+        "fax": "(806) 894-2171",
+        "address": "P.O. Box 1148 Levelland TX 79336",
+        "clerk_name": "Tina Conder"
+      },
+      {
+        "county_name": "Hood",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(817) 573-1211",
+        "fax": "(817) 573-7335",
+        "address": "P.O. Box 1359 Granbury TX 76048",
+        "clerk_name": "Mike Weston"
+      },
+      {
+        "county_name": "Hopkins",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7436",
+        "fax": "(903) 723-7437",
+        "address": "118 Church Street Sulphur Springs TX 75482",
+        "clerk_name": "Michelle Collins"
+      },
+      {
+        "county_name": "Houston",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 544-3621",
+        "fax": "(936) 544-3625",
+        "address": "P.O. Box 367 Crockett TX 75835",
+        "clerk_name": "Phyllis Sims"
+      },
+      {
+        "county_name": "Howard",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 264-2202",
+        "fax": "(432) 264-2203",
+        "address": "300 Main Street Big Spring TX 79720",
+        "clerk_name": "Jackie Reid"
+      },
+      {
+        "county_name": "Hudspeth",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 375-2681",
+        "fax": "(432) 375-2685",
+        "address": "P.O. Box 68 Sierra Blanca TX 79851",
+        "clerk_name": "Viola Deboer"
+      },
+      {
+        "county_name": "Hunt",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 408-4100",
+        "fax": "(903) 408-4101",
+        "address": "P.O. Box 1348 Greenville TX 75401",
+        "clerk_name": "Glenna Dellinger"
+      },
+      {
+        "county_name": "Hutchinson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 273-0738",
+        "fax": "(806) 273-0740",
+        "address": "500 W Main Street Borger TX 79007",
+        "clerk_name": "Mary Sissney"
+      },
+      {
+        "county_name": "Irion",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 835-7301",
+        "fax": "(325) 835-7310",
+        "address": "P.O. Box 736 Mertzon TX 76941",
+        "clerk_name": "Carol Mier"
+      },
+      {
+        "county_name": "Jack",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 567-2311",
+        "fax": "(940) 567-2314",
+        "address": "100 W Main Street Jacksboro TX 76458",
+        "clerk_name": "Ann Carrol"
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 782-2352",
+        "fax": "(361) 782-2353",
+        "address": "P.O. Box 1390 Edna TX 77957",
+        "clerk_name": "Brenda Parishwitz"
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 384-7265",
+        "fax": "(409) 384-7266",
+        "address": "P.O. Box 2070 Jasper TX 75951",
+        "clerk_name": "Beverly Nolan"
+      },
+      {
+        "county_name": "Jeff Davis",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 426-3969",
+        "fax": "(432) 426-3968",
+        "address": "P.O. Box 309 Fort Davis TX 79734",
+        "clerk_name": "Maisie Fonseca"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 835-8600",
+        "fax": "(409) 835-8601",
+        "address": "P.O. Box 1090 Beaumont TX 77704",
+        "clerk_name": "Natalie Moran"
+      },
+      {
+        "county_name": "Jim Hogg",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 527-3209",
+        "fax": "(361) 527-3210",
+        "address": "P.O. Box 668 Hebbronville TX 78361",
+        "clerk_name": "Raul Vela"
+      },
+      {
+        "county_name": "Jim Wells",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 668-5702",
+        "fax": "(361) 668-5703",
+        "address": "P.O. Box 1460 Alice TX 78332",
+        "clerk_name": "Patricia Garcia"
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(817) 556-6000",
+        "fax": "(817) 556-6001",
+        "address": "P.O. Box 909 Cleburne TX 76033",
+        "clerk_name": "Rita Ashford"
+      },
+      {
+        "county_name": "Jones",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 773-2452",
+        "fax": "(325) 773-2453",
+        "address": "P.O. Box 685 Stamford TX 79553",
+        "clerk_name": "Linda Emmons"
+      },
+      {
+        "county_name": "Karnes",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 780-3730",
+        "fax": "(830) 780-3731",
+        "address": "P.O. Box 356 Karnes City TX 78118",
+        "clerk_name": "Ginger Gann"
+      },
+      {
+        "county_name": "Kaufman",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(972) 932-4331",
+        "fax": "(972) 932-4332",
+        "address": "100 W Mulberry Street Kaufman TX 75142",
+        "clerk_name": "Cindy Malone"
+      },
+      {
+        "county_name": "Kendall",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 249-9343",
+        "fax": "(830) 249-7351",
+        "address": "201 E Water Street Boerne TX 78006",
+        "clerk_name": "Carla Brundrett"
+      },
+      {
+        "county_name": "Kenedy",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 294-5714",
+        "fax": "(361) 294-5715",
+        "address": "P.O. Box 1188 Sarita TX 78385",
+        "clerk_name": "Rene Gonzalez"
+      },
+      {
+        "county_name": "Kent",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 237-3881",
+        "fax": "(806) 237-3882",
+        "address": "P.O. Box 130 Jayton TX 79528",
+        "clerk_name": "Robert Edmiston"
+      },
+      {
+        "county_name": "Kerr",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 792-2500",
+        "fax": "(830) 792-2505",
+        "address": "700 Main Street Kerrville TX 78028",
+        "clerk_name": "Judy Kammich"
+      },
+      {
+        "county_name": "Kimble",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 446-2725",
+        "fax": "(325) 446-2726",
+        "address": "P.O. Box 518 Junction TX 76849",
+        "clerk_name": "Carolyn Trant"
+      },
+      {
+        "county_name": "King",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 596-4412",
+        "fax": "(806) 596-4412",
+        "address": "P.O. Box 135 Guthrie TX 79236",
+        "clerk_name": "Shirley Crowder"
+      },
+      {
+        "county_name": "Kinney",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 563-2561",
+        "fax": "(830) 563-2401",
+        "address": "P.O. Box 1176 Brackettville TX 78832",
+        "clerk_name": "Joni Gouge"
+      },
+      {
+        "county_name": "Kleberg",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 595-8530",
+        "fax": "(361) 595-8535",
+        "address": "700 E Samford Avenue Kingsville TX 78363",
+        "clerk_name": "Denise Tebeest"
+      },
+      {
+        "county_name": "Knox",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 454-2441",
+        "fax": "(806) 454-2442",
+        "address": "P.O. Box 180 Benjamin TX 79505",
+        "clerk_name": "Tommy Stalcup"
+      },
+      {
+        "county_name": "LaSalle",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 879-4432",
+        "fax": "(830) 879-4433",
+        "address": "P.O. Box 340 Cotulla TX 78014",
+        "clerk_name": "Mary Moreno"
+      },
+      {
+        "county_name": "Lamar",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7406",
+        "fax": "(903) 723-7407",
+        "address": "P.O. Box 546 Paris TX 75460",
+        "clerk_name": "Theresa Donley"
+      },
+      {
+        "county_name": "Lamb",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 385-4222",
+        "fax": "(806) 385-4229",
+        "address": "P.O. Box 2000 Littlefield TX 79339",
+        "clerk_name": "Cheryl Johnson"
+      },
+      {
+        "county_name": "Lampasas",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(512) 556-8012",
+        "fax": "(512) 556-8013",
+        "address": "415 E 2nd Street Lampasas TX 76550",
+        "clerk_name": "Andrea Anderson"
+      },
+      {
+        "county_name": "Lavaca",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 798-2314",
+        "fax": "(361) 798-2315",
+        "address": "P.O. Box 307 Hallettsville TX 77964",
+        "clerk_name": "Sharon Michna"
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 542-2633",
+        "fax": "(979) 542-2634",
+        "address": "P.O. Box 419 Giddings TX 78942",
+        "clerk_name": "Alexa K. Schouppe"
+      },
+      {
+        "county_name": "Leon",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 536-2351",
+        "fax": "(903) 536-2352",
+        "address": "P.O. Box 98 Centerville TX 75833",
+        "clerk_name": "Dorla J. Garrett"
+      },
+      {
+        "county_name": "Liberty",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 336-4700",
+        "fax": "(936) 336-4701",
+        "address": "1923 Sam Houston Road Liberty TX 77575",
+        "clerk_name": "Kasey Krizan"
+      },
+      {
+        "county_name": "Limestone",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 729-5504",
+        "fax": "(254) 729-5505",
+        "address": "P.O. Box 350 Groesbeck TX 76642",
+        "clerk_name": "Ann Brown"
+      },
+      {
+        "county_name": "Lipscomb",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 862-4391",
+        "fax": "(806) 862-4391",
+        "address": "P.O. Box 40 Lipscomb TX 79056",
+        "clerk_name": "Cindy Hicks"
+      },
+      {
+        "county_name": "Live Oak",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 449-2733",
+        "fax": "(361) 449-2733",
+        "address": "P.O. Box 338 George West TX 78022",
+        "clerk_name": "Geraldine Lott"
+      },
+      {
+        "county_name": "Llano",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 247-2455",
+        "fax": "(325) 247-2456",
+        "address": "884 Ford Street Llano TX 78643",
+        "clerk_name": "Rhonda Wilson"
+      },
+      {
+        "county_name": "Loving",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 943-6050",
+        "fax": "(432) 943-6090",
+        "address": "P.O. Box 341 Mentone TX 79754",
+        "clerk_name": "Genaro Guerra"
+      },
+      {
+        "county_name": "Lubbock",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 775-1236",
+        "fax": "(806) 775-1237",
+        "address": "P.O. Box 10536 Lubbock TX 79408",
+        "clerk_name": "David B. Dawkins"
+      },
+      {
+        "county_name": "Lynn",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 561-4278",
+        "fax": "(806) 561-4266",
+        "address": "P.O. Box 937 Tahoka TX 79373",
+        "clerk_name": "Krista Burk"
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 348-2638",
+        "fax": "(936) 348-2639",
+        "address": "P.O. Box 616 Madisonville TX 77864",
+        "clerk_name": "Leah Scruggs"
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 665-2661",
+        "fax": "(903) 665-2662",
+        "address": "P.O. Box 527 Jefferson TX 75657",
+        "clerk_name": "Angela Gordon"
+      },
+      {
+        "county_name": "Martin",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 756-2644",
+        "fax": "(432) 756-2645",
+        "address": "P.O. Box 206 Stanton TX 79782",
+        "clerk_name": "Sherri Hogg"
+      },
+      {
+        "county_name": "Mason",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 347-5500",
+        "fax": "(325) 347-5511",
+        "address": "P.O. Box 702 Mason TX 76856",
+        "clerk_name": "Linda Durke"
+      },
+      {
+        "county_name": "Matagorda",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 245-3344",
+        "fax": "(979) 245-3371",
+        "address": "P.O. Box 1506 Bay City TX 77414",
+        "clerk_name": "Jena Hixson"
+      },
+      {
+        "county_name": "Maverick",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 773-2829",
+        "fax": "(830) 773-2830",
+        "address": "1322 Guerrero Street Eagle Pass TX 78852",
+        "clerk_name": "Jose A. Villarreal"
+      },
+      {
+        "county_name": "McCulloch",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 597-2373",
+        "fax": "(325) 597-2374",
+        "address": "P.O. Box 237 Brady TX 76825",
+        "clerk_name": "Kathleen Moser"
+      },
+      {
+        "county_name": "McLennan",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 757-5017",
+        "fax": "(254) 757-5018",
+        "address": "P.O. Box 1959 Waco TX 76703",
+        "clerk_name": "Patty McCaleb"
+      },
+      {
+        "county_name": "McMullen",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 274-3215",
+        "fax": "(361) 274-3216",
+        "address": "P.O. Box 235 Tilden TX 78376",
+        "clerk_name": "Esperanza Garza"
+      },
+      {
+        "county_name": "Medina",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 426-4245",
+        "fax": "(830) 426-4244",
+        "address": "P.O. Box 2555 Hondo TX 78861",
+        "clerk_name": "Joe D Viktorin"
+      },
+      {
+        "county_name": "Menard",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 396-4682",
+        "fax": "(325) 396-4621",
+        "address": "P.O. Box 1028 Menard TX 76859",
+        "clerk_name": "Benita Redding"
+      },
+      {
+        "county_name": "Midland",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 688-4700",
+        "fax": "(432) 688-4701",
+        "address": "P.O. Box 211 Midland TX 79702",
+        "clerk_name": "Debbie Valenzuela"
+      },
+      {
+        "county_name": "Milam",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 697-6962",
+        "fax": "(254) 697-6966",
+        "address": "P.O. Box 191 Cameron TX 76520",
+        "clerk_name": "Dianna Ginn"
+      },
+      {
+        "county_name": "Mills",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 648-2711",
+        "fax": "(325) 648-2714",
+        "address": "P.O. Box 996 Goldthwaite TX 76844",
+        "clerk_name": "Jana Hinton"
+      },
+      {
+        "county_name": "Mitchell",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 728-3481",
+        "fax": "(325) 728-3482",
+        "address": "P.O. Box 310 Colorado City TX 79512",
+        "clerk_name": "Anita Lara"
+      },
+      {
+        "county_name": "Montague",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 894-2230",
+        "fax": "(940) 894-2231",
+        "address": "P.O. Box 668 Montague TX 76251",
+        "clerk_name": "Linda Meagher"
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 539-7885",
+        "fax": "(936) 539-7900",
+        "address": "P.O. Box 3195 Conroe TX 77305",
+        "clerk_name": "Lorraine Krupa"
+      },
+      {
+        "county_name": "Moore",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 935-3119",
+        "fax": "(806) 935-3120",
+        "address": "P.O. Box 211 Dumas TX 79029",
+        "clerk_name": "Roxanna Cobb"
+      },
+      {
+        "county_name": "Morris",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7411",
+        "fax": "(903) 723-7412",
+        "address": "P.O. Box 469 Daingerfield TX 75638",
+        "clerk_name": "Darlene Myles"
+      },
+      {
+        "county_name": "Motley",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 347-2334",
+        "fax": "(806) 347-2335",
+        "address": "P.O. Box 66 Matador TX 79244",
+        "clerk_name": "Mattie Gobin"
+      },
+      {
+        "county_name": "Nacogdoches",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 560-5860",
+        "fax": "(936) 560-5861",
+        "address": "P.O. Box 595 Nacogdoches TX 75961",
+        "clerk_name": "Lori Perry"
+      },
+      {
+        "county_name": "Navarro",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 654-3030",
+        "fax": "(903) 654-3031",
+        "address": "P.O. Box 423 Corsicana TX 75110",
+        "clerk_name": "Doris Hulbary"
+      },
+      {
+        "county_name": "Newton",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 379-8281",
+        "fax": "(409) 379-8282",
+        "address": "P.O. Box 418 Newton TX 75966",
+        "clerk_name": "Karen Dougherty"
+      },
+      {
+        "county_name": "Nolan",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 235-9282",
+        "fax": "(325) 235-9283",
+        "address": "P.O. Box 1220 Sweetwater TX 79556",
+        "clerk_name": "Sharla Franks"
+      },
+      {
+        "county_name": "Nueces",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 888-0777",
+        "fax": "(361) 888-0778",
+        "address": "P.O. Box 1687 Corpus Christi TX 78403",
+        "clerk_name": "Kelle Strickland"
+      },
+      {
+        "county_name": "Ochiltree",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 435-8039",
+        "fax": "(806) 435-8040",
+        "address": "P.O. Box 555 Perryton TX 79070",
+        "clerk_name": "June Kennedy"
+      },
+      {
+        "county_name": "Oldham",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 267-2341",
+        "fax": "(806) 267-2639",
+        "address": "P.O. Box 469 Vega TX 79092",
+        "clerk_name": "Terri Sherwood"
+      },
+      {
+        "county_name": "Orange",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 883-7601",
+        "fax": "(409) 883-7635",
+        "address": "P.O. Box 347 Orange TX 77631",
+        "clerk_name": "David Guillory"
+      },
+      {
+        "county_name": "Palo Pinto",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 594-7322",
+        "fax": "(940) 594-7323",
+        "address": "P.O. Box 219 Weatherford TX 76086",
+        "clerk_name": "Karen Davis"
+      },
+      {
+        "county_name": "Panola",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 693-0302",
+        "fax": "(903) 693-0317",
+        "address": "P.O. Box 726 Carthage TX 75633",
+        "clerk_name": "Judith Johnson"
+      },
+      {
+        "county_name": "Parker",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(817) 598-6161",
+        "fax": "(817) 598-6162",
+        "address": "P.O. Box 819 Weatherford TX 76086",
+        "clerk_name": "Linda Wilkins"
+      },
+      {
+        "county_name": "Parmer",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 481-3391",
+        "fax": "(806) 481-3392",
+        "address": "P.O. Box 356 Farwell TX 79325",
+        "clerk_name": "Sharolyn Johnson"
+      },
+      {
+        "county_name": "Pecos",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 336-8161",
+        "fax": "(432) 336-8168",
+        "address": "P.O. Box 386 Fort Stockton TX 79735",
+        "clerk_name": "Jose A. Rosas"
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 327-3800",
+        "fax": "(936) 327-3801",
+        "address": "P.O. Box 2119 Livingston TX 77351",
+        "clerk_name": "Beth Brannan"
+      },
+      {
+        "county_name": "Potter",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 468-5655",
+        "fax": "(806) 468-5656",
+        "address": "P.O. Box 368 Amarillo TX 79105",
+        "clerk_name": "Anita Joseph"
+      },
+      {
+        "county_name": "Presidio",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 729-4923",
+        "fax": "(432) 729-4921",
+        "address": "P.O. Box 789 Marfa TX 79843",
+        "clerk_name": "Amanda Holguin"
+      },
+      {
+        "county_name": "Rains",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7408",
+        "fax": "(903) 723-7409",
+        "address": "P.O. Box 187 Emory TX 75440",
+        "clerk_name": "Sharolyn Wilson"
+      },
+      {
+        "county_name": "Randall",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 468-5505",
+        "fax": "(806) 468-5506",
+        "address": "P.O. Box 2270 Canyon TX 79015",
+        "clerk_name": "Kathe Hicks"
+      },
+      {
+        "county_name": "Reagan",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 884-2442",
+        "fax": "(325) 884-1503",
+        "address": "300 North Plaza Avenue, Big Lake, TX 76932",
+        "clerk_name": "Tammy Hodge"
+      },
+      {
+        "county_name": "Real",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "",
+        "fax": "",
+        "address": "146 Highway 83 South, P.O. Box 446, Leakey, TX 78873",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Red River",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 427-2401",
+        "fax": "(903) 427-3589",
+        "address": "200 N Walnut St, Courthouse Annex Bldg, Clarksville, TX 75426",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Reeves",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 287-0222",
+        "fax": "(432) 400-0822",
+        "address": "100 E. 4th St. Suite 101, Pecos, TX 79772",
+        "clerk_name": ""
+      },
+      {
+        "county_name": "Refugio",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 526-2233",
+        "fax": "(361) 526-1325",
+        "address": "808 Commerce, Rm 112, Refugio, TX 78377",
+        "clerk_name": "Margie A. Castellano"
+      },
+      {
+        "county_name": "Roberts",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 868-2341",
+        "fax": "(806) 868-3381",
+        "address": "300 East Commercial St, P.O. Box 477, Miami, TX 79059",
+        "clerk_name": "Toni Rankin"
+      },
+      {
+        "county_name": "Robertson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 828-4130",
+        "fax": "",
+        "address": "103 E. Morgan St, P.O. Box 1029, Franklin, TX 77856",
+        "clerk_name": "Stephanie M. Sanders"
+      },
+      {
+        "county_name": "Rockwall",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(972) 204-6300",
+        "fax": "(972) 204-6309",
+        "address": "1111 E Yellowjacket Lane Suite 100, Rockwall, TX 75087",
+        "clerk_name": "Jennifer Fogg"
+      },
+      {
+        "county_name": "Runnels",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 365-3600",
+        "fax": "(325) 365-3601",
+        "address": "P.O. Box 35 Ballinger TX 76821",
+        "clerk_name": "Kelly Klaiber"
+      },
+      {
+        "county_name": "Rusk",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 657-0330",
+        "fax": "(903) 657-0335",
+        "address": "P.O. Box 1368 Henderson TX 75654",
+        "clerk_name": "Carolyn Tucker"
+      },
+      {
+        "county_name": "Sabine",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 787-3613",
+        "fax": "(409) 787-3614",
+        "address": "P.O. Box 677 Sabinetown TX 75980",
+        "clerk_name": "Sandi Jones"
+      },
+      {
+        "county_name": "San Augustine",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 275-2189",
+        "fax": "(936) 275-2246",
+        "address": "P.O. Box 976 San Augustine TX 75972",
+        "clerk_name": "Mary McBride"
+      },
+      {
+        "county_name": "San Jacinto",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 653-3753",
+        "fax": "(936) 653-3754",
+        "address": "P.O. Box 579 Coldspring TX 77331",
+        "clerk_name": "Tena K. Grimes"
+      },
+      {
+        "county_name": "San Patricio",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 972-1233",
+        "fax": "(361) 972-1234",
+        "address": "P.O. Box 578 Corpus Christi TX 78403",
+        "clerk_name": "Jean Doyle"
+      },
+      {
+        "county_name": "San Saba",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 372-5621",
+        "fax": "(325) 372-5623",
+        "address": "P.O. Box 655 San Saba TX 76877",
+        "clerk_name": "Martha Kothmann"
+      },
+      {
+        "county_name": "Schleicher",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 853-2766",
+        "fax": "(325) 853-2763",
+        "address": "P.O. Box 584 Eldorado TX 76936",
+        "clerk_name": "Margaret Kerbow"
+      },
+      {
+        "county_name": "Scurry",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 573-5374",
+        "fax": "(325) 573-5333",
+        "address": "300 S Loraine Street Snyder TX 79549",
+        "clerk_name": "Pat Burleson"
+      },
+      {
+        "county_name": "Shackelford",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 762-2232",
+        "fax": "(325) 762-2233",
+        "address": "P.O. Box 400 Albany TX 76430",
+        "clerk_name": "Corinne Ford"
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 598-6361",
+        "fax": "(936) 598-6362",
+        "address": "P.O. Box 1865 Center TX 75935",
+        "clerk_name": "Jennifer Tran"
+      },
+      {
+        "county_name": "Sherman",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 366-2371",
+        "fax": "(806) 366-2381",
+        "address": "P.O. Box 30 Stratford TX 79084",
+        "clerk_name": "Joyce Osteen"
+      },
+      {
+        "county_name": "Smith",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 593-5000",
+        "fax": "(903) 593-5001",
+        "address": "P.O. Box 1555 Tyler TX 75710",
+        "clerk_name": "Karen Harmon"
+      },
+      {
+        "county_name": "Somervell",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 897-2502",
+        "fax": "(254) 897-2503",
+        "address": "P.O. Box 219 Glen Rose TX 76043",
+        "clerk_name": "Christy Goad"
+      },
+      {
+        "county_name": "Starr",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(956) 519-4700",
+        "fax": "(956) 519-4750",
+        "address": "P.O. Box 70 Rio Grande City TX 78582",
+        "clerk_name": "Maria Flores"
+      },
+      {
+        "county_name": "Stephens",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(254) 559-3771",
+        "fax": "(254) 559-3778",
+        "address": "P.O. Box 1086 Breckenridge TX 76024",
+        "clerk_name": "Karla Fischbach"
+      },
+      {
+        "county_name": "Sterling",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 378-5191",
+        "fax": "(325) 378-5192",
+        "address": "P.O. Box 249 Sterling City TX 76951",
+        "clerk_name": "Shirley Rutledge"
+      },
+      {
+        "county_name": "Stonewall",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 989-2272",
+        "fax": "(940) 989-2272",
+        "address": "P.O. Box 189 Aspermont TX 79502",
+        "clerk_name": "Shirley Smith"
+      },
+      {
+        "county_name": "Sutton",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 387-2711",
+        "fax": "(325) 387-2712",
+        "address": "P.O. Box 1347 Sonora TX 76950",
+        "clerk_name": "Joni Gouge"
+      },
+      {
+        "county_name": "Swisher",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 995-3521",
+        "fax": "(806) 995-3555",
+        "address": "P.O. Box 200 Tulia TX 79088",
+        "clerk_name": "Brandy Jennings"
+      },
+      {
+        "county_name": "Tarrant",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(817) 884-1305",
+        "fax": "(817) 884-1329",
+        "address": "100 W Weatherford Street Arlington TX 76010",
+        "clerk_name": "Heather Harries"
+      },
+      {
+        "county_name": "Taylor",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 674-1410",
+        "fax": "(325) 674-1417",
+        "address": "P.O. Box 3009 Abilene TX 79604",
+        "clerk_name": "Ricky Bishop"
+      },
+      {
+        "county_name": "Terrell",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 345-2391",
+        "fax": "(432) 345-2392",
+        "address": "P.O. Box 60 Sanderson TX 79848",
+        "clerk_name": "Patty Frazier"
+      },
+      {
+        "county_name": "Terry",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 637-8541",
+        "fax": "(806) 637-8542",
+        "address": "P.O. Box 910 Brownfield TX 79316",
+        "clerk_name": "Tiffany Roper"
+      },
+      {
+        "county_name": "Throckmorton",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 849-2501",
+        "fax": "(940) 849-2502",
+        "address": "P.O. Box 466 Throckmorton TX 76483",
+        "clerk_name": "Pat Simmons"
+      },
+      {
+        "county_name": "Titus",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 723-7434",
+        "fax": "(903) 723-7435",
+        "address": "P.O. Box 226 Mount Pleasant TX 75456",
+        "clerk_name": "Karla Goad"
+      },
+      {
+        "county_name": "Tom Green",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(325) 653-3735",
+        "fax": "(325) 653-3739",
+        "address": "P.O. Box 1226 San Angelo TX 76902",
+        "clerk_name": "Margaret Metcalf"
+      },
+      {
+        "county_name": "Travis",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(512) 854-4996",
+        "fax": "(512) 854-3969",
+        "address": "P.O. Box 149325 Austin TX 78714-9325",
+        "clerk_name": "Dyana Limon-Mercado"
+      },
+      {
+        "county_name": "Trinity",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 642-2316",
+        "fax": "(936) 642-2317",
+        "address": "P.O. Box 356 Groveton TX 75845",
+        "clerk_name": "Christine Crum"
+      },
+      {
+        "county_name": "Tyler",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(409) 283-2113",
+        "fax": "(409) 283-2114",
+        "address": "P.O. Box 66 Woodville TX 75979",
+        "clerk_name": "Tammy Sanger"
+      },
+      {
+        "county_name": "Upshur",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 843-5705",
+        "fax": "(903) 843-5706",
+        "address": "P.O. Box 1239 Gilmer TX 75644",
+        "clerk_name": "Ruth Anne Posey"
+      },
+      {
+        "county_name": "Upton",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 693-2852",
+        "fax": "(432) 693-2853",
+        "address": "P.O. Box 465 Rankin TX 79778",
+        "clerk_name": "Pam Musselman"
+      },
+      {
+        "county_name": "Uvalde",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 278-6361",
+        "fax": "(830) 278-6362",
+        "address": "P.O. Box 748 Uvalde TX 78801",
+        "clerk_name": "Rosa Canales"
+      },
+      {
+        "county_name": "Val Verde",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 774-7559",
+        "fax": "(830) 774-7560",
+        "address": "P.O. Box 1267 Del Rio TX 78840",
+        "clerk_name": "Luis Sanchez"
+      },
+      {
+        "county_name": "Van Zandt",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 567-4406",
+        "fax": "(903) 567-4407",
+        "address": "P.O. Box 510 Canton TX 75103",
+        "clerk_name": "Dyan Robinson"
+      },
+      {
+        "county_name": "Victoria",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(361) 575-4613",
+        "fax": "(361) 575-4614",
+        "address": "P.O. Box 1358 Victoria TX 77901",
+        "clerk_name": "Heather Young"
+      },
+      {
+        "county_name": "Walker",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 436-4922",
+        "fax": "(936) 436-4937",
+        "address": "1100 University Avenue Huntsville TX 77340",
+        "clerk_name": "Patricia Metcalfe"
+      },
+      {
+        "county_name": "Waller",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(936) 826-8006",
+        "fax": "(936) 826-8007",
+        "address": "P.O. Box 352 Hempstead TX 77445",
+        "clerk_name": "Sharon Brown"
+      },
+      {
+        "county_name": "Ward",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 943-5050",
+        "fax": "(432) 943-5051",
+        "address": "P.O. Box 427 Monahans TX 79756",
+        "clerk_name": "Maria Garcia"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 277-6200",
+        "fax": "(979) 277-6214",
+        "address": "P.O. Box 580 Brenham TX 77833",
+        "clerk_name": "Hortencia Rivas"
+      },
+      {
+        "county_name": "Webb",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(956) 523-4000",
+        "fax": "(956) 523-4003",
+        "address": "P.O. Box 2146 Laredo TX 78044",
+        "clerk_name": "Lillia Gutierrez"
+      },
+      {
+        "county_name": "Wharton",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(979) 532-1718",
+        "fax": "(979) 532-1722",
+        "address": "P.O. Box 367 Wharton TX 77488",
+        "clerk_name": "Belinda Plummer"
+      },
+      {
+        "county_name": "Wheeler",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 826-3937",
+        "fax": "(806) 826-3937",
+        "address": "P.O. Box 506 Wheeler TX 79096",
+        "clerk_name": "Rosie Brown"
+      },
+      {
+        "county_name": "Wichita",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 766-8000",
+        "fax": "(940) 766-8011",
+        "address": "P.O. Box 967 Wichita Falls TX 76307",
+        "clerk_name": "Jamie Hendrix"
+      },
+      {
+        "county_name": "Wilbarger",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 552-7591",
+        "fax": "(940) 552-7592",
+        "address": "P.O. Box 674 Vernon TX 76384",
+        "clerk_name": "Melissa Cowan"
+      },
+      {
+        "county_name": "Willacy",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(956) 689-2700",
+        "fax": "(956) 689-2701",
+        "address": "P.O. Box 1100 Raymondville TX 78580",
+        "clerk_name": "Sylvia Delgado"
+      },
+      {
+        "county_name": "Williamson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(512) 943-1637",
+        "fax": "(512) 943-1644",
+        "address": "P.O. Box 2390 Georgetown TX 78627",
+        "clerk_name": "Sylvia Hernandez"
+      },
+      {
+        "county_name": "Wilson",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 393-6321",
+        "fax": "(830) 393-6340",
+        "address": "P.O. Box 517 Floresville TX 78114",
+        "clerk_name": "Sylvia Garza-Hernandez"
+      },
+      {
+        "county_name": "Winkler",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(432) 586-2863",
+        "fax": "(432) 586-2884",
+        "address": "P.O. Box 156 Kermit TX 79745",
+        "clerk_name": "Carla Hartman"
+      },
+      {
+        "county_name": "Wise",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 627-3541",
+        "fax": "(940) 627-3542",
+        "address": "P.O. Box 579 Decatur TX 76234",
+        "clerk_name": "Patricia Rouse"
+      },
+      {
+        "county_name": "Wood",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(903) 763-2301",
+        "fax": "(903) 763-2301",
+        "address": "P.O. Box 338 Quitman TX 75783",
+        "clerk_name": "Lisa Smotherman"
+      },
+      {
+        "county_name": "Yoakum",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(806) 592-2666",
+        "fax": "(806) 592-3665",
+        "address": "P.O. Box 899 Denver City TX 79323",
+        "clerk_name": "Susan Morrow"
+      },
+      {
+        "county_name": "Young",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(940) 549-8411",
+        "fax": "(940) 549-8412",
+        "address": "P.O. Box 68 Graham TX 76450",
+        "clerk_name": "Tammy Beasley"
+      },
+      {
+        "county_name": "Zapata",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(956) 765-9915",
+        "fax": "(956) 765-9933",
+        "address": "200 E. 7th Ave. Suite 138 Zapata TX 78076",
+        "clerk_name": "Mary Jayne Villarreal-Bonoan"
+      },
+      {
+        "county_name": "Zavala",
+        "clerk_website": "https://www.sos.state.tx.us/elections/voter/cclerks.shtml",
+        "efiling_url": "https://efiletexas.gov/",
+        "phone": "(830) 374-2871",
+        "fax": "(830) 374-2872",
+        "address": "P.O. Box 1 Crystal City TX 78839",
+        "clerk_name": "Olivia Gonzalez"
+      }
+    ]
+  }
+]

@@ -1,0 +1,2114 @@
+[
+  {
+    "state_abbr": "NC",
+    "state_name": "North Carolina",
+    "statewide_efiling_system": "Odyssey eFileNC",
+    "statewide_efiling_url": "https://northcarolina.tylertech.cloud/ofsweb",
+    "counties": [
+      {
+        "county_name": "Alamance",
+        "phone": "(336) 570-5200",
+        "fax": "",
+        "address": "Alamance County Courthouse, Graham, NC",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Alexander",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Alleghany",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Anson",
+        "phone": "(704) 994-3800",
+        "fax": "",
+        "address": "114 N Greene St, Wadesboro, NC 28170",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Ashe",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Avery",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Beaufort",
+        "phone": "(252) 940-4000",
+        "fax": "",
+        "address": "112 W Second St, Washington, NC 27889",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bertie",
+        "phone": "(252) 794-6800",
+        "fax": "",
+        "address": "108 Dundee St, Windsor, NC 27983",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bladen",
+        "phone": "(910) 872-7200",
+        "fax": "",
+        "address": "166 E. Broad St., Elizabethtown, NC 28337",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Brunswick",
+        "phone": "(910) 253-3900",
+        "fax": "",
+        "address": "310 Government Center Drive NE Unit 1, Bolivia, NC 28422",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Buncombe",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Burke",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cabarrus",
+        "phone": "(704) 262-5500",
+        "fax": "(704) 262-5507",
+        "address": "77 Union Street South, Concord, NC 28025",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Caldwell",
+        "phone": "(828) 759-3503",
+        "fax": "(828) 759-3501",
+        "address": "216 Main Street Northwest, Lenoir, NC 28645",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Camden",
+        "phone": "(252) 336-4000",
+        "fax": "(252) 336-4001",
+        "address": "117 NC Highway 343 North, Camden, NC 27921",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Carteret",
+        "phone": "(252) 504-4400",
+        "fax": "(252) 504-4403",
+        "address": "300 Courthouse Square, Beaufort, NC 28516",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Caswell",
+        "phone": "(336) 459-4000",
+        "fax": "(336) 459-4001",
+        "address": "139 East Church Street, Yanceyville, NC 27379",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Catawba",
+        "phone": "(828) 695-6100",
+        "fax": "",
+        "address": "Catawba County Justice Center, Newton, NC",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Chatham",
+        "phone": "(919) 545-3500",
+        "fax": "",
+        "address": "Chatham County Courthouse, Pittsboro, NC",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cherokee",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Chowan",
+        "phone": "(252) 482-8431",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Clay",
+        "phone": "(828) 389-0089",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cleveland",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Columbus",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Craven",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cumberland",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Currituck",
+        "phone": "(252) 232-6200",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Dare",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Davidson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Davie",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Duplin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Durham",
+        "phone": "(919) 808-3000",
+        "fax": "",
+        "address": "Durham County Courthouse, Durham, NC",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Edgecombe",
+        "phone": "(252) 824-3200",
+        "fax": "",
+        "address": "301 St. Andrew Street, Tarboro, NC 27886",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Forsyth",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Franklin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Gaston",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Gates",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Granville",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Greene",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Guilford",
+        "phone": "(336) 412-7300",
+        "fax": "",
+        "address": "Guilford County Courthouse, Greensboro, NC",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Halifax",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Harnett",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Haywood",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Henderson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hertford",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hoke",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hyde",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Iredell",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jackson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Johnston",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jones",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lee",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lenoir",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Macon",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Madison",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Martin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "McDowell",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Mecklenburg",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Mitchell",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Moore",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Nash",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "New Hanover",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Northampton",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Onslow",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Orange",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pamlico",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pasquotank",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pender",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Perquimans",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Person",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pitt",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Polk",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Randolph",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Richmond",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Robeson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Rockingham",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Rowan",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Rutherford",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sampson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Scotland",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Stanly",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Stokes",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Surry",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Swain",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Transylvania",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Tyrrell",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Union",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Vance",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wake",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Warren",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Washington",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Watauga",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wayne",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wilkes",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wilson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Yadkin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Yancey",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "GA",
+    "state_name": "Georgia",
+    "statewide_efiling_system": "Odyssey eFileGA",
+    "statewide_efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+    "counties": [
+      {
+        "county_name": "Appling",
+        "phone": "(912) 367-8126",
+        "fax": "(912) 367-8180",
+        "address": "69 Tippins St., Suite 103, Baxley, GA 31513",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Atkinson",
+        "phone": "(912) 422-3343",
+        "fax": "(912) 422-7025",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bacon",
+        "phone": "(912) 632-4915",
+        "fax": "(912) 632-6545",
+        "address": "502 W. 12th St., Suite 304, Alma, GA 31510",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Baker",
+        "phone": "(229) 734-3004",
+        "fax": "(229) 734-7770",
+        "address": "167 Baker Place, Newton, GA 31770",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Baldwin",
+        "phone": "(478) 445-6324",
+        "fax": "(478) 445-6039",
+        "address": "121 N. Wilkinson St., Suite 209, Milledgeville, GA 31061",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Banks",
+        "phone": "(706) 677-6240",
+        "fax": "(706) 677-6294",
+        "address": "144 Yonah Homer Rd., Suite 8, Homer, GA 30547",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Barrow",
+        "phone": "(770) 307-3035",
+        "fax": "(770) 867-4800",
+        "address": "652 Barrow Park Dr. Suite B, Winder, GA 30680",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bartow",
+        "phone": "(770) 387-5030",
+        "fax": "(770) 387-5023",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Ben Hill",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Berrien",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bibb",
+        "phone": "(478) 621-6540",
+        "fax": "(478) 621-6329",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bleckley",
+        "phone": "(478) 934-3200",
+        "fax": "(478) 934-0822",
+        "address": "306 SE Second Street, Cochran, GA 31014",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Brantley",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Brooks",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bryan",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Bulloch",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Burke",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Butts",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Calhoun",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Camden",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Candler",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Carroll",
+        "phone": "(770) 830-5830",
+        "fax": "(770) 214-3584",
+        "address": "323 Newnan St., Carrollton, GA 30117",
+        "clerk_website": "http://www.carrollcountyclerk.com",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Catoosa",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Charlton",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Chatham",
+        "phone": "(912) 652-7200",
+        "fax": "(912) 652-7380",
+        "address": "133 Montgomery St., Room 304, Savannah, GA 31401",
+        "clerk_website": "http://www.chathamcourts.org/SuperiorCourt/SuperiorCourtClerk.aspx",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Chattahoochee",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Chattooga",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cherokee",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Chester",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Chickamauga",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Clarke",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Clay",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Clayton",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Clinch",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cobb",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Coffee",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Colquitt",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Columbia",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Cook",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Coweta",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Crawford",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Crisp",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Dade",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Dawson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Decatur",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "DeKalb",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Dodge",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Dooly",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Dougherty",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Douglas",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Early",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Echols",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Effingham",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Elbert",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Emanuel",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Evans",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Fannin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Fayette",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Floyd",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Forsyth",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Franklin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Fulton",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Gilmer",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Glascock",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Glynn",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Gordon",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Grady",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Greene",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Greenville",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Griggs",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Gwinnett",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Habersham",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hall",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hancock",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Haralson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Harris",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Hart",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Heard",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Henry",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Houston",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Irwin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jackson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jasper",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jeff Davis",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jenkins",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Johnson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Jones",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lamar",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lanier",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Laurens",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lee",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Liberty",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Long",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lowndes",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Lumpkin",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Macon",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Madison",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Marion",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "McDuffie",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "McIntosh",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Meriwether",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Miller",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Mitchell",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Monroe",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Morgan",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Murray",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Muscogee",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Newton",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Oconee",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Oglethorpe",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Paulding",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Peach",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pickens",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pierce",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pike",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Polk",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Pulaski",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Putnam",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Quitman",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Rabun",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Randolph",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Richmond",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Rockdale",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Schley",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Screven",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Seminole",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Spalding",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Stephens",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Stewart",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Sumter",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Talbot",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Taliaferro",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Tattnall",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Taylor",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Telfair",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Terrell",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Thomas",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Tift",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Toombs",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Towns",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Treutlen",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Troup",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Turner",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Twiggs",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Union",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Upson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Walker",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Walton",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Ware",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Warren",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Washington",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wayne",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Webster",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wheeler",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "White",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Whitfield",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wilcox",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wilkes",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Wilkinson",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      },
+      {
+        "county_name": "Worth",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "clerk_website": "",
+        "efiling_url": ""
+      }
+    ]
+  }
+]

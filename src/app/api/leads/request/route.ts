@@ -63,6 +63,34 @@ export async function POST(request: NextRequest) {
 
   const requestedCount = Math.min(Math.max(1, Number(leadCount) || 1), maxLeads)
 
+  // Persist the request so it shows in Admin > Fresh Leads as a reviewable queue.
+  let operatorPinId: string | null = null
+  try {
+    const { data: pin } = await supabaseAdmin
+      .from("user_pins")
+      .select("id")
+      .ilike("email", userEmail)
+      .eq("is_active", true)
+      .maybeSingle()
+    operatorPinId = (pin as { id?: string } | null)?.id || null
+  } catch { /* pin lookup best-effort */ }
+
+  try {
+    await supabaseAdmin.from("lead_requests").insert({
+      clerk_id: userId,
+      operator_pin_id: operatorPinId,
+      user_email: userEmail,
+      user_name: userName,
+      account_type: accountType,
+      requested_count: requestedCount,
+      state_preference: statePreference || null,
+      notes: notes || null,
+      status: "pending",
+    })
+  } catch (e) {
+    console.error("Lead request persist failed (continuing to email):", e)
+  }
+
   const result = await sendAdminNotification(
     `Lead Request: ${requestedCount} leads - ${userEmail} (${accountType})`,
     buildLeadRequestHtml(userEmail, userName, accountType, requestedCount, statePreference || "", notes || "")
@@ -70,7 +98,7 @@ export async function POST(request: NextRequest) {
 
   if (!result.success) {
     console.error("Lead request email failed:", result.error)
-    return NextResponse.json({ error: "Failed to send request. Please try again." }, { status: 500 })
+    // request is already persisted; don't hard-fail the user over the email
   }
 
   return NextResponse.json({

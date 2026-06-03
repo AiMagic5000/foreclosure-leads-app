@@ -25,6 +25,15 @@ import { Badge } from "@/components/ui/badge"
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
 const REFRESH_MS = 5000
 
+interface SourceAudit {
+  source: string
+  total: number
+  unique_surplus: number
+  unique_pct: number
+  dead_count: number
+  trust: "TRUST" | "SUSPECT" | "QUARANTINED"
+}
+
 interface StateLead {
   id: string
   owner_name: string
@@ -63,6 +72,7 @@ interface Stats {
     camofox: { ok: boolean; detail: string }
     tracerfy: { ok: boolean; balance: number | null; detail: string }
   }
+  sourceAudit: SourceAudit[]
   recent: {
     leads: Array<{
       id: string
@@ -487,6 +497,88 @@ export default function PipelineMonitorPage() {
         </Card>
       </div>
 
+      {/* Source quality audit — full-width, sortable, color-coded */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-1.5">
+            <Activity className="h-4 w-4 text-amber-600" />
+            Source Trust Audit
+            <span className="ml-2 text-xs font-normal text-muted-foreground">
+              Uniqueness check — real auctions should be 80%+ unique. Lower = scraper bug.
+            </span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto -mx-2 sm:mx-0">
+            <table className="w-full text-sm min-w-[700px]">
+              <thead>
+                <tr className="text-xs text-muted-foreground border-b">
+                  <th className="text-left py-2 pr-3">Status</th>
+                  <th className="text-left py-2 pr-3">Source</th>
+                  <th className="text-right py-2 pr-3">Total</th>
+                  <th className="text-right py-2 pr-3">Distinct $</th>
+                  <th className="text-right py-2 pr-3">Uniqueness</th>
+                  <th className="text-right py-2 pr-3">Quarantined</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stats?.sourceAudit.map((row) => {
+                  const badgeColor =
+                    row.trust === "QUARANTINED"
+                      ? "bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200"
+                      : row.trust === "SUSPECT"
+                      ? "bg-rose-100 text-rose-800 dark:bg-rose-800 dark:text-rose-50"
+                      : "bg-emerald-100 text-emerald-800 dark:bg-emerald-800 dark:text-emerald-50"
+                  const pctColor =
+                    row.unique_pct >= 80
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : row.unique_pct >= 50
+                      ? "text-amber-600 dark:text-amber-400"
+                      : "text-rose-600 dark:text-rose-400"
+                  return (
+                    <tr
+                      key={row.source}
+                      className="border-b last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                    >
+                      <td className="py-1.5 pr-3">
+                        <Badge className={badgeColor + " font-semibold"}>
+                          {row.trust}
+                        </Badge>
+                      </td>
+                      <td className="py-1.5 pr-3 font-mono text-xs max-w-[280px] truncate text-slate-800 dark:text-slate-200">
+                        {row.source}
+                      </td>
+                      <td className="py-1.5 pr-3 text-right tabular-nums">
+                        {row.total.toLocaleString()}
+                      </td>
+                      <td className="py-1.5 pr-3 text-right tabular-nums">
+                        {row.unique_surplus.toLocaleString()}
+                      </td>
+                      <td className={`py-1.5 pr-3 text-right tabular-nums font-semibold ${pctColor}`}>
+                        {row.unique_pct}%
+                      </td>
+                      <td className="py-1.5 pr-3 text-right tabular-nums text-muted-foreground">
+                        {row.dead_count > 0 ? row.dead_count.toLocaleString() : ""}
+                      </td>
+                    </tr>
+                  )
+                })}
+                {(!stats?.sourceAudit || stats.sourceAudit.length === 0) && (
+                  <tr>
+                    <td colSpan={6} className="py-4 text-center italic text-muted-foreground">
+                      Loading source audit...
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-[11px] text-muted-foreground mt-3">
+            <strong>TRUST</strong>: 80%+ unique surplus values, &lt;70% dead. <strong>SUSPECT</strong>: scraper bug suspected -- review before assigning. <strong>QUARANTINED</strong>: 70%+ rows already marked dead.
+          </p>
+        </CardContent>
+      </Card>
+
       {/* State drawer */}
       {drawerState && (
         <div
@@ -497,13 +589,13 @@ export default function PipelineMonitorPage() {
             className="w-full max-w-3xl h-full bg-white dark:bg-slate-900 shadow-2xl flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700">
               <div>
-                <h3 className="text-lg font-bold flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-emerald-600" />
+                <h3 className="text-lg font-bold flex items-center gap-2 text-slate-900 dark:text-white">
+                  <TrendingUp className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                   {drawerState} -- Unassigned $5K+ Reachable
                 </h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
+                <p className="text-xs mt-0.5 text-slate-600 dark:text-slate-400">
                   Review before issuing to operators. {drawerLeads?.length ?? 0} leads loaded.
                 </p>
               </div>
@@ -536,20 +628,20 @@ export default function PipelineMonitorPage() {
                     return (
                       <div
                         key={lead.id}
-                        className="border rounded-lg p-3 hover:border-emerald-300 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10"
+                        className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/60 rounded-lg p-3 hover:border-emerald-400 dark:hover:border-emerald-500 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/20"
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0 flex-1">
-                            <div className="font-semibold text-sm truncate">
+                            <div className="font-semibold text-sm truncate text-slate-900 dark:text-white">
                               {lead.owner_name || "—"}
                             </div>
-                            <div className="text-xs text-muted-foreground mt-0.5 truncate">
+                            <div className="text-xs mt-0.5 truncate text-slate-700 dark:text-slate-300">
                               {lead.property_address || "no address"}
                               {lead.city ? `, ${lead.city}` : ""} {lead.county ? `(${lead.county})` : ""}
                             </div>
                             <div className="flex flex-wrap items-center gap-1.5 mt-2 text-xs">
                               {hasEmail && (
-                                <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+                                <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-800 dark:text-emerald-50 font-semibold">
                                   <AtSign className="h-3 w-3 mr-0.5" />
                                   {lead.primary_email}
                                 </Badge>
@@ -558,8 +650,8 @@ export default function PipelineMonitorPage() {
                                 <Badge
                                   className={
                                     phoneClear
-                                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                                      : "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300"
+                                      ? "bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-50 font-semibold"
+                                      : "bg-rose-100 text-rose-800 dark:bg-rose-800 dark:text-rose-50 font-semibold"
                                   }
                                 >
                                   {phoneClear ? (
@@ -572,23 +664,23 @@ export default function PipelineMonitorPage() {
                                 </Badge>
                               )}
                               {lead.lead_tier && lead.lead_tier !== "unscored" && (
-                                <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">
+                                <Badge className="bg-amber-100 text-amber-900 dark:bg-amber-700 dark:text-amber-50 font-semibold">
                                   {lead.lead_tier}
                                 </Badge>
                               )}
                               {lead.source && (
-                                <span className="text-muted-foreground text-[10px]">
+                                <span className="text-[10px] text-slate-600 dark:text-slate-400 font-medium">
                                   {lead.source}
                                 </span>
                               )}
                             </div>
                           </div>
                           <div className="text-right flex-shrink-0">
-                            <div className="text-lg font-bold text-emerald-600 tabular-nums">
+                            <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
                               {fmtMoney(surplus)}
                             </div>
                             {lead.sale_date && (
-                              <div className="text-[10px] text-muted-foreground">
+                              <div className="text-[10px] text-slate-500 dark:text-slate-400">
                                 sold {new Date(lead.sale_date).toLocaleDateString()}
                               </div>
                             )}
@@ -601,8 +693,8 @@ export default function PipelineMonitorPage() {
               )}
             </div>
 
-            <div className="border-t px-5 py-3 flex items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800/50">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-t border-slate-200 dark:border-slate-700 px-5 py-3 flex items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800">
+              <p className="text-xs text-slate-700 dark:text-slate-300">
                 Review pre-issuance. Use the Admin panel to assign these leads to an operator.
               </p>
               <a

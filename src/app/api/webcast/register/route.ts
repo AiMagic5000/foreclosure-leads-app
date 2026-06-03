@@ -145,6 +145,30 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, sessionTime: new Date().toISOString(), leadId: 'ok' })
     }
 
+    // Permanent suppression check — STOP replies / opt-outs (eternal)
+    const phoneDigits = (phone || '').replace(/\D/g, '')
+    const phoneVariants = phoneDigits
+      ? [phoneDigits, '+1' + phoneDigits, '1' + phoneDigits, '+' + phoneDigits]
+      : []
+    if (phoneVariants.length > 0) {
+      const { data: phoneBl } = await supabaseAdmin
+        .from('phone_blacklist')
+        .select('phone_number')
+        .in('phone_number', phoneVariants)
+        .limit(1)
+      if (phoneBl && phoneBl.length > 0) {
+        return NextResponse.json({ success: true, sessionTime: new Date().toISOString(), leadId: 'suppressed' })
+      }
+    }
+    const { data: emailBl } = await supabaseAdmin
+      .from('email_blacklist')
+      .select('email')
+      .eq('email', email.toLowerCase())
+      .limit(1)
+    if (emailBl && emailBl.length > 0) {
+      return NextResponse.json({ success: true, sessionTime: new Date().toISOString(), leadId: 'suppressed' })
+    }
+
     const sessionTime = getNextSessionTime()
 
     const { data: session } = await supabaseAdmin
@@ -186,9 +210,11 @@ export async function POST(request: NextRequest) {
     const dbTasks: Promise<unknown>[] = [
       queueEmailDrip(lead.id, sessionTime),
     ]
-    if (phone && smsConsent) {
-      dbTasks.push(queueSmsDrip(lead.id, phone, sessionTime))
-    }
+    // SMS drip DISABLED 2026-05-05 — gateway reliability issues
+    // if (phone && smsConsent) {
+    //   dbTasks.push(queueSmsDrip(lead.id, phone, sessionTime))
+    // }
+    void queueSmsDrip; void phone; void smsConsent;
     await Promise.allSettled(dbTasks)
 
     // Fire external API calls (email, SMS) -- best-effort, OK if killed

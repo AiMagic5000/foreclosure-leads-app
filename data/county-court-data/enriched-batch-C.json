@@ -1,0 +1,1765 @@
+[
+  {
+    "state_abbr": "GA",
+    "state_name": "Georgia",
+    "statewide_efiling_system": "Odyssey eFileGA",
+    "statewide_efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+    "notes": "Georgia has 159 counties. Data partially collected. Individual county clerk websites and fax numbers require individual county lookups via gaclerks.org Find My Clerk tool.",
+    "research_status": "IN_PROGRESS",
+    "data_quality": "INCOMPLETE",
+    "counties": [
+      {
+        "county_name": "Appling",
+        "clerk_website": "https://applingcountyga.org/",
+        "efiling_url": "",
+        "phone": "(912) 367-8126",
+        "fax": "(912) 367-8180",
+        "address": "69 Tippins Street, Suite 103, Baxley, GA 31513",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Atkinson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(912) 422-3391",
+        "fax": "(912) 422-3429",
+        "address": "305 S. Main Street, Pearson, GA 31642",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Bacon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(912) 632-5961",
+        "fax": "",
+        "address": "502 W 12th Street, Alma, GA 31510",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Baker",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(229) 734-3004",
+        "fax": "",
+        "address": "167 Baker Place, Newton, GA 39870",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Baldwin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(912) 526-6116",
+        "fax": "",
+        "address": "P.O. Drawer C, Lyons, GA 30436",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Barrow",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": "",
+        "research_status": "NOT_STARTED"
+      },
+      {
+        "county_name": "Bartow",
+        "clerk_website": "https://www.bartowcountyga.gov/departments/courts/clerk_of_superior_court.php",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": "Cartersville, GA",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Ben Hill",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(229) 426-5293",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Bibb",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(478) 749-0106",
+        "fax": "",
+        "address": "Macon, GA",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Bleckley",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(478) 934-6590",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      }
+    ]
+  },
+  {
+    "state_abbr": "FL",
+    "state_name": "Florida",
+    "statewide_efiling_system": "MyFloridaCourtAccess",
+    "statewide_efiling_url": "https://www.myflcourtaccess.com/",
+    "notes": "Florida has 67 counties. Phone and address data complete. Fax numbers not available on state directory. County-specific e-filing URLs require individual verification.",
+    "research_status": "SUBSTANTIALLY_COMPLETE",
+    "data_quality": "GOOD",
+    "counties": [
+      {
+        "county_name": "Alachua",
+        "clerk_website": "https://alachuacounty.us/Depts/Clerk/pages/default.aspx",
+        "efiling_url": "https://alachuacounty.us/Depts/Clerk/pages/efiling.aspx",
+        "phone": "(352) 374-3609",
+        "fax": "(352) 338-3207",
+        "address": "201 East University Avenue, Gainesville, FL 32601",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Baker",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(904) 259-3686",
+        "fax": "",
+        "address": "339 E Macclenny Ave, Macclenny, FL 32063",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Bay",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 763-9061",
+        "fax": "",
+        "address": "300 East 4th Street, Panama City, FL 32401",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Bradford",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(904) 966-6289",
+        "fax": "",
+        "address": "945 N Temple Ave, Starke, FL 32091",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Brevard",
+        "clerk_website": "https://www.brevardclerk.us/",
+        "efiling_url": "https://www.brevardclerk.us/e-filing",
+        "phone": "(321) 637-5413",
+        "fax": "",
+        "address": "51 Nieman Ave #100, Melbourne, FL 32901",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Broward",
+        "clerk_website": "https://www.browardclerk.org/",
+        "efiling_url": "https://www.browardclerk.org/GeneralInformation/eFILING",
+        "phone": "(954) 831-6565",
+        "fax": "",
+        "address": "201 SE 6th Street, Fort Lauderdale, FL 33301",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 674-4545",
+        "fax": "",
+        "address": "20859 Central Avenue E., Room 130, Blountstown, FL 32424",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Charlotte",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(941) 743-1400",
+        "fax": "",
+        "address": "18500 Murdock Cir, Port Charlotte, FL 33948",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Citrus",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(352) 341-6424",
+        "fax": "",
+        "address": "110 N Apopka Ave, Inverness, FL 34450",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(904) 269-6302",
+        "fax": "",
+        "address": "825 N Orange Ave, Green Cove Springs, FL 32043",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Collier",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(239) 252-2646",
+        "fax": "",
+        "address": "3315 Tamiami Trail E, Naples, FL 34112",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Columbia",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(386) 758-1031",
+        "fax": "",
+        "address": "173 NE Hernando Ave #225, Lake City, FL 32055",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Dixie",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(352) 498-1200",
+        "fax": "",
+        "address": "214 NE 351 Hwy, Cross City, FL 32628",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Duval",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(904) 255-2000",
+        "fax": "",
+        "address": "501 Adams Street, Jacksonville, FL 32202",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Escambia",
+        "clerk_website": "https://escambiaclerk.com/",
+        "efiling_url": "",
+        "phone": "(850) 595-3900",
+        "fax": "",
+        "address": "1800 St Mary Ave, Pensacola, FL 32501",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Flagler",
+        "clerk_website": "https://flaglerclerk.com/",
+        "efiling_url": "",
+        "phone": "(386) 313-4400",
+        "fax": "",
+        "address": "1769 E Moody Blvd, Building #1, Bunnell, FL 32110",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 653-8861",
+        "fax": "",
+        "address": "33 Market Street, Suite 203, Apalachicola, FL 32320",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Gadsden",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 875-8601",
+        "fax": "",
+        "address": "10 E Jefferson St, Quincy, FL 32351",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Gilchrist",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(352) 463-3170",
+        "fax": "",
+        "address": "112 S Main St, Trenton, FL 32693",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Glades",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(863) 946-6010",
+        "fax": "",
+        "address": "500 Avenue J, Moore Haven, FL 33471",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Gulf",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 229-6112",
+        "fax": "",
+        "address": "1000 Cecil G. Costin Sr. Blvd, Port St Joe, FL 32456",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(386) 792-0860",
+        "fax": "",
+        "address": "207 N.E. First Street, Suite 106, Jasper, FL 32052",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Hardee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(863) 773-4174",
+        "fax": "",
+        "address": "417 West Main St., Suite 202, Wauchula, FL 33873",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Hendry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(863) 675-5209",
+        "fax": "",
+        "address": "25 East Hickpochee Avenue, LaBelle, FL 33935",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Hernando",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(352) 754-4201",
+        "fax": "",
+        "address": "20 N. Main Street, Brooksville, FL 34601",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Highlands",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(863) 402-6565",
+        "fax": "",
+        "address": "590 S. Commerce Ave, Sebring, FL 33870",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Hillsborough",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(813) 276-8100",
+        "fax": "",
+        "address": "601 E Kennedy Blvd, Tampa, FL 33602",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Holmes",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 547-1100",
+        "fax": "",
+        "address": "2201 N. Oklahoma Street, Bonifay, FL 32425",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Indian River",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(772) 770-5185",
+        "fax": "",
+        "address": "2000 16th Ave, Vero Beach, FL 32960",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 482-9552",
+        "fax": "",
+        "address": "4445 Lafayette St, Marianna, FL 32446",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 342-0218",
+        "fax": "",
+        "address": "1 Courthouse Cir, Monticello, FL 32344",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lafayette",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(386) 294-1600",
+        "fax": "",
+        "address": "P.O. Box 88, Mayo, FL 32066",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "https://www.lakecountyclerkfl.gov/",
+        "efiling_url": "",
+        "phone": "(352) 742-4100",
+        "fax": "",
+        "address": "550 W Main St, Tavares, FL 32778",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(239) 533-5000",
+        "fax": "",
+        "address": "1700 Monroe St, Fort Myers, FL 33901",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Leon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 606-4000",
+        "fax": "",
+        "address": "301 S Monroe St #100, Tallahassee, FL 32301",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Levy",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(352) 486-5229",
+        "fax": "",
+        "address": "355 S Court St, Bronson, FL 32621",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Liberty",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 643-2215",
+        "fax": "",
+        "address": "10818 NW SR 20, Bristol, FL 32321",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "https://www.madisonclerk.com/",
+        "efiling_url": "",
+        "phone": "(850) 973-1500",
+        "fax": "",
+        "address": "125 SW Range Avenue, Madison, FL 32340",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Manatee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(941) 749-1800",
+        "fax": "",
+        "address": "1115 Manatee Ave W, Bradenton, FL 34205",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(352) 671-5604",
+        "fax": "",
+        "address": "110 NW 1st Ave #1, Ocala, FL 34475",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Martin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(772) 288-5576",
+        "fax": "",
+        "address": "100 SE Ocean Blvd, Stuart, FL 34994",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Miami-Dade",
+        "clerk_website": "https://www.miamidadeclerk.gov/",
+        "efiling_url": "https://www.miamidadeclerk.gov/clerk/e-filing.page",
+        "phone": "(305) 375-5126",
+        "fax": "",
+        "address": "111 NW 1st St, Miami, FL 33128",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(305) 294-4641",
+        "fax": "",
+        "address": "500 Whitehead St, Key West, FL 33040",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Nassau",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(904) 548-4600",
+        "fax": "",
+        "address": "76347 Veterans Way, Yulee, FL 32097",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Okaloosa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 689-5000",
+        "fax": "",
+        "address": "601 E James Lee Blvd B, Crestview, FL 32536",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Okeechobee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(863) 763-2131",
+        "fax": "",
+        "address": "312 NW 3rd St, Okeechobee, FL 34972",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Orange",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(407) 836-2000",
+        "fax": "",
+        "address": "425 N Orange Ave, Orlando, FL 32801",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Osceola",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(407) 742-3500",
+        "fax": "",
+        "address": "2 Courthouse Sq #2000, Kissimmee, FL 34741",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Palm Beach",
+        "clerk_website": "https://www.mypalmbeachclerk.com/",
+        "efiling_url": "",
+        "phone": "(561) 355-2996",
+        "fax": "",
+        "address": "205 N Dixie Hwy, West Palm Beach, FL 33401",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Pasco",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(352) 523-2411",
+        "fax": "",
+        "address": "38053 Live Oak Avenue, Suite 112, Dade City, FL 33523",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Pinellas",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(727) 464-7000",
+        "fax": "",
+        "address": "315 Court St, Clearwater, FL 33756",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(863) 534-4000",
+        "fax": "",
+        "address": "3425 Lake Alfred Rd, Winter Haven, FL 33881",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Putnam",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(386) 326-7600",
+        "fax": "",
+        "address": "410 St Johns Ave, Palatka, FL 32177",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Santa Rosa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 981-5650",
+        "fax": "",
+        "address": "5819 Gulf Breeze Parkway, Gulf Breeze, FL 32561",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Sarasota",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(941) 861-7400",
+        "fax": "",
+        "address": "2000 Main Street, Sarasota, FL 34237",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Seminole",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(407) 665-4330",
+        "fax": "",
+        "address": "301 North Park Avenue, Sanford, FL 32773",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "St. Johns",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(904) 819-3628",
+        "fax": "",
+        "address": "4010 Lewis Speedway, St Augustine, FL 32084",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "St. Lucie",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(772) 462-6900",
+        "fax": "",
+        "address": "201 S Indian River Dr, Fort Pierce, FL 34950",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Sumter",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(352) 569-6810",
+        "fax": "",
+        "address": "215 E McCollum Ave, Bushnell, FL 33513",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Suwannee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(386) 362-0533",
+        "fax": "",
+        "address": "200 South Ohio Avenue, Live Oak, FL 32064",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Taylor",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 838-3506",
+        "fax": "",
+        "address": "108 North Jefferson St. Suite 102, Perry, FL 32347",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(386) 496-3711",
+        "fax": "",
+        "address": "55 West Main Street, Room 103, Lake Butler, FL 32054",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Volusia",
+        "clerk_website": "https://www.clerk.org/",
+        "efiling_url": "",
+        "phone": "(386) 736-5910",
+        "fax": "",
+        "address": "P.O. Box 6043, DeLand, FL 32721",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Wakulla",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 926-0311",
+        "fax": "",
+        "address": "3056 Crawfordville Highway, Crawfordville, FL 32327",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Walton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 892-8115",
+        "fax": "",
+        "address": "571 U.S. Highway 90 East, DeFuniak Springs, FL 32433",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(850) 638-6289",
+        "fax": "",
+        "address": "1293 Suite 151 Jackson Avenue, Chipley, FL 32428",
+        "research_status": "PARTIAL"
+      }
+    ]
+  },
+  {
+    "state_abbr": "AL",
+    "state_name": "Alabama",
+    "statewide_efiling_system": "AlaFile",
+    "statewide_efiling_url": "https://efile.alacourt.gov/",
+    "notes": "Alabama has 67 counties. Phone data complete from Alabama Secretary of State directory. Fax numbers and individual county websites require targeted research.",
+    "research_status": "SUBSTANTIALLY_COMPLETE",
+    "data_quality": "FAIR",
+    "counties": [
+      {
+        "county_name": "Autauga",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 358-6801",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Baldwin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(251) 937-9561",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Barbour",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 687-1500",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Bibb",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 926-3103",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Blount",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 625-4153",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Bullock",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 738-2280",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Butler",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 382-7166",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 231-1750",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Chambers",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 864-4348",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 927-3637",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Chilton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 755-4275",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Choctaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 459-2155",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Clarke",
+        "clerk_website": "https://clarkecountyal.com/the-circuit-court-clerk/",
+        "efiling_url": "",
+        "phone": "(251) 275-3363",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 354-7926",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Cleburne",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 463-2651",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Coffee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 347-2519",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Colbert",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 386-8511",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Conecuh",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(251) 578-7012",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Coosa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 377-2678",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Covington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 428-2520",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Crenshaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 335-6575",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Cullman",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 775-4770",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Dale",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 774-5003",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Dallas",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 874-2523",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "DeKalb",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 845-8525",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Elmore",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 514-3116",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Escambia",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(251) 867-0225",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Etowah",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 549-2181",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 932-4617",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 332-8861",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Geneva",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 684-5620",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 372-3598",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Hale",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 624-4334",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 585-2753",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Houston",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 671-8764",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 574-9320",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Jefferson (Birmingham)",
+        "clerk_website": "https://jeffersoncircuitclerk.alacourt.gov/",
+        "efiling_url": "",
+        "phone": "(205) 325-5355",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Jefferson (Bessemer)",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 497-8510",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lamar",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 695-7193",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lauderdale",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 760-5728",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 974-2438",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 749-7141",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Limestone",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 233-6406",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Lowndes",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 548-2252",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Macon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 724-2614",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 532-3390",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Marengo",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 295-2224",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 921-4301",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 571-7785",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Mobile",
+        "clerk_website": "https://mobile.alacourt.gov/clerk-bio/",
+        "efiling_url": "",
+        "phone": "(251) 574-8806",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(251) 743-2283",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 832-1260",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 351-4790",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 683-6106",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Pickens",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 367-2050",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 566-5113",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Randolph",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 357-4551",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Russell",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 298-0516",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 669-3760",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "St. Clair (Ashville)",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 594-2184",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "St. Clair (Pell City)",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 338-2511",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Sumter",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 652-2291",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Talladega",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 761-2102",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Tallapoosa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(256) 825-1098",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Tuscaloosa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 464-8259",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Walker",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 384-7268",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(251) 847-2239",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Wilcox",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(334) 682-4126",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Winston",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(205) 489-5533",
+        "fax": "",
+        "address": "",
+        "research_status": "PARTIAL"
+      }
+    ]
+  },
+  {
+    "state_abbr": "SC",
+    "state_name": "South Carolina",
+    "statewide_efiling_system": "Odyssey eFileSC",
+    "statewide_efiling_url": "https://efiling.sccourts.org/",
+    "notes": "South Carolina has 46 counties. Complete data collected including phone, fax, address for all counties. Clerk websites and individual county e-filing URLs require additional research.",
+    "research_status": "SUBSTANTIALLY_COMPLETE",
+    "data_quality": "GOOD",
+    "counties": [
+      {
+        "county_name": "Abbeville",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 366-5312",
+        "fax": "(864) 366-9188",
+        "address": "PO Box 99, Abbeville, SC 29620",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Aiken",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 642-7856",
+        "fax": "(803) 642-1718",
+        "address": "PO Box 583, Aiken, SC 29802",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Allendale",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 584-2737",
+        "fax": "(803) 584-7046",
+        "address": "PO Box 126, Allendale, SC 29810",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Anderson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 260-4053",
+        "fax": "(864) 260-4715",
+        "address": "PO Box 8002, Anderson, SC 29622",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Bamberg",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 245-3025",
+        "fax": "(803) 245-3088",
+        "address": "PO Drawer 150, Bamberg, SC 29003",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Barnwell",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 541-1020",
+        "fax": "(803) 541-1025",
+        "address": "PO Box 723, Barnwell, SC 29812",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Beaufort",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 255-5050",
+        "fax": "(843) 255-9412",
+        "address": "PO Box 1128, Beaufort, SC 29901",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Berkeley",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 719-4400",
+        "fax": "(843) 719-4509",
+        "address": "PO Box 219, Moncks Corner, SC 29461",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 874-3524",
+        "fax": "(803) 874-1942",
+        "address": "PO Box 709, St Matthews, SC 29135",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Charleston",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 958-5000",
+        "fax": "(843) 958-5020",
+        "address": "100 Broad St Ste 106, Charleston, SC 29401",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 487-2571",
+        "fax": "(864) 487-2754",
+        "address": "PO Drawer 2289, Gaffney, SC 29342",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Chester",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 385-2605",
+        "fax": "(803) 581-7975",
+        "address": "PO Drawer 580, Chester, SC 29706",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Chesterfield",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 623-2574",
+        "fax": "(843) 623-6944",
+        "address": "PO Box 529, Chesterfield, SC 29709",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Clarendon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 435-4443",
+        "fax": "(803) 435-4844",
+        "address": "PO Box 136, Manning, SC 29102",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Colleton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 549-5791",
+        "fax": "(843) 549-6857",
+        "address": "PO Box 620, Walterboro, SC 29488",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Darlington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 398-4330",
+        "fax": "(843) 393-6871",
+        "address": "110 N Main Street, Darlington, SC 29532",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Dillon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 774-1425",
+        "fax": "(843) 841-3706",
+        "address": "PO Box 1220, Dillon, SC 29536",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Dorchester",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 563-0160",
+        "fax": "(843) 563-0178",
+        "address": "5200 E Jim Bilton Blvd, St George, SC 29477",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Edgefield",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 637-4080",
+        "fax": "(803) 637-4117",
+        "address": "PO Box 34, Edgefield, SC 29824",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Fairfield",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 712-6526",
+        "fax": "(803) 712-1506",
+        "address": "PO Drawer 299, Winnsboro, SC 29180",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Florence",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 665-3031",
+        "fax": "(843) 665-3097",
+        "address": "181 N. Irby Street MSC-E, Florence, SC 29501",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Georgetown",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 545-3215",
+        "fax": "(843) 545-3204",
+        "address": "PO Box 479, Georgetown, SC 29442",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Greenville",
+        "clerk_website": "https://www.greenvillecounty.org/ClerkOfCourt/",
+        "efiling_url": "",
+        "phone": "(864) 467-8551",
+        "fax": "(864) 467-8540",
+        "address": "305 E North St, Greenville, SC 29601",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Greenwood",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 942-8546",
+        "fax": "(864) 942-8693",
+        "address": "528 Monument Street Rm #114, Greenwood, SC 29646",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Hampton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 914-2250",
+        "fax": "(803) 943-7538",
+        "address": "PO Box 7, Hampton, SC 29924",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Horry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 915-5080",
+        "fax": "(843) 915-6081",
+        "address": "PO Box 677, Conway, SC 29528",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 726-7710",
+        "fax": "(843) 726-7782",
+        "address": "PO Box 248, Ridgeland, SC 29936",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Kershaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 425-7223",
+        "fax": "(803) 425-1505",
+        "address": "PO Box 1557, Camden, SC 29021",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lancaster",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 285-1581",
+        "fax": "(877) 220-4138",
+        "address": "PO Box 1809, Lancaster, SC 29721",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Laurens",
+        "clerk_website": "https://www.laurenscoga.org/152/Clerk-of-Courts",
+        "efiling_url": "",
+        "phone": "(864) 984-3538",
+        "fax": "(864) 984-7023",
+        "address": "PO Box 287, Laurens, SC 29360",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 484-5341",
+        "fax": "(803) 484-1632",
+        "address": "PO Box 387, Bishopville, SC 29010",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Lexington",
+        "clerk_website": "https://lex-co.sc.gov/departments/clerk-court",
+        "efiling_url": "",
+        "phone": "(803) 785-8212",
+        "fax": "(803) 785-2215",
+        "address": "205 East Main Street Suite 128, Lexington, SC 29072",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 423-8240",
+        "fax": "(843) 423-8242",
+        "address": "PO Box 295, Marion, SC 29571",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Marlboro",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 479-5615",
+        "fax": "(843) 479-5653",
+        "address": "PO Drawer 996, Bennettsville, SC 29512",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "McCormick",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 852-2195",
+        "fax": "(864) 852-0071",
+        "address": "133 S Mine St Suite 102, McCormick, SC 29835",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Newberry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 321-2110",
+        "fax": "(803) 321-2111",
+        "address": "PO Drawer 10, Newberry, SC 29108",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Oconee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 638-4280",
+        "fax": "(864) 638-4282",
+        "address": "PO Box 678, Walhalla, SC 29691",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Orangeburg",
+        "clerk_website": "https://www.orangeburgcounty.org/169/Clerk-of-Court",
+        "efiling_url": "",
+        "phone": "(803) 533-6243",
+        "fax": "(803) 534-3848",
+        "address": "PO Box 9000, Orangeburg, SC 29115",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Pickens",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 898-5857",
+        "fax": "(864) 898-5863",
+        "address": "PO Box 215, Pickens, SC 29671",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Richland",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 576-1950",
+        "fax": "(803) 576-1785",
+        "address": "PO Box 2766, Columbia, SC 29202",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Saluda",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 445-4500",
+        "fax": "",
+        "address": "100 Church Street Suite 6, Saluda, SC 29138",
+        "research_status": "PARTIAL"
+      },
+      {
+        "county_name": "Spartanburg",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 596-3428",
+        "fax": "(864) 596-2239",
+        "address": "PO Box 3483, Spartanburg, SC 29304",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Sumter",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 436-2227",
+        "fax": "(803) 436-2223",
+        "address": "215 North Harvin Street, Sumter, SC 29150",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(864) 429-1630",
+        "fax": "(864) 429-1715",
+        "address": "PO Box 703, Union, SC 29379",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "Williamsburg",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(843) 355-9321",
+        "fax": "(843) 355-1580",
+        "address": "125 W Main St, Kingstree, SC 29556",
+        "research_status": "COMPLETE"
+      },
+      {
+        "county_name": "York",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(803) 684-8507",
+        "fax": "(803) 628-3226",
+        "address": "PO Box 649, York, SC 29745",
+        "research_status": "COMPLETE"
+      }
+    ]
+  }
+]

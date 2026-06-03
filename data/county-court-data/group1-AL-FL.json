@@ -1,0 +1,3017 @@
+[
+  {
+    "state_abbr": "AL",
+    "state_name": "Alabama",
+    "statewide_efiling_url": "https://efile.alacourt.gov/",
+    "statewide_efiling_system": "AlaFile",
+    "clerk_directory_url": "https://www.sos.alabama.gov/city-county-lookup/circuit-clerk",
+    "judicial_branch_url": "https://judicial.alabama.gov/",
+    "counties": [
+      {
+        "county_name": "Autauga",
+        "clerk_website": "https://autauga.alacourt.gov/",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "334-361-2500",
+        "fax": "",
+        "address": "134 North Court St Rm 114, Prattville, AL 36067"
+      },
+      {
+        "county_name": "Baldwin",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "251-937-0260",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Barbour",
+        "clerk_website": "https://barbour.alacourt.gov/",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "334-775-1128",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bibb",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Blount",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bullock",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Butler",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chambers",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chilton",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Choctaw",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clarke",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cleburne",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Coffee",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Colbert",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Conecuh",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Coosa",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Covington",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crenshaw",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cullman",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dale",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dallas",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "De Kalb",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Elmore",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Escambia",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Etowah",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Geneva",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grenada",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hale",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Houston",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "205-325-5601",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lamar",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lauderdale",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Limestone",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lowndes",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Macon",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marengo",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mobile",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pickens",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Randolph",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Russell",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Clair",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sumter",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Talladega",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tallapoosa",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tuscaloosa",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Walker",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wilcox",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Winston",
+        "clerk_website": "",
+        "efiling_url": "https://efile.alacourt.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "AK",
+    "state_name": "Alaska",
+    "statewide_efiling_url": "https://akfile.truefiling.com/",
+    "statewide_efiling_system": "AKFile (TrueFiling)",
+    "clerk_directory_url": "https://courts.alaska.gov/courtdir/",
+    "judicial_branch_url": "https://courts.alaska.gov/",
+    "counties": [
+      {
+        "county_name": "First Judicial District - Juneau",
+        "clerk_website": "https://courts.alaska.gov/courtdir/1ju.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-463-4700",
+        "fax": "",
+        "address": "123 4th Street, P.O. Box 114100, Juneau, AK 99811"
+      },
+      {
+        "county_name": "First Judicial District - Ketchikan",
+        "clerk_website": "https://courts.alaska.gov/courtdir/1ke.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-225-3195",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "First Judicial District - Sitka",
+        "clerk_website": "https://courts.alaska.gov/courtdir/1si.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-747-8700",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Second Judicial District - Kotzebue",
+        "clerk_website": "https://courts.alaska.gov/courtdir/2ko.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-442-3881",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Second Judicial District - Nome",
+        "clerk_website": "https://courts.alaska.gov/courtdir/2no.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-443-6136",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Third Judicial District - Anchorage",
+        "clerk_website": "https://courts.alaska.gov/courtdir/3an.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-264-0514",
+        "fax": "907-264-0873",
+        "address": "825 West 4th Avenue, Anchorage, AK 99501"
+      },
+      {
+        "county_name": "Third Judicial District - Palmer",
+        "clerk_website": "https://courts.alaska.gov/courtdir/3pa.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-745-4110",
+        "fax": "907-746-4151",
+        "address": "435 South Denali Street, Palmer, AK 99645"
+      },
+      {
+        "county_name": "Third Judicial District - Kenai",
+        "clerk_website": "https://courts.alaska.gov/courtdir/3ke.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-283-3620",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Third Judicial District - Kodiak",
+        "clerk_website": "https://courts.alaska.gov/courtdir/3ko.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-486-4419",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fourth Judicial District - Fairbanks",
+        "clerk_website": "https://courts.alaska.gov/courtdir/4fa.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-452-9277",
+        "fax": "907-452-9330",
+        "address": "101 Lacey Street, Fairbanks, AK 99701"
+      },
+      {
+        "county_name": "Fourth Judicial District - Bethel",
+        "clerk_website": "https://courts.alaska.gov/courtdir/4be.htm",
+        "efiling_url": "https://akfile.truefiling.com/",
+        "phone": "907-543-2298",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "AZ",
+    "state_name": "Arizona",
+    "statewide_efiling_url": "https://efile.azcourts.gov/",
+    "statewide_efiling_system": "Arizona E-Filing Portal",
+    "clerk_directory_url": "https://www.azcourts.gov/clerkofcourt/Contact-Us",
+    "judicial_branch_url": "https://www.azcourts.gov/",
+    "counties": [
+      {
+        "county_name": "Apache",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-337-7550",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cochise",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "520-432-8600",
+        "fax": "",
+        "address": "Bisbee Location"
+      },
+      {
+        "county_name": "Coconino",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-679-7600",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gila",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-402-8866",
+        "fax": "",
+        "address": "Globe Location"
+      },
+      {
+        "county_name": "Graham",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-428-3100",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greenlee",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-865-4242",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "La Paz",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-669-6131",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Maricopa",
+        "clerk_website": "https://www.clerkofcourt.maricopa.gov/",
+        "efiling_url": "https://efilingonline.clerkofcourt.maricopa.gov/Web/",
+        "phone": "602-372-5375",
+        "fax": "",
+        "address": "620 West Jackson Street, Phoenix, AZ 85003"
+      },
+      {
+        "county_name": "Mohave",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-753-0713",
+        "fax": "",
+        "address": "Kingman Location"
+      },
+      {
+        "county_name": "Navajo",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-524-4188",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pima",
+        "clerk_website": "https://www.sc.pima.gov/",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "520-724-4200",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pinal",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "520-866-5300",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Santa Cruz",
+        "clerk_website": "https://www.santacruzcountyaz.gov/132/Clerk-of-the-Superior-Court",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "520-375-7700",
+        "fax": "520-375-7703",
+        "address": ""
+      },
+      {
+        "county_name": "Yavapai",
+        "clerk_website": "https://courts.yavapaiaz.gov/Departments/Clerk",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-771-3312",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yuma",
+        "clerk_website": "",
+        "efiling_url": "https://efile.azcourts.gov/",
+        "phone": "928-817-4222",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "AR",
+    "state_name": "Arkansas",
+    "statewide_efiling_url": "https://efile.arcourts.gov/",
+    "statewide_efiling_system": "eFlex (Tybera)",
+    "clerk_directory_url": "https://arcourts.gov/directories/circuit-clerks",
+    "judicial_branch_url": "https://arcourts.gov/",
+    "counties": [
+      {
+        "county_name": "Arkansas",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-659-2098",
+        "fax": "870-659-2081",
+        "address": "302 S. College, Stuttgart, AR 72042"
+      },
+      {
+        "county_name": "Ashley",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-853-2030",
+        "fax": "870-853-2034",
+        "address": "205 East Jefferson, #6, Hamburg, AR 71646"
+      },
+      {
+        "county_name": "Baxter",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-425-3475",
+        "fax": "870-424-5105",
+        "address": "#1 East Seventh, Suite 103, Mountain Home, AR 72653"
+      },
+      {
+        "county_name": "Benton",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-271-1015",
+        "fax": "479-271-5719",
+        "address": "102 NE \"A\" Street, Bentonville, AR 72712"
+      },
+      {
+        "county_name": "Boone",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-741-5560",
+        "fax": "870-364-0064",
+        "address": "100 N. Main Street, #200, Harrison, AR 72601"
+      },
+      {
+        "county_name": "Bradley",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-226-2272",
+        "fax": "870-226-8416",
+        "address": "101 East Cedar, Warren, AR 71671"
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-798-2517",
+        "fax": "870-798-2428",
+        "address": "P.O. Box 1175, Hampton, AR 71744"
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-423-2422",
+        "fax": "870-423-4796",
+        "address": "210 W. Church Ave., Berryville, AR 72616"
+      },
+      {
+        "county_name": "Chicot",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-265-8010",
+        "fax": "870-865-8012",
+        "address": "108 Main Street, Lake Village, AR 71653"
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "https://clarkcountyar.gov/circuit-clerk/",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-246-4281",
+        "fax": "870-246-1419",
+        "address": "401 Clay Street, Arkadelphia, AR 71923"
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-598-2524",
+        "fax": "870-598-1107",
+        "address": "151 S. Second Street, Piggott, AR 72454"
+      },
+      {
+        "county_name": "Cleburne",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-362-8149",
+        "fax": "501-362-4681",
+        "address": "301 W. Main St, Heber Springs, AR 72543"
+      },
+      {
+        "county_name": "Cleveland",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-325-6521",
+        "fax": "870-325-6144",
+        "address": "P.O. Box 368, Rison, AR 71665"
+      },
+      {
+        "county_name": "Columbia",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-235-3700",
+        "fax": "870-235-3786",
+        "address": "1 Court Square, Magnolia, AR 71753"
+      },
+      {
+        "county_name": "Conway",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-354-9617",
+        "fax": "501-354-9612",
+        "address": "115 S. Moose Street, Morrilton, AR 72110"
+      },
+      {
+        "county_name": "Craighead",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-933-4530",
+        "fax": "870-933-4514",
+        "address": "511 S. Main Street, Jonesboro, AR 72401"
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-474-1821",
+        "fax": "479-471-0622",
+        "address": "317 Main Street, Van Buren, AR 72956"
+      },
+      {
+        "county_name": "Crittenden",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-739-3248",
+        "fax": "870-739-3287",
+        "address": "100 Court Square, Marion, AR 72364"
+      },
+      {
+        "county_name": "Cross",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-238-5720",
+        "fax": "870-238-5722",
+        "address": "705 East Union, Wynne, AR 72396"
+      },
+      {
+        "county_name": "Dallas",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-352-2307",
+        "fax": "870-352-7179",
+        "address": "Third and Oak St., Fordyce, AR 71742"
+      },
+      {
+        "county_name": "Desha",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-222-0930",
+        "fax": "870-877-3407",
+        "address": "P.O. Box 309, Arkansas City, AR 71630"
+      },
+      {
+        "county_name": "Drew",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-460-6250",
+        "fax": "870-460-6255",
+        "address": "210 South Main, Monticello, AR 71655"
+      },
+      {
+        "county_name": "Faulkner",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-450-4911",
+        "fax": "501-450-4948",
+        "address": "P.O. Box 9, Conway, AR 72034"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-965-7332",
+        "fax": "479-667-5174",
+        "address": "P.O. Box 1112, Ozark, AR 72949"
+      },
+      {
+        "county_name": "Fulton",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-895-3310",
+        "fax": "870-895-3383",
+        "address": "P.O. Box 219, Salem, AR 72576"
+      },
+      {
+        "county_name": "Garland",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-622-3630",
+        "fax": "501-609-9043",
+        "address": "501 Ouachita, Suite No. 207, Hot Springs, AR 71901"
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-942-2631",
+        "fax": "870-942-3564",
+        "address": "103 W. Center, Room 106, Sheridan, AR 72150"
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-239-6330",
+        "fax": "870-239-3550",
+        "address": "320 West Court Street, Paragould, AR 72450"
+      },
+      {
+        "county_name": "Hempstead",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-777-2384",
+        "fax": "870-777-7837",
+        "address": "200 E 3rd Street, Hope, AR 71801"
+      },
+      {
+        "county_name": "Hot Spring",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-332-2281",
+        "fax": "501-332-2221",
+        "address": "210 Locust Street, Malvern, AR 72104"
+      },
+      {
+        "county_name": "Howard",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-845-7500",
+        "fax": "870-845-7505",
+        "address": "421 N. Main St., Nashville, AR 71852"
+      },
+      {
+        "county_name": "Independence",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-793-8833",
+        "fax": "870-793-8888",
+        "address": "P.O. Box 2155, Batesville, AR 72501"
+      },
+      {
+        "county_name": "Izard",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-368-4316",
+        "fax": "870-368-4748",
+        "address": "P.O. Box 95, Melbourne, AR 72556"
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-523-7423",
+        "fax": "870-523-3682",
+        "address": "208 Main Street, Newport, AR 72112"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-541-5306",
+        "fax": "870-541-5324",
+        "address": "101 East Barraque Street, Pine Bluff, AR 71601"
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "https://johnsoncounty.arkansas.gov/circuit-clerk/",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-754-2977",
+        "fax": "479-754-4235",
+        "address": "P.O. Box 189, Clarksville, AR 72830"
+      },
+      {
+        "county_name": "Lafayette",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-921-4878",
+        "fax": "870-921-4879",
+        "address": "3rd & Spruce Streets, Lewisville, AR 71845"
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-886-1112",
+        "fax": "870-886-1128",
+        "address": "315 West Main, Walnut Ridge, AR 72476"
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-295-7710",
+        "fax": "870-295-7712",
+        "address": "15 East Chestnut Street, Room 2, Marianna, AR 72360"
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-628-3154",
+        "fax": "870-628-5546",
+        "address": "300 S. Drew Street, Star City, AR 71667"
+      },
+      {
+        "county_name": "Little River",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-898-7280",
+        "fax": "870-898-5783",
+        "address": "351 North Second, Ashdown, AR 71822"
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-963-2164",
+        "fax": "479-963-3304",
+        "address": "25 W. Walnut, Paris, AR 72855"
+      },
+      {
+        "county_name": "Lonoke",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-676-2316",
+        "fax": "501-266-7134",
+        "address": "P.O. Box 870, Lonoke, AR 72086"
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-738-2215",
+        "fax": "479-738-1544",
+        "address": "P.O. Box 626, Huntsville, AR 72740"
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-449-6226",
+        "fax": "870-449-4979",
+        "address": "P.O. Box 385, Yellville, AR 72687"
+      },
+      {
+        "county_name": "Miller",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-774-4501",
+        "fax": "",
+        "address": "400 Laurel Street, Room 109, Texarkana, AR 71854"
+      },
+      {
+        "county_name": "Mississippi",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-762-2332",
+        "fax": "870-762-8148",
+        "address": "206 North 2nd Street, P.O. Box 1498, Blytheville, AR 72315"
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-747-3615",
+        "fax": "870-747-3710",
+        "address": "123 Madison Street, Clarendon, AR 72029"
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-867-3521",
+        "fax": "870-867-2177",
+        "address": "105 Highway 270 E. #10, Mount Ida, AR 71957"
+      },
+      {
+        "county_name": "Nevada",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-887-2511",
+        "fax": "870-887-1911",
+        "address": "215 East 2nd Street South, Prescott, AR 71857"
+      },
+      {
+        "county_name": "Newton",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-446-5125",
+        "fax": "870-446-5755",
+        "address": "P.O. Box 410, Jasper, AR 72641"
+      },
+      {
+        "county_name": "Ouachita",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-837-2230",
+        "fax": "870-837-2252",
+        "address": "145 Jefferson Street, Camden, AR 71701"
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-889-5126",
+        "fax": "501-889-5759",
+        "address": "P.O. Box 358, Perryville, AR 72126"
+      },
+      {
+        "county_name": "Phillips",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-338-5515",
+        "fax": "870-338-5513",
+        "address": "620 Cherry Street, Helena, AR 72342"
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-285-2231",
+        "fax": "870-285-3281",
+        "address": "P.O. Box 219, Murfreesboro, AR 71958"
+      },
+      {
+        "county_name": "Poinsett",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-578-4420",
+        "fax": "870-578-4427",
+        "address": "401 Market Street, Harrisburg, AR 72432"
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-394-8100",
+        "fax": "479-394-8170",
+        "address": "507 Church Avenue, Mena, AR 71953"
+      },
+      {
+        "county_name": "Pope",
+        "clerk_website": "https://www.popecountyar.gov/circuit-clerk",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-968-7499",
+        "fax": "479-880-8463",
+        "address": "100 West Main, Russellville, AR 72801"
+      },
+      {
+        "county_name": "Prairie",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-256-4434",
+        "fax": "870-256-4434",
+        "address": "200 Courthouse Square, Ste 104, Des Arc, AR 72040"
+      },
+      {
+        "county_name": "Pulaski",
+        "clerk_website": "https://pulaskiclerkar.gov/",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-340-8500",
+        "fax": "501-421-0293",
+        "address": "401 West Markham, Suite 100, Little Rock, AR 72201"
+      },
+      {
+        "county_name": "Randolph",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-892-5522",
+        "fax": "870-892-8794",
+        "address": "107 West Broadway, Pocahontas, AR 72455"
+      },
+      {
+        "county_name": "Saline",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-303-5615",
+        "fax": "501-303-1592",
+        "address": "200 North Main, Benton, AR 72015"
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-637-2642",
+        "fax": "479-637-0124",
+        "address": "190 West First Street, Box 10, Waldron, AR 72958"
+      },
+      {
+        "county_name": "Searcy",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-448-3807",
+        "fax": "870-448-5005",
+        "address": "P.O. Box 998, Marshall, AR 72650"
+      },
+      {
+        "county_name": "Sebastian",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-782-1046",
+        "fax": "479-784-1580",
+        "address": "P.O. Box 1179, Fort Smith, AR 72901"
+      },
+      {
+        "county_name": "Sevier",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-584-3055",
+        "fax": "870-642-3119",
+        "address": "115 North 3rd, DeQueen, AR 71832"
+      },
+      {
+        "county_name": "Sharp",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-994-7361",
+        "fax": "870-994-7712",
+        "address": "P.O. Box 307, Ash Flat, AR 72513"
+      },
+      {
+        "county_name": "St. Francis",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-261-1715",
+        "fax": "870-261-1723",
+        "address": "313 South Izard, Forrest City, AR 72335"
+      },
+      {
+        "county_name": "Stone",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-269-3271",
+        "fax": "870-269-2303",
+        "address": "107 West Main, Suite D, Mountain View, AR 72560"
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-864-1940",
+        "fax": "",
+        "address": "101 N. Washington, Suite 201, El Dorado, AR 71730"
+      },
+      {
+        "county_name": "Van Buren",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-745-4140",
+        "fax": "501-745-7400",
+        "address": "273 Main Street, Suite 2, Clinton, AR 72031"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-444-1538",
+        "fax": "479-444-1537",
+        "address": "280 N College Ave., #302, Fayetteville, AR 72701"
+      },
+      {
+        "county_name": "White",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "501-279-6203",
+        "fax": "501-279-6223",
+        "address": "300 N. Spruce, Searcy, AR 72143"
+      },
+      {
+        "county_name": "Woodruff",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "870-347-2391",
+        "fax": "870-347-8703",
+        "address": "500 N. Third Street, Augusta, AR 72006"
+      },
+      {
+        "county_name": "Yell",
+        "clerk_website": "",
+        "efiling_url": "https://efile.arcourts.gov/",
+        "phone": "479-495-4850",
+        "fax": "479-495-4875",
+        "address": "P.O. Box 219, Danville, AR 72833"
+      }
+    ]
+  },
+  {
+    "state_abbr": "CA",
+    "state_name": "California",
+    "statewide_efiling_url": "https://www.odysseyefileca.com/",
+    "statewide_efiling_system": "Odyssey eFileCA",
+    "clerk_directory_url": "https://courts.ca.gov/find-your-court",
+    "judicial_branch_url": "https://courts.ca.gov/",
+    "note": "California has 58 counties. Each county has its own Superior Court with varying e-filing systems through Odyssey eFileCA or certified service providers.",
+    "counties": [
+      {
+        "county_name": "Alameda",
+        "clerk_website": "https://www.alameda.courts.ca.gov/",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "510-891-6000",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Alpine",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Amador",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Butte",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calaveras",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Colusa",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Contra Costa",
+        "clerk_website": "https://www.cc-courts.org/",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Del Norte",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "El Dorado",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fresno",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Glenn",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Humboldt",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Inyo",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kern",
+        "clerk_website": "https://www.kern.courts.ca.gov/",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kings",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lassen",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Los Angeles",
+        "clerk_website": "https://www.lacourt.ca.gov/",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madera",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marin",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mariposa",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mendocino",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Merced",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mono",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monterey",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Napa",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nevada",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Orange",
+        "clerk_website": "https://www.occourts.org/",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Placer",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Plumas",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Riverside",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sacramento",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Benito",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Bernardino",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Diego",
+        "clerk_website": "https://www.sdcourt.ca.gov/",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Francisco",
+        "clerk_website": "https://sf.courts.ca.gov/",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Luis Obispo",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Santa Barbara",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Santa Clara",
+        "clerk_website": "https://www.scscourt.org/",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Santa Cruz",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shasta",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sierra",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Siskiyou",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Solano",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sonoma",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stanislaus",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sutter",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tehama",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Trinity",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tulare",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tuolumne",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ventura",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yolo",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yuba",
+        "clerk_website": "",
+        "efiling_url": "https://www.odysseyefileca.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "CO",
+    "state_name": "Colorado",
+    "statewide_efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+    "statewide_efiling_system": "Colorado Courts E-Filing System",
+    "clerk_directory_url": "https://www.coloradojudicial.gov/contact-us",
+    "judicial_branch_url": "https://www.coloradojudicial.gov/",
+    "note": "Colorado has 64 district courts organized into 22 judicial districts. Each county has associated courts.",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Alamosa",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Arapahoe",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Archuleta",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Baca",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bent",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Boulder",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Broomfield",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chaffee",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cheyenne",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clear Creek",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Conejos",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Costilla",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crowley",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Custer",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Delta",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Denver",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dolores",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Eagle",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "El Paso",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Elbert",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fremont",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Garfield",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gilpin",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grand",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gunnison",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hinsdale",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Huerfano",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kiowa",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kit Carson",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "La Plata",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Larimer",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Las Animas",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mesa",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mineral",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Moffat",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montezuma",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montrose",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ouray",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Park",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Phillips",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pitkin",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Prowers",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pueblo",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rio Blanco",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rio Grande",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Routt",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Saguache",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Juan",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Miguel",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sedgwick",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Summit",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Teller",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Weld",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yuma",
+        "clerk_website": "",
+        "efiling_url": "https://www.jbits.courts.state.co.us/efiling",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "CT",
+    "state_name": "Connecticut",
+    "statewide_efiling_url": "https://eservices.jud.ct.gov/",
+    "statewide_efiling_system": "Connecticut Judicial Branch E-Services",
+    "clerk_directory_url": "https://www.jud.ct.gov/directory/courthouses.htm",
+    "judicial_branch_url": "https://www.jud.ct.gov/",
+    "note": "Connecticut has 8 counties with 20 judicial districts (multiple courts per county).",
+    "counties": [
+      {
+        "county_name": "Fairfield",
+        "clerk_website": "https://www.jud.ct.gov/directory/courthouses.htm",
+        "efiling_url": "https://eservices.jud.ct.gov/",
+        "phone": "203-579-6936",
+        "fax": "203-579-7291",
+        "address": "1061 Main Street, Bridgeport, CT 06604"
+      },
+      {
+        "county_name": "Hartford",
+        "clerk_website": "https://www.jud.ct.gov/directory/courthouses.htm",
+        "efiling_url": "https://eservices.jud.ct.gov/",
+        "phone": "860-756-7920",
+        "fax": "860-756-7925",
+        "address": "80 Washington Street, Hartford, CT 06106"
+      },
+      {
+        "county_name": "Litchfield",
+        "clerk_website": "https://www.jud.ct.gov/directory/courthouses.htm",
+        "efiling_url": "https://eservices.jud.ct.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Middlesex",
+        "clerk_website": "https://www.jud.ct.gov/directory/courthouses.htm",
+        "efiling_url": "https://eservices.jud.ct.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "New Haven",
+        "clerk_website": "https://www.jud.ct.gov/directory/courthouses.htm",
+        "efiling_url": "https://eservices.jud.ct.gov/",
+        "phone": "203-789-7937",
+        "fax": "203-773-6795",
+        "address": "121 Elm Street, New Haven, CT 06510"
+      },
+      {
+        "county_name": "New London",
+        "clerk_website": "https://www.jud.ct.gov/directory/courthouses.htm",
+        "efiling_url": "https://eservices.jud.ct.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tolland",
+        "clerk_website": "https://www.jud.ct.gov/directory/courthouses.htm",
+        "efiling_url": "https://eservices.jud.ct.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Windham",
+        "clerk_website": "https://www.jud.ct.gov/directory/courthouses.htm",
+        "efiling_url": "https://eservices.jud.ct.gov/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "DE",
+    "state_name": "Delaware",
+    "statewide_efiling_url": "https://courts.delaware.gov/superior/eLitigation/tech_efile.aspx",
+    "statewide_efiling_system": "File & ServeXpress (Superior Court), Delaware eFlex (Common Pleas)",
+    "clerk_directory_url": "https://courts.delaware.gov/superior/contact_superior.aspx",
+    "judicial_branch_url": "https://courts.delaware.gov/",
+    "counties": [
+      {
+        "county_name": "New Castle",
+        "clerk_website": "https://courts.delaware.gov/superior/",
+        "efiling_url": "https://courts.delaware.gov/superior/eLitigation/tech_efile.aspx",
+        "phone": "302-255-0800",
+        "fax": "",
+        "address": "Leonard L. Williams Justice Center, 500 North King Street, Wilmington, DE 19801"
+      },
+      {
+        "county_name": "Kent",
+        "clerk_website": "https://courts.delaware.gov/superior/",
+        "efiling_url": "https://courts.delaware.gov/superior/eLitigation/tech_efile.aspx",
+        "phone": "302-735-1910",
+        "fax": "",
+        "address": "Kent County Courthouse, 414 Federal Street, Dover, DE 19901"
+      },
+      {
+        "county_name": "Sussex",
+        "clerk_website": "https://courts.delaware.gov/superior/",
+        "efiling_url": "https://courts.delaware.gov/superior/eLitigation/tech_efile.aspx",
+        "phone": "302-854-6959",
+        "fax": "",
+        "address": "Sussex County Courthouse, 1 The Circle, Suite 2, Georgetown, DE 19947"
+      }
+    ]
+  },
+  {
+    "state_abbr": "DC",
+    "state_name": "District of Columbia",
+    "statewide_efiling_url": "https://efiledcsuperiorcourt.gov/",
+    "statewide_efiling_system": "eFileDC",
+    "clerk_directory_url": "https://www.dccourts.gov/superior-court/e-filing",
+    "judicial_branch_url": "https://www.dccourts.gov/",
+    "counties": [
+      {
+        "county_name": "District of Columbia",
+        "clerk_website": "https://www.dccourts.gov/superior-court",
+        "efiling_url": "https://efiledcsuperiorcourt.gov/",
+        "phone": "202-879-1400",
+        "fax": "",
+        "address": "Moultrie Courthouse, 500 Indiana Ave. NW, Suite 2500, Washington, DC 20001"
+      }
+    ]
+  },
+  {
+    "state_abbr": "FL",
+    "state_name": "Florida",
+    "statewide_efiling_url": "https://www.myflcourtaccess.com/",
+    "statewide_efiling_system": "Florida Courts E-Filing Portal",
+    "clerk_directory_url": "http://websrv.myfloridacounty.com/directory.html",
+    "judicial_branch_url": "https://www.flcourts.org/",
+    "counties": [
+      {
+        "county_name": "Alachua",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Baker",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bradford",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Brevard",
+        "clerk_website": "https://www.brevardclerk.us/",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Broward",
+        "clerk_website": "https://www.browardclerk.org/",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Charlotte",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Citrus",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Collier",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Columbia",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "DeSoto",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dixie",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Duval",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Escambia",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Flagler",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gadsden",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gilchrist",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Glades",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gulf",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hardee",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hendry",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hernando",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Highlands",
+        "clerk_website": "https://www.highlandsclerkfl.gov/",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hillsborough",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Holmes",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Indian River",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lafayette",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Leon",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Levy",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Liberty",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Manatee",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Martin",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Miami-Dade",
+        "clerk_website": "https://www.miamidadeclerk.gov/",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nassau",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Okaloosa",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Okeechobee",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Orange",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Osceola",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Palm Beach",
+        "clerk_website": "https://www.mypalmbeachclerk.com/",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pasco",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pinellas",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Putnam",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Johns",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Lucie",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Santa Rosa",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sarasota",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Seminole",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sumter",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Suwannee",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Taylor",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Volusia",
+        "clerk_website": "https://www.clerk.org/",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wakulla",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Walton",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://www.myflcourtaccess.com/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  }
+]

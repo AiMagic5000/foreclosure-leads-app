@@ -1,0 +1,3679 @@
+[
+  {
+    "state_abbr": "MI",
+    "state_name": "Michigan",
+    "statewide_efiling_system": "MiFILE",
+    "statewide_efiling_url": "https://mifile.courts.michigan.gov/",
+    "data_collection_notes": "Michigan has 83 counties organized into 57 judicial circuits. Data gathered from individual county websites and CourtReference.com.",
+    "counties": [
+      {
+        "county_name": "Alcona",
+        "clerk_website": "https://alconacountymi.com/home/23rd-circuit-court/",
+        "efiling_url": "",
+        "phone": "(989) 724-9410",
+        "fax": "(989) 724-9411",
+        "address": "106 Fifth Street, Harrisville, MI 48740"
+      },
+      {
+        "county_name": "Alger",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(906) 387-7053",
+        "fax": "",
+        "address": "101 Court Street, Munising, MI 49862"
+      },
+      {
+        "county_name": "Allegan",
+        "clerk_website": "https://www.allegancounty.org/departments/county-clerk",
+        "efiling_url": "",
+        "phone": "(269) 673-0450",
+        "fax": "",
+        "address": "113 Chestnut Street, Allegan, MI 49010"
+      },
+      {
+        "county_name": "Alpena",
+        "clerk_website": "https://alpenacounty.org/159/Clerks-Office",
+        "efiling_url": "",
+        "phone": "(989) 354-9520",
+        "fax": "",
+        "address": "720 W. Chisholm Street, Suite 2, Alpena, MI 49707"
+      },
+      {
+        "county_name": "Antrim",
+        "clerk_website": "https://www.antrimcountymi.gov/departments___services_/clerk/index.php",
+        "efiling_url": "",
+        "phone": "(231) 533-6353",
+        "fax": "(231) 533-6935",
+        "address": "203 E. Cayuga Street, Bellaire, MI 49615"
+      },
+      {
+        "county_name": "Arenac",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(989) 846-6131",
+        "fax": "(989) 846-6757",
+        "address": "120 North Grove Street, Standish, MI 48658"
+      },
+      {
+        "county_name": "Baraga",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(906) 524-6100",
+        "fax": "(906) 524-6432",
+        "address": "16 North Third Street, L'Anse, MI 49946"
+      },
+      {
+        "county_name": "Barry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(269) 945-1286",
+        "fax": "(269) 945-1299",
+        "address": "220 West State Street, Floor 2, Hastings, MI 49058"
+      },
+      {
+        "county_name": "Berrien",
+        "clerk_website": "https://www.berriencounty.org/152/County-Clerk",
+        "efiling_url": "",
+        "phone": "(269) 982-0392",
+        "fax": "(269) 982-8643",
+        "address": "811 Port St, St. Joseph, MI 49085"
+      },
+      {
+        "county_name": "Branch",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "https://www.calhouncountymi.gov/departments/clerk_and_register_of_deeds/circuit_court_clerk.php",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "(269) 969-6922",
+        "address": ""
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(269) 445-4416",
+        "fax": "(269) 445-4453",
+        "address": "Law and Courts Building, 60296 M-62, Cassopolis, MI 49031"
+      },
+      {
+        "county_name": "Charlevoix",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(231) 547-7243",
+        "fax": "",
+        "address": "301 State Street, Charlevoix, MI 49720"
+      },
+      {
+        "county_name": "Cheboygan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(231) 627-8818",
+        "fax": "",
+        "address": "870 South Main Street, Cheboygan, MI 49721"
+      },
+      {
+        "county_name": "Chippewa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clare",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Delta",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dickinson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Eaton",
+        "clerk_website": "https://www.eatoncounty.org/162/Circuit-Court-Clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Emmet",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Genesee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gladwin",
+        "clerk_website": "https://gladwincounty-mi.gov/departments/55th-circuit-court/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gogebic",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grand Traverse",
+        "clerk_website": "https://gtcountymi.gov/2632/County-Clerks-Office",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gratiot",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hillsdale",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Houghton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Huron",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ingham",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ionia",
+        "clerk_website": "https://ioniacounty.org/courts/circuit-court/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Iosco",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Iron",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Isabella",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "https://www.co.jackson.mi.us/796/County-Clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kalamazoo",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kalkaska",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kent",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Keweenaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lapeer",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Leelanau",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lenawee",
+        "clerk_website": "https://www.lenawee.mi.us/168/County-Clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Livingston",
+        "clerk_website": "https://milivcounty.gov/clerk-circuit-court/records/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Luce",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mackinac",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Macomb",
+        "clerk_website": "https://www.macombgov.org/departments/clerk-register-deeds/court-records",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Manistee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marquette",
+        "clerk_website": "https://www.co.marquette.mi.us/departments/courts/circuit_court/index.php",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mason",
+        "clerk_website": "https://www.masoncounty.net/courts/circuit-court/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mecosta",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Menominee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Midland",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Missaukee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montcalm",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(989) 831-3520",
+        "fax": "(989) 831-7428",
+        "address": ""
+      },
+      {
+        "county_name": "Montmorency",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Muskegon",
+        "clerk_website": "https://co.muskegon.mi.us/474/Circuit-Court-Records",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Newaygo",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oakland",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oceana",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ogemaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ontonagon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Osceola",
+        "clerk_website": "https://www.oscodacountymi.com/circuit-court/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oscoda",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Otsego",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ottawa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Presque Isle",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Roscommon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Saginaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sanilac",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Schoolcraft",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shiawassee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Clair",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Joseph",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tuscola",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Van Buren",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washtenaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wexford",
+        "clerk_website": "https://wexfordcounty.org/?page_id=816",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "(231) 306-2155",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "MN",
+    "state_name": "Minnesota",
+    "statewide_efiling_system": "eFS Minnesota",
+    "statewide_efiling_url": "https://efilemn.tylertech.cloud/OfsEfsp",
+    "data_collection_notes": "Minnesota has 87 counties with district courts. Contact information distributed across individual county websites and Minnesota Judicial Branch.",
+    "counties": [
+      {
+        "county_name": "Aitkin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(218) 927-7350",
+        "fax": "(218) 927-4535",
+        "address": "Aitkin County Courthouse, 209 2nd Street NW, Room 242A, Aitkin, MN 56431"
+      },
+      {
+        "county_name": "Anoka",
+        "clerk_website": "https://www.anokacountymn.gov/139/Courts",
+        "efiling_url": "",
+        "phone": "(763) 760-6700",
+        "fax": "(763) 712-3247",
+        "address": "Anoka County Courthouse, 2100 3rd Ave., Anoka, MN 55303-2489"
+      },
+      {
+        "county_name": "Becker",
+        "clerk_website": "https://www.co.becker.mn.us/dept/court_administrator/",
+        "efiling_url": "",
+        "phone": "(218) 846-5040",
+        "fax": "(218) 847-7620",
+        "address": "Becker County Courthouse, 913 Lake Avenue, Detroit Lakes, MN 56501"
+      },
+      {
+        "county_name": "Beltrami",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(218) 333-4120",
+        "fax": "(218) 333-4209",
+        "address": "Beltrami County Judicial Center, 600 Minnesota Avenue NW, Suite 108, Bemidji, MN 56601-3068"
+      },
+      {
+        "county_name": "Benton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Big Stone",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Blue Earth",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Brown",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carlton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carver",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "https://www.casscountymn.gov/1221/Court-Administration",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chippewa",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chisago",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "https://claycountymn.gov/246/Court-Administration",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clearwater",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cook",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cottonwood",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crow Wing",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dakota",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dodge",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Faribault",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fillmore",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Freeborn",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Goodhue",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hennepin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Houston",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hubbard",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Isanti",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Itasca",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kanabec",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kandiyohi",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kittson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Koochiching",
+        "clerk_website": "https://www.co.koochiching.mn.us/166/Court-Administration",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lac Qui Parle",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake of the Woods",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Le Sueur",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lyon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mahnomen",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Martin",
+        "clerk_website": "https://www.co.martin.mn.us/your_government/district_court/index.php",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "McLeod",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Meeker",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mille Lacs",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morrison",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mower",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Murray",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nicollet",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nobles",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Norman",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Olmsted",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Otter Tail",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pennington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pine",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pipestone",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pope",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ramsey",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Red Lake",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Redwood",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Renville",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rice",
+        "clerk_website": "https://www.ricecountymn.gov/388/Court-Administration",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rock",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Roseau",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Louis",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sherburne",
+        "clerk_website": "https://www.co.sherburne.mn.us/190/Court-Administration",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sibley",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stearns",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Steele",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stevens",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Swift",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Todd",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Traverse",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wabasha",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wadena",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Waseca",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Watonwan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wilkin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Winona",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wright",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yellow Medicine",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "MO",
+    "state_name": "Missouri",
+    "statewide_efiling_system": "Missouri eFiling",
+    "statewide_efiling_url": "https://www.courts.mo.gov/ecf/logon.do",
+    "data_collection_notes": "Missouri has 115 counties plus St. Louis City, organized into 46 judicial circuits. Data gathered from individual county websites and judicial circuit pages.",
+    "counties": [
+      {
+        "county_name": "Adair",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(660) 665-2552",
+        "fax": "(660) 665-3420",
+        "address": "106 W. Washington Street, Kirksville, MO 63501"
+      },
+      {
+        "county_name": "Andrew",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(816) 324-3921",
+        "fax": "(816) 324-3191",
+        "address": "411 Court, P.O. Box 318, Savannah, MO 64485"
+      },
+      {
+        "county_name": "Atchison",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(660) 744-2700",
+        "fax": "(660) 744-6100",
+        "address": "P.O. Box 280, Rock Port, MO 64482"
+      },
+      {
+        "county_name": "Audrain",
+        "clerk_website": "https://www.audraincounty.org/circuit-clerk",
+        "efiling_url": "",
+        "phone": "(573) 473-5840",
+        "fax": "(573) 581-3237",
+        "address": "101 N. Jefferson, Mexico, MO 65265"
+      },
+      {
+        "county_name": "Barry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(417) 847-3133",
+        "fax": "(417) 847-6298",
+        "address": "102 West Street, Cassville, MO 65625"
+      },
+      {
+        "county_name": "Bates",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(660) 679-5171",
+        "fax": "(660) 679-4446",
+        "address": "One North Delaware, Butler, MO 64730"
+      },
+      {
+        "county_name": "Benton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(660) 438-7712",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bollinger",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(573) 238-1900",
+        "fax": "",
+        "address": "204 High Street, Marble Hill, MO 63764"
+      },
+      {
+        "county_name": "Boone",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Buchanan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Butler",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Caldwell",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Callaway",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(573) 642-0780",
+        "fax": "(573) 642-0700",
+        "address": "10 East 5th Street, Fulton, MO 65251"
+      },
+      {
+        "county_name": "Camden",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cape Girardeau",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carter",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cedar",
+        "clerk_website": "https://cedarcountymo.gov/circuit-clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chariton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Christian",
+        "clerk_website": "https://courts.christiancountymo.gov/circlerk.html",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "https://clarkcountymo.org/county-offices/circuit-clerk/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(816) 407-3899",
+        "fax": "(816) 407-3899",
+        "address": ""
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cole",
+        "clerk_website": "https://www.colecounty.org/directory.aspx?did=27",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cooper",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dade",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dallas",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Daviess",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "DeKalb",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dent",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dunklin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gasconade",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gentry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grundy",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harrison",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hickory",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Holt",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Howard",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Howell",
+        "clerk_website": "https://howellcounty.net/circuit-clerk/",
+        "efiling_url": "",
+        "phone": "(417) 256-3741",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Iron",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "https://www.16thcircuit.org/directory",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "https://jaspercountycourts.org/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "https://www.jeffcomo.gov/Directory.aspx?did=53",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Knox",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Laclede",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lafayette",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "https://lcmocircuitclerk.com/contact/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lewis",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "https://www.lincolncomo.gov/circuit-clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Linn",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Livingston",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Macon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Maries",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "McDonald",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mercer",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Miller",
+        "clerk_website": "https://millercountymo.gov/services/circuit_clerk.php",
+        "efiling_url": "",
+        "phone": "(573) 369-1980",
+        "fax": "(573) 369-1894",
+        "address": ""
+      },
+      {
+        "county_name": "Mississippi",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Moniteau",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "https://www.morgancountymo.gov/circuit-clerk",
+        "efiling_url": "",
+        "phone": "(573) 378-4413",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "New Madrid",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Newton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nodaway",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oregon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Osage",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ozark",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pemiscot",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pettis",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Phelps",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Platte",
+        "clerk_website": "https://www.co.platte.mo.us/staff-directory/Circuit-Clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pulaski",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Putnam",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ralls",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Randolph",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ray",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Reynolds",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ripley",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Charles",
+        "clerk_website": "https://www.sccmo.org/343/Circuit-Clerk",
+        "efiling_url": "",
+        "phone": "(636) 949-3080",
+        "fax": "(636) 949-7390",
+        "address": ""
+      },
+      {
+        "county_name": "St. Clair",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ste. Genevieve",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Francois",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Louis",
+        "clerk_website": "https://www.stlouis-mo.gov/external/22-circuit-court/Circuit-Clerk.cfm",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Louis City",
+        "clerk_website": "https://www.stlouis-mo.gov/external/22-circuit-court/Circuit-Clerk.cfm",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Saline",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Schuyler",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scotland",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shannon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stoddard",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stone",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sullivan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Taney",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Texas",
+        "clerk_website": "https://www.texascountymissouri.gov/government/elected-officials/circuit-clerk/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vernon",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Webster",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Worth",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wright",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "MS",
+    "state_name": "Mississippi",
+    "statewide_efiling_system": "MEC",
+    "statewide_efiling_url": "https://www.pamecapps.mec.ms.gov/onlinereg/",
+    "data_collection_notes": "Mississippi has 82 counties with chancery courts. Data gathered from Mississippi Chancery Clerks Association and individual county websites.",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "https://www.adamscountyms.net/elected-offices/chancery-clerk/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Amite",
+        "clerk_website": "https://www.amitecounty.ms/chancery-clerk",
+        "efiling_url": "",
+        "phone": "(601) 657-8022",
+        "fax": "(601) 657-8288",
+        "address": "243 W Main St, Liberty, MS 39645"
+      },
+      {
+        "county_name": "Attala",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bolivar",
+        "clerk_website": "https://www.co.bolivar.ms.us/chancery-court",
+        "efiling_url": "",
+        "phone": "(662) 759-3762",
+        "fax": "(662) 759-3467",
+        "address": "P.O. Box 238, Rosedale, MS 38769"
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(662) 412-3117",
+        "fax": "(662) 412-3128",
+        "address": "P.O. Box 8, Pittsboro, MS 38951"
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(662) 237-9274",
+        "fax": "(662) 237-9642",
+        "address": "P.O. Box 60, Carrollton, MS 38917"
+      },
+      {
+        "county_name": "Chickasaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(662) 456-2513",
+        "fax": "(662) 456-5295",
+        "address": "1 Pinson Square Rd., Houston, MS 38851"
+      },
+      {
+        "county_name": "Choctaw",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(662) 285-6329",
+        "fax": "(662) 285-3444",
+        "address": "P.O. Box 250, Ackerman, MS 39735"
+      },
+      {
+        "county_name": "Claiborne",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(601) 437-4992",
+        "fax": "(601) 437-3137",
+        "address": "P.O. Box 449, Port Gibson, MS 39150"
+      },
+      {
+        "county_name": "Clarke",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(662) 624-3000",
+        "fax": "(662) 624-3040",
+        "address": "P.O. Box 98, Clarksdale, MS 38614"
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Coahoma",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Copiah",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Covington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "DeSoto",
+        "clerk_website": "https://www.desotocountyms.gov/111/Chancery-Clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Forrest",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(601) 384-2330",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "George",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grenada",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hancock",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harrison",
+        "clerk_website": "https://www.harrisoncountymschanceryclerk.gov/",
+        "efiling_url": "",
+        "phone": "(228) 865-4036",
+        "fax": "(228) 214-1513",
+        "address": ""
+      },
+      {
+        "county_name": "Hinds",
+        "clerk_website": "https://www.hindscountyms.com/elected-offices/chancery-clerk/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Holmes",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Humphreys",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Issaquena",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Itawamba",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "https://www.co.jackson.ms.us/278/Chancery-Clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson Davis",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jones",
+        "clerk_website": "https://www.scottcountyms.gov/chancery-clerk",
+        "efiling_url": "",
+        "phone": "(601) 477-3307",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kemper",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lafayette",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lamar",
+        "clerk_website": "https://lamarcountyms.gov/ms/departments/chancery-clerk/",
+        "efiling_url": "",
+        "phone": "(601) 794-8504",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lauderdale",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Leake",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Leflore",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lowndes",
+        "clerk_website": "https://www.lowndescountyms.com/176/Chancery-Clerk/",
+        "efiling_url": "",
+        "phone": "(662) 329-5800",
+        "fax": "",
+        "address": "505 2nd Avenue N, Columbus, MS 39701"
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "https://www.madison-co.com/elected-offices/chancery-clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Neshoba",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Newton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Noxubee",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oktibbeha",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Panola",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pearl River",
+        "clerk_website": "https://pearlrivercounty.net/187/Chancery-Clerk/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "https://www.co.pike.ms.us/chancery-clerk/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pontotoc",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Prentiss",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Quitman",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rankin",
+        "clerk_website": "https://www.rankincounty.org/department/index.php?structureid=16",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "https://www.scottcountyms.gov/chancery-clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sharkey",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Simpson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Smith",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stone",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sunflower",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tallahatchie",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tate",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tippah",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tishomingo",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tunica",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Walthall",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Webster",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wilkinson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Winston",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yalobusha",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yazoo",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "IN",
+    "state_name": "Indiana",
+    "statewide_efiling_system": "Odyssey/INfile",
+    "statewide_efiling_url": "https://efile.incourts.gov/",
+    "data_collection_notes": "Indiana has 92 counties. Data gathered from ACCCIND (Association of Clerks of Circuit Courts of Indiana) and individual county websites.",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "https://www.co.adams.in.us/174/Clerks-Office",
+        "efiling_url": "",
+        "phone": "(260) 724-2600",
+        "fax": "(260) 724-3848",
+        "address": ""
+      },
+      {
+        "county_name": "Allen",
+        "clerk_website": "https://allencountyclerk.in.gov/",
+        "efiling_url": "",
+        "phone": "(260) 449-7424",
+        "fax": "(260) 428-7929",
+        "address": ""
+      },
+      {
+        "county_name": "Bartholomew",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(812) 379-1600",
+        "fax": "(812) 379-1675",
+        "address": ""
+      },
+      {
+        "county_name": "Benton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(765) 884-0930",
+        "fax": "(765) 884-0322",
+        "address": ""
+      },
+      {
+        "county_name": "Blackford",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(765) 348-1130",
+        "fax": "(765) 348-7234",
+        "address": ""
+      },
+      {
+        "county_name": "Boone",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(765) 482-3510",
+        "fax": "(765) 485-0150",
+        "address": ""
+      },
+      {
+        "county_name": "Brown",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(812) 285-6244",
+        "fax": "(812) 285-6732",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(812) 448-9024",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(765) 659-6335",
+        "fax": "(765) 659-6391",
+        "address": ""
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(812) 338-2565",
+        "fax": "(812) 338-2507",
+        "address": ""
+      },
+      {
+        "county_name": "Daviess",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(812) 254-8690",
+        "fax": "(812) 254-8698",
+        "address": ""
+      },
+      {
+        "county_name": "Dearborn",
+        "clerk_website": "https://www.dearborncounty.org/department/index.php?structureid=16",
+        "efiling_url": "",
+        "phone": "(812) 537-8867",
+        "fax": "(812) 532-2021",
+        "address": ""
+      },
+      {
+        "county_name": "Decatur",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(812) 663-8223",
+        "fax": "(812) 663-8642",
+        "address": ""
+      },
+      {
+        "county_name": "DeKalb",
+        "clerk_website": "https://www.co.dekalb.in.us/department/index.php?structureid=8",
+        "efiling_url": "",
+        "phone": "(260) 927-4725",
+        "fax": "(260) 925-5126",
+        "address": ""
+      },
+      {
+        "county_name": "Delaware",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dubois",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Elkhart",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Floyd",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fountain",
+        "clerk_website": "https://www.fountaincounty.net/department/index.php?structureid=16",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fulton",
+        "clerk_website": "https://www.co.fulton.in.us/210/Clerk-of-Courts",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gibson",
+        "clerk_website": "https://gibsoncounty-in.gov/circuit-court/",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hancock",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harrison",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hendricks",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Howard",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Huntington",
+        "clerk_website": "https://www.huntington.in.us/county/department/index.php?structureid=13",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jay",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jennings",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "https://johnsoncounty.in.gov/department/index.php?structureid=21",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Knox",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kosciusko",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "LaGrange",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "https://lakecountyin.gov/departments/clerk",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "LaPorte",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(219) 326-6808",
+        "fax": "(219) 326-6626",
+        "address": ""
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "https://www.co.marshall.in.us/department/index.php?structureid=15",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Martin",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Miami",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "https://www.montgomerycounty.in.gov/department/index.php?structureid=2",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Newton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Noble",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ohio",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Orange",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Owen",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Parke",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Porter",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Posey",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pulaski",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Putnam",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Randolph",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ripley",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rush",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Spencer",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "(812) 649-6025",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Joseph",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Starke",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Steuben",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sullivan",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Switzerland",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tippecanoe",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tipton",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vanderburgh",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vermillion",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vigo",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wabash",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warrick",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "https://co.wayne.in.us/clerk/index.html",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wells",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "White",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Whitley",
+        "clerk_website": "",
+        "efiling_url": "",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  }
+]

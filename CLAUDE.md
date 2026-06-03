@@ -7,6 +7,20 @@ SaaS platform for foreclosure surplus fund recovery. Scrapes county foreclosure 
 **Deployed on**: Vercel
 **Admin email**: coreypearsonemail@gmail.com
 
+## CRITICAL BUSINESS RULES (NEVER VIOLATE)
+
+### Lead Assignment Exclusivity (ABSOLUTE - NO EXCEPTIONS)
+- **Every agent MUST have completely separate leads from every other agent**
+- A lead can ONLY be assigned to ONE agent -- NEVER to multiple agents simultaneously
+- Before ANY lead assignment operation, ALWAYS query `operator_lead_assignments` to find leads already assigned to other agents and EXCLUDE them
+- DB enforces this via UNIQUE constraint on `lead_id` in `operator_lead_assignments` (one lead = one agent)
+- If overlap is ever discovered: remove the duplicate from the NEWER assignment (first-assigned agent wins)
+- This applies to ALL assignment methods: bulk SQL, API calls, UI actions, scripts
+
+### No Judicial States
+- NEVER scrape, enrich, or work on leads from judicial foreclosure states
+- Only non-judicial states: AL, AK, AZ, AR, GA, ID, MI, MN, MS, MO, NE, NV, NH, OR, RI, TN, VA, WV, WY
+
 ## Tech Stack
 - **Framework**: Next.js 16 (App Router) with React 19
 - **Auth**: Clerk (`@clerk/nextjs`)
@@ -161,8 +175,9 @@ scripts/
 ### POST /api/email-draft
 - **Auth**: Clerk (admin only)
 - **Actions**: `preview` | `create_draft`
-- **How it works**: Generates personalized HTML email with lead data, then uses direct IMAP APPEND via TLS to `imap.hostinger.com:993` to save draft in `INBOX.Drafts` of `claim@usforeclosurerecovery.com`
-- **IMAP credentials**: User `claim@usforeclosurerecovery.com`, password from `IMAP_CLAIM_PASSWORD` env var
+- **How it works**: Generates personalized HTML email with lead data, then uses direct IMAP APPEND via TLS to save draft in the sender's `Drafts` (falls back to `INBOX.Drafts`)
+- **IMAP host is PER-MAILBOX** (see `IMAP_HOST_MAP` / `resolveImapHost()`): `ira@`, `marie@`, `claim@usforeclosurerecovery.com` → `redbull.mxrouting.net` (MXRoute); everyone else (e.g. `contact@premiersurplusclaims.com`) → `imap.hostinger.com` default. usforeclosurerecovery.com email migrated Hostinger→MXRoute on 2026-06-03 — see `HANDOFF-email-mxroute-migration.md`.
+- **IMAP credentials**: User = full sender email; password from `IMAP_PASSWORD_MAP` (Vercel env per agent) → DB `user_pins.imap_password` → default. MXRoute mailboxes use `Thepassword#123`. `IMAP_CLAIM_PASSWORD` is now the MXRoute claim@ password (`Thepassword#123`).
 - **Important**: n8n Code nodes CANNOT use `require()` - that's why IMAP is done directly in the API route, not via n8n webhook
 - **IMAP folder**: Must be `INBOX.Drafts` (not `Drafts`) on Hostinger. State machine has fallback: tries `Drafts` first, falls back to `INBOX.Drafts` on NO response
 - **Email template features**:
@@ -428,7 +443,7 @@ echo "value" | npx vercel env add VAR_NAME production --force
 - **NOT** "US Foreclosure Recovery" or "US Foreclosure Recovery Inc." -- those are WRONG
 - **Service**: Connects foreclosed homeowners with their unclaimed surplus funds
 - **Recovery Agent**: Allie Pearson, (888) 545-8007
-- **Outreach Email**: claim@usforeclosurerecovery.com (Hostinger IMAP)
+- **Outreach Email**: claim@usforeclosurerecovery.com (MXRoute IMAP since 2026-06-03, was Hostinger). Active agents: Ira Katz (ext 7), Marie Daniel (ext 8). Rebecca + Joshua deactivated.
 - **Report Email**: support@usforeclosureleads.com (all pipeline reports go here)
 - **Sender**: Corey Pearson
 - **Service Fee**: 30% contingency (NOT 25% -- corrected Feb 28, 2026)

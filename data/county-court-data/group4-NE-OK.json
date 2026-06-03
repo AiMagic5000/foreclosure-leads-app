@@ -1,0 +1,2107 @@
+[
+  {
+    "state_abbr": "NE",
+    "state_name": "Nebraska",
+    "statewide_efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+    "statewide_efiling_system": "Nebraska Judicial Branch eFiling System (JUSTICE/SCCALES)",
+    "clerk_directory_url": "https://nebraskajudicial.gov/courts/district-court/clerks-contact-information",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "https://adamscountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-547-7523",
+        "address": "Adams County Courthouse, Hastings, NE"
+      },
+      {
+        "county_name": "Antelope",
+        "clerk_website": "https://www.antelope.ne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-887-4141",
+        "address": "Antelope County Courthouse, Neligh, NE"
+      },
+      {
+        "county_name": "Arthur",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-764-2644",
+        "address": "Arthur County Courthouse, Arthur, NE"
+      },
+      {
+        "county_name": "Banner",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-384-2671",
+        "address": "Banner County Courthouse, Harrisburg, NE"
+      },
+      {
+        "county_name": "Blaine",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-944-2305",
+        "address": "Blaine County Courthouse, Dunning, NE"
+      },
+      {
+        "county_name": "Boone",
+        "clerk_website": "https://www.boonecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-694-2088",
+        "address": "Boone County Courthouse, Albion, NE"
+      },
+      {
+        "county_name": "Box Butte",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-762-6565",
+        "address": "Box Butte County Courthouse, Alliance, NE"
+      },
+      {
+        "county_name": "Boyd",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-775-2563",
+        "address": "Boyd County Courthouse, Boyd, NE"
+      },
+      {
+        "county_name": "Brown",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-387-2705",
+        "address": "Brown County Courthouse, Ainsworth, NE"
+      },
+      {
+        "county_name": "Buffalo",
+        "clerk_website": "https://www.buffalocountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-234-2641",
+        "address": "Buffalo County Courthouse, Kearney, NE"
+      },
+      {
+        "county_name": "Burt",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-374-2677",
+        "address": "Burt County Courthouse, Tekamah, NE"
+      },
+      {
+        "county_name": "Butler",
+        "clerk_website": "https://www.butler.ne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-274-4280",
+        "address": "Butler County Courthouse, David City, NE"
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "https://www.casscountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-296-9276",
+        "address": "Cass County Courthouse, Plattsmouth, NE"
+      },
+      {
+        "county_name": "Cedar",
+        "clerk_website": "https://cedarcountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-254-6834",
+        "address": "Cedar County Courthouse, Hartington, NE"
+      },
+      {
+        "county_name": "Chase",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-882-5266",
+        "address": "Chase County Courthouse, Imperial, NE"
+      },
+      {
+        "county_name": "Cherry",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-376-2788",
+        "address": "Cherry County Courthouse, Valentine, NE"
+      },
+      {
+        "county_name": "Cheyenne",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-254-5851",
+        "address": "Cheyenne County Courthouse, Sidney, NE"
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "https://claycounty.ne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-228-3000",
+        "address": "Clay County Courthouse, Clay Center, NE"
+      },
+      {
+        "county_name": "Colfax",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-352-3434",
+        "address": "Colfax County Courthouse, Schuyler, NE"
+      },
+      {
+        "county_name": "Cuming",
+        "clerk_website": "https://cumingcountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-372-2753",
+        "address": "Cuming County Courthouse, West Point, NE"
+      },
+      {
+        "county_name": "Custer",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-784-2341",
+        "address": "Custer County Courthouse, Broken Bow, NE"
+      },
+      {
+        "county_name": "Dakota",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-987-3875",
+        "address": "Dakota County Courthouse, Dakota City, NE"
+      },
+      {
+        "county_name": "Dawes",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-432-0108",
+        "address": "Dawes County Courthouse, Chadron, NE"
+      },
+      {
+        "county_name": "Dawson",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-324-2329",
+        "address": "Dawson County Courthouse, Lexington, NE"
+      },
+      {
+        "county_name": "Deuel",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-874-3415",
+        "address": "Deuel County Courthouse, Chappell, NE"
+      },
+      {
+        "county_name": "Dixon",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-584-2584",
+        "address": "Dixon County Courthouse, Ponca, NE"
+      },
+      {
+        "county_name": "Dodge",
+        "clerk_website": "https://www.dodgecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-727-2757",
+        "address": "Dodge County Courthouse, Fremont, NE"
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "https://clerk.dc4dc.com/",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-444-7065",
+        "address": "Douglas County Courthouse, Omaha, NE"
+      },
+      {
+        "county_name": "Dundy",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-882-5266",
+        "address": "Dundy County Courthouse, Benkelman, NE"
+      },
+      {
+        "county_name": "Fillmore",
+        "clerk_website": "https://www.fillmorecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-759-3519",
+        "address": "Fillmore County Courthouse, Geneva, NE"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-425-6202",
+        "address": "Franklin County Courthouse, Franklin, NE"
+      },
+      {
+        "county_name": "Frontier",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-367-4641",
+        "address": "Frontier County Courthouse, Stockville, NE"
+      },
+      {
+        "county_name": "Furnas",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-268-4145",
+        "address": "Furnas County Courthouse, Beaver City, NE"
+      },
+      {
+        "county_name": "Gage",
+        "clerk_website": "https://gagecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-223-1300",
+        "address": "Gage County Courthouse, Beatrice, NE"
+      },
+      {
+        "county_name": "Garden",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-772-3924",
+        "address": "Garden County Courthouse, Oshkosh, NE"
+      },
+      {
+        "county_name": "Garfield",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-346-4161",
+        "address": "Garfield County Courthouse, Burwell, NE"
+      },
+      {
+        "county_name": "Gosper",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-785-2263",
+        "address": "Gosper County Courthouse, Elwood, NE"
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-352-4643",
+        "address": "Grant County Courthouse, Hyannis, NE"
+      },
+      {
+        "county_name": "Greeley",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-428-3625",
+        "address": "Greeley County Courthouse, Greeley, NE"
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-340-3556",
+        "address": "Greene County Courthouse, Linwood, NE"
+      },
+      {
+        "county_name": "Hall",
+        "clerk_website": "https://www.hallcountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-385-5088",
+        "address": "Hall County Courthouse, Grand Island, NE"
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-694-2088",
+        "address": "Hamilton County Courthouse, Aurora, NE"
+      },
+      {
+        "county_name": "Harlan",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-928-2173",
+        "address": "Harlan County Courthouse, Alma, NE"
+      },
+      {
+        "county_name": "Hayes",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-286-3413",
+        "address": "Hayes County Courthouse, Hayes Center, NE"
+      },
+      {
+        "county_name": "Hitchcock",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-335-3246",
+        "address": "Hitchcock County Courthouse, Trenton, NE"
+      },
+      {
+        "county_name": "Holt",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-336-2638",
+        "address": "Holt County Courthouse, O'Neill, NE"
+      },
+      {
+        "county_name": "Hooker",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-546-2181",
+        "address": "Hooker County Courthouse, Mullen, NE"
+      },
+      {
+        "county_name": "Howard",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-754-4343",
+        "address": "Howard County Courthouse, St. Paul, NE"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "https://www.jeffcountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-729-2329",
+        "address": "Jefferson County Courthouse, Fairbury, NE"
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "https://www.johnsoncountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-335-6300",
+        "address": "Johnson County Courthouse, Mountain Home, NE"
+      },
+      {
+        "county_name": "Kearney",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-236-1307",
+        "address": "Kearney County Courthouse, Minden, NE"
+      },
+      {
+        "county_name": "Keith",
+        "clerk_website": "https://www.keithcountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-284-3022",
+        "address": "Keith County Courthouse, Ogallala, NE"
+      },
+      {
+        "county_name": "Keya Paha",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-773-5693",
+        "address": "Keya Paha County Courthouse, Springview, NE"
+      },
+      {
+        "county_name": "Kimball",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-235-3221",
+        "address": "Kimball County Courthouse, Kimball, NE"
+      },
+      {
+        "county_name": "Knox",
+        "clerk_website": "https://knoxcountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-288-4231",
+        "address": "Knox County Courthouse, Center, NE"
+      },
+      {
+        "county_name": "Lancaster",
+        "clerk_website": "https://www.lancaster.ne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-471-7463",
+        "address": "Lancaster County Courthouse, Lincoln, NE"
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "https://lincolncountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-534-8812",
+        "address": "Lincoln County Courthouse, North Platte, NE"
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-539-4731",
+        "address": "Logan County Courthouse, Stapleton, NE"
+      },
+      {
+        "county_name": "Loup",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-638-4292",
+        "address": "Loup County Courthouse, Taylor, NE"
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "https://madisoncountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-454-3521",
+        "address": "Madison County Courthouse, Madison, NE"
+      },
+      {
+        "county_name": "Merrick",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-946-2881",
+        "address": "Merrick County Courthouse, Central City, NE"
+      },
+      {
+        "county_name": "Morrill",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-262-0860",
+        "address": "Morrill County Courthouse, Bridgeport, NE"
+      },
+      {
+        "county_name": "Nance",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-536-2731",
+        "address": "Nance County Courthouse, Fullerton, NE"
+      },
+      {
+        "county_name": "Nemaha",
+        "clerk_website": "https://www.nemaha.ne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-274-4280",
+        "address": "Nemaha County Courthouse, Auburn, NE"
+      },
+      {
+        "county_name": "Nuckolls",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-225-2341",
+        "address": "Nuckolls County Courthouse, Nelson, NE"
+      },
+      {
+        "county_name": "Otoe",
+        "clerk_website": "https://oteecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-873-9500",
+        "address": "Otoe County Courthouse, Nebraska City, NE"
+      },
+      {
+        "county_name": "Pawnee",
+        "clerk_website": "https://www.pawneecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-852-2969",
+        "address": "Pawnee County Courthouse, Pawnee City, NE"
+      },
+      {
+        "county_name": "Perkins",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-352-4643",
+        "address": "Perkins County Courthouse, Grant, NE"
+      },
+      {
+        "county_name": "Phelps",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-728-4784",
+        "address": "Phelps County Courthouse, Holdrege, NE"
+      },
+      {
+        "county_name": "Pierce",
+        "clerk_website": "https://www.piercene.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-329-6611",
+        "address": "Pierce County Courthouse, Pierce, NE"
+      },
+      {
+        "county_name": "Platte",
+        "clerk_website": "https://www.plattecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-564-8610",
+        "address": "Platte County Courthouse, Columbus, NE"
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-765-5255",
+        "address": "Polk County Courthouse, Osceola, NE"
+      },
+      {
+        "county_name": "Red Willow",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-345-1552",
+        "address": "Red Willow County Courthouse, McCook, NE"
+      },
+      {
+        "county_name": "Richardson",
+        "clerk_website": "https://richardsoncountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-245-2722",
+        "address": "Richardson County Courthouse, Falls City, NE"
+      },
+      {
+        "county_name": "Rock",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-684-3636",
+        "address": "Rock County Courthouse, Bassett, NE"
+      },
+      {
+        "county_name": "Saline",
+        "clerk_website": "https://salinecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-821-2374",
+        "address": "Saline County Courthouse, Wilber, NE"
+      },
+      {
+        "county_name": "Sarpy",
+        "clerk_website": "https://www.sarpy.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-593-2170",
+        "address": "Sarpy County Courthouse, Papillion, NE"
+      },
+      {
+        "county_name": "Saunders",
+        "clerk_website": "https://www.saunderscounty.ne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-643-2883",
+        "address": "Saunders County Courthouse, Wahoo, NE"
+      },
+      {
+        "county_name": "Scotts Bluff",
+        "clerk_website": "https://www.scottsbluffcounty.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-436-6615",
+        "address": "Scotts Bluff County Courthouse, Gering, NE"
+      },
+      {
+        "county_name": "Seward",
+        "clerk_website": "https://sewardcountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-643-2883",
+        "address": "Seward County Courthouse, Seward, NE"
+      },
+      {
+        "county_name": "Sheridan",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-327-2657",
+        "address": "Sheridan County Courthouse, Rushville, NE"
+      },
+      {
+        "county_name": "Sherman",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-745-0448",
+        "address": "Sherman County Courthouse, Loup City, NE"
+      },
+      {
+        "county_name": "Sioux",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-436-4722",
+        "address": "Sioux County Courthouse, Harrison, NE"
+      },
+      {
+        "county_name": "Stanton",
+        "clerk_website": "https://www.stantonne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-439-2323",
+        "address": "Stanton County Courthouse, Stanton, NE"
+      },
+      {
+        "county_name": "Thayer",
+        "clerk_website": "https://thayercountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-768-6116",
+        "address": "Thayer County Courthouse, Hebron, NE"
+      },
+      {
+        "county_name": "Thomas",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "308-635-2451",
+        "address": "Thomas County Courthouse, Thedford, NE"
+      },
+      {
+        "county_name": "Thurston",
+        "clerk_website": "https://thurstoncountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-385-2988",
+        "address": "Thurston County Courthouse, Pender, NE"
+      },
+      {
+        "county_name": "Valley",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-728-3900",
+        "address": "Valley County Courthouse, Ord, NE"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "https://www.washingtoncountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-426-4555",
+        "address": "Washington County Courthouse, Blair, NE"
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "https://waynecountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-375-2343",
+        "address": "Wayne County Courthouse, Wayne, NE"
+      },
+      {
+        "county_name": "Webster",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-746-2716",
+        "address": "Webster County Courthouse, Red Cloud, NE"
+      },
+      {
+        "county_name": "Wheeler",
+        "clerk_website": "",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-654-3235",
+        "address": "Wheeler County Courthouse, Bartlett, NE"
+      },
+      {
+        "county_name": "York",
+        "clerk_website": "https://yorkcountyne.gov",
+        "efiling_url": "https://www.nebraska.gov/apps-EFILE/",
+        "fax": "",
+        "phone": "402-362-4641",
+        "address": "York County Courthouse, York, NE"
+      }
+    ]
+  },
+  {
+    "state_abbr": "NV",
+    "state_name": "Nevada",
+    "statewide_efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+    "statewide_efiling_system": "Nevada eFlex (Odyssey-based) and County-Specific Systems",
+    "clerk_directory_url": "https://www.nvsos.gov/sos/elections/voters/county-clerk-contact-information",
+    "counties": [
+      {
+        "county_name": "Churchill",
+        "clerk_website": "https://www.churchillcountynv.gov",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-423-6028",
+        "address": "Churchill County Clerk's Office, Fallon, NV"
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "https://www.clarkcountycourts.us",
+        "efiling_url": "https://www.clarkcountycourts.us/departments/clerk/electronic-filing/",
+        "fax": "",
+        "phone": "702-455-2590",
+        "address": "Clark County Clerk's Office, Las Vegas, NV"
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "https://www.douglasnv.us",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-782-9120",
+        "address": "Douglas County Clerk's Office, Minden, NV"
+      },
+      {
+        "county_name": "Elko",
+        "clerk_website": "https://www.elkocountynv.net",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-738-6251",
+        "address": "Elko County Clerk's Office, Elko, NV"
+      },
+      {
+        "county_name": "Esmeralda",
+        "clerk_website": "https://www.esmeraldacountynv.us",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-485-6347",
+        "address": "Esmeralda County Clerk's Office, Goldfield, NV"
+      },
+      {
+        "county_name": "Eureka",
+        "clerk_website": "https://www.eurekacountynv.gov",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-237-5262",
+        "address": "Eureka County Clerk's Office, Eureka, NV"
+      },
+      {
+        "county_name": "Humboldt",
+        "clerk_website": "https://www.humboldtcountynv.gov",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-623-6412",
+        "address": "Humboldt County Clerk's Office, Winnemucca, NV"
+      },
+      {
+        "county_name": "Lander",
+        "clerk_website": "https://www.landercountynv.gov",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-635-5722",
+        "address": "Lander County Clerk's Office, Battle Mountain, NV"
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "https://www.lincolncountynv.gov",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-962-5166",
+        "address": "Lincoln County Clerk's Office, Pioche, NV"
+      },
+      {
+        "county_name": "Lyon",
+        "clerk_website": "https://www.lyon-county.org",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-782-7130",
+        "address": "Lyon County Clerk's Office, Yerington, NV"
+      },
+      {
+        "county_name": "Mineral",
+        "clerk_website": "https://mineralcountynv.gov",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-945-2828",
+        "address": "Mineral County Clerk's Office, Hawthorne, NV"
+      },
+      {
+        "county_name": "Nye",
+        "clerk_website": "https://www.nyecountynv.gov",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-751-7349",
+        "address": "Nye County Clerk's Office, Pahrump, NV"
+      },
+      {
+        "county_name": "Pershing",
+        "clerk_website": "https://www.pershingcountynv.gov",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-273-2208",
+        "address": "Pershing County Clerk's Office, Lovelock, NV"
+      },
+      {
+        "county_name": "Storey",
+        "clerk_website": "https://www.storeycounty.org",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-847-0969",
+        "address": "Storey County Clerk's Office, Virginia City, NV"
+      },
+      {
+        "county_name": "Washoe",
+        "clerk_website": "https://www.washoecounty.gov/clerks/",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-328-3100",
+        "address": "Washoe County Clerk's Office, Reno, NV"
+      },
+      {
+        "county_name": "White Pine",
+        "clerk_website": "https://www.whitepinecountynv.org",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-289-3700",
+        "address": "White Pine County Clerk's Office, Ely, NV"
+      },
+      {
+        "county_name": "Carson City",
+        "clerk_website": "https://www.carson.org",
+        "efiling_url": "https://nevada-portal.ecourt.com/public-portal/?q=Home",
+        "fax": "",
+        "phone": "775-887-2087",
+        "address": "Carson City Clerk's Office, Carson City, NV"
+      }
+    ]
+  },
+  {
+    "state_abbr": "NH",
+    "state_name": "New Hampshire",
+    "statewide_efiling_url": "https://ctefile.nhecourt.us/",
+    "statewide_efiling_system": "New Hampshire Supreme Court E-Filing and Odyssey File & Serve",
+    "clerk_directory_url": "https://www.courts.nh.gov/your-visit/find-court",
+    "counties": [
+      {
+        "county_name": "Belknap",
+        "clerk_website": "https://www.belknap.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-524-9355",
+        "phone": "603-527-2400",
+        "address": "Belknap County Superior Court, Laconia, NH"
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "https://www.carroll.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-356-3788",
+        "phone": "603-356-5042",
+        "address": "Carroll County Superior Court, Ossipee, NH"
+      },
+      {
+        "county_name": "Cheshire",
+        "clerk_website": "https://www.cheshire.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-357-1817",
+        "phone": "603-357-4400",
+        "address": "Cheshire County Superior Court, Keene, NH"
+      },
+      {
+        "county_name": "Coos",
+        "clerk_website": "https://www.coos.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-788-3943",
+        "phone": "603-788-3191",
+        "address": "Coos County Superior Court, Lancaster, NH"
+      },
+      {
+        "county_name": "Grafton",
+        "clerk_website": "https://www.grafton.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-787-7049",
+        "phone": "603-787-2029",
+        "address": "Grafton County Superior Court, Plymouth, NH"
+      },
+      {
+        "county_name": "Hillsborough",
+        "clerk_website": "https://www.hillsborough.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-669-3220",
+        "phone": "603-669-7410",
+        "address": "Hillsborough County Superior Court, Nashua, NH"
+      },
+      {
+        "county_name": "Merrimack",
+        "clerk_website": "https://www.merrimack.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-226-2443",
+        "phone": "603-226-4600",
+        "address": "Merrimack County Superior Court, Concord, NH"
+      },
+      {
+        "county_name": "Rockingham",
+        "clerk_website": "https://www.rockingham.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-778-0169",
+        "phone": "603-778-0600",
+        "address": "Rockingham County Superior Court, Portsmouth, NH"
+      },
+      {
+        "county_name": "Strafford",
+        "clerk_website": "https://www.strafford.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-516-1020",
+        "phone": "603-516-5700",
+        "address": "Strafford County Superior Court, Dover, NH"
+      },
+      {
+        "county_name": "Sullivan",
+        "clerk_website": "https://www.sullivan.courts.nh.gov",
+        "efiling_url": "https://newhampshire.tylertech.cloud/ofsweb",
+        "fax": "603-863-3311",
+        "phone": "603-863-3200",
+        "address": "Sullivan County Superior Court, Newport, NH"
+      }
+    ]
+  },
+  {
+    "state_abbr": "NJ",
+    "state_name": "New Jersey",
+    "statewide_efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+    "statewide_efiling_system": "eCourts - NJ Judiciary Electronic Case Filing and Management System",
+    "clerk_directory_url": "https://www.njcourts.gov/public/directories",
+    "counties": [
+      {
+        "county_name": "Atlantic",
+        "clerk_website": "https://www.atlanticcountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "609-383-6234",
+        "phone": "609-383-2000",
+        "address": "Atlantic County Courthouse, Mays Landing, NJ"
+      },
+      {
+        "county_name": "Bergen",
+        "clerk_website": "https://www.bergencountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "201-336-5880",
+        "phone": "201-336-5555",
+        "address": "Bergen County Courthouse, Hackensack, NJ"
+      },
+      {
+        "county_name": "Burlington",
+        "clerk_website": "https://www.burlco.org",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "609-265-5319",
+        "phone": "609-265-5300",
+        "address": "Burlington County Courthouse, Mount Holly, NJ"
+      },
+      {
+        "county_name": "Camden",
+        "clerk_website": "https://www.camdencountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "856-225-7519",
+        "phone": "856-225-7000",
+        "address": "Camden County Courthouse, Camden, NJ"
+      },
+      {
+        "county_name": "Cape May",
+        "clerk_website": "https://capemaycountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "609-465-1047",
+        "phone": "609-465-1000",
+        "address": "Cape May County Courthouse, Cape May Court House, NJ"
+      },
+      {
+        "county_name": "Cumberland",
+        "clerk_website": "https://www.cumberland.nj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "856-456-2221",
+        "phone": "856-453-2000",
+        "address": "Cumberland County Courthouse, Bridgeton, NJ"
+      },
+      {
+        "county_name": "Essex",
+        "clerk_website": "https://www.essexclerk.com",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "973-621-4778",
+        "phone": "973-621-4600",
+        "address": "Essex County Courthouse, Newark, NJ"
+      },
+      {
+        "county_name": "Gloucester",
+        "clerk_website": "https://www.gloucestercountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "856-384-6639",
+        "phone": "856-384-6600",
+        "address": "Gloucester County Courthouse, Woodbury, NJ"
+      },
+      {
+        "county_name": "Hudson",
+        "clerk_website": "https://hudsonclerk.org",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "201-216-3648",
+        "phone": "201-216-3600",
+        "address": "Hudson County Courthouse, Jersey City, NJ"
+      },
+      {
+        "county_name": "Hunterdon",
+        "clerk_website": "https://www.hunterdon.nj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "908-788-1368",
+        "phone": "908-788-1200",
+        "address": "Hunterdon County Courthouse, Flemington, NJ"
+      },
+      {
+        "county_name": "Mercer",
+        "clerk_website": "https://www.mercercounty.org",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "609-989-6627",
+        "phone": "609-989-6600",
+        "address": "Mercer County Courthouse, Trenton, NJ"
+      },
+      {
+        "county_name": "Middlesex",
+        "clerk_website": "https://www.middlesexcountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "732-981-4040",
+        "phone": "732-981-3600",
+        "address": "Middlesex County Courthouse, New Brunswick, NJ"
+      },
+      {
+        "county_name": "Monmouth",
+        "clerk_website": "https://monmouthcountyclerk.org",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "732-431-7659",
+        "phone": "732-431-7400",
+        "address": "Monmouth County Courthouse, Freehold, NJ"
+      },
+      {
+        "county_name": "Morris",
+        "clerk_website": "https://www.morriscountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "973-285-6168",
+        "phone": "973-285-6000",
+        "address": "Morris County Courthouse, Morristown, NJ"
+      },
+      {
+        "county_name": "Ocean",
+        "clerk_website": "https://www.oceancountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "732-286-2720",
+        "phone": "732-286-2500",
+        "address": "Ocean County Courthouse, Toms River, NJ"
+      },
+      {
+        "county_name": "Passaic",
+        "clerk_website": "https://www.passaiccountynj.org",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "973-881-4491",
+        "phone": "973-881-4400",
+        "address": "Passaic County Courthouse, Paterson, NJ"
+      },
+      {
+        "county_name": "Salem",
+        "clerk_website": "https://www.salemcountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "856-935-7510",
+        "phone": "856-935-7510",
+        "address": "Salem County Courthouse, Salem, NJ"
+      },
+      {
+        "county_name": "Somerset",
+        "clerk_website": "https://www.somersetcountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "908-231-7629",
+        "phone": "908-231-7600",
+        "address": "Somerset County Courthouse, Somerville, NJ"
+      },
+      {
+        "county_name": "Sussex",
+        "clerk_website": "https://www.sussex.nj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "973-383-8600",
+        "phone": "973-383-8600",
+        "address": "Sussex County Courthouse, Newton, NJ"
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "https://ucnj.org",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "908-558-2464",
+        "phone": "908-558-2000",
+        "address": "Union County Courthouse, Elizabeth, NJ"
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "https://www.warrencountynj.gov",
+        "efiling_url": "https://portal-cloud.njcourts.gov/prweb/PRAuth/CloudSAMLAuth?AppName=ESSO",
+        "fax": "908-475-6524",
+        "phone": "908-475-6600",
+        "address": "Warren County Courthouse, Belvidere, NJ"
+      }
+    ]
+  },
+  {
+    "state_abbr": "NM",
+    "state_name": "New Mexico",
+    "statewide_efiling_url": "https://www.nmcourts.gov/e-filing/",
+    "statewide_efiling_system": "File and Serve (Odyssey)",
+    "clerk_directory_url": "https://nmcourts.gov/search-for-your-court/",
+    "note": "New Mexico has 13 judicial districts and 34 district courts. County probate courts are separate. Court clerk information available through individual district court websites.",
+    "counties": [
+      {
+        "county_name": "Bernalillo",
+        "clerk_website": "https://seconddistrict.nmcourts.gov",
+        "efiling_url": "https://seconddistrict.nmcourts.gov/about-this-district/clerks-office/",
+        "fax": "",
+        "phone": "505-841-6500",
+        "address": "Bernalillo County District Court, Albuquerque, NM"
+      },
+      {
+        "county_name": "Catron",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-388-1942",
+        "address": "Third Judicial District Court, Las Cruces, NM"
+      },
+      {
+        "county_name": "Chaves",
+        "clerk_website": "https://www.chaves.org",
+        "efiling_url": "https://www.nmcourts.gov/e-filing/",
+        "fax": "",
+        "phone": "575-624-6711",
+        "address": "Chaves County Court, Roswell, NM"
+      },
+      {
+        "county_name": "Cibola",
+        "clerk_website": "https://firstdistrict.nmcourts.gov",
+        "efiling_url": "https://firstdistrict.nmcourts.gov/about-this-district/court-clerks-office/",
+        "fax": "",
+        "phone": "505-346-2644",
+        "address": "First Judicial District Court, Santa Fe, NM"
+      },
+      {
+        "county_name": "Colfax",
+        "clerk_website": "https://fourthdistrict.nmcourts.gov",
+        "efiling_url": "https://fourthdistrict.nmcourts.gov/clerk/",
+        "fax": "",
+        "phone": "575-376-2381",
+        "address": "Fourth Judicial District Court, Las Vegas, NM"
+      },
+      {
+        "county_name": "Curry",
+        "clerk_website": "https://seventhdistrict.nmcourts.gov",
+        "efiling_url": "https://seventhdistrict.nmcourts.gov/office-of-the-clerk/",
+        "fax": "",
+        "phone": "575-763-6297",
+        "address": "Seventh Judicial District Court, Clovis, NM"
+      },
+      {
+        "county_name": "De Baca",
+        "clerk_website": "https://seventhdistrict.nmcourts.gov",
+        "efiling_url": "https://seventhdistrict.nmcourts.gov/office-of-the-clerk/",
+        "fax": "",
+        "phone": "575-763-6297",
+        "address": "Seventh Judicial District Court, Fort Sumner, NM"
+      },
+      {
+        "county_name": "Doña Ana",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-541-2614",
+        "address": "Third Judicial District Court, Las Cruces, NM"
+      },
+      {
+        "county_name": "Eddy",
+        "clerk_website": "https://fifthdistrict.nmcourts.gov",
+        "efiling_url": "https://fifthdistrict.nmcourts.gov/office-of-the-clerk/",
+        "fax": "",
+        "phone": "575-683-5511",
+        "address": "Fifth Judicial District Court, Carlsbad, NM"
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-388-1942",
+        "address": "Third Judicial District Court, Silver City, NM"
+      },
+      {
+        "county_name": "Guadalupe",
+        "clerk_website": "https://fourthdistrict.nmcourts.gov",
+        "efiling_url": "https://fourthdistrict.nmcourts.gov/clerk/",
+        "fax": "",
+        "phone": "575-461-2541",
+        "address": "Fourth Judicial District Court, Santa Rosa, NM"
+      },
+      {
+        "county_name": "Harding",
+        "clerk_website": "https://www.nmcourts.gov/courts-by-district/",
+        "efiling_url": "https://www.nmcourts.gov/e-filing/",
+        "fax": "",
+        "phone": "575-445-5031",
+        "address": "Harding County, Springer, NM"
+      },
+      {
+        "county_name": "Hidalgo",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-542-0036",
+        "address": "Third Judicial District Court, Lordsburg, NM"
+      },
+      {
+        "county_name": "Lea",
+        "clerk_website": "https://fifthdistrict.nmcourts.gov",
+        "efiling_url": "https://fifthdistrict.nmcourts.gov/office-of-the-clerk/",
+        "fax": "",
+        "phone": "575-886-7921",
+        "address": "Fifth Judicial District Court, Lovington, NM"
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-648-2373",
+        "address": "Third Judicial District Court, Carrizozo, NM"
+      },
+      {
+        "county_name": "Los Alamos",
+        "clerk_website": "https://firstdistrict.nmcourts.gov",
+        "efiling_url": "https://firstdistrict.nmcourts.gov/about-this-district/court-clerks-office/",
+        "fax": "",
+        "phone": "505-661-0744",
+        "address": "First Judicial District Court, Los Alamos, NM"
+      },
+      {
+        "county_name": "Luna",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-546-0494",
+        "address": "Third Judicial District Court, Deming, NM"
+      },
+      {
+        "county_name": "McKinley",
+        "clerk_website": "https://tenthdistrict.nmcourts.gov",
+        "efiling_url": "https://tenthdistrict.nmcourts.gov/clerk-of-court/",
+        "fax": "",
+        "phone": "505-863-1400",
+        "address": "Tenth Judicial District Court, Gallup, NM"
+      },
+      {
+        "county_name": "Mora",
+        "clerk_website": "https://fourthdistrict.nmcourts.gov",
+        "efiling_url": "https://fourthdistrict.nmcourts.gov/clerk/",
+        "fax": "",
+        "phone": "575-387-2448",
+        "address": "Fourth Judicial District Court, Mora, NM"
+      },
+      {
+        "county_name": "Otero",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-437-7788",
+        "address": "Third Judicial District Court, Alamogordo, NM"
+      },
+      {
+        "county_name": "Quay",
+        "clerk_website": "https://www.nmcourts.gov/courts-by-district/",
+        "efiling_url": "https://www.nmcourts.gov/e-filing/",
+        "fax": "",
+        "phone": "575-461-2541",
+        "address": "Eighth Judicial District Court, Tucumcari, NM"
+      },
+      {
+        "county_name": "Rio Arriba",
+        "clerk_website": "https://firstdistrict.nmcourts.gov",
+        "efiling_url": "https://firstdistrict.nmcourts.gov/about-this-district/court-clerks-office/",
+        "fax": "",
+        "phone": "505-753-3100",
+        "address": "First Judicial District Court, Española, NM"
+      },
+      {
+        "county_name": "Roosevelt",
+        "clerk_website": "https://seventhdistrict.nmcourts.gov",
+        "efiling_url": "https://seventhdistrict.nmcourts.gov/office-of-the-clerk/",
+        "fax": "",
+        "phone": "575-763-6297",
+        "address": "Seventh Judicial District Court, Portales, NM"
+      },
+      {
+        "county_name": "Sandoval",
+        "clerk_website": "https://seconddistrict.nmcourts.gov",
+        "efiling_url": "https://seconddistrict.nmcourts.gov/about-this-district/clerks-office/",
+        "fax": "",
+        "phone": "505-867-2300",
+        "address": "Second Judicial District Court, Bernalillo, NM"
+      },
+      {
+        "county_name": "San Juan",
+        "clerk_website": "https://tenthdistrict.nmcourts.gov",
+        "efiling_url": "https://tenthdistrict.nmcourts.gov/clerk-of-court/",
+        "fax": "",
+        "phone": "505-327-5800",
+        "address": "Tenth Judicial District Court, Aztec, NM"
+      },
+      {
+        "county_name": "San Miguel",
+        "clerk_website": "https://fourthdistrict.nmcourts.gov",
+        "efiling_url": "https://fourthdistrict.nmcourts.gov/clerk/",
+        "fax": "",
+        "phone": "505-454-1700",
+        "address": "Fourth Judicial District Court, Las Vegas, NM"
+      },
+      {
+        "county_name": "Santa Fe",
+        "clerk_website": "https://firstdistrict.nmcourts.gov",
+        "efiling_url": "https://firstdistrict.nmcourts.gov/about-this-district/court-clerks-office/",
+        "fax": "",
+        "phone": "505-827-4600",
+        "address": "First Judicial District Court, Santa Fe, NM"
+      },
+      {
+        "county_name": "Sierra",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-388-1942",
+        "address": "Third Judicial District Court, Truth or Consequences, NM"
+      },
+      {
+        "county_name": "Socorro",
+        "clerk_website": "https://thirddistrict.nmcourts.gov",
+        "efiling_url": "https://thirddistrict.nmcourts.gov/location-hours-contacts/",
+        "fax": "",
+        "phone": "575-838-0994",
+        "address": "Third Judicial District Court, Socorro, NM"
+      },
+      {
+        "county_name": "Taos",
+        "clerk_website": "https://sixthdistrict.nmcourts.gov",
+        "efiling_url": "https://sixthdistrict.nmcourts.gov/about-this-district/eFiling/",
+        "fax": "",
+        "phone": "575-751-5700",
+        "address": "Sixth Judicial District Court, Taos, NM"
+      },
+      {
+        "county_name": "Torrance",
+        "clerk_website": "https://seconddistrict.nmcourts.gov",
+        "efiling_url": "https://seconddistrict.nmcourts.gov/about-this-district/clerks-office/",
+        "fax": "",
+        "phone": "505-841-6500",
+        "address": "Second Judicial District Court, Estancia, NM"
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "https://www.nmcourts.gov/courts-by-district/",
+        "efiling_url": "https://www.nmcourts.gov/e-filing/",
+        "fax": "",
+        "phone": "575-374-9461",
+        "address": "Eighth Judicial District Court, Clayton, NM"
+      },
+      {
+        "county_name": "Valencia",
+        "clerk_website": "https://seconddistrict.nmcourts.gov",
+        "efiling_url": "https://seconddistrict.nmcourts.gov/about-this-district/clerks-office/",
+        "fax": "",
+        "phone": "505-891-7100",
+        "address": "Second Judicial District Court, Los Lunas, NM"
+      }
+    ]
+  },
+  {
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "statewide_efiling_url": "https://iapps.courts.state.ny.us/nyscef/HomePage",
+    "statewide_efiling_system": "NYSCEF - New York State Court Electronic Filing",
+    "clerk_directory_url": "https://www.nysac.org/countyclerks",
+    "counties": []
+  },
+  {
+    "state_abbr": "NC",
+    "state_name": "North Carolina",
+    "statewide_efiling_url": "https://www.efiling.nccourts.org/",
+    "statewide_efiling_system": "File & Serve / Odyssey Electronic Filing",
+    "clerk_directory_url": "https://www.nccourts.gov/locations",
+    "counties": []
+  },
+  {
+    "state_abbr": "ND",
+    "state_name": "North Dakota",
+    "statewide_efiling_url": "https://northdakota.tylertech.cloud/OfsWeb/Home",
+    "statewide_efiling_system": "Odyssey Electronic Filing System",
+    "clerk_directory_url": "https://www.ndaco.org/cod/browse-by-county/",
+    "counties": []
+  },
+  {
+    "state_abbr": "OH",
+    "state_name": "Ohio",
+    "statewide_efiling_url": "https://www.supremecourt.ohio.gov/e-filing/",
+    "statewide_efiling_system": "eFileOH / County-Specific Systems",
+    "clerk_directory_url": "https://www.occaohio.com/ohio-county-clerks.html",
+    "note": "Ohio has 88 counties. County court systems vary - some use eFileOH while others have county-specific e-filing portals.",
+    "counties": []
+  },
+  {
+    "state_abbr": "OK",
+    "state_name": "Oklahoma",
+    "statewide_efiling_url": "https://efile.oscn.net/",
+    "statewide_efiling_system": "Oklahoma Electronic Filing System (OCIS-enabled counties only)",
+    "clerk_directory_url": "http://www.county-clerk.net/county.asp?state=Oklahoma",
+    "note": "E-filing is limited to 13 counties with OCIS software: Adair, Canadian, Cleveland, Comanche, Ellis, Garfield, Logan, Oklahoma, Payne, Pushmataha, Roger Mills, Rogers, and Tulsa.",
+    "counties": [
+      {
+        "county_name": "Adair",
+        "clerk_website": "https://www.adaircountryok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-696-7633",
+        "address": "Adair County Courthouse, Tahlequah, OK"
+      },
+      {
+        "county_name": "Alfalfa",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-596-3642",
+        "address": "Alfalfa County Courthouse, Cherokee, OK"
+      },
+      {
+        "county_name": "Atoka",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-889-2833",
+        "address": "Atoka County Courthouse, Atoka, OK"
+      },
+      {
+        "county_name": "Beaver",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-625-3189",
+        "address": "Beaver County Courthouse, Beaver, OK"
+      },
+      {
+        "county_name": "Beckham",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-928-2050",
+        "address": "Beckham County Courthouse, Sayre, OK"
+      },
+      {
+        "county_name": "Blaine",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-388-5366",
+        "address": "Blaine County Courthouse, Watonga, OK"
+      },
+      {
+        "county_name": "Bryan",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-924-1400",
+        "address": "Bryan County Courthouse, Durant, OK"
+      },
+      {
+        "county_name": "Caddo",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-247-3393",
+        "address": "Caddo County Courthouse, Anadarko, OK"
+      },
+      {
+        "county_name": "Canadian",
+        "clerk_website": "https://www.canadianok.com",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-323-1221",
+        "address": "Canadian County Courthouse, El Reno, OK"
+      },
+      {
+        "county_name": "Carter",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-223-6656",
+        "address": "Carter County Courthouse, Ardmore, OK"
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "https://www.cherokeecountynationalforest.com",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-456-2543",
+        "address": "Cherokee County Courthouse, Tahlequah, OK"
+      },
+      {
+        "county_name": "Choctaw",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-326-7615",
+        "address": "Choctaw County Courthouse, Hugo, OK"
+      },
+      {
+        "county_name": "Cimarron",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-544-2251",
+        "address": "Cimarron County Courthouse, Boise City, OK"
+      },
+      {
+        "county_name": "Cleveland",
+        "clerk_website": "https://www.clevelandcountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-321-7300",
+        "address": "Cleveland County Courthouse, Norman, OK"
+      },
+      {
+        "county_name": "Coal",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-927-2014",
+        "address": "Coal County Courthouse, Coalgate, OK"
+      },
+      {
+        "county_name": "Comanche",
+        "clerk_website": "https://www.comancheco.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-353-0620",
+        "address": "Comanche County Courthouse, Lawton, OK"
+      },
+      {
+        "county_name": "Cotton",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-875-3565",
+        "address": "Cotton County Courthouse, Walters, OK"
+      },
+      {
+        "county_name": "Craig",
+        "clerk_website": "https://www.craigcountok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-256-7328",
+        "address": "Craig County Courthouse, Vinita, OK"
+      },
+      {
+        "county_name": "Creek",
+        "clerk_website": "https://www.muskogee.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-683-2012",
+        "address": "Creek County Courthouse, Muskogee, OK"
+      },
+      {
+        "county_name": "Custer",
+        "clerk_website": "https://www.custercountook.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-323-1221",
+        "address": "Custer County Courthouse, Arapaho, OK"
+      },
+      {
+        "county_name": "Delaware",
+        "clerk_website": "https://www.delawarecountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-254-2203",
+        "address": "Delaware County Courthouse, Jay, OK"
+      },
+      {
+        "county_name": "Dewey",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-534-2446",
+        "address": "Dewey County Courthouse, Taloga, OK"
+      },
+      {
+        "county_name": "Ellis",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-885-7522",
+        "address": "Ellis County Courthouse, Arnett, OK"
+      },
+      {
+        "county_name": "Garfield",
+        "clerk_website": "https://www.garfield.ok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-227-2232",
+        "address": "Garfield County Courthouse, Enid, OK"
+      },
+      {
+        "county_name": "Garvin",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-238-1386",
+        "address": "Garvin County Courthouse, Pauls Valley, OK"
+      },
+      {
+        "county_name": "Grady",
+        "clerk_website": "https://www.gradycounty.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-465-2636",
+        "address": "Grady County Courthouse, Chickasha, OK"
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-481-3710",
+        "address": "Grant County Courthouse, Medford, OK"
+      },
+      {
+        "county_name": "Greer",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-886-3391",
+        "address": "Greer County Courthouse, Mangum, OK"
+      },
+      {
+        "county_name": "Harmon",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-423-7565",
+        "address": "Harmon County Courthouse, Hollis, OK"
+      },
+      {
+        "county_name": "Harper",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-735-2222",
+        "address": "Harper County Courthouse, Buffalo, OK"
+      },
+      {
+        "county_name": "Haskell",
+        "clerk_website": "https://www.haskellcountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-482-1313",
+        "address": "Haskell County Courthouse, Stigler, OK"
+      },
+      {
+        "county_name": "Hughes",
+        "clerk_website": "https://www.hughescountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-376-2464",
+        "address": "Hughes County Courthouse, Holdenville, OK"
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-482-1221",
+        "address": "Jackson County Courthouse, Altus, OK"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-331-3350",
+        "address": "Jefferson County Courthouse, Waurika, OK"
+      },
+      {
+        "county_name": "Johnston",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-371-3358",
+        "address": "Johnston County Courthouse, Tishomingo, OK"
+      },
+      {
+        "county_name": "Kay",
+        "clerk_website": "https://www.kaycountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-362-2227",
+        "address": "Kay County Courthouse, Newkirk, OK"
+      },
+      {
+        "county_name": "Kingfisher",
+        "clerk_website": "https://www.kingfishercounty.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-375-3224",
+        "address": "Kingfisher County Courthouse, Kingfisher, OK"
+      },
+      {
+        "county_name": "Kiowa",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-726-5158",
+        "address": "Kiowa County Courthouse, Hobart, OK"
+      },
+      {
+        "county_name": "Latimer",
+        "clerk_website": "https://www.latimercountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-465-2635",
+        "address": "Latimer County Courthouse, Wilburton, OK"
+      },
+      {
+        "county_name": "Le Flore",
+        "clerk_website": "https://www.leflorecountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-653-2241",
+        "address": "Le Flore County Courthouse, Poteau, OK"
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "https://www.lincolncountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-258-0676",
+        "address": "Lincoln County Courthouse, Chandler, OK"
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "https://www.logancountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-321-7300",
+        "address": "Logan County Courthouse, Guthrie, OK"
+      },
+      {
+        "county_name": "Love",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-356-2266",
+        "address": "Love County Courthouse, Marietta, OK"
+      },
+      {
+        "county_name": "Major",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-227-1134",
+        "address": "Major County Courthouse, Fairview, OK"
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-369-2981",
+        "address": "Marshall County Courthouse, Madill, OK"
+      },
+      {
+        "county_name": "Mayes",
+        "clerk_website": "https://www.mayescountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-542-3391",
+        "address": "Mayes County Courthouse, Pryor, OK"
+      },
+      {
+        "county_name": "McClain",
+        "clerk_website": "https://www.mcclaincountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-527-3221",
+        "address": "McClain County Courthouse, Purcell, OK"
+      },
+      {
+        "county_name": "McCurtain",
+        "clerk_website": "https://www.mccurtaincountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-286-3379",
+        "address": "McCurtain County Courthouse, Idabel, OK"
+      },
+      {
+        "county_name": "McIntosh",
+        "clerk_website": "https://www.mcintosh.ok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-423-4307",
+        "address": "McIntosh County Courthouse, Eufaula, OK"
+      },
+      {
+        "county_name": "Medford",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-481-3710",
+        "address": "Grant County Courthouse, Medford, OK"
+      },
+      {
+        "county_name": "Murray",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-622-3255",
+        "address": "Murray County Courthouse, Sulphur, OK"
+      },
+      {
+        "county_name": "Muskogee",
+        "clerk_website": "https://www.muskogee.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-684-7941",
+        "address": "Muskogee County Courthouse, Muskogee, OK"
+      },
+      {
+        "county_name": "Noble",
+        "clerk_website": "https://www.noblecountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-336-2144",
+        "address": "Noble County Courthouse, Perry, OK"
+      },
+      {
+        "county_name": "Nowata",
+        "clerk_website": "https://www.nowatacountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-696-7633",
+        "address": "Nowata County Courthouse, Nowata, OK"
+      },
+      {
+        "county_name": "Okfuskee",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-732-2313",
+        "address": "Okfuskee County Courthouse, Okfuskee, OK"
+      },
+      {
+        "county_name": "Oklahoma",
+        "clerk_website": "https://www.oklahomacounty.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "405-278-1450",
+        "phone": "405-236-0481",
+        "address": "Oklahoma County Courthouse, Oklahoma City, OK"
+      },
+      {
+        "county_name": "Okmulgee",
+        "clerk_website": "https://www.okmulgeecountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-756-3716",
+        "address": "Okmulgee County Courthouse, Okmulgee, OK"
+      },
+      {
+        "county_name": "Osage",
+        "clerk_website": "https://www.osagecountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-287-3737",
+        "address": "Osage County Courthouse, Pawhuska, OK"
+      },
+      {
+        "county_name": "Ottawa",
+        "clerk_website": "https://www.ottawacountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-540-2473",
+        "address": "Ottawa County Courthouse, Miami, OK"
+      },
+      {
+        "county_name": "Pawnee",
+        "clerk_website": "https://www.pawneecountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-762-2327",
+        "address": "Pawnee County Courthouse, Pawnee, OK"
+      },
+      {
+        "county_name": "Payne",
+        "clerk_website": "https://www.paynecountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-747-8100",
+        "address": "Payne County Courthouse, Stillwater, OK"
+      },
+      {
+        "county_name": "Pittsburg",
+        "clerk_website": "https://www.pittsburgcountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-423-4307",
+        "address": "Pittsburg County Courthouse, McAlester, OK"
+      },
+      {
+        "county_name": "Pontotoc",
+        "clerk_website": "https://www.pontotoccountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-332-0840",
+        "address": "Pontotoc County Courthouse, Ada, OK"
+      },
+      {
+        "county_name": "Pottawatomie",
+        "clerk_website": "https://www.pottawatomieco.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-273-0760",
+        "address": "Pottawatomie County Courthouse, Shawnee, OK"
+      },
+      {
+        "county_name": "Pushmataha",
+        "clerk_website": "https://www.pushmatahaok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-298-3625",
+        "address": "Pushmataha County Courthouse, Antlers, OK"
+      },
+      {
+        "county_name": "Roger Mills",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-497-7329",
+        "address": "Roger Mills County Courthouse, Cheyenne, OK"
+      },
+      {
+        "county_name": "Rogers",
+        "clerk_website": "https://www.rogerscountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-341-3812",
+        "address": "Rogers County Courthouse, Claremore, OK"
+      },
+      {
+        "county_name": "Seminole",
+        "clerk_website": "https://www.seminolecountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-257-7777",
+        "address": "Seminole County Courthouse, Wewoka, OK"
+      },
+      {
+        "county_name": "Sequoyah",
+        "clerk_website": "https://www.sequoyahcountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-775-4413",
+        "address": "Sequoyah County Courthouse, Sallisaw, OK"
+      },
+      {
+        "county_name": "Stephens",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-255-0383",
+        "address": "Stephens County Courthouse, Duncan, OK"
+      },
+      {
+        "county_name": "Texas",
+        "clerk_website": "https://www.texascountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-338-1000",
+        "address": "Texas County Courthouse, Guymon, OK"
+      },
+      {
+        "county_name": "Tillman",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-335-2848",
+        "address": "Tillman County Courthouse, Frederick, OK"
+      },
+      {
+        "county_name": "Tulsa",
+        "clerk_website": "https://countyclerk.tulsacounty.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-596-5000",
+        "address": "Tulsa County Courthouse, Tulsa, OK"
+      },
+      {
+        "county_name": "Wagoner",
+        "clerk_website": "https://www.wagonercountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-485-3565",
+        "address": "Wagoner County Courthouse, Wagoner, OK"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "https://www.washingtonco.org",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "918-534-4800",
+        "address": "Washington County Courthouse, Bartlesville, OK"
+      },
+      {
+        "county_name": "Washita",
+        "clerk_website": "https://www.washitaokgov.com",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "405-564-3314",
+        "address": "Washita County Courthouse, Cordell, OK"
+      },
+      {
+        "county_name": "Woods",
+        "clerk_website": "",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-327-2125",
+        "address": "Woods County Courthouse, Alva, OK"
+      },
+      {
+        "county_name": "Woodward",
+        "clerk_website": "https://www.woodwardcountynok.gov",
+        "efiling_url": "https://efile.oscn.net/",
+        "fax": "",
+        "phone": "580-256-3113",
+        "address": "Woodward County Courthouse, Woodward, OK"
+      }
+    ]
+  }
+]

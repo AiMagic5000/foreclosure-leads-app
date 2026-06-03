@@ -39,6 +39,31 @@ export default function FreshLeadsPage() {
   const [issuing, setIssuing] = useState(false)
   const [msg, setMsg] = useState<string | null>(null)
 
+  interface LeadRequest {
+    id: string; user_email: string; user_name: string | null; account_type: string | null
+    requested_count: number; state_preference: string | null; operator_pin_id: string | null; created_at: string
+  }
+  const [requests, setRequests] = useState<LeadRequest[]>([])
+  const [activeRequest, setActiveRequest] = useState<LeadRequest | null>(null)
+
+  const loadRequests = useCallback(async () => {
+    const r = await fetch("/api/admin/fresh-leads?requests=1")
+    const j = await r.json()
+    setRequests(j.requests || [])
+  }, [])
+  useEffect(() => { loadRequests() }, [loadRequests])
+
+  // Click a pending request -> target that agent + remember the request to fulfill.
+  function fulfillRequest(req: LeadRequest) {
+    setActiveRequest(req)
+    if (req.operator_pin_id) {
+      setAgent({ pinId: req.operator_pin_id, name: req.user_name || req.user_email, email: req.user_email })
+    } else {
+      setAgentQuery(req.user_name || req.user_email)
+    }
+    setMsg(`Fulfilling request: ${req.requested_count} lead(s) for ${req.user_name || req.user_email}${req.state_preference ? ` · prefers ${req.state_preference}` : ""}. Pick matching leads below and Issue.`)
+  }
+
   const loadStates = useCallback(async () => {
     const r = await fetch("/api/admin/fresh-leads?states=1")
     const j = await r.json()
@@ -93,14 +118,15 @@ export default function FreshLeadsPage() {
         leadIds: [...selected],
         pinId: agent.pinId,
         agentName: agent.name,
+        requestId: activeRequest?.id,
       }),
     })
     const j = await r.json()
     setIssuing(false)
     if (!r.ok) { setMsg(`Error: ${j.error || "failed"}`); return }
     setMsg(`Issued ${j.issued} lead(s) to ${agent.name}${j.skipped ? ` (${j.skipped} skipped — already assigned)` : ""}.`)
-    setAgent(null); setAgentQuery("")
-    loadLeads(); loadStates()
+    setAgent(null); setAgentQuery(""); setActiveRequest(null)
+    loadLeads(); loadStates(); loadRequests()
   }
 
   return (
@@ -120,6 +146,32 @@ export default function FreshLeadsPage() {
           <RefreshCw className="w-4 h-4" /> Refresh
         </button>
       </div>
+
+      {/* Pending agent lead requests */}
+      {requests.length > 0 && (
+        <div className="mb-4 border border-amber-300 bg-amber-50 rounded-lg p-3">
+          <div className="text-sm font-semibold text-amber-900 mb-2">
+            {requests.length} pending lead request{requests.length > 1 ? "s" : ""} — review &amp; issue
+          </div>
+          <div className="flex flex-col gap-2">
+            {requests.map((req) => (
+              <div key={req.id}
+                className={`flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-md border bg-white ${activeRequest?.id === req.id ? "ring-2 ring-amber-400" : ""}`}>
+                <div className="text-sm">
+                  <span className="font-medium">{req.user_name || req.user_email}</span>
+                  <span className="text-gray-500"> · {req.account_type || "?"} · </span>
+                  <span className="font-semibold text-blue-600">{req.requested_count} lead{req.requested_count > 1 ? "s" : ""}</span>
+                  {req.state_preference && <span className="text-gray-500"> · prefers {req.state_preference}</span>}
+                </div>
+                <button onClick={() => fulfillRequest(req)}
+                  className="px-3 py-1 text-xs font-medium rounded-md bg-amber-600 text-white hover:bg-amber-700">
+                  {activeRequest?.id === req.id ? "Selected — pick leads ↓" : "Fulfill"}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* State filter */}
       <div className="flex flex-wrap gap-2 mb-4">

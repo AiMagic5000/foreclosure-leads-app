@@ -1,10 +1,12 @@
-# Asset Recovery Leads - Foreclosure Surplus Funds Platform
-# https://dashboard.assetrecoverybusiness.com
+# US Foreclosure Leads - Foreclosure Surplus Funds Lead Platform
+# https://usforeclosureleads.com
 
 User-agent: *
 Allow: /
 Allow: /states-guide
 Allow: /pricing
+Allow: /blog
+Allow: /compliance
 Disallow: /dashboard
 Disallow: /api/
 Disallow: /sign-in
@@ -42,7 +44,7 @@ Allow: /
 Crawl-delay: 1
 
 # Sitemap
-Sitemap: https://dashboard.assetrecoverybusiness.com/sitemap.xml
+Sitemap: https://usforeclosureleads.com/sitemap.xml
 
 # LLMs.txt for AI context
-# See: https://dashboard.assetrecoverybusiness.com/llms.txt
+# See: https://usforeclosureleads.com/llms.txt

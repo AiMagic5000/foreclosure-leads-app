@@ -1,0 +1,4800 @@
+[
+  {
+    "state_abbr": "ID",
+    "state_name": "Idaho",
+    "statewide_efiling_url": "https://icourt.idaho.gov/efileoverview",
+    "statewide_efiling_system": "iCourt (Tyler Technology)",
+    "clerk_directory_url": "https://isc.idaho.gov/Courthouse",
+    "judicial_branch_url": "https://isc.idaho.gov/",
+    "counties": [
+      {
+        "county_name": "Ada",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-287-6900",
+        "fax": "",
+        "address": "200 West Front St., Boise, ID 83702-7300"
+      },
+      {
+        "county_name": "Adams",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-253-4561",
+        "fax": "",
+        "address": "201 Industrial, Council, ID 83612"
+      },
+      {
+        "county_name": "Bannock",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-236-7342",
+        "fax": "",
+        "address": "624 E. Center, Pocatello, ID 83201-6274"
+      },
+      {
+        "county_name": "Bear Lake",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-945-2212",
+        "fax": "",
+        "address": "7 East Center St, Paris, ID 83261"
+      },
+      {
+        "county_name": "Benewah",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-245-3212",
+        "fax": "",
+        "address": "701 College Avenue, St. Maries, ID 83861"
+      },
+      {
+        "county_name": "Bingham",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-782-3154",
+        "fax": "",
+        "address": "501 N. Maple #205, Blackfoot, ID 83221-1700"
+      },
+      {
+        "county_name": "Blaine",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-788-5505",
+        "fax": "",
+        "address": "206 1st Avenue South, Hailey, ID 83333"
+      },
+      {
+        "county_name": "Boise",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-392-4431",
+        "fax": "",
+        "address": "420 Main Street, Idaho City, ID 83631"
+      },
+      {
+        "county_name": "Bonner",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-265-1432",
+        "fax": "",
+        "address": "215 South 1st Avenue, Sandpoint, ID 83864"
+      },
+      {
+        "county_name": "Bonneville",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-529-1350",
+        "fax": "",
+        "address": "605 North Capital Avenue, Idaho Falls, ID 83402"
+      },
+      {
+        "county_name": "Boundary",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-267-2242",
+        "fax": "",
+        "address": "6452 Kootenai Street, Bonners Ferry, ID 83805"
+      },
+      {
+        "county_name": "Butte",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-527-8259",
+        "fax": "",
+        "address": "326 W. Grand Avenue, Arco, ID 83213"
+      },
+      {
+        "county_name": "Camas",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-764-2242",
+        "fax": "",
+        "address": "Corner of Soldier & Willow Streets, Fairfield, ID 83327"
+      },
+      {
+        "county_name": "Canyon",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-454-7300",
+        "fax": "",
+        "address": "1115 Albany Street, Caldwell, ID 83605"
+      },
+      {
+        "county_name": "Caribou",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-574-4324",
+        "fax": "",
+        "address": "159 South Main Room 202, Soda Springs, ID 83276"
+      },
+      {
+        "county_name": "Cassia",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-878-7351",
+        "fax": "",
+        "address": "1459 Overland Avenue, Burley, ID 83318"
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-374-5402",
+        "fax": "",
+        "address": "224 West Main, Dubois, ID 83423"
+      },
+      {
+        "county_name": "Clearwater",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-476-5615",
+        "fax": "",
+        "address": "150 Michigan Room 201, Orofino, ID 83544"
+      },
+      {
+        "county_name": "Custer",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-879-2360",
+        "fax": "",
+        "address": "801 Main Street, Challis, ID 83226"
+      },
+      {
+        "county_name": "Elmore",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-587-2130",
+        "fax": "",
+        "address": "150 South 4th East Suite 3, Mountain Home, ID 83647"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-852-1090",
+        "fax": "",
+        "address": "39 West Oneida Room 2, Preston, ID 83263"
+      },
+      {
+        "county_name": "Fremont",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-624-7332",
+        "fax": "",
+        "address": "151 West 1st North St Rm 12, Saint Anthony, ID 83445"
+      },
+      {
+        "county_name": "Gem",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-365-4221",
+        "fax": "",
+        "address": "415 East Main Street, Emmett, ID 83617"
+      },
+      {
+        "county_name": "Gooding",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-934-4221",
+        "fax": "",
+        "address": "624 Main Street, Gooding, ID 83330"
+      },
+      {
+        "county_name": "Idaho",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-983-2751",
+        "fax": "",
+        "address": "320 West Main, Grangeville, ID 83530"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-745-7736",
+        "fax": "",
+        "address": "210 Courthouse Way Suite 120, Rigby, ID 83442"
+      },
+      {
+        "county_name": "Jerome",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-644-2600",
+        "fax": "",
+        "address": "233 W. Main Street, Jerome, ID 83338"
+      },
+      {
+        "county_name": "Kootenai",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-446-1000",
+        "fax": "",
+        "address": "324 West Garden Avenue, Coeur d'Alene, ID 83816-9000"
+      },
+      {
+        "county_name": "Latah",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-883-8580",
+        "fax": "",
+        "address": "5th & VanBuren Room 119, Moscow, ID 83843-0568"
+      },
+      {
+        "county_name": "Lemhi",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-742-1673",
+        "fax": "",
+        "address": "206 Courthouse Drive, Salmon, ID 83467"
+      },
+      {
+        "county_name": "Lewis",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-937-2661",
+        "fax": "",
+        "address": "510 Oak Street, Nez Perce, ID 83543"
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-886-7641",
+        "fax": "",
+        "address": "111 West B Street Suite C, Shoshone, ID 83352"
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-359-6252",
+        "fax": "",
+        "address": "159 East Main, Rexburg, ID 83440"
+      },
+      {
+        "county_name": "Minidoka",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-436-9511",
+        "fax": "",
+        "address": "8th & G Streets, Rupert, ID 83350"
+      },
+      {
+        "county_name": "Nez Perce",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-799-3020",
+        "fax": "",
+        "address": "PO Box 896, Lewiston, ID 83501"
+      },
+      {
+        "county_name": "Oneida",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-766-4285",
+        "fax": "",
+        "address": "10 Court Street, Malad, ID 83252"
+      },
+      {
+        "county_name": "Owyhee",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-495-2421",
+        "fax": "",
+        "address": "PO Box 128, Murphy, ID 83650"
+      },
+      {
+        "county_name": "Payette",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-642-6000",
+        "fax": "",
+        "address": "1130 3rd Avenue N. Suite 104, Payette, ID 83661"
+      },
+      {
+        "county_name": "Power",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-226-7611",
+        "fax": "",
+        "address": "543 Bannock Room 101, American Falls, ID 83211"
+      },
+      {
+        "county_name": "Shoshone",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-752-1264",
+        "fax": "",
+        "address": "700 Bank Street Suite 120, Wallace, ID 83873"
+      },
+      {
+        "county_name": "Teton",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-776-8210",
+        "fax": "",
+        "address": "150 Courthouse Drive Room 306, Driggs, ID 83422"
+      },
+      {
+        "county_name": "Twin Falls",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-736-4004",
+        "fax": "",
+        "address": "425 Shoshone Street North, Twin Falls, ID 83303-0126"
+      },
+      {
+        "county_name": "Valley",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-382-7100",
+        "fax": "",
+        "address": "219 Main Street, Cascade, ID 83611"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://idaho.tylertech.cloud/ofsweb/",
+        "phone": "208-414-2092",
+        "fax": "",
+        "address": "256 East Court, Weiser, ID 83672"
+      }
+    ]
+  },
+  {
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "statewide_efiling_url": "https://efile.illinoiscourts.gov/",
+    "statewide_efiling_system": "eFileIL",
+    "clerk_directory_url": "https://www.illinoiscourts.gov/courts/circuit-court/circuit-court-clerks/",
+    "judicial_branch_url": "https://www.illinoiscourts.gov/",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-277-2100",
+        "fax": "217-277-2116",
+        "address": "521 Vermont St, Quincy, IL 62301"
+      },
+      {
+        "county_name": "Alexander",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-734-0107",
+        "fax": "618-734-7003",
+        "address": "2000 Washington, Cairo, IL 62914"
+      },
+      {
+        "county_name": "Bond",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-664-3208",
+        "fax": "618-664-2257",
+        "address": "200 W College, Greenville, IL 62246"
+      },
+      {
+        "county_name": "Boone",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-544-0371",
+        "fax": "815-547-9213",
+        "address": "601 N Main #303, Belvidere, IL 61008"
+      },
+      {
+        "county_name": "Brown",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-773-2713",
+        "fax": "217-773-3648",
+        "address": "200 Court St Rm 5, Mt. Sterling, IL 62353"
+      },
+      {
+        "county_name": "Bureau",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-872-2001",
+        "fax": "815-872-0027",
+        "address": "700 S Main St, Princeton, IL 61356"
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-576-2451",
+        "fax": "618-576-9541",
+        "address": "P.O. Box 486, Hardin, IL 62047"
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-244-0230",
+        "fax": "815-244-3869",
+        "address": "301 N Main St, Mt. Carroll, IL 61053"
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-452-7225",
+        "fax": "217-452-7552",
+        "address": "P.O. Box 203, Virginia, IL 62691"
+      },
+      {
+        "county_name": "Champaign",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-384-3725",
+        "fax": "217-384-3879",
+        "address": "101 E Main St, Urbana, IL 61801"
+      },
+      {
+        "county_name": "Christian",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-824-4966",
+        "fax": "217-824-5030",
+        "address": "101 S Main, Taylorville, IL 62568"
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-826-2811",
+        "fax": "217-826-1391",
+        "address": "P.O. Box 187, Marshall, IL 62441"
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-665-3523",
+        "fax": "618-665-3543",
+        "address": "111 Chestnut, Louisville, IL 62858"
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-594-6615",
+        "fax": "618-594-0197",
+        "address": "850 Fairfax St, Carlyle, IL 62231"
+      },
+      {
+        "county_name": "Coles",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-348-0516",
+        "fax": "217-348-7324",
+        "address": "651 Jackson Ave Rm 128, Charleston, IL 61920"
+      },
+      {
+        "county_name": "Cook",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "312-603-5030",
+        "fax": "312-603-4557",
+        "address": "50 W Washington Suite 1001, Chicago, IL 60602"
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-544-3512",
+        "fax": "618-546-5628",
+        "address": "P.O. Box 655, Robinson, IL 62454"
+      },
+      {
+        "county_name": "Cumberland",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-849-3601",
+        "fax": "217-849-2655",
+        "address": "1 Courthouse Sq Rm 107, Toledo, IL 62468"
+      },
+      {
+        "county_name": "DeKalb",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-895-7131",
+        "fax": "815-895-7140",
+        "address": "133 W State St, Sycamore, IL 60178"
+      },
+      {
+        "county_name": "DeWitt",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-935-7750",
+        "fax": "217-935-7759",
+        "address": "201 W Washington St, Clinton, IL 61727"
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-253-2352",
+        "fax": "217-253-9006",
+        "address": "401 S Center, Tuscola, IL 61953"
+      },
+      {
+        "county_name": "DuPage",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "630-407-8700",
+        "fax": "630-407-8575",
+        "address": "P.O. Box 707, Wheaton, IL 60187"
+      },
+      {
+        "county_name": "Edgar",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-466-7447",
+        "fax": "217-466-7443",
+        "address": "115 W Court St, Paris, IL 61944"
+      },
+      {
+        "county_name": "Edwards",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-445-2016",
+        "fax": "618-445-4943",
+        "address": "50 E Main St Suite 7, Albion, IL 62806"
+      },
+      {
+        "county_name": "Effingham",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-342-4065",
+        "fax": "217-342-6183",
+        "address": "120 W Jefferson Suite 101, Effingham, IL 62401"
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-283-5009",
+        "fax": "618-283-4490",
+        "address": "221 S 7th St, Vandalia, IL 62471"
+      },
+      {
+        "county_name": "Ford",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-379-9420",
+        "fax": "217-379-9429",
+        "address": "200 W State, Paxton, IL 60957"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-439-2011",
+        "fax": "618-439-4119",
+        "address": "P.O. Box 485, Benton, IL 62812"
+      },
+      {
+        "county_name": "Fulton",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-547-3041",
+        "fax": "309-547-3674",
+        "address": "P.O. Box 152, Lewistown, IL 61542"
+      },
+      {
+        "county_name": "Gallatin",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-269-3140",
+        "fax": "618-269-4324",
+        "address": "P.O. Box 249, Shawneetown, IL 62984"
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-942-3421",
+        "fax": "217-942-5431",
+        "address": "519 N Main St, Carrollton, IL 62016"
+      },
+      {
+        "county_name": "Grundy",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-941-3256",
+        "fax": "815-941-3265",
+        "address": "P.O. Box 707, Morris, IL 60450"
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-643-3224",
+        "fax": "618-643-3455",
+        "address": "100 S Jackson St, McLeansboro, IL 62859"
+      },
+      {
+        "county_name": "Hancock",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-357-2616",
+        "fax": "217-357-2231",
+        "address": "P.O. Box 189, Carthage, IL 62321"
+      },
+      {
+        "county_name": "Hardin",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-287-2735",
+        "fax": "618-287-2713",
+        "address": "P.O. Box 308, Elizabethtown, IL 62931"
+      },
+      {
+        "county_name": "Henderson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-867-3121",
+        "fax": "309-867-3207",
+        "address": "P.O. Box 546, Oquawka, IL 61469"
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-937-3752",
+        "fax": "309-937-3990",
+        "address": "307 W Center St, Cambridge, IL 61238"
+      },
+      {
+        "county_name": "Iroquois",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-432-6950",
+        "fax": "815-432-9333",
+        "address": "550 S 10th St, Watseka, IL 60970"
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-687-7300",
+        "fax": "618-684-6378",
+        "address": "P.O. Box 730, Murphysboro, IL 62966"
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-783-2524",
+        "fax": "618-783-8626",
+        "address": "100 W Jourdan St, Newton, IL 62448"
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-244-8008",
+        "fax": "618-244-8029",
+        "address": "P.O. Box 1266, Mt. Vernon, IL 62864"
+      },
+      {
+        "county_name": "Jersey",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-498-5571",
+        "fax": "618-498-6128",
+        "address": "201 W Pearl St, Jerseyville, IL 62052"
+      },
+      {
+        "county_name": "Jo Daviess",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-777-0037",
+        "fax": "815-776-9146",
+        "address": "330 N Bench St, Galena, IL 61036"
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-658-4751",
+        "fax": "618-658-2908",
+        "address": "105 N 6th St, Vienna, IL 62995"
+      },
+      {
+        "county_name": "Kane",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "630-232-3413",
+        "fax": "630-208-2172",
+        "address": "540 S Randall Rd, St. Charles, IL 60174"
+      },
+      {
+        "county_name": "Kankakee",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-936-5700",
+        "fax": "815-939-8830",
+        "address": "450 E Court St, Kankakee, IL 60901"
+      },
+      {
+        "county_name": "Kendall",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "630-553-4183",
+        "fax": "630-553-4964",
+        "address": "807 W John St, Yorkville, IL 60560"
+      },
+      {
+        "county_name": "Knox",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-345-6719",
+        "fax": "309-345-0098",
+        "address": "200 S Cherry St, Galesburg, IL 61401"
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "847-377-3380",
+        "fax": "847-360-6409",
+        "address": "18 N County St, Waukegan, IL 60085"
+      },
+      {
+        "county_name": "LaSalle",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-434-8671",
+        "fax": "815-433-9198",
+        "address": "119 W Madison St Rm 201, Ottawa, IL 61350"
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-943-2815",
+        "fax": "618-943-5205",
+        "address": "1100 State St, Lawrenceville, IL 62439"
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-284-5234",
+        "fax": "815-288-5615",
+        "address": "309 S Galena Suite 320, Dixon, IL 61021"
+      },
+      {
+        "county_name": "Livingston",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-844-2602",
+        "fax": "815-844-2322",
+        "address": "110 N Main St, Pontiac, IL 61764"
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-735-2376",
+        "fax": "217-732-1231",
+        "address": "P.O. Box 158, Lincoln, IL 62656"
+      },
+      {
+        "county_name": "Macon",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-424-1454",
+        "fax": "217-424-1350",
+        "address": "253 E Wood St, Decatur, IL 62523"
+      },
+      {
+        "county_name": "Macoupin",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-854-3211",
+        "fax": "217-854-7361",
+        "address": "P.O. Box 197, Carlinville, IL 62626"
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-692-6240",
+        "fax": "618-692-0676",
+        "address": "155 N Main St, Edwardsville, IL 62025"
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-548-3856",
+        "fax": "618-740-0118",
+        "address": "100 E Main St, Salem, IL 62881"
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-246-6435",
+        "fax": "309-246-2173",
+        "address": "122 N Prairie, Lacon, IL 61540"
+      },
+      {
+        "county_name": "Mason",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-543-6619",
+        "fax": "309-543-4214",
+        "address": "125 N Plum, Havana, IL 62644"
+      },
+      {
+        "county_name": "Massac",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-524-5011",
+        "fax": "618-524-4850",
+        "address": "One Superman Square Rm 2D, Metropolis, IL 62960"
+      },
+      {
+        "county_name": "McDonough",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-837-4889",
+        "fax": "309-833-4493",
+        "address": "#1 Courthouse Sq, Macomb, IL 61455"
+      },
+      {
+        "county_name": "McHenry",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-334-4310",
+        "fax": "815-338-8583",
+        "address": "2200 N Seminary Ave Rm 352, Woodstock, IL 60098"
+      },
+      {
+        "county_name": "McLean",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-888-5301",
+        "fax": "309-888-5281",
+        "address": "104 W Front St Rm 404, Bloomington, IL 61701"
+      },
+      {
+        "county_name": "Menard",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-632-2615",
+        "fax": "217-632-4124",
+        "address": "102 S 7th St, Petersburg, IL 62675"
+      },
+      {
+        "county_name": "Mercer",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-582-7122",
+        "fax": "309-582-7121",
+        "address": "100 SE 3rd St, Aledo, IL 61231"
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-939-8681",
+        "fax": "618-939-1929",
+        "address": "100 S Main St Rm 115, Waterloo, IL 62298"
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-532-9546",
+        "fax": "217-532-2142",
+        "address": "120 N Main St Rm 125, Hillsboro, IL 62049"
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-243-5419",
+        "fax": "217-243-2009",
+        "address": "300 W State St, Jacksonville, IL 62650"
+      },
+      {
+        "county_name": "Moultrie",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-728-4622",
+        "fax": "217-728-7833",
+        "address": "10 S Main St Suite 7, Sullivan, IL 61951"
+      },
+      {
+        "county_name": "Ogle",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-732-3201",
+        "fax": "815-732-9093",
+        "address": "106 S 5th St Suite 300, Oregon, IL 61061"
+      },
+      {
+        "county_name": "Peoria",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-672-6989",
+        "fax": "309-677-6228",
+        "address": "324 Main St Rm G22, Peoria, IL 61602"
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-357-6726",
+        "fax": "618-357-8336",
+        "address": "P.O. Box 219, Pinckneyville, IL 62274"
+      },
+      {
+        "county_name": "Piatt",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-762-4966",
+        "fax": "217-762-5906",
+        "address": "101 W Washington St, Monticello, IL 61856"
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-285-6612",
+        "fax": "217-285-4726",
+        "address": "100 E Washington, Pittsfield, IL 62363"
+      },
+      {
+        "county_name": "Pope",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-683-3941",
+        "fax": "618-683-3018",
+        "address": "310 E Main St, Golconda, IL 62938"
+      },
+      {
+        "county_name": "Pulaski",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-748-9300",
+        "fax": "618-748-9329",
+        "address": "500 Illinois Ave, Mound City, IL 62963"
+      },
+      {
+        "county_name": "Putnam",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-925-7016",
+        "fax": "815-925-7492",
+        "address": "120 N 4th St, Hennepin, IL 61327"
+      },
+      {
+        "county_name": "Randolph",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-826-5000",
+        "fax": "618-826-3761",
+        "address": "#1 Taylor St Rm 302, Chester, IL 62233"
+      },
+      {
+        "county_name": "Richland",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-392-2151",
+        "fax": "618-392-5041",
+        "address": "103 W Main St #21, Olney, IL 62450"
+      },
+      {
+        "county_name": "Rock Island",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-558-3538",
+        "fax": "309-786-3029",
+        "address": "P.O. Box 5230, Rock Island, IL 61201"
+      },
+      {
+        "county_name": "Saline",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-253-5096",
+        "fax": "618-253-3904",
+        "address": "10 E Poplar St, Harrisburg, IL 62946"
+      },
+      {
+        "county_name": "Sangamon",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-753-6674",
+        "fax": "217-747-5108",
+        "address": "200 S 9th St Rm 405, Springfield, IL 62701"
+      },
+      {
+        "county_name": "Schuyler",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-322-4633",
+        "fax": "217-322-6164",
+        "address": "102 S Congress Suite 103, Rushville, IL 62681"
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-742-5217",
+        "fax": "217-742-5853",
+        "address": "35 E Market St, Winchester, IL 62694"
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-774-4212",
+        "fax": "217-774-4109",
+        "address": "P.O. Box 469, Shelbyville, IL 62565"
+      },
+      {
+        "county_name": "St. Clair",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-277-6832",
+        "fax": "618-277-1562",
+        "address": "10 Public Square, Belleville, IL 62220"
+      },
+      {
+        "county_name": "Stark",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-286-5941",
+        "fax": "309-286-4039",
+        "address": "130 W Main St, Toulon, IL 61483"
+      },
+      {
+        "county_name": "Stephenson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-235-8266",
+        "fax": "815-233-1576",
+        "address": "15 N Galena Ave, Freeport, IL 61032"
+      },
+      {
+        "county_name": "Tazewell",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-477-2214",
+        "fax": "309-478-5792",
+        "address": "342 Court St, Pekin, IL 61554"
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-833-5913",
+        "fax": "618-833-5223",
+        "address": "309 W Market St Rm 101, Jonesboro, IL 62952"
+      },
+      {
+        "county_name": "Vermilion",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "217-554-7700",
+        "fax": "217-554-7728",
+        "address": "7 N Vermilion St, Danville, IL 61832"
+      },
+      {
+        "county_name": "Wabash",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-262-5362",
+        "fax": "618-263-4441",
+        "address": "401 Market St, Mt. Carmel, IL 62863"
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-734-5179",
+        "fax": "309-734-4151",
+        "address": "100 W Broadway, Monmouth, IL 61462"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-327-4800",
+        "fax": "618-327-3583",
+        "address": "125 E Elm St, Nashville, IL 62263"
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-842-7684",
+        "fax": "618-842-2556",
+        "address": "301 E Main St Suite 204, Fairfield, IL 62837"
+      },
+      {
+        "county_name": "White",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-382-2321",
+        "fax": "618-382-2322",
+        "address": "P.O. Box 310, Carmi, IL 62821"
+      },
+      {
+        "county_name": "Whiteside",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-772-5188",
+        "fax": "815-772-5187",
+        "address": "200 E Knox St, Morrison, IL 61270"
+      },
+      {
+        "county_name": "Will",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-727-8592",
+        "fax": "815-740-8074",
+        "address": "100 W Jefferson St, Joliet, IL 60432"
+      },
+      {
+        "county_name": "Williamson",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "618-997-1301",
+        "fax": "618-998-9401",
+        "address": "200 W Jefferson Suite 100, Marion, IL 62959"
+      },
+      {
+        "county_name": "Winnebago",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "815-319-4500",
+        "fax": "815-987-3012",
+        "address": "400 W State St Rm 100, Rockford, IL 61101"
+      },
+      {
+        "county_name": "Woodford",
+        "clerk_website": "",
+        "efiling_url": "https://efile.illinoiscourts.gov/",
+        "phone": "309-467-3312",
+        "fax": "309-467-7377",
+        "address": "P.O. Box 284, Eureka, IL 61530"
+      }
+    ]
+  },
+  {
+    "state_abbr": "IN",
+    "state_name": "Indiana",
+    "statewide_efiling_url": "https://www.in.gov/courts/efiling/",
+    "statewide_efiling_system": "Odyssey Case Management System (Tyler Technology)",
+    "clerk_directory_url": "https://www.in.gov/courts/directory/",
+    "judicial_branch_url": "https://www.in.gov/courts/",
+    "counties": [
+      {
+        "county_name": "Adams",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Allen",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bartholomew",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Benton",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Blackford",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Boone",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Brown",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Daviess",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dearborn",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Decatur",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "DeKalb",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Delaware",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dubois",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Elkhart",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Floyd",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fountain",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fulton",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gibson",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hancock",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harrison",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hendricks",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Howard",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Huntington",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jay",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jennings",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Knox",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kosciusko",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "LaGrange",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lake",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "LaPorte",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Martin",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Miami",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Newton",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Noble",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ohio",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Orange",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Owen",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Parke",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Porter",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Posey",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pulaski",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Putnam",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Randolph",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ripley",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rush",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Joseph",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Spencer",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Starke",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Steuben",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sullivan",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Switzerland",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tippecanoe",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tipton",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vanderburgh",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vermillion",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vigo",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wabash",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warrick",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wells",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "White",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Whitley",
+        "clerk_website": "",
+        "efiling_url": "https://www.in.gov/courts/efiling/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "IA",
+    "state_name": "Iowa",
+    "statewide_efiling_url": "https://www.iowacourts.gov/efile",
+    "statewide_efiling_system": "EDMS (Electronic Document Management System)",
+    "clerk_directory_url": "https://www.iowacourts.gov/iowa-courts/court-directory",
+    "judicial_branch_url": "https://www.iowacourts.gov/",
+    "counties": [
+      {
+        "county_name": "Adair",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-743-2445",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Adams",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-322-4711",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Allamakee",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-568-6351",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Appanoose",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-856-6101",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Audubon",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-563-4275",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Benton",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-472-2766",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Black Hawk",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-833-3331",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Boone",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-433-0561",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bremer",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-352-5661",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Buchanan",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-334-2196",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Buena Vista",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-749-2546",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Butler",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-267-2487",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-297-8122",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-792-4327",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cass",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-243-2105",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cedar",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-886-2101",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cerro Gordo",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-424-6431",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-225-6744",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chickasaw",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-394-2106",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clarke",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-342-6096",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-262-4335",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clayton",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-245-2204",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-243-6213",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-263-4519",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dallas",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-993-5816",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Davis",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-664-2011",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Decatur",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-446-4331",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Delaware",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-927-4942",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Des Moines",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-753-8258",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dickinson",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-336-1138",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dubuque",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-589-4418",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Emmet",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-362-3325",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-422-5694",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Floyd",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-228-7777",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-456-5626",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fremont",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-374-2232",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-386-2516",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grundy",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-824-5229",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Guthrie",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-747-3415",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-832-9600",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hancock",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-923-2532",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hardin",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-858-2328",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harrison",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-644-2665",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-385-3150",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Howard",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-547-9206",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Humboldt",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-332-1806",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ida",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-364-2628",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Iowa",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-642-3914",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-652-4946",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-792-3255",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-472-3454",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-356-6060",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jones",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-462-4342",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Keokuk",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-622-2210",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kossuth",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-295-3240",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-524-2433",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Linn",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-398-3411",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Louisa",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-523-4541",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lucas",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-774-4421",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lyon",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-472-2623",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-462-4451",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mahaska",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-673-7786",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-828-2207",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-754-1604",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mills",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-527-4880",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mitchell",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-732-3726",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monona",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-423-2491",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-932-5212",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-623-4986",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Muscatine",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-263-2447",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "O'Brien",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-957-3255",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Osceola",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-754-3595",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Page",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-542-3214",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Palo Alto",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-852-3603",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Plymouth",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-546-4215",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pocahontas",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-335-4208",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-286-3760",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pottawattamie",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-328-5604",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Poweshiek",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-623-5644",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ringgold",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-464-3234",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sac",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-662-7791",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-326-8219",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-755-5543",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sioux",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-737-2286",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Story",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-382-7410",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tama",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-484-3721",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Taylor",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-523-2095",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-782-7315",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Van Buren",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-528-5009",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wapello",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-683-0060",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-961-1116",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "319-653-7741",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-872-2264",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Webster",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-576-7115",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Winnebago",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-585-4520",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Winneshiek",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "563-422-5694",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Woodbury",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "712-279-6624",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Worth",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "641-324-2840",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wright",
+        "clerk_website": "",
+        "efiling_url": "https://www.iowacourts.state.ia.us/Efile/",
+        "phone": "515-532-3113",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "KS",
+    "state_name": "Kansas",
+    "statewide_efiling_url": "https://kscourts.gov/eCourt/Kansas-Courts-eFiling",
+    "statewide_efiling_system": "Kansas eCourt (Tyler Technology)",
+    "clerk_directory_url": "https://kscourts.gov/About-the-Courts/District-Courts",
+    "judicial_branch_url": "https://kscourts.gov/",
+    "counties": [
+      {
+        "county_name": "Allen",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Anderson",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Atchison",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Barber",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Barton",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bourbon",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Brown",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Butler",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chase",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chautauqua",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cheyenne",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cloud",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Coffey",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Comanche",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cowley",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Decatur",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dickinson",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Doniphan",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Edwards",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Elk",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ellis",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ellsworth",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Finney",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ford",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Geary",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gove",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Graham",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gray",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greeley",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greenwood",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hamilton",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harper",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harvey",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Haskell",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hodgeman",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jewell",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kearny",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kingman",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kiowa",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Labette",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lane",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Leavenworth",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Linn",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lyon",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "McPherson",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Meade",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Miami",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mitchell",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morris",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morton",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nemaha",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Neosho",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ness",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Norton",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Osage",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Osborne",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ottawa",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pawnee",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Phillips",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pottawatomie",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pratt",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rawlins",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Reno",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Republic",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rice",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Riley",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rooks",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rush",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Russell",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Saline",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sedgwick",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Seward",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shawnee",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sheridan",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sherman",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Smith",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stafford",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stanton",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stevens",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sumner",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Thomas",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Trego",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wabaunsee",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wallace",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wichita",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wilson",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Woodson",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wyandotte",
+        "clerk_website": "",
+        "efiling_url": "https://filer.kscourts.org/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "KY",
+    "state_name": "Kentucky",
+    "statewide_efiling_url": "https://www.kycourts.gov/AOC/Information-and-Technology/Pages/File_Serve(eFiling).aspx",
+    "statewide_efiling_system": "File & Serve (eFiling)",
+    "clerk_directory_url": "https://www.kycourts.gov/Courts/County-Information/Pages/default.aspx",
+    "judicial_branch_url": "https://www.kycourts.gov/",
+    "counties": [
+      {
+        "county_name": "Adair",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Allen",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Anderson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ballard",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Barren",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bath",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bell",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Boone",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bourbon",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Boyd",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Boyle",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bracken",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Breathitt",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Breckinridge",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bullitt",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Butler",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Caldwell",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calloway",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Campbell",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carlisle",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carter",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Casey",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Christian",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clark",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clinton",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crittenden",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cumberland",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Daviess",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Edmonson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Elliott",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Estill",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fleming",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Floyd",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fulton",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gallatin",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Garrard",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grant",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Graves",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grayson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Green",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greenup",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hancock",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hardin",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harlan",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harrison",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hart",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henderson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hickman",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hopkins",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jessamine",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kenton",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Knott",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Knox",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "LaRue",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Laurel",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lawrence",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Leslie",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Letcher",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lewis",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Livingston",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Logan",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lyon",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Magoffin",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Martin",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mason",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "McCracken",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "McCreary",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "McLean",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Meade",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Menifee",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mercer",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Metcalfe",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Muhlenberg",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nelson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nicholas",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ohio",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oldham",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Owen",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Owsley",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pendleton",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Perry",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Powell",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pulaski",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Robertson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rockcastle",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rowan",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Russell",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shelby",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Simpson",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Spencer",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Taylor",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Todd",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Trigg",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Trimble",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Webster",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Whitley",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wolfe",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Woodford",
+        "clerk_website": "",
+        "efiling_url": "https://ehelp.kycourts.net/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "UT",
+    "state_name": "Utah",
+    "statewide_efiling_url": "https://efile.utcourts.gov/",
+    "statewide_efiling_system": "eFlex by Tybera (Multi-vendor Certified EFSPs)",
+    "clerk_directory_url": "https://www.utcourts.gov/en/about/miscellaneous/directory.html",
+    "judicial_branch_url": "https://www.utcourts.gov/",
+    "counties": [
+      {
+        "county_name": "Beaver",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Box Elder",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cache",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carbon",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Daggett",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Davis",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Duchesne",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Emery",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Garfield",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grand",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Iron",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Juab",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kane",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Millard",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Piute",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rich",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Salt Lake",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Juan",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sanpete",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sevier",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Summit",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tooele",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Uintah",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Utah",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wasatch",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      },
+      {
+        "county_name": "Weber",
+        "clerk_website": "",
+        "efiling_url": "https://efile.utcourts.gov/efile/",
+        "phone": "",
+        "fax": "",
+        "address": ""
+      }
+    ]
+  }
+]

@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surplus Funds Recovery Agent Program | Foreclosure Recovery Inc.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8A951;
+    --gold-light: #E2C97A;
+    --gold-dark: #9C7E2E;
+    --black: #0A0A0A;
+    --near-black: #111111;
+    --dark: #1A1810;
+    --cream: #FAF7F0;
+    --muted: #888880;
+    --white: #FFFFFF;
+    --red-alert: #C0392B;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* --- NOISE TEXTURE OVERLAY --- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* --- ALERT BAR --- */
+  .alert-bar {
+    background: var(--gold);
+    color: var(--black);
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .alert-bar span { color: var(--near-black); }
+
+  /* --- HERO --- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 900px; height: 900px;
+    background: radial-gradient(ellipse, rgba(200,169,81,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-text {
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.2s forwards;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 58px);
+    font-weight: 900;
+    line-height: 1.08;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: rgba(250,247,240,0.72);
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  .hero-sub strong { color: var(--cream); font-weight: 600; }
+
+  .hero-video-wrap {
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-video-container {
+    border: 1px solid rgba(200,169,81,0.25);
+    background: rgba(200,169,81,0.04);
+    padding: 6px;
+    position: relative;
+  }
+
+  .hero-video-container video {
+    width: 100%;
+    display: block;
+    border: none;
+    outline: none;
+  }
+
+  .hero-video-caption {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  .hero-cta-row {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 20px 48px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+
+  .btn-primary:hover::after { transform: translateX(100%); }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(200,169,81,0.4);
+  }
+
+  .btn-ghost {
+    display: inline-block;
+    border: 1.5px solid rgba(200,169,81,0.5);
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover {
+    background: rgba(200,169,81,0.08);
+    border-color: var(--gold);
+  }
+
+  .btn-note {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  /* --- STAT STRIP --- */
+  .stat-strip {
+    border-top: 1px solid rgba(200,169,81,0.15);
+    border-bottom: 1px solid rgba(200,169,81,0.15);
+    padding: 40px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    background: rgba(200,169,81,0.04);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 20px 48px;
+    border-right: 1px solid rgba(200,169,81,0.12);
+  }
+  .stat-item:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* --- SECTIONS --- */
+  section { padding: 100px 24px; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .container-wide { max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 54px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+
+  h2 em { font-style: italic; color: var(--gold); }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  p { color: rgba(250,247,240,0.78); margin-bottom: 20px; }
+  p strong { color: var(--cream); }
+
+  /* --- STORY SECTION --- */
+  .story {
+    background: var(--near-black);
+    border-top: 1px solid rgba(200,169,81,0.1);
+    border-bottom: 1px solid rgba(200,169,81,0.1);
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .story-visual {
+    background: linear-gradient(135deg, rgba(200,169,81,0.08), rgba(200,169,81,0.02));
+    border: 1px solid rgba(200,169,81,0.18);
+    padding: 48px;
+    position: relative;
+  }
+
+  .story-visual::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    color: rgba(200,169,81,0.06);
+    position: absolute;
+    top: -30px; left: 20px;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--cream);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 24px;
+  }
+
+  .quote-attr {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* --- PAIN SECTION --- */
+  .pain-section { background: var(--black); }
+
+  .pain-list { list-style: none; margin-top: 40px; }
+
+  .pain-list li {
+    display: flex;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(200,169,81,0.08);
+    align-items: flex-start;
+  }
+
+  .pain-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--red-alert);
+    font-size: 20px;
+    margin-top: 2px;
+  }
+
+  .pain-text strong {
+    display: block;
+    font-size: 17px;
+    color: var(--cream);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .pain-text span {
+    font-size: 15px;
+    color: rgba(250,247,240,0.55);
+  }
+
+  /* --- SOLUTION SECTION --- */
+  .solution-section {
+    background: var(--near-black);
+    border-top: 1px solid rgba(200,169,81,0.1);
+  }
+
+  .solution-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .solution-card {
+    background: rgba(200,169,81,0.04);
+    border: 1px solid rgba(200,169,81,0.12);
+    padding: 40px 32px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .solution-card:hover {
+    background: rgba(200,169,81,0.08);
+  }
+
+  .solution-card .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .solution-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--cream);
+  }
+
+  .solution-card p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* --- WHAT YOU GET --- */
+  .included-section { background: var(--black); }
+
+  .included-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .included-item {
+    display: flex;
+    gap: 20px;
+    padding: 28px;
+    border: 1px solid rgba(200,169,81,0.1);
+    background: rgba(200,169,81,0.02);
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+
+  .included-item:hover { border-color: rgba(200,169,81,0.3); }
+
+  .check-icon {
+    width: 28px; height: 28px;
+    background: var(--gold);
+    color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .included-item strong {
+    display: block;
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .included-item span {
+    font-size: 14px;
+    color: rgba(250,247,240,0.55);
+    line-height: 1.6;
+  }
+
+  /* --- PROCESS --- */
+  .process-section { background: var(--near-black); }
+
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 60px;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    left: 24px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), rgba(200,169,81,0.1));
+  }
+
+  .process-step {
+    display: flex;
+    gap: 40px;
+    padding: 48px 0 48px 0;
+    align-items: flex-start;
+  }
+
+  .step-marker {
+    width: 48px; height: 48px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-content { padding-top: 6px; }
+
+  .step-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: var(--cream);
+  }
+
+  .step-content p { font-size: 15px; max-width: 600px; }
+
+  /* --- TESTIMONIAL --- */
+  .testimonial-section {
+    background: var(--black);
+    border-top: 1px solid rgba(200,169,81,0.1);
+    border-bottom: 1px solid rgba(200,169,81,0.1);
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .testimonial-card {
+    padding: 36px;
+    border: 1px solid rgba(200,169,81,0.12);
+    background: rgba(200,169,81,0.03);
+    position: relative;
+  }
+
+  .stars {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-card p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+
+  .testimonial-attr {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .testimonial-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* --- JV SECTION --- */
+  .jv-section {
+    background: var(--near-black);
+  }
+
+  .jv-box {
+    border: 1px solid var(--gold-dark);
+    padding: 64px;
+    position: relative;
+    margin-top: 60px;
+    background: linear-gradient(135deg, rgba(200,169,81,0.06), transparent);
+  }
+
+  .jv-box::before {
+    content: 'EXCLUSIVE PARTNERSHIP';
+    position: absolute;
+    top: -12px; left: 40px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    padding: 4px 16px;
+    font-weight: 500;
+  }
+
+  .jv-split {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .split-divider {
+    background: rgba(200,169,81,0.2);
+    align-self: stretch;
+  }
+
+  .split-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .split-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  /* --- CTA SECTION --- */
+  .cta-section {
+    background: var(--black);
+    text-align: center;
+    padding: 120px 24px;
+  }
+
+  .cta-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .urgency-bar {
+    background: rgba(192,57,43,0.12);
+    border: 1px solid rgba(192,57,43,0.3);
+    padding: 16px 32px;
+    margin-bottom: 48px;
+    font-size: 14px;
+    color: #E07060;
+    letter-spacing: 0.06em;
+    display: inline-block;
+  }
+
+  .cta-btn-wrap {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    background: var(--near-black);
+    border-top: 1px solid rgba(200,169,81,0.1);
+    padding: 48px 24px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  footer p {
+    font-size: 13px;
+    color: rgba(250,247,240,0.35);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* --- DIVIDER --- */
+  .gold-divider {
+    width: 60px; height: 2px;
+    background: var(--gold);
+    margin: 32px 0;
+  }
+
+  .center { text-align: center; }
+  .center .gold-divider { margin: 32px auto; }
+
+  /* --- ANIMATIONS --- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .hero-text { text-align: center; }
+    .hero h1 { font-size: clamp(32px, 7vw, 48px); }
+    .story-grid, .solution-grid, .testimonial-grid, .included-grid {
+      grid-template-columns: 1fr;
+    }
+    .jv-split { grid-template-columns: 1fr; }
+    .split-divider { display: none; }
+    .stat-item { padding: 20px 24px; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 70px 20px; }
+    .jv-box { padding: 40px 24px; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(200,169,81,0.12); }
+    .stat-item:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ALERT BAR -->
+<div class="alert-bar">
+  Live Webcast Starting In: &nbsp;<span id="countdown-timer" style="font-size:15px;font-weight:800;">--:--</span>&nbsp; &nbsp;|&nbsp; Next Session: <span id="next-session-time">loading...</span> &nbsp;-&nbsp; <a id="webinar-link" href="/webcast" style="color:var(--black);text-decoration:underline;font-weight:800;">Join Live Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow">Foreclosure Recovery Inc. -- Surplus Funds Agent Program</p>
+      <h1>
+        There's a Hidden Fortune Sitting in Government Accounts.
+        <em>Most People Never Claim It.</em>
+        You Can Get Paid to Return It.
+      </h1>
+      <p class="hero-sub">
+        Discover the little-known surplus funds recovery model that pays independent agents <strong>$10,000-$50,000 per deal</strong> -- working fully remote, without cold calling, door knocking, or prior experience required.
+      </p>
+      <a href="/webcast" class="btn-primary">Reserve My Free Masterclass Seat</a>
+      <span class="btn-note">Next session starts in <span id="hero-countdown">--:--</span> -- Free -- Live 24/7 every 30 minutes</span>
+    </div>
+    <div class="hero-video-wrap">
+      <div class="hero-video-container">
+        <video autoplay muted loop playsinline controls controlslist="nodownload noremoteplayback" disablepictureinpicture>
+          <source src="/lander/usfr-rv-hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="hero-video-caption">See how surplus funds recovery works</p>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-item">
+    <span class="stat-number">$180M+</span>
+    <div class="stat-label">Surplus funds recovered</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">10+</span>
+    <div class="stat-label">Years operating nationally</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">50</span>
+    <div class="stat-label">States with active cases</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">$15k+</span>
+    <div class="stat-label">Average agent monthly income</div>
+  </div>
+</div>
+
+<!-- STORY SECTION -->
+<section class="story">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-copy reveal">
+        <p class="section-label">The Hidden Opportunity</p>
+        <h2>Every Day, Millions Sit Unclaimed in Government Vaults</h2>
+        <div class="gold-divider"></div>
+        <p>When a home is foreclosed and sold at auction for more than what's owed -- the difference doesn't disappear. It sits in a government account, legally owed to the former homeowner.</p>
+        <p>The problem? <strong>Most homeowners never find out it exists.</strong> The government isn't required to hunt them down. The money just waits -- sometimes for years.</p>
+        <p>That's where surplus funds recovery agents step in. You locate the rightful owners, guide them through the claim process, and earn a <strong>contingency fee of 30-40% of whatever you recover</strong>. No money upfront. No guesswork. You only get paid when they get paid.</p>
+        <p>It is completely legal, entirely ethical, and -- with the right system -- remarkably scalable.</p>
+      </div>
+      <div class="story-visual reveal">
+        <p class="quote-text">"I closed my first deal in 11 days and collected $18,400. I had zero background in real estate. I just followed the system exactly as it was laid out."</p>
+        <p class="quote-attr">-- Marcus T., Junior Recovery Agent -- Las Vegas, NV</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN SECTION -->
+<section class="pain-section">
+  <div class="container">
+    <div class="center reveal">
+      <p class="section-label">Why Most Agents Fail</p>
+      <h2>The Brutal Truth Nobody Tells You <em>Before</em> You Start</h2>
+      <div class="gold-divider"></div>
+      <p style="max-width:640px;margin:0 auto;">Most people who try surplus funds recovery quit within 90 days -- not because the opportunity isn't real, but because they walk in without a working system. Here's exactly where they go wrong:</p>
+    </div>
+
+    <ul class="pain-list">
+      <li class="reveal">
+        <div class="pain-icon">X</div>
+        <div class="pain-text">
+          <strong>They waste months chasing unqualified cases</strong>
+          <span>Without knowing how to research and score cases before investing hours of work, they pour energy into dead-ends -- and burn out before landing a single check.</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="pain-icon">X</div>
+        <div class="pain-text">
+          <strong>They have no system for finding property owners</strong>
+          <span>Locating heirs, tracking down relocated claimants, and verifying rightful ownership is a maze without the right tools and databases. Most give up here.</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="pain-icon">X</div>
+        <div class="pain-text">
+          <strong>They don't know how to structure agreements correctly</strong>
+          <span>A poorly worded contingency agreement can get you removed from a deal entirely -- or expose you to legal liability. Knowing exactly what to say, and how to say it, is everything.</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="pain-icon">X</div>
+        <div class="pain-text">
+          <strong>They have no automation -- so follow-up kills them</strong>
+          <span>Surplus funds deals require persistent, consistent contact. Without automation, agents manually chase every lead, burn out fast, and let profitable deals slip through the cracks.</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="pain-icon">X</div>
+        <div class="pain-text">
+          <strong>They're operating in isolation with no expert guidance</strong>
+          <span>The moment they hit a legal snag, a complex heir situation, or a state that requires specialized filings -- there's nobody to call. They're stuck. And then they quit.</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="reveal" style="margin-top:60px;padding:48px;border:1px solid rgba(200,169,81,0.15);background:rgba(200,169,81,0.03);text-align:center;">
+      <h3 style="max-width:680px;margin:0 auto 20px;">The gap between a struggling agent and a $15k/month agent isn't luck.<br>It's <em>system</em>.</h3>
+      <p style="max-width:560px;margin:0 auto;">When you have the right framework, the right tools, and the right team backing you -- this business becomes entirely predictable. And that's precisely what the Foreclosure Recovery Inc. Junior Agent Program delivers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION SECTION -->
+<section class="solution-section">
+  <div class="container-wide">
+    <div class="center reveal">
+      <p class="section-label">The Solution</p>
+      <h2>A Proven 3-Phase System for Building a <em>Remote Recovery Business</em></h2>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="solution-grid reveal">
+      <div class="solution-card">
+        <p class="step-num">Phase 01</p>
+        <h4>Find & Qualify</h4>
+        <p>You'll know exactly which cases to pursue -- and which ones to walk away from -- before spending a single minute of work. We give you our proprietary research methodology and access to the same databases and surplus fund registries that our full-time agents use every day.</p>
+      </div>
+      <div class="solution-card">
+        <p class="step-num">Phase 02</p>
+        <h4>Automate & Outreach</h4>
+        <p>AI-powered outreach sequences, pre-built email and SMS templates, and a plug-and-play CRM eliminate the manual grind entirely. You focus on relationships and closings. The system handles the rest -- 24 hours a day, 7 days a week, from your laptop.</p>
+      </div>
+      <div class="solution-card">
+        <p class="step-num">Phase 03</p>
+        <h4>Close & Collect</h4>
+        <p>Step-by-step closing procedures, done-for-you legal templates, and direct access to our senior recovery team means deals actually cross the finish line. When your client collects -- you collect. $10k to $50k per deal, on a 50/50 joint venture split.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS SECTION -->
+<section class="process-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">How It Works</p>
+      <h2>From Zero to Your First Closed Deal -- <em>Step by Step</em></h2>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-marker">1</div>
+        <div class="step-content">
+          <h4>You Join the Program & Get Instant Access</h4>
+          <p>The moment you're accepted into the Junior Recovery Agent Program, you receive your full onboarding package -- training modules, agreement templates, research tools, and CRM access. There's no "figuring it out" phase. You're operational from day one.</p>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-marker">2</div>
+        <div class="step-content">
+          <h4>You Identify a Surplus Fund Case Using Our Research Framework</h4>
+          <p>Using our step-by-step case qualification guide, you'll identify genuine surplus fund cases in public records -- cases where a real person is owed real money and hasn't claimed it yet. We show you exactly where to look and how to score each opportunity.</p>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-marker">3</div>
+        <div class="step-content">
+          <h4>The Automation System Reaches Out on Your Behalf</h4>
+          <p>Your AI-powered outreach sequence contacts the rightful claimant through multiple channels -- email, SMS, and direct mail -- using our pre-approved copy and cadence. You simply monitor responses and step in when someone is ready to sign.</p>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-marker">4</div>
+        <div class="step-content">
+          <h4>You Sign the Contingency Agreement & Submit the Claim</h4>
+          <p>We provide the exact contingency agreement language. You countersign with the claimant, file the documentation package, and our senior team reviews everything before submission. You never have to wonder if you "did it right."</p>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-marker">5</div>
+        <div class="step-content">
+          <h4>The State Releases the Funds -- You Both Get Paid</h4>
+          <p>When the state processes the claim and releases the surplus funds to your client, your contingency fee is simultaneously processed. On a $60,000 surplus -- that's a $30,000 check to your client and a $15,000 check to you. And then you open the next file.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+  <div class="container-wide">
+    <div class="center reveal">
+      <p class="section-label">Real Results</p>
+      <h2>What Agents Are Saying After <em>Joining the Program</em></h2>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">*****</div>
+        <span class="testimonial-amount">$22,500</span>
+        <p>"I was skeptical -- this sounded too simple. But I worked the system, stayed consistent, and collected $22,500 on my second deal. This has completely replaced my 9-to-5."</p>
+        <div class="testimonial-attr">-- Dana K. -- Former Teacher -- Phoenix, AZ</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">*****</div>
+        <span class="testimonial-amount">$41,200</span>
+        <p>"I had a real estate background but this was still a brand new world. The step-by-step process made it easy. I closed a $41,200 deal in my third month. Nothing else like it."</p>
+        <div class="testimonial-attr">-- Trevor M. -- Real Estate Investor -- Atlanta, GA</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">*****</div>
+        <span class="testimonial-amount">$18,400</span>
+        <p>"The automation tools alone are worth it. I run 4 active cases right now from my kitchen table. The system does the heavy lifting. I just show up for the closings."</p>
+        <div class="testimonial-attr">-- Alicia R. -- Stay-at-Home Mom -- Las Vegas, NV</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="included-section">
+  <div class="container">
+    <div class="center reveal">
+      <p class="section-label">Program Deliverables</p>
+      <h2>Everything You Need to Close Deals <em>From Day One</em></h2>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="included-grid reveal">
+      <div class="included-item">
+        <div class="check-icon">+</div>
+        <div>
+          <strong>Complete Surplus Funds Training System</strong>
+          <span>Every step of the recovery process from case research to funds disbursement -- structured for fast execution, not theory.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check-icon">+</div>
+        <div>
+          <strong>AI-Powered Outreach & Automation Stack</strong>
+          <span>Pre-built email and SMS sequences, contact tracking, and follow-up cadences -- so no qualified lead ever goes cold.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check-icon">+</div>
+        <div>
+          <strong>Done-for-You Legal Templates</strong>
+          <span>Contingency agreements, authorization forms, and state-specific filing packages reviewed by real estate attorneys.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check-icon">+</div>
+        <div>
+          <strong>Plug-and-Play CRM Pipeline</strong>
+          <span>A fully configured deal management system so you always know exactly where each case stands and what the next action is.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check-icon">+</div>
+        <div>
+          <strong>Live Group Coaching & Case Reviews</strong>
+          <span>Weekly sessions with senior recovery specialists who help you work through complex heir situations, legal nuances, and state-specific requirements.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="check-icon">+</div>
+        <div>
+          <strong>Private Agent Community</strong>
+          <span>Connect with active agents closing deals right now -- share leads, strategies, and lessons learned in a high-accountability environment.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JV PARTNERSHIP -->
+<section class="jv-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">The Revenue Model</p>
+      <h2>Your Cut on Every Deal You Close -- <em>Without Risking a Dollar</em></h2>
+      <div class="gold-divider"></div>
+      <p style="max-width:680px;">Our joint venture structure means you earn on contingency. No money changes hands until the state releases the funds. Here's exactly how the math works:</p>
+    </div>
+
+    <div class="jv-box reveal">
+      <div class="jv-split">
+        <div>
+          <p class="split-label">Example Deal</p>
+          <div class="split-amount">$80,000</div>
+          <p style="margin:0;font-size:15px;color:var(--muted);">Surplus funds owed to former homeowner</p>
+          <br>
+          <p style="font-size:14px;color:rgba(250,247,240,0.65);">Recovery fee: 30% = <strong style="color:var(--cream);">$24,000</strong><br>Agent's 50% JV share = <strong style="color:var(--gold);font-size:18px;">$12,000</strong> collected by you</p>
+        </div>
+        <div class="split-divider"></div>
+        <div>
+          <p class="split-label">Your Advantage as a Member</p>
+          <div style="margin-bottom:20px;">
+            <p style="font-size:15px;color:rgba(250,247,240,0.7);margin-bottom:6px;">+ <strong style="color:var(--cream);">50/50 split</strong> -- the same split our in-house team earns</p>
+            <p style="font-size:15px;color:rgba(250,247,240,0.7);margin-bottom:6px;">+ <strong style="color:var(--cream);">Deal pipeline priority</strong> -- your cases move first</p>
+            <p style="font-size:15px;color:rgba(250,247,240,0.7);margin-bottom:6px;">+ <strong style="color:var(--cream);">No upfront costs</strong> -- pay nothing until you collect</p>
+            <p style="font-size:15px;color:rgba(250,247,240,0.7);margin-bottom:6px;">+ <strong style="color:var(--cream);">Nationwide reach</strong> -- work cases in any state</p>
+          </div>
+          <p style="font-size:13px;color:var(--muted);">Non-members who work independently typically access 60/40 splits with no deal priority and no backend support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="reserve">
+  <div class="cta-inner reveal">
+    <p class="section-label">Your Next Step</p>
+    <h2>You've Read Enough. <em>Now It's Time to Decide.</em></h2>
+    <div class="gold-divider" style="margin:32px auto;"></div>
+    <p style="color:rgba(250,247,240,0.72);font-size:18px;max-width:580px;margin:0 auto 32px;">The surplus funds sitting in government accounts right now aren't going anywhere. But the people who learn to recover them -- and build real income from it -- are the ones who take action before they talk themselves out of it.</p>
+    <p style="color:rgba(250,247,240,0.72);max-width:580px;margin:0 auto;">Attend this free masterclass. See the exact system. Hear from real agents who are closing deals right now. Ask every question you have. Then decide if this is the right move for you.</p>
+
+    <div class="urgency-bar">
+      Seats are capped to keep the session interactive -- claim yours before they're gone
+    </div>
+
+    <div class="cta-btn-wrap">
+      <a href="/webcast" class="btn-primary" style="font-size:17px;padding:24px 64px;">Join the Next Live Session</a>
+      <span style="font-size:13px;color:var(--muted);">Live 24/7 -- New session every 30 minutes -- Free -- No obligation</span>
+    </div>
+
+    <div style="margin-top:64px;padding-top:64px;border-top:1px solid rgba(200,169,81,0.1);">
+      <p style="font-size:13px;color:var(--muted);max-width:560px;margin:0 auto;">Still have questions? Think about this: every week you wait, another agent in your area is filing cases and collecting checks. The question isn't whether this works -- it does. The question is whether you're the one who shows up to learn how.</p>
+      <br>
+      <a href="#" class="btn-ghost">Contact Our Team Before the Masterclass</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Foreclosure Recovery Inc.</div>
+  <p>
+    Foreclosure Recovery Inc. is a nationally operating surplus funds recovery company. Results vary based on market conditions, effort applied, and cases worked. Testimonials represent individual outcomes and are not guarantees of future earnings. This page is for educational and informational purposes only and does not constitute legal or financial advice.<br><br>
+    2025 Foreclosure Recovery Inc. -- All Rights Reserved
+  </p>
+</footer>
+
+<script>
+  // --- SCROLL REVEAL ---
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry, i) {
+      if (entry.isIntersecting) {
+        setTimeout(function() { entry.target.classList.add('visible'); }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+  // --- ANIMATED COUNTERS ---
+  function animateCounter(el, target, prefix, suffix) {
+    prefix = prefix || '';
+    suffix = suffix || '';
+    var duration = 2000;
+    var start = performance.now();
+    var update = function(time) {
+      var progress = Math.min((time - start) / duration, 1);
+      var ease = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(ease * target);
+      el.textContent = prefix + current.toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+  var statNums = document.querySelectorAll('.stat-number');
+  var statObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        var text = el.textContent;
+        if (text.indexOf('$180M') !== -1) animateCounter(el, 180, '$', 'M+');
+        else if (text.indexOf('10+') !== -1) animateCounter(el, 10, '', '+');
+        else if (text.indexOf('50') !== -1) animateCounter(el, 50, '', '');
+        statObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  statNums.forEach(function(el) { statObserver.observe(el); });
+
+  // --- WEBINAR COUNTDOWN (every 30 min, 24/7) ---
+  function getSecondsToNextHalf() {
+    var now = new Date();
+    var mins = now.getMinutes();
+    var secs = now.getSeconds();
+    var secsToNext = mins < 30
+      ? (30 - mins) * 60 - secs
+      : (60 - mins) * 60 - secs;
+    return secsToNext === 0 ? 1800 : secsToNext;
+  }
+
+  function getNextSessionLabel() {
+    var now = new Date();
+    var secsToNext = getSecondsToNextHalf();
+    var next = new Date(now.getTime() + secsToNext * 1000);
+    var h = next.getHours();
+    var m = next.getMinutes().toString().padStart(2, '0');
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    var tz = Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
+      .formatToParts(next)
+      .find(function(p) { return p.type === 'timeZoneName'; });
+    tz = tz ? tz.value : '';
+    return h + ':' + m + ' ' + ampm + ' ' + tz;
+  }
+
+  function formatCountdown(totalSecs) {
+    var m = Math.floor(totalSecs / 60).toString().padStart(2, '0');
+    var s = (totalSecs % 60).toString().padStart(2, '0');
+    return m + ':' + s;
+  }
+
+  var URGENT_THRESHOLD = 10 * 60;
+  var COLOR_NORMAL  = '#1a7a1a';
+  var COLOR_URGENT  = '#C0392B';
+
+  function updateCountdown() {
+    var secsRemaining = getSecondsToNextHalf();
+    var display = formatCountdown(secsRemaining);
+    var isUrgent = secsRemaining <= URGENT_THRESHOLD;
+    var color = isUrgent ? COLOR_URGENT : COLOR_NORMAL;
+    var nextLabel = getNextSessionLabel();
+
+    var timerEl  = document.getElementById('countdown-timer');
+    var sessionEl = document.getElementById('next-session-time');
+    var heroEl   = document.getElementById('hero-countdown');
+
+    if (timerEl) {
+      timerEl.textContent = display;
+      timerEl.style.color = color;
+      timerEl.style.background = isUrgent ? 'rgba(192,57,43,0.12)' : 'rgba(26,122,26,0.12)';
+      timerEl.style.padding = '2px 10px';
+      timerEl.style.borderRadius = '3px';
+      timerEl.style.transition = 'color 0.5s, background 0.5s';
+    }
+    if (sessionEl) sessionEl.textContent = nextLabel;
+    if (heroEl) {
+      heroEl.textContent = display;
+      heroEl.style.color = color;
+      heroEl.style.fontWeight = '700';
+    }
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>

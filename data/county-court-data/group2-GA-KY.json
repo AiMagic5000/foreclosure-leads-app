@@ -1,0 +1,1349 @@
+[
+  {
+    "state_abbr": "GA",
+    "state_name": "Georgia",
+    "statewide_efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+    "statewide_efiling_system": "Odyssey eFileGA (Tyler Technologies)",
+    "clerk_directory_url": "https://gaclerks.org/Clerks/FindMyClerk.aspx",
+    "alternative_directory_url": "https://www.gsccca.org/clerks",
+    "counties": [
+      {
+        "county_name": "Appling",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Atkinson",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bacon",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Baker",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Baldwin",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bartow",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ben Hill",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Berrien",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bibb",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bleckley",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Brantley",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Brooks",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bryan",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bulloch",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Burke",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Butts",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calhoun",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Camden",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Campbell",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Candler",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carroll",
+        "clerk_website": "https://www.carrollcountyclerk.com/",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "770-830-5800",
+        "phone": "770-830-5800",
+        "address": ""
+      },
+      {
+        "county_name": "Catoosa",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Charlton",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chatham",
+        "clerk_website": "https://superiorcourtclerk.chathamcountyga.gov/",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chattahoochee",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chattooga",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cherokee",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cherry",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clarke",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clay",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clayton",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clinch",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cobb",
+        "clerk_website": "https://www.cobbcounty.gov/courts/state-court/state-court-clerk",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Coffee",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Colquitt",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Columbia",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cook",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Coweta",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crawford",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crisp",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dade",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dawson",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Decatur",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "DeKalb",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dodge",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dooly",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dougherty",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Douglas",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Early",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Echols",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Effingham",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Elbert",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Emanuel",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Evans",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fannin",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fayette",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Floyd",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Forsyth",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "https://www.franklincountyga.gov/clerk-superior-court",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fulton",
+        "clerk_website": "https://www.fultonclerk.org/",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": "136 Pryor St SW, Atlanta, GA 30303"
+      },
+      {
+        "county_name": "Gilmer",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Glascock",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Glynn",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gordon",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grady",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greenville",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gwinnett",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Habersham",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hall",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hancock",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Haralson",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harris",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hart",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Heard",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Houston",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Irwin",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jasper",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jeff Davis",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jenkins",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jones",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lamar",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lanier",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Laurens",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lee",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Liberty",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Long",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lowndes",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lumpkin",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Macon",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marion",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "McDuffie",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "McIntosh",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Meriwether",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Miller",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Milton",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mitchell",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Murray",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Muscogee",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Newton",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oconee",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oglethorpe",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Paulding",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Peach",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pickens",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pierce",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pike",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Polk",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pulaski",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Putnam",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Quitman",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rabun",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Randolph",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Richmond",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rockdale",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Schley",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Screven",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Seminole",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Spalding",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stephens",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stewart",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sumter",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Talbot",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Taliaferro",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tattnall",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Taylor",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Telfair",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Terrell",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Thomas",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tift",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Toombs",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Towns",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Treutlen",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Troup",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Turner",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Twiggs",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Union",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Upson",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Walker",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Walton",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ware",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Webster",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wheeler",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "White",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Whitfield",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wilcox",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wilkes",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wilkinson",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Worth",
+        "clerk_website": "",
+        "efiling_url": "https://efilega.tylertech.cloud/OfsEfsp/ui/landing",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "HI",
+    "state_name": "Hawaii",
+    "statewide_efiling_url": "https://jimspss1.courts.state.hi.us/JIMSExternal/login.iface",
+    "statewide_efiling_system": "JEFS (Judiciary Electronic Filing and Service System)",
+    "clerk_directory_url": "https://www.courts.state.hi.us/legal_references/efiling",
+    "counties": [
+      {
+        "county_name": "Hawaii",
+        "clerk_website": "https://www.hawaiicounty.gov/departments/office-of-the-county-clerk",
+        "efiling_url": "https://jimspss1.courts.state.hi.us/JIMSExternal/login.iface",
+        "fax": "808-961-8415",
+        "phone": "808-961-8201",
+        "address": "Aupuni Center, 101 Pauahi St., Suite 4, Hilo, HI 96720"
+      },
+      {
+        "county_name": "Honolulu",
+        "clerk_website": "",
+        "efiling_url": "https://jimspss1.courts.state.hi.us/JIMSExternal/login.iface",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kauai",
+        "clerk_website": "",
+        "efiling_url": "https://jimspss1.courts.state.hi.us/JIMSExternal/login.iface",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kalawao",
+        "clerk_website": "",
+        "efiling_url": "https://jimspss1.courts.state.hi.us/JIMSExternal/login.iface",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Maui",
+        "clerk_website": "https://www.mauicounty.gov/657/Office-of-the-County-Clerk",
+        "efiling_url": "https://jimspss1.courts.state.hi.us/JIMSExternal/login.iface",
+        "fax": "",
+        "phone": "808-244-2823",
+        "address": ""
+      }
+    ]
+  }
+]

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { sendAdminNotification } from "@/lib/email"
+import { supabaseAdmin } from "@/lib/supabase"
 
 const DEBOUNCE_MS = 30 * 60 * 1000 // 30 minutes
 const lastNotified = new Map<string, number>()
@@ -45,6 +46,18 @@ export async function POST() {
       </div>
     </div>
   `
+
+  // Record the login in user_activity so it shows in admin activity views.
+  // The email is a notification; this is the durable record. Best-effort.
+  try {
+    await supabaseAdmin.from("user_activity").insert({
+      user_id: email,
+      action: "login",
+      details: { name, clerk_user_id: userId, at: new Date().toISOString() },
+    })
+  } catch (e) {
+    console.error("user_activity login insert failed:", e)
+  }
 
   await sendAdminNotification(`Dashboard Login: ${name} (${email})`, html)
 

@@ -1,0 +1,2752 @@
+[
+  {
+    "state_abbr": "VT",
+    "state_name": "Vermont",
+    "statewide_efiling_url": "https://portal.vtcourts.gov/Portal",
+    "statewide_efiling_system": "Odyssey File & Serve (OFS)",
+    "clerk_directory_url": "https://www.vermontjudiciary.org/court-locations",
+    "counties": [
+      {
+        "county_name": "Addison",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-388-4621",
+        "phone": "802-388-7741",
+        "address": "7 Mahady Court, Middlebury, VT 05753"
+      },
+      {
+        "county_name": "Bennington",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-447-2703",
+        "phone": "802-447-2700",
+        "address": "207 South Street, Bennington, VT 05201"
+      },
+      {
+        "county_name": "Caledonia",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-748-6603",
+        "phone": "802-748-6600",
+        "address": "1126 Main Street Suite 1, St Johnsbury, VT 05819"
+      },
+      {
+        "county_name": "Chittenden",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-863-7250",
+        "phone": "802-863-3467",
+        "address": "175 Main Street, Burlington, VT 05402"
+      },
+      {
+        "county_name": "Essex",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-676-3463",
+        "phone": "802-676-3910",
+        "address": "75 Courthouse Drive, Guildhall, VT 05905"
+      },
+      {
+        "county_name": "Franklin",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-524-7996",
+        "phone": "802-524-7993",
+        "address": "17 Church Street, St Albans, VT 05478"
+      },
+      {
+        "county_name": "Grand Isle",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-372-3221",
+        "phone": "802-372-8350",
+        "address": "North Hero, VT 05474"
+      },
+      {
+        "county_name": "Lamoille",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-888-2591",
+        "phone": "802-888-2207",
+        "address": "154 Main Street, Hyde Park, VT 05655"
+      },
+      {
+        "county_name": "Orange",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-685-3173",
+        "phone": "802-685-4610",
+        "address": "5 Court Street, Chelsea, VT 05038"
+      },
+      {
+        "county_name": "Orleans",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-334-3385",
+        "phone": "802-334-3344",
+        "address": "247 Main Street, Newport, VT 05855"
+      },
+      {
+        "county_name": "Rutland",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-775-2291",
+        "phone": "802-775-4394",
+        "address": "83 Center Street Suite 3, Rutland, VT 05701"
+      },
+      {
+        "county_name": "Washington",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-828-2146",
+        "phone": "802-828-2091",
+        "address": "65 State Street, Montpelier, VT 05602"
+      },
+      {
+        "county_name": "Windham",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-365-4360",
+        "phone": "802-365-7979",
+        "address": "Newfane, VT 05345"
+      },
+      {
+        "county_name": "Windsor",
+        "clerk_website": "https://www.vermontjudiciary.org",
+        "efiling_url": "https://portal.vtcourts.gov/Portal",
+        "fax": "802-457-3446",
+        "phone": "802-457-2121",
+        "address": "12 Green Wood, Woodstock, VT 05091"
+      }
+    ]
+  },
+  {
+    "state_abbr": "VA",
+    "state_name": "Virginia",
+    "statewide_efiling_url": "https://efiling.courts.state.va.us/EfilingWeb/initialLogin.action",
+    "statewide_efiling_system": "Virginia Judiciary eFiling System (VJEFS)",
+    "clerk_directory_url": "https://www.vacourts.gov/directories/rule115",
+    "counties": [
+      {
+        "county_name": "Accomack County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "757-787-5779",
+        "address": "23316 Courthouse Ave, Accomac, VA 23301"
+      },
+      {
+        "county_name": "Albemarle County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "434-972-4083",
+        "address": "501 E. Jefferson Street, Charlottesville, VA 22902"
+      },
+      {
+        "county_name": "Alleghany County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Amelia County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Amherst County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Appomattox County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Arlington County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Augusta County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bath County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bedford County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bland County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Botetourt County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Brunswick County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Buchanan County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Buckingham County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Campbell County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Caroline County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carroll County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Charles City County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Charlotte County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chesterfield County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clarke County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Craig County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Culpeper County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cumberland County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dickenson County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dinwiddie County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Essex County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fairfax County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fauquier County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Floyd County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fluvanna County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Frederick County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Giles County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Gloucester County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Goochland County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grayson County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greene County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Greensville County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Halifax County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hanover County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henrico County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Henry County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Highland County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Isle of Wight County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "James City County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "King and Queen County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "King George County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "King William County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lancaster County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lee County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Loudoun County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Louisa County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lunenburg County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Madison County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mathews County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mecklenburg County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Middlesex County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Montgomery County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nelson County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "New Kent County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Northampton County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Northumberland County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Nottoway County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Orange County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Page County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Patrick County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pittsylvania County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Powhatan County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Prince Edward County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Prince George County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Prince William County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pulaski County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rappahannock County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Richmond County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Roanoke County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rockbridge County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rockingham County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Russell County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Scott County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shenandoah County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Smyth County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Southampton County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Spotsylvania County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stafford County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Surry County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sussex County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Tazewell County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Warren County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Westmoreland County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wise County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wythe County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "York County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Alexandria (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "703-746-4044",
+        "address": "520 King Street Room 307, Alexandria, VA 22314"
+      },
+      {
+        "county_name": "Bristol (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Buena Vista (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Charlottesville (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chesapeake (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Colonial Heights (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Covington (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Danville (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Emporia (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fairfax City (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Falls Church (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fredericksburg (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Galax (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hampton (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Harrisonburg (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hopewell (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lexington (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lynchburg (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Manassas (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Manassas Park (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Martinsville (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Newport News (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Norfolk (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Norton (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Petersburg (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Poquoson (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Portsmouth (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Radford (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Richmond (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Roanoke (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Salem (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Staunton (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Suffolk (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Virginia Beach (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Waynesboro (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Williamsburg (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Winchester (Independent City)",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.va.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "WA",
+    "state_name": "Washington",
+    "statewide_efiling_url": "http://efilewa.com/",
+    "statewide_efiling_system": "eFileWA and Appellate Court Portal",
+    "clerk_directory_url": "https://www.courts.wa.gov/court_dir/",
+    "counties": [
+      {
+        "county_name": "Adams County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Asotin County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Benton County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chelan County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clallam County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clark County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Columbia County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Cowlitz County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Douglas County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ferry County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Franklin County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Garfield County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grant County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grays Harbor County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Island County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "King County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kitsap County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kittitas County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Klickitat County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lewis County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Mason County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Okanogan County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pacific County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pend Oreille County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pierce County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "San Juan County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Skagit County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Skamania County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Snohomish County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Spokane County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Stevens County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Thurston County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wahkiakum County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Walla Walla County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Whatcom County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Whitman County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Yakima County",
+        "clerk_website": "",
+        "efiling_url": "http://efilewa.com/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "WV",
+    "state_name": "West Virginia",
+    "statewide_efiling_url": "https://efile.courtswva.com",
+    "statewide_efiling_system": "CourtPLUS E-File System",
+    "clerk_directory_url": "https://sos.wv.gov/elections/Pages/CountyClerkDirectory.aspx",
+    "counties": [
+      {
+        "county_name": "Barbour County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 457-2232",
+        "address": ""
+      },
+      {
+        "county_name": "Berkeley County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 264-1989",
+        "address": ""
+      },
+      {
+        "county_name": "Boone County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 369-7330",
+        "address": ""
+      },
+      {
+        "county_name": "Braxton County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 765-2833",
+        "address": ""
+      },
+      {
+        "county_name": "Brooke County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 737-3661",
+        "address": ""
+      },
+      {
+        "county_name": "Cabell County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 526-8625",
+        "address": ""
+      },
+      {
+        "county_name": "Calhoun County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 354-6725",
+        "address": ""
+      },
+      {
+        "county_name": "Clay County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 587-4259",
+        "address": ""
+      },
+      {
+        "county_name": "Doddridge County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 873-2631",
+        "address": ""
+      },
+      {
+        "county_name": "Fayette County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 574-4225",
+        "address": ""
+      },
+      {
+        "county_name": "Gilmer County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 462-7641",
+        "address": ""
+      },
+      {
+        "county_name": "Grant County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 257-4550",
+        "address": ""
+      },
+      {
+        "county_name": "Greenbrier County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 647-6602",
+        "address": ""
+      },
+      {
+        "county_name": "Hampshire County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 822-5112",
+        "address": ""
+      },
+      {
+        "county_name": "Hancock County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 564-3311",
+        "address": ""
+      },
+      {
+        "county_name": "Hardy County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 530-0250",
+        "address": ""
+      },
+      {
+        "county_name": "Harrison County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 624-8613",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 373-2250",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 728-3386",
+        "address": ""
+      },
+      {
+        "county_name": "Kanawha County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 357-0130",
+        "address": ""
+      },
+      {
+        "county_name": "Lewis County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 269-8215",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 824-3336",
+        "address": ""
+      },
+      {
+        "county_name": "Logan County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 792-8600",
+        "address": ""
+      },
+      {
+        "county_name": "Marion County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 367-5445",
+        "address": ""
+      },
+      {
+        "county_name": "Marshall County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 845-1220",
+        "address": ""
+      },
+      {
+        "county_name": "Mason County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 675-1997",
+        "address": ""
+      },
+      {
+        "county_name": "McDowell County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 436-8544",
+        "address": ""
+      },
+      {
+        "county_name": "Mercer County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 487-8338",
+        "address": ""
+      },
+      {
+        "county_name": "Mineral County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 788-3924",
+        "address": ""
+      },
+      {
+        "county_name": "Mingo County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 235-0330",
+        "address": ""
+      },
+      {
+        "county_name": "Monongalia County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 291-7230",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 772-3096",
+        "address": ""
+      },
+      {
+        "county_name": "Morgan County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 258-8547",
+        "address": ""
+      },
+      {
+        "county_name": "Nicholas County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 872-7820",
+        "address": ""
+      },
+      {
+        "county_name": "Ohio County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 234-3656",
+        "address": ""
+      },
+      {
+        "county_name": "Pendleton County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 358-2505",
+        "address": ""
+      },
+      {
+        "county_name": "Pleasants County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 684-3542",
+        "address": ""
+      },
+      {
+        "county_name": "Pocahontas County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 799-4549",
+        "address": ""
+      },
+      {
+        "county_name": "Preston County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 329-0070",
+        "address": ""
+      },
+      {
+        "county_name": "Putnam County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 586-0202",
+        "address": ""
+      },
+      {
+        "county_name": "Raleigh County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 252-8681",
+        "address": ""
+      },
+      {
+        "county_name": "Randolph County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 636-0543",
+        "address": ""
+      },
+      {
+        "county_name": "Ritchie County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 643-2164",
+        "address": ""
+      },
+      {
+        "county_name": "Roane County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 927-2860",
+        "address": ""
+      },
+      {
+        "county_name": "Summers County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 466-7104",
+        "address": ""
+      },
+      {
+        "county_name": "Taylor County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 265-1401",
+        "address": ""
+      },
+      {
+        "county_name": "Tucker County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 478-2414",
+        "address": ""
+      },
+      {
+        "county_name": "Tyler County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 758-2102",
+        "address": ""
+      },
+      {
+        "county_name": "Upshur County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 472-1068",
+        "address": ""
+      },
+      {
+        "county_name": "Wayne County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 272-6362",
+        "address": ""
+      },
+      {
+        "county_name": "Webster County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 847-2508",
+        "address": ""
+      },
+      {
+        "county_name": "Wetzel County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 455-8224",
+        "address": ""
+      },
+      {
+        "county_name": "Wirt County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 275-4271",
+        "address": ""
+      },
+      {
+        "county_name": "Wood County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 424-1860",
+        "address": ""
+      },
+      {
+        "county_name": "Wyoming County",
+        "clerk_website": "",
+        "efiling_url": "https://efile.courtswva.com",
+        "fax": "",
+        "phone": "(304) 732-8000",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "WI",
+    "state_name": "Wisconsin",
+    "statewide_efiling_url": "https://efiling.wicourts.gov/",
+    "statewide_efiling_system": "Wisconsin eCourts eFile System",
+    "clerk_directory_url": "https://www.wicourts.gov/courts/circuit/clerkcontact.htm",
+    "counties": [
+      {
+        "county_name": "Adams County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ashland County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Barron County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Bayfield County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Brown County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Buffalo County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Burnett County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Calumet County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Chippewa County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Clark County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Columbia County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crawford County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dane County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dodge County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Door County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Douglas County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Dunn County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Eau Claire County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Florence County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fond du Lac County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Forest County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Grant County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Green County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Green Lake County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Iowa County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Iron County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jackson County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Jefferson County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Juneau County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kenosha County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Kewaunee County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "La Crosse County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lafayette County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Langlade County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Manitowoc County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marathon County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marinette County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Marquette County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Menominee County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Milwaukee County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Monroe County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oconto County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Oneida County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Outagamie County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Ozaukee County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pepin County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Pierce County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Polk County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Portage County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Price County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Racine County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Richland County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rock County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Rusk County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Saint Croix County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sauk County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sawyer County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Shawano County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sheboygan County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "St. Croix County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Taylor County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Trempealeau County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vernon County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Vilas County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Walworth County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washburn County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washington County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Waukesha County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Waupaca County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Waushara County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Winnebago County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Wood County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.wicourts.gov/",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      }
+    ]
+  },
+  {
+    "state_abbr": "WY",
+    "state_name": "Wyoming",
+    "statewide_efiling_url": "https://efiling.courts.state.wy.us/login.do",
+    "statewide_efiling_system": "File & ServeXpress",
+    "clerk_directory_url": "https://www.wyocourts.gov/contact/",
+    "counties": [
+      {
+        "county_name": "Albany County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Big Horn County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Campbell County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Carbon County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Converse County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Crook County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Fremont County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Goshen County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Hot Springs County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Johnson County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Laramie County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Lincoln County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Natrona County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Niobrara County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Park County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Platte County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sheridan County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sublette County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Sweetwater County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Teton County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Uinta County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Washakie County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      },
+      {
+        "county_name": "Weston County",
+        "clerk_website": "",
+        "efiling_url": "https://efiling.courts.state.wy.us",
+        "fax": "",
+        "phone": "",
+        "address": ""
+      }
+    ]
+  }
+]
