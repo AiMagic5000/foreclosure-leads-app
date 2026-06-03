@@ -1,6 +1,7 @@
 "use client"
 
-import { Gift, MessageSquare, Mail, Phone, Ticket, ArrowUpRight, Check } from "lucide-react"
+import { Gift, MessageSquare, Mail, Phone, Ticket, ArrowUpRight, Check, AlertTriangle } from "lucide-react"
+import Link from "next/link"
 
 const USE_CASES = [
   { icon: MessageSquare, title: "In your SMS", body: "Drop your incentive link in a text. A complimentary Vegas getaway as a thank-you gives the homeowner a reason to reply and sign now." },
@@ -18,6 +19,27 @@ const WHY = [
 export default function ContingencyIncentivesPage() {
   return (
     <div className="max-w-5xl space-y-8 pb-12">
+      {/* How complimentary incentives actually work — important rules */}
+      <div className="rounded-2xl border-l-4 border-amber-500 bg-amber-50 p-5 shadow-sm">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="mt-0.5 h-5 w-5 flex-none text-amber-600" />
+          <div className="text-sm text-amber-900 space-y-2">
+            <p className="font-bold">How you keep these incentives complimentary</p>
+            <p>
+              Your leads are the actual people named on the property that went through foreclosure. The complimentary
+              leads, coupons, and incentives from <strong>Sales Incentive Network</strong> are only honored when the person
+              redeeming has a <strong>signed contingency agreement</strong> &mdash; from someone on <strong>your</strong> leads list.
+            </p>
+            <p>
+              To avoid paying for incentives out of pocket, upload a clear <strong>photo of each signed contingency
+              agreement</strong> to your{" "}
+              <Link href="/dashboard/settings#phone-section" className="font-semibold underline">My Account</Link>{" "}
+              page. Only signed, uploaded agreements unlock the complimentary incentives for that claimant.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Hero */}
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="h-1.5 w-full" style={{ background: "linear-gradient(90deg,#2563eb 0%,#2563eb 50%,#D82221 50%,#D82221 100%)" }} />

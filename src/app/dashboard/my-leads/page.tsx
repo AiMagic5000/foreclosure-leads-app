@@ -1015,15 +1015,6 @@ export default function MyLeadsPage() {
   // Basic-tier lead-request upgrade modal
   const [showBasicUpgradeModal, setShowBasicUpgradeModal] = useState(false)
   const router = useRouter()
-  // Free tier hit "Request Leads" — show the upgrade prompt, then auto-route to My Account.
-  useEffect(() => {
-    if (!showBasicUpgradeModal) return
-    const t = setTimeout(() => {
-      setShowBasicUpgradeModal(false)
-      router.push("/dashboard/settings")
-    }, 2600)
-    return () => clearTimeout(t)
-  }, [showBasicUpgradeModal, router])
 
   // Admin view-as-user
   const [allUsers, setAllUsers] = useState<{ id: string; email: string; package_type: string; account_type: string; is_active: boolean }[]>([])
@@ -1481,8 +1472,7 @@ export default function MyLeadsPage() {
             </div>
             <h3 className="text-lg font-bold mb-3 text-white">Please upgrade to unlock leads</h3>
             <p className="text-sm text-slate-300 mb-5 leading-relaxed">
-              Lead delivery isn&apos;t included on your <strong className="text-white">Free tier</strong>. Taking you to
-              <strong className="text-white"> My Account</strong> to view your upgrade options&hellip;
+              Lead delivery isn&apos;t included on your <strong className="text-white">Free tier</strong>. Head to <strong className="text-white">My Account</strong> to view your upgrade options.
             </p>
             <button
               onClick={() => { setShowBasicUpgradeModal(false); router.push("/dashboard/settings") }}

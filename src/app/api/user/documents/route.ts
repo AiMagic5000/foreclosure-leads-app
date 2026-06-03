@@ -91,6 +91,28 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ success: true, path })
 }
 
+// PATCH — rename a document's label (storage move; keeps the file extension)
+export async function PATCH(req: NextRequest) {
+  const body = await req.json()
+  const { pinId, error } = await ownerPinId(req, body?.asPinId || null)
+  if (error) return NextResponse.json({ error }, { status: error === "Unauthorized" ? 401 : 403 })
+  if (!pinId) return NextResponse.json({ error: "No profile" }, { status: 404 })
+
+  const name = String(body?.name || "")
+  const newLabel = String(body?.label || "").replace(/[^a-zA-Z0-9.\- _]/g, "_").trim().slice(0, 80)
+  if (!name || !newLabel) return NextResponse.json({ error: "name and label required" }, { status: 400 })
+  const folder = folderOf(req, (body?.folder as string) || null)
+  const ext = name.includes(".") ? "." + name.split(".").pop() : ""
+  const base = newLabel.endsWith(ext) ? newLabel : newLabel + ext
+  const ts = name.split("-")[0] || `${Date.now()}`
+  const from = `${pinId}/${folder}/${name.replace(/\.\./g, "")}`
+  const to = `${pinId}/${folder}/${ts}-${base}`
+  if (from === to) return NextResponse.json({ success: true })
+  const { error: mvErr } = await supabaseAdmin.storage.from(BUCKET).move(from, to)
+  if (mvErr) return NextResponse.json({ error: mvErr.message }, { status: 500 })
+  return NextResponse.json({ success: true })
+}
+
 // DELETE — remove a document (?name=, ?folder=, ?asPinId=)
 export async function DELETE(req: NextRequest) {
   const { pinId, error } = await ownerPinId(req)

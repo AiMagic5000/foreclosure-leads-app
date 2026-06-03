@@ -11,6 +11,7 @@ import { UpgradeButton } from "@/components/upgrade-button"
 import { IntegrationsSettings } from "@/components/integrations-settings"
 import { usePin } from "@/lib/pin-context"
 import { PhoneUnlock } from "@/components/phone-unlock"
+import { DocumentUploader } from "@/components/document-uploader"
 import {
   User,
   CreditCard,
@@ -270,6 +271,23 @@ export default function SettingsPage() {
           </div>
           <IntegrationsSettings />
         </div>
+
+        {/* Contingency Agreements — signed agreements uploaded here unlock SIN incentives */}
+        <Card className="lg:col-span-2 shadow-lg">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <ClipboardList className="h-5 w-5 text-muted-foreground" />
+              <CardTitle>Contingency Agreements</CardTitle>
+            </div>
+            <CardDescription>
+              Upload a clear photo of each <strong>signed contingency agreement</strong> from a homeowner on your leads list.
+              These unlock your complimentary Sales Incentive Network incentives &mdash; only signed, uploaded agreements qualify.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DocumentUploader folder="contingency-agreements" accept="image/*,application/pdf" />
+          </CardContent>
+        </Card>
 
         {/* Upgrades & Add-ons */}
         <Card className="lg:col-span-2 shadow-lg">

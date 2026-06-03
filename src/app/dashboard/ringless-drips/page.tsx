@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { usePin } from "@/lib/pin-context"
-import { Mic, Square, Upload, Trash2, Phone, Loader2, Voicemail, CheckCircle2, ArrowRight } from "lucide-react"
+import { Mic, Square, Upload, Phone, Loader2, Voicemail, ArrowRight } from "lucide-react"
+import { FileFolder } from "@/components/file-folder"
 
 interface Recording { name: string; label: string; url: string; created: string | null; size: number }
 
@@ -131,16 +132,17 @@ export default function RinglessDripsPage() {
           ) : recordings.length === 0 ? (
             <p className="rounded-lg border border-dashed border-slate-300 p-4 text-center text-sm text-slate-400">No recordings yet. Record or upload your first one above.</p>
           ) : (
-            recordings.map((r) => (
-              <div key={r.name} className="flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
-                <CheckCircle2 className="h-4 w-4 flex-none text-emerald-500" />
-                <span className="text-sm font-medium text-[#0f172a]">{r.label}</span>
-                <audio controls src={r.url} className="h-8 max-w-[280px] flex-1" />
-                <button onClick={() => del(r.name)} aria-label="Delete" className="ml-auto rounded-md p-1.5 text-slate-400 hover:bg-slate-200 hover:text-red-600">
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </div>
-            ))
+            <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
+              {recordings.map((r) => (
+                <FileFolder
+                  key={r.name}
+                  label={r.label}
+                  audioSrc={r.url}
+                  onDownload={() => window.open(r.url, "_blank")}
+                  onDelete={() => del(r.name)}
+                />
+              ))}
+            </div>
           )}
         </div>
       </div>
