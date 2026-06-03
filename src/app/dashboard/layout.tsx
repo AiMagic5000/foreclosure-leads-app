@@ -101,18 +101,21 @@ const navSections: NavSection[] = [
     label: "Administration",
     tier: "admin",
     items: [
+      // Admin hub + people
+      { name: "Admin", href: "/dashboard/admin", icon: Shield, badge: { text: "Staff", color: "red" } },
+      { name: "User Data", href: "/dashboard/user-data", icon: UserCircle, badge: { text: "CRM", color: "teal" } },
+      { name: "User Activity", href: "/dashboard/admin/user-activity", icon: Activity, badge: { text: "Live", color: "blue" } },
+      { name: "Pipeline Monitor", href: "/dashboard/admin/pipeline", icon: Activity, badge: { text: "Live", color: "emerald" } },
+      // Lead sources
       { name: "Foreclosure Leads", href: "/dashboard/leads", icon: Users },
+      { name: "Pre-Foreclosure", href: "/dashboard/pre-foreclosure", icon: Gavel, badge: { text: "New", color: "orange" } },
       { name: "Title Leads", href: "/dashboard/title-leads", icon: Building2, badge: { text: "5%", color: "cyan" } },
       { name: "Real Estate Leads", href: "/dashboard/real-estate-leads", icon: TrendingUp, badge: { text: "8%", color: "orange" } },
       { name: "Attorney Leads", href: "/dashboard/attorney-leads", icon: Scale, badge: { text: "10%", color: "violet" } },
       { name: "Export", href: "/dashboard/export", icon: Download },
-      { name: "Admin", href: "/dashboard/admin", icon: Shield, badge: { text: "Staff", color: "red" } },
-      { name: "Pipeline Monitor", href: "/dashboard/admin/pipeline", icon: Activity, badge: { text: "Live", color: "emerald" } },
-      { name: "User Activity", href: "/dashboard/admin/user-activity", icon: TrendingUp, badge: { text: "Live", color: "blue" } },
-      { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Legal", color: "orange" } },
+      // Compliance + legal
       { name: "Compliance", href: "/dashboard/admin/compliance", icon: Shield, badge: { text: "Gate", color: "red" } },
-      { name: "User Data", href: "/dashboard/user-data", icon: UserCircle, badge: { text: "CRM", color: "teal" } },
-      { name: "Pre-Foreclosure", href: "/dashboard/pre-foreclosure", icon: Gavel, badge: { text: "New", color: "orange" } },
+      { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Legal", color: "orange" } },
     ],
   },
 ]
