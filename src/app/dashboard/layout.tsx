@@ -352,6 +352,18 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
             <Menu className={cn("h-6 w-6", textColor)} />
           </button>
 
+          {/* Mobile: call button against the hamburger */}
+          <a
+            href="tel:+18885458007"
+            className="lg:hidden inline-flex flex-col leading-tight rounded-lg bg-[#1E3A5F] px-2.5 py-1 text-white shadow-sm"
+            title="Call us — (888) 545-8007 · 9 to 5 Pacific, 7 days a week"
+          >
+            <span className="inline-flex items-center gap-1 text-xs font-bold">
+              <Phone className="h-3.5 w-3.5 flex-none" /> (888) 545-8007
+            </span>
+            <span className="text-[9px] text-white/70">9–5 PT · 7 days/wk</span>
+          </a>
+
           <div className={cn("hidden sm:flex items-center gap-2 text-sm", mutedText)}>
             <Link href="/dashboard" className={cn("hover:text-emerald-500")}>
               Dashboard
@@ -369,13 +381,16 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           <div className="flex-1" />
 
           <div className="flex items-center gap-2">
+            {/* Desktop: call button on the bell line */}
             <a
               href="tel:+18885458007"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-[#1E3A5F] px-2.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-[#2d4a6f] sm:px-3 sm:text-sm"
-              title="Call us — (888) 545-8007"
+              className="hidden lg:inline-flex flex-col leading-tight rounded-lg bg-[#1E3A5F] px-3 py-1.5 text-white shadow-sm transition hover:bg-[#2d4a6f]"
+              title="Call us — (888) 545-8007 · 9 to 5 Pacific, 7 days a week"
             >
-              <Phone className="h-4 w-4 flex-none" />
-              <span className="whitespace-nowrap">(888) 545-8007</span>
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold">
+                <Phone className="h-4 w-4 flex-none" /> (888) 545-8007
+              </span>
+              <span className="text-[10px] font-medium text-white/70">9–5 PT · 7 days a week</span>
             </a>
             <button
               onClick={toggleTheme}
