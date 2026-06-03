@@ -7,8 +7,10 @@ const PRIMARY_ADMIN_EMAIL = 'coreypearsonemail@gmail.com'
 // fresh_unassigned_leads = deliverable_leads (trusted source + overage $5k-$5M +
 // servable + DNC-clean) minus anything already in operator_lead_assignments.
 const LEAD_COLUMNS =
-  'id,owner_name,property_address,city,state_abbr,county,surplus_county,overage_amount,' +
-  'primary_phone,primary_email,source,dnc_checked,lead_tier'
+  'id,owner_name,property_address,mailing_address,city,state,state_abbr,zip_code,county,surplus_county,' +
+  'parcel_id,apn_number,overage_amount,sale_amount,mortgage_amount,sale_date,lender_name,foreclosure_type,' +
+  'primary_phone,secondary_phone,primary_email,source,source_url,skip_trace_source,skip_traced_at,scraped_at,' +
+  'dnc_checked,on_dnc,can_contact,dnc_type,deed_verified,deed_data_source,lead_tier,case_number'
 
 async function requireAdmin() {
   const user = await currentUser()
