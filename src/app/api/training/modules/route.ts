@@ -132,7 +132,7 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: "module_id is required" }, { status: 400 })
     }
 
-    const allowedFields = ["title", "description", "duration", "poster_url", "video_url", "status", "access_level"]
+    const allowedFields = ["title", "description", "duration", "poster_url", "video_url", "status", "access_level", "sort_order", "module_number"]
     const cleanUpdates: Record<string, unknown> = {}
     for (const key of allowedFields) {
       if (updates[key] !== undefined) {

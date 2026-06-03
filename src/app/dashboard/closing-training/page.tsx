@@ -165,9 +165,8 @@ export default function ClosingTrainingPage() {
       if (json.data) {
         setModules(json.data)
         if (!selectedModule) {
-          // Default to video #1 — the free preview everyone can play.
-          const first = json.data.find((m: TrainingModule) => m.module_number === 1) || json.data[0]
-          setSelectedModule(first)
+          // Default to the first module in order — the free preview everyone can play.
+          setSelectedModule(json.data[0])
         }
       }
     } catch {
@@ -274,7 +273,20 @@ export default function ClosingTrainingPage() {
 
   // Video #1 is a free preview — playable by anyone, no tier or phone required.
   function isFreePreview(mod: TrainingModule | null): boolean {
-    return mod?.module_number === 1
+    // The first module in display order is the free preview — robust to reordering.
+    return !!mod && modules.length > 0 && mod.id === modules[0].id
+  }
+
+  // Admin: swap a module's sort_order with its neighbor to reorder the list.
+  async function moveModule(idx: number, dir: "up" | "down") {
+    const swapIdx = dir === "up" ? idx - 1 : idx + 1
+    if (swapIdx < 0 || swapIdx >= modules.length) return
+    const a = modules[idx], b = modules[swapIdx]
+    await Promise.all([
+      fetch("/api/training/modules", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ module_id: a.id, sort_order: b.sort_order }) }),
+      fetch("/api/training/modules", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ module_id: b.id, sort_order: a.sort_order }) }),
+    ])
+    fetchModules()
   }
 
   // Full access to play a video / download resources: the tier must allow it AND a phone
@@ -598,7 +610,7 @@ export default function ClosingTrainingPage() {
           </CardHeader>
           <CardContent className="p-0 overflow-hidden">
             <div className="lg:max-h-[560px] lg:overflow-y-auto divide-y divide-border">
-              {modules.map((mod) => {
+              {modules.map((mod, idx) => {
                 const isSelected = selectedModule?.id === mod.id
                 const accessible = isAdmin || isModuleAccessible()
                 const isMobileExpanded = isMobile && mobileExpandedId === mod.id
@@ -639,7 +651,7 @@ export default function ClosingTrainingPage() {
                           getEffectiveStatus(mod) === "locked" && "bg-slate-500/10 text-slate-500"
                         )}
                       >
-                        {mod.module_number}
+                        {idx + 1}
                       </span>
                       <div className="flex-1 min-w-0">
                         <p
@@ -653,6 +665,22 @@ export default function ClosingTrainingPage() {
                         <span className="text-xs text-muted-foreground">{mod.duration}</span>
                       </div>
                       <div className="shrink-0 flex items-center gap-1.5">
+                        {isAdmin && (
+                          <span className="flex flex-col leading-none mr-0.5">
+                            <span
+                              role="button"
+                              aria-label="Move up"
+                              onClick={(e) => { e.stopPropagation(); moveModule(idx, "up") }}
+                              className={cn("text-xs px-1 text-slate-400 hover:text-indigo-600", idx === 0 && "opacity-20 pointer-events-none")}
+                            >▲</span>
+                            <span
+                              role="button"
+                              aria-label="Move down"
+                              onClick={(e) => { e.stopPropagation(); moveModule(idx, "down") }}
+                              className={cn("text-xs px-1 text-slate-400 hover:text-indigo-600", idx === modules.length - 1 && "opacity-20 pointer-events-none")}
+                            >▼</span>
+                          </span>
+                        )}
                         {statusIcon(getEffectiveStatus(mod))}
                         {isAdmin && mod.access_level && mod.access_level.length < 4 && (
                           <span className="text-[10px] text-amber-500 font-medium">
