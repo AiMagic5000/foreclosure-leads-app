@@ -25,6 +25,8 @@ const DEFAULT_IMAP_PASS = process.env.IMAP_CLAIM_PASSWORD || "Thepassword#1234"
 const IMAP_HOST_MAP: Record<string, string> = {
   "ira@usforeclosurerecovery.com": "redbull.mxrouting.net",
   "marie@usforeclosurerecovery.com": "redbull.mxrouting.net",
+  // claim@ migrated to MXRoute with the full usforeclosurerecovery.com MX cutover.
+  "claim@usforeclosurerecovery.com": "redbull.mxrouting.net",
 }
 
 function resolveImapHost(senderEmail: string): string {
