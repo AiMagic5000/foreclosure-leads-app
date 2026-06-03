@@ -16,7 +16,7 @@ interface Referral {
 
 const STATUS_LABEL: Record<string, { text: string; cls: string }> = {
   invited: { text: "Invited", cls: "bg-gray-100 text-gray-600" },
-  signed_up: { text: "Signed up (+$100)", cls: "bg-emerald-100 text-emerald-700" },
+  signed_up: { text: "Paid plan (+$100)", cls: "bg-emerald-100 text-emerald-700" },
   paid: { text: "Paid out (+$500)", cls: "bg-emerald-600 text-white" },
 }
 
@@ -81,8 +81,8 @@ export function ReferralSection() {
             <div className="flex items-start gap-3 mb-4">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 shrink-0"><DollarSign className="h-5 w-5" /></div>
               <div>
-                <p className="font-bold text-emerald-800">$100 when they sign up</p>
-                <p className="text-sm text-muted-foreground">As soon as someone you refer creates their account, $100 is credited to you.</p>
+                <p className="font-bold text-emerald-800">$100 when they go paid</p>
+                <p className="text-sm text-muted-foreground">As soon as someone you refer upgrades to a paid plan, $100 is credited to you.</p>
               </div>
             </div>
             <div className="flex items-start gap-3 mb-4">
