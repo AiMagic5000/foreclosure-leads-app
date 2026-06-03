@@ -38,7 +38,7 @@ export async function GET() {
   // Get existing DB records
   const { data: dbUsers } = await supabaseAdmin
     .from('users')
-    .select('id, clerk_id, email, full_name, fullname, role, subscription_tier, subscription_status, account_type, selected_states, automation_enabled, training_unlocked, created_at, updated_at')
+    .select('id, clerk_id, email, full_name, fullname, role, subscription_tier, subscription_status, account_type, selected_states, automation_enabled, training_unlocked, banned, ban_reason, created_at, updated_at')
     .order('created_at', { ascending: false })
 
   const dbMap = new Map((dbUsers || []).map((u) => [u.clerk_id, u]))
@@ -69,7 +69,7 @@ export async function GET() {
     const { data: inserted } = await supabaseAdmin
       .from('users')
       .upsert(inserts, { onConflict: 'clerk_id' })
-      .select('id, clerk_id, email, full_name, fullname, role, subscription_tier, subscription_status, account_type, selected_states, automation_enabled, training_unlocked, created_at, updated_at')
+      .select('id, clerk_id, email, full_name, fullname, role, subscription_tier, subscription_status, account_type, selected_states, automation_enabled, training_unlocked, banned, ban_reason, created_at, updated_at')
 
     if (inserted) {
       for (const row of inserted) {
@@ -96,6 +96,8 @@ export async function GET() {
       selected_states: db?.selected_states || [],
       automation_enabled: db?.automation_enabled || false,
       training_unlocked: db?.training_unlocked || false,
+      banned: db?.banned || false,
+      ban_reason: db?.ban_reason || null,
       created_at: new Date(cu.createdAt).toISOString(),
       updated_at: db?.updated_at || null,
       last_sign_in: cu.lastSignInAt ? new Date(cu.lastSignInAt).toISOString() : null,
@@ -133,13 +135,20 @@ export async function PATCH(req: NextRequest) {
   }
 
   const body = await req.json()
-  const { userId, role, accountType, subscriptionTier, trainingUnlocked } = body
+  const { userId, role, accountType, subscriptionTier, trainingUnlocked, banned, banReason } = body
 
   const updateData: Record<string, unknown> = {}
 
   // Per-user override: grant access to ALL training videos + resources regardless of tier
   if (typeof trainingUnlocked === 'boolean') {
     updateData.training_unlocked = trainingUnlocked
+  }
+
+  // Ban / unban a user, with an optional reason.
+  if (typeof banned === 'boolean') {
+    updateData.banned = banned
+    updateData.ban_reason = banned ? (String(banReason || '').slice(0, 200) || 'Banned by admin') : null
+    updateData.banned_at = banned ? new Date().toISOString() : null
   }
 
   // Support legacy role field (0=user, 1=admin)

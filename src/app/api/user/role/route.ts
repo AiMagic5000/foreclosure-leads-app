@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
     }
     const { data: tUser } = await supabaseAdmin
       .from('users')
-      .select('role, subscription_tier, account_type, training_unlocked, profile_phone')
+      .select('role, subscription_tier, account_type, training_unlocked, phone_verified, banned, ban_reason')
       .ilike('email', target.email)
       .limit(1)
       .maybeSingle()
@@ -51,13 +51,15 @@ export async function GET(req: NextRequest) {
       pinId: target.pinId,
       statesAccess: target.statesAccess,
       trainingUnlocked: !!tUser?.training_unlocked,
-      hasPhone: !!tUser?.profile_phone,
+      hasPhone: !!tUser?.phone_verified,
+      banned: !!tUser?.banned,
+      banReason: tUser?.ban_reason || null,
     })
   }
 
   // Normal (self) resolution.
   const [{ data }, { data: pinData }] = await Promise.all([
-    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, profile_phone').ilike('email', email).limit(1).maybeSingle(),
+    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, phone_verified, banned, ban_reason').ilike('email', email).limit(1).maybeSingle(),
     supabaseAdmin.from('user_pins').select('id, package_type, states_access, is_active, role').ilike('email', email).eq('is_active', true).single(),
   ])
 
@@ -78,6 +80,8 @@ export async function GET(req: NextRequest) {
     pinId,
     statesAccess,
     trainingUnlocked: !!data?.training_unlocked,
-    hasPhone: !!data?.profile_phone,
+    hasPhone: !!data?.phone_verified,
+    banned: !!data?.banned,
+    banReason: data?.ban_reason || null,
   })
 }

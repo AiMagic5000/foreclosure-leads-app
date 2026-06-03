@@ -185,7 +185,7 @@ function BadgeLabel({ color, text }: { color: string; text: string }) {
 
 function DashboardInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const { accountType } = usePin()
+  const { accountType, banned, banReason } = usePin()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -220,6 +220,28 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
   const borderColor = isDark ? "border-slate-800" : "border-gray-200"
   const textColor = isDark ? "text-white" : "text-gray-900"
   const mutedText = isDark ? "text-slate-400" : "text-gray-500"
+
+  // Banned accounts get a full-screen block — no dashboard, no content.
+  if (banned) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-950 p-6">
+        <div className="max-w-md rounded-2xl border border-red-500/30 bg-slate-900 p-8 text-center shadow-2xl">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15">
+            <Lock className="h-7 w-7 text-red-400" />
+          </div>
+          <h1 className="text-xl font-bold text-white">Account suspended</h1>
+          <p className="mt-2 text-sm text-slate-300">
+            Your account has been suspended and dashboard access is disabled.
+            {banReason ? <> Reason: <span className="font-medium text-white">{banReason}</span>.</> : null}
+          </p>
+          <p className="mt-3 text-sm text-slate-400">
+            If you believe this is a mistake, contact us at <a href="tel:+18885458007" className="font-semibold text-white underline">(888) 545-8007</a>.
+          </p>
+          <div className="mt-5"><UserButton afterSignOutUrl="/" /></div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={cn("min-h-screen", bg)}>

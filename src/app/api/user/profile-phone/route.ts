@@ -31,14 +31,16 @@ export async function GET(req: NextRequest) {
   // Use limit(1) (not single()) — some accounts have duplicate users rows and single() errors on >1.
   const { data: rows } = await supabaseAdmin
     .from("users")
-    .select("profile_phone, sms_consent")
+    .select("profile_phone, sms_consent, phone_verified")
     .ilike("email", email as string)
     .order("profile_phone", { ascending: false, nullsFirst: false })
     .limit(1)
   const data = rows?.[0]
   const phone = data?.profile_phone || ""
   return NextResponse.json({
-    hasPhone: !!phone,
+    // hasPhone now means VERIFIED — an unverified number does not unlock content.
+    hasPhone: !!data?.phone_verified,
+    verified: !!data?.phone_verified,
     phone,
     smsConsent: !!data?.sms_consent,
   })
@@ -56,9 +58,12 @@ export async function POST(req: NextRequest) {
   if (d.length < 10) return NextResponse.json({ error: "Enter a valid phone number (at least 10 digits)." }, { status: 400 })
   if (!consent) return NextResponse.json({ error: "Please agree to the communications consent to continue." }, { status: 400 })
 
+  // Admin setting a number while impersonating is trusted (no OTP). Self-saves go through
+  // the OTP flow (/api/user/phone-verify) and never hit this path from the UI.
+  const adminOverride = !!body?.asPinId
   const { error: upErr } = await supabaseAdmin
     .from("users")
-    .update({ profile_phone: phone, sms_consent: true, sms_consent_at: new Date().toISOString() })
+    .update({ profile_phone: phone, sms_consent: true, sms_consent_at: new Date().toISOString(), phone_verified: adminOverride })
     .ilike("email", email as string)
   if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 })
 

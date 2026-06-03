@@ -38,6 +38,8 @@ interface UserRecord {
   selected_states: string[] | null
   automation_enabled: boolean | null
   training_unlocked?: boolean | null
+  banned?: boolean | null
+  ban_reason?: string | null
   created_at: string
   updated_at: string | null
   last_sign_in: string | null
@@ -69,6 +71,16 @@ const statusColors: Record<string, string> = {
   trialing: "bg-sky-100 text-sky-700 dark:bg-sky-900 dark:text-sky-300",
 }
 
+const BAN_REASONS = [
+  "Bad phone number",
+  "Fake / invalid information",
+  "Spam or abuse",
+  "Chargeback / payment issue",
+  "Violated terms",
+  "Duplicate account",
+  "Other",
+]
+
 const accountTypeLabels: Record<string, string> = {
   basic: "Basic",
   partnership: "Partnership",
@@ -95,6 +107,7 @@ export default function UserDataPage() {
   const [sortField, setSortField] = useState<SortField>("created_at")
   const [sortAsc, setSortAsc] = useState(false)
   const [savingId, setSavingId] = useState<string | null>(null)
+  const [banSel, setBanSel] = useState<Record<string, string>>({})
 
   const fetchUsers = async () => {
     setLoading(true)
@@ -164,6 +177,21 @@ export default function UserDataPage() {
     }
     setImpersonation(pinId as string)
     router.push("/dashboard")
+  }
+
+  const updateBan = async (userId: string, banned: boolean, banReason?: string) => {
+    setSavingId(userId)
+    try {
+      const res = await fetch("/api/admin/users", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, banned, banReason }),
+      })
+      if (res.ok) {
+        setUsers((prev) => prev.map((u) => (u.id === userId ? { ...u, banned, ban_reason: banned ? (banReason || "Banned by admin") : null } : u)))
+      }
+    } catch { /* silent */ }
+    setSavingId(null)
   }
 
   const updateTrainingUnlocked = async (userId: string, value: boolean) => {
@@ -549,12 +577,43 @@ export default function UserDataPage() {
                             : "--"}
                         </td>
                         <td className="py-3 px-2">
-                          <button
-                            onClick={() => viewAs(u)}
-                            className="inline-flex items-center gap-1 rounded-md border border-[#1E3A5F] px-2 py-1 text-xs font-medium text-[#1E3A5F] transition hover:bg-[#1E3A5F] hover:text-white"
-                          >
-                            View as
-                          </button>
+                          <div className="flex flex-col gap-1.5">
+                            <button
+                              onClick={() => viewAs(u)}
+                              className="inline-flex items-center justify-center gap-1 rounded-md border border-[#1E3A5F] px-2 py-1 text-xs font-medium text-[#1E3A5F] transition hover:bg-[#1E3A5F] hover:text-white"
+                            >
+                              View as
+                            </button>
+                            {u.banned ? (
+                              <div className="flex items-center gap-1">
+                                <span className="rounded bg-red-100 px-1.5 py-0.5 text-[10px] font-semibold text-red-700" title={u.ban_reason || ""}>Banned</span>
+                                <button
+                                  onClick={() => updateBan(u.id, false)}
+                                  disabled={isSaving}
+                                  className="rounded-md border border-emerald-400 px-2 py-0.5 text-[11px] font-medium text-emerald-700 hover:bg-emerald-50"
+                                >
+                                  Unban
+                                </button>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-1">
+                                <select
+                                  value={banSel[u.id] || BAN_REASONS[0]}
+                                  onChange={(e) => setBanSel((p) => ({ ...p, [u.id]: e.target.value }))}
+                                  className="rounded border border-slate-300 bg-transparent px-1 py-0.5 text-[10px]"
+                                >
+                                  {BAN_REASONS.map((r) => <option key={r} value={r}>{r}</option>)}
+                                </select>
+                                <button
+                                  onClick={() => { if (confirm(`Ban ${u.email}?`)) updateBan(u.id, true, banSel[u.id] || BAN_REASONS[0]) }}
+                                  disabled={isSaving}
+                                  className="rounded-md border border-red-400 px-2 py-0.5 text-[11px] font-medium text-red-600 hover:bg-red-50"
+                                >
+                                  Ban
+                                </button>
+                              </div>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     )

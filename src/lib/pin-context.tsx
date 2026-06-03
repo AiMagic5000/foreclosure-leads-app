@@ -17,6 +17,8 @@ interface PinContextType {
   accountType: AccountType
   trainingUnlocked: boolean
   hasPhone: boolean
+  banned: boolean
+  banReason: string | null
   pinEmail: string | null
   pinId: string | null
   isRealAdmin: boolean
@@ -41,6 +43,8 @@ export function PinProvider({ children }: { children: ReactNode }) {
   const [accountType, setAccountType] = useState<AccountType>('basic')
   const [trainingUnlocked, setTrainingUnlocked] = useState(false)
   const [hasPhone, setHasPhone] = useState(false)
+  const [banned, setBanned] = useState(false)
+  const [banReason, setBanReason] = useState<string | null>(null)
   const [pinEmail, setPinEmail] = useState<string | null>(null)
   const [pinId, setPinId] = useState<string | null>(null)
   const [impersonatePinId, setImpersonatePinId] = useState<string | null>(() =>
@@ -88,6 +92,8 @@ export function PinProvider({ children }: { children: ReactNode }) {
         setAccountType(acctType)
         setTrainingUnlocked(!!data.trainingUnlocked || !!data.isAdmin)
         setHasPhone(!!data.hasPhone)
+        setBanned(!!data.banned)
+        setBanReason(data.banReason || null)
         setIsAdmin(!!data.isAdmin)
         setIsOwnerOperator(acctType === 'owner_operator' || acctType === 'junior_owner_operator')
         setIsFullOwnerOperator(acctType === 'owner_operator' || acctType === 'admin' || !!data.isAdmin)
@@ -172,6 +178,8 @@ export function PinProvider({ children }: { children: ReactNode }) {
         accountType,
         trainingUnlocked,
         hasPhone,
+        banned,
+        banReason,
         pinEmail,
         pinId,
         isRealAdmin,
