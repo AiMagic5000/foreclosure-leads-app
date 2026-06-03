@@ -50,13 +50,21 @@ export default function RinglessDripsPage() {
     setErr(null)
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      const mr = new MediaRecorder(stream)
+      // Record in a format the recording device can also PLAY BACK. iOS Safari can't play
+      // webm/opus, so prefer mp4/aac when the device supports recording it (iOS does).
+      const candidates = ["audio/mp4", "audio/mpeg", "audio/webm;codecs=opus", "audio/webm"]
+      const supported = typeof MediaRecorder !== "undefined" && MediaRecorder.isTypeSupported
+        ? candidates.find((t) => MediaRecorder.isTypeSupported(t))
+        : undefined
+      const mr = supported ? new MediaRecorder(stream, { mimeType: supported }) : new MediaRecorder(stream)
       chunksRef.current = []
       mr.ondataavailable = (e) => { if (e.data.size) chunksRef.current.push(e.data) }
       mr.onstop = () => {
         stream.getTracks().forEach((t) => t.stop())
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" })
-        upload(blob, "webm")
+        const mt = mr.mimeType || "audio/webm"
+        const ext = mt.includes("mp4") ? "m4a" : mt.includes("mpeg") ? "mp3" : mt.includes("ogg") ? "ogg" : "webm"
+        const blob = new Blob(chunksRef.current, { type: mt })
+        upload(blob, ext)
       }
       mr.start()
       mediaRef.current = mr

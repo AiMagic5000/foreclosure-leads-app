@@ -6,7 +6,7 @@ import { notifyAccountActivity } from "@/lib/email"
 
 export const dynamic = "force-dynamic"
 const BUCKET = "agent-docs"
-const MAX = 25 * 1024 * 1024 // 25MB
+const MAX = 50 * 1024 * 1024 // 50MB
 
 async function ensureBucket() {
   try {
@@ -75,11 +75,17 @@ export async function POST(req: NextRequest) {
 
   const file = form.get("file") as File | null
   if (!file) return NextResponse.json({ error: "No file provided" }, { status: 400 })
-  if (file.size > MAX) return NextResponse.json({ error: "File too large (25MB max)" }, { status: 400 })
+  if (file.size > MAX) return NextResponse.json({ error: "File too large (50MB max)" }, { status: 400 })
 
   const folder = folderOf(req, (form.get("folder") as string) || null)
-  const safeName = (file.name || "document").replace(/[^a-zA-Z0-9.\- _]/g, "_").slice(0, 80)
-  const ts = req.nextUrl.searchParams.get("ts") || `${Date.now()}`
+  // Supabase storage keys reject many characters ("string did not match the recognized pattern").
+  // Keep only safe chars; collapse the rest to hyphens; always keep a sane extension.
+  const rawName = file.name || "document"
+  const dot = rawName.lastIndexOf(".")
+  const base = (dot > 0 ? rawName.slice(0, dot) : rawName).replace(/[^A-Za-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "file"
+  const ext = (dot > 0 ? rawName.slice(dot + 1) : "").replace(/[^A-Za-z0-9]+/g, "").slice(0, 8).toLowerCase()
+  const safeName = ext ? `${base}.${ext}` : base
+  const ts = (req.nextUrl.searchParams.get("ts") || `${Date.now()}`).replace(/[^A-Za-z0-9]+/g, "")
   const path = `${pinId}/${folder}/${ts}-${safeName}`
 
   await ensureBucket()
@@ -102,7 +108,7 @@ export async function PATCH(req: NextRequest) {
   if (!pinId) return NextResponse.json({ error: "No profile" }, { status: 404 })
 
   const name = String(body?.name || "")
-  const newLabel = String(body?.label || "").replace(/[^a-zA-Z0-9.\- _]/g, "_").trim().slice(0, 80)
+  const newLabel = String(body?.label || "").replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80)
   if (!name || !newLabel) return NextResponse.json({ error: "name and label required" }, { status: 400 })
   const folder = folderOf(req, (body?.folder as string) || null)
   const ext = name.includes(".") ? "." + name.split(".").pop() : ""

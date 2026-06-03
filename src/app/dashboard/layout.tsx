@@ -438,7 +438,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <main className="p-4 lg:p-6">
+        <main className="p-4 lg:p-6 min-w-0 max-w-full overflow-x-hidden">
           <ImpersonationBanner />
           <FreeUpgradeBanner />
           <DashboardSectionVideo />

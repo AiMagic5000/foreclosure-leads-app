@@ -34,7 +34,8 @@ export async function GET(req: NextRequest) {
       .from('users')
       .select('role, subscription_tier, account_type, training_unlocked, profile_phone')
       .ilike('email', target.email)
-      .single()
+      .limit(1)
+      .maybeSingle()
     // users.account_type is the source of truth (what the admin sets + what the User Data
     // table shows). The pin's package_type can be stale, so prefer the users row.
     const effectiveAccountType = tUser?.account_type || target.packageType || 'basic'
@@ -56,7 +57,7 @@ export async function GET(req: NextRequest) {
 
   // Normal (self) resolution.
   const [{ data }, { data: pinData }] = await Promise.all([
-    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, profile_phone').ilike('email', email).single(),
+    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, profile_phone').ilike('email', email).limit(1).maybeSingle(),
     supabaseAdmin.from('user_pins').select('id, package_type, states_access, is_active, role').ilike('email', email).eq('is_active', true).single(),
   ])
 

@@ -298,7 +298,7 @@ export default function SettingsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <DocumentUploader folder="contingency-agreements" accept="image/*,application/pdf" />
+            <DocumentUploader folder="contingency-agreements" accept="image/*,video/*,application/pdf" />
           </CardContent>
         </Card>
 

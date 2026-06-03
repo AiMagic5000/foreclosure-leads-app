@@ -28,11 +28,14 @@ function digits(s: string) {
 export async function GET(req: NextRequest) {
   const { email, error } = await targetEmail(req)
   if (error) return NextResponse.json({ error }, { status: error === "Unauthorized" ? 401 : 403 })
-  const { data } = await supabaseAdmin
+  // Use limit(1) (not single()) — some accounts have duplicate users rows and single() errors on >1.
+  const { data: rows } = await supabaseAdmin
     .from("users")
     .select("profile_phone, sms_consent")
     .ilike("email", email as string)
-    .single()
+    .order("profile_phone", { ascending: false, nullsFirst: false })
+    .limit(1)
+  const data = rows?.[0]
   const phone = data?.profile_phone || ""
   return NextResponse.json({
     hasPhone: !!phone,

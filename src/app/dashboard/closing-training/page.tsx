@@ -212,6 +212,17 @@ export default function ClosingTrainingPage() {
     }
   }, [selectedModule, fetchResources])
 
+  // On mobile, auto-expand the first module once so users see there's a video there.
+  const autoExpandedRef = useRef(false)
+  useEffect(() => {
+    if (autoExpandedRef.current) return
+    if (isMobile && modules.length > 0) {
+      autoExpandedRef.current = true
+      setMobileExpandedId(modules[0].id)
+      setSelectedModule((cur) => cur ?? modules[0])
+    }
+  }, [isMobile, modules])
+
   // All modules are selectable/viewable -- content access is gated separately
   function isModuleAccessible(): boolean {
     return true
