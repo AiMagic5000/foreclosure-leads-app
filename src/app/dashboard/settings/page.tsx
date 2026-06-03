@@ -10,6 +10,7 @@ import Link from "next/link"
 import { UpgradeButton } from "@/components/upgrade-button"
 import { IntegrationsSettings } from "@/components/integrations-settings"
 import { usePin } from "@/lib/pin-context"
+import { PhoneUnlock } from "@/components/phone-unlock"
 import {
   User,
   CreditCard,
@@ -77,7 +78,7 @@ export default function SettingsPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Access Status Section */}
-        <Card className="bg-[#0f172a] text-white border-0">
+        <Card className="bg-[#0f172a] text-white border-0 shadow-xl">
           <CardHeader>
             <div className="flex items-center gap-2">
               <CreditCard className="h-5 w-5 text-white/80" />
@@ -176,7 +177,7 @@ export default function SettingsPage() {
         </Card>
 
         {/* Profile Section */}
-        <Card className="border-2 border-blue-900" style={{ borderStyle: "dashed", backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(30,58,95,0.07) 4px, rgba(30,58,95,0.07) 5px)" }}>
+        <Card className="border-2 border-blue-900 shadow-xl ring-1 ring-blue-900/10" style={{ borderStyle: "dashed", backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(30,58,95,0.07) 4px, rgba(30,58,95,0.07) 5px)" }}>
           <CardHeader>
             <div className="flex items-center gap-2">
               <User className="h-5 w-5 text-muted-foreground" />
@@ -244,10 +245,7 @@ export default function SettingsPage() {
                 <label className="text-sm font-medium">Company Name</label>
                 <Input placeholder="Your company name" />
               </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Phone Number</label>
-                <Input type="tel" placeholder="(555) 123-4567" />
-              </div>
+              <PhoneUnlock />
             </div>
 
             <Button className="w-full">Save Changes</Button>
@@ -274,7 +272,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Upgrades & Add-ons */}
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 shadow-lg">
           <CardHeader>
             <div className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-muted-foreground" />

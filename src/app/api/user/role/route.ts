@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
     }
     const { data: tUser } = await supabaseAdmin
       .from('users')
-      .select('role, subscription_tier, account_type, training_unlocked')
+      .select('role, subscription_tier, account_type, training_unlocked, profile_phone')
       .ilike('email', target.email)
       .single()
     // users.account_type is the source of truth (what the admin sets + what the User Data
@@ -50,12 +50,13 @@ export async function GET(req: NextRequest) {
       pinId: target.pinId,
       statesAccess: target.statesAccess,
       trainingUnlocked: !!tUser?.training_unlocked,
+      hasPhone: !!tUser?.profile_phone,
     })
   }
 
   // Normal (self) resolution.
   const [{ data }, { data: pinData }] = await Promise.all([
-    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked').ilike('email', email).single(),
+    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, profile_phone').ilike('email', email).single(),
     supabaseAdmin.from('user_pins').select('id, package_type, states_access, is_active, role').ilike('email', email).eq('is_active', true).single(),
   ])
 
@@ -76,5 +77,6 @@ export async function GET(req: NextRequest) {
     pinId,
     statesAccess,
     trainingUnlocked: !!data?.training_unlocked,
+    hasPhone: !!data?.profile_phone,
   })
 }

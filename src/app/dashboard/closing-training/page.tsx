@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef, useMemo } from "react"
+import { useRouter } from "next/navigation"
 import { useUser } from "@clerk/nextjs"
 import {
   Play,
@@ -99,7 +100,8 @@ export default function ClosingTrainingPage() {
   const { user } = useUser()
   const userEmail = user?.emailAddresses?.[0]?.emailAddress?.toLowerCase() || ""
   const isAdmin = userEmail === ADMIN_EMAIL.toLowerCase()
-  const { accountType, trainingUnlocked } = usePin()
+  const { accountType, trainingUnlocked, hasPhone } = usePin()
+  const router = useRouter()
   const [modules, setModules] = useState<TrainingModule[]>([])
   const [selectedModule, setSelectedModule] = useState<TrainingModule | null>(null)
   const [resources, setResources] = useState<TrainingResource[]>([])
@@ -257,12 +259,12 @@ export default function ClosingTrainingPage() {
     vid.onerror = () => vid.remove()
   }
 
-  // Check if user's tier has access to a module's content (video + resources)
-  function hasContentAccess(mod: TrainingModule): boolean {
-    if (isAdmin || trainingUnlocked) return true
-    const tier = (accountType || "basic") as AccountTier
-    const levels = mod.access_level || ["basic", "partnership", "owner_operator", "admin"]
-    return levels.includes(tier)
+  // Access to a module's video + resources requires a phone number on file
+  // (admins and manually-unlocked accounts always pass). Everyone can SEE every
+  // module; playback and downloads are what the phone unlocks.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function hasContentAccess(_mod: TrainingModule): boolean {
+    return isAdmin || trainingUnlocked || hasPhone
   }
 
   // Get the display label for required tiers
@@ -489,6 +491,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handleDownload(resource: TrainingResource) {
+    if (!isAdmin && !trainingUnlocked && !hasPhone) { setShowAccessPopup("PHONE"); return }
     const a = document.createElement("a")
     a.href = resource.file_url
     a.download = resource.file_name
@@ -499,6 +502,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handlePrint(resource: TrainingResource) {
+    if (!isAdmin && !trainingUnlocked && !hasPhone) { setShowAccessPopup("PHONE"); return }
     window.open(resource.file_url, "_blank")
   }
 
@@ -674,7 +678,7 @@ export default function ClosingTrainingPage() {
                                 onClick={() => {
                                   if (!selectedModule.video_url) return
                                   if (!hasContentAccess(selectedModule)) {
-                                    setShowAccessPopup(getRequiredTierLabel(selectedModule))
+                                    setShowAccessPopup("PHONE")
                                     return
                                   }
                                   setPlayingVideoId(selectedModule.id)
@@ -785,7 +789,7 @@ export default function ClosingTrainingPage() {
                                 <div className="bg-background/80 backdrop-blur-sm rounded-lg px-4 py-2 border shadow-sm">
                                   <p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
                                     <Lock className="h-3.5 w-3.5" />
-                                    Requires {getRequiredTierLabel(selectedModule)} account
+                                    Add your phone number to unlock
                                   </p>
                                 </div>
                               </div>
@@ -1026,7 +1030,7 @@ export default function ClosingTrainingPage() {
                       onClick={() => {
                         if (!selectedModule.video_url) return
                         if (!hasContentAccess(selectedModule)) {
-                          setShowAccessPopup(getRequiredTierLabel(selectedModule))
+                          setShowAccessPopup("PHONE")
                           return
                         }
                         setPlayingVideoId(selectedModule.id)
@@ -1386,7 +1390,7 @@ export default function ClosingTrainingPage() {
                       <div className="bg-background/90 backdrop-blur-sm rounded-lg px-6 py-3 border shadow-lg">
                         <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                           <Lock className="h-4 w-4" />
-                          Resources require {getRequiredTierLabel(selectedModule)} account
+                          Add your phone number to unlock these resources
                         </p>
                       </div>
                     </div>
@@ -1480,31 +1484,35 @@ export default function ClosingTrainingPage() {
         />
       </div>
 
-      {/* Access restriction popup */}
+      {/* Phone-gate popup — unlock training by adding a phone number */}
       {showAccessPopup && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
           onClick={() => setShowAccessPopup(null)}
         >
           <div
-            className="bg-background rounded-xl p-6 max-w-sm mx-4 shadow-2xl border border-border text-center"
+            className="bg-background rounded-xl p-6 max-w-sm mx-auto shadow-2xl border border-border text-center"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mx-auto w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mb-4">
               <Lock className="h-6 w-6 text-amber-600 dark:text-amber-400" />
             </div>
-            <h3 className="text-lg font-semibold mb-2">Restricted Content</h3>
+            <h3 className="text-lg font-semibold mb-2">Add your phone number to unlock</h3>
             <p className="text-sm text-muted-foreground mb-5">
-              This training module is available for <span className="font-medium text-foreground">{showAccessPopup}</span> accounts.
-              Upgrade your plan to access this content.
+              Add your phone number to your account profile to unlock the training videos and downloadable resources.
             </p>
             <Button
-              onClick={() => setShowAccessPopup(null)}
-              size="sm"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6"
+              onClick={() => { setShowAccessPopup(null); router.push("/dashboard/settings?flash=phone") }}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
             >
-              Got it
+              Unlock Training
             </Button>
+            <button
+              onClick={() => setShowAccessPopup(null)}
+              className="text-sm text-muted-foreground hover:text-foreground mt-1"
+            >
+              Not now
+            </button>
           </div>
         </div>
       )}

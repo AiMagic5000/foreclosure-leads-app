@@ -16,6 +16,7 @@ interface PinContextType {
   userRole: 'standard' | 'owner_operator' | 'admin'
   accountType: AccountType
   trainingUnlocked: boolean
+  hasPhone: boolean
   pinEmail: string | null
   pinId: string | null
   isRealAdmin: boolean
@@ -39,6 +40,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
   const [userRole, setUserRole] = useState<'standard' | 'owner_operator' | 'admin'>('standard')
   const [accountType, setAccountType] = useState<AccountType>('basic')
   const [trainingUnlocked, setTrainingUnlocked] = useState(false)
+  const [hasPhone, setHasPhone] = useState(false)
   const [pinEmail, setPinEmail] = useState<string | null>(null)
   const [pinId, setPinId] = useState<string | null>(null)
   const [impersonatePinId, setImpersonatePinId] = useState<string | null>(() =>
@@ -85,6 +87,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
         // Effective identity (self, or the impersonated user) drives every flag.
         setAccountType(acctType)
         setTrainingUnlocked(!!data.trainingUnlocked || !!data.isAdmin)
+        setHasPhone(!!data.hasPhone)
         setIsAdmin(!!data.isAdmin)
         setIsOwnerOperator(acctType === 'owner_operator' || acctType === 'junior_owner_operator')
         setIsFullOwnerOperator(acctType === 'owner_operator' || acctType === 'admin' || !!data.isAdmin)
@@ -168,6 +171,7 @@ export function PinProvider({ children }: { children: ReactNode }) {
         userRole,
         accountType,
         trainingUnlocked,
+        hasPhone,
         pinEmail,
         pinId,
         isRealAdmin,
