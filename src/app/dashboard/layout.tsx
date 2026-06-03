@@ -42,6 +42,7 @@ import { DashboardSectionVideo } from "@/components/dashboard-section-video"
 import { ImpersonationBanner } from "@/components/impersonation-banner"
 import { FreeUpgradeBanner } from "@/components/free-upgrade-banner"
 import { ChatWidget } from "@/components/chat-widget"
+import { ActivityTracker } from "@/components/activity-tracker"
 import { cn } from "@/lib/utils"
 import { PinProvider, usePin } from "@/lib/pin-context"
 
@@ -107,6 +108,7 @@ const navSections: NavSection[] = [
       { name: "Export", href: "/dashboard/export", icon: Download },
       { name: "Admin", href: "/dashboard/admin", icon: Shield, badge: { text: "Staff", color: "red" } },
       { name: "Pipeline Monitor", href: "/dashboard/admin/pipeline", icon: Activity, badge: { text: "Live", color: "emerald" } },
+      { name: "User Activity", href: "/dashboard/admin/user-activity", icon: TrendingUp, badge: { text: "Live", color: "blue" } },
       { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Legal", color: "orange" } },
       { name: "Compliance", href: "/dashboard/admin/compliance", icon: Shield, badge: { text: "Gate", color: "red" } },
       { name: "User Data", href: "/dashboard/user-data", icon: UserCircle, badge: { text: "CRM", color: "teal" } },
@@ -444,6 +446,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
         </main>
       </div>
       <ChatWidget />
+      <ActivityTracker />
     </div>
   )
 }
