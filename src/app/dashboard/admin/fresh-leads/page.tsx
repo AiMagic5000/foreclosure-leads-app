@@ -149,15 +149,16 @@ export default function FreshLeadsPage() {
 
       {requests.length > 0 && (
         <div className="mb-4 border border-amber-300 bg-amber-50 rounded-lg p-3">
-          <div className="text-sm font-semibold text-amber-900 mb-2">{requests.length} pending lead request{requests.length > 1 ? "s" : ""} — review &amp; issue</div>
+          <div className="text-sm font-semibold text-amber-900 mb-1">{requests.length} pending agent request{requests.length > 1 ? "s" : ""} — this is what the agent ASKED for, not available inventory</div>
+          <div className="text-xs text-amber-700 mb-2">&ldquo;3 leads · prefers NJ, TX&rdquo; = the agent wants 3 leads and prefers those states. Availability is the table below.</div>
           <div className="flex flex-col gap-2">
             {requests.map((req) => (
               <div key={req.id} className={`flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-md border bg-white ${activeRequest?.id === req.id ? "ring-2 ring-amber-400" : ""}`}>
                 <div className="text-sm">
                   <span className="font-medium">{req.user_name || req.user_email}</span>
                   <span className="text-gray-500"> · {req.account_type || "?"} · </span>
-                  <span className="font-semibold text-blue-600">{req.requested_count} lead{req.requested_count > 1 ? "s" : ""}</span>
-                  {req.state_preference && <span className="text-gray-500"> · prefers {req.state_preference}</span>}
+                  <span className="font-semibold text-blue-600">requested {req.requested_count}</span>
+                  {req.state_preference && <span className="text-gray-500"> · prefers {req.state_preference} (preference only)</span>}
                 </div>
                 <button onClick={() => fulfillRequest(req)} className="px-3 py-1 text-xs font-medium rounded-md bg-amber-600 text-white hover:bg-amber-700">
                   {activeRequest?.id === req.id ? "Selected — pick leads ↓" : "Fulfill"}
