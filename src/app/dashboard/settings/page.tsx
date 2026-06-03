@@ -74,95 +74,7 @@ export default function SettingsPage() {
         <p className="text-muted-foreground">Manage your account and subscription</p>
       </div>
 
-      {/* Outreach integrations — agents add their own SlyBroadcast + TextBee credentials */}
-      <div className="space-y-3">
-        <div>
-          <h2 className="text-lg font-bold tracking-tight">Outreach Integrations</h2>
-          <p className="text-sm text-muted-foreground">Connect your ringless voicemail and SMS accounts so your drips and texts send under your own name.</p>
-        </div>
-        <IntegrationsSettings />
-      </div>
-
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Profile Section */}
-        <Card className="border-2 border-blue-900" style={{ borderStyle: "dashed", backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(30,58,95,0.07) 4px, rgba(30,58,95,0.07) 5px)" }}>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <User className="h-5 w-5 text-muted-foreground" />
-              <CardTitle>Profile</CardTitle>
-            </div>
-            <CardDescription>Your account information</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="relative group">
-                <img
-                  src={avatarSrc}
-                  alt="Profile"
-                  className="h-20 w-20 rounded-full object-cover border-2 border-background shadow-md"
-                />
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                >
-                  <Camera className="h-5 w-5 text-white" />
-                </button>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                />
-              </div>
-              <div>
-                <p className="font-medium">
-                  {displayName}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {displayEmail || "email@example.com"}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="text-xs text-primary hover:underline mt-1"
-                >
-                  Change profile photo
-                </button>
-              </div>
-            </div>
-
-            <div className="pt-4 border-t space-y-3">
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Full Name</label>
-                <Input key={displayName} defaultValue={displayName === "User" ? "" : displayName} />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Email</label>
-                <Input
-                  key={displayEmail}
-                  defaultValue={displayEmail}
-                  disabled
-                />
-                <p className="text-xs text-muted-foreground">
-                  Managed by Clerk authentication
-                </p>
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Company Name</label>
-                <Input placeholder="Your company name" />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm font-medium">Phone Number</label>
-                <Input type="tel" placeholder="(555) 123-4567" />
-              </div>
-            </div>
-
-            <Button className="w-full">Save Changes</Button>
-          </CardContent>
-        </Card>
-
         {/* Access Status Section */}
         <Card className="bg-[#0f172a] text-white border-0">
           <CardHeader>
@@ -243,6 +155,94 @@ export default function SettingsPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Profile Section */}
+        <Card className="border-2 border-blue-900" style={{ borderStyle: "dashed", backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(30,58,95,0.07) 4px, rgba(30,58,95,0.07) 5px)" }}>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <User className="h-5 w-5 text-muted-foreground" />
+              <CardTitle>Profile</CardTitle>
+            </div>
+            <CardDescription>Your account information</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center gap-4">
+              <div className="relative group">
+                <img
+                  src={avatarSrc}
+                  alt="Profile"
+                  className="h-20 w-20 rounded-full object-cover border-2 border-background shadow-md"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                >
+                  <Camera className="h-5 w-5 text-white" />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </div>
+              <div>
+                <p className="font-medium">
+                  {displayName}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {displayEmail || "email@example.com"}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="text-xs text-primary hover:underline mt-1"
+                >
+                  Change profile photo
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t space-y-3">
+              <div className="grid gap-2">
+                <label className="text-sm font-medium">Full Name</label>
+                <Input key={displayName} defaultValue={displayName === "User" ? "" : displayName} />
+              </div>
+              <div className="grid gap-2">
+                <label className="text-sm font-medium">Email</label>
+                <Input
+                  key={displayEmail}
+                  defaultValue={displayEmail}
+                  disabled
+                />
+                <p className="text-xs text-muted-foreground">
+                  Managed by Clerk authentication
+                </p>
+              </div>
+              <div className="grid gap-2">
+                <label className="text-sm font-medium">Company Name</label>
+                <Input placeholder="Your company name" />
+              </div>
+              <div className="grid gap-2">
+                <label className="text-sm font-medium">Phone Number</label>
+                <Input type="tel" placeholder="(555) 123-4567" />
+              </div>
+            </div>
+
+            <Button className="w-full">Save Changes</Button>
+          </CardContent>
+        </Card>
+
+        {/* Outreach integrations — full width, under the account containers */}
+        <div className="lg:col-span-2 space-y-3">
+          <div>
+            <h2 className="text-lg font-bold tracking-tight">Outreach Integrations</h2>
+            <p className="text-sm text-muted-foreground">Connect your ringless voicemail and SMS accounts so your drips and texts send under your own name.</p>
+          </div>
+          <IntegrationsSettings />
+        </div>
 
         {/* Upgrades & Add-ons */}
         <Card className="lg:col-span-2">

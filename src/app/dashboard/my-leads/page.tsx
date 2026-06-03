@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useMemo, useCallback } from "react"
+import { useRouter } from "next/navigation"
 import { usePin } from "@/lib/pin-context"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -282,16 +283,21 @@ const MOCK_LEAD: LeadData = {
 }
 
 const LEAD_LIMITS: Record<string, number> = {
-  basic: 10,
-  free_webcast: 10,
-  partnership: 25,
-  owner_operator: 50,
+  basic: 0,
+  free: 0,
+  free_webcast: 0,
+  partnership: 50,
+  junior_owner_operator: 50,
+  owner_operator: 100,
   admin: 9999,
 }
 
 const ACCOUNT_LABELS: Record<string, string> = {
-  basic: "Basic",
-  partnership: "Partnership",
+  basic: "Free",
+  free: "Free",
+  free_webcast: "Free",
+  partnership: "Asset Recovery Agent",
+  junior_owner_operator: "Junior Owner Operator",
   owner_operator: "Owner Operator",
   admin: "Admin",
 }
@@ -1008,6 +1014,16 @@ export default function MyLeadsPage() {
   const [showUpgradePopup, setShowUpgradePopup] = useState(false)
   // Basic-tier lead-request upgrade modal
   const [showBasicUpgradeModal, setShowBasicUpgradeModal] = useState(false)
+  const router = useRouter()
+  // Free tier hit "Request Leads" — show the upgrade prompt, then auto-route to My Account.
+  useEffect(() => {
+    if (!showBasicUpgradeModal) return
+    const t = setTimeout(() => {
+      setShowBasicUpgradeModal(false)
+      router.push("/dashboard/settings")
+    }, 2600)
+    return () => clearTimeout(t)
+  }, [showBasicUpgradeModal, router])
 
   // Admin view-as-user
   const [allUsers, setAllUsers] = useState<{ id: string; email: string; package_type: string; account_type: string; is_active: boolean }[]>([])
@@ -1018,7 +1034,7 @@ export default function MyLeadsPage() {
   const activeAccountType = viewAsUserId
     ? (allUsers.find((u) => u.id === viewAsUserId)?.account_type || "basic")
     : accountType
-  const maxLeads = LEAD_LIMITS[activeAccountType] || 10
+  const maxLeads = LEAD_LIMITS[activeAccountType] ?? 10
 
   // Fetch all users for admin dropdown
   useEffect(() => {
@@ -1457,27 +1473,26 @@ export default function MyLeadsPage() {
           onClick={() => setShowBasicUpgradeModal(false)}
         >
           <div
-            className="bg-white dark:bg-slate-900 rounded-xl border shadow-2xl w-full max-w-md p-6 text-center"
+            className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-md p-6 text-center"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-100 to-amber-200 ring-4 ring-amber-200/50">
               <Lock className="h-7 w-7 text-amber-600" />
             </div>
-            <h3 className="text-lg font-bold mb-3 text-white">Lead Delivery Not Included</h3>
-            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-              Heads up &mdash; your account is currently on the <strong>Basic tier</strong>, which doesn&apos;t include lead delivery. To unlock leads, you&apos;ll need to grab the Asset Recovery Agent Partnership Package from our site:
+            <h3 className="text-lg font-bold mb-3 text-white">Please upgrade to unlock leads</h3>
+            <p className="text-sm text-slate-300 mb-5 leading-relaxed">
+              Lead delivery isn&apos;t included on your <strong className="text-white">Free tier</strong>. Taking you to
+              <strong className="text-white"> My Account</strong> to view your upgrade options&hellip;
             </p>
-            <a
-              href="https://usforeclosureleads.com/#partnership-package"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => { setShowBasicUpgradeModal(false); router.push("/dashboard/settings") }}
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 font-semibold shadow-md text-sm mb-3 w-full justify-center"
             >
-              View Partnership Package
-            </a>
+              Go to My Account now
+            </button>
             <button
               onClick={() => setShowBasicUpgradeModal(false)}
-              className="text-sm text-white hover:text-slate-200 mt-2"
+              className="text-sm text-slate-400 hover:text-white mt-2"
             >
               Close
             </button>
@@ -1526,12 +1541,12 @@ export default function MyLeadsPage() {
       {/* Lead Request Modal */}
       {showRequestModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" onClick={() => setShowRequestModal(false)}>
-          <div className="bg-white dark:bg-slate-900 rounded-xl border shadow-2xl w-full max-w-md p-6" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-md p-6" onClick={(e) => e.stopPropagation()}>
             {requestSuccess ? (
               <div className="text-center py-4">
                 <CheckCircle2 className="h-12 w-12 text-emerald-500 mx-auto mb-4" />
-                <h3 className="text-lg font-bold mb-2">Request Submitted</h3>
-                <p className="text-sm text-muted-foreground mb-4">
+                <h3 className="text-lg font-bold mb-2 text-white">Request Submitted</h3>
+                <p className="text-sm text-slate-300 mb-4">
                   Your lead request has been sent to our team. We will assign leads to your account within 1-2 business days.
                 </p>
                 <Button onClick={() => setShowRequestModal(false)} variant="outline">Close</Button>
@@ -1545,7 +1560,7 @@ export default function MyLeadsPage() {
                   </button>
                 </div>
                 <p className="text-sm text-slate-400 mb-4">
-                  As a <strong className="text-emerald-400">{ACCOUNT_LABELS[activeAccountType] || "Basic"}</strong> account, you can request up to <strong className="text-white">{maxLeads}</strong> leads.
+                  As a <strong className="text-emerald-400">{ACCOUNT_LABELS[activeAccountType] || "Basic"}</strong> account, you can request up to <strong className="text-white">{maxLeads}</strong> leads per week.
                 </p>
                 <div className="space-y-4">
                   <div>
@@ -1561,7 +1576,7 @@ export default function MyLeadsPage() {
                       />
                       <span className="text-2xl font-bold text-blue-400 w-12 text-center">{requestCount}</span>
                     </div>
-                    <p className="text-xs text-slate-400 mt-1">Max: {maxLeads} leads</p>
+                    <p className="text-xs text-slate-400 mt-1">Max: {maxLeads} leads per week{activeAccountType === "junior_owner_operator" ? " — state-specific requests welcome in the notes below" : ""}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-white mb-1.5 block">State Preference (optional)</label>
