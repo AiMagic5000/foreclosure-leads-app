@@ -114,7 +114,7 @@ export default function SettingsPage() {
                   ? "All 50 states, skip-traced leads, automation, and the full business build-out are included — the complete platform."
                   : isAgent
                   ? "50 exclusive DNC-scrubbed leads every week, certified letters mailed for you, RVM / SMS / email automation under your name, and your dedicated landing page."
-                  : "You have free access to browse the platform and preview leads. Upgrade to a paid program to unlock weekly exclusive leads and outreach under your name."}
+                  : "You have free access to browse the platform and preview our resource documents under each free tier video. Upgrade to a paid program to unlock weekly exclusive leads and outreach under your name."}
               </p>
             </div>
 
