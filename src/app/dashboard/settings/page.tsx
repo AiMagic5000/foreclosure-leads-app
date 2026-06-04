@@ -139,19 +139,39 @@ export default function SettingsPage() {
             {/* Free tier — upgrade to the $995 Asset Recovery Agent program */}
             {isFreeTier && (
               <div className="p-3 rounded-lg border border-emerald-400/40 bg-emerald-500/10">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="font-medium text-white">Upgrade: Asset Recovery Agent</p>
-                    <p className="text-sm text-white/70">$995 — weekly exclusive leads, certified mail, and outreach automation.</p>
+                <p className="font-medium text-white">Upgrade: Asset Recovery Agent</p>
+                <p className="text-sm text-white/70 mb-3">$995 — weekly exclusive leads, certified mail, and outreach automation. Choose how to pay:</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* Pay in full */}
+                  <div className="flex flex-col justify-between rounded-lg border border-emerald-400/40 bg-emerald-500/10 p-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">Pay in full</p>
+                      <p className="text-2xl font-bold text-white">$995</p>
+                      <p className="text-xs text-white/60 mb-3">One-time, full access today.</p>
+                    </div>
+                    <a
+                      href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
+                      target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600"
+                    >
+                      Pay $995
+                    </a>
                   </div>
-                  <a
-                    href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex flex-none items-center justify-center rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600"
-                  >
-                    Upgrade
-                  </a>
+                  {/* 33% down */}
+                  <div className="flex flex-col justify-between rounded-lg border border-amber-400/40 bg-amber-500/10 p-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">Get started — 33% down</p>
+                      <p className="text-2xl font-bold text-white">$331</p>
+                      <p className="text-xs text-white/60 mb-3">Start now, pay the balance over time (partnership plan).</p>
+                    </div>
+                    <a
+                      href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership-13-down"
+                      target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600"
+                    >
+                      Start for $331
+                    </a>
+                  </div>
                 </div>
               </div>
             )}
