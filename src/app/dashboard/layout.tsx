@@ -235,7 +235,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
             {banReason ? <> Reason: <span className="font-medium text-white">{banReason}</span>.</> : null}
           </p>
           <p className="mt-3 text-sm text-slate-400">
-            If you believe this is a mistake, contact us at <a href="tel:+18885458007" className="font-semibold text-white underline">(888) 545-8007</a>.
+            If you believe this is a mistake, contact us at <a href="tel:+18885458007" className="font-semibold text-white underline">(888) 545-8007</a> or <a href="mailto:support@usforeclosureleads.com" className="font-semibold text-white underline">support@usforeclosureleads.com</a>.
           </p>
           <div className="mt-5"><UserButton afterSignOutUrl="/" /></div>
         </div>
