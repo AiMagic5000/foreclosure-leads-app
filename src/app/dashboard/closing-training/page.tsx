@@ -282,7 +282,8 @@ export default function ClosingTrainingPage() {
     return levels.includes(tier)
   }
 
-  // Video #1 is a free preview — playable by anyone, no tier or phone required.
+  // Video #1 is the free-of-tier preview (no paid plan needed) — but a phone is
+  // still required (enforced in hasVideoAccess), so free no-phone accounts are gated.
   function isFreePreview(mod: TrainingModule | null): boolean {
     // The first module in display order is the free preview — robust to reordering.
     return !!mod && modules.length > 0 && mod.id === modules[0].id
@@ -305,8 +306,12 @@ export default function ClosingTrainingPage() {
   // admins / manually-unlocked accounts bypass both.
   function hasVideoAccess(mod: TrainingModule | null): boolean {
     if (!mod) return false
-    if (isFreePreview(mod) || effectiveIsAdmin || trainingUnlocked) return true
-    return tierAllowed(mod) && hasPhone
+    if (effectiveIsAdmin || trainingUnlocked) return true
+    // A phone number on file is required for ALL closing training — including the
+    // free preview. No phone = no access (free accounts must add a phone first).
+    if (!hasPhone) return false
+    if (isFreePreview(mod)) return true
+    return tierAllowed(mod)
   }
   const hasResourceAccess = hasVideoAccess
 
