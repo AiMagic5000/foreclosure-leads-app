@@ -224,29 +224,45 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
   // Banned accounts get a full-screen block — no dashboard, no content.
   if (banned) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 p-6">
-        <div className="max-w-md rounded-2xl border border-red-500/30 bg-slate-900 p-8 text-center shadow-2xl">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15">
-            <Lock className="h-7 w-7 text-red-400" />
+      <div className="flex min-h-screen items-center justify-center p-6" style={{ backgroundColor: "#241c12" }}>
+        <div className="w-full max-w-md sm:max-w-lg overflow-hidden rounded-2xl border-2 text-center shadow-2xl" style={{ backgroundColor: "#f4ecd8", borderColor: "#8a6a43" }}>
+          {/* Suspension artwork — landscape on desktop, portrait on mobile */}
+          <img
+            src="/account-suspended-desktop.jpg"
+            alt="Account suspended - Foreclosure Recovery Inc."
+            className="hidden sm:block w-full"
+          />
+          <img
+            src="/account-suspended-mobile.jpg"
+            alt="Account suspended - Foreclosure Recovery Inc."
+            className="block sm:hidden w-full"
+          />
+          <div className="p-7">
+            <img
+              src="https://cdn.prod.website-files.com/67ec4cfbdf0509c176a8cdfe/69897785586ae271c69d085e_image%20(1).png"
+              alt="Foreclosure Recovery Inc."
+              className="mx-auto mb-4 h-9 w-auto"
+            />
+            <h1 className="text-xl font-bold" style={{ color: "#5b4327" }}>Account suspended</h1>
+            <p className="mt-2 text-sm" style={{ color: "#6b5640" }}>
+              Your account has been suspended and dashboard access is disabled.
+              {banReason ? <> Reason: <span className="font-semibold" style={{ color: "#5b4327" }}>{banReason}</span>.</> : null}
+            </p>
+            <p className="mt-3 text-sm" style={{ color: "#6b5640" }}>
+              If you believe this is a mistake, contact us at <a href="tel:+18885458007" className="font-semibold underline" style={{ color: "#8a5a1f" }}>(888) 545-8007</a> or <a href="mailto:support@usforeclosureleads.com" className="font-semibold underline" style={{ color: "#8a5a1f" }}>support@usforeclosureleads.com</a>.
+            </p>
+            {impersonating ? (
+              <button
+                onClick={() => clearImpersonation()}
+                className="mt-5 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white"
+                style={{ backgroundColor: "#8a6a43" }}
+              >
+                Exit impersonation &mdash; back to admin
+              </button>
+            ) : (
+              <div className="mt-5"><UserButton afterSignOutUrl="/" /></div>
+            )}
           </div>
-          <h1 className="text-xl font-bold text-white">Account suspended</h1>
-          <p className="mt-2 text-sm text-slate-300">
-            Your account has been suspended and dashboard access is disabled.
-            {banReason ? <> Reason: <span className="font-medium text-white">{banReason}</span>.</> : null}
-          </p>
-          <p className="mt-3 text-sm text-slate-400">
-            If you believe this is a mistake, contact us at <a href="tel:+18885458007" className="font-semibold text-white underline">(888) 545-8007</a> or <a href="mailto:support@usforeclosureleads.com" className="font-semibold text-white underline">support@usforeclosureleads.com</a>.
-          </p>
-          {impersonating ? (
-            <button
-              onClick={() => clearImpersonation()}
-              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-200"
-            >
-              Exit impersonation &mdash; back to admin
-            </button>
-          ) : (
-            <div className="mt-5"><UserButton afterSignOutUrl="/" /></div>
-          )}
         </div>
       </div>
     )
