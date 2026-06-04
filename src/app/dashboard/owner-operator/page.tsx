@@ -163,6 +163,17 @@ export default function OwnerOperatorPage() {
             loading="lazy"
           />
           <p className="mt-2 text-xs text-amber-800/70 text-center">Example of your custom white-label website</p>
+          <a
+            href="https://www.usforeclosurerecovery.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-900 transition hover:bg-amber-100"
+          >
+            See it live: usforeclosurerecovery.com
+          </a>
+          <p className="mt-2 text-xs text-amber-800/70 text-center">
+            This is our claimant-facing site &mdash; the same site we point homeowners to during outreach.
+          </p>
         </div>
       </div>
 
