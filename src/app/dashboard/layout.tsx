@@ -185,7 +185,7 @@ function BadgeLabel({ color, text }: { color: string; text: string }) {
 
 function DashboardInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const { accountType, banned, banReason } = usePin()
+  const { accountType, banned, banReason, impersonating, clearImpersonation } = usePin()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -237,7 +237,16 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           <p className="mt-3 text-sm text-slate-400">
             If you believe this is a mistake, contact us at <a href="tel:+18885458007" className="font-semibold text-white underline">(888) 545-8007</a> or <a href="mailto:support@usforeclosureleads.com" className="font-semibold text-white underline">support@usforeclosureleads.com</a>.
           </p>
-          <div className="mt-5"><UserButton afterSignOutUrl="/" /></div>
+          {impersonating ? (
+            <button
+              onClick={() => clearImpersonation()}
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-200"
+            >
+              Exit impersonation &mdash; back to admin
+            </button>
+          ) : (
+            <div className="mt-5"><UserButton afterSignOutUrl="/" /></div>
+          )}
         </div>
       </div>
     )
