@@ -54,11 +54,24 @@ export async function POST(request: NextRequest) {
 
   const { data: dbUser } = await supabaseAdmin
     .from("users")
-    .select("account_type")
+    .select("account_type, subscription_tier")
     .eq("clerk_id", userId)
     .single()
 
   const accountType = dbUser?.account_type || "basic"
+  const subTier = dbUser?.subscription_tier || "free"
+
+  // Hard gate: free/basic tiers cannot request leads — must upgrade to a paid plan.
+  // (Frontend shows the upgrade modal; this enforces it server-side so the request
+  // can never be created via a stale build or a direct API call.)
+  const FREE_TIERS = ["basic", "free", "free_webcast"]
+  if (FREE_TIERS.includes(accountType) || FREE_TIERS.includes(subTier)) {
+    return NextResponse.json(
+      { error: "upgrade_required", message: "Lead requests require a paid plan. Upgrade in My Account to unlock lead delivery." },
+      { status: 403 }
+    )
+  }
+
   const maxLeads = LEAD_LIMITS[accountType] || 10
 
   const requestedCount = Math.min(Math.max(1, Number(leadCount) || 1), maxLeads)
