@@ -6,6 +6,7 @@ import { Check, Phone, FileText, Crown, Building2, Globe, ShieldCheck, X } from 
 const AGENT_995_URL = "https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
 
 const BUILD_OUT = [
+  "Up to 50 skip-traced leads per week, every week for 3 months",
   "Registered Agent Service (first year included)",
   "Operating Agreement & Bylaws",
   "DUNS & Bradstreet Registration",
