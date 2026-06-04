@@ -33,16 +33,29 @@ export async function GET(req: NextRequest) {
     const qstr = (searchParams.get('agents') || '').toLowerCase().trim()
     const { data, error } = await supabaseAdmin
       .from('user_pins')
-      .select('id, full_name, display_name, email')
+      .select('id, full_name, display_name, email, package_type')
       .eq('is_active', true)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    const TIER_LABEL: Record<string, string> = {
+      basic: 'Free', free: 'Free', free_webcast: 'Free', partnership: 'Partnership',
+      junior_owner_operator: 'Jr Owner Operator', owner_operator: 'Owner Operator', admin: 'Admin',
+    }
     const agents = (data || [])
       .map((p) => {
-        const pin = p as { id: string; full_name?: string; display_name?: string; email?: string }
-        return { pinId: pin.id, name: pin.display_name || pin.full_name || pin.email || '(unnamed)', email: pin.email || '' }
+        const pin = p as { id: string; full_name?: string; display_name?: string; email?: string; package_type?: string }
+        const tierRaw = pin.package_type || 'basic'
+        return {
+          pinId: pin.id,
+          name: pin.display_name || pin.full_name || pin.email || '(unnamed)',
+          email: pin.email || '',
+          tier: TIER_LABEL[tierRaw] || tierRaw,
+        }
       })
+      // No query -> return the WHOLE list (so the dropdown loads everyone); with a
+      // query, filter by name/email. Admin is the human-in-the-loop verifier.
       .filter((a) => !qstr || a.name.toLowerCase().includes(qstr) || a.email.toLowerCase().includes(qstr))
-      .slice(0, 10)
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .slice(0, 500)
     return NextResponse.json({ agents })
   }
 

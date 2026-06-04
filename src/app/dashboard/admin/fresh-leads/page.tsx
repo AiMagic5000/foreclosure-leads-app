@@ -40,7 +40,7 @@ interface Lead {
   case_number: string | null
 }
 interface StateOpt { state: string; count: number }
-interface Agent { pinId: string; name: string; email: string }
+interface Agent { pinId: string; name: string; email: string; tier?: string }
 interface LeadRequest {
   id: string; user_email: string; user_name: string | null; account_type: string | null
   requested_count: number; state_preference: string | null; operator_pin_id: string | null; created_at: string
@@ -95,9 +95,10 @@ export default function FreshLeadsPage() {
   useEffect(() => { loadLeads() }, [loadLeads])
   useEffect(() => { loadRequests() }, [loadRequests])
 
+  const [agentsOpen, setAgentsOpen] = useState(false)
+  // Load the full operator list (filtered by query if typed). Empty query => everyone.
   useEffect(() => {
     let active = true
-    if (agentQuery.trim().length < 2) { setAgents([]); return }
     fetch(`/api/admin/fresh-leads?agents=${encodeURIComponent(agentQuery)}`)
       .then((r) => r.json()).then((j) => { if (active) setAgents(j.agents || []) })
     return () => { active = false }
@@ -185,15 +186,22 @@ export default function FreshLeadsPage() {
         <div className="relative">
           <div className="flex items-center gap-2 px-3 py-2 bg-white border rounded-lg">
             <Search className="w-4 h-4 text-gray-400" />
-            <input value={agent ? agent.name : agentQuery} onChange={(e) => { setAgent(null); setAgentQuery(e.target.value) }} placeholder="Search agent by name or email…" className="text-sm outline-none w-64" />
+            <input value={agent ? agent.name : agentQuery}
+              onFocus={() => setAgentsOpen(true)}
+              onChange={(e) => { setAgent(null); setAgentQuery(e.target.value); setAgentsOpen(true) }}
+              placeholder="Click to pick an agent (or type to filter)…" className="text-sm outline-none w-72" />
           </div>
-          {agents.length > 0 && !agent && (
-            <div className="absolute z-10 mt-1 w-full bg-white border rounded-lg shadow-lg max-h-64 overflow-auto">
+          {agentsOpen && !agent && <div className="fixed inset-0 z-10" onClick={() => setAgentsOpen(false)} />}
+          {agentsOpen && !agent && (
+            <div className="absolute z-20 mt-1 w-96 bg-white border rounded-lg shadow-lg max-h-72 overflow-auto">
+              <div className="px-3 py-1.5 text-[11px] uppercase tracking-wide text-gray-400 border-b sticky top-0 bg-white">{agents.length} users</div>
               {agents.map((a) => (
-                <button key={a.pinId} onClick={() => { setAgent(a); setAgents([]) }} className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-50">
-                  <span className="font-medium">{a.name}</span>{a.email && <span className="text-gray-500"> · {a.email}</span>}
+                <button key={a.pinId} onClick={() => { setAgent(a); setAgentsOpen(false) }} className="flex items-center justify-between gap-2 w-full text-left px-3 py-2 text-sm hover:bg-emerald-50">
+                  <span><span className="font-medium">{a.name}</span>{a.email && <span className="text-gray-500"> · {a.email}</span>}</span>
+                  {a.tier && <span className="shrink-0 text-[11px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">{a.tier}</span>}
                 </button>
               ))}
+              {agents.length === 0 && <div className="px-3 py-3 text-sm text-gray-400">No users found</div>}
             </div>
           )}
         </div>
