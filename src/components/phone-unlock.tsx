@@ -8,7 +8,7 @@ import { Phone, CheckCircle2, Loader2, ShieldCheck } from "lucide-react"
 // Phone number + SMS verification. A VERIFIED phone (via a texted code) unlocks the Closing
 // Training videos + downloadable resources. Flashes when arrived at via ?flash=phone.
 export function PhoneUnlock() {
-  const { impersonating } = usePin()
+  const { impersonating, isLoading } = usePin()
   const pinId = impersonating?.pinId
   const q = pinId ? `?asPinId=${pinId}` : ""
 
@@ -24,13 +24,17 @@ export function PhoneUnlock() {
   const ref = useRef<HTMLDivElement>(null)
 
   const load = useCallback(async () => {
+    // Wait until pin-context resolves who we're viewing as — otherwise the first
+    // load fires without asPinId and leaks the real admin's phone into the view.
+    if (isLoading) return
     try {
       const d = await (await fetch(`/api/user/profile-phone${q}`)).json()
-      if (d.phone) setPhone(d.phone)
+      // Always set (clear when the target has none) so a stale value never sticks.
+      setPhone(d.phone || "")
       setVerified(!!d.verified)
       setConsent(!!d.smsConsent)
     } catch { /* ignore */ }
-  }, [q])
+  }, [q, isLoading])
 
   useEffect(() => { load() }, [load])
 
