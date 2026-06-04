@@ -119,9 +119,21 @@ export default function OwnerOperatorPage() {
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h3 className="font-bold text-[#0f172a]">Already a Partner?</h3>
           <p className="mt-1 text-sm text-slate-600">
-            Upgrade to Owner Operator for just <strong className="text-[#0f172a]">$4,205</strong> (the difference).
-            Payment plans must be completed first. <strong>Already have an LLC?</strong> Save $500.
+            Your $995 Agent Partnership credits toward Owner Operator — you only pay the difference.
           </p>
+          <div className="mt-3 space-y-2 text-sm">
+            <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
+              <p className="font-semibold text-[#0f172a]">Already a Partner</p>
+              <p className="text-slate-600">$5,200 &minus; $995 (already paid) = <strong className="text-[#0f172a]">$4,205</strong> to upgrade</p>
+              <p className="text-slate-500 text-xs">Or 4 payments of <strong className="text-[#0f172a]">$1,051</strong> — first payment is your down payment.</p>
+            </div>
+            <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3">
+              <p className="font-semibold text-[#0f172a]">Partner + already own an LLC</p>
+              <p className="text-slate-600">$5,200 &minus; $995 &minus; $500 (LLC) = <strong className="text-[#0f172a]">$3,705</strong> to upgrade</p>
+              <p className="text-slate-500 text-xs">Or 4 payments of <strong className="text-[#0f172a]">$926</strong> — first payment is your down payment.</p>
+            </div>
+            <p className="text-xs text-slate-500">Payment plans must be completed before website/build-out delivery.</p>
+          </div>
           <div className="mt-4 grid grid-cols-2 gap-3 text-center">
             <a href={AGENT_995_URL} target="_blank" rel="noopener noreferrer"
               className="rounded-lg border border-slate-200 p-3 transition hover:border-emerald-400 hover:bg-emerald-50 cursor-pointer">
