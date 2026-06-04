@@ -1,6 +1,9 @@
 "use client"
 
-import { Check, Phone, FileText, Crown, Building2, Globe, ShieldCheck } from "lucide-react"
+import { useState } from "react"
+import { Check, Phone, FileText, Crown, Building2, Globe, ShieldCheck, X } from "lucide-react"
+
+const AGENT_995_URL = "https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
 
 const BUILD_OUT = [
   "Registered Agent Service (first year included)",
@@ -25,6 +28,7 @@ const HEADLINE_INCLUDES = [
 ]
 
 export default function OwnerOperatorPage() {
+  const [showCall, setShowCall] = useState(false)
   return (
     <div className="max-w-5xl space-y-8 pb-12">
       {/* Hero */}
@@ -118,16 +122,18 @@ export default function OwnerOperatorPage() {
             Payment plans must be completed first. <strong>Already have an LLC?</strong> Save $500.
           </p>
           <div className="mt-4 grid grid-cols-2 gap-3 text-center">
-            <div className="rounded-lg border border-slate-200 p-3">
+            <a href={AGENT_995_URL} target="_blank" rel="noopener noreferrer"
+              className="rounded-lg border border-slate-200 p-3 transition hover:border-emerald-400 hover:bg-emerald-50 cursor-pointer">
               <div className="text-xs font-semibold uppercase text-slate-500">Partnership</div>
               <div className="text-lg font-bold text-[#0f172a]">$995</div>
               <div className="text-xs text-slate-500">agent program</div>
-            </div>
-            <div className="rounded-lg border-2 border-[#D82221] p-3">
+            </a>
+            <button type="button" onClick={() => setShowCall(true)}
+              className="rounded-lg border-2 border-[#D82221] p-3 text-center transition hover:bg-red-50 cursor-pointer">
               <div className="text-xs font-semibold uppercase text-[#D82221]">Owner Operator</div>
               <div className="text-lg font-bold text-[#0f172a]">$5,200</div>
               <div className="text-xs text-slate-500">4 x $1,300</div>
-            </div>
+            </button>
           </div>
         </div>
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6">
@@ -171,6 +177,21 @@ export default function OwnerOperatorPage() {
           <Phone className="h-5 w-5" /> (888) 545-8007
         </a>
       </div>
+
+      {showCall && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setShowCall(false)}>
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setShowCall(false)} className="ml-auto block text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
+            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#D82221]/10"><Phone className="h-7 w-7 text-[#D82221]" /></div>
+            <h3 className="text-xl font-bold text-[#0f172a]">Owner Operator — $5,200 (or 4 × $1,300)</h3>
+            <p className="mt-2 text-sm text-slate-600">Call an agent to make your down payment or your full payment. We&apos;ll set up your plan and get your build-out started.</p>
+            <a href="tel:+18885458007" className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-[#D82221] px-6 py-3 text-lg font-bold text-white transition hover:opacity-90">
+              <Phone className="h-5 w-5" /> (888) 545-8007
+            </a>
+            <p className="mt-3 text-xs text-slate-400">9–5 PT, 7 days a week</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
