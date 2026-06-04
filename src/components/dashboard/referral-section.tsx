@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Gift, DollarSign, UserPlus, Loader2, CheckCircle2 } from "lucide-react"
+import { usePin } from "@/lib/pin-context"
 
 interface Referral {
   id: string
@@ -28,15 +29,17 @@ export function ReferralSection() {
   const [email, setEmail] = useState("")
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState<string | null>(null)
+  const { impersonating } = usePin()
+  const asPinId = impersonating?.pinId
 
   const load = useCallback(async () => {
-    const r = await fetch("/api/referrals")
+    const r = await fetch("/api/referrals" + (asPinId ? `?asPinId=${asPinId}` : ""))
     if (!r.ok) return
     const j = await r.json()
     setReferralCode(j.referralCode || "")
     setReferrals(j.referrals || [])
     setEarned(j.totalEarned || 0)
-  }, [])
+  }, [asPinId])
   useEffect(() => { load() }, [load])
 
   async function add() {
@@ -44,7 +47,7 @@ export function ReferralSection() {
     setSaving(true); setMsg(null)
     const r = await fetch("/api/referrals", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email }),
+      body: JSON.stringify({ name, email, asPinId }),
     })
     const j = await r.json(); setSaving(false)
     if (!r.ok) { setMsg(j.error || "Failed"); return }
