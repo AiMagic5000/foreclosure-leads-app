@@ -156,6 +156,13 @@ export default function OwnerOperatorPage() {
             scheduled program payments. Training, lead access, legal documents, automation, and support are activated
             immediately upon your first payment.
           </p>
+          <img
+            src="/owner-operator-white-label-website-example.jpg"
+            alt="Example white-label foreclosure recovery website built for Owner Operators"
+            className="mt-4 w-full rounded-lg border border-amber-200 shadow-sm"
+            loading="lazy"
+          />
+          <p className="mt-2 text-xs text-amber-800/70 text-center">Example of your custom white-label website</p>
         </div>
       </div>
 
