@@ -371,6 +371,8 @@ export default function TermsOfService() {
                   </ul>
                   <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">6.2 Disqualification</h3>
                   <p className="text-slate-700 leading-relaxed mb-4">An agent is disqualified from the Money Back Guarantee if the agent does not complete training, does not seek support, fails to document weekly outreach effort, or otherwise materially deviates from program processes.</p>
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">6.3 Continuous Activity Requirement</h3>
+                  <p className="text-slate-700 leading-relaxed mb-4">The Money Back Guarantee is contingent on continuous, active participation. If at any point there is a lapse of fourteen (14) consecutive days during which no human login and account activity consistent with regular, ongoing outreach to claimants is recorded, the Money Back Guarantee is permanently forfeited. The Company tracks login and outreach activity within the dashboard; a two-week or longer period without a human login and consistent claimant outreach demonstrates that the agent is not actively participating and voids any eligibility for a refund under this guarantee.</p>
                   <p className="text-slate-700 leading-relaxed">The Money Back Guarantee replaces any prior "double your money back" or similar offer. No prior offer remains in effect.</p>
                 </section>
 
