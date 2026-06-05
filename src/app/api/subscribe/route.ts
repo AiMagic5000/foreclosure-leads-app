@@ -8,7 +8,7 @@ const SMTP_USER = "support@usforeclosureleads.com";
 const SMTP_PASS = process.env.SMTP_USFR_LEADS_PASSWORD || "Thepassword#123";
 const FROM_NAME = "Foreclosure Recovery Inc.";
 
-const PDF_GUIDE_URL = 'https://www.assetrecoverybusiness.com/Foreclosure-Recovery-Business-Programs-Guide.pdf';
+const PDF_GUIDE_URL = 'https://usforeclosureleads.com/Foreclosure_Recovery_Business_Programs_Guide.pdf';
 const PARTNERSHIP_URL = 'https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business';
 const SIGNUP_URL = 'https://usforeclosureleads.com/';
 const LOGO_URL = 'https://cdn.prod.website-files.com/67ec4cfbdf0509c176a8cdfe/69897785586ae271c69d085e_image%20(1).png';

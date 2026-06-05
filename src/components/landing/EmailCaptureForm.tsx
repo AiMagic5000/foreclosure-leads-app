@@ -78,7 +78,7 @@ export function EmailCaptureForm({
           Your free Surplus Funds Overages Guide is on its way. Check your inbox (and spam folder just in case).
         </p>
         <a
-          href="https://www.assetrecoverybusiness.com/Foreclosure-Recovery-Business-Programs-Guide.pdf"
+          href="/Foreclosure_Recovery_Business_Programs_Guide.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm font-medium text-[#1e3a5f] underline underline-offset-2"

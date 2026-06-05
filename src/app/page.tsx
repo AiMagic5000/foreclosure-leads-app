@@ -1034,7 +1034,7 @@ export default function LandingPage() {
 
                     {/* PDF Download */}
                     <a
-                      href="https://www.assetrecoverybusiness.com/Foreclosure-Recovery-Business-Programs-Guide.pdf"
+                      href="/Foreclosure_Recovery_Business_Programs_Guide.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block w-full text-center bg-gradient-to-r from-[#1e3a5f] to-[#3b82f6] text-white py-3 rounded-lg text-sm font-bold mb-3 hover:opacity-90 transition-opacity"
