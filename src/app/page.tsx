@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/accordion";
 import { Header } from "@/components/header";
 import { HeroAnimation } from "@/components/hero-animation";
+import { TrustedSection } from "@/components/trusted-section";
 import { LandingWebcastPlayer } from "@/components/landing-webcast-player";
 import { ApiDocsPopup } from "@/components/api-docs-popup";
 import { faqs } from "@/data/faqs";
@@ -430,6 +431,9 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+
+        {/* Trusted By Recovery Agents Nationwide (from assetrecoverybusiness.com) */}
+        <TrustedSection />
 
         {/* Trust Badges */}
         <section className="py-6 border-y border-gray-200 bg-gray-50">
