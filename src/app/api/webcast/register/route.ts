@@ -3,6 +3,8 @@ import { z } from 'zod'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getNextSessionTime, getSessionLabel, getSecondsUntilSession } from '@/lib/webcast/session-manager'
 import { getEmailTemplate, SMS_TEMPLATES } from '@/lib/webcast/email-templates'
+import { sendAdminNotification } from '@/lib/email'
+import { sendMetaLeadEvent, readFbCookies } from '@/lib/meta/capi'
 import nodemailer from 'nodemailer'
 
 const registerSchema = z.object({
@@ -15,6 +17,7 @@ const registerSchema = z.object({
   utmSource: z.string().max(200).optional(),
   utmMedium: z.string().max(200).optional(),
   utmCampaign: z.string().max(200).optional(),
+  eventId: z.string().max(100).optional(),
 })
 
 const TEXTBEE_API_KEY = process.env.TEXTBEE_API_KEY || ''
@@ -139,7 +142,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid input', details: parsed.error.flatten() }, { status: 400 })
     }
 
-    const { firstName, lastName, email, phone, smsConsent, honeypot, utmSource, utmMedium, utmCampaign } = parsed.data
+    const { firstName, lastName, email, phone, smsConsent, honeypot, utmSource, utmMedium, utmCampaign, eventId } = parsed.data
 
     if (honeypot) {
       return NextResponse.json({ success: true, sessionTime: new Date().toISOString(), leadId: 'ok' })
@@ -210,20 +213,55 @@ export async function POST(request: NextRequest) {
     const dbTasks: Promise<unknown>[] = [
       queueEmailDrip(lead.id, sessionTime),
     ]
-    // SMS drip DISABLED 2026-05-05 — gateway reliability issues
-    // if (phone && smsConsent) {
-    //   dbTasks.push(queueSmsDrip(lead.id, phone, sessionTime))
-    // }
-    void queueSmsDrip; void phone; void smsConsent;
+    // SMS drip RE-ENABLED 2026-06-05 (now on TextBee w/ browser UA header)
+    if (phone && smsConsent) {
+      dbTasks.push(queueSmsDrip(lead.id, phone, sessionTime))
+    }
     await Promise.allSettled(dbTasks)
 
-    // Fire external API calls (email, SMS) -- best-effort, OK if killed
-    sendConfirmationEmail({ first_name: firstName, email }, sessionTime).catch(() => {})
+    // Welcome email is owned by the Clerk user.created webhook (single source — no duplicate welcomes).
+    // This route only captures the lead + queues the drip. SMS welcome still fires if a phone/consent given.
+    void sendConfirmationEmail
     if (phone && smsConsent) {
       sendWelcomeSms(phone, firstName, sessionTime).catch(() => {})
     }
 
+    // Notice of new webcast registration -> xscore10 + claim@ (admin emails)
+    sendAdminNotification(
+      `New Webcast Registration: ${firstName}${lastName ? " " + lastName : ""}`,
+      `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;">
+        <p><strong>New webcast registration</strong></p>
+        <p>Name: ${firstName}${lastName ? " " + lastName : ""}<br/>
+        Email: ${email}<br/>
+        Phone: ${phone || "(none)"}<br/>
+        SMS consent: ${phone && smsConsent ? "yes" : "no"}<br/>
+        Session: ${getSessionLabel(sessionTime)} (${sessionTime.toISOString()})<br/>
+        Source: ${utmSource || "direct"}${utmCampaign ? " / " + utmCampaign : ""}</p>
+      </div>`
+    ).catch(() => {})
+
     // Voice drop + account provisioning handled by n8n (90s delay can't run in serverless)
+
+    // Meta Conversions API — server-side Lead (deduped with browser pixel via eventId).
+    // Best-effort; no-ops until META_CAPI_ACCESS_TOKEN is set.
+    try {
+      const { fbp, fbc } = readFbCookies(request.headers.get('cookie'))
+      await sendMetaLeadEvent({
+        email,
+        phone: phone || undefined,
+        firstName,
+        lastName: lastName || undefined,
+        eventId,
+        eventSourceUrl: request.headers.get('referer') || 'https://usforeclosureleads.com/webcast',
+        clientIp: ip !== 'unknown' ? ip : undefined,
+        userAgent: request.headers.get('user-agent') || undefined,
+        fbp,
+        fbc,
+        actionSource: 'website',
+      })
+    } catch (capiErr) {
+      console.error('Meta CAPI (webcast register) error:', capiErr)
+    }
 
     return NextResponse.json({
       success: true,
