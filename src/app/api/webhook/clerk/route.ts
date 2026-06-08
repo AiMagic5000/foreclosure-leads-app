@@ -3,6 +3,8 @@ import { headers } from "next/headers"
 import { Webhook } from "svix"
 import { supabaseAdmin } from "@/lib/supabase"
 import { sendEmail, sendAdminNotification } from "@/lib/email"
+import { sendMetaLeadEvent } from "@/lib/meta/capi"
+import { getEmailTemplate } from "@/lib/webcast/email-templates"
 
 const webhookSecret = process.env.CLERK_WEBHOOK_SECRET!
 
@@ -126,6 +128,25 @@ async function handleUserCreated(data: ClerkWebhookEvent["data"]) {
 
   console.log(`[CLERK WEBHOOK] New user created: ${primaryEmail.email_address} (${fullName || "no name"})`)
 
+  // Meta Conversions API — server-side Lead for every new signup (the webcast
+  // funnel converts via Clerk signup). event_id keyed to the Clerk user id so
+  // webhook retries dedupe. No-ops until META_PIXEL_ID + token are set.
+  sendMetaLeadEvent({
+    email: primaryEmail.email_address,
+    phone: data.phone_numbers?.[0]?.phone_number || undefined,
+    firstName: data.first_name || undefined,
+    lastName: data.last_name || undefined,
+    eventId: `clerk_${data.id}`,
+    eventSourceUrl: "https://usforeclosureleads.com/webcast",
+    actionSource: "website",
+  })
+    .then((r) => {
+      if (!r.ok && r.error !== "capi_not_configured") {
+        console.error(`[CLERK WEBHOOK] Meta CAPI Lead failed: ${r.error}`)
+      }
+    })
+    .catch((e) => console.error("[CLERK WEBHOOK] Meta CAPI Lead threw:", e))
+
   // Send signup notification
   const phone = data.phone_numbers?.[0]?.phone_number || "Not provided"
   const signupTime = data.created_at
@@ -163,15 +184,28 @@ async function handleUserCreated(data: ClerkWebhookEvent["data"]) {
   const notifySent = notifyResult.success
   console.log(`[CLERK WEBHOOK] Admin notification email ${notifySent ? "SENT" : "FAILED"} for ${primaryEmail.email_address}`)
 
-  // Send welcome email to the new user
-  const firstName = data.first_name || "there"
-  const welcomeHtml = buildWelcomeEmail(firstName)
-  const welcomeSent = await sendSmtpEmail(
-    primaryEmail.email_address,
-    "Welcome to US Foreclosure Leads - Your Account Is Ready",
-    welcomeHtml
-  )
-  console.log(`[CLERK WEBHOOK] Welcome email ${welcomeSent ? "SENT" : "FAILED"} to ${primaryEmail.email_address}`)
+  // Dedupe: a confirmed buyer already got their Stan receipt -- skip the generic welcome.
+  const { data: buyer } = await supabaseAdmin
+    .from("onboarding_drip")
+    .select("buyer_email")
+    .eq("buyer_email", primaryEmail.email_address.toLowerCase())
+    .maybeSingle()
+
+  if (buyer) {
+    console.log(`[CLERK WEBHOOK] Welcome email SKIPPED (already a buyer) for ${primaryEmail.email_address}`)
+  } else {
+    // Send welcome email to the new user — branded template with the surplus-math
+    // infographic + "add your phone in My Account to unlock free training" message.
+    // This is the email a webcast/Clerk signup actually receives, so the infographic lives here.
+    const firstName = data.first_name || "there"
+    const welcome = getEmailTemplate(0, { first_name: firstName, email: primaryEmail.email_address })
+    const welcomeSent = await sendSmtpEmail(
+      primaryEmail.email_address,
+      welcome.subject,
+      welcome.html
+    )
+    console.log(`[CLERK WEBHOOK] Welcome email ${welcomeSent ? "SENT" : "FAILED"} to ${primaryEmail.email_address}`)
+  }
 }
 
 function buildWelcomeEmail(firstName: string): string {
