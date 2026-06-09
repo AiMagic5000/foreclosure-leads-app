@@ -2107,12 +2107,14 @@
         <!-- Mobile override: stack to single column -->
         <style>
             @media (max-width: 1100px) {
-                .trust-desktop-grid { grid-template-columns: 1fr !important; }
-                .trust-desktop-grid > div:last-child { max-width: 660px; margin: 0 auto; }
+                #intelligence [style*="1fr 660px"] { grid-template-columns: 1fr !important; }
+                #intelligence [style*="1fr 660px"] > div:last-child { max-width: 660px !important; margin: 0 auto !important; }
             }
-            @media (max-width: 700px) {
-                .trust-shorts-row { flex-direction: column !important; }
-                .trust-shorts-row > div { width: 100% !important; max-width: 320px !important; margin: 0 auto !important; }
+            @media (max-width: 760px) {
+                #intelligence [style*="repeat(3"] { grid-template-columns: repeat(2, 1fr) !important; }
+                #intelligence [style*="1fr 660px"] > div:last-child > div:first-child { flex-direction: column !important; }
+                #intelligence [style*="1fr 660px"] iframe { height: 320px !important; }
+                #intelligence h2 { font-size: 26px !important; line-height: 1.2 !important; }
             }
         </style>
         
