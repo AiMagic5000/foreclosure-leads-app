@@ -17,6 +17,8 @@ import {
   Gift,
   ClipboardList,
   GraduationCap,
+  Radio,
+  UserCheck,
   Shield,
   Menu,
   X,
@@ -35,8 +37,11 @@ import {
   Mail,
   Lock,
   Gavel,
+  Landmark,
+  Upload,
   MessageSquare,
   Activity,
+  Bot,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DashboardSectionVideo } from "@/components/dashboard-section-video"
@@ -52,6 +57,7 @@ interface NavItem {
   href: string
   icon: typeof LayoutDashboard
   badge?: { text: string; color: string }
+  allTiers?: boolean // unlock this item for every tier even when its section is gated
 }
 
 interface NavSection {
@@ -67,8 +73,11 @@ const navSections: NavSection[] = [
     items: [
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
       { name: "My Leads", href: "/dashboard/my-leads", icon: FileStack, badge: { text: "New", color: "emerald" } },
+      { name: "Import Leads", href: "/dashboard/import", icon: Upload, badge: { text: "Paid", color: "violet" } },
       { name: "State Laws", href: "/dashboard/states", icon: Map },
+      { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Paid", color: "violet" } },
       { name: "Closing Training", href: "/dashboard/closing-training", icon: GraduationCap, badge: { text: "New", color: "indigo" } },
+      { name: "Live Webcast", href: "/dashboard/live-webcast", icon: Radio, badge: { text: "Live", color: "red" } },
       { name: "My Account", href: "/dashboard/settings", icon: Settings },
     ],
   },
@@ -76,6 +85,7 @@ const navSections: NavSection[] = [
     label: "Communications",
     tier: "partnership",
     items: [
+      { name: "My AI Avatar", href: "/dashboard/admin/ai-agent", icon: Bot, badge: { text: "Beta", color: "purple" }, allTiers: true },
       { name: "Ringless Drips", href: "/dashboard/ringless-drips", icon: Voicemail, badge: { text: "New", color: "red" } },
       { name: "SMS Messages", href: "/dashboard/sms-messages", icon: MessageSquare },
     ],
@@ -93,13 +103,15 @@ const navSections: NavSection[] = [
     label: "Business Suite",
     tier: "basic",
     items: [
+      { name: "Recovery Agent", href: "/dashboard/recovery-agent", icon: UserCheck, badge: { text: "Program", color: "blue" } },
       { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
+      { name: "Tax Deeds", href: "/dashboard/tax-deeds", icon: Landmark, badge: { text: "New", color: "emerald" } },
       { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Comp.", color: "emerald" } },
       { name: "White Label", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
     ],
   },
   {
-    label: "Administration",
+    label: "Owner Operator Admin",
     tier: "admin",
     items: [
       // Admin hub + people
@@ -117,7 +129,6 @@ const navSections: NavSection[] = [
       { name: "Export", href: "/dashboard/export", icon: Download },
       // Compliance + legal
       { name: "Compliance", href: "/dashboard/admin/compliance", icon: Shield, badge: { text: "Gate", color: "red" } },
-      { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Legal", color: "orange" } },
     ],
   },
 ]
@@ -325,9 +336,10 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                   </p>
                   {section.items.map((item) => {
                     const isActive =
-                      pathname === item.href ||
-                      pathname.startsWith(item.href + "/")
-                    const isLocked = !accessible
+                      item.href === "/dashboard"
+                        ? pathname === "/dashboard"
+                        : pathname === item.href || pathname.startsWith(item.href + "/")
+                    const isLocked = !accessible && !item.allTiers
 
                     return (
                       <Link
@@ -371,9 +383,8 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           </nav>
 
           <div className={cn("p-4 border-t space-y-4", borderColor)}>
-            <div className="rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 p-4 text-white">
-              <p className="font-semibold text-sm">Fully Built Asset Recovery Business</p>
-              <p className="text-xs opacity-90 mt-1">45 Points of Compliance</p>
+            <div className="rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 p-3 text-white">
+              <p className="font-semibold text-sm">Fully Built Business</p>
               <a
                 href="/dashboard/owner-operator"
                 target="_blank"
@@ -382,7 +393,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
               >
                 <Button
                   size="sm"
-                  className="w-full mt-3 bg-blue-800 text-white hover:bg-blue-900 border border-blue-400/30"
+                  className="w-full mt-2 h-auto whitespace-normal py-2 text-xs leading-tight bg-red-600 text-white hover:bg-red-700 border border-red-400/30"
                 >
                   Become an Owner Operator
                 </Button>
@@ -520,7 +531,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
-      <ChatWidget />
+      {pathname !== "/dashboard/live-webcast" && <ChatWidget />}
       <ActivityTracker />
     </div>
   )

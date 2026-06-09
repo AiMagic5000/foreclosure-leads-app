@@ -50,6 +50,19 @@ export default function SmsMessagesPage() {
   const [saving, setSaving] = useState(false)
   const [saveErr, setSaveErr] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [soc, setSoc] = useState({ enabled: false, link: "", consent: false })
+  const [socSaving, setSocSaving] = useState(false)
+  const [socMsg, setSocMsg] = useState<string | null>(null)
+
+  async function saveSocial() {
+    setSocSaving(true); setSocMsg(null)
+    try {
+      const res = await fetch("/api/user/social-link", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(soc) })
+      const d = await res.json()
+      if (!res.ok) throw new Error(d.error || "Save failed")
+      setSocMsg("Saved — it will be added to your outgoing messages.")
+    } catch (e) { setSocMsg(e instanceof Error ? e.message : "Save failed") } finally { setSocSaving(false) }
+  }
 
   async function saveTextbee() {
     setSaving(true); setSaveErr(null)
@@ -80,6 +93,14 @@ export default function SmsMessagesPage() {
       .then((d) => { if (d && !d.error) setTb(d) })
       .catch(() => {})
       .finally(() => setLoading(false))
+  }, [isLoaded, user, hasAccess])
+
+  useEffect(() => {
+    if (!isLoaded || !user || !hasAccess) return
+    fetch("/api/user/social-link")
+      .then((r) => r.json())
+      .then((d) => { if (d && !d.error) setSoc({ enabled: !!d.enabled, link: d.link || "", consent: !!d.consent }) })
+      .catch(() => {})
   }, [isLoaded, user, hasAccess])
 
   if (!isLoaded || loading) {
@@ -190,6 +211,38 @@ export default function SmsMessagesPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* Social media link — auto-added to outgoing SMS + email (below TextBee) */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <ExternalLink className="h-5 w-5 text-muted-foreground" />
+            <CardTitle className="text-lg">Add a social media link to your messages</CardTitle>
+          </div>
+          <CardDescription>
+            Want to add a social media link to your emails and SMS messages? It auto-attaches to your outgoing communications so claimants can see the real you &mdash; proof of a real, working agent.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4 max-w-2xl">
+          <div>
+            <label className="text-xs font-medium text-muted-foreground">Your best social media profile link (LinkedIn preferred)</label>
+            <Input value={soc.link} onChange={(e) => setSoc({ ...soc, link: e.target.value })} placeholder="https://www.linkedin.com/in/your-profile" className="mt-1" />
+          </div>
+          <label className="flex items-start gap-2 text-sm">
+            <input type="checkbox" checked={soc.consent} onChange={(e) => setSoc({ ...soc, consent: e.target.checked })} className="mt-0.5 h-4 w-4" />
+            <span>I consent to including this social media link in my outgoing SMS and email communications to claimants, to provide proof that I am a real agent.</span>
+          </label>
+          <label className="flex items-center gap-2 text-sm font-medium">
+            <input type="checkbox" checked={soc.enabled} onChange={(e) => setSoc({ ...soc, enabled: e.target.checked })} className="h-4 w-4" />
+            <span>Auto-add my social link to outgoing messages</span>
+          </label>
+          <div className="flex items-center gap-3">
+            <Button onClick={saveSocial} disabled={socSaving}>{socSaving ? "Saving…" : "Save"}</Button>
+            {socMsg && <span className="text-sm text-muted-foreground">{socMsg}</span>}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Section 4: Recent Replies (inbound via TextBee) */}
       <Card>
         <CardHeader>

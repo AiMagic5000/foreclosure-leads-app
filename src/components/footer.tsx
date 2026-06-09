@@ -98,37 +98,24 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-200 pt-6 sm:pt-8 flex flex-col items-center gap-4 text-center">
+          {/* Partner business logos */}
+          <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
+            {[
+              { name: "USForeclosureRecovery.com", url: "https://usforeclosurerecovery.com" },
+              { name: "AssetRecoveryBusiness.com", url: "https://assetrecoverybusiness.com" },
+              { name: "MyStateFunds.com", url: "https://mystatefunds.com" },
+              { name: "StartMyBusiness.us", url: "https://startmybusiness.us" },
+            ].map((b) => (
+              <a key={b.url} href={b.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 opacity-80 transition hover:opacity-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/favicons/${b.url.replace("https://", "")}.png`} alt={b.name} className="h-6 w-6 rounded" />
+                <span className="text-xs font-semibold text-[#1e3a5f]">{b.name}</span>
+              </a>
+            ))}
+          </div>
           <p className="text-xs sm:text-sm text-gray-500">
             &copy; 2026 Foreclosure Recovery Inc. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 text-xs sm:text-sm">
-            <a
-              href="https://usforeclosurerecovery.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#1e3a5f] hover:text-[#3b82f6] font-medium"
-            >
-              USForeclosureRecovery.com
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://assetrecoverybusiness.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#1e3a5f] hover:text-[#3b82f6] font-medium"
-            >
-              AssetRecoveryBusiness.com
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://startmybusiness.us"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#1e3a5f] hover:text-[#3b82f6] font-medium"
-            >
-              StartMyBusiness.us
-            </a>
-          </div>
           <p className="text-[10px] sm:text-xs text-gray-400 max-w-2xl">
             Website development and management provided by Start My Business
             Incorporated (StartMyBusiness.us). Foreclosure Recovery Inc., US

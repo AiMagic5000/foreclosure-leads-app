@@ -5,6 +5,19 @@ import { PRIMARY_ADMIN_EMAIL, resolveImpersonationTarget } from '@/lib/admin-gua
 
 export const dynamic = 'force-dynamic'
 
+// A phone/number/country ban must NEVER lock out an account that has no phone on
+// file — no number = full access, by rule. Only an account that actually saved a
+// phone (with a disallowed country) can be suspended for a bad number. Non-phone
+// bans (fraud, abuse, "Banned by admin") always apply.
+function effectiveBan(row: { banned?: boolean | null; ban_reason?: string | null; profile_phone?: string | null } | null | undefined): { banned: boolean; banReason: string | null } {
+  if (!row?.banned) return { banned: false, banReason: null }
+  const reason = row.ban_reason || null
+  const isPhoneReason = !!reason && /phone|number|country|calling code/i.test(reason)
+  const hasPhoneOnFile = !!(row.profile_phone && String(row.profile_phone).trim())
+  if (isPhoneReason && !hasPhoneOnFile) return { banned: false, banReason: null }
+  return { banned: true, banReason: reason }
+}
+
 // Whether an operator pin has the outreach credentials saved. Voice-drop needs
 // SlyBroadcast; SMS needs TextBee. Buttons stay inactive until these are true.
 async function credFlags(pinId: string | null): Promise<{ hasSlybroadcast: boolean; hasTextbee: boolean }> {
@@ -48,7 +61,7 @@ export async function GET(req: NextRequest) {
     }
     const { data: tUser } = await supabaseAdmin
       .from('users')
-      .select('role, subscription_tier, account_type, training_unlocked, phone_verified, banned, ban_reason')
+      .select('role, subscription_tier, account_type, training_unlocked, phone_verified, profile_phone, banned, ban_reason')
       .ilike('email', target.email)
       .limit(1)
       .maybeSingle()
@@ -70,14 +83,13 @@ export async function GET(req: NextRequest) {
       statesAccess: target.statesAccess,
       trainingUnlocked: !!tUser?.training_unlocked,
       hasPhone: !!tUser?.phone_verified,
-      banned: !!tUser?.banned,
-      banReason: tUser?.ban_reason || null,
+      ...effectiveBan(tUser),
     })
   }
 
   // Normal (self) resolution.
   const [{ data }, { data: pinData }] = await Promise.all([
-    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, phone_verified, banned, ban_reason').ilike('email', email).limit(1).maybeSingle(),
+    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, phone_verified, profile_phone, banned, ban_reason').ilike('email', email).limit(1).maybeSingle(),
     supabaseAdmin.from('user_pins').select('id, package_type, states_access, is_active, role').ilike('email', email).eq('is_active', true).single(),
   ])
 
@@ -101,7 +113,6 @@ export async function GET(req: NextRequest) {
     statesAccess,
     trainingUnlocked: !!data?.training_unlocked,
     hasPhone: !!data?.phone_verified,
-    banned: !!data?.banned,
-    banReason: data?.ban_reason || null,
+    ...effectiveBan(data),
   })
 }

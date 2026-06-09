@@ -146,7 +146,7 @@ ${BTN('💳&nbsp; View Partnership Packages &amp; Make Payment', PRICING, '#0927
 ${NOTE(`<strong>💡 Reminder:</strong> Your account setup and training are <strong style="color:#1a7a3a;">completely free</strong>. Payment is only needed when you are ready to activate live leads and set up your 800 number and business email &mdash; leads that go to you only, never shared.`, '#f0f7ff')}
 ${P(`<strong style="color:#09274c;">Got interrupted or distracted during the webcast?</strong> Here is the quick recap &mdash; and you can watch the full session anytime.`)}
 <img src="${APP}/images/foreclosure-surplus-math.jpg" alt="The foreclosure surplus math: $120,000 average surplus times a 30% recovery fee equals $36,000 per claim" width="520" style="display:block;width:520px;max-width:100%;height:auto;border-radius:8px;margin:8px 0;border:1px solid #dce1e8;" />
-${BTN('▶&nbsp; Watch the Full Webcast', `${APP}/webcast/live?autoplay=1`, '#09274c')}
+${BTN('▶&nbsp; Watch the Full Webcast', `${APP}/dashboard/live-webcast`, '#09274c')}
 <table style="background-color:#f0f7ff;border-radius:6px;border-left:4px solid #09274c;width:100%;margin:18px 0 0;" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td style="padding:20px 24px;text-align:center;">
 <p style="margin:0 0 12px;font-size:15px;color:#09274c;font-weight:600;font-family:${FONT};">Have Questions? We Are Here to Help.</p>
 <p style="margin:0 0 16px;font-size:14px;color:#2c3e50;line-height:22px;font-family:${FONT};">Reply to this email or give us a call &mdash; we will walk you through everything.</p>
@@ -167,7 +167,7 @@ ${BTN('▶&nbsp; Add Your Phone &amp; Unlock Training', `${APP}/dashboard/settin
 ${NOTE(`Add it once. No spam, no commitment &mdash; just full access to your free training.`)}
 ${P(`<strong style="color:#09274c;">Got interrupted or distracted during the webcast?</strong> No problem &mdash; here is the quick recap, and you can watch the full session anytime you have a few minutes.`)}
 <img src="${APP}/images/foreclosure-surplus-math.jpg" alt="The foreclosure surplus math: $120,000 average surplus times a 30% recovery fee equals $36,000 per claim" width="520" style="display:block;width:520px;max-width:100%;height:auto;border-radius:8px;margin:0 0 8px;border:1px solid #dce1e8;" />
-${BTN('▶&nbsp; Watch the Full Webcast', `${APP}/webcast/live?autoplay=1`, '#09274c')}`,
+${BTN('▶&nbsp; Watch the Full Webcast', `${APP}/dashboard/live-webcast`, '#09274c')}`,
     },
     2: {
       subject: 'Inside the dashboard: where your training lives',

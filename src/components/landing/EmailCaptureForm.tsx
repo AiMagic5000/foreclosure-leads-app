@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckCircle, Download, Loader2 } from "lucide-react";
+import { trackLead, genEventId } from "@/lib/meta/pixel-client";
 
 interface Props {
   source?: string;
@@ -38,6 +39,7 @@ export function EmailCaptureForm({
     setErrorMsg("");
 
     try {
+      const eventId = genEventId();
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -47,6 +49,7 @@ export function EmailCaptureForm({
           phone: phone.trim(),
           consent,
           source,
+          eventId,
         }),
       });
       const data = await res.json();
@@ -55,6 +58,8 @@ export function EmailCaptureForm({
         setStatus("error");
         return;
       }
+      // Fire the browser-side Lead (deduped with the server CAPI copy via eventId)
+      trackLead(eventId, { content_name: source });
       setStatus("success");
       onSuccess?.();
     } catch {
@@ -158,7 +163,9 @@ export function EmailCaptureForm({
           required
         />
         <span className="text-[11px] text-gray-600 leading-snug">
-          I agree to receive marketing emails, SMS, ringless voicemails, and phone calls from Foreclosure Recovery Inc. at the number and email provided. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to opt out. By submitting I accept the{" "}
+          By submitting, I agree to receive marketing emails, texts, ringless voicemails, and calls from Foreclosure Recovery Inc. at the number and email I provided — consent is not required to buy, and message/data rates may apply.
+          {" "}Reply STOP to opt out anytime.
+          {" "}I accept the{" "}
           <a
             href="https://usforeclosurerecovery.com/terms-and-conditions"
             target="_blank"

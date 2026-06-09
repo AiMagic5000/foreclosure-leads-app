@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Leads That Convert — Foreclosure Recovery Inc.</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @font-face { font-family:"Inter"; src:url("fonts/Inter-400.woff2") format("woff2"); font-weight:400; font-display:block; }
+  @font-face { font-family:"Inter"; src:url("fonts/Inter-500.woff2") format("woff2"); font-weight:500; font-display:block; }
+  @font-face { font-family:"Inter"; src:url("fonts/Inter-600.woff2") format("woff2"); font-weight:600; font-display:block; }
+  @font-face { font-family:"Inter"; src:url("fonts/Inter-700.woff2") format("woff2"); font-weight:700; font-display:block; }
+  @font-face { font-family:"Fraunces"; src:url("fonts/Fraunces-600.woff2") format("woff2"); font-weight:600; font-display:block; }
+  @font-face { font-family:"Fraunces"; src:url("fonts/Fraunces-700.woff2") format("woff2"); font-weight:700; font-display:block; }
+  [data-composition-id="oo-leads-that-convert"] { position:absolute; inset:0; width:100%; height:100%;
+    background:#ffffff; color:#0f172a; font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+    overflow:hidden; font-size:clamp(14px,1.45vw,30px); }
+  #wash { position:absolute; inset:0; z-index:0; background:
+      radial-gradient(60% 55% at 12% 8%, rgba(37,99,235,0.08) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(60% 55% at 92% 96%, rgba(216,34,33,0.07) 0%, rgba(255,255,255,0) 60%), #ffffff; }
+  #toprule { position:absolute; top:0; left:0; right:0; height:6px; z-index:6;
+    background:linear-gradient(90deg,#2563eb 0%,#2563eb 50%,#D82221 50%,#D82221 100%); }
+  #logo { position:absolute; top:6.5%; left:9%; z-index:5; height:4.4em; opacity:0.5; }
+  .scene { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column;
+    justify-content:center; padding:9% 9%; box-sizing:border-box; }
+  .display { font-family:"Fraunces",Georgia,serif; line-height:1.05; font-weight:700; color:#0f172a; }
+  .red { color:#D82221; } .blue { color:#2563eb; }
+  .chip { display:inline-block; align-self:flex-start; background:rgba(37,99,235,0.10); color:#2563eb;
+    border:1px solid rgba(37,99,235,0.35); font-size:1.0em; font-weight:700; letter-spacing:0.22em;
+    text-transform:uppercase; padding:0.5em 1.1em; border-radius:999px; margin-bottom:0.6em; }
+  .t-intro .eye { font-size:1.05em; letter-spacing:0.26em; text-transform:uppercase; font-weight:700; color:#D82221; }
+  .t-intro .h1 { font-size:3.6em; max-width:18em; margin-top:0.5em; }
+  .t-intro .sub { font-size:1.45em; max-width:24em; margin-top:0.8em; color:#475569; line-height:1.45; }
+  .t-stat { justify-content:center; }
+  .t-stat .h2 { font-family:"Fraunces",serif; font-size:5.0em; font-weight:700; }
+  .t-stat .h2 .small { display:block; font-size:0.34em; color:#475569; font-family:"Inter",sans-serif; font-weight:500; margin-top:0.7em; max-width:30em; line-height:1.4; }
+  .t-cards { justify-content:center; }
+  .t-cards .h3 { font-family:"Fraunces",serif; font-size:2.5em; font-weight:700; max-width:16em; }
+  .t-cards .sub { font-size:1.2em; color:#475569; margin-top:0.3em; }
+  .t-cards .cards { display:flex; gap:1.0em; margin-top:1.3em; }
+  .t-cards .card { flex:1; background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.15em;
+    box-shadow:0 14px 34px rgba(15,23,42,0.08); border-top:3px solid #2563eb; }
+  .t-cards .card.red { border-top-color:#D82221; }
+  .t-cards .card .klab { font-size:0.8em; letter-spacing:0.14em; text-transform:uppercase; font-weight:700; color:#64748b; }
+  .t-cards .card .kval { font-family:"Fraunces",serif; font-size:1.7em; font-weight:700; margin-top:0.2em; color:#0f172a; }
+  .t-cards .card.b .kval { color:#2563eb; } .t-cards .card.r .kval { color:#D82221; }
+  .t-cards .card .kfoot { font-size:0.9em; color:#94a3b8; margin-top:0.3em; }
+  .t-pills .h4 { font-family:"Fraunces",serif; font-size:2.7em; font-weight:700; max-width:14em; }
+  .t-pills .sub { font-size:1.25em; color:#475569; margin-top:0.4em; max-width:24em; line-height:1.4; }
+  .t-pills .states { display:flex; gap:0.7em; margin-top:1.2em; flex-wrap:wrap; max-width:32em; }
+  .t-pills .pill { background:#fff; border:1px solid #dbe4f0; color:#1e293b; padding:0.5em 1.0em;
+    border-radius:999px; font-weight:600; font-size:1.1em; box-shadow:0 6px 16px rgba(15,23,42,0.06); }
+  .t-rows .h5 { font-family:"Fraunces",serif; font-size:2.7em; font-weight:700; }
+  .t-rows .sub { font-size:1.2em; color:#475569; margin-top:0.3em; max-width:26em; line-height:1.4; }
+  .t-rows .rows { margin-top:1.2em; display:flex; flex-direction:column; gap:0.6em; max-width:32em; }
+  .t-rows .row { display:flex; align-items:center; gap:0.9em; background:#fff; border:1px solid #e2e8f0;
+    border-radius:12px; padding:0.8em 1.1em; box-shadow:0 8px 20px rgba(15,23,42,0.05); }
+  .t-rows .row .dot { width:0.7em; height:0.7em; border-radius:50%; background:#D82221; flex:none; }
+  .t-rows .row .nm { font-weight:600; font-size:1.1em; } .t-rows .row .mt { color:#94a3b8; font-size:0.9em; margin-left:auto; }
+  .t-quote { justify-content:center; }
+  .t-quote .hq { font-size:3.6em; max-width:17em; }
+  .t-quote .tag { font-size:1.5em; color:#475569; margin-top:0.7em; max-width:26em; line-height:1.4; }
+  .t-outro { justify-content:center; }
+  .t-outro .h6 { font-size:4.0em; max-width:13em; }
+  .t-outro .tag { font-size:1.4em; color:#475569; margin-top:0.6em; }
+  .t-outro .cta { font-size:1.45em; color:#0f172a; font-weight:700; margin-top:0.9em; max-width:24em; }
+  .t-outro .phone { margin-top:1.0em; font-size:1.25em; font-weight:600; color:#0f172a; }
+  .t-outro .phone .pill { display:inline-block; background:#D82221; color:#fff; font-weight:700;
+    padding:0.22em 0.8em; border-radius:999px; margin:0 0.25em; }
+  @media (max-aspect-ratio: 1/1) {
+    [data-composition-id="oo-leads-that-convert"] { font-size:clamp(14px,2.9vw,36px); }
+    [data-composition-id="oo-leads-that-convert"] .scene { padding:14% 8%; }
+    [data-composition-id="oo-leads-that-convert"] .t-cards .cards { flex-direction:column; gap:0.6em; }
+  }
+</style>
+</head>
+<body>
+  <div data-composition-id="oo-leads-that-convert" data-start="0" data-duration="358.03" data-width="1920" data-height="1080">
+    <div id="wash"></div><div id="toprule"></div>
+    <img id="logo" src="logo.png" alt="Foreclosure Recovery Inc." />
+    <div class="scene t-intro" id="s1">
+      <div class="eye anim">Owner Operator &middot; Leads</div><div class="display h1 anim">Leads That <span class="red">Convert</span></div><div class="sub anim">Handed to you, even if you are starting from zero</div>
+    </div>
+    <div class="scene t-stat" id="s2">
+      <div class="chip anim">The Lead Guarantee</div><div class="display h2 anim">One phone. One email.<span class="small">No contact point, no lead. It never even shows.</span></div>
+    </div>
+    <div class="scene t-quote" id="s3">
+      <div class="display hq anim">By the time you get a name, <span class="red">you can already reach them.</span></div><div class="tag anim">It&apos;s never if you can contact them. Only how.</div>
+    </div>
+    <div class="scene t-cards" id="s4">
+      <div class="h3 anim">Inside your dashboard</div><div class="sub anim">Up to 50 fresh leads a week, sorted so you don&apos;t waste a minute</div><div class="cards"><div class="card anim b"><div class="klab">Weekly Leads</div><div class="kval">Up to 50</div><div class="kfoot">Handed to you every week</div></div><div class="card anim r red"><div class="klab">Diamond</div><div class="kval">Big money</div><div class="kfoot">The fat surpluses</div></div><div class="card anim"><div class="klab">Voice-Drop Ready</div><div class="kval">Loaded</div><div class="kfoot">Queued to ring</div></div><div class="card anim b"><div class="klab">Fresh</div><div class="kval">Verified</div><div class="kfoot">Phone or email, or it doesn&apos;t show</div></div></div>
+    </div>
+    <div class="scene t-rows" id="s5">
+      <div class="h5 anim">The engine never stops</div><div class="sub anim">How fresh leads land in your dashboard every day</div><div class="rows"><div class="row anim"><span class="dot"></span><span class="nm">Daily state email blasts</span><span class="mt">Every state in the country, all the time</span></div><div class="row anim"><span class="dot"></span><span class="nm">Public records requests</span><span class="mt">When a state goes quiet, the law makes them answer</span></div><div class="row anim"><span class="dot"></span><span class="nm">Excel &amp; PDF lists, batched daily</span><span class="mt">Skip-traced and enriched for you</span></div></div>
+    </div>
+    <div class="scene t-stat" id="s6">
+      <div class="chip anim">Premium Data</div><div class="display h2 anim">3,142 sources<span class="small">Every contact, in the 2026 book. Yours the day you join.</span></div>
+    </div>
+    <div class="scene t-quote" id="s7">
+      <div class="display hq anim">We put <span class="red">ten percent</span> of every closed claim back into the data.</div><div class="tag anim">Hire a PI. Send a rep. Knock the door when it&apos;s worth it.</div>
+    </div>
+    <div class="scene t-pills" id="s8">
+      <div class="h4 anim">Your voice, cloned</div><div class="sub anim">Record one minute. Every drip goes out sounding like you.</div><div class="states"><div class="pill anim">Read for sixty seconds</div><div class="pill anim">We clone it</div><div class="pill anim">Drips go out in your voice</div><div class="pill anim">They feel like they know you</div></div>
+    </div>
+    <div class="scene t-cards" id="s9">
+      <div class="h3 anim">AI that calls for you</div><div class="sub anim">Outbound and inbound, and you can&apos;t tell it&apos;s not a person</div><div class="cards"><div class="card anim b"><div class="klab">Sounds human</div><div class="kval">100%</div><div class="kfoot">You can&apos;t hear the difference</div></div><div class="card anim"><div class="klab">Knows the script</div><div class="kval">Your whole site</div><div class="kfoot">Trained on the surplus playbook</div></div><div class="card anim r red"><div class="klab">Books callbacks</div><div class="kval">"Tomorrow at 2"</div><div class="kfoot">Sets the appointment for you</div></div><div class="card anim b"><div class="klab">One assistant</div><div class="kval">30 calls</div><div class="kfoot">Work you&apos;d never have time for</div></div></div>
+    </div>
+    <div class="scene t-stat" id="s10">
+      <div class="chip anim">Claimant Portal</div><div class="display h2 anim">They sign from their phone<span class="small">Login portal, e-signature, remote online notary, all built in</span></div>
+    </div>
+    <div class="scene t-stat" id="s11">
+      <div class="chip anim">One Afternoon</div><div class="display h2 anim">50 leads, activated<span class="small">Voicemail, SMS, and email firing at once</span></div>
+    </div>
+    <div class="scene t-quote" id="s12">
+      <div class="display hq anim">You don&apos;t rent a dozen tools. <span class="blue">It&apos;s all built for you.</span></div><div class="tag anim">Hit the upgrade button, or call eight eight eight, five four five, eight thousand seven.</div>
+    </div>
+    <div class="scene t-rows" id="s13">
+      <div class="h5 anim">You never miss a hot one</div><div class="sub anim">The second someone replies, you know</div><div class="rows"><div class="row anim"><span class="dot"></span><span class="nm">Dashboard alert</span><span class="mt">Pops the instant they respond</span></div><div class="row anim"><span class="dot"></span><span class="nm">SMS notification</span><span class="mt">Straight to your pocket</span></div><div class="row anim"><span class="dot"></span><span class="nm">Email notification</span><span class="mt">Every reply, every call, logged</span></div></div>
+    </div>
+    <div class="scene t-stat" id="s14">
+      <div class="chip anim">Your Pocket</div><div class="display h2 anim">Your whole company, mobile<span class="small">Live SMS through TextBee from any device, any phone</span></div>
+    </div>
+    <div class="scene t-stat" id="s15">
+      <div class="chip anim">The Company Behind It</div><div class="display h2 anim">40 years in computers<span class="small">17 companies, our own servers, going international</span></div>
+    </div>
+    <div class="scene t-quote" id="s16">
+      <div class="display hq anim">We don&apos;t just build sites. <span class="red">We engineer empires.</span></div><div class="tag anim">Our own servers. Our own production systems. Real payouts.</div>
+    </div>
+    <div class="scene t-stat" id="s17">
+      <div class="chip anim">Going Global</div><div class="display h2 anim">UK. Mexico. Canada.<span class="small">This work travels. So can you.</span></div>
+    </div>
+    <div class="scene t-quote" id="s18">
+      <div class="display hq anim">The bottleneck isn&apos;t software. <span class="red">It&apos;s leads.</span></div><div class="tag anim">So only so many operators get onboarded. Act now.</div>
+    </div>
+    <div class="scene t-stat" id="s19">
+      <div class="chip anim">A Little Thank You</div><div class="display h2 anim">Vegas, on us<span class="small">Plus grocery and restaurant savings, just for joining</span></div>
+    </div>
+    <div class="scene t-outro" id="s20">
+      <div class="display h6 anim">Your pipeline&apos;s waiting. <span class="red">Go claim it.</span></div><div class="tag anim">Seats are limited by the leads we can responsibly supply.</div><div class="cta anim">Hit the Upgrade button now, or call (888) 545-8007 for your consultation.</div><div class="phone anim">Hit <span class="pill">Upgrade</span> or call <span class="pill">(888) 545-8007</span></div>
+    </div>
+    <div id="blackout"></div>
+    <audio id="vo" src="vo.mp3" data-start="0" data-duration="358.03" data-track-index="20" data-volume="1"></audio>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines=window.__timelines||{};
+    const tl=gsap.timeline({paused:true});
+    const EO="power3.out",EE="expo.out",EB="back.out(1.5)",XF=0.6;
+    tl.set("#s2,#s3,#s4,#s5,#s6,#s7,#s8,#s9,#s10,#s11,#s12,#s13,#s14,#s15,#s16,#s17,#s18,#s19,#s20",{opacity:0},0);
+    tl.from("#logo",{opacity:0,duration:0.7,ease:EO},0.2);
+    tl.from("#toprule",{scaleX:0,transformOrigin:"left center",duration:0.8,ease:EO},0.1);
+    tl.from("#s1 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},0.25);
+    tl.to("#s1",{opacity:0,duration:XF},15.72-XF);
+    tl.to("#s2",{opacity:1,duration:XF},15.72-XF);
+    tl.from("#s2 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},15.87);
+    tl.to("#s2",{opacity:0,duration:XF},33.18-XF);
+    tl.to("#s3",{opacity:1,duration:XF},33.18-XF);
+    tl.from("#s3 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},33.33);
+    tl.to("#s3",{opacity:0,duration:XF},49.78-XF);
+    tl.to("#s4",{opacity:1,duration:XF},49.78-XF);
+    tl.from("#s4 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},49.93);
+    tl.to("#s4",{opacity:0,duration:XF},68.11-XF);
+    tl.to("#s5",{opacity:1,duration:XF},68.11-XF);
+    tl.from("#s5 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},68.26);
+    tl.to("#s5",{opacity:0,duration:XF},86.45-XF);
+    tl.to("#s6",{opacity:1,duration:XF},86.45-XF);
+    tl.from("#s6 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},86.60);
+    tl.to("#s6",{opacity:0,duration:XF},103.92-XF);
+    tl.to("#s7",{opacity:1,duration:XF},103.92-XF);
+    tl.from("#s7 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},104.07);
+    tl.to("#s7",{opacity:0,duration:XF},123.13-XF);
+    tl.to("#s8",{opacity:1,duration:XF},123.13-XF);
+    tl.from("#s8 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},123.28);
+    tl.to("#s8",{opacity:0,duration:XF},142.34-XF);
+    tl.to("#s9",{opacity:1,duration:XF},142.34-XF);
+    tl.from("#s9 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},142.49);
+    tl.to("#s9",{opacity:0,duration:XF},162.43-XF);
+    tl.to("#s10",{opacity:1,duration:XF},162.43-XF);
+    tl.from("#s10 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},162.58);
+    tl.to("#s10",{opacity:0,duration:XF},179.02-XF);
+    tl.to("#s11",{opacity:1,duration:XF},179.02-XF);
+    tl.from("#s11 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},179.17);
+    tl.to("#s11",{opacity:0,duration:XF},196.48-XF);
+    tl.to("#s12",{opacity:1,duration:XF},196.48-XF);
+    tl.from("#s12 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},196.63);
+    tl.to("#s12",{opacity:0,duration:XF},217.44-XF);
+    tl.to("#s13",{opacity:1,duration:XF},217.44-XF);
+    tl.from("#s13 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},217.59);
+    tl.to("#s13",{opacity:0,duration:XF},232.29-XF);
+    tl.to("#s14",{opacity:1,duration:XF},232.29-XF);
+    tl.from("#s14 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},232.44);
+    tl.to("#s14",{opacity:0,duration:XF},249.75-XF);
+    tl.to("#s15",{opacity:1,duration:XF},249.75-XF);
+    tl.from("#s15 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},249.90);
+    tl.to("#s15",{opacity:0,duration:XF},268.96-XF);
+    tl.to("#s16",{opacity:1,duration:XF},268.96-XF);
+    tl.from("#s16 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},269.11);
+    tl.to("#s16",{opacity:0,duration:XF},285.55-XF);
+    tl.to("#s17",{opacity:1,duration:XF},285.55-XF);
+    tl.from("#s17 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},285.70);
+    tl.to("#s17",{opacity:0,duration:XF},300.40-XF);
+    tl.to("#s18",{opacity:1,duration:XF},300.40-XF);
+    tl.from("#s18 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},300.55);
+    tl.to("#s18",{opacity:0,duration:XF},318.74-XF);
+    tl.to("#s19",{opacity:1,duration:XF},318.74-XF);
+    tl.from("#s19 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},318.89);
+    tl.to("#s19",{opacity:0,duration:XF},331.84-XF);
+    tl.to("#s20",{opacity:1,duration:XF},331.84-XF);
+    tl.from("#s20 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},331.99);
+    window.__timelines["oo-leads-that-convert"]=tl;
+  </script>
+</body>
+</html>

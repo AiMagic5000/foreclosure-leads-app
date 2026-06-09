@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getNextSessionTime, getSessionLabel } from '@/lib/webcast/session-manager'
 import { getEmailTemplate } from '@/lib/webcast/email-templates'
+import { sendAdminNotification } from '@/lib/email'
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
 
@@ -150,6 +151,18 @@ export async function POST(request: NextRequest) {
         html: template.html,
       }).catch(() => {})
     }
+
+    // Notify the team a viewer joined the live chat so they can follow up (xscore10 + claim@)
+    sendAdminNotification(
+      `Webcast chat: ${firstName} joined the live chat`,
+      `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;">
+        <p><strong>A webcast viewer opened the live chat</strong></p>
+        <p>Name: ${firstName}<br/>
+        Email: ${emailLower}<br/>
+        Session: ${getSessionLabel(sessionTime)}</p>
+        <p>Watch for their questions in the chat and follow up at ${emailLower}.</p>
+      </div>`
+    ).catch(() => {})
 
     return NextResponse.json({
       success: true,

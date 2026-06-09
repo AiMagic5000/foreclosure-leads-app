@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { MetaPixel } from "@/components/meta-pixel";
+import { GoogleAdsTag } from "@/components/google-ads-tag";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -127,6 +129,8 @@ export default function RootLayout({
           className="min-h-screen antialiased font-sans"
           suppressHydrationWarning
         >
+          <MetaPixel />
+          <GoogleAdsTag />
           {children}
         </body>
       </html>

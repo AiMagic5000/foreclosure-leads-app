@@ -160,6 +160,32 @@ export const faqs: FAQ[] = [
     question: "What integrations are available with the platform?",
     answer: "Current integrations include: Stripe for payments, Clerk for authentication, n8n for workflow automation, SlyBroadcast for voicemail delivery, FastPeopleSearch for skip tracing, and various DNC verification APIs. API access is available on multi-state plans.",
     category: "technical"
+  },
+  // Added from assetrecoverybusiness.com — topics not already covered
+  {
+    question: "What makes surplus funds recovery recession-proof?",
+    answer: "Foreclosures rise when the economy struggles, so this work tends to grow exactly when other businesses slow down. More financial hardship means more property losses, which means more unclaimed surplus to recover. Homes and mortgages are permanent parts of the economy, so foreclosures, and the surplus they create, never really go away.",
+    category: "business"
+  },
+  {
+    question: "What is the difference between judicial and non-judicial foreclosure?",
+    answer: "Judicial foreclosures go through the court system. They move slower but leave detailed public records, and they are the norm in states like New York, New Jersey, and Florida. Non-judicial foreclosures happen outside court through a trustee, move faster, and are common in states like Texas, California, and Georgia. Both can produce surplus funds; the claim procedure just differs by jurisdiction.",
+    category: "general"
+  },
+  {
+    question: "Is surplus funds recovery a good fit for real estate agents?",
+    answer: "Yes. Realtors already understand property, foreclosures, and local records, and many have contacts who could use this service. It complements an existing real estate business well, especially for agents who are not actively listing and selling but still want income tied to what they already know.",
+    category: "business"
+  },
+  {
+    question: "What if I don't like making sales calls?",
+    answer: "You do not have to make them. A professional closing team can handle the phone conversations for a 10% fee on closed deals. You pass them qualified leads, they do the talking, and you keep the rest while focusing on finding leads and managing claims. Plenty of agents close cases without ever making a single sales call.",
+    category: "business"
+  },
+  {
+    question: "What happens if a surplus claim is denied?",
+    answer: "Claims are usually denied for incomplete paperwork, competing claims, outstanding liens, or ownership disputes. Most can be appealed or resubmitted once the missing documentation is in order, and careful upfront vetting prevents the majority of denials. Because the work is done on contingency, there is no fee on an unsuccessful claim, so thorough due diligence is in everyone's interest.",
+    category: "general"
   }
 ]
 

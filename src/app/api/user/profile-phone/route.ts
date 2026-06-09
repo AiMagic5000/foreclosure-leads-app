@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 }
 
 const WELCOME_SMS =
-  "Welcome to the team! We're here for you -- any questions, always ask. Corey Pearson https://usforeclosureleads.com/ Reply STOP to opt out."
+  "Welcome to the team! We're here for you 7 days a week, 9-5 Pacific. Any questions, always ask -- just reply to this text. We're not successful unless you are. Call (888) 545-8007 or email support@usforeclosureleads.com. -Corey Pearson. Reply STOP to opt out."
 
 // TextBee needs E.164 — bare 10-digit US numbers don't deliver.
 function toE164(p: string): string {

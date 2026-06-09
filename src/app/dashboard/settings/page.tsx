@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { UpgradeButton } from "@/components/upgrade-button"
 import { IntegrationsSettings } from "@/components/integrations-settings"
 import { usePin } from "@/lib/pin-context"
 import { PhoneUnlock } from "@/components/phone-unlock"
@@ -72,13 +71,13 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-w-0 max-w-full overflow-x-hidden">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">My Account</h1>
         <p className="text-muted-foreground">Manage your account and subscription</p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 min-w-0 [&>*]:min-w-0">
         {/* Access Status Section */}
         <Card className="bg-[#0f172a] text-white border-0 shadow-xl">
           <CardHeader>
@@ -116,25 +115,21 @@ export default function SettingsPage() {
                   ? "50 exclusive DNC-scrubbed leads every week, certified letters mailed for you, RVM / SMS / email automation under your name, and your dedicated landing page."
                   : "You have free access to browse the platform and preview our resource documents under each free tier video. Upgrade to a paid program to unlock weekly exclusive leads and outreach under your name."}
               </p>
-            </div>
-
-            {/* Free tier — partial training access: start the closer training now */}
-            {isFreeTier && (
-              <div className="p-3 rounded-lg border border-white/20 bg-white/10">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="font-medium text-white">Free access: Closing Training</p>
-                    <p className="text-sm text-white/70">You have partial access to the closer training videos and resource docs. Start learning now.</p>
-                  </div>
+              {/* Free tier — partial closing-training access, folded into the tier card */}
+              {isFreeTier && (
+                <div className="mt-3 flex items-center justify-between gap-3 border-t border-white/15 pt-3">
+                  <p className="text-sm text-white/70">
+                    <span className="font-medium text-white">Free access: Closing Training.</span> Partial access to the closer training videos and resource docs — start learning now.
+                  </p>
                   <Link
                     href="/dashboard/closing-training"
                     className="inline-flex flex-none items-center justify-center rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#0f172a] transition hover:bg-white/90"
                   >
-                    Start your training
+                    Start training
                   </Link>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Free tier — upgrade to the $995 Asset Recovery Agent program */}
             {isFreeTier && (
@@ -150,7 +145,7 @@ export default function SettingsPage() {
                       <p className="text-xs text-white/60 mb-3">One-time, full access today.</p>
                     </div>
                     <a
-                      href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
+                      href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership"
                       target="_blank" rel="noopener noreferrer"
                       className="inline-flex items-center justify-center rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600"
                     >
@@ -176,31 +171,94 @@ export default function SettingsPage() {
               </div>
             )}
 
-            {/* Business Build Out — included for Owner Operators, the upgrade for everyone else */}
-            <div className={`p-3 rounded-lg border ${isOwnerOperator ? "border-white/20 bg-white/10" : "border-emerald-400/40 bg-emerald-500/10"}`}>
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="font-medium text-white">{isOwnerOperator ? "Full Business Build Out" : "Upgrade: Complete Business Build Out"}</p>
-                  <p className="text-sm text-white/70">
-                    Complete asset-recovery business with 45 points of compliance{isOwnerOperator ? "" : " — the Owner Operator tier"}
-                  </p>
-                </div>
-                {isOwnerOperator ? (
+            {/* Business Build Out — included for Owner Operators, the upgrade routes for everyone else */}
+            {isOwnerOperator ? (
+              <div className="p-3 rounded-lg border border-white/20 bg-white/10">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="font-medium text-white">Full Business Build Out</p>
+                    <p className="text-sm text-white/70">
+                      Complete asset-recovery business with 45 points of compliance — included with your Owner Operator tier.
+                    </p>
+                  </div>
                   <Badge variant="outline" className="bg-emerald-500/20 border-emerald-400 text-emerald-200">
                     <CheckCircle2 className="mr-1 h-3 w-3" />
                     Included
                   </Badge>
-                ) : (
-                  <UpgradeButton label="Upgrade" className="inline-flex flex-none items-center justify-center rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600" />
-                )}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="p-3 rounded-lg border border-emerald-400/40 bg-emerald-500/10">
+                <div className="mb-3 flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-medium text-white">Upgrade: Complete Business Build Out</p>
+                    <p className="text-sm text-white/70">
+                      Your own brand, LLC, and white-label site — the Owner Operator tier. You keep 100% of the recovery fee. Pick your route:
+                    </p>
+                  </div>
+                  <a
+                    href="/dashboard/owner-operator"
+                    className="inline-flex flex-none items-center justify-center rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-white/20"
+                  >
+                    See Features
+                  </a>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* Complete build-out */}
+                  <div className="flex flex-col justify-between rounded-lg border border-emerald-400/40 bg-emerald-500/10 p-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">Complete Build-Out</p>
+                      <p className="text-2xl font-bold text-white">$5,200</p>
+                      <p className="text-xs text-white/60 mb-3">or 4 payments of $1,300</p>
+                    </div>
+                    <a
+                      href="https://stan.store/alliepearson/p/owner-operator--complete-business-buildout"
+                      target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600"
+                    >
+                      Enroll
+                    </a>
+                  </div>
+                  {/* Already a Partner ($995 paid) */}
+                  <div className="flex flex-col justify-between rounded-lg border border-amber-400/40 bg-amber-500/10 p-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">Already a Partner</p>
+                      <p className="text-2xl font-bold text-white">$4,205</p>
+                      <p className="text-xs text-white/60 mb-3">$5,200 &minus; $995 paid &middot; or 4 &times; $1,051</p>
+                    </div>
+                    <a
+                      href="https://stan.store/alliepearson/p/owner-operator-upgrade"
+                      target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600"
+                    >
+                      Upgrade
+                    </a>
+                  </div>
+                  {/* Partner + LLC */}
+                  <div className="flex flex-col justify-between rounded-lg border border-amber-400/40 bg-amber-500/10 p-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">Partner + LLC</p>
+                      <p className="text-2xl font-bold text-white">$3,705</p>
+                      <p className="text-xs text-white/60 mb-3">$5,200 &minus; $995 &minus; $500 LLC &middot; or 4 &times; $926</p>
+                    </div>
+                    <a
+                      href="https://stan.store/alliepearson/p/owner-operator-upgrade--partner--you-own-your-l"
+                      target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600"
+                    >
+                      Upgrade
+                    </a>
+                  </div>
+                </div>
+                <p className="mt-2 text-xs text-white/50">Payment plans must be completed before website / build-out delivery.</p>
+              </div>
+            )}
 
             {/* Team brand image — under the upgrade tiers */}
             <div className="overflow-hidden rounded-lg border border-white/10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/foreclosure-recovery-team-the-work-you-do-matters.webp"
+                src="/images/foreclosure-recovery-team-v2.webp"
                 alt="Foreclosure Recovery Inc team — the work you do matters"
                 width={1320}
                 height={566}

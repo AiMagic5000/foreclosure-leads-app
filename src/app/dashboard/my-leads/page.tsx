@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react"
 import { useRouter } from "next/navigation"
+import { useUser } from "@clerk/nextjs"
 import { usePin } from "@/lib/pin-context"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -654,8 +655,8 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
           )}
           {onSms ? (
             <button
-              onClick={(e) => { e.stopPropagation(); if (hasTextbee) { onSms() } else { onNeedCreds?.("sms") } }}
-              title={hasTextbee ? "Send SMS" : "Connect TextBee in My Account to activate"}
+              onClick={(e) => { e.stopPropagation(); if (lead.isMock || hasTextbee) { onSms() } else { onNeedCreds?.("sms") } }}
+              title={lead.isMock ? "See a sample text" : hasTextbee ? "Send SMS" : "Connect TextBee in My Account to activate"}
               className={cn(
                 "inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors",
                 hasTextbee ? "bg-violet-600 text-white hover:bg-violet-700 cursor-pointer" : "bg-gray-200 text-gray-500 hover:bg-gray-300 cursor-pointer"
@@ -994,10 +995,69 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
   )
 }
 
+/* ===== SAMPLE COMMS (free-tier demo on the John & Mary Smith lead) ===== */
+// Shows a free agent exactly what the email + SMS sent on their behalf look like,
+// with their own name as the agent and our 888 number on extension 10.
+const SAMPLE_EXT = "10"
+const SAMPLE_PHONE = "(888) 545-8007"
+
+function sampleEmailDraft(agentName: string, lang: "en" | "es") {
+  const to = MOCK_LEAD.primaryEmail || "j.smith.example@email.com"
+  const from = `${agentName} <yourname@usforeclosurerecovery.com>`
+  if (lang === "es") {
+    return {
+      to,
+      from,
+      subject: "Fondos que se le adeudan -- 1234 Oak Valley Drive",
+      html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#0f172a;line-height:1.6;">
+  <div style="background:#1e3a5f;padding:18px 24px;"><span style="color:#fff;font-weight:700;font-size:18px;">Foreclosure Recovery Inc.</span></div>
+  <div style="padding:24px;">
+    <p>Estimados John y Mary Smith:</p>
+    <p>Mi nombre es <strong>${agentName}</strong> y soy agente de recuperacion en <strong>Foreclosure Recovery Inc.</strong> Nuestros registros indican que es posible que se le adeuden <strong>fondos excedentes</strong> de la venta por ejecucion hipotecaria de su antigua propiedad en <strong>1234 Oak Valley Drive, Orlando, FL 32801</strong>.</p>
+    <p>Cuando una propiedad se vende por mas de lo que se debia, el excedente le pertenece al antiguo propietario. En su caso, el excedente es de aproximadamente <strong>$93,000</strong>. Estos fondos estan retenidos y hay un plazo limitado para reclamarlos.</p>
+    <p>Trabajamos por <strong>honorarios de contingencia</strong>: usted no paga nada por adelantado. Solo cobramos cuando usted cobra.</p>
+    <p>Adjunto nuestro acuerdo de contingencia. Para empezar, firme la pagina 5, tome una foto y enviemela.</p>
+    <p>Preguntas? Llameme o envieme un mensaje al <strong>${SAMPLE_PHONE} ext. ${SAMPLE_EXT}</strong>.</p>
+    <p style="margin-top:24px;">Atentamente,<br><strong>${agentName}</strong><br>Agente de Recuperacion, Foreclosure Recovery Inc.<br>${SAMPLE_PHONE} ext. ${SAMPLE_EXT}</p>
+  </div>
+  <div style="background:#f1f5f9;padding:14px 24px;font-size:12px;color:#64748b;">Foreclosure Recovery Inc. &middot; Ejemplo del correo que se envia en su nombre.</div>
+</div>`,
+    }
+  }
+  return {
+    to,
+    from,
+    subject: "Funds You May Be Owed -- 1234 Oak Valley Drive",
+    html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#0f172a;line-height:1.6;">
+  <div style="background:#1e3a5f;padding:18px 24px;"><span style="color:#fff;font-weight:700;font-size:18px;">Foreclosure Recovery Inc.</span></div>
+  <div style="padding:24px;">
+    <p>Dear John &amp; Mary Smith,</p>
+    <p>My name is <strong>${agentName}</strong> and I am a recovery agent with <strong>Foreclosure Recovery Inc.</strong> I am reaching out because our research shows you may be owed <strong>excess equity proceeds</strong> from the foreclosure sale of your former property at <strong>1234 Oak Valley Drive, Orlando, FL 32801</strong>.</p>
+    <p>When a property sells at foreclosure for more than what was owed, the surplus belongs to the former owner. Based on the sale records, the surplus in your case is approximately <strong>$93,000</strong>. These funds are being held now, and there is a limited window to claim them.</p>
+    <p>We work on a <strong>contingency basis</strong> -- there is no upfront cost to you. We only get paid when you do, out of the recovered funds. Any costs we incur come out of our share, not yours.</p>
+    <p>I have attached our contingency agreement for your review. To get started, sign page 5, take a photo, and send it back to me.</p>
+    <p>Questions? Call or text me directly at <strong>${SAMPLE_PHONE} ext. ${SAMPLE_EXT}</strong>.</p>
+    <p style="margin-top:24px;">Warm regards,<br><strong>${agentName}</strong><br>Recovery Agent, Foreclosure Recovery Inc.<br>${SAMPLE_PHONE} ext. ${SAMPLE_EXT}</p>
+  </div>
+  <div style="background:#f1f5f9;padding:14px 24px;font-size:12px;color:#64748b;">Foreclosure Recovery Inc. &middot; 30 N Gould St, Ste R, Sheridan, WY 82801 &middot; Sample of the email sent on your behalf.</div>
+</div>`,
+  }
+}
+
+function sampleSms(agentName: string) {
+  const message = `Hi John, this is ${agentName} with Foreclosure Recovery Inc. Our records show about $93,000 in surplus funds may be owed to you from the sale of 1234 Oak Valley Drive in Orange County, FL. There is a deadline to claim it. Call or text me at ${SAMPLE_PHONE} ext ${SAMPLE_EXT}. Reply STOP to opt out.`
+  return { phone: MOCK_LEAD.primaryPhone || "", message, charCount: message.length, segments: Math.ceil(message.length / 160) }
+}
+
 /* ===== MAIN PAGE ===== */
 
 export default function MyLeadsPage() {
   const { isAdmin, pinId, accountType, isLoading: pinLoading, hasSlybroadcast, hasTextbee } = usePin()
+  const { user } = useUser()
+  const agentName =
+    user?.fullName ||
+    [user?.firstName, user?.lastName].filter(Boolean).join(" ").trim() ||
+    "Your Name"
   const [commsGate, setCommsGate] = useState<null | "voice" | "sms">(null)
   const [leads, setLeads] = useState<LeadData[]>([])
   const [loading, setLoading] = useState(true)
@@ -1131,6 +1191,16 @@ export default function MyLeadsPage() {
   const [emailDraftResult, setEmailDraftResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
 
   const openEmailDraft = useCallback(async (leadId: string, to: string, ownerName: string) => {
+    // Sample lead: show a client-side example draft (no real lead in the DB)
+    if (leadId === MOCK_LEAD.id) {
+      setEmailDraftModal({ leadId, to, ownerName })
+      setEmailDraftResult(null)
+      setEmailPreviewLang("en")
+      setEmailPreview(sampleEmailDraft(agentName, "en"))
+      setEmailPreviewES(sampleEmailDraft(agentName, "es"))
+      setEmailDraftLoading(false)
+      return
+    }
     if (!activePinId) {
       setEmailDraftResult({ success: false, error: "Your agent profile is still loading. Please wait a moment and try again." })
       return
@@ -1164,7 +1234,7 @@ export default function MyLeadsPage() {
     } finally {
       setEmailDraftLoading(false)
     }
-  }, [activePinId])
+  }, [activePinId, agentName])
 
   const createEmailDraft = useCallback(async (draftAction: "create_draft_en" | "create_draft_es" | "create_draft_both" = "create_draft_en") => {
     if (!emailDraftModal) return
@@ -1227,6 +1297,16 @@ export default function MyLeadsPage() {
   const [smsEditMessage, setSmsEditMessage] = useState("")
 
   const openSmsPreview = useCallback(async (leadId: string, phone: string, ownerName: string) => {
+    // Sample lead: show a client-side example text (no real lead in the DB)
+    if (leadId === MOCK_LEAD.id) {
+      setSmsModal({ leadId, phone, ownerName })
+      setSmsResult(null)
+      const s = sampleSms(agentName)
+      setSmsPreview(s)
+      setSmsEditMessage(s.message)
+      setSmsLoading(false)
+      return
+    }
     if (!activePinId) {
       setSmsResult({ success: false, error: "Your agent profile is still loading. Please wait a moment and try again." })
       return
@@ -1250,7 +1330,7 @@ export default function MyLeadsPage() {
     } finally {
       setSmsLoading(false)
     }
-  }, [activePinId])
+  }, [activePinId, agentName])
 
   const sendSms = useCallback(async () => {
     if (!smsModal || !activePinId) return
@@ -1318,6 +1398,14 @@ export default function MyLeadsPage() {
 
   const showingMock = leads.length === 0
   const baseLeads = showingMock ? [MOCK_LEAD] : leads
+
+  // Free accounts only see the sample lead — expand it by default so they can
+  // immediately see the example email + SMS sent on their behalf.
+  useEffect(() => {
+    if (showingMock) {
+      setExpandedLeads((prev) => (prev.includes(MOCK_LEAD.id) ? prev : [...prev, MOCK_LEAD.id]))
+    }
+  }, [showingMock])
 
   // Derive available states from leads
   const availableStates = useMemo(() => {
@@ -1918,7 +2006,7 @@ export default function MyLeadsPage() {
                             ) : (
                               <button
                                 className="text-sm font-medium text-emerald-700 hover:underline cursor-pointer"
-                                onClick={(e) => { e.stopPropagation(); if (!isRevealed) return; if (hasTextbee) { openSmsPreview(lead.id, lead.primaryPhone, lead.ownerName) } else { setCommsGate("sms") } }}
+                                onClick={(e) => { e.stopPropagation(); if (lead.isMock) { openSmsPreview(lead.id, lead.primaryPhone, lead.ownerName); return } if (!isRevealed) return; if (hasTextbee) { openSmsPreview(lead.id, lead.primaryPhone, lead.ownerName) } else { setCommsGate("sms") } }}
                               >
                                 <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                               </button>
@@ -2148,11 +2236,16 @@ export default function MyLeadsPage() {
                 </div>
               )}
             </CardContent>
-            <div className="flex flex-wrap justify-end gap-2 p-6 pt-0">
+            <div className="flex flex-wrap items-center justify-end gap-2 p-6 pt-0">
+              {emailDraftModal.leadId === MOCK_LEAD.id && (
+                <p className="mr-auto text-xs text-muted-foreground">
+                  This is a sample of the email sent on your behalf. Your name and extension fill in automatically once you upgrade.
+                </p>
+              )}
               <Button variant="outline" onClick={() => { setEmailDraftModal(null); setEmailDraftResult(null) }}>
                 Close
               </Button>
-              {emailPreview && !emailDraftResult?.success && (
+              {emailPreview && !emailDraftResult?.success && emailDraftModal.leadId !== MOCK_LEAD.id && (
                 <>
                   <Button
                     onClick={() => createEmailDraft("create_draft_en")}
@@ -2261,11 +2354,16 @@ export default function MyLeadsPage() {
                 </div>
               )}
             </CardContent>
-            <div className="flex justify-end gap-2 p-6 pt-0">
+            <div className="flex items-center justify-end gap-2 p-6 pt-0">
+              {smsModal.leadId === MOCK_LEAD.id && (
+                <p className="mr-auto text-xs text-muted-foreground">
+                  This is a sample of the text sent on your behalf. Your name fills in automatically once you upgrade.
+                </p>
+              )}
               <Button variant="outline" onClick={() => { setSmsModal(null); setSmsResult(null) }}>
                 Close
               </Button>
-              {smsPreview && !smsResult?.success && (
+              {smsPreview && !smsResult?.success && smsModal.leadId !== MOCK_LEAD.id && (
                 <Button
                   onClick={sendSms}
                   disabled={smsLoading || !smsEditMessage.trim()}

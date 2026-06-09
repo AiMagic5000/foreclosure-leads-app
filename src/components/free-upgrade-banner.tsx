@@ -3,14 +3,15 @@
 import { usePin } from "@/lib/pin-context"
 import { Crown, ArrowUpRight } from "lucide-react"
 
-const AGENT_PROGRAM_URL = "https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
-
-// Shown to free (basic) accounts on every dashboard page: upgrade to the $995 agent
-// program (landing page) or to the Owner Operator program (in-app tab with full benefits).
+// Upsell bar pinned to the top of every dashboard page (above the section video).
+// Shown to every tier EXCEPT full Owner Operators, who already bought the top
+// build-out. Gated on isLoading so it never flashes in then out while the account
+// tier resolves — the old version defaulted accountType to "basic" (shown), then
+// hid once a non-basic tier (admin/OO) loaded, which read as "appears then vanishes".
 export function FreeUpgradeBanner() {
-  const { accountType } = usePin()
-  const isFree = !accountType || accountType === "basic"
-  if (!isFree) return null
+  const { accountType, isLoading } = usePin()
+  if (isLoading) return null
+  if (accountType === "owner_operator") return null
 
   return (
     <div className="mb-6 overflow-hidden rounded-2xl border border-[#D82221]/20 bg-white shadow-sm">
@@ -19,16 +20,14 @@ export function FreeUpgradeBanner() {
         <div>
           <p className="text-xs font-bold uppercase tracking-wider text-[#D82221]">Upgrade your account</p>
           <h3 className="mt-1 text-lg font-bold text-[#0f172a]">Turn lead access into a real recovery business.</h3>
-          <p className="mt-1 text-sm text-slate-600">Become a certified Asset Recovery Agent for $995, or go all the way with the full Owner Operator build-out.</p>
+          <p className="mt-1 text-sm text-slate-600">Become a certified Asset Recovery Agent for $331, or go all the way with the full Owner Operator build-out.</p>
         </div>
         <div className="flex flex-none flex-col gap-2 sm:flex-row">
           <a
-            href={AGENT_PROGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/dashboard/recovery-agent"
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
           >
-            Become an Agent &mdash; $995 <ArrowUpRight className="h-4 w-4" />
+            Become an Agent &mdash; $331 <ArrowUpRight className="h-4 w-4" />
           </a>
           <a
             href="/dashboard/owner-operator"

@@ -76,7 +76,7 @@ export function DocumentUploader({ folder = "general", accept }: { folder?: stri
         ) : docs.length === 0 ? (
           <p className="rounded-lg border border-dashed border-slate-300 p-4 text-center text-sm text-slate-400">No documents yet. Uploaded files will be saved here and appear every time you return.</p>
         ) : (
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-6 sm:grid-cols-3">
             {docs.map((d) => (
               <FileFolder
                 key={d.name}

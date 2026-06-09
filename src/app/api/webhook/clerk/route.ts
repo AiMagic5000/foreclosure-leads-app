@@ -128,6 +128,19 @@ async function handleUserCreated(data: ClerkWebhookEvent["data"]) {
 
   console.log(`[CLERK WEBHOOK] New user created: ${primaryEmail.email_address} (${fullName || "no name"})`)
 
+  // Durable signup event so registrations show in admin activity views alongside
+  // logins (login-notify writes "login" rows; without this, signups are invisible
+  // there). Best-effort — never block account creation on it.
+  try {
+    await supabaseAdmin.from("user_activity").insert({
+      user_id: primaryEmail.email_address,
+      action: "signup",
+      details: { name: fullName, clerk_user_id: data.id, at: new Date().toISOString() },
+    })
+  } catch (e) {
+    console.error("[CLERK WEBHOOK] user_activity signup insert failed:", e)
+  }
+
   // Meta Conversions API — server-side Lead for every new signup (the webcast
   // funnel converts via Clerk signup). event_id keyed to the Clerk user id so
   // webhook retries dedupe. No-ops until META_PIXEL_ID + token are set.

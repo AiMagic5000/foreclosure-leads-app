@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveOperatorConfig, isCommsAuthorized } from "@/lib/operator-config"
 import { isRequestAdmin } from "@/lib/admin-guard"
+import { getAgentSocialLink } from "@/lib/social-link"
 
 const TEXTBEE_BASE_URL = "https://api.textbee.dev/api/v1/gateway/devices"
 const SMS_GATEWAY_SEND_PATH = "/api/v1/send"
@@ -88,8 +89,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const message = customMessage
+    const baseMessage = customMessage
       || (variant === "meet_agent" ? buildMeetAgentSms(lead, config) : buildSmsMessage(lead, config))
+    // Auto-append the agent's consented social link (proof of a real person) when enabled.
+    const socialLink = await getAgentSocialLink(userEmail)
+    const message = socialLink ? `${baseMessage}\n\nThat's really me — connect with me: ${socialLink}` : baseMessage
 
     // Preview mode
     if (action === "preview") {

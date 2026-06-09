@@ -26,8 +26,33 @@ const MAP: Record<string, { id: string; title: string; subtitle: string }> = {
   "/dashboard/admin/state-rules": { id: "state-rules", title: "The legal backbone, verified", subtitle: "Non-attorney rules, fee caps, deadlines, and statutes per state." },
 }
 
+// Owner Operator leads with its first TWO series videos, side by side at the top.
+// (Parts 3 & 4 live lower on the page, by the features.) Part 1 appears ONLY here.
+const OWNER_OP_VIDEOS = [
+  { id: "owner-operator", title: "Part 1 — The Owner Operator Program", subtitle: "Your brand, your LLC, the full build-out, and 100% of your fee." },
+  { id: "own-the-platform", title: "Part 2 — Own the Whole Platform", subtitle: "One platform you own, built for you from nothing." },
+]
+
 export function DashboardSectionVideo() {
   const pathname = usePathname()
+
+  if (pathname === "/dashboard/owner-operator") {
+    return (
+      <div className="mb-6 grid gap-4 lg:grid-cols-2">
+        {OWNER_OP_VIDEOS.map((v) => (
+          <SectionVideo
+            key={v.id}
+            src={`/videos/${v.id}-16x9.mp4`}
+            poster={`/videos/${v.id}-poster.jpg`}
+            title={v.title}
+            subtitle={v.subtitle}
+            storageKey={`video-dismissed-${v.id}`}
+          />
+        ))}
+      </div>
+    )
+  }
+
   const cfg = pathname ? MAP[pathname] : undefined
   if (!cfg) return null
   return (

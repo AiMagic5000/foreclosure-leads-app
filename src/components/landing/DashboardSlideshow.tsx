@@ -4,9 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const SLIDES = [
-  "https://www.assetrecoverybusiness.com/images/dashboard-5.jpg",
-  "https://www.assetrecoverybusiness.com/images/dashboard-6.jpg",
-  "https://www.assetrecoverybusiness.com/images/dashboard-7.jpg",
+  "/dashboard-slides/dashboard-5.jpg",
+  "/dashboard-slides/dashboard-6.jpg",
+  "/dashboard-slides/dashboard-7.jpg",
 ];
 
 const ALT = "Foreclosure surplus funds recovery overages dashboard";

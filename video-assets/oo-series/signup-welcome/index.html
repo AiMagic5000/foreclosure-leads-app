@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Your Free Preview Account — Foreclosure Recovery Inc.</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @font-face { font-family:"Inter"; src:url("fonts/Inter-400.woff2") format("woff2"); font-weight:400; font-display:block; }
+  @font-face { font-family:"Inter"; src:url("fonts/Inter-500.woff2") format("woff2"); font-weight:500; font-display:block; }
+  @font-face { font-family:"Inter"; src:url("fonts/Inter-600.woff2") format("woff2"); font-weight:600; font-display:block; }
+  @font-face { font-family:"Inter"; src:url("fonts/Inter-700.woff2") format("woff2"); font-weight:700; font-display:block; }
+  @font-face { font-family:"Fraunces"; src:url("fonts/Fraunces-600.woff2") format("woff2"); font-weight:600; font-display:block; }
+  @font-face { font-family:"Fraunces"; src:url("fonts/Fraunces-700.woff2") format("woff2"); font-weight:700; font-display:block; }
+  [data-composition-id="oo-signup-welcome"] { position:absolute; inset:0; width:100%; height:100%;
+    background:#ffffff; color:#0f172a; font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+    overflow:hidden; font-size:clamp(14px,1.45vw,30px); }
+  #wash { position:absolute; inset:0; z-index:0; background:
+      radial-gradient(60% 55% at 12% 8%, rgba(37,99,235,0.08) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(60% 55% at 92% 96%, rgba(216,34,33,0.07) 0%, rgba(255,255,255,0) 60%), #ffffff; }
+  #toprule { position:absolute; top:0; left:0; right:0; height:6px; z-index:6;
+    background:linear-gradient(90deg,#2563eb 0%,#2563eb 50%,#D82221 50%,#D82221 100%); }
+  #logo { position:absolute; top:6.5%; left:9%; z-index:5; height:4.4em; opacity:0.5; }
+  .scene { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column;
+    justify-content:center; padding:9% 9%; box-sizing:border-box; }
+  .display { font-family:"Fraunces",Georgia,serif; line-height:1.05; font-weight:700; color:#0f172a; }
+  .red { color:#D82221; } .blue { color:#2563eb; }
+  .chip { display:inline-block; align-self:flex-start; background:rgba(37,99,235,0.10); color:#2563eb;
+    border:1px solid rgba(37,99,235,0.35); font-size:1.0em; font-weight:700; letter-spacing:0.22em;
+    text-transform:uppercase; padding:0.5em 1.1em; border-radius:999px; margin-bottom:0.6em; }
+  .t-intro .eye { font-size:1.05em; letter-spacing:0.26em; text-transform:uppercase; font-weight:700; color:#D82221; }
+  .t-intro .h1 { font-size:3.6em; max-width:18em; margin-top:0.5em; }
+  .t-intro .sub { font-size:1.45em; max-width:24em; margin-top:0.8em; color:#475569; line-height:1.45; }
+  .t-stat { justify-content:center; }
+  .t-stat .h2 { font-family:"Fraunces",serif; font-size:5.0em; font-weight:700; }
+  .t-stat .h2 .small { display:block; font-size:0.34em; color:#475569; font-family:"Inter",sans-serif; font-weight:500; margin-top:0.7em; max-width:30em; line-height:1.4; }
+  .t-cards { justify-content:center; }
+  .t-cards .h3 { font-family:"Fraunces",serif; font-size:2.5em; font-weight:700; max-width:16em; }
+  .t-cards .sub { font-size:1.2em; color:#475569; margin-top:0.3em; }
+  .t-cards .cards { display:flex; gap:1.0em; margin-top:1.3em; }
+  .t-cards .card { flex:1; background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.15em;
+    box-shadow:0 14px 34px rgba(15,23,42,0.08); border-top:3px solid #2563eb; }
+  .t-cards .card.red { border-top-color:#D82221; }
+  .t-cards .card .klab { font-size:0.8em; letter-spacing:0.14em; text-transform:uppercase; font-weight:700; color:#64748b; }
+  .t-cards .card .kval { font-family:"Fraunces",serif; font-size:1.7em; font-weight:700; margin-top:0.2em; color:#0f172a; }
+  .t-cards .card.b .kval { color:#2563eb; } .t-cards .card.r .kval { color:#D82221; }
+  .t-cards .card .kfoot { font-size:0.9em; color:#94a3b8; margin-top:0.3em; }
+  .t-pills .h4 { font-family:"Fraunces",serif; font-size:2.7em; font-weight:700; max-width:14em; }
+  .t-pills .sub { font-size:1.25em; color:#475569; margin-top:0.4em; max-width:24em; line-height:1.4; }
+  .t-pills .states { display:flex; gap:0.7em; margin-top:1.2em; flex-wrap:wrap; max-width:32em; }
+  .t-pills .pill { background:#fff; border:1px solid #dbe4f0; color:#1e293b; padding:0.5em 1.0em;
+    border-radius:999px; font-weight:600; font-size:1.1em; box-shadow:0 6px 16px rgba(15,23,42,0.06); }
+  .t-rows .h5 { font-family:"Fraunces",serif; font-size:2.7em; font-weight:700; }
+  .t-rows .sub { font-size:1.2em; color:#475569; margin-top:0.3em; max-width:26em; line-height:1.4; }
+  .t-rows .rows { margin-top:1.2em; display:flex; flex-direction:column; gap:0.6em; max-width:32em; }
+  .t-rows .row { display:flex; align-items:center; gap:0.9em; background:#fff; border:1px solid #e2e8f0;
+    border-radius:12px; padding:0.8em 1.1em; box-shadow:0 8px 20px rgba(15,23,42,0.05); }
+  .t-rows .row .dot { width:0.7em; height:0.7em; border-radius:50%; background:#D82221; flex:none; }
+  .t-rows .row .nm { font-weight:600; font-size:1.1em; } .t-rows .row .mt { color:#94a3b8; font-size:0.9em; margin-left:auto; }
+  .t-quote { justify-content:center; }
+  .t-quote .hq { font-size:3.6em; max-width:17em; }
+  .t-quote .tag { font-size:1.5em; color:#475569; margin-top:0.7em; max-width:26em; line-height:1.4; }
+  .t-outro { justify-content:center; }
+  .t-outro .h6 { font-size:4.0em; max-width:13em; }
+  .t-outro .tag { font-size:1.4em; color:#475569; margin-top:0.6em; }
+  .t-outro .cta { font-size:1.45em; color:#0f172a; font-weight:700; margin-top:0.9em; max-width:24em; }
+  .t-outro .phone { margin-top:1.0em; font-size:1.25em; font-weight:600; color:#0f172a; }
+  .t-outro .phone .pill { display:inline-block; background:#D82221; color:#fff; font-weight:700;
+    padding:0.22em 0.8em; border-radius:999px; margin:0 0.25em; }
+  @media (max-aspect-ratio: 1/1) {
+    [data-composition-id="oo-signup-welcome"] { font-size:clamp(14px,2.9vw,36px); }
+    [data-composition-id="oo-signup-welcome"] .scene { padding:14% 8%; }
+    [data-composition-id="oo-signup-welcome"] .t-cards .cards { flex-direction:column; gap:0.6em; }
+  }
+</style>
+</head>
+<body>
+  <div data-composition-id="oo-signup-welcome" data-start="0" data-duration="46.37" data-width="1920" data-height="1080">
+    <div id="wash"></div><div id="toprule"></div>
+    <img id="logo" src="logo.png" alt="Foreclosure Recovery Inc." />
+    <div class="scene t-intro" id="s1">
+      <div class="eye anim">Your free account</div><div class="display h1 anim">See if this is <span class="red">for you</span> — free.</div><div class="sub anim">No card. No commitment. Just real training.</div>
+    </div>
+    <div class="scene t-cards" id="s2">
+      <div class="h3 anim">What the free tier gives you</div><div class="sub anim">Enough to make an informed decision.</div><div class="cards"><div class="card anim b"><div class="klab">Training</div><div class="kval">Free</div><div class="kfoot">Learn the process</div></div><div class="card anim r red"><div class="klab">Guides</div><div class="kval">Download</div><div class="kfoot">Under each video</div></div><div class="card anim"><div class="klab">Support</div><div class="kval">7 days</div><div class="kfoot">Just ask</div></div><div class="card anim b"><div class="klab">Cost</div><div class="kval">$0</div><div class="kfoot">No commitment</div></div></div>
+    </div>
+    <div class="scene t-pills" id="s3">
+      <div class="h4 anim">Under every <span class="blue">training video</span></div><div class="sub anim">Guides you can download and research on your own.</div><div class="states"><div class="pill anim">Learn the process</div><div class="pill anim">Check your standing</div><div class="pill anim">Confirm you qualify</div><div class="pill anim">Then decide</div></div>
+    </div>
+    <div class="scene t-outro" id="s4">
+      <div class="display h6 anim">Watch, research, <span class="red">then decide.</span></div><div class="tag anim">We are not successful unless you are.</div><div class="cta anim">Watch the free training, download the guides, and call us with any question.</div><div class="phone anim">Hit <span class="pill">Sign Up Free</span> or call <span class="pill">(888) 545-8007</span></div>
+    </div>
+    <div id="blackout"></div>
+    <audio id="vo" src="vo.mp3" data-start="0" data-duration="46.37" data-track-index="4" data-volume="1"></audio>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines=window.__timelines||{};
+    const tl=gsap.timeline({paused:true});
+    const EO="power3.out",EE="expo.out",EB="back.out(1.5)",XF=0.6;
+    tl.set("#s2,#s3,#s4",{opacity:0},0);
+    tl.from("#logo",{opacity:0,duration:0.7,ease:EO},0.2);
+    tl.from("#toprule",{scaleX:0,transformOrigin:"left center",duration:0.8,ease:EO},0.1);
+    tl.from("#s1 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},0.25);
+    tl.to("#s1",{opacity:0,duration:XF},10.30-XF);
+    tl.to("#s2",{opacity:1,duration:XF},10.30-XF);
+    tl.from("#s2 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},10.45);
+    tl.to("#s2",{opacity:0,duration:XF},22.67-XF);
+    tl.to("#s3",{opacity:1,duration:XF},22.67-XF);
+    tl.from("#s3 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},22.82);
+    tl.to("#s3",{opacity:0,duration:XF},35.03-XF);
+    tl.to("#s4",{opacity:1,duration:XF},35.03-XF);
+    tl.from("#s4 .anim",{y:26,opacity:0,duration:0.55,stagger:0.16,ease:EO},35.18);
+    window.__timelines["oo-signup-welcome"]=tl;
+  </script>
+</body>
+</html>

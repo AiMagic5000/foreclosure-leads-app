@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import nodemailer from "nodemailer";
+import { sendMetaLeadEvent, readFbCookies } from "@/lib/meta/capi";
 
 const SMTP_HOST = "smtp.hostinger.com";
 const SMTP_PORT = 465;
@@ -205,7 +206,7 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: NextRequest) {
-  let body: { name?: string; email?: string; phone?: string; consent?: boolean; source?: string };
+  let body: { name?: string; email?: string; phone?: string; consent?: boolean; source?: string; eventId?: string };
   try {
     body = await request.json();
   } catch {
@@ -215,7 +216,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { name = "", email = "", phone = "", consent = false, source = "hero_form" } = body;
+  const { name = "", email = "", phone = "", consent = false, source = "hero_form", eventId } = body;
   const trimmedEmail = email.trim().toLowerCase();
   const trimmedName = name.trim();
   const trimmedPhone = phone.trim();
@@ -323,6 +324,28 @@ export async function POST(request: NextRequest) {
     }
   } catch (dripErr) {
     console.error("Drip enrollment error:", dripErr);
+  }
+
+  // Meta Conversions API — server-side Lead (deduped with the browser pixel via eventId).
+  // Best-effort; never blocks the response. No-ops until META_PIXEL_ID + token are set.
+  try {
+    const { fbp, fbc } = readFbCookies(request.headers.get("cookie"));
+    const [firstName, ...rest] = trimmedName.split(" ");
+    await sendMetaLeadEvent({
+      email: trimmedEmail,
+      phone: trimmedPhone || undefined,
+      firstName: firstName || undefined,
+      lastName: rest.join(" ") || undefined,
+      eventId,
+      eventSourceUrl: request.headers.get("referer") || "https://usforeclosureleads.com/",
+      clientIp: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined,
+      userAgent: request.headers.get("user-agent") || undefined,
+      fbp,
+      fbc,
+      actionSource: "website",
+    });
+  } catch (capiErr) {
+    console.error("Meta CAPI (subscribe) error:", capiErr);
   }
 
   return NextResponse.json({ success: true }, { headers: CORS_HEADERS });

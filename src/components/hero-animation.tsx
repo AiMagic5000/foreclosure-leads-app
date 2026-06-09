@@ -14,12 +14,12 @@ export function HeroAnimation() {
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(ellipse 150% 100% at 50% 100%, rgba(220, 38, 38, 0.20) 0%, rgba(185, 28, 28, 0.12) 30%, transparent 60%),
-            radial-gradient(ellipse 120% 80% at 30% 90%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
-            radial-gradient(ellipse 120% 80% at 70% 90%, rgba(185, 28, 28, 0.12) 0%, transparent 50%),
-            radial-gradient(ellipse 100% 70% at 50% 70%, rgba(248, 113, 113, 0.06) 0%, transparent 50%),
-            radial-gradient(ellipse 80% 50% at 50% 0%, rgba(30, 58, 95, 0.08) 0%, transparent 50%),
-            linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(254, 242, 242, 0.6) 50%, rgba(254, 202, 202, 0.35) 100%)
+            radial-gradient(ellipse 150% 100% at 50% 100%, rgba(30, 58, 95, 0.12) 0%, rgba(37, 99, 235, 0.08) 30%, transparent 60%),
+            radial-gradient(ellipse 120% 80% at 30% 90%, rgba(59, 130, 246, 0.10) 0%, transparent 50%),
+            radial-gradient(ellipse 120% 80% at 70% 90%, rgba(30, 58, 95, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse 100% 70% at 50% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+            radial-gradient(ellipse 80% 50% at 50% 0%, rgba(30, 58, 95, 0.06) 0%, transparent 50%),
+            linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(241, 245, 249, 0.7) 50%, rgba(226, 232, 240, 0.4) 100%)
           `,
         }}
       />
