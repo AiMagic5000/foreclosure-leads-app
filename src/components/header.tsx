@@ -7,7 +7,7 @@ import { Menu, X, ArrowRight, Phone, ShieldCheck, Radio } from "lucide-react"
 
 const NAV_LINKS = [
   { href: "/#platform", label: "Platform" },
-  { href: "/#pricing", label: "Pricing" },
+  { href: "/#offer", label: "Pricing" },
   { href: "/#opportunity", label: "Coverage" },
   { href: "/#intelligence", label: "Intelligence" },
   { href: "/#faq", label: "FAQ" },

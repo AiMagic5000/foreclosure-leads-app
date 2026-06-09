@@ -37,6 +37,8 @@ export function ArbEmbed() {
       if (scrollToSection(m[1], true)) {
         e.preventDefault()
         history.replaceState(null, "", "/#" + m[1])
+        // Re-assert after the mobile menu closes / layout settles.
+        setTimeout(() => scrollToSection(m[1], true), 130)
       }
     }
     document.addEventListener("click", onClick)
