@@ -22,6 +22,7 @@ export function ChatWidget() {
   const [sending, setSending] = useState(false)
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
+  const [emailError, setEmailError] = useState(false)
   const sessionRef = useRef<string>("")
   const scrollRef = useRef<HTMLDivElement>(null)
   const sentTranscriptForRef = useRef(0)
@@ -67,6 +68,8 @@ export function ChatWidget() {
   async function send() {
     const text = input.trim()
     if (!text || sending) return
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) { setEmailError(true); return }
+    setEmailError(false)
     const next = [...messages, { role: "user" as const, content: text }]
     setMessages(next)
     setInput("")
@@ -94,7 +97,6 @@ export function ChatWidget() {
           onClick={() => setOpen(true)}
           aria-label="Open chat"
           className="fixed bottom-5 right-5 z-[1000] flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-white shadow-xl transition hover:scale-105"
-          style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/fri-bird.png" alt="Chat with Foreclosure Recovery Inc." className="h-11 w-11 object-contain" />
@@ -169,9 +171,10 @@ export function ChatWidget() {
               />
               <input
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email (optional)"
-                className="min-w-0 flex-1 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs outline-none focus:border-[#2563eb]"
+                onChange={(e) => { setEmail(e.target.value); if (emailError) setEmailError(false) }}
+                type="email"
+                placeholder={emailError ? "Enter your email to chat" : "Email (required to chat)"}
+                className={"min-w-0 flex-1 rounded-lg border px-2.5 py-1.5 text-xs outline-none focus:border-[#2563eb] " + (emailError ? "border-red-500 bg-red-50 placeholder-red-500" : "border-slate-200")}
               />
             </div>
 

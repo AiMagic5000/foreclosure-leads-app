@@ -4067,4 +4067,8 @@ if(window.ResizeObserver){new ResizeObserver(ph).observe(document.body);}setInte
   }
 })();
 </script>
+<script>
+function toggleAudio(){var a=document.getElementById('overviewAudio');var i=document.getElementById('audioIcon');var t=document.getElementById('audioText');if(!a)return;if(a.paused){a.play();if(i)i.textContent='⏸️';if(t)t.textContent='Pause Audio';}else{a.pause();if(i)i.textContent='🔊';if(t)t.textContent='Listen to Overview';}}
+function resetAudioButton(){var i=document.getElementById('audioIcon');var t=document.getElementById('audioText');if(i)i.textContent='🔊';if(t)t.textContent='Listen to Overview';}
+</script>
 </body></html>
