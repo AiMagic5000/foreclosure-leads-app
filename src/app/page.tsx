@@ -40,6 +40,8 @@ import { ClosingToolsSlideshow } from "@/components/landing/ClosingToolsSlidesho
 import { DashboardSlideshow } from "@/components/landing/DashboardSlideshow";
 import { AnimatedFeatures } from "@/components/landing/AnimatedFeatures";
 import { Footer } from "@/components/footer";
+import { ChatWidget } from "@/components/chat-widget";
+import { BackToTop } from "@/components/back-to-top";
 
 const STATS = [
   { value: "3,200", label: "Counties Covered" },
@@ -426,6 +428,8 @@ export default function LandingPage() {
       </main>
 
       <Footer />
+      <BackToTop />
+      <ChatWidget />
     </div>
   );
 }

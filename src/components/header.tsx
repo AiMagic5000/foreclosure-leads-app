@@ -6,11 +6,11 @@ import Image from "next/image"
 import { Menu, X, ArrowRight, Phone, ShieldCheck, Radio } from "lucide-react"
 
 const NAV_LINKS = [
-  { href: "#features", label: "Platform" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "/states-guide", label: "Coverage" },
-  { href: "/blog", label: "Intelligence" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#platform", label: "Platform" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/#opportunity", label: "Coverage" },
+  { href: "/#intelligence", label: "Intelligence" },
+  { href: "/#faq", label: "FAQ" },
 ] as const
 
 export function Header() {

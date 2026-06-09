@@ -1982,7 +1982,7 @@
     
 
     <!-- Trust Bar - Industry Metrics -->
-    <section style="padding: 80px 0 90px; background: linear-gradient(180deg, #050d1a 0%, #0a1628 50%, #0f1e36 100%); position: relative; overflow: hidden;">
+    <section id="intelligence" style="padding: 80px 0 90px; background: linear-gradient(180deg, #050d1a 0%, #0a1628 50%, #0f1e36 100%); position: relative; overflow: hidden;">
         <!-- Subtle grid pattern overlay -->
         <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none;"></div>
         <div style="position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,75,0.3), transparent);"></div>
@@ -2066,7 +2066,7 @@
                             <span style="width: 10px; height: 10px; background: #ef4444; border-radius: 50; display: inline-block; animation: pulse 2s infinite; flex-shrink: 0;"></span>
                             <span style="color: rgba(255,255,255,0.9); font-size: 14px; font-weight: 600;">Foreclosures in Dec 2025: <strong style="color: #fbbf24;">44,990 filings</strong> -- a 57% increase over Dec 2024</span>
                         </div>
-                        <span onclick="showForeclosureModal()" style="cursor: pointer; background: rgba(220,38,38,0.3); border: 1px solid rgba(220,38,38,0.4); padding: 6px 14px; border-radius: 8px; color: #ffffff; font-size: 12px; font-weight: 700; white-space: nowrap; transition: background 0.2s;" onmouseover="this.style.background='rgba(220,38,38,0.5)'" onmouseout="this.style.background='rgba(220,38,38,0.3)'">View Report</span>
+                        <a href="/sign-up" target="_top" style="cursor: pointer; text-decoration: none; background: rgba(220,38,38,0.3); border: 1px solid rgba(220,38,38,0.4); padding: 6px 14px; border-radius: 8px; color: #ffffff; font-size: 12px; font-weight: 700; white-space: nowrap; transition: background 0.2s;" onmouseover="this.style.background='rgba(220,38,38,0.5)'" onmouseout="this.style.background='rgba(220,38,38,0.3)'">View Report</a>
                     </div>
 
                     <!-- Bottom Micro Stats Row -->
@@ -2161,7 +2161,7 @@
     </div>
 
     <!-- Live Demo Access Section - MOVED UP -->
-    <section class="demo-access" style="padding: 80px 0; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);">
+    <section id="platform" class="demo-access" style="padding: 80px 0; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);">
         <div class="container">
             <h2 class="section-title" style="color: #ffffff;">See Exactly What You're Getting</h2>
             <p class="section-subtitle" style="color: rgba(255,255,255,0.8);">Preview the live dashboards and websites included in your business-in-a-box</p>
@@ -2185,7 +2185,7 @@
                     <div style="padding: 20px; text-align: center;">
                         <h3 style="color: #1E3A5F; margin-bottom: 8px; font-size: 18px;">Recovery Agent Dashboard</h3>
                         <p style="color: #64748b; font-size: 13px; margin-bottom: 15px;">Your complete business command center with training, documents, and lead management.</p>
-                        <a href="https://usforeclosureleads.com/" target="_blank" rel="noopener" style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">View Live Dashboard →</a>
+                        <a href="/sign-up" target="_top" rel="noopener" style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">View Live Dashboard →</a>
                     </div>
                 </div>
                 
@@ -2284,14 +2284,14 @@
     </div>
 
     <!-- Problem Section -->
-    <section class="problem">
+    <section id="opportunity" class="problem">
         <div class="container">
             <h2 class="section-title">The Hidden $300 Billion Opportunity</h2>
             <p class="section-subtitle">Every year, billions in foreclosure surplus funds go unclaimed. Former homeowners don't know they're owed money - and that's where you come in.</p>
 
             <div style="max-width: 900px; margin: 30px auto; text-align: center;">
                 <a href="https://www.usforeclosurerecovery.com/" target="_blank" style="display: inline-block; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 15px 50px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 10px 40px rgba(0,0,0,0.15)'">
-                    <img src="/arb/images/lets-talk-recovery.png" alt="Foreclosure Recovery Business Opportunity" style="width: 100%; max-width: 900px; height: auto; display: block; border-radius: 16px;">
+                    <img src="/arb/images/opportunity-hero.jpg" alt="The Hidden $300 Billion Opportunity" style="width: 100%; max-width: 900px; height: auto; display: block; border-radius: 16px;">
                 </a>
             </div>
 
@@ -2478,7 +2478,7 @@
                 <button id="audioPlayBtn" onclick="toggleAudio()" style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); border: none; padding: 12px 20px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; color: #ffffff; box-shadow: 0 4px 15px rgba(212, 168, 75, 0.4);">
                     <span id="audioIcon">🔊</span> <span id="audioText">Listen to Overview</span>
                 </button>
-                <audio id="overviewAudio" src="audio/everything-you-get-overview.mp3" onended="resetAudioButton()"></audio>
+                <audio id="overviewAudio" src="/arb/audio/everything-you-get-overview.mp3" onended="resetAudioButton()"></audio>
             </div>
             
 
@@ -3093,7 +3093,7 @@
                             <div>
                                 <h3 style="font-size: 26px;">Asset Recovery Agent Partnership</h3>
                                 <p style="color: #64748b; font-size: 14px; margin-bottom: 12px;">Training, leads, automation, certified mailings, and support -- one flat program fee</p>
-                                <div class="tier-price">$995 <small style="display: block; margin-top: 4px; font-size: 14px; color: #475569;">or 3 payments of $331 &nbsp;•&nbsp; in-house financing available</small></div>
+                                <div class="tier-price">Start with $331 down <small style="display: block; margin-top: 4px; font-size: 14px; color: #475569;">$995 total &nbsp;•&nbsp; 3 payments of $331 &nbsp;•&nbsp; in-house financing available</small></div>
                                 <div class="tier-commission">50/50 Split on Recovery Fee <span onclick="document.getElementById('commissionTooltip').style.display=document.getElementById('commissionTooltip').style.display==='block'?'none':'block'" style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #2563eb; color: #ffffff; font-size: 12px; font-weight: 700; cursor: pointer; margin-left: 6px; font-style: italic; font-family: Georgia, serif; vertical-align: middle;">i</span></div>
                                 <div id="commissionTooltip" style="display: none; background: #f0f4ff; border: 1px solid #2563eb; border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 13px; color: #1E3A5F; line-height: 1.5; text-align: left;">
                                     <strong>Commission Split:</strong> Agent receives 50% and the company receives 50% of "<strong>UP TO</strong>" 30% of the recovery fee, since some jurisdictions like Texas only allow recovery agents to collect up to 20%. <span style="color: #64748b; font-style: italic;">(Updated 4/3/2026)</span>
@@ -3115,8 +3115,8 @@
                                     <li>No business entity required -- work as a 1099 sub-contractor under us. <strong>Already have a business?</strong> We can also bill your business directly and pay your case earnings into your business account if you prefer not to take a 1099.</li>
                                 </ul>
 
-                                <a href="Foreclosure-Recovery-Business-Programs-Guide.pdf" target="_blank" style="display: block; background: linear-gradient(135deg, #1E3A5F 0%, #2563eb 100%); color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; text-align: center; font-size: 14px; font-weight: 700; margin-top: 18px; margin-bottom: 10px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(30,58,95,0.3);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">📄 Download Complete Programs Guide (PDF)</a>
-                                <a href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership" target="_blank" rel="noopener" class="tier-cta primary">Enroll Now -- $995</a>
+                                <a href="/Foreclosure_Recovery_Business_Programs_Guide.pdf" target="_blank" style="display: block; background: linear-gradient(135deg, #1E3A5F 0%, #2563eb 100%); color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; text-align: center; font-size: 14px; font-weight: 700; margin-top: 18px; margin-bottom: 10px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(30,58,95,0.3);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">📄 Download Complete Programs Guide (PDF)</a>
+                                <a href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership" target="_blank" rel="noopener" class="tier-cta primary">$995 One Time</a>
                                 <a href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership-13-down" target="_blank" rel="noopener" style="display:block; text-align:center; margin-top:10px; background:linear-gradient(135deg,#059669 0%,#047857 100%); color:#ffffff; text-decoration:none; padding:14px 20px; border-radius:10px; font-size:16px; font-weight:700; box-shadow:0 4px 14px rgba(5,150,105,0.35);">Or Start for $331 -- 33% Down (3 Payments)</a>
                                 <a href="#" onclick="showJuniorEnrollModal(); return false;" style="display: block; text-align: center; margin-top: 8px; color: #1E3A5F; font-size: 13px; text-decoration: underline;">Or call us to enroll</a>
                             </div>
@@ -3308,7 +3308,7 @@
                         <div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px;">
                             <a href="https://stan.store/alliepearson/p/owner-operator--complete-business-buildout" target="_blank" rel="noopener" style="display: inline-block; background: linear-gradient(135deg, #059669 0%, #047857 100%); color: #ffffff; padding: 16px 36px; border-radius: 10px; text-decoration: none; font-size: 17px; font-weight: 700; box-shadow: 0 6px 20px rgba(5,150,105,0.35);">Enroll &mdash; $1,300 Down (4 &times; $1,300)</a>
                             <a href="tel:+18885458007" style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #ffffff; padding: 16px 36px; border-radius: 10px; text-decoration: none; font-size: 17px; font-weight: 700; box-shadow: 0 6px 20px rgba(220,38,38,0.35);">Call &mdash; (888) 545-8007</a>
-                            <a href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business" target="_blank" rel="noopener" style="display: inline-block; background: #ffffff; border: 2px solid #1e3a5f; color: #1e3a5f; padding: 14px 30px; border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 700;">See the full program</a>
+                            <a href="/sign-up" target="_top" rel="noopener" style="display: inline-block; background: #ffffff; border: 2px solid #1e3a5f; color: #1e3a5f; padding: 14px 30px; border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 700;">See the full program</a>
                         </div>
 
                         <div style="margin-top: 18px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
@@ -3345,7 +3345,7 @@
                     <img src="/arb/images/fri-march-payouts.jpg" alt="Foreclosure Recovery Inc. March agent payouts" style="display: block; width: 100%; max-width: 1000px; border-radius: 8px;">
                 </div>
                 <div style="margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
-                    <a href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership" target="_blank" rel="noopener" style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #ffffff; padding: 16px 40px; border-radius: 10px; text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 6px 20px rgba(220,38,38,0.4);">Enroll Now -- $995</a>
+                    <a href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership" target="_blank" rel="noopener" style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #ffffff; padding: 16px 40px; border-radius: 10px; text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 6px 20px rgba(220,38,38,0.4);">$995 One Time</a>
                     <a href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership-13-down" target="_blank" rel="noopener" style="display: inline-block; background: linear-gradient(135deg, #059669 0%, #047857 100%); color: #ffffff; padding: 16px 40px; border-radius: 10px; text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 6px 20px rgba(5,150,105,0.4);">Start for $331 -- 33% Down</a>
                 </div>
             </div>
@@ -3532,7 +3532,7 @@
                 </div>
                 <p>Follow the training, work the leads, use our phone system, and stay in touch with our support team. If after 12 months of active participation you have not closed a deal, we will refund your program payment in full.</p>
                 <p style="margin-top: 12px; font-size: 14px; color: #1E3A5F; line-height: 1.7;"><strong style="color: #dc2626;">Important:</strong> This guarantee applies to the Asset Recovery Agent Partnership program ($995). To qualify, you must complete training, seek support from our staff, and make calls from our phone system (all calls are recorded). You must demonstrate a consistent effort to get contingency agreements signed. If you do not complete training, do not seek support, and do not make calls where it is obvious you are making a consistent effort, you will not qualify for a refund.</p>
-                <p style="margin-top: 15px; font-size: 14px; color: #64748b;">Guarantee details outlined in our <a href="terms-of-service.html#s2" style="color: #2563eb; text-decoration: underline;">Terms of Service</a> Section 2.6.</p>
+                <p style="margin-top: 15px; font-size: 14px; color: #64748b;">Guarantee details outlined in our <a href="https://usforeclosureleads.com/terms" target="_top" style="color: #2563eb; text-decoration: underline;">Terms of Service</a> Section 2.6.</p>
             </div>
         </div>
     </section>
@@ -3958,7 +3958,7 @@
             <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin: 20px 0; align-items: center;">
                 <div style="text-align: center;">
                     <div style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 5px;">Asset Recovery Agent Partnership</div>
-                    <div style="font-size: 42px; font-weight: 900; color: #ffffff;">$995 <span style="font-size: 22px; font-weight: 600; color: rgba(255,255,255,0.8);">or 3 x $331</span></div>
+                    <div style="font-size: 42px; font-weight: 900; color: #ffffff;">Start with $331 down <span style="font-size: 22px; font-weight: 600; color: rgba(255,255,255,0.8);">$995 total or 3 x $331</span></div>
                     <div style="font-size: 13px; color: #dc2626;">Pay in full, 3 payments, or in-house 0% financing</div>
                 </div>
                 <div style="text-align: center; max-width: 300px;">
@@ -3969,7 +3969,7 @@
             </div>
 
             <div class="cta-buttons">
-                <a href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership" target="_blank" rel="noopener" class="btn btn-primary" style="font-size: 22px; padding: 20px 50px;">Enroll Now -- $995</a>
+                <a href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership" target="_blank" rel="noopener" class="btn btn-primary" style="font-size: 22px; padding: 20px 50px;">$995 One Time</a>
                 <a href="https://usforeclosureleads.com/webcast" target="_blank" class="btn btn-secondary">View Dashboard Demo First</a>
             </div>
         </div>
@@ -4035,4 +4035,34 @@
 (function(){function ph(){try{parent.postMessage({arbHeight:Math.max(document.body.scrollHeight,document.documentElement.scrollHeight)},'*')}catch(e){}}
 window.addEventListener('load',ph);window.addEventListener('resize',ph);
 if(window.ResizeObserver){new ResizeObserver(ph).observe(document.body);}setInterval(ph,1200);})();
-</script></body></html>
+</script>
+<script>
+(function(){
+  var dash=document.querySelectorAll('#dashSlideshow .dash-slide');
+  if(dash.length>1){var di=0;setInterval(function(){dash[di].style.opacity='0';di=(di+1)%dash.length;dash[di].style.opacity='1';},4000);}
+  var ct=document.querySelectorAll('#ct-slideshow .ct-slide');
+  if(ct.length){
+    var ci=0,ctTimer;
+    var lb=document.getElementById('ct-lightbox'),lbImg=document.getElementById('ct-lb-img'),lbCounter=document.getElementById('ct-lb-counter'),lbOpen=false;
+    var dots=document.getElementById('ct-dots'),dotEls=[];
+    if(dots){for(var i=0;i<ct.length;i++){(function(idx){var d=document.createElement('span');d.style.cssText='width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.5);cursor:pointer;display:inline-block;';d.addEventListener('click',function(e){e.stopPropagation();show(idx);reset();});dots.appendChild(d);dotEls.push(d);})(i);}}
+    function show(n){ct[ci].style.opacity='0';ct[ci].classList.remove('ct-active');ci=(n+ct.length)%ct.length;ct[ci].style.opacity='1';ct[ci].classList.add('ct-active');for(var j=0;j<dotEls.length;j++){dotEls[j].style.background=(j===ci)?'#fff':'rgba(255,255,255,0.5)';}if(lbOpen){lbImg.src=ct[ci].src;lbCounter.textContent=(ci+1)+' / '+ct.length;}}
+    function next(){show(ci+1);}function prev(){show(ci-1);}
+    function reset(){clearInterval(ctTimer);ctTimer=setInterval(next,3500);}
+    var pn=document.getElementById('ct-next'),pp=document.getElementById('ct-prev');
+    if(pn)pn.addEventListener('click',function(e){e.stopPropagation();next();reset();});
+    if(pp)pp.addEventListener('click',function(e){e.stopPropagation();prev();reset();});
+    var ss=document.getElementById('ct-slideshow');
+    function openLb(){lbOpen=true;lb.style.display='flex';lbImg.src=ct[ci].src;lbCounter.textContent=(ci+1)+' / '+ct.length;}
+    function closeLb(){lbOpen=false;lb.style.display='none';}
+    if(ss)ss.addEventListener('click',openLb);
+    var lc=document.getElementById('ct-lb-close'),lp=document.getElementById('ct-lb-prev'),ln=document.getElementById('ct-lb-next');
+    if(lc)lc.addEventListener('click',function(e){e.stopPropagation();closeLb();});
+    if(ln)ln.addEventListener('click',function(e){e.stopPropagation();next();});
+    if(lp)lp.addEventListener('click',function(e){e.stopPropagation();prev();});
+    if(lb)lb.addEventListener('click',function(e){if(e.target===lb)closeLb();});
+    show(0);reset();
+  }
+})();
+</script>
+</body></html>
