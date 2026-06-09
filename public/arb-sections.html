@@ -2020,7 +2020,7 @@
                         <div style="background: linear-gradient(135deg, rgba(30,58,95,0.5) 0%, rgba(15,23,42,0.8) 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px 20px; text-align: center; position: relative; overflow: hidden;">
                             <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 2px; background: linear-gradient(90deg, transparent, #10b981, transparent);"></div>
                             <div style="font-size: 36px; margin-bottom: 8px;">&#128176;</div>
-                            <div style="color: #10b981; font-size: 32px; font-weight: 800; letter-spacing: -1px; line-height: 1;">$3.2B</div>
+                            <div style="color: #10b981; font-size: 32px; font-weight: 800; letter-spacing: -1px; line-height: 1;">$300B+</div>
                             <div style="color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px;">Unclaimed Surplus</div>
                             <div style="margin-top: 8px; display: inline-flex; align-items: center; gap: 4px; background: rgba(16,185,129,0.15); padding: 3px 10px; border-radius: 12px;">
                                 <span style="color: #10b981; font-size: 11px; font-weight: 700;">Sitting in State Accounts</span>
@@ -4064,7 +4064,7 @@
     <!-- Hero email capture form submit -->
     
 <script>
-(function(){function ph(){try{parent.postMessage({arbHeight:Math.max(document.body.scrollHeight,document.documentElement.scrollHeight)},'*')}catch(e){}}
+(function(){var lastH=0;function ph(){try{var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);if(Math.abs(h-lastH)>16){lastH=h;parent.postMessage({arbHeight:h},'*');}}catch(e){}}
 window.addEventListener('load',ph);window.addEventListener('resize',ph);
 if(window.ResizeObserver){new ResizeObserver(ph).observe(document.body);}setInterval(ph,1200);})();
 </script>

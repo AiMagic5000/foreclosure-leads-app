@@ -14,7 +14,7 @@ export function ArbEmbed() {
   useEffect(() => {
     function onMessage(e: MessageEvent) {
       const h = (e.data && (e.data as { arbHeight?: number }).arbHeight) || 0
-      if (typeof h === "number" && h > 300) setHeight(h)
+      if (typeof h === "number" && h > 300) setHeight((prev) => (Math.abs(h - prev) > 16 ? h : prev))
     }
     window.addEventListener("message", onMessage)
 
@@ -70,7 +70,6 @@ export function ArbEmbed() {
       className="block w-full border-0"
       style={{ height }}
       scrolling="no"
-      loading="lazy"
     />
   )
 }
