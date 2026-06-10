@@ -32,6 +32,9 @@ function Redirector() {
           const result = await signIn.create({ strategy: 'ticket', ticket })
           if (result.createdSessionId) {
             await setActive({ session: result.createdSessionId })
+            // Tell the admins a lead just used their magic link (identity comes
+            // from the fresh session server-side; keepalive survives the redirect).
+            fetch('/api/webcast/login-notify', { method: 'POST', keepalive: true }).catch(() => {})
           }
         } catch {
           /* expired/used ticket — continue; they'll see sign-in */
