@@ -4,7 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { getNextSessionTime, getSessionLabel, getSecondsUntilSession } from '@/lib/webcast/session-manager'
 import { getEmailTemplate } from '@/lib/webcast/email-templates'
 import { sendAdminNotification } from '@/lib/email'
-import nodemailer from 'nodemailer'
+import nodemailer from '@/lib/nodemailer-relay-shim'
 
 /**
  * Enroll a Clerk-authenticated webcast signup into the webcast automations.

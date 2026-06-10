@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer"
+import nodemailer from '@/lib/nodemailer-relay-shim'
 
 const SMTP_HOST = "smtp.hostinger.com"
 const SMTP_PORT = 465

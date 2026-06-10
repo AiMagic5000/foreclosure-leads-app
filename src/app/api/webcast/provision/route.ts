@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
-import nodemailer from "nodemailer";
+import nodemailer from '@/lib/nodemailer-relay-shim';
 import crypto from "crypto";
 
 const SMTP_HOST = process.env.SMTP_HOST || "smtp.hostinger.com";

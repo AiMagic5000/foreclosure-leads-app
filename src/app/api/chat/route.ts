@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
-import nodemailer from "nodemailer"
+import nodemailer from '@/lib/nodemailer-relay-shim'
 
 export const dynamic = "force-dynamic"
 export const maxDuration = 30

@@ -5,7 +5,7 @@ import { getNextSessionTime, getSessionLabel, getSecondsUntilSession } from '@/l
 import { getEmailTemplate, SMS_TEMPLATES } from '@/lib/webcast/email-templates'
 import { sendAdminNotification } from '@/lib/email'
 import { sendMetaLeadEvent, readFbCookies } from '@/lib/meta/capi'
-import nodemailer from 'nodemailer'
+import nodemailer from '@/lib/nodemailer-relay-shim'
 
 const registerSchema = z.object({
   firstName: z.string().min(1).max(100),

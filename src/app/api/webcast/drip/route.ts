@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getEmailTemplate, SMS_TEMPLATES } from '@/lib/webcast/email-templates'
 import { getSessionLabel } from '@/lib/webcast/session-manager'
-import nodemailer from 'nodemailer'
+import nodemailer from '@/lib/nodemailer-relay-shim'
 
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.hostinger.com'
 const SMTP_PORT = parseInt(process.env.SMTP_PORT || '465', 10)

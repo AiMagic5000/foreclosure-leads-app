@@ -4,7 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { getNextSessionTime, getSessionLabel } from '@/lib/webcast/session-manager'
 import { getEmailTemplate } from '@/lib/webcast/email-templates'
 import { sendAdminNotification } from '@/lib/email'
-import nodemailer from 'nodemailer'
+import nodemailer from '@/lib/nodemailer-relay-shim'
 import crypto from 'crypto'
 
 const unlockSchema = z.object({

@@ -3,7 +3,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import * as fs from "fs"
 import * as path from "path"
-import * as nodemailer from "nodemailer"
+import nodemailer from "@/lib/nodemailer-relay-shim"
 import PizZip from "pizzip"
 import Docxtemplater from "docxtemplater"
 

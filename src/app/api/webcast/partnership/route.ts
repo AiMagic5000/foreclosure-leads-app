@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { supabaseAdmin } from '@/lib/supabase'
-import nodemailer from 'nodemailer'
+import nodemailer from '@/lib/nodemailer-relay-shim'
 
 const partnershipSchema = z.object({
   leadId: z.string().uuid().optional(),
