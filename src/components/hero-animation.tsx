@@ -9,22 +9,10 @@ import Image from "next/image"
 export function HeroAnimation() {
   return (
     <div className="absolute inset-0 overflow-hidden z-0">
-      {/* Sunset dimensional background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `
-            radial-gradient(ellipse 150% 100% at 50% 100%, rgba(30, 58, 95, 0.12) 0%, rgba(37, 99, 235, 0.08) 30%, transparent 60%),
-            radial-gradient(ellipse 120% 80% at 30% 90%, rgba(59, 130, 246, 0.10) 0%, transparent 50%),
-            radial-gradient(ellipse 120% 80% at 70% 90%, rgba(30, 58, 95, 0.08) 0%, transparent 50%),
-            radial-gradient(ellipse 100% 70% at 50% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-            radial-gradient(ellipse 80% 50% at 50% 0%, rgba(30, 58, 95, 0.06) 0%, transparent 50%),
-            linear-gradient(180deg, rgba(248, 250, 252, 1) 0%, rgba(241, 245, 249, 0.7) 50%, rgba(226, 232, 240, 0.4) 100%)
-          `,
-        }}
-      />
+      {/* Hero background-video mask — matches assetrecoverybusiness.com (.hero::before: rgba(255,255,255,0.8)) */}
+      <div className="absolute inset-0" style={{ background: "rgba(255, 255, 255, 0.8)" }} />
 
-      {/* Animated SVG Background - Arc pattern only */}
+      {/* Animated SVG Background - Arc pattern only (colored sunsetFill removed) */}
       <svg
         className="absolute inset-0 w-full h-full"
         viewBox="0 0 1200 700"
@@ -46,11 +34,6 @@ export function HeroAnimation() {
         </defs>
 
         <rect width="100%" height="100%" fill="url(#movingDots)" />
-
-        <path
-          d="M 0,700 L 50,500 Q 100,400 180,280 Q 350,40 600,30 Q 850,40 1020,280 Q 1100,400 1150,500 L 1200,700 Z"
-          fill="url(#sunsetFill)"
-        />
 
         <path
           d="M 50,500 Q 100,400 180,280 Q 350,40 600,30 Q 850,40 1020,280 Q 1100,400 1150,500"

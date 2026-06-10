@@ -33,6 +33,8 @@ import { Header } from "@/components/header";
 import { HeroAnimation } from "@/components/hero-animation";
 import { TrustedSection } from "@/components/trusted-section";
 import { ArbEmbed } from "@/components/landing/arb-embed";
+import { PromoCountdownBar } from "@/components/promo-countdown-bar";
+import { RotatingWord } from "@/components/rotating-word";
 import { ApiDocsPopup } from "@/components/api-docs-popup";
 import { faqs } from "@/data/faqs";
 import { statesData } from "@/data/states";
@@ -283,6 +285,8 @@ export default function LandingPage() {
 
       <Header />
 
+      <PromoCountdownBar />
+
       <main>
         {/* Hero Section with Motion Graphics */}
         <section className="relative pt-20 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-20 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden min-h-[650px] md:min-h-[750px]">
@@ -314,10 +318,10 @@ export default function LandingPage() {
                     </span>
                   </div>
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight mb-4 sm:mb-6 leading-[1.05]">
-                    Stop Hunting Leads &amp; Start
+                    Add <RotatingWord /> to Your Retirement
                     <br />
-                    <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
-                      Closing Foreclosure Surplus Overages.
+                    <span className="text-shine">
+                      Without Risking Your Benefits
                     </span>
                   </h1>
                   {/* Mobile-only hero video (positioned right under headline) */}
@@ -337,33 +341,31 @@ export default function LandingPage() {
                       </video>
                     </div>
                   </div>
-                  <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-5 max-w-2xl leading-relaxed px-2 lg:px-0 mx-auto lg:mx-0">
-                    Verified foreclosure surplus overages leads delivered to your dashboard every
-                    24 hours -- skip-traced, DNC-scrubbed, and ready for outreach.
-                    Trusted by 500+ recovery agents across all 50 states.
+                  <p
+                    className="text-base sm:text-lg md:text-xl text-gray-800 font-medium mb-5 sm:mb-6 max-w-2xl leading-relaxed px-2 lg:px-0 mx-auto lg:mx-0"
+                    style={{ textShadow: "0 1px 14px rgba(255,255,255,0.95), 0 1px 2px rgba(255,255,255,0.9)" }}
+                  >
+                    Help homeowners recover unclaimed foreclosure surplus funds while
+                    building a profitable business from home. We handle 95% of the work
+                    -- you just verify the foreclosure with a warm follow up call.
                   </p>
-                  <div className="mb-8 sm:mb-10 max-w-2xl px-2 lg:px-0 mx-auto lg:mx-0">
-                    <p className="text-base sm:text-lg md:text-xl font-semibold text-[#1e3a5f] leading-snug">
-                      Keep up to <span className="text-red-600 font-black">30%</span> of every
-                      surplus you successfully recover.
-                      <sup>
-                        <Link
-                          href="/income-disclaimer"
-                          className="text-[10px] sm:text-xs font-normal text-gray-500 hover:text-[#1e3a5f] underline decoration-dotted ml-1"
-                        >
-                          disclosure
-                        </Link>
-                      </sup>
-                    </p>
-                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                      We deliver the data. You close the claim. Fee caps vary by state.
-                    </p>
+                  {/* Included value mentions */}
+                  <div className="mb-8 flex flex-wrap justify-center gap-2.5 lg:justify-start">
+                    {["LLC Included", "50+ Legal Docs", "Full Training", "Website Access"].map((f) => (
+                      <span
+                        key={f}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[#1e3a5f]/15 bg-[#1e3a5f]/5 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-[#1e3a5f]"
+                      >
+                        <CheckCircle className="h-4 w-4 text-[#dc2626]" />
+                        {f}
+                      </span>
+                    ))}
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-3 px-4 sm:px-0">
                     <Link href="/sign-up" className="w-full sm:w-auto">
                       <Button
                         size="lg"
-                        className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full shadow-lg shadow-[#1e3a5f]/20"
+                        className="bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full shadow-lg shadow-[#dc2626]/25"
                       >
                         Sign Up Free Now
                         <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -372,7 +374,7 @@ export default function LandingPage() {
                     <Link href="/webcast" className="w-full sm:w-auto">
                       <Button
                         size="lg"
-                        className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full shadow-lg border border-gray-200"
+                        className="bg-[#1e3a5f] text-white hover:bg-[#2d4a6f] px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base w-full shadow-lg"
                       >
                         <Play className="mr-2 h-4 w-4" />
                         Watch 20-Min Demo
@@ -383,6 +385,23 @@ export default function LandingPage() {
                     <CheckCircle className="h-3.5 w-3.5 text-[#10b981]" />
                     Free training included. No credit card required.
                   </p>
+
+                  {/* Proof strip — from assetrecoverybusiness.com */}
+                  <div className="mb-10 flex items-end justify-center gap-3 sm:gap-4 lg:justify-start">
+                    {[
+                      ["/images/arb-proof/training-manual.png", "Surplus Recovery Training Manual"],
+                      ["/images/arb-proof/kathy-reynolds.png", "Agent Kathy Reynolds"],
+                      ["/images/arb-proof/first-check.png", "My First Recovery Check"],
+                    ].map(([src, alt]) => (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        key={src}
+                        src={src}
+                        alt={alt}
+                        className="h-32 w-auto rounded-lg border border-gray-200 object-cover shadow-md sm:h-40"
+                      />
+                    ))}
+                  </div>
 
                   {/* Stats */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 max-w-3xl pt-6 sm:pt-8 border-t border-gray-200 mx-auto lg:mx-0">

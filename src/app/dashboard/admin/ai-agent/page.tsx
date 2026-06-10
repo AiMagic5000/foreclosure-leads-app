@@ -6,7 +6,7 @@ import { FileFolder } from "@/components/file-folder"
 import {
   Bot, Mic, Square, Upload, Loader2, ShieldCheck, Sparkles, Camera,
   CheckCircle2, Mail, MessageSquare, Voicemail, PhoneCall, Clock, Image as ImageIcon,
-  ChevronDown,
+  ChevronDown, Download,
 } from "lucide-react"
 
 interface Recording { name: string; label: string; url: string; created: string | null; size: number }
@@ -386,6 +386,17 @@ export default function AiAgentPage() {
                   </>
                 )}
                 {doc && <span className="absolute right-2 top-2 inline-flex items-center gap-1 rounded bg-emerald-600 px-1.5 py-0.5 text-[10px] font-bold text-white"><CheckCircle2 className="h-3 w-3" /> {p.label}</span>}
+                {doc && (
+                  <a
+                    href={`${doc.url}${doc.url.includes("?") ? "&" : "?"}download=${encodeURIComponent(doc.label || p.key)}`}
+                    download={doc.label || `${p.key}.jpg`}
+                    onClick={(e) => e.stopPropagation()}
+                    title="Download original image"
+                    className="absolute left-2 top-2 z-10 inline-flex items-center gap-1 rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-bold text-slate-800 shadow transition hover:bg-white"
+                  >
+                    <Download className="h-3 w-3" /> Save
+                  </a>
+                )}
                 {isUp && <span className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 text-white"><Loader2 className="h-6 w-6 animate-spin" /></span>}
                 <div className="absolute inset-x-0 bottom-0 flex divide-x divide-white/20 text-[11px] font-bold text-white">
                   <button type="button" onClick={() => openCamera(p.key)} className="flex flex-1 items-center justify-center gap-1 bg-violet-600/90 py-2 transition hover:bg-violet-600"><Camera className="h-3.5 w-3.5" /> Camera</button>
