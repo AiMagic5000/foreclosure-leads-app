@@ -62,7 +62,9 @@ const RELAY_TOKEN = process.env.MAIL_RELAY_TOKEN || ''
 
 async function sendMagicLinkEmail(to: string, firstName: string, ticket: string) {
   if (!RELAY_TOKEN) return
-  const link = `${SITE}/webcast/live?autoplay=1&welcome=1&ticket=${encodeURIComponent(ticket)}`
+  // livefb = the no-login live room (FB leads gave us their info already; the
+  // ticket logs them in silently in the background, never blocks playback).
+  const link = `${SITE}/webcast/livefb?autoplay=1&welcome=1&ticket=${encodeURIComponent(ticket)}`
   const html = `
       <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#0f172a">
         <div style="background:linear-gradient(135deg,#09274c,#1E3A5F);padding:26px;border-radius:12px 12px 0 0;text-align:center">
