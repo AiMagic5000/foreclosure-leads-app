@@ -23,7 +23,7 @@ const SITE = 'https://usforeclosureleads.com'
 
 // Vercel's serverless runtime can't reach SMTP reliably (getaddrinfo EBUSY), so the
 // magic-link email goes out over HTTPS via the proven tradelinejet PHP->MXRoute relay.
-const RELAY_URL = process.env.MAIL_RELAY_URL || 'https://www.tradelinejet.com/_api/lncf-relay.php'
+const RELAY_URL = process.env.MAIL_RELAY_URL || 'https://www.assetrecoverybusiness.com/_api/usfr-relay.php'
 const RELAY_TOKEN = process.env.MAIL_RELAY_TOKEN || ''
 
 async function sendMagicLinkEmail(to: string, firstName: string, ticket: string) {
@@ -43,7 +43,7 @@ async function sendMagicLinkEmail(to: string, firstName: string, ticket: string)
   const text = `Your seat is saved, ${firstName}. Tap to join the live webcast (logs you in automatically, link valid 24h): ${link}`
   const res = await fetch(RELAY_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-LNCF-Relay-Token': RELAY_TOKEN },
+    headers: { 'Content-Type': 'application/json', 'X-USFR-Relay-Token': RELAY_TOKEN },
     body: JSON.stringify({
       to,
       subject: 'You’re in — tap to join the live webcast',

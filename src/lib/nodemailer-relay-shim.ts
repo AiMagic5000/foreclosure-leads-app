@@ -12,7 +12,7 @@ import zlib from 'zlib'
  * `import nodemailer from "@/lib/nodemailer-relay-shim"` — nothing else changes.
  */
 
-const RELAY_URL = process.env.MAIL_RELAY_URL || 'https://www.tradelinejet.com/_api/lncf-relay.php'
+const RELAY_URL = process.env.MAIL_RELAY_URL || 'https://www.assetrecoverybusiness.com/_api/usfr-relay.php'
 const RELAY_TOKEN = process.env.MAIL_RELAY_TOKEN || ''
 
 type Address = string | { name?: string; address: string }
@@ -75,7 +75,7 @@ async function relaySend(opts: SendMailOptions): Promise<{ messageId: string; ac
 
     const res = await fetch(RELAY_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-LNCF-Relay-Token': RELAY_TOKEN },
+      headers: { 'Content-Type': 'application/json', 'X-USFR-Relay-Token': RELAY_TOKEN },
       body: JSON.stringify(body),
     })
     const textRes = await res.text()
