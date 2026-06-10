@@ -170,7 +170,7 @@ export function WebcastEmailGate() {
         {status === 'error' && <p className="text-red-300 text-xs text-center">{errorMsg}</p>}
         {status === 'loading' && errorMsg && <p className="text-amber-300 text-xs text-center">{errorMsg}</p>}
         <p className="text-center text-xs text-slate-400">
-          Already have an account? <a href="/sign-in?redirect_url=/webcast/live?autoplay=1" className="font-semibold text-[#1e3a5f] hover:underline">Sign in</a>
+          Already have an account? <a href="/sign-in?direct=1&redirect_url=/webcast/live?autoplay=1" className="font-semibold text-[#1e3a5f] hover:underline">Sign in</a>
         </p>
       </form>
     </div>

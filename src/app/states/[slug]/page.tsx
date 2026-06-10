@@ -121,7 +121,7 @@ export default async function StateLandingPage({ params }: Props) {
             >
               50 States Guide
             </Link>
-            <Link href="/sign-in">
+            <Link href="/sign-in?direct=1">
               <Button
                 size="sm"
                 className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white"
@@ -189,7 +189,7 @@ export default async function StateLandingPage({ params }: Props) {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/sign-in">
+                <Link href="/sign-in?direct=1">
                   <Button
                     size="lg"
                     className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-8 py-6 text-base font-semibold w-full sm:w-auto"
@@ -433,7 +433,7 @@ export default async function StateLandingPage({ params }: Props) {
                 hundreds of recovery agents using our platform.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/sign-in">
+                <Link href="/sign-in?direct=1">
                   <Button
                     size="lg"
                     className="bg-white text-[#1e3a5f] hover:bg-gray-100 px-10 py-6 text-base font-semibold w-full sm:w-auto"

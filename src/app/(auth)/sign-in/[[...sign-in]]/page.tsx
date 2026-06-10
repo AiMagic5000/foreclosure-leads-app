@@ -2,13 +2,25 @@ import { SignIn } from "@clerk/nextjs"
 import { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
+import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Sign In",
   description: "Sign in to your US Foreclosure Leads account.",
 }
 
-export default function SignInPage() {
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ direct?: string }>
+}) {
+  // Cold visitors who land on sign-in (e.g. bounced off an auth-gated page) belong
+  // on sign-up. Existing agents reach the real sign-in via ?direct=1 (header link +
+  // the "Sign in" link on the sign-up page).
+  const params = await searchParams
+  if (!params.direct) {
+    redirect("/sign-up")
+  }
   return (
     <div className="min-h-screen bg-[#0a1628] flex flex-col items-center justify-center p-4">
       <Link href="/" className="mb-8">

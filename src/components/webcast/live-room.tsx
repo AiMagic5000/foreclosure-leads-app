@@ -675,7 +675,7 @@ function WebcastLiveContent() {
                 </SignedIn>
                 <SignedOut>
                   <a
-                    href="/sign-in?redirect_url=/dashboard/live-webcast"
+                    href="/sign-in?direct=1&redirect_url=/dashboard/live-webcast"
                     className="px-4 py-1.5 rounded-lg font-bold text-xs sm:text-sm whitespace-nowrap transition hover:opacity-90 inline-flex items-center"
                     style={{ background: BRAND.gold, color: BRAND.navy }}
                   >

@@ -182,7 +182,7 @@ export default function SignUpPage() {
               <div className="bg-slate-50 border-t border-slate-200 px-6 py-4 text-center">
                 <p className="text-sm text-slate-500">
                   Already have an account?{" "}
-                  <Link href="/sign-in" className="text-[#1e3a5f] hover:text-[#dc2626] font-semibold transition-colors">Sign in</Link>
+                  <Link href="/sign-in?direct=1" className="text-[#1e3a5f] hover:text-[#dc2626] font-semibold transition-colors">Sign in</Link>
                 </p>
               </div>
             </div>

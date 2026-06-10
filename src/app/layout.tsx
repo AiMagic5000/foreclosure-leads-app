@@ -66,10 +66,10 @@ export const metadata: Metadata = {
       "Access fresh foreclosure leads daily across all 50 states. Tax deed surplus, mortgage overage data for asset recovery professionals.",
     images: [
       {
-        url: "https://usforeclosureleads.com/og-image.png",
+        url: "https://usforeclosureleads.com/foreclosure-surplus-funds-recovery-leads-platform.png",
         width: 1200,
-        height: 760,
-        alt: "Fresh Foreclosure Leads, Delivered 24/7/365 - US Foreclosure Leads",
+        height: 630,
+        alt: "Foreclosure surplus funds recovery leads platform - become an asset recovery agent - US Foreclosure Leads",
       },
     ],
   },
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     title: "Asset Recovery Leads - Foreclosure Surplus Funds Data",
     description:
       "Fresh foreclosure leads daily across all 50 states for surplus funds recovery professionals.",
-    images: ["https://usforeclosureleads.com/og-image.png"],
+    images: ["https://usforeclosureleads.com/foreclosure-surplus-funds-recovery-leads-platform.png"],
   },
   alternates: {
     canonical: "https://usforeclosureleads.com",

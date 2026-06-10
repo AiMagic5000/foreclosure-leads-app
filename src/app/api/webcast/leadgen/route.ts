@@ -49,9 +49,9 @@ async function sendMagicLinkEmail(to: string, firstName: string, ticket: string)
       subject: 'You’re in — tap to join the live webcast',
       html_b64gz: zlib.gzipSync(Buffer.from(html)).toString('base64'),
       text_b64gz: zlib.gzipSync(Buffer.from(text)).toString('base64'),
-      from_email: 'claim@usforeclosurerecovery.com',
+      from_email: 'support@usforeclosureleads.com',
       from_name: 'Corey | Foreclosure Recovery Inc.',
-      reply_to: 'claim@usforeclosurerecovery.com',
+      reply_to: 'support@usforeclosureleads.com',
     }),
   })
   if (!res.ok) throw new Error(`relay ${res.status}: ${(await res.text()).slice(0, 200)}`)
