@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getAuth, clerkClient } from '@clerk/nextjs/server'
 import nodemailer from '@/lib/nodemailer-relay-shim'
 
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.hostinger.com'
 const SMTP_PORT = parseInt(process.env.SMTP_PORT || '465', 10)
 const SMTP_USER = process.env.SMTP_USER || 'support@usforeclosureleads.com'
 const SMTP_PASS = process.env.SMTP_PASS || ''
-const NOTIFY_EMAIL = process.env.WEBCAST_NOTIFY_EMAIL || 'coreypearsonemail@gmail.com'
+const NOTIFY_EMAILS = (process.env.WEBCAST_NOTIFY_EMAIL || 'xscore10@protonmail.com,coreypearsonemail@gmail.com')
+  .split(',').map((e) => e.trim()).filter(Boolean)
 
 // Bot user-agent patterns to filter out
 const BOT_PATTERNS = /bot|crawl|spider|slurp|facebook|twitter|discord|telegram|whatsapp|preview|lighthouse|pagespeed|gtmetrix|pingdom|uptimerobot|headless|phantom|selenium|puppeteer|playwright|curl|wget|python|java\/|go-http|node-fetch|axios/i
@@ -13,7 +15,7 @@ const BOT_PATTERNS = /bot|crawl|spider|slurp|facebook|twitter|discord|telegram|w
 // In-memory cooldown: max 1 email per 2 minutes per page (serverless = per-instance, not perfect but good enough)
 const lastEmailSent: Record<string, number> = {}
 const COOLDOWN_MS = 120_000 // 2 minutes
-const pendingVisits: Array<{ page: string; ip: string; referer: string; ua: string; utms: string; ts: string }> = []
+const pendingVisits: Array<{ page: string; ip: string; referer: string; ua: string; utms: string; ts: string; who: string }> = []
 
 function getDeviceType(ua: string): string {
   if (/iphone|ipad|ipod/i.test(ua)) return 'iOS'
@@ -47,6 +49,7 @@ async function sendNotification(visits: typeof pendingVisits) {
     const browser = getBrowser(v.ua)
     return `
       <tr>
+        <td style="padding:8px 12px;border-bottom:1px solid #eee;font-weight:bold;color:${v.who === 'Anonymous' ? '#6b7280' : '#059669'}">${v.who}</td>
         <td style="padding:8px 12px;border-bottom:1px solid #eee;font-weight:bold;color:#d4a84b">${v.page}</td>
         <td style="padding:8px 12px;border-bottom:1px solid #eee">${v.ts}</td>
         <td style="padding:8px 12px;border-bottom:1px solid #eee">${device} / ${browser}</td>
@@ -57,7 +60,7 @@ async function sendNotification(visits: typeof pendingVisits) {
 
   const count = visits.length
   const subject = count === 1
-    ? `Webcast Visitor: ${visits[0].page} (${getDeviceType(visits[0].ua)})`
+    ? `Webcast Visitor: ${visits[0].who !== 'Anonymous' ? visits[0].who + ' — ' : ''}${visits[0].page} (${getDeviceType(visits[0].ua)})`
     : `${count} Webcast Visitors in the last 2 minutes`
 
   const html = `
@@ -70,6 +73,7 @@ async function sendNotification(visits: typeof pendingVisits) {
         <table style="width:100%;border-collapse:collapse;font-size:13px">
           <thead>
             <tr style="background:#09274c;color:#fff">
+              <th style="padding:8px 12px;text-align:left">Who</th>
               <th style="padding:8px 12px;text-align:left">Page</th>
               <th style="padding:8px 12px;text-align:left">Time</th>
               <th style="padding:8px 12px;text-align:left">Device</th>
@@ -86,12 +90,14 @@ async function sendNotification(visits: typeof pendingVisits) {
       </div>
     </div>`
 
-  await transport.sendMail({
-    from: `"Webcast Alerts" <${SMTP_USER}>`,
-    to: NOTIFY_EMAIL,
-    subject,
-    html,
-  })
+  for (const to of NOTIFY_EMAILS) {
+    await transport.sendMail({
+      from: `"Webcast Alerts" <${SMTP_USER}>`,
+      to,
+      subject,
+      html,
+    }).catch((e) => console.error('webcast track alert failed:', to, e))
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -110,6 +116,21 @@ export async function POST(req: NextRequest) {
     // Build UTM string
     const utms = [body.utm_source, body.utm_medium, body.utm_campaign].filter(Boolean).join(' / ')
 
+    // Identify signed-in visitors (magic-link logins, account holders) so the
+    // alert says WHO is on the page, not just a device.
+    let who = 'Anonymous'
+    try {
+      const { userId } = getAuth(req)
+      if (userId) {
+        const user = await (await clerkClient()).users.getUser(userId)
+        const name = [user.firstName, user.lastName].filter(Boolean).join(' ')
+        const email = user.emailAddresses?.[0]?.emailAddress || ''
+        who = name && email ? `${name} (${email})` : name || email || 'Signed-in user'
+      }
+    } catch {
+      /* identity is best-effort */
+    }
+
     const visit = {
       page,
       ip,
@@ -117,18 +138,21 @@ export async function POST(req: NextRequest) {
       ua,
       utms,
       ts: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true, month: 'short', day: 'numeric' }),
+      who,
     }
 
     pendingVisits.push(visit)
 
-    // Check cooldown -- send batched email if enough time has passed
+    // Check cooldown -- send batched email if enough time has passed.
+    // MUST be awaited: Vercel freezes the function after the response, so
+    // fire-and-forget sends randomly never complete (lost alerts).
     const now = Date.now()
     const lastSent = lastEmailSent[page] || 0
 
     if (now - lastSent >= COOLDOWN_MS) {
       lastEmailSent[page] = now
       const batch = pendingVisits.splice(0, pendingVisits.length)
-      sendNotification(batch).catch(() => {})
+      await sendNotification(batch).catch(() => {})
     }
 
     return NextResponse.json({ ok: true })
