@@ -228,11 +228,13 @@ export async function POST(request: NextRequest) {
     // This route only captures the lead + queues the drip. SMS welcome still fires if a phone/consent given.
     void sendConfirmationEmail
     if (phone && smsConsent) {
-      sendWelcomeSms(phone, firstName, sessionTime).catch(() => {})
+      await sendWelcomeSms(phone, firstName, sessionTime).catch(() => {})
     }
 
-    // Notice of new webcast registration -> xscore10 + claim@ (admin emails)
-    sendAdminNotification(
+    // Notice of new webcast registration -> xscore10 + claim@ (admin emails).
+    // MUST be awaited: Vercel freezes the function right after the response is
+    // returned, so fire-and-forget sends randomly never complete (lost notices).
+    await sendAdminNotification(
       `New Webcast Registration: ${firstName}${lastName ? " " + lastName : ""}`,
       `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;">
         <p><strong>New webcast registration</strong></p>
