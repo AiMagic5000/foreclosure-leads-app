@@ -95,21 +95,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Account creation failed' }, { status: 500 })
     }
 
-    // Full funnel enrollment (lead row, drips, CAPI Lead, suppression checks) —
+    // Full funnel enrollment (lead row, drips, CAPI Lead, admin notice, suppression) —
     // reuse the existing register route so the logic stays in one place.
-    fetch(`${SITE}/api/webcast/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        phone,
-        smsConsent: Boolean(phone),
-        utmSource: 'fb_leadgen',
-        utmMedium: 'lead_ad',
-      }),
-    }).catch(() => {})
+    // MUST be awaited: Vercel freezes the function after the response, so a
+    // fire-and-forget fetch here randomly never completes (lost drips/notices).
+    try {
+      await fetch(`${SITE}/api/webcast/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          phone,
+          smsConsent: Boolean(phone),
+          utmSource: 'fb_leadgen',
+          utmMedium: 'lead_ad',
+        }),
+      })
+    } catch (e) {
+      console.error('leadgen: register enrollment failed', e)
+    }
 
     // Magic login link (24h) straight into the live room.
     const ticket = await client.signInTokens.createSignInToken({ userId, expiresInSeconds: 86400 })
