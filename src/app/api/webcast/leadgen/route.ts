@@ -19,6 +19,40 @@ const schema = z.object({
   phone: z.string().max(30).optional(),
 })
 
+// Accepts JSON or form-encoded bodies; tolerates fullName instead of first/last
+// and FB's array-shaped field values. Returns a schema-shaped object.
+async function parseLead(req: NextRequest): Promise<{ firstName: string; lastName?: string; email: string; phone?: string } | null> {
+  const ct = req.headers.get('content-type') || ''
+  let raw: Record<string, unknown> = {}
+  try {
+    if (ct.includes('application/json')) {
+      raw = await req.json()
+    } else {
+      const form = await req.formData()
+      for (const [k, v] of form.entries()) raw[k] = v
+    }
+  } catch {
+    return null
+  }
+  const pick = (v: unknown): string => {
+    if (Array.isArray(v)) return String(v[0] ?? '').trim()
+    return String(v ?? '').trim()
+  }
+  let firstName = pick(raw.firstName)
+  let lastName = pick(raw.lastName) || undefined
+  const fullName = pick(raw.fullName ?? raw.full_name)
+  if (!firstName && fullName) {
+    const parts = fullName.split(/\s+/)
+    firstName = parts[0] || ''
+    lastName = parts.slice(1).join(' ') || undefined
+  }
+  const email = pick(raw.email).toLowerCase()
+  const phone = pick(raw.phone) || undefined
+  if (!firstName) firstName = 'there'
+  const parsed = schema.safeParse({ firstName, lastName, email, phone })
+  return parsed.success ? parsed.data : null
+}
+
 const SITE = 'https://usforeclosureleads.com'
 
 // Vercel's serverless runtime can't reach SMTP reliably (getaddrinfo EBUSY), so the
@@ -64,11 +98,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const parsed = schema.safeParse(await req.json())
-    if (!parsed.success) {
-      return NextResponse.json({ error: 'Invalid input', details: parsed.error.flatten() }, { status: 400 })
+    const lead = await parseLead(req)
+    if (!lead) {
+      return NextResponse.json({ error: 'Invalid input' }, { status: 400 })
     }
-    const { firstName, lastName, email, phone } = parsed.data
+    const { firstName, lastName, email, phone } = lead
 
     const client = await clerkClient()
 
