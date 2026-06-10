@@ -91,6 +91,39 @@ async function sendMagicLinkEmail(to: string, firstName: string, ticket: string)
   if (!res.ok) throw new Error(`relay ${res.status}: ${(await res.text()).slice(0, 200)}`)
 }
 
+async function sendEnrollmentFailureAlert(
+  email: string,
+  firstName: string,
+  lastName: string | undefined,
+  phone: string | undefined,
+  errorMsg: string
+) {
+  if (!RELAY_TOKEN) return
+  const name = [firstName, lastName].filter(Boolean).join(' ')
+  const html = `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;max-width:560px">
+    <div style="background:#b91c1c;padding:18px;border-radius:10px 10px 0 0"><h2 style="color:#fff;margin:0;font-size:18px">⚠️ New FB Lead — enrollment FAILED (needs backfill)</h2></div>
+    <div style="border:1px solid #e5e7eb;border-top:none;border-radius:0 0 10px 10px;padding:18px">
+      <p style="margin:0 0 4px"><strong>Name:</strong> ${name}</p>
+      <p style="margin:0 0 4px"><strong>Email:</strong> ${email}</p>
+      <p style="margin:0 0 4px"><strong>Phone:</strong> ${phone || '—'}</p>
+      <p style="margin:8px 0 0;font-size:12px;color:#64748b">Clerk account + magic link were sent, but the lead row / drip / notice step failed: ${errorMsg}</p>
+    </div></div>`
+  for (const to of ['xscore10@protonmail.com', 'support@usforeclosureleads.com']) {
+    await fetch(RELAY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-USFR-Relay-Token': RELAY_TOKEN },
+      body: JSON.stringify({
+        to,
+        subject: `⚠️ FB lead NOT enrolled: ${name} (${email})`,
+        html_b64gz: zlib.gzipSync(Buffer.from(html)).toString('base64'),
+        text_b64gz: zlib.gzipSync(Buffer.from(`FB lead enrollment failed for ${name} (${email}, ${phone || 'no phone'}): ${errorMsg}`)).toString('base64'),
+        from_email: 'support@usforeclosureleads.com',
+        from_name: 'USFR Lead Notifications',
+      }),
+    }).catch(() => {})
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const secret = process.env.LEADGEN_WEBHOOK_SECRET
@@ -133,10 +166,13 @@ export async function POST(req: NextRequest) {
     // reuse the existing register route so the logic stays in one place.
     // MUST be awaited: Vercel freezes the function after the response, so a
     // fire-and-forget fetch here randomly never completes (lost drips/notices).
+    // The x-leadgen-secret header bypasses register's per-IP rate limit (all
+    // internal calls share Vercel's egress IP — real leads were getting 429'd).
+    let registerError = ''
     try {
-      await fetch(`${SITE}/api/webcast/register`, {
+      const regRes = await fetch(`${SITE}/api/webcast/register`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'x-leadgen-secret': secret },
         body: JSON.stringify({
           firstName,
           lastName,
@@ -147,8 +183,19 @@ export async function POST(req: NextRequest) {
           utmMedium: 'lead_ad',
         }),
       })
+      if (!regRes.ok) {
+        registerError = `register ${regRes.status}: ${(await regRes.text()).slice(0, 200)}`
+      }
     } catch (e) {
-      console.error('leadgen: register enrollment failed', e)
+      registerError = e instanceof Error ? e.message : String(e)
+    }
+    // Never lose a lead silently: if enrollment failed, alert the admin inboxes
+    // directly so the lead can be backfilled.
+    if (registerError) {
+      console.error('leadgen: register enrollment failed:', registerError)
+      await sendEnrollmentFailureAlert(email, firstName, lastName, phone, registerError).catch((e) =>
+        console.error('leadgen: failure alert send failed', e)
+      )
     }
 
     // Magic login link (24h) straight into the live room.

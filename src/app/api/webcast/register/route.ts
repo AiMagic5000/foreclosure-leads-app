@@ -131,8 +131,13 @@ async function queueSmsDrip(leadId: string, phone: string, sessionTime: Date) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Internal calls from the FB leadgen webhook all share Vercel's egress IP, so
+    // the per-IP limit (5/hr) would silently block real leads. The leadgen secret
+    // marks them trusted and skips the IP limit (leadgen has its own auth gate).
+    const internalSecret = process.env.LEADGEN_WEBHOOK_SECRET
+    const isTrustedInternal = Boolean(internalSecret && request.headers.get('x-leadgen-secret') === internalSecret)
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
-    if (!checkRateLimit(ip)) {
+    if (!isTrustedInternal && !checkRateLimit(ip)) {
       return NextResponse.json({ error: 'Too many signups. Try again later.' }, { status: 429 })
     }
 
