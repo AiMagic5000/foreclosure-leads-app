@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { clerkClient } from '@clerk/nextjs/server'
 import { z } from 'zod'
 import crypto from 'crypto'
-import nodemailer from 'nodemailer'
+import zlib from 'zlib'
 
 /**
  * FB Lead Ads -> n8n -> this endpoint.
@@ -19,26 +19,17 @@ const schema = z.object({
   phone: z.string().max(30).optional(),
 })
 
-const SMTP_HOST = process.env.SMTP_HOST || 'smtp.hostinger.com'
-const SMTP_PORT = parseInt(process.env.SMTP_PORT || '465', 10)
-const SMTP_USER = process.env.SMTP_USER || 'support@usforeclosureleads.com'
-const SMTP_PASS = process.env.SMTP_PASS || process.env.SMTP_USFR_LEADS_PASSWORD || ''
 const SITE = 'https://usforeclosureleads.com'
 
+// Vercel's serverless runtime can't reach SMTP reliably (getaddrinfo EBUSY), so the
+// magic-link email goes out over HTTPS via the proven tradelinejet PHP->MXRoute relay.
+const RELAY_URL = process.env.MAIL_RELAY_URL || 'https://www.tradelinejet.com/_api/lncf-relay.php'
+const RELAY_TOKEN = process.env.MAIL_RELAY_TOKEN || ''
+
 async function sendMagicLinkEmail(to: string, firstName: string, ticket: string) {
-  if (!SMTP_PASS) return
+  if (!RELAY_TOKEN) return
   const link = `${SITE}/webcast/live?autoplay=1&welcome=1&ticket=${encodeURIComponent(ticket)}`
-  const transport = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_PORT === 465,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-  })
-  await transport.sendMail({
-    from: `"Corey | Foreclosure Recovery Inc." <${SMTP_USER}>`,
-    to,
-    subject: 'You’re in — tap to join the live webcast',
-    html: `
+  const html = `
       <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#0f172a">
         <div style="background:linear-gradient(135deg,#09274c,#1E3A5F);padding:26px;border-radius:12px 12px 0 0;text-align:center">
           <h1 style="color:#fff;margin:0;font-size:22px">Your seat is saved, ${firstName}</h1>
@@ -48,8 +39,22 @@ async function sendMagicLinkEmail(to: string, firstName: string, ticket: string)
           <a href="${link}" style="display:inline-block;background:#dc2626;color:#fff;text-decoration:none;font-weight:700;font-size:16px;padding:14px 34px;border-radius:10px">▶ Join the Live Webcast</a>
           <p style="font-size:12px;color:#64748b;margin:18px 0 0">This login link works for 24 hours. After that, sign in at usforeclosureleads.com with your email (use “Forgot password” to set one).</p>
         </div>
-      </div>`,
+      </div>`
+  const text = `Your seat is saved, ${firstName}. Tap to join the live webcast (logs you in automatically, link valid 24h): ${link}`
+  const res = await fetch(RELAY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-LNCF-Relay-Token': RELAY_TOKEN },
+    body: JSON.stringify({
+      to,
+      subject: 'You’re in — tap to join the live webcast',
+      html_b64gz: zlib.gzipSync(Buffer.from(html)).toString('base64'),
+      text_b64gz: zlib.gzipSync(Buffer.from(text)).toString('base64'),
+      from_email: 'claim@usforeclosurerecovery.com',
+      from_name: 'Corey | Foreclosure Recovery Inc.',
+      reply_to: 'claim@usforeclosurerecovery.com',
+    }),
   })
+  if (!res.ok) throw new Error(`relay ${res.status}: ${(await res.text()).slice(0, 200)}`)
 }
 
 export async function POST(req: NextRequest) {
