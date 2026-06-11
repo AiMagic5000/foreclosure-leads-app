@@ -215,27 +215,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Registration failed' }, { status: 500 })
     }
 
+    // Idempotency guard: retried/duplicate registrations (poller timeouts,
+    // backfills, double form fills) must NOT re-queue drips or re-text the
+    // lead. Existing drip rows for this lead = already enrolled.
+    const { data: existingDrip } = await supabaseAdmin
+      .from('webcast_email_drip_queue')
+      .select('id')
+      .eq('lead_id', lead.id)
+      .limit(1)
+    const alreadyEnrolled = Boolean(existingDrip && existingDrip.length > 0)
+
     // Await DB operations (fast) -- must complete before response
-    const dbTasks: Promise<unknown>[] = [
-      queueEmailDrip(lead.id, sessionTime),
-    ]
-    // SMS drip RE-ENABLED 2026-06-05 (now on TextBee w/ browser UA header)
-    if (phone && smsConsent) {
-      dbTasks.push(queueSmsDrip(lead.id, phone, sessionTime))
+    if (!alreadyEnrolled) {
+      const dbTasks: Promise<unknown>[] = [
+        queueEmailDrip(lead.id, sessionTime),
+      ]
+      // SMS drip RE-ENABLED 2026-06-05 (now on TextBee w/ browser UA header)
+      if (phone && smsConsent) {
+        dbTasks.push(queueSmsDrip(lead.id, phone, sessionTime))
+      }
+      await Promise.allSettled(dbTasks)
     }
-    await Promise.allSettled(dbTasks)
 
     // Welcome email is owned by the Clerk user.created webhook (single source — no duplicate welcomes).
     // This route only captures the lead + queues the drip. SMS welcome still fires if a phone/consent given.
     void sendConfirmationEmail
-    if (phone && smsConsent) {
+    if (phone && smsConsent && !alreadyEnrolled) {
       await sendWelcomeSms(phone, firstName, sessionTime).catch(() => {})
     }
 
     // Notice of new webcast registration -> xscore10 + claim@ (admin emails).
     // MUST be awaited: Vercel freezes the function right after the response is
     // returned, so fire-and-forget sends randomly never complete (lost notices).
-    await sendAdminNotification(
+    // Skipped on retries/duplicates — one notice per lead.
+    if (!alreadyEnrolled) await sendAdminNotification(
       `New Webcast Registration: ${firstName}${lastName ? " " + lastName : ""}`,
       `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;">
         <p><strong>New webcast registration</strong></p>
