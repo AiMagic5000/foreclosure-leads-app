@@ -281,6 +281,14 @@ export async function POST(request: NextRequest) {
       to: "xscore10@protonmail.com",
       subject: `New signup: ${trimmedName || "No name"} (${source})`,
       text: `Name: ${trimmedName || "Not provided"}\nEmail: ${trimmedEmail}\nPhone: ${trimmedPhone || "Not provided"}\nConsent (SMS/voicemail/calls + Terms + Privacy): ${consent ? `YES @ ${consentedAt}` : "NO"}\nSource: ${source}\nTime: ${new Date().toISOString()}`,
+      html: `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;">
+        <p><strong>New site signup</strong></p>
+        <p>Name: ${trimmedName || "Not provided"}<br/>
+        Email: ${trimmedEmail}<br/>
+        Phone: ${trimmedPhone || "Not provided"}<br/>
+        Consent: ${consent ? "YES" : "NO"}<br/>
+        Source: ${source}</p>
+      </div>`,
     });
   } catch (notifyErr) {
     console.error("Admin notification error:", notifyErr);
@@ -295,6 +303,8 @@ export async function POST(request: NextRequest) {
           first_name: trimmedName.split(" ")[0] || trimmedName,
           last_name: trimmedName.split(" ").slice(1).join(" ") || null,
           email: trimmedEmail,
+          phone: trimmedPhone || null,
+          sms_consent: Boolean(consent && trimmedPhone),
           status: "registered",
           utm_source: source,
         },

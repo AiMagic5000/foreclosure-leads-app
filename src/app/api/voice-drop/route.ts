@@ -120,9 +120,9 @@ async function generateAudioMiniMax(script: string, voiceId: string): Promise<Bu
   return Buffer.from(data.data.audio as string, "hex");
 }
 
-async function generateAudioElevenLabs(script: string): Promise<Buffer> {
+async function generateAudioElevenLabs(script: string, voiceId: string = ELEVENLABS_VOICE_ID): Promise<Buffer> {
   const response = await fetch(
-    `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}`,
+    `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
     {
       method: "POST",
       headers: {
@@ -131,7 +131,7 @@ async function generateAudioElevenLabs(script: string): Promise<Buffer> {
       },
       body: JSON.stringify({
         text: script,
-        model_id: "eleven_v3",
+        model_id: "eleven_multilingual_v2",
         voice_settings: {
           stability: 0.5,
           similarity_boost: 0.75,
@@ -153,17 +153,29 @@ async function generateAudioElevenLabs(script: string): Promise<Buffer> {
 }
 
 async function generateAudio(script: string, voiceId: string): Promise<Buffer> {
-  // Primary: MiniMax 2.5
+  // Agents with a cloned ElevenLabs voice (user_pins.voice_id) get THEIR voice.
+  // MiniMax voice ids are "moss_audio_..."; anything else is an ElevenLabs id.
+  const isElevenLabsVoice = !!voiceId && !voiceId.startsWith("moss_audio");
+  if (isElevenLabsVoice && ELEVENLABS_API_KEY) {
+    try {
+      return await generateAudioElevenLabs(script, voiceId);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error(`ElevenLabs cloned-voice TTS failed, falling back: ${msg}`);
+    }
+  }
+
+  // MiniMax 2.5 (default/admin voice path)
   if (MINIMAX_API_KEY) {
     try {
-      return await generateAudioMiniMax(script, voiceId);
+      return await generateAudioMiniMax(script, isElevenLabsVoice ? "moss_audio_c0bbc114-1f24-11f1-83c7-3e0d56c699a9" : voiceId);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error(`MiniMax TTS failed, falling back to ElevenLabs: ${msg}`);
     }
   }
 
-  // Fallback: ElevenLabs (only when MiniMax unavailable)
+  // Last resort: ElevenLabs default voice
   if (ELEVENLABS_API_KEY && ELEVENLABS_VOICE_ID) {
     return await generateAudioElevenLabs(script);
   }
