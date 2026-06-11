@@ -14,6 +14,7 @@ const isPublicRoute = createRouteMatcher([
   '/income-disclaimer',
   '/compliance',
   '/unsubscribe(.*)',
+  '/blocked',
   '/blog',
   '/webcast(.*)',
   '/waiting-room(.*)',
