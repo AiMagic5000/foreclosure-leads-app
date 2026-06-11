@@ -27,7 +27,11 @@ export function PaymentMethodsNote({ compact = false }: { compact?: boolean }) {
         Prefer to split it up? Pick <span className="font-semibold text-slate-700">&ldquo;Another way to pay&rdquo;</span> at
         checkout for Klarna, Afterpay or Google Pay payment plans &mdash; you get{' '}
         <span className="font-semibold text-slate-700">full program access today</span> and can start closing deals right
-        away while you pay over time.
+        away while you pay over time. Prefer <span className="font-semibold text-slate-700">0% in-house financing</span>?
+        No credit pull, no qualifying &mdash;{' '}
+        <a href="tel:8885458007" className="font-semibold text-slate-700 underline-offset-2 hover:underline">
+          call (888) 545-8007
+        </a>.
       </p>
     </div>
   )
