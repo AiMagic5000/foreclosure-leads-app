@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PaymentMethodsNote } from '@/components/payment-methods-note'
 import {
   Card,
   CardContent,
@@ -265,6 +266,7 @@ export default function PricingPage() {
                     Apply for In-House Financing -- (888) 545-8007
                   </Button>
                 </a>
+                <PaymentMethodsNote compact />
               </CardFooter>
             </Card>
           </div>
@@ -422,6 +424,9 @@ export default function PricingPage() {
               Enroll Now -- $995
             </Button>
           </a>
+          <div className="mx-auto mt-4 w-fit max-w-lg rounded-xl bg-white/95 px-5 py-3">
+            <PaymentMethodsNote compact />
+          </div>
         </div>
       </section>
 

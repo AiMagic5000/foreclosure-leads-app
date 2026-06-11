@@ -1,5 +1,6 @@
 "use client"
 
+import { PaymentMethodsNote } from '@/components/payment-methods-note'
 import { useState, useRef, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -250,6 +251,7 @@ export default function SettingsPage() {
                     </a>
                   </div>
                 </div>
+                <PaymentMethodsNote compact />
                 <p className="mt-2 text-xs text-white/50">Payment plans must be completed before website / build-out delivery.</p>
               </div>
             )}

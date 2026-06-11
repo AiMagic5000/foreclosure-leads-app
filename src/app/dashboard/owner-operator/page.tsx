@@ -1,5 +1,6 @@
 "use client"
 
+import { PaymentMethodsNote } from '@/components/payment-methods-note'
 import { Check, Phone, FileText, Crown, Building2, Globe, ShieldCheck, ChevronDown, Play } from "lucide-react"
 
 const AGENT_995_URL = "https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
@@ -115,6 +116,9 @@ export default function OwnerOperatorPage() {
               <a href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-base font-semibold text-[#1E3A5F] transition hover:bg-slate-50">
                 See the full program
               </a>
+            </div>
+            <div className="mt-4 w-fit rounded-xl bg-white/95 px-4 py-2">
+              <PaymentMethodsNote compact />
             </div>
           </div>
           <div className="flex flex-col gap-4">
@@ -265,6 +269,7 @@ export default function OwnerOperatorPage() {
               <a href="https://stan.store/alliepearson/p/owner-operator-upgrade--partner--you-own-your-l" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700">Upgrade &mdash; $926 Down (4 &times; $926)</a>
             </div>
             <p className="text-xs text-slate-500">Payment plans must be completed before website/build-out delivery.</p>
+            <PaymentMethodsNote compact />
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3 text-center">
             <a href={AGENT_995_URL} target="_blank" rel="noopener noreferrer"
@@ -343,6 +348,9 @@ export default function OwnerOperatorPage() {
           <a href="tel:+18885458007" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#D82221] px-6 py-3 text-lg font-bold text-white transition hover:opacity-90">
             <Phone className="h-5 w-5" /> (888) 545-8007
           </a>
+        </div>
+        <div className="mx-auto mt-4 w-fit max-w-lg rounded-xl bg-white/95 px-5 py-3">
+          <PaymentMethodsNote compact />
         </div>
       </div>
     </div>
