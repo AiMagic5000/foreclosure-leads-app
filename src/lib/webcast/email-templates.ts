@@ -232,10 +232,10 @@ ${P(`Text <strong>&ldquo;READY&rdquo;</strong> to (888) 545-8007 anytime and I w
 }
 
 export const SMS_TEMPLATES: Record<number, string> = {
-  0: `{first_name}, your free account on usforeclosureleads.com is ready! Add your phone in the My Account tab to unlock all your free training videos + resources. - Foreclosure Recovery Inc. Reply STOP to opt out`,
-  1: `{first_name}, one step left: add your phone in My Account to open your free training videos and the guides under each. https://usforeclosureleads.com/dashboard/settings Reply STOP to opt out`,
-  2: `{first_name}, once you're in, click "Closing Training" in the left menu for all your free modules and downloadable resources. https://usforeclosureleads.com/dashboard Reply STOP to opt out`,
-  3: `{first_name}, real results from agents who did the training: $14K, $22K, $30K first deals. Open your free training: https://usforeclosureleads.com/dashboard/settings Reply STOP to opt out`,
+  0: `{first_name}, your free account on usforeclosureleads.com is ready! Watch the live webcast now, no login needed: https://usforeclosureleads.com/webcast/livefb - Foreclosure Recovery Inc. Reply STOP to opt out`,
+  1: `{first_name}, log in anytime: your email + your phone number is the password. Your free training videos and guides are waiting. https://usforeclosureleads.com/sign-in?direct=1 Reply STOP to opt out`,
+  2: `{first_name}, once you're in, click "Closing Training" in the left menu for all your free modules and downloadable resources. Login = your email + your phone number. https://usforeclosureleads.com/sign-in?direct=1 Reply STOP to opt out`,
+  3: `{first_name}, real results from agents who did the training: $14K, $22K, $30K first deals. Log in with your email + your phone number: https://usforeclosureleads.com/sign-in?direct=1 Reply STOP to opt out`,
   4: `{first_name}, ready for leads that go to you only + your own 800# and business email? See packages: https://usforeclosureleads.com/#pricing Reply STOP to opt out`,
   5: `Last text {first_name}. Your free account + training don't expire. Text READY anytime to talk about going live. - Foreclosure Recovery Inc. Reply STOP to opt out`,
 }
