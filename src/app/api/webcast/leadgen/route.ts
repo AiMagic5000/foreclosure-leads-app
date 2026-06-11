@@ -141,12 +141,17 @@ export async function POST(req: NextRequest) {
 
     const client = await clerkClient()
 
-    // Create the account (random strong password) or find the existing one.
+    // Create the account or find the existing one. When the lead gave a phone
+    // number it doubles as their password ("log in: your email + your phone
+    // number") — these are free webcast accounts, recall beats entropy here.
+    // skipPasswordChecks: phone numbers trip Clerk's breach-list filter.
     let userId: string | null = null
+    const phoneDigits = (phone || '').replace(/\D/g, '')
     try {
       const user = await client.users.createUser({
         emailAddress: [email],
-        password: crypto.randomBytes(18).toString('base64url'),
+        password: phoneDigits.length >= 10 ? phoneDigits : crypto.randomBytes(18).toString('base64url'),
+        skipPasswordChecks: phoneDigits.length >= 10,
         firstName,
         lastName: lastName || undefined,
       })
