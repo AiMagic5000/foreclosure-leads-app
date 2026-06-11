@@ -7,7 +7,7 @@ export function PaymentMethodsNote({ compact = false }: { compact?: boolean }) {
   const pill =
     'inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 shadow-sm'
   return (
-    <div className={compact ? 'mt-3' : 'mt-4'}>
+    <div className={`${compact ? 'mt-3' : 'mt-4'} rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm`}>
       <div className="flex flex-wrap items-center justify-center gap-2">
         <span className={pill}>
           <span aria-hidden>💳</span> Card <span className="font-normal text-slate-400">Visa · MC · Amex</span>

@@ -117,7 +117,7 @@ export default function OwnerOperatorPage() {
                 See the full program
               </a>
             </div>
-            <div className="mt-4 w-fit rounded-xl bg-white/95 px-4 py-2">
+            <div className="mt-4 max-w-lg">
               <PaymentMethodsNote compact />
             </div>
           </div>
@@ -349,7 +349,7 @@ export default function OwnerOperatorPage() {
             <Phone className="h-5 w-5" /> (888) 545-8007
           </a>
         </div>
-        <div className="mx-auto mt-4 w-fit max-w-lg rounded-xl bg-white/95 px-5 py-3">
+        <div className="mx-auto mt-4 max-w-lg">
           <PaymentMethodsNote compact />
         </div>
       </div>

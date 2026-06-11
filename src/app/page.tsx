@@ -386,23 +386,6 @@ export default function LandingPage() {
                     Free training included. No credit card required.
                   </p>
 
-                  {/* Proof strip — from assetrecoverybusiness.com */}
-                  <div className="mb-10 flex items-end justify-center gap-3 sm:gap-4 lg:justify-start">
-                    {[
-                      ["/images/arb-proof/training-manual.png", "Surplus Recovery Training Manual"],
-                      ["/images/arb-proof/kathy-reynolds.png", "Agent Kathy Reynolds"],
-                      ["/images/arb-proof/first-check.png", "My First Recovery Check"],
-                    ].map(([src, alt]) => (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        key={src}
-                        src={src}
-                        alt={alt}
-                        className="h-32 w-auto rounded-lg border border-gray-200 object-cover shadow-md sm:h-40"
-                      />
-                    ))}
-                  </div>
-
                   {/* Stats */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 max-w-3xl pt-6 sm:pt-8 border-t border-gray-200 mx-auto lg:mx-0">
                     {STATS.map((stat) => (

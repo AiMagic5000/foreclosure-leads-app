@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAuth, clerkClient } from '@clerk/nextjs/server'
+import { supabaseAdmin } from '@/lib/supabase'
 import nodemailer from '@/lib/nodemailer-relay-shim'
 
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.hostinger.com'
@@ -141,19 +142,20 @@ export async function POST(req: NextRequest) {
       who,
     }
 
-    pendingVisits.push(visit)
-
-    // Check cooldown -- send batched email if enough time has passed.
-    // MUST be awaited: Vercel freezes the function after the response, so
-    // fire-and-forget sends randomly never complete (lost alerts).
-    const now = Date.now()
-    const lastSent = lastEmailSent[page] || 0
-
-    if (now - lastSent >= COOLDOWN_MS) {
-      lastEmailSent[page] = now
-      const batch = pendingVisits.splice(0, pendingVisits.length)
-      await sendNotification(batch).catch(() => {})
-    }
+    // Log to the visits table — the hourly digest cron (R740xd) emails counts.
+    // Per-visit emails retired 2026-06-11 (too noisy at scale).
+    void pendingVisits
+    void lastEmailSent
+    void COOLDOWN_MS
+    void sendNotification
+    await supabaseAdmin.from('webcast_visits').insert({
+      page: visit.page,
+      device: getDeviceType(ua),
+      browser: getBrowser(ua),
+      referer: visit.referer,
+      utms: visit.utms || null,
+      who,
+    }).then(() => {}, () => {})
 
     return NextResponse.json({ ok: true })
   } catch {

@@ -424,7 +424,7 @@ export default function PricingPage() {
               Enroll Now -- $995
             </Button>
           </a>
-          <div className="mx-auto mt-4 w-fit max-w-lg rounded-xl bg-white/95 px-5 py-3">
+          <div className="mx-auto mt-4 max-w-lg">
             <PaymentMethodsNote compact />
           </div>
         </div>
