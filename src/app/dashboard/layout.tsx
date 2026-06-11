@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { UserButton } from "@clerk/nextjs"
+import { UserButton, useUser } from "@clerk/nextjs"
 import {
   Inbox,
   LayoutDashboard,
@@ -542,6 +542,13 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
+  const { user, isLoaded } = useUser()
+  // Soft block: flagged accounts can sign in and browse the public site, but
+  // every dashboard route serves the blocked notice instead of content.
+  if (isLoaded && user?.publicMetadata?.blocked) {
+    if (typeof window !== "undefined") window.location.replace("/blocked")
+    return null
+  }
   return (
     <PinProvider>
       <DashboardInner>{children}</DashboardInner>
