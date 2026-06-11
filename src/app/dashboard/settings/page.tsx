@@ -169,6 +169,7 @@ export default function SettingsPage() {
                     </a>
                   </div>
                 </div>
+                <PaymentMethodsNote compact />
               </div>
             )}
 
