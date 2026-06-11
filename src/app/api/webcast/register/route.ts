@@ -81,6 +81,7 @@ async function sendWelcomeSms(phone: string, firstName: string, sessionTime: Dat
       method: 'POST',
       headers: {
         'x-api-key': TEXTBEE_API_KEY,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ recipients: [formatPhone(phone)], message }),

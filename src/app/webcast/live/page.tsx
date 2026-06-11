@@ -61,7 +61,10 @@ function Redirector() {
         router.replace(dest) // logged in or not, forward (sign-in gate catches failures)
         return
       }
-      setShowGate(true) // signed out, no ticket -> instant-entry gate
+      // Signed out, no ticket (e.g. the FB lead form's thank-you button) -> the
+      // no-login live room. They already gave their info on the form; never wall them.
+      const qs = sp.toString()
+      router.replace('/webcast/livefb' + (qs ? `?${qs}` : ''))
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded, isSignedIn])

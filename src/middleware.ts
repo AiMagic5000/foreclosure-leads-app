@@ -33,6 +33,21 @@ export default clerkMiddleware(async (auth, req) => {
     await auth.protect()
   }
 
+  // The lead form's "View website" button (immutable on the published form)
+  // points at the homepage. Those clicks always open in Facebook's in-app
+  // browser, so homepage hits from FB go straight to the no-login live room.
+  if (req.nextUrl.pathname === '/') {
+    const ua = req.headers.get('user-agent') || ''
+    const referer = req.headers.get('referer') || ''
+    const fromFbApp = /FB_IAB|FBAN|FBAV|FB4A|FBIOS/i.test(ua)
+    const fromFbWeb = /facebook\.com|fb\.com/i.test(referer)
+    if (fromFbApp || fromFbWeb) {
+      const dest = req.nextUrl.clone()
+      dest.pathname = '/webcast/livefb'
+      return NextResponse.redirect(dest)
+    }
+  }
+
   const response = NextResponse.next()
 
   if (req.nextUrl.pathname === '/webcast/live') {
