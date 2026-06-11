@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getAuth, clerkClient } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getModeratorResponse } from '@/lib/webcast/chat-moderator'
 import { sendAdminNotification } from '@/lib/email'
@@ -36,9 +37,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Slow down! Max 3 messages per minute.' }, { status: 429 })
     }
 
-    // Look up the lead only if we have an id. No leadId (signed-in dashboard viewer) is
-    // fine — Allie still answers; we just skip the lead-tied persistence.
+    // Look up the lead by id, or — for signed-in dashboard viewers with no leadId —
+    // resolve their Clerk session to an email and find their lead row. That ties the
+    // conversation to the lead (persistence + real identity in the admin notice).
     let lead: { first_name: string | null; email: string | null; session_id: string | null } | null = null
+    let effectiveLeadId: string | null = leadId || null
     if (leadId) {
       const { data } = await supabaseAdmin
         .from('webcast_leads')
@@ -46,32 +49,46 @@ export async function POST(request: NextRequest) {
         .eq('id', leadId)
         .single()
       lead = data || null
+    } else {
+      try {
+        const { userId } = getAuth(request)
+        if (userId) {
+          const user = await (await clerkClient()).users.getUser(userId)
+          const email = user.emailAddresses?.[0]?.emailAddress?.toLowerCase()
+          if (email) {
+            const { data } = await supabaseAdmin
+              .from('webcast_leads')
+              .select('id, first_name, email, session_id')
+              .ilike('email', email)
+              .order('created_at', { ascending: false })
+              .limit(1)
+              .maybeSingle()
+            if (data) {
+              lead = data
+              effectiveLeadId = data.id
+            } else {
+              lead = { first_name: user.firstName, email, session_id: null }
+            }
+          }
+        }
+      } catch {
+        /* identity best-effort */
+      }
     }
 
     const displayName = senderName || lead?.first_name || 'Guest'
     const effectiveSessionId = sessionId || lead?.session_id || ''
 
     // Save the user message (best-effort; only when tied to a lead + session)
-    if (leadId && effectiveSessionId) {
+    if (effectiveLeadId && effectiveSessionId) {
       await supabaseAdmin.from('webcast_chat_messages').insert({
         session_id: effectiveSessionId,
-        lead_id: leadId,
+        lead_id: effectiveLeadId,
         sender_type: 'user',
         sender_name: displayName,
         message: message.trim(),
       }).then(() => {}, () => {})
     }
-
-    // Notify the team of the real question so a human can follow up (xscore10 + claim@)
-    sendAdminNotification(
-      `Webcast question from ${displayName}`,
-      `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;">
-        <p><strong>A live webcast viewer asked a question</strong></p>
-        <p>Name: ${displayName}<br/>
-        Email: ${lead?.email || '(signed-in viewer)'}<br/>
-        Question: "${message.trim().replace(/</g, '&lt;')}"</p>
-      </div>`
-    ).catch(() => {})
 
     // Get chat history (only if we have a session to pull it from)
     let history: { sender_type: string; sender_name: string; message: string }[] = []
@@ -99,15 +116,36 @@ export async function POST(request: NextRequest) {
     }
 
     // Save Allie's reply (best-effort; only when tied to a lead + session)
-    if (leadId && effectiveSessionId) {
+    if (effectiveLeadId && effectiveSessionId) {
       await supabaseAdmin.from('webcast_chat_messages').insert({
         session_id: effectiveSessionId,
-        lead_id: leadId,
+        lead_id: effectiveLeadId,
         sender_type: 'moderator_ai',
         sender_name: 'Allie',
         message: aiResponse,
       }).then(() => {}, () => {})
     }
+
+    // Notify the team with BOTH sides — recent thread + this question + Allie's reply.
+    // Awaited so Vercel can't freeze the function before it sends.
+    const esc = (s: string) => s.replace(/</g, '&lt;')
+    const recent = history.slice(-6).map((h) => {
+      const mod = h.sender_type !== 'user'
+      return `<p style="margin:4px 0;padding:8px 10px;border-radius:8px;background:${mod ? '#eef6ff' : '#f3f4f6'};">
+        <strong style="color:${mod ? '#1d4ed8' : '#111827'};">${esc(h.sender_name)}${mod ? ' (moderator)' : ''}:</strong> ${esc(h.message)}</p>`
+    }).join('')
+    await sendAdminNotification(
+      `Webcast question from ${displayName}`,
+      `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;max-width:560px;">
+        <p><strong>Live webcast chat — full conversation</strong></p>
+        <p style="margin:0 0 10px;">Name: ${esc(displayName)}<br/>Email: ${lead?.email || '(unknown viewer)'}</p>
+        ${recent}
+        <p style="margin:4px 0;padding:8px 10px;border-radius:8px;background:#f3f4f6;">
+          <strong>${esc(displayName)}:</strong> ${esc(message.trim())}</p>
+        <p style="margin:4px 0;padding:8px 10px;border-radius:8px;background:#eef6ff;">
+          <strong style="color:#1d4ed8;">Allie (moderator):</strong> ${esc(aiResponse)}</p>
+      </div>`
+    ).catch(() => {})
 
     return NextResponse.json({
       success: true,
