@@ -46,8 +46,9 @@ interface OnboardingSubmission {
 }
 
 export default function WhiteLabelPage() {
-  const { isAdmin, isOwnerOperator, pinEmail, pinId, impersonating } = usePin()
-  const hasAccess = isAdmin || isOwnerOperator
+  const { isAdmin, isOwnerOperator, pinEmail, pinId, impersonating, accountType } = usePin()
+  // All paid tiers (anything above basic) get White Label access
+  const hasAccess = isAdmin || isOwnerOperator || accountType !== "basic"
 
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -156,9 +157,9 @@ export default function WhiteLabelPage() {
         <Card className="max-w-md w-full">
           <CardContent className="pt-6 text-center">
             <AlertTriangle className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
-            <h2 className="text-xl font-bold mb-2">Owner Operator Access Required</h2>
+            <h2 className="text-xl font-bold mb-2">Paid Agent Access Required</h2>
             <p className="text-muted-foreground">
-              White Label business onboarding is part of the Owner Operator tier. Upgrade your account to
+              White Label business onboarding is available on all paid agent tiers. Upgrade your account to
               run the operation under your own brand.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
