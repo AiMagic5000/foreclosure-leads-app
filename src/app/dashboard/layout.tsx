@@ -384,18 +384,13 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
 
           <div className={cn("p-4 border-t space-y-4", borderColor)}>
             <div className="rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 p-3 text-white">
-              <p className="font-semibold text-sm">Fully Built Business</p>
-              <a
-                href="/dashboard/owner-operator"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
+              <p className="font-semibold text-sm text-center">Upgrade to become an</p>
+              <a href="/dashboard/recovery-agent" className="block">
                 <Button
                   size="sm"
                   className="w-full mt-2 h-auto whitespace-normal py-2 text-xs leading-tight bg-red-600 text-white hover:bg-red-700 border border-red-400/30"
                 >
-                  Become an Owner Operator
+                  ASSET RECOVERY AGENT
                 </Button>
               </a>
             </div>
