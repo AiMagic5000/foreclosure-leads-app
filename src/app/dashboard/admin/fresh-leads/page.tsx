@@ -77,6 +77,7 @@ export default function FreshLeadsPage() {
 
   const [requests, setRequests] = useState<LeadRequest[]>([])
   const [activeRequest, setActiveRequest] = useState<LeadRequest | null>(null)
+  const [contactFilter, setContactFilter] = useState<"all" | "phone" | "email" | "both">("all")
 
   const loadStates = useCallback(async () => {
     const r = await fetch("/api/admin/fresh-leads?states=1"); const j = await r.json()
@@ -111,8 +112,25 @@ export default function FreshLeadsPage() {
     setMsg(`Fulfilling: ${req.requested_count} lead(s) for ${req.user_name || req.user_email}${req.state_preference ? ` · prefers ${req.state_preference}` : ""}. Review the data below, select, then Issue.`)
   }
 
-  const allSelected = leads.length > 0 && selected.size === leads.length
-  const toggleAll = () => setSelected(allSelected ? new Set() : new Set(leads.map((l) => l.id)))
+  const hasPhone = (l: Lead) => !!(l.primary_phone && l.primary_phone.trim())
+  const hasEmail = (l: Lead) => !!(l.primary_email && l.primary_email.trim())
+  const contactCounts = useMemo(() => ({
+    all: leads.length,
+    phone: leads.filter(hasPhone).length,
+    email: leads.filter(hasEmail).length,
+    both: leads.filter((l) => hasPhone(l) && hasEmail(l)).length,
+  }), [leads])
+  // Visible = filtered by contact type, phone-having sorted to the top so callable leads are first.
+  const visibleLeads = useMemo(() => {
+    let v = leads
+    if (contactFilter === "phone") v = leads.filter(hasPhone)
+    else if (contactFilter === "email") v = leads.filter(hasEmail)
+    else if (contactFilter === "both") v = leads.filter((l) => hasPhone(l) && hasEmail(l))
+    return [...v].sort((a, b) => (hasPhone(b) ? 1 : 0) - (hasPhone(a) ? 1 : 0))
+  }, [leads, contactFilter])
+
+  const allSelected = visibleLeads.length > 0 && visibleLeads.every((l) => selected.has(l.id))
+  const toggleAll = () => setSelected(allSelected ? new Set() : new Set(visibleLeads.map((l) => l.id)))
   const toggle = (id: string) => setSelected((p) => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n })
   const toggleExpand = (id: string) => setExpanded((p) => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n })
 
@@ -181,6 +199,23 @@ export default function FreshLeadsPage() {
         ))}
       </div>
 
+      {/* Contact-type filter: grab phone-ready leads and issue immediately */}
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <span className="text-xs font-medium text-gray-500 mr-1">Contact:</span>
+        {([
+          ["all", `All (${contactCounts.all})`],
+          ["phone", `📞 Has phone (${contactCounts.phone})`],
+          ["email", `✉️ Has email (${contactCounts.email})`],
+          ["both", `Phone + email (${contactCounts.both})`],
+        ] as const).map(([key, label]) => (
+          <button key={key} onClick={() => setContactFilter(key)}
+            className={`px-3 py-1.5 text-sm rounded-full border ${contactFilter === key ? "bg-blue-600 text-white border-blue-600" : "hover:bg-gray-50"}`}>
+            {label}
+          </button>
+        ))}
+        <span className="text-xs text-gray-400">phone-ready leads sorted to top</span>
+      </div>
+
       <div className="flex flex-wrap items-center gap-3 mb-4 p-3 bg-gray-50 rounded-lg border">
         <span className="text-sm font-medium">{selected.size} selected · {money(totalSurplus)} total surplus</span>
         <div className="relative">
@@ -225,9 +260,9 @@ export default function FreshLeadsPage() {
           <tbody>
             {loading ? (
               <tr><td colSpan={9} className="p-8 text-center text-gray-400"><Loader2 className="w-5 h-5 animate-spin inline" /> Loading…</td></tr>
-            ) : leads.length === 0 ? (
-              <tr><td colSpan={9} className="p-8 text-center text-gray-400">No fresh deliverable leads{state !== "ALL" ? ` in ${state}` : ""}. (Only leads that pass source + $5k–$5M + DNC + deed-verification appear here.)</td></tr>
-            ) : leads.map((l) => (
+            ) : visibleLeads.length === 0 ? (
+              <tr><td colSpan={9} className="p-8 text-center text-gray-400">No leads{state !== "ALL" ? ` in ${state}` : ""}{contactFilter !== "all" ? ` with ${contactFilter === "both" ? "phone + email" : contactFilter}` : ""}. (Only contactable, $5k+, DNC-aware, deed-checked leads appear here.)</td></tr>
+            ) : visibleLeads.map((l) => (
               <Fragment key={l.id}>
                 <tr className={`border-t ${selected.has(l.id) ? "bg-emerald-50" : "hover:bg-gray-50"}`}>
                   <td className="p-2 text-center"><button onClick={() => toggleExpand(l.id)}>{expanded.has(l.id) ? <ChevronDown className="w-4 h-4 text-gray-500" /> : <ChevronRight className="w-4 h-4 text-gray-400" />}</button></td>

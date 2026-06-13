@@ -33,7 +33,8 @@ import {
   Mail,
 } from "lucide-react"
 
-const DEFAULT_AVATAR = "/avatars/default-shield.jpg"
+// Default avatar = the FRI eagle (same bird as the chat bubble) when there is no Google/uploaded photo.
+const DEFAULT_AVATAR = "/images/fri-bird.png"
 
 export default function SettingsPage() {
   const { user } = useUser()
@@ -52,8 +53,12 @@ export default function SettingsPage() {
   // When admin is viewing-as another account, show that account's identity here.
   const displayName = impersonating?.name || user?.fullName || "User"
   const displayEmail = impersonating?.email || user?.primaryEmailAddress?.emailAddress || ""
-  // Prefer a freshly uploaded image, otherwise the Google/Clerk profile photo, then the fallback.
-  const avatarSrc = impersonating ? DEFAULT_AVATAR : (profileImage !== DEFAULT_AVATAR ? profileImage : (user?.imageUrl || DEFAULT_AVATAR))
+  // Prefer a freshly uploaded image, otherwise the REAL Google photo (only when
+  // user.hasImage — user.imageUrl is otherwise Clerk's generated gradient), then
+  // fall back to the FRI eagle. (hasImage distinguishes a real photo from Clerk's default.)
+  const avatarSrc = impersonating
+    ? DEFAULT_AVATAR
+    : (profileImage !== DEFAULT_AVATAR ? profileImage : (user?.hasImage ? user.imageUrl : DEFAULT_AVATAR))
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -79,8 +84,8 @@ export default function SettingsPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2 min-w-0 [&>*]:min-w-0">
-        {/* Access Status Section */}
-        <Card className="bg-[#0f172a] text-white border-0 shadow-xl">
+        {/* Access Status Section — #your-tier anchor target (closing-training resource upgrade popup links here) */}
+        <Card id="your-tier" className="scroll-mt-24 bg-[#0f172a] text-white border-0 shadow-xl">
           <CardHeader>
             <div className="flex items-center gap-2">
               <CreditCard className="h-5 w-5 text-white/80" />
@@ -272,6 +277,8 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
+        {/* Profile + Notifications stacked together in the right column */}
+        <div className="space-y-6 min-w-0">
         {/* Profile Section */}
         <Card className="border-2 border-blue-900 shadow-xl ring-1 ring-blue-900/10" style={{ borderStyle: "dashed", backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(30,58,95,0.07) 4px, rgba(30,58,95,0.07) 5px)" }}>
           <CardHeader>
@@ -347,6 +354,76 @@ export default function SettingsPage() {
             <Button className="w-full">Save Changes</Button>
           </CardContent>
         </Card>
+
+        {/* Notifications -- directly under Profile in the right column */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Bell className="h-5 w-5 text-muted-foreground" />
+              <CardTitle>Notifications</CardTitle>
+            </div>
+            <CardDescription>Configure how you receive updates</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between p-3 rounded-lg border">
+              <div>
+                <p className="font-medium">Email Notifications</p>
+                <p className="text-sm text-muted-foreground">
+                  Receive updates about new leads and callbacks
+                </p>
+              </div>
+              <button
+                onClick={() => setNotificationsEnabled(!notificationsEnabled)}
+                className={`relative w-11 h-6 rounded-full transition-colors ${
+                  notificationsEnabled ? "bg-primary" : "bg-muted"
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
+                    notificationsEnabled ? "translate-x-5" : "translate-x-0"
+                  }`}
+                />
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Email Digest Frequency</label>
+              <div className="flex gap-2">
+                {["daily", "weekly", "never"].map((option) => (
+                  <Button
+                    key={option}
+                    variant={emailDigest === option ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setEmailDigest(option)}
+                    className="capitalize"
+                  >
+                    {option}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <p className="text-sm font-medium">Notify me about:</p>
+              {[
+                { label: "New leads in my states", checked: true },
+                { label: "Callback received", checked: true },
+                { label: "Voicemail delivery status", checked: false },
+                { label: "Weekly performance report", checked: true },
+              ].map((item, idx) => (
+                <label key={idx} className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    defaultChecked={item.checked}
+                    className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                  />
+                  <span className="text-sm">{item.label}</span>
+                </label>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+        </div>
 
         {/* Outreach integrations — full width, under the account containers */}
         <div className="lg:col-span-2 space-y-3">
@@ -560,75 +637,6 @@ export default function SettingsPage() {
                   <span className="font-medium text-emerald-600">You keep $25,500</span>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Notifications */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Bell className="h-5 w-5 text-muted-foreground" />
-              <CardTitle>Notifications</CardTitle>
-            </div>
-            <CardDescription>Configure how you receive updates</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-3 rounded-lg border">
-              <div>
-                <p className="font-medium">Email Notifications</p>
-                <p className="text-sm text-muted-foreground">
-                  Receive updates about new leads and callbacks
-                </p>
-              </div>
-              <button
-                onClick={() => setNotificationsEnabled(!notificationsEnabled)}
-                className={`relative w-11 h-6 rounded-full transition-colors ${
-                  notificationsEnabled ? "bg-primary" : "bg-muted"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
-                    notificationsEnabled ? "translate-x-5" : "translate-x-0"
-                  }`}
-                />
-              </button>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Email Digest Frequency</label>
-              <div className="flex gap-2">
-                {["daily", "weekly", "never"].map((option) => (
-                  <Button
-                    key={option}
-                    variant={emailDigest === option ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setEmailDigest(option)}
-                    className="capitalize"
-                  >
-                    {option}
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-2 pt-2">
-              <p className="text-sm font-medium">Notify me about:</p>
-              {[
-                { label: "New leads in my states", checked: true },
-                { label: "Callback received", checked: true },
-                { label: "Voicemail delivery status", checked: false },
-                { label: "Weekly performance report", checked: true },
-              ].map((item, idx) => (
-                <label key={idx} className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    defaultChecked={item.checked}
-                    className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                  />
-                  <span className="text-sm">{item.label}</span>
-                </label>
-              ))}
             </div>
           </CardContent>
         </Card>
