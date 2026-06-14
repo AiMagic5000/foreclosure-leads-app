@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
   }
 
   const state = searchParams.get('state')
-  const limit = Math.min(Number(searchParams.get('limit')) || 200, 1000)
+  const limit = Math.min(Number(searchParams.get('limit')) || 200, 6000)
   let query = supabaseAdmin
     .from('fresh_unassigned_leads')
     .select(LEAD_COLUMNS)

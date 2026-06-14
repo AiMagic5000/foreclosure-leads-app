@@ -86,7 +86,7 @@ export default function FreshLeadsPage() {
   }, [])
   const loadLeads = useCallback(async () => {
     setLoading(true); setSelected(new Set()); setExpanded(new Set())
-    const r = await fetch(`/api/admin/fresh-leads?state=${encodeURIComponent(state)}&limit=500`)
+    const r = await fetch(`/api/admin/fresh-leads?state=${encodeURIComponent(state)}&limit=6000`)
     const j = await r.json(); setLeads(j.leads || []); setLoading(false)
   }, [state])
   const loadRequests = useCallback(async () => {
@@ -158,8 +158,8 @@ export default function FreshLeadsPage() {
         <div className="flex items-center gap-3">
           <Inbox className="w-7 h-7 text-emerald-600" />
           <div>
-            <h1 className="text-2xl font-bold">Fresh Leads</h1>
-            <p className="text-sm text-gray-500">Verified, DNC-clean, $5k+ county-direct leads. Expand any row to inspect 100% of the data before issuing.</p>
+            <h1 className="text-2xl font-bold">Fresh Leads <span className="text-emerald-600">{loading ? "" : `· ${leads.length.toLocaleString()} contactable`}</span></h1>
+            <p className="text-sm text-gray-500">Every lead has a phone or email. {visibleLeads.length.toLocaleString()} shown{contactFilter !== "all" || state !== "ALL" ? " (filtered)" : ""}. Expand any row to inspect before issuing.</p>
           </div>
         </div>
         <button onClick={() => { loadLeads(); loadStates(); loadRequests() }} className="flex items-center gap-2 px-3 py-2 text-sm border rounded-lg hover:bg-gray-50">
