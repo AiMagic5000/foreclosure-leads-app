@@ -168,7 +168,7 @@ export default function SettingsPage() {
                       <p className="text-xs text-white/60 mb-3">Start now, pay the balance over time (partnership plan).</p>
                     </div>
                     <a
-                      href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership-13-down"
+                      href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership"
                       target="_blank" rel="noopener noreferrer"
                       className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600"
                     >
@@ -481,12 +481,16 @@ export default function SettingsPage() {
               <p className="mb-2 text-xs font-medium text-muted-foreground">
                 Example — a payout check marked for social proof:
               </p>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/hero-images/proof-2.png"
-                alt="Example payout disbursement check with privacy markers"
-                className="w-full max-w-md rounded-md border shadow-sm"
-              />
+              <div className="flex justify-end">
+                <div className="aspect-video w-full max-w-md overflow-hidden rounded-md border bg-white shadow-sm">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/hero-images/proof-2.png"
+                    alt="Example payout disbursement check with privacy markers"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </div>
             </div>
             <DocumentUploader folder="check-proof" accept="image/*" />
             <CheckProofConsent />
