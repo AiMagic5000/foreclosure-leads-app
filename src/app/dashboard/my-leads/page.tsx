@@ -290,7 +290,7 @@ const LEAD_LIMITS: Record<string, number> = {
   free_webcast: 0,
   partnership: 125,
   junior_owner_operator: 125,
-  owner_operator: 125,
+  owner_operator: 250,
   admin: 9999,
 }
 
