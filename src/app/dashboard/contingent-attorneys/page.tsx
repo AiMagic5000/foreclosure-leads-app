@@ -37,27 +37,39 @@ export default function ContingentAttorneysPage() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border shadow-sm bg-white">
-        <iframe
-          src="/api/cattorneys-frame"
-          title="Contingent Attorneys Network"
-          className="w-full"
-          style={{ height: "calc(100vh - 240px)", minHeight: 640 }}
-          loading="lazy"
-        />
-      </div>
+      {/* My Trust Software blocks third-party embedding, so we show a live preview
+          that opens the real portal in a new tab. */}
+      <a
+        href="https://www.mytrustsoftware.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group block overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:shadow-md"
+      >
+        <div className="relative">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/mytrustsoftware-preview.png"
+            alt="My Trust Software — create your living trust online"
+            className="w-full"
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition group-hover:bg-black/10">
+            <span className="inline-flex items-center gap-2 rounded-lg bg-[#1E3A5F] px-5 py-3 text-sm font-bold text-white shadow-lg">
+              Open My Trust Software <ExternalLink className="h-4 w-4" />
+            </span>
+          </div>
+        </div>
+      </a>
 
-      <p className="text-xs text-muted-foreground">
-        Trouble viewing?{" "}
+      <div className="flex justify-center">
         <a
           href="https://www.mytrustsoftware.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#1E3A5F] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#2d4a6f]"
         >
-          Open in a new tab <ExternalLink className="h-3 w-3" />
+          Go to My Trust Software <ExternalLink className="h-4 w-4" />
         </a>
-      </p>
+      </div>
     </div>
   )
 }
