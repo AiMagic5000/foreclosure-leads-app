@@ -304,11 +304,11 @@ export default function FreshLeadsPage() {
                         {field("Primary phone", l.primary_phone)}{field("Secondary phone", l.secondary_phone)}
                         {field("Email", l.primary_email)}{field("Lead tier", l.lead_tier)}
                         {field("Source", l.source)}{field("Source URL", l.source_url)}
-                        {field("Skip-trace source", l.skip_trace_source)}{field("Skip-traced at", l.skip_traced_at)}
+                        {field("Skip-trace source", l.skip_trace_source ? "Ref: Admin" : "—")}{field("Skip-traced at", l.skip_traced_at)}
                         {field("Scraped at", l.scraped_at)}
                         {field("DNC checked", l.dnc_checked ? "yes" : "no")}{field("On DNC", l.on_dnc ? "YES" : "no")}
                         {field("Can contact", l.can_contact ? "yes" : "no")}{field("DNC type", l.dnc_type)}
-                        {field("Deed verified", l.deed_verified ? "YES" : "no")}{field("Deed source", l.deed_data_source)}
+                        {field("Deed verified", l.deed_verified ? "YES" : "no")}{field("Deed source", l.deed_data_source ? "Ref: Admin" : "—")}
                       </div>
                     </td>
                   </tr>

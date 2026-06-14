@@ -102,7 +102,7 @@ export default function ClosingTrainingPage() {
   // Real admin (Clerk identity) drives the edit/upload UI. The CONTENT gate uses the
   // impersonation-aware admin from pin-context, so "View as" a free user enforces locks.
   const isAdmin = userEmail === ADMIN_EMAIL.toLowerCase()
-  const { accountType, trainingUnlocked, hasPhone, isAdmin: effectiveIsAdmin } = usePin()
+  const { accountType, trainingUnlocked, isAdmin: effectiveIsAdmin } = usePin()
   const router = useRouter()
   const [modules, setModules] = useState<TrainingModule[]>([])
   const [selectedModule, setSelectedModule] = useState<TrainingModule | null>(null)
@@ -282,8 +282,8 @@ export default function ClosingTrainingPage() {
     return levels.includes(tier)
   }
 
-  // Video #1 is the free-of-tier preview (no paid plan needed) — but a phone is
-  // still required (enforced in hasVideoAccess), so free no-phone accounts are gated.
+  // Video #1 is the free-of-tier preview (no paid plan needed). All non-"OO+A"
+  // modules are open to everyone now — no phone required.
   function isFreePreview(mod: TrainingModule | null): boolean {
     // The first module in display order is the free preview — robust to reordering.
     return !!mod && modules.length > 0 && mod.id === modules[0].id
@@ -301,25 +301,29 @@ export default function ClosingTrainingPage() {
     fetchModules()
   }
 
-  // Watching a video AND downloading resources both require: the TIER allows the module
-  // (free = non-"OO+A" only) AND a phone number is on file. Video #1 is a free preview, and
-  // admins / manually-unlocked accounts bypass both.
+  // Watching a video AND downloading resources are governed by TIER only:
+  // free accounts get every non-"OO+A" module; "OO+A" modules are paid-only.
+  // Video #1 is a free preview, and admins / manually-unlocked accounts bypass.
+  // Phone number is NO LONGER required — our leads already have phones on file.
   function hasVideoAccess(mod: TrainingModule | null): boolean {
     if (!mod) return false
     if (effectiveIsAdmin || trainingUnlocked) return true
-    // A phone number on file is required for ALL closing training — including the
-    // free preview. No phone = no access (free accounts must add a phone first).
-    if (!hasPhone) return false
     if (isFreePreview(mod)) return true
     return tierAllowed(mod)
   }
-  const hasResourceAccess = hasVideoAccess
+  // Resources are PAID-ONLY across EVERY module — including the free preview's.
+  // No free/basic tier gets resources from any video. Module/video access and
+  // phone number are irrelevant here; only a paid agent tier unlocks resources.
+  function hasResourceAccess(_mod: TrainingModule | null): boolean {
+    if (effectiveIsAdmin || trainingUnlocked) return true
+    return accountType === "partnership" || accountType === "owner_operator" || accountType === "junior_owner_operator"
+  }
 
-  // Popup when a blocked module is clicked: tier-locked (paid only) vs needs-phone.
+  // The only thing that blocks a module now is its TIER ("OO+A" = paid only).
+  // Phone gating was removed, so a blocked click is always the paid-tier popup.
   function showBlockedPopup(mod: TrainingModule | null) {
     if (!mod) return
-    if (!tierAllowed(mod)) setShowAccessPopup("TIER")
-    else setShowAccessPopup("PHONE")
+    setShowAccessPopup("TIER")
   }
 
   // Get the display label for required tiers
@@ -546,7 +550,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handleDownload(resource: TrainingResource) {
-    if (!hasResourceAccess(selectedModule)) { showBlockedPopup(selectedModule); return }
+    if (!hasResourceAccess(selectedModule)) { setShowAccessPopup("RESOURCE"); return }
     const a = document.createElement("a")
     a.href = resource.file_url
     a.download = resource.file_name
@@ -557,7 +561,7 @@ export default function ClosingTrainingPage() {
   }
 
   function handlePrint(resource: TrainingResource) {
-    if (!hasResourceAccess(selectedModule)) { showBlockedPopup(selectedModule); return }
+    if (!hasResourceAccess(selectedModule)) { setShowAccessPopup("RESOURCE"); return }
     window.open(resource.file_url, "_blank")
   }
 
@@ -822,7 +826,7 @@ export default function ClosingTrainingPage() {
                         {/* Resources */}
                         {(resources.length > 0 || isAdmin) && (
                           <div className="relative">
-                            <div className={cn(!hasResourceAccess(selectedModule) && "blur-sm pointer-events-none select-none")}>
+                            <div>
                               <div className="flex items-center gap-2 mb-3">
                                 <FolderOpen className="h-4 w-4 text-indigo-500" />
                                 <span className="text-sm font-semibold">Resources</span>
@@ -855,16 +859,6 @@ export default function ClosingTrainingPage() {
                                 </p>
                               )}
                             </div>
-                            {!hasResourceAccess(selectedModule) && resources.length > 0 && (
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="bg-background/80 backdrop-blur-sm rounded-lg px-4 py-2 border shadow-sm">
-                                  <p className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
-                                    <Lock className="h-3.5 w-3.5" />
-                                    {!tierAllowed(selectedModule) ? "Paid members only" : "Add your phone number to unlock"}
-                                  </p>
-                                </div>
-                              </div>
-                            )}
                           </div>
                         )}
                       </div>
@@ -1386,7 +1380,7 @@ export default function ClosingTrainingPage() {
               {/* Resources Section */}
               {(resources.length > 0 || isAdmin) && (
                 <Card className="relative">
-                  <div className={cn(!hasResourceAccess(selectedModule) && "blur-sm pointer-events-none select-none")}>
+                  <div>
                     <CardHeader>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -1456,16 +1450,6 @@ export default function ClosingTrainingPage() {
                       )}
                     </CardContent>
                   </div>
-                  {!hasResourceAccess(selectedModule) && resources.length > 0 && (
-                    <div className="absolute inset-0 flex items-center justify-center rounded-xl">
-                      <div className="bg-background/90 backdrop-blur-sm rounded-lg px-6 py-3 border shadow-lg">
-                        <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                          <Lock className="h-4 w-4" />
-                          {!tierAllowed(selectedModule) ? "Paid members only" : "Add your phone number to unlock these resources"}
-                        </p>
-                      </div>
-                    </div>
-                  )}
                 </Card>
               )}
             </>
@@ -1568,7 +1552,21 @@ export default function ClosingTrainingPage() {
             <div className="mx-auto w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mb-4">
               <Lock className="h-6 w-6 text-amber-600 dark:text-amber-400" />
             </div>
-            {showAccessPopup === "TIER" ? (
+            {showAccessPopup === "RESOURCE" ? (
+              <>
+                <h3 className="text-lg font-semibold mb-2">Resources are for paid agents</h3>
+                <p className="text-sm text-muted-foreground mb-5">
+                  Downloadable resources for every module are reserved for paid agents. Upgrade to an
+                  <span className="font-medium text-foreground"> Asset Recovery Agent</span> account to download and print them.
+                </p>
+                <Button
+                  onClick={() => { setShowAccessPopup(null); router.push("/dashboard/settings#your-tier") }}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
+                >
+                  Upgrade to become an Asset Recovery Agent
+                </Button>
+              </>
+            ) : (
               <>
                 <h3 className="text-lg font-semibold mb-2">Paid members only</h3>
                 <p className="text-sm text-muted-foreground mb-5">
@@ -1580,19 +1578,6 @@ export default function ClosingTrainingPage() {
                   className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
                 >
                   See upgrade options
-                </Button>
-              </>
-            ) : (
-              <>
-                <h3 className="text-lg font-semibold mb-2">Add your phone number to unlock</h3>
-                <p className="text-sm text-muted-foreground mb-5">
-                  Add your phone number to your account profile to unlock the training videos and downloadable resources.
-                </p>
-                <Button
-                  onClick={() => { setShowAccessPopup(null); router.push("/dashboard/settings?flash=phone") }}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
-                >
-                  Unlock Training
                 </Button>
               </>
             )}

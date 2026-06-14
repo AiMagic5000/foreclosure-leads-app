@@ -1,6 +1,6 @@
 "use client"
 
-import { Gift, MessageSquare, Mail, Phone, Ticket, ArrowUpRight, Check, AlertTriangle } from "lucide-react"
+import { Gift, MessageSquare, Mail, Phone, Ticket, ArrowUpRight, Check, AlertTriangle, Download } from "lucide-react"
 import Link from "next/link"
 
 const USE_CASES = [
@@ -62,6 +62,39 @@ export default function ContingencyIncentivesPage() {
             <a href="https://salesincentivenetwork.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-base font-semibold text-[#1E3A5F] transition hover:bg-slate-50">
               Become an Affiliate
             </a>
+          </div>
+
+          {/* The Incentive Edge playbook — cover + download */}
+          <div className="mt-6 flex flex-col gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center">
+            <a
+              href="/downloads/incentive-edge-playbook.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-none self-center sm:self-start"
+            >
+              <img
+                src="/images/incentive-edge-playbook-cover.jpg"
+                alt="The Incentive Edge — Sales Incentive Network Agent Playbook cover"
+                className="h-44 w-auto rounded-md border border-slate-200 shadow-sm transition hover:shadow-md"
+                loading="lazy"
+              />
+            </a>
+            <div className="min-w-0">
+              <p className="text-xs font-bold uppercase tracking-wider text-amber-700">Free playbook</p>
+              <p className="mt-1 font-bold text-[#0f172a]">The Incentive Edge &mdash; Agent Playbook</p>
+              <p className="mt-1 text-sm text-slate-600">
+                The complete Sales Incentive Network system &mdash; how the complimentary incentives work, the
+                scripts that close, and how to hand every signed claimant a reason to say yes.
+              </p>
+              <a
+                href="/downloads/incentive-edge-playbook.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center justify-center gap-2 rounded-lg bg-[#D82221] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#b91c1c]"
+              >
+                <Download className="h-4 w-4" /> Open the Playbook (PDF)
+              </a>
+            </div>
           </div>
         </div>
       </div>

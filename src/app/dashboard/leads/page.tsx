@@ -1395,7 +1395,7 @@ function LeadsPageContent() {
 
   const submitSkipTrace = useCallback(async () => {
     setSkipTraceLoading(true)
-    setSkipTraceResult({ step: "submitting", message: "Submitting leads to Tracerfy..." })
+    setSkipTraceResult({ step: "submitting", message: "Submitting leads for skip tracing..." })
     try {
       const res = await fetch("/api/skip-trace", {
         method: "POST",
@@ -1431,7 +1431,7 @@ function LeadsPageContent() {
             setSkipTraceResult(prev => ({
               ...prev,
               step: "polling",
-              message: `Processing... (check ${attempts}/${maxAttempts}). Tracerfy is tracing ${data.leadsSubmitted} leads.`,
+              message: `Processing... (check ${attempts}/${maxAttempts}). Skip-trace provider is processing ${data.leadsSubmitted} leads.`,
             }))
             setTimeout(poll, 5000)
             return
@@ -1464,7 +1464,7 @@ function LeadsPageContent() {
           } else {
             setSkipTraceResult({
               step: "error",
-              message: `Polling timed out after ${maxAttempts} attempts. Queue ID: ${queueId} - check Tracerfy dashboard.`,
+              message: `Polling timed out after ${maxAttempts} attempts. Queue ID: ${queueId} - check admin dashboard.`,
               queueId: String(queueId),
             })
           }
@@ -2064,10 +2064,10 @@ function LeadsPageContent() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <UserSearch className="h-5 w-5 text-blue-600" />
-                Skip Trace via Tracerfy
+                Skip Trace
               </CardTitle>
               <CardDescription>
-                Submit leads without phone numbers to Tracerfy for skip tracing. Returns phone numbers, emails, and mailing addresses.
+                Submit leads without phone numbers for skip tracing. Returns phone numbers, emails, and mailing addresses.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

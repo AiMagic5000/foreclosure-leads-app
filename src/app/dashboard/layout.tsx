@@ -72,13 +72,13 @@ const navSections: NavSection[] = [
     tier: "basic",
     items: [
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-      { name: "My Leads", href: "/dashboard/my-leads", icon: FileStack, badge: { text: "New", color: "emerald" } },
-      { name: "Import Leads", href: "/dashboard/import", icon: Upload, badge: { text: "Paid", color: "violet" } },
-      { name: "State Laws", href: "/dashboard/states", icon: Map },
-      { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Paid", color: "violet" } },
-      { name: "Closing Training", href: "/dashboard/closing-training", icon: GraduationCap, badge: { text: "New", color: "indigo" } },
+      { name: "FREE Training", href: "/dashboard/closing-training", icon: GraduationCap, badge: { text: "New", color: "indigo" } },
       { name: "Live Webcast", href: "/dashboard/live-webcast", icon: Radio, badge: { text: "Live", color: "red" } },
       { name: "My Account", href: "/dashboard/settings", icon: Settings },
+      { name: "State Laws", href: "/dashboard/states", icon: Map },
+      { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Paid", color: "violet" } },
+      { name: "My Leads", href: "/dashboard/my-leads", icon: FileStack, badge: { text: "New", color: "emerald" } },
+      { name: "Import Leads", href: "/dashboard/import", icon: Upload, badge: { text: "Paid", color: "violet" } },
     ],
   },
   {
@@ -97,17 +97,17 @@ const navSections: NavSection[] = [
       { name: "Hire a Closer", href: "/dashboard/hire-closer", icon: Briefcase, badge: { text: "Pro", color: "amber" } },
       { name: "Contract Admin", href: "/dashboard/contract-admin", icon: ClipboardList, badge: { text: "5%", color: "purple" } },
       { name: "Automation", href: "/dashboard/automation", icon: Zap, badge: { text: "Add-on", color: "blue" } },
+      { name: "Tax Deeds", href: "/dashboard/tax-deeds", icon: Landmark, badge: { text: "New", color: "emerald" } },
     ],
   },
   {
     label: "Business Suite",
     tier: "basic",
     items: [
-      { name: "Recovery Agent", href: "/dashboard/recovery-agent", icon: UserCheck, badge: { text: "Program", color: "blue" } },
+      { name: "Become Recovery Agent", href: "/dashboard/recovery-agent", icon: UserCheck, badge: { text: "Program", color: "blue" } },
       { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
-      { name: "Tax Deeds", href: "/dashboard/tax-deeds", icon: Landmark, badge: { text: "New", color: "emerald" } },
+      { name: "Agent Onboarding", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
       { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Comp.", color: "emerald" } },
-      { name: "White Label", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
     ],
   },
   {
@@ -139,6 +139,106 @@ const TIER_ORDER: Record<string, number> = {
   junior_owner_operator: 2,
   owner_operator: 3,
   admin: 4,
+}
+
+// Distinct accent color per nav tab so the sidebar icons read as colorful
+// (like a native app), instead of all sharing the text color. Keyed by href;
+// anything unlisted falls back to a stable color from PALETTE by hashing href.
+const NAV_ICON_COLORS: Record<string, string> = {
+  "/dashboard": "#6366f1",
+  "/dashboard/closing-training": "#10b981",
+  "/dashboard/live-webcast": "#ef4444",
+  "/dashboard/settings": "#0ea5e9",
+  "/dashboard/states": "#f59e0b",
+  "/dashboard/admin/state-rules": "#8b5cf6",
+  "/dashboard/my-leads": "#14b8a6",
+  "/dashboard/import": "#f97316",
+  "/dashboard/admin/ai-agent": "#a855f7",
+  "/dashboard/ringless-drips": "#e11d48",
+  "/dashboard/sms-messages": "#3b82f6",
+  "/dashboard/hire-closer": "#d97706",
+  "/dashboard/contract-admin": "#7c3aed",
+  "/dashboard/automation": "#2563eb",
+  "/dashboard/tax-deeds": "#059669",
+  "/dashboard/recovery-agent": "#2563eb",
+  "/dashboard/owner-operator": "#dc2626",
+  "/dashboard/white-label": "#0284c7",
+  "/dashboard/contingency-incentives": "#16a34a",
+}
+const NAV_ICON_PALETTE = ["#6366f1", "#10b981", "#ef4444", "#f59e0b", "#8b5cf6", "#14b8a6", "#f97316", "#0ea5e9", "#a855f7", "#22c55e"]
+function navIconColor(href: string): string {
+  if (NAV_ICON_COLORS[href]) return NAV_ICON_COLORS[href]
+  let h = 0
+  for (let i = 0; i < href.length; i++) h = (h * 31 + href.charCodeAt(i)) >>> 0
+  return NAV_ICON_PALETTE[h % NAV_ICON_PALETTE.length]
+}
+
+// Glossy multicolor Microsoft Fluent Emoji (3D) icons per tab — matches the
+// reference dashboard. Hotlinked from jsDelivr (all URLs verified 200); on any
+// load error we fall back to the Unicode emoji, then to the colored Lucide icon.
+const FLUENT_BASE = "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji/assets"
+const NAV_FLUENT: Record<string, { folder: string; file: string; emoji: string }> = {
+  "/dashboard": { folder: "House", file: "house", emoji: "🏠" },
+  "/dashboard/closing-training": { folder: "Graduation cap", file: "graduation_cap", emoji: "🎓" },
+  "/dashboard/live-webcast": { folder: "Television", file: "television", emoji: "📺" },
+  "/dashboard/settings": { folder: "Bust in silhouette", file: "bust_in_silhouette", emoji: "👤" },
+  "/dashboard/states": { folder: "Balance scale", file: "balance_scale", emoji: "⚖️" },
+  "/dashboard/admin/state-rules": { folder: "Scroll", file: "scroll", emoji: "📜" },
+  "/dashboard/my-leads": { folder: "Fire", file: "fire", emoji: "🔥" },
+  "/dashboard/import": { folder: "Inbox tray", file: "inbox_tray", emoji: "📥" },
+  "/dashboard/admin/ai-agent": { folder: "Robot", file: "robot", emoji: "🤖" },
+  "/dashboard/ringless-drips": { folder: "Loudspeaker", file: "loudspeaker", emoji: "📢" },
+  "/dashboard/sms-messages": { folder: "Speech balloon", file: "speech_balloon", emoji: "💬" },
+  "/dashboard/hire-closer": { folder: "Briefcase", file: "briefcase", emoji: "💼" },
+  "/dashboard/contract-admin": { folder: "Memo", file: "memo", emoji: "📝" },
+  "/dashboard/automation": { folder: "Gear", file: "gear", emoji: "⚙️" },
+  "/dashboard/tax-deeds": { folder: "Bank", file: "bank", emoji: "🏦" },
+  "/dashboard/recovery-agent": { folder: "Handshake", file: "handshake", emoji: "🤝" },
+  "/dashboard/owner-operator": { folder: "Crown", file: "crown", emoji: "👑" },
+  "/dashboard/white-label": { folder: "Rocket", file: "rocket", emoji: "🚀" },
+  "/dashboard/contingency-incentives": { folder: "Wrapped gift", file: "wrapped_gift", emoji: "🎁" },
+  "/dashboard/admin": { folder: "Shield", file: "shield", emoji: "🛡️" },
+  "/dashboard/admin/compliance": { folder: "Check mark button", file: "check_mark_button", emoji: "✅" },
+  "/dashboard/user-data": { folder: "Busts in silhouette", file: "busts_in_silhouette", emoji: "👥" },
+  "/dashboard/admin/user-activity": { folder: "Chart increasing", file: "chart_increasing", emoji: "📈" },
+  "/dashboard/admin/pipeline": { folder: "Bar chart", file: "bar_chart", emoji: "📊" },
+  "/dashboard/admin/fresh-leads": { folder: "Sparkles", file: "sparkles", emoji: "✨" },
+  "/dashboard/leads": { folder: "House with garden", file: "house_with_garden", emoji: "🏡" },
+  "/dashboard/pre-foreclosure": { folder: "Hammer", file: "hammer", emoji: "🔨" },
+  "/dashboard/title-leads": { folder: "Office building", file: "office_building", emoji: "🏢" },
+  "/dashboard/real-estate-leads": { folder: "Houses", file: "houses", emoji: "🏘️" },
+  "/dashboard/attorney-leads": { folder: "Classical building", file: "classical_building", emoji: "🏛️" },
+  "/dashboard/export": { folder: "Outbox tray", file: "outbox_tray", emoji: "📤" },
+}
+function fluentUrl(d: { folder: string; file: string }): string {
+  return `${FLUENT_BASE}/${d.folder.replace(/ /g, "%20")}/3D/${d.file}_3d.png`
+}
+
+// One nav icon: glossy 3D Fluent PNG → Unicode emoji on image error → colored
+// Lucide icon if the tab has no Fluent mapping.
+function FluentNavIcon({ href, fallback: Fallback }: {
+  href: string
+  fallback: React.ComponentType<{ className?: string; style?: React.CSSProperties }>
+}) {
+  const def = NAV_FLUENT[href]
+  const [broken, setBroken] = useState(false)
+  if (!def) return <Fallback className="h-5 w-5 flex-shrink-0" style={{ color: navIconColor(href) }} />
+  if (broken) {
+    return <span className="flex h-[22px] w-[22px] flex-shrink-0 items-center justify-center text-[18px] leading-none" role="img" aria-label={href}>{def.emoji}</span>
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={fluentUrl(def)}
+      alt=""
+      width={22}
+      height={22}
+      loading="lazy"
+      draggable={false}
+      onError={() => setBroken(true)}
+      className="h-[22px] w-[22px] flex-shrink-0 object-contain"
+    />
+  )
 }
 
 function tierAccess(userTier: string, sectionTier: string): boolean {
@@ -364,7 +464,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                               )
                         )}
                       >
-                        <item.icon className="h-5 w-5 flex-shrink-0" />
+                        <FluentNavIcon href={item.href} fallback={item.icon} />
                         {item.name}
                         {isLocked ? (
                           <Lock className="ml-auto h-3.5 w-3.5 opacity-60" />

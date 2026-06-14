@@ -6,7 +6,7 @@ import { FileFolder } from "@/components/file-folder"
 import {
   Bot, Mic, Square, Upload, Loader2, ShieldCheck, Sparkles, Camera,
   CheckCircle2, Mail, MessageSquare, Voicemail, PhoneCall, Clock, Image as ImageIcon,
-  ChevronDown, Download,
+  ChevronDown, Download, Star,
 } from "lucide-react"
 
 interface Recording { name: string; label: string; url: string; created: string | null; size: number }
@@ -64,6 +64,7 @@ export default function AiAgentPage() {
   // images
   const [docs, setDocs] = useState<Doc[]>([])
   const [uploadingPose, setUploadingPose] = useState<string | null>(null)
+  const [settingPrimary, setSettingPrimary] = useState<string | null>(null)
   const [cameraPose, setCameraPose] = useState<string | null>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const camStreamRef = useRef<MediaStream | null>(null)
@@ -173,6 +174,24 @@ export default function AiAgentPage() {
     if (f) await uploadPose(poseKey, f, f.name.split(".").pop() || "jpg")
   }
 
+  // Promote an existing (older) photo to be the slot's primary. The documents API
+  // PATCH renames it with a fresh timestamp prefix, so it sorts newest-first and
+  // becomes the displayed primary; the previously-primary photo drops into the
+  // slot's slideshow of older photos.
+  async function setPrimaryPose(poseKey: string, doc: Doc) {
+    setSettingPrimary(doc.name); setErr(null)
+    try {
+      const res = await fetch("/api/user/documents", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: doc.name, label: poseKey, folder: "ai-avatar", ...(impersonating ? { asPinId: impersonating.pinId } : {}) }),
+      })
+      const d = await res.json()
+      if (!res.ok) throw new Error(d.error || "Could not set primary photo")
+      await loadAll()
+    } catch (e2) { setErr(e2 instanceof Error ? e2.message : "Could not set primary photo") } finally { setSettingPrimary(null) }
+  }
+
   // Live webcam / phone-camera capture for a pose.
   async function openCamera(poseKey: string) {
     setErr(null)
@@ -199,6 +218,9 @@ export default function AiAgentPage() {
   }
 
   const poseDoc = (key: string) => docs.find((d) => d.name.replace(/^\d+-/, "").toLowerCase().startsWith(key))
+  // All photos for a pose, newest-first (the API returns docs sorted by created_at desc).
+  // [0] is the current primary; the rest are older primaries shown in the slot's slideshow.
+  const poseDocs = (key: string) => docs.filter((d) => d.name.replace(/^\d+-/, "").toLowerCase().startsWith(key))
 
   const gateCls = consented ? "" : "pointer-events-none select-none opacity-50"
 
@@ -368,40 +390,72 @@ export default function AiAgentPage() {
           <Camera className="h-5 w-5 text-violet-600" />
           <h2 className="text-lg font-bold text-[#0f172a]">2. Three photos for your avatar</h2>
         </div>
-        <p className="mt-1 text-sm text-slate-600">Upload a clear, well-lit photo from each angle, or use your camera. These build your video avatar, used for your email, SMS, and landing-page introductions to your claimants.</p>
+        <p className="mt-1 text-sm text-slate-600">Upload a clear, well-lit photo from each angle, or use your camera. Set the <strong>primary</strong> photo for each slot — your older photos stay in that slot&apos;s slideshow so you can switch back anytime. These build your video avatar, used for your email, SMS, and landing-page introductions to your claimants.</p>
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {POSES.map((p) => {
-            const doc = poseDoc(p.key)
+            const all = poseDocs(p.key)
+            const doc = all[0]            // current primary (newest)
+            const older = all.slice(1)    // previous primaries -> slideshow
             const isUp = uploadingPose === p.key
             return (
-              <div key={p.key} className="group relative flex aspect-[3/4] flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 text-center">
-                {doc ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={doc.url} alt={p.label} className="absolute inset-0 h-full w-full object-cover" />
-                ) : (
-                  <>
-                    <Camera className="h-7 w-7 text-slate-400" />
-                    <span className="mt-2 text-sm font-bold text-[#0f172a]">{p.label}</span>
-                    <span className="mt-0.5 px-2 text-xs text-slate-500">{p.hint}</span>
-                  </>
-                )}
-                {doc && <span className="absolute right-2 top-2 inline-flex items-center gap-1 rounded bg-emerald-600 px-1.5 py-0.5 text-[10px] font-bold text-white"><CheckCircle2 className="h-3 w-3" /> {p.label}</span>}
-                {doc && (
-                  <a
-                    href={`${doc.url}${doc.url.includes("?") ? "&" : "?"}download=${encodeURIComponent(doc.label || p.key)}`}
-                    download={doc.label || `${p.key}.jpg`}
-                    onClick={(e) => e.stopPropagation()}
-                    title="Download original image"
-                    className="absolute left-2 top-2 z-10 inline-flex items-center gap-1 rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-bold text-slate-800 shadow transition hover:bg-white"
-                  >
-                    <Download className="h-3 w-3" /> Save
-                  </a>
-                )}
-                {isUp && <span className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 text-white"><Loader2 className="h-6 w-6 animate-spin" /></span>}
-                <div className="absolute inset-x-0 bottom-0 flex divide-x divide-white/20 text-[11px] font-bold text-white">
-                  <button type="button" onClick={() => openCamera(p.key)} className="flex flex-1 items-center justify-center gap-1 bg-violet-600/90 py-2 transition hover:bg-violet-600"><Camera className="h-3.5 w-3.5" /> Camera</button>
-                  <label className="flex flex-1 cursor-pointer items-center justify-center gap-1 bg-slate-800/85 py-2 transition hover:bg-slate-800"><Upload className="h-3.5 w-3.5" /> Upload<input type="file" accept="image/*" onChange={(e) => onPoseFile(p.key, e)} className="hidden" /></label>
+              <div key={p.key} className="flex flex-col gap-2">
+                <div className="group relative flex aspect-[3/4] flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 text-center">
+                  {doc ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={doc.url} alt={p.label} className="absolute inset-0 h-full w-full object-cover" />
+                  ) : (
+                    <>
+                      <Camera className="h-7 w-7 text-slate-400" />
+                      <span className="mt-2 text-sm font-bold text-[#0f172a]">{p.label}</span>
+                      <span className="mt-0.5 px-2 text-xs text-slate-500">{p.hint}</span>
+                    </>
+                  )}
+                  {doc && <span className="absolute right-2 top-2 inline-flex items-center gap-1 rounded bg-emerald-600 px-1.5 py-0.5 text-[10px] font-bold text-white"><CheckCircle2 className="h-3 w-3" /> {p.label} · Primary</span>}
+                  {doc && (
+                    <a
+                      href={`${doc.url}${doc.url.includes("?") ? "&" : "?"}download=${encodeURIComponent(doc.label || p.key)}`}
+                      download={doc.label || `${p.key}.jpg`}
+                      onClick={(e) => e.stopPropagation()}
+                      title="Download original image"
+                      className="absolute left-2 top-2 z-10 inline-flex items-center gap-1 rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-bold text-slate-800 shadow transition hover:bg-white"
+                    >
+                      <Download className="h-3 w-3" /> Save
+                    </a>
+                  )}
+                  {isUp && <span className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 text-white"><Loader2 className="h-6 w-6 animate-spin" /></span>}
+                  <div className="absolute inset-x-0 bottom-0 flex divide-x divide-white/20 text-[11px] font-bold text-white">
+                    <button type="button" onClick={() => openCamera(p.key)} className="flex flex-1 items-center justify-center gap-1 bg-violet-600/90 py-2 transition hover:bg-violet-600"><Camera className="h-3.5 w-3.5" /> Camera</button>
+                    <label className="flex flex-1 cursor-pointer items-center justify-center gap-1 bg-slate-800/85 py-2 transition hover:bg-slate-800"><Upload className="h-3.5 w-3.5" /> Upload<input type="file" accept="image/*" onChange={(e) => onPoseFile(p.key, e)} className="hidden" /></label>
+                  </div>
                 </div>
+
+                {/* Slideshow of older photos for this slot — tap one to make it primary */}
+                {older.length > 0 && (
+                  <div>
+                    <p className="px-0.5 text-[11px] font-semibold text-slate-500">Your other {p.label.toLowerCase()} photos — tap to make primary</p>
+                    <div className="mt-1 flex gap-2 overflow-x-auto pb-1">
+                      {older.map((od) => {
+                        const setting = settingPrimary === od.name
+                        return (
+                          <button
+                            key={od.name}
+                            type="button"
+                            onClick={() => setPrimaryPose(p.key, od)}
+                            disabled={setting}
+                            title="Make this the primary photo"
+                            className="relative h-16 w-12 flex-none overflow-hidden rounded-md border border-slate-200 ring-offset-1 transition hover:ring-2 hover:ring-violet-500 disabled:opacity-60"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={od.url} alt="Previous photo" className="h-full w-full object-cover" />
+                            <span className="absolute inset-0 flex items-center justify-center bg-black/0 transition group-hover:bg-black/20">
+                              {setting ? <Loader2 className="h-4 w-4 animate-spin text-white" /> : <Star className="h-4 w-4 text-white opacity-0 drop-shadow transition hover:opacity-100" />}
+                            </span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             )
           })}
