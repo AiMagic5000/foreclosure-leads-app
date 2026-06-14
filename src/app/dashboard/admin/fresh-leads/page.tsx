@@ -294,9 +294,10 @@ export default function FreshLeadsPage() {
                         {field("Parcel / APN", l.parcel_id || l.apn_number)}{field("Case #", l.case_number)}
                         {field("Surplus / overage", money(l.overage_amount))}{field("Sale amount", money(l.sale_amount))}
                         {(() => { const e = leadEconomics(l.overage_amount, l.state_abbr); return (<>
-                          {field("Max claimant fee", e.restricted ? "restricted state" : e.capLabel + (e.note ? ` — ${e.note}` : ""))}
-                          {field("Firm cut (≤40%)", e.firmCut != null ? fmtUsd(e.firmCut) : "needs surplus $")}
-                          {field("Agent cut (50/50)", e.agentCut != null ? fmtUsd(e.agentCut) : "needs surplus $")}
+                          {field("Fee % (max 30, state cap)", e.restricted ? "restricted" : e.capLabel + (e.note ? ` — ${e.note}` : ""))}
+                          {field("Total fee to claimant", e.totalFee != null ? fmtUsd(e.totalFee) : "needs surplus $")}
+                          {field("Firm cut (50%)", e.firmCut != null ? fmtUsd(e.firmCut) : "needs surplus $")}
+                          {field("Agent cut (50%)", e.agentCut != null ? fmtUsd(e.agentCut) : "needs surplus $")}
                         </>) })()}
                         {field("Mortgage amount", money(l.mortgage_amount))}{field("Sale date", l.sale_date)}
                         {field("Lender", l.lender_name)}{field("Foreclosure type", l.foreclosure_type)}

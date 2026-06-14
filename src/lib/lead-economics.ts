@@ -1,12 +1,13 @@
-// Per-lead economics: what the firm can charge the claimant (capped by state),
-// and the partner agent's 50/50 cut of that fee.
-// Fee caps sourced from the "50 States Overage Guide" (statutory finder/recovery
-// fee limits). Firm charges UP TO 40% where no lower statutory cap applies.
+// Per-lead economics. The firm charges the claimant a recovery fee of UP TO 30%
+// of the surplus (capped lower by state statute where applicable). That total
+// fee is then split 50/50 between the firm and the partner agent.
+// Fee caps sourced from the "50 States Overage Guide" (statutory finder/recovery limits).
 
-export const FIRM_MAX_PCT = 40
-export const AGENT_SHARE = 0.5 // 50/50 partnership
+export const MAX_FEE_PCT = 30   // max total fee charged to the claimant
+export const FIRM_SHARE = 0.5   // firm's half of the fee
+export const AGENT_SHARE = 0.5  // agent's half of the fee (50/50 partnership)
 
-// pct = max % of the surplus the firm may charge; flat = hard $ cap;
+// pct = max % of the surplus the fee may be; flat = hard $ cap on the total fee;
 // restricted = state where non-attorney recovery is barred/illegal.
 type Cap = { pct?: number; flat?: number; restricted?: boolean; note?: string }
 
@@ -28,12 +29,13 @@ export const STATE_FEE_CAP: Record<string, Cap> = {
 export interface LeadEconomics {
   overage: number | null
   state: string
-  feePct: number          // effective % the firm charges
-  flatCap: number | null  // $ cap if any
+  feePct: number          // effective total fee % charged to claimant
+  flatCap: number | null
   restricted: boolean
-  firmCut: number | null  // $ the firm earns (null if overage unknown)
-  agentCut: number | null // $ the agent earns (50% of firm cut)
-  capLabel: string        // e.g. "20% (TX cap)" or "40%" or "$1,000 cap"
+  totalFee: number | null // total $ the claimant pays (null if overage unknown)
+  firmCut: number | null  // firm's 50%
+  agentCut: number | null // agent's 50%
+  capLabel: string        // e.g. "30%", "20% (TX cap)", "$1,000 cap", "restricted"
   note?: string
 }
 
@@ -41,16 +43,17 @@ export function leadEconomics(overage: number | null | undefined, stateAbbr: str
   const state = (stateAbbr || "").toUpperCase()
   const cap = STATE_FEE_CAP[state] || {}
   const restricted = !!cap.restricted
-  const feePct = restricted ? 0 : Math.min(FIRM_MAX_PCT, cap.pct ?? FIRM_MAX_PCT)
+  const feePct = restricted ? 0 : Math.min(MAX_FEE_PCT, cap.pct ?? MAX_FEE_PCT)
   const flatCap = cap.flat ?? null
   const ov = typeof overage === "number" && overage > 0 ? overage : null
 
-  let firmCut: number | null = null
+  let totalFee: number | null = null
   if (ov !== null && !restricted) {
-    firmCut = ov * (feePct / 100)
-    if (flatCap !== null) firmCut = Math.min(firmCut, flatCap)
+    totalFee = ov * (feePct / 100)
+    if (flatCap !== null) totalFee = Math.min(totalFee, flatCap)
   }
-  const agentCut = firmCut !== null ? firmCut * AGENT_SHARE : null
+  const firmCut = totalFee !== null ? totalFee * FIRM_SHARE : null
+  const agentCut = totalFee !== null ? totalFee * AGENT_SHARE : null
 
   let capLabel: string
   if (restricted) capLabel = "restricted"
@@ -58,7 +61,7 @@ export function leadEconomics(overage: number | null | undefined, stateAbbr: str
   else if (flatCap !== null) capLabel = `${feePct}% / $${flatCap.toLocaleString()} cap`
   else capLabel = `${feePct}%${cap.pct !== undefined ? ` (${state} cap)` : ""}`
 
-  return { overage: ov, state, feePct, flatCap, restricted, firmCut, agentCut, capLabel, note: cap.note }
+  return { overage: ov, state, feePct, flatCap, restricted, totalFee, firmCut, agentCut, capLabel, note: cap.note }
 }
 
 export function fmtUsd(n: number | null): string {

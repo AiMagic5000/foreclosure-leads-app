@@ -961,11 +961,11 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
               {(() => { const e = leadEconomics(lead.foreclosureDetails.estimatedSurplus, lead.stateAbbr); return (<>
               <div className="text-center">
                 <p className="text-2xl font-bold text-emerald-600">{e.firmCut != null ? fmtUsd(e.firmCut) : "—"}</p>
-                <p className="text-xs text-muted-foreground">Firm fee · {e.capLabel}</p>
+                <p className="text-xs text-muted-foreground">Firm cut (50%) · fee {e.capLabel}</p>
               </div>
               <div className="text-center">
                 <p className="text-2xl font-bold text-blue-700">{e.agentCut != null ? fmtUsd(e.agentCut) : "—"}</p>
-                <p className="text-xs text-muted-foreground">Your cut (50/50)</p>
+                <p className="text-xs text-muted-foreground">Your cut (50%)</p>
               </div></>) })()}
             </div>
           </div>
