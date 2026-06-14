@@ -79,10 +79,10 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6 min-w-0 max-w-full overflow-x-hidden rounded-2xl bg-sky-50 p-4 sm:p-6 dark:bg-slate-900/40">
+    <div className="space-y-6 min-w-0 max-w-full overflow-x-hidden">
       <div className="flex items-center gap-3">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/fri-bird.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
+        <img src="/images/fri-bird.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
         <div>
           <h1 className="text-2xl font-bold tracking-tight">My Account</h1>
           <p className="text-muted-foreground">Manage your account and subscription</p>

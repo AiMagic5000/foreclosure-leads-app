@@ -16,7 +16,7 @@ export default function ContingentAttorneysPage() {
 
       <div className="overflow-hidden rounded-2xl border shadow-sm bg-white">
         <iframe
-          src="https://www.mytrustsoftware.com/"
+          src="/api/cattorneys-frame"
           title="Contingent Attorneys Network"
           className="w-full"
           style={{ height: "calc(100vh - 240px)", minHeight: 640 }}

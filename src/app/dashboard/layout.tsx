@@ -229,7 +229,7 @@ function FluentNavIcon({ href, fallback: Fallback }: {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src="/fri-bird.png"
+        src="/images/fri-bird.png"
         alt=""
         width={22}
         height={22}
@@ -457,6 +457,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                         ? pathname === "/dashboard"
                         : pathname === item.href || pathname.startsWith(item.href + "/")
                     const isLocked = !accessible && !item.allTiers
+                    const isAccount = item.href === "/dashboard/settings"
 
                     return (
                       <Link
@@ -473,12 +474,14 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                           "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                           isLocked && "opacity-40 cursor-not-allowed",
                           isActive && !isLocked
-                            ? "bg-emerald-500 text-white"
-                            : cn(
-                                isDark ? "text-slate-300" : "text-gray-700",
-                                !isLocked && (isDark ? "hover:bg-slate-800" : "hover:bg-gray-100"),
-                                !isLocked && "hover:text-emerald-500"
-                              )
+                            ? (isAccount ? "bg-blue-600 text-white" : "bg-emerald-500 text-white")
+                            : isAccount && !isLocked
+                              ? "bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-200"
+                              : cn(
+                                  isDark ? "text-slate-300" : "text-gray-700",
+                                  !isLocked && (isDark ? "hover:bg-slate-800" : "hover:bg-gray-100"),
+                                  !isLocked && "hover:text-emerald-500"
+                                )
                         )}
                       >
                         <FluentNavIcon href={item.href} fallback={item.icon} />
