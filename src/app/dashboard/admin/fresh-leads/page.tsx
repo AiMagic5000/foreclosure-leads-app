@@ -89,9 +89,9 @@ export default function FreshLeadsPage() {
   }, [])
   const loadLeads = useCallback(async () => {
     setLoading(true); setSelected(new Set()); setExpanded(new Set())
-    const r = await fetch(`/api/admin/fresh-leads?state=${encodeURIComponent(state)}&limit=6000`)
+    const r = await fetch(`/api/admin/fresh-leads?state=ALL&limit=6000`)
     const j = await r.json(); setLeads(j.leads || []); setLoading(false)
-  }, [state])
+  }, [])
   const loadRequests = useCallback(async () => {
     const r = await fetch("/api/admin/fresh-leads?requests=1"); const j = await r.json()
     setRequests(j.requests || [])
@@ -118,23 +118,35 @@ export default function FreshLeadsPage() {
 
   const hasPhone = (l: Lead) => !!(l.primary_phone && l.primary_phone.trim())
   const hasEmail = (l: Lead) => !!(l.primary_email && l.primary_email.trim())
+  const matchesContact = (l: Lead) =>
+    contactFilter === "all" ||
+    (contactFilter === "phone" && hasPhone(l)) ||
+    (contactFilter === "email" && hasEmail(l)) ||
+    (contactFilter === "both" && hasPhone(l) && hasEmail(l))
+  const matchesState = (l: Lead) => state === "ALL" || (l.state_abbr || "—") === state
+
+  // All filtering is client-side over the full loaded set so every count reconciles.
+  const afterContact = useMemo(() => leads.filter(matchesContact), [leads, contactFilter])
+  const afterState = useMemo(() => leads.filter(matchesState), [leads, state])
+  // State chips reflect the active CONTACT filter (sum == All count under that filter).
+  const stateCounts = useMemo(() => {
+    const m: Record<string, number> = {}
+    for (const l of afterContact) { const s = l.state_abbr || "—"; m[s] = (m[s] || 0) + 1 }
+    return Object.entries(m).map(([state, count]) => ({ state, count })).sort((a, b) => b.count - a.count)
+  }, [afterContact])
+  // Contact chips reflect the active STATE filter.
   const contactCounts = useMemo(() => ({
-    all: leads.length,
-    phone: leads.filter(hasPhone).length,
-    email: leads.filter(hasEmail).length,
-    both: leads.filter((l) => hasPhone(l) && hasEmail(l)).length,
-  }), [leads])
-  // Visible = filtered by contact type, phone-having sorted to the top so callable leads are first.
+    all: afterState.length,
+    phone: afterState.filter(hasPhone).length,
+    email: afterState.filter(hasEmail).length,
+    both: afterState.filter((l) => hasPhone(l) && hasEmail(l)).length,
+  }), [afterState])
   const visibleLeads = useMemo(() => {
-    let v = leads
-    if (contactFilter === "phone") v = leads.filter(hasPhone)
-    else if (contactFilter === "email") v = leads.filter(hasEmail)
-    else if (contactFilter === "both") v = leads.filter((l) => hasPhone(l) && hasEmail(l))
-    // Highest surplus first (so $ + agent-cut leads are on top), then phone-ready.
+    const v = leads.filter((l) => matchesState(l) && matchesContact(l))
     return [...v].sort((a, b) =>
       (b.overage_amount || 0) - (a.overage_amount || 0) ||
       (hasPhone(b) ? 1 : 0) - (hasPhone(a) ? 1 : 0))
-  }, [leads, contactFilter])
+  }, [leads, state, contactFilter])
 
   const pageCount = Math.max(1, Math.ceil(visibleLeads.length / PAGE_SIZE))
   const pageLeads = useMemo(() => visibleLeads.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE), [visibleLeads, page])
@@ -199,9 +211,9 @@ export default function FreshLeadsPage() {
 
       <div className="flex flex-wrap gap-2 mb-4">
         <button onClick={() => setState("ALL")} className={`px-3 py-1.5 text-sm rounded-full border ${state === "ALL" ? "bg-emerald-600 text-white border-emerald-600" : "hover:bg-gray-50"}`}>
-          All ({states.reduce((s, x) => s + x.count, 0)})
+          All ({afterContact.length.toLocaleString()})
         </button>
-        {states.map((s) => (
+        {stateCounts.map((s) => (
           <button key={s.state} onClick={() => setState(s.state)} className={`px-3 py-1.5 text-sm rounded-full border ${state === s.state ? "bg-emerald-600 text-white border-emerald-600" : "hover:bg-gray-50"}`}>
             {s.state} ({s.count})
           </button>
