@@ -134,7 +134,7 @@ export default function PricingPage() {
             >
               50 States Guide
             </Link>
-            <Link href="/sign-in?direct=1">
+            <Link href="/sign-up">
               <Button variant="ghost" size="sm">
                 Sign In
               </Button>

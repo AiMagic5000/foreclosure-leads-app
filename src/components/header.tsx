@@ -75,7 +75,7 @@ export function Header() {
             </a>
             <span className="h-3 w-px bg-white/15" />
             <Link
-              href="/sign-in?direct=1"
+              href="/sign-in"
               className="uppercase tracking-[0.14em] text-[10px] text-white/70 hover:text-white transition-colors"
             >
               Agent Sign In
@@ -229,7 +229,7 @@ export function Header() {
               </button>
             </Link>
             <Link
-              href="/sign-in?direct=1"
+              href="/sign-in"
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-center py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white/70 border border-white/10 rounded-md hover:bg-white/5 transition-colors"
             >

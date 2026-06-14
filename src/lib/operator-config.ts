@@ -190,6 +190,12 @@ export async function resolveOperatorConfig(opts: {
   }
 
   const r = pinRow || {}
+  // Agent vs company: when an operator pin resolved (and it's not the admin's own
+  // row), this is an AGENT — they must use THEIR OWN SlyBroadcast/TextBee creds,
+  // never the company's. Only the company-default path (no pin, or the admin row)
+  // uses the env/company credentials. TextBee was already strict; SlyBroadcast now
+  // matches so an agent never silently sends on the company account.
+  const isCompanyDefault = !pinRow || String(r.email || "").toLowerCase() === "coreypearsonemail@gmail.com"
   return {
     pinId: String(r.id || ""),
     email: String(r.email || clerkEmail || ""),
@@ -207,9 +213,13 @@ export async function resolveOperatorConfig(opts: {
     smsApiKey: ADMIN_DEFAULTS.sms_api_key,
     textbeeApiKey: String(r.textbee_api_key || ""),
     textbeeDeviceId: String(r.textbee_device_id || ""),
-    slybroadcastEmail: String(r.slybroadcast_email || ADMIN_DEFAULTS.slybroadcast_email),
-    slybroadcastPassword: String(r.slybroadcast_password || ADMIN_DEFAULTS.slybroadcast_password),
-    slyCallbackNumber: String(r.sly_callback_number || ADMIN_DEFAULTS.sly_callback_number),
+    // .trim() is critical: env vars can carry a trailing newline (the company
+    // SlyBroadcast creds did, which broke auth on EVERY voice drop). Never send raw.
+    // Agents use ONLY their own SlyBroadcast account; company creds only on the
+    // company-default path (no silent fallback that would send on the wrong account).
+    slybroadcastEmail: (isCompanyDefault ? String(r.slybroadcast_email || ADMIN_DEFAULTS.slybroadcast_email) : String(r.slybroadcast_email || "")).trim(),
+    slybroadcastPassword: (isCompanyDefault ? String(r.slybroadcast_password || ADMIN_DEFAULTS.slybroadcast_password) : String(r.slybroadcast_password || "")).trim(),
+    slyCallbackNumber: String(r.sly_callback_number || ADMIN_DEFAULTS.sly_callback_number).trim(),
     voiceId: String(r.voice_id || ADMIN_DEFAULTS.voice_id),
     voicedropAudioUrl: r.voicedrop_audio_url ? String(r.voicedrop_audio_url) : null,
     websiteUrl: String(r.website_url || ADMIN_DEFAULTS.website_url),

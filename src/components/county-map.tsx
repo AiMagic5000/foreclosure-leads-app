@@ -12,6 +12,7 @@ import { Search, RotateCcw, Download, X, MapPin, Phone, Mail, Globe, Users, File
 import { findCountyContact, type CountyContact } from '@/data/county-directory';
 import { findCountyCourtInfo, type CountyCourtInfo } from '@/data/county-court-directory';
 import { stateOverageGuide } from '@/data/state-overage-guide';
+import { UPGRADE_URL } from '@/lib/upgrade';
 
 // Judicial foreclosure states (require court process) - BLUE
 const JUDICIAL_STATES = new Set([
@@ -649,7 +650,7 @@ export function CountyMap({
                     {selectedCounty.leadCount.toLocaleString()}
                   </span>
                 ) : (
-                  <a href="/dashboard/recovery-agent" className="text-sm font-bold hover:underline" style={{ color: theme.accent }}>
+                  <a href={UPGRADE_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-bold hover:underline" style={{ color: theme.accent }}>
                     Upgrade to access →
                   </a>
                 )}
@@ -709,7 +710,7 @@ export function CountyMap({
                     {!isOwnerOperator && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <a
-                          href="/dashboard/recovery-agent"
+                          href={UPGRADE_URL} target="_blank" rel="noopener noreferrer"
                           className="inline-flex items-center gap-1 text-xs font-semibold text-white px-3 py-1.5 rounded-md shadow-lg"
                           style={{ backgroundColor: theme.accent }}
                         >
@@ -808,7 +809,7 @@ export function CountyMap({
                       County lead counts, contact data, court filing links, and e-filing access are available to Asset Recovery Agents. Upgrade to download county leads.
                     </p>
                     <a
-                      href="/dashboard/recovery-agent"
+                      href={UPGRADE_URL} target="_blank" rel="noopener noreferrer"
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',

@@ -278,7 +278,8 @@ export async function POST(request: NextRequest) {
     });
     await notifyTransporter.sendMail({
       from: `"USFL Signup Alert" <${SMTP_USER}>`,
-      to: "xscore10@protonmail.com",
+      // support@ only — Hostinger forward mirrors a single copy to xscore10.
+      to: "support@usforeclosureleads.com",
       subject: `New signup: ${trimmedName || "No name"} (${source})`,
       text: `Name: ${trimmedName || "Not provided"}\nEmail: ${trimmedEmail}\nPhone: ${trimmedPhone || "Not provided"}\nConsent (SMS/voicemail/calls + Terms + Privacy): ${consent ? `YES @ ${consentedAt}` : "NO"}\nSource: ${source}\nTime: ${new Date().toISOString()}`,
       html: `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111827;">

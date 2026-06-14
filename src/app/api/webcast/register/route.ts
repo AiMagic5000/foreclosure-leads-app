@@ -215,6 +215,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Registration failed' }, { status: 500 })
     }
 
+    // Enroll in the welcome ringless-voicemail pipeline (drip engine renders
+    // Allie's personalized VM inside the recipient-local 9am-8pm window).
+    if (phone && smsConsent) {
+      try {
+        const { data: existingVm } = await supabaseAdmin
+          .from('sms_drips')
+          .select('id')
+          .eq('phone', phone)
+          .maybeSingle()
+        if (!existingVm) {
+          await supabaseAdmin.from('sms_drips').insert({ email: email.toLowerCase(), phone })
+        }
+      } catch (err) {
+        console.error('sms_drips VM enrollment failed (non-fatal):', err)
+      }
+    }
+
     // Idempotency guard: retried/duplicate registrations (poller timeouts,
     // backfills, double form fills) must NOT re-queue drips or re-text the
     // lead. Existing drip rows for this lead = already enrolled.
@@ -227,9 +244,30 @@ export async function POST(request: NextRequest) {
 
     // Await DB operations (fast) -- must complete before response
     if (!alreadyEnrolled) {
-      const dbTasks: Promise<unknown>[] = [
-        queueEmailDrip(lead.id, sessionTime),
-      ]
+      // Only enqueue the email drip for deliverable domains. User-typed FB-lead
+      // emails with bogus domains bounce at the relay and got our sending IP
+      // banned by MXRoute (2026-06-10) — an MX lookup catches those up front.
+      let domainOk = true
+      try {
+        const { resolveMx } = await import('node:dns/promises')
+        const domain = email.split('@')[1]
+        const mx = await Promise.race([
+          resolveMx(domain),
+          new Promise<never>((_, rej) => setTimeout(() => rej(new Error('dns timeout')), 3000)),
+        ])
+        domainOk = Array.isArray(mx) && mx.length > 0
+      } catch (err) {
+        // ENOTFOUND/ENODATA = domain definitively has no mail service -> block.
+        // Timeouts or resolver errors fail open so real leads aren't dropped.
+        const code = (err as NodeJS.ErrnoException)?.code
+        domainOk = !(code === 'ENOTFOUND' || code === 'ENODATA')
+      }
+      const dbTasks: Promise<unknown>[] = []
+      if (domainOk) {
+        dbTasks.push(queueEmailDrip(lead.id, sessionTime))
+      } else {
+        console.error('email drip skipped — no MX for domain:', email)
+      }
       // SMS drip RE-ENABLED 2026-06-05 (now on TextBee w/ browser UA header)
       if (phone && smsConsent) {
         dbTasks.push(queueSmsDrip(lead.id, phone, sessionTime))

@@ -33,8 +33,32 @@ const OWNER_OP_VIDEOS = [
   { id: "own-the-platform", title: "Part 2 — Own the Whole Platform", subtitle: "One platform you own, built for you from nothing." },
 ]
 
+// My Leads pairs the overview with Corey's full tab walkthrough (Seafile-hosted).
+const MY_LEADS_VIDEOS = [
+  { src: "/videos/my-leads-16x9.mp4", poster: "/videos/my-leads-poster.jpg", id: "my-leads", title: "Your leads, and only yours", subtitle: "Exclusive, skip-traced, DNC-cleared — pick up the phone with confidence." },
+  { src: "https://seafile.alwaysencrypted.com/f/d271ac1bc0d64730b64b/?dl=1", poster: "/videos/my-leads-walkthrough-poster.jpg", id: "my-leads-walkthrough", title: "Full My Leads walkthrough", subtitle: "Corey works the tab end to end — every button, every play, real leads." },
+]
+
 export function DashboardSectionVideo() {
   const pathname = usePathname()
+
+  if (pathname === "/dashboard/my-leads") {
+    return (
+      <div className="mb-6 grid gap-4 lg:grid-cols-2">
+        {MY_LEADS_VIDEOS.map((v) => (
+          <SectionVideo
+            key={v.id}
+            src={v.src}
+            poster={v.poster}
+            title={v.title}
+            subtitle={v.subtitle}
+            storageKey={`video-dismissed-${v.id}`}
+            fit={v.id === "my-leads-walkthrough" ? "contain" : "cover"}
+          />
+        ))}
+      </div>
+    )
+  }
 
   if (pathname === "/dashboard/owner-operator") {
     return (

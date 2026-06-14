@@ -10,6 +10,8 @@ interface SectionVideoProps {
   subtitle?: string
   /** unique key for remembering collapsed state (per section). */
   storageKey: string
+  /** "contain" shows the full frame (no edge cropping) for sources wider than 16:9. */
+  fit?: "cover" | "contain"
 }
 
 /**
@@ -20,7 +22,7 @@ interface SectionVideoProps {
  * reopen). Click-to-play with sound; the video pauses when collapsed.
  * Left-aligned, brand styled (white card, red #D82221 + blue #2563eb).
  */
-export function SectionVideo({ src, poster, title, subtitle, storageKey }: SectionVideoProps) {
+export function SectionVideo({ src, poster, title, subtitle, storageKey, fit = "cover" }: SectionVideoProps) {
   // Lazy init from storage (SSR-safe) — avoids setState-in-effect.
   const [collapsed, setCollapsed] = useState<boolean>(() => {
     if (typeof window === "undefined") return false
@@ -77,7 +79,7 @@ export function SectionVideo({ src, poster, title, subtitle, storageKey }: Secti
               controls={playing}
               preload="metadata"
               playsInline
-              className="h-full w-full object-cover"
+              className={`h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
             />
             {!playing && (
               <button

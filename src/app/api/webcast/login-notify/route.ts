@@ -10,7 +10,8 @@ import zlib from 'zlib'
 
 const RELAY_URL = process.env.MAIL_RELAY_URL || 'https://www.assetrecoverybusiness.com/_api/usfr-relay.php'
 const RELAY_TOKEN = process.env.MAIL_RELAY_TOKEN || ''
-const NOTIFY_TO = ['xscore10@protonmail.com', 'support@usforeclosureleads.com']
+// support@ only — Hostinger forward mirrors a single copy to xscore10.
+const NOTIFY_TO = ['support@usforeclosureleads.com']
 
 function b64gz(s: string): string {
   return zlib.gzipSync(Buffer.from(s)).toString('base64')

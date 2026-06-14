@@ -10,8 +10,9 @@ const SMTP_PORT = Number(process.env.SMTP_PORT || 465)
 const SMTP_USER = process.env.SMTP_USER || "support@usforeclosurerecovery.com"
 const SMTP_PASS = process.env.SMTP_PASS || process.env.SMTP_SUPPORT_PASSWORD || process.env.IMAP_SUPPORT_PASSWORD || "Thepassword#1234"
 
-// Transcript recipients — site support inbox + owner's monitoring inbox.
-const TRANSCRIPT_TO = ["support@usforeclosureleads.com", "xscore10@protonmail.com"]
+// Transcript recipient — support inbox only. The Hostinger forward
+// (support@ -> xscore10) mirrors it to the owner, so a single copy lands there.
+const TRANSCRIPT_TO = ["support@usforeclosureleads.com"]
 
 const SYSTEM_PROMPT = `You are the assistant for Foreclosure Recovery Inc., an asset-recovery administration company that helps people claim surplus funds left over after a foreclosure sale.
 

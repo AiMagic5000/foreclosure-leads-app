@@ -28,23 +28,12 @@ interface DashboardStats {
   withPhone: number
   withEmail: number
   newLeads: number
+  pendingTrace: number
   failedTraces: number
   dncCleared: number
   tracedContact: number    // traced leads that returned a phone/email
   enrichmentPct: number    // real: tracedContact / traced (skip-trace success rate)
   dncCleanPct: number      // real: DNC-clean / DNC-checked
-}
-
-interface RecentLead {
-  id: string
-  ownerName: string
-  address: string
-  city: string
-  state: string
-  saleAmount: number
-  status: string
-  scrapedAt: string
-  primaryPhone: string | null
 }
 
 interface StateCount {
@@ -60,16 +49,6 @@ const statusColors: Record<string, string> = {
   failed: "bg-red-500/10 text-red-600",
 }
 
-function timeAgo(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime()
-  const mins = Math.floor(diff / 60000)
-  if (mins < 60) return `${mins}m ago`
-  const hours = Math.floor(mins / 60)
-  if (hours < 24) return `${hours}h ago`
-  const days = Math.floor(hours / 24)
-  return `${days}d ago`
-}
-
 // Judicial foreclosure states (court process) — badge BLUE; everything else
 // is non-judicial — badge RED. Matches the county map legend.
 const JUDICIAL_STATES = new Set([
@@ -79,18 +58,39 @@ const JUDICIAL_STATES = new Set([
 ])
 const isJudicial = (st: string) => JUDICIAL_STATES.has((st || "").toUpperCase())
 
-// First name shown, everything after it blurred (privacy for the free feed).
-function splitName(full: string): { first: string; rest: string } {
-  const parts = (full || "").trim().split(/\s+/)
-  if (parts.length <= 1) return { first: parts[0] || "Lead", rest: "" }
-  return { first: parts[0], rest: parts.slice(1).join(" ") }
-}
+// --- Live-feed mock leads: 100 entries, 50/50 judicial/non-judicial so the
+// red/blue state badges stay balanced. Deterministic (no Math.random) so server
+// and client render identically (no hydration mismatch). ---
+const JUDICIAL_LIST = Array.from(JUDICIAL_STATES)
+const NON_JUDICIAL_LIST = [
+  "AL", "AK", "AZ", "CA", "CO", "GA", "ID", "MI", "MN", "MS",
+  "MO", "MT", "NV", "NH", "NC", "OR", "RI", "TN", "TX", "UT",
+  "VA", "WA", "WV", "WY",
+]
+const MOCK_FIRST = ["James", "Maria", "Robert", "Linda", "Michael", "Patricia", "David", "Jennifer", "William", "Elizabeth", "Richard", "Susan", "Joseph", "Jessica", "Thomas", "Karen", "Charles", "Nancy", "Daniel", "Lisa", "Matthew", "Sandra", "Anthony", "Ashley", "Mark", "Kimberly", "Donald", "Emily", "Steven", "Donna", "Gabriel", "Natalie", "Angela", "Giovanni", "Benjamin", "Justus", "Kevin", "Janice", "Carlos", "Denise"]
+const MOCK_LAST = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Wilson", "Anderson", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker", "Young"]
+const MOCK_STREET = ["Maple Ave", "Oak St", "Pine Dr", "Cedar Ln", "Elm St", "Trails Court", "Doyle Dr", "Timothy Dr", "Glenwood St", "Mustang Canyon Way", "Beechnut Dr", "Gaddis Ave", "Mesquite Court", "Sunset Blvd", "Lakeview Dr", "Hillcrest Rd", "Magnolia St", "Birch Way", "Willow Bend", "Ridgeline Dr"]
+const MOCK_CITY = ["Springfield", "Riverside", "Franklin", "Clinton", "Georgetown", "Salem", "Madison", "Arlington", "Centerville", "Fairview", "Manchester", "Oakland", "Ashland", "Burlington", "Kingston", "Dayton", "Newport", "Bristol", "Milton", "Auburn"]
+
+const MOCK_FEED = Array.from({ length: 100 }, (_, i) => {
+  const judicial = i % 2 === 0
+  const states = judicial ? JUDICIAL_LIST : NON_JUDICIAL_LIST
+  return {
+    id: `mock-${i}`,
+    first: MOCK_FIRST[(i * 3) % MOCK_FIRST.length],
+    last: MOCK_LAST[(i * 7) % MOCK_LAST.length],
+    street: `${100 + ((i * 137) % 9800)} ${MOCK_STREET[(i * 5) % MOCK_STREET.length]}`,
+    city: MOCK_CITY[(i * 11) % MOCK_CITY.length],
+    state: states[(i >> 1) % states.length],
+    ago: `${1 + (i % 23)}h ago`,
+    hasPhone: i % 4 !== 0,
+  }
+})
 
 export default function DashboardPage() {
   const { theme } = useTheme()
   const isDark = theme === "dark"
   const [stats, setStats] = useState<DashboardStats | null>(null)
-  const [recentLeads, setRecentLeads] = useState<RecentLead[]>([])
   const [topStates, setTopStates] = useState<StateCount[]>([])
   const [loading, setLoading] = useState(true)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
@@ -144,6 +144,7 @@ export default function DashboardPage() {
           withPhone: withPhone,
           withEmail: withEmail,
           newLeads: newLeads,
+          pendingTrace: Math.max(0, total - traced),
           failedTraces: failed,
           dncCleared: dncCleared,
           tracedContact: tracedContact,
@@ -164,27 +165,6 @@ export default function DashboardPage() {
           .sort((a, b) => b.count - a.count)
           .slice(0, 7)
         setTopStates(sorted)
-
-        // Fetch recent leads (latest 10) for the live feed
-        const { data: recent } = await supabase
-          .from("foreclosure_leads")
-          .select("id,owner_name,property_address,city,state_abbr,sale_amount,status,scraped_at,primary_phone")
-          .order("created_at", { ascending: false })
-          .limit(10) as { data: Record<string, unknown>[] | null; error: unknown }
-
-        if (recent) {
-          setRecentLeads(recent.map(r => ({
-            id: String(r.id),
-            ownerName: String(r.owner_name || "Unknown"),
-            address: String(r.property_address || ""),
-            city: String(r.city || ""),
-            state: String(r.state_abbr || ""),
-            saleAmount: Number(r.sale_amount) || 0,
-            status: String(r.status || "new"),
-            scrapedAt: String(r.scraped_at || ""),
-            primaryPhone: r.primary_phone ? String(r.primary_phone) : null,
-          })))
-        }
 
         setLastUpdated(new Date())
       } catch {
@@ -268,7 +248,7 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold">{stats.totalLeads.toLocaleString()}</div>
               <div className="flex items-center gap-1 text-xs">
-                <span className="text-blue-600">{stats.newLeads.toLocaleString()} pending trace</span>
+                <span className="text-blue-600">{stats.pendingTrace.toLocaleString()} pending trace</span>
               </div>
             </CardContent>
           </Card>
@@ -345,71 +325,56 @@ export default function DashboardPage() {
             </Link>
           </CardHeader>
           <CardContent>
-            {recentLeads.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center py-4">No leads found.</p>
-            ) : (
-              <div className="relative h-[400px] overflow-hidden group">
-                {/* keyframes for the vertical live-feed scroll */}
-                <style>{`@keyframes leadfeed { from { transform: translateY(0); } to { transform: translateY(-50%); } }`}</style>
-                {/* fade top/bottom edges */}
-                <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-background to-transparent" />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-background to-transparent" />
-                <div className="flex flex-col gap-3 animate-[leadfeed_32s_linear_infinite] group-hover:[animation-play-state:paused]">
-                  {[...recentLeads, ...recentLeads].map((lead, idx) => {
-                    const { first, rest } = splitName(lead.ownerName)
-                    const judicial = isJudicial(lead.state)
-                    return (
-                      <div
-                        key={`${lead.id}-${idx}`}
-                        className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
-                      >
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="font-medium truncate">
-                              {first}{" "}
-                              {rest && <span className="blur-[5px] select-none">{rest}</span>}
-                            </span>
-                            <Badge
-                              title={`${judicial ? "Judicial" : "Non-judicial"} state`}
-                              className={`text-xs shrink-0 cursor-help text-white ${
-                                judicial ? "bg-blue-600 hover:bg-blue-600" : "bg-red-600 hover:bg-red-600"
-                              }`}
-                            >
-                              {lead.state}
-                            </Badge>
-                            {lead.primaryPhone && (
-                              <Phone className="h-3 w-3 text-emerald-500 shrink-0" />
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <MapPin className="h-3 w-3 flex-shrink-0" />
-                            <span className="truncate">
-                              {lead.address}
-                              {lead.city && (
-                                <>
-                                  , <span className="blur-[5px] select-none">{lead.city}</span>
-                                </>
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3 ml-4">
-                          {lead.scrapedAt && (
-                            <div className="hidden sm:flex items-center gap-1 text-xs text-muted-foreground">
-                              <Clock className="h-3 w-3" />
-                              {timeAgo(lead.scrapedAt)}
-                            </div>
-                          )}
-                          <Badge className={statusColors[lead.status] || statusColors.new}>
-                            {lead.status.replaceAll("_", " ")}
+            <div className="relative h-[400px] overflow-hidden group">
+              {/* keyframes for the vertical live-feed scroll */}
+              <style>{`@keyframes leadfeed { from { transform: translateY(0); } to { transform: translateY(-50%); } }`}</style>
+              {/* fade top/bottom edges */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-background to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-background to-transparent" />
+              <div className="flex flex-col gap-3 animate-[leadfeed_90s_linear_infinite] group-hover:[animation-play-state:paused]">
+                {[...MOCK_FEED, ...MOCK_FEED].map((lead, idx) => {
+                  const judicial = isJudicial(lead.state)
+                  return (
+                    <div
+                      key={`${lead.id}-${idx}`}
+                      className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-medium truncate">
+                            {lead.first} <span className="blur-[5px] select-none">{lead.last}</span>
+                          </span>
+                          <Badge
+                            title={`${judicial ? "Judicial" : "Non-judicial"} state`}
+                            className={`text-xs shrink-0 cursor-help text-white ${
+                              judicial ? "bg-blue-600 hover:bg-blue-600" : "bg-red-600 hover:bg-red-600"
+                            }`}
+                          >
+                            {lead.state}
                           </Badge>
+                          {lead.hasPhone && (
+                            <Phone className="h-3 w-3 text-emerald-500 shrink-0" />
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <MapPin className="h-3 w-3 flex-shrink-0" />
+                          <span className="truncate">
+                            {lead.street}, <span className="blur-[5px] select-none">{lead.city}</span>
+                          </span>
                         </div>
                       </div>
-                    )
-                  })}
-                </div>
+                      <div className="flex items-center gap-3 ml-4">
+                        <div className="hidden sm:flex items-center gap-1 text-xs text-muted-foreground">
+                          <Clock className="h-3 w-3" />
+                          {lead.ago}
+                        </div>
+                        <Badge className={statusColors.new}>new</Badge>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
-            )}
+            </div>
           </CardContent>
         </Card>
 

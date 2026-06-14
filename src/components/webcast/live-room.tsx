@@ -5,7 +5,7 @@ import { useSearchParams, usePathname } from 'next/navigation'
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import { Volume2, VolumeX, Maximize, MessageCircle, X, Send, Zap, Lock, Clock } from 'lucide-react'
 import Hls from 'hls.js'
-import { SCRIPTED_MESSAGES, getSessionOffset } from '@/data/webcast-scripted-chat'
+import { SCRIPTED_MESSAGES, getSessionOffset, SESSION_DURATION } from '@/data/webcast-scripted-chat'
 
 const BRAND = {
   navy: '#09274c',
@@ -16,7 +16,8 @@ const BRAND = {
 }
 
 const HLS_URL = 'https://stream.usforeclosureleads.com/webcast.m3u8'
-const SESSION_DURATION = 1800 // 30 minutes in seconds
+// SESSION_DURATION now imported from the scripted-chat module (single source of
+// truth, == the HLS reel length) so the session window matches the video exactly.
 
 interface ChatMsg {
   id: string
@@ -45,6 +46,7 @@ interface ChatPanelProps {
   chatEmail: string
   onEmailChange: (val: string) => void
   onUnlock: (e: React.FormEvent) => void
+  chatUnlockError?: string
   onClose?: () => void
   joinFormOpen: boolean
   onToggleJoinForm: () => void
@@ -66,6 +68,7 @@ function ChatPanel({
   chatEmail,
   onEmailChange,
   onUnlock,
+  chatUnlockError,
   onClose,
   joinFormOpen,
   onToggleJoinForm,
@@ -165,6 +168,9 @@ function ChatPanel({
               required
               className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-white/40 focus:outline-none focus:border-[#d4a84b]"
             />
+            {chatUnlockError && (
+              <p className="text-xs text-red-300">{chatUnlockError}</p>
+            )}
             <button
               type="submit"
               disabled={chatUnlocking}
@@ -220,17 +226,11 @@ function SessionCountdown({ offsetSeconds }: { offsetSeconds: number }) {
   )
 }
 
-// ---- Next Session Countdown (big timer until the next :00 or :30 slot) ----
+// ---- Next Session Countdown (seconds until the reel loops back to the start) ----
 
 function getSecondsUntilNextSlot(): number {
-  const now = new Date()
-  const min = now.getMinutes()
-  const sec = now.getSeconds()
-  // Next slot is the upcoming :00 or :30
-  if (min < 30) {
-    return (30 - min) * 60 - sec
-  }
-  return (60 - min) * 60 - sec
+  // Rolling loop: the cycle restarts every SESSION_DURATION seconds (== the reel).
+  return SESSION_DURATION - (Math.floor(Date.now() / 1000) % SESSION_DURATION)
 }
 
 function NextSessionOverlay() {
@@ -240,8 +240,8 @@ function NextSessionOverlay() {
   useEffect(() => {
     const interval = setInterval(() => {
       const r = getSecondsUntilNextSlot()
-      // Rollover detection: was near zero, jumped to ~1800 = boundary crossed
-      if (prevRef.current <= 15 && r > 1700) {
+      // Rollover detection: was near zero, jumped back near the full cycle = boundary crossed
+      if (prevRef.current <= 15 && r > SESSION_DURATION - 60) {
         window.location.reload()
         return
       }
@@ -272,7 +272,7 @@ function NextSessionOverlay() {
         REFRESH NOW
       </button>
 
-      <p className="text-white/40 text-sm mt-6">Sessions run every 30 minutes, 24/7</p>
+      <p className="text-white/40 text-sm mt-6">Runs continuously, 24/7 — jump in anytime</p>
       <p className="text-white/50 text-sm mt-2">Your preview account is active -- explore the dashboard at usforeclosureleads.com</p>
     </div>
   )
@@ -349,6 +349,9 @@ function WebcastLiveContent() {
   const [sessionEnded, setSessionEnded] = useState(false)
   const videoOffsetRef = useRef(initialOffset)
   const videoStartedRef = useRef(false)
+  // Shared between the anti-rewind guard and the loop handler so a legitimate
+  // loop restart (jump from near-end back to 0) is allowed through.
+  const lastTimeRef = useRef(initialOffset)
 
   // Chat gate state -- name + email required to post, triggers lead creation + account provisioning
   const [chatName, setChatName] = useState('')
@@ -356,6 +359,10 @@ function WebcastLiveContent() {
   const [chatUnlocked, setChatUnlocked] = useState(false)
   const [chatUnlocking, setChatUnlocking] = useState(false)
   const [joinFormOpen, setJoinFormOpen] = useState(false)
+  // leadId captured from the join form (name+email) — ties every chat message to a
+  // real, reachable lead so the admin notice never shows "(unknown viewer)".
+  const [chatLeadId, setChatLeadId] = useState('')
+  const [chatUnlockError, setChatUnlockError] = useState('')
 
   // Fetch session info (for viewer count + session ID only -- offset is computed locally)
   const [sessionId, setSessionId] = useState('')
@@ -380,7 +387,13 @@ function WebcastLiveContent() {
     function startPlayback() {
       if (videoStartedRef.current) return
       videoStartedRef.current = true
-      video!.currentTime = videoOffsetRef.current
+      // The wall-clock offset (0..SESSION_DURATION) can exceed the actual video
+      // length (the reel is ~27 min, the session window is 30) — seeking past the
+      // end shows BLACK. Wrap it into the real duration so the video always plays.
+      const dur = video!.duration && isFinite(video!.duration) ? video!.duration : SESSION_DURATION
+      const startAt = videoOffsetRef.current % dur
+      video!.currentTime = startAt
+      lastTimeRef.current = startAt
 
       if (autoplay) {
         // Try unmuted first; browsers may block it, fall back to muted
@@ -431,18 +444,28 @@ function WebcastLiveContent() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Block seeking (fake-live -- no rewinding)
+  // Block seeking (fake-live -- no rewinding), BUT allow the natural loop restart
+  // (a jump from near the end back to ~0). Uses the shared lastTimeRef so the loop
+  // handler can reset it.
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
-    let lastTime = initialOffset
 
+    const isLoopRestart = () => {
+      const dur = video.duration && isFinite(video.duration) ? video.duration : SESSION_DURATION
+      return lastTimeRef.current > dur - 6 && video.currentTime < 6
+    }
     const handleTimeUpdate = () => {
-      if (video.currentTime < lastTime - 2) video.currentTime = lastTime
-      else lastTime = video.currentTime
+      if (video.currentTime < lastTimeRef.current - 2 && !isLoopRestart()) {
+        video.currentTime = lastTimeRef.current
+      } else {
+        lastTimeRef.current = video.currentTime
+      }
     }
     const handleSeeking = () => {
-      if (video.currentTime < lastTime - 2) video.currentTime = lastTime
+      if (video.currentTime < lastTimeRef.current - 2 && !isLoopRestart()) {
+        video.currentTime = lastTimeRef.current
+      }
     }
 
     video.addEventListener('timeupdate', handleTimeUpdate)
@@ -453,12 +476,14 @@ function WebcastLiveContent() {
     }
   }, [initialOffset])
 
-  // Continuous loop -- when video ends, restart at 0 and keep playing.
-  // No "session ended" overlay; the stream is treated as a 24/7 broadcast.
+  // Continuous loop -- when the video ends, restart at 0 and keep playing.
+  // Treated as a 24/7 broadcast (no "session ended" black screen). Reset
+  // lastTimeRef BEFORE seeking so the anti-rewind guard permits the restart.
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
     const handleEnded = () => {
+      lastTimeRef.current = 0
       video.currentTime = 0
       video.play().catch(() => {})
     }
@@ -567,7 +592,7 @@ function WebcastLiveContent() {
       const res = await fetch('/api/webcast/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ leadId, sessionId, message: msg, senderName: displayName }),
+        body: JSON.stringify({ leadId: chatLeadId || leadId, sessionId, message: msg, senderName: displayName, senderEmail: chatEmail || undefined }),
       })
       const data = await res.json()
       setChatMessages((prev) => prev.filter((p) => p.id !== 'typing-indicator'))
@@ -582,7 +607,7 @@ function WebcastLiveContent() {
     } finally {
       setChatSending(false)
     }
-  }, [chatInput, chatSending, leadId, sessionId, chatName])
+  }, [chatInput, chatSending, leadId, chatLeadId, chatEmail, sessionId, chatName])
 
   const toggleFullscreen = () => {
     const video = videoRef.current
@@ -602,14 +627,19 @@ function WebcastLiveContent() {
         body: JSON.stringify({ firstName: chatName.trim(), email: chatEmail.trim() }),
       })
       const data = await res.json()
-      if (data.leadId) {
-        // Update leadId so subsequent chat messages are associated
-        // (leadId from searchParams may be empty if they came directly)
+      if (!res.ok || !data.leadId) {
+        // Fail closed: we MUST capture name+email (a reachable lead) before chat.
+        // Don't unlock anonymously — show a quick retry instead.
+        setChatUnlockError('Could not start chat — please check your email and try again.')
+        return
       }
+      // Tie every subsequent chat message to this lead (the URL leadId is often
+      // empty for direct/FB visitors), so the team can always reach back out.
+      setChatLeadId(data.leadId)
+      setChatUnlockError('')
       setChatUnlocked(true)
     } catch {
-      // Unlock anyway so the user can chat even if the API fails
-      setChatUnlocked(true)
+      setChatUnlockError('Could not start chat — please try again.')
     } finally {
       setChatUnlocking(false)
     }
@@ -629,6 +659,7 @@ function WebcastLiveContent() {
     chatEmail,
     onEmailChange: setChatEmail,
     onUnlock: handleUnlockChat,
+    chatUnlockError,
     joinFormOpen,
     onToggleJoinForm: () => setJoinFormOpen(true),
     chatContainerRef,

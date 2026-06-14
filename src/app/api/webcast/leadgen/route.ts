@@ -110,7 +110,8 @@ async function sendEnrollmentFailureAlert(
       <p style="margin:0 0 4px"><strong>Phone:</strong> ${phone || '—'}</p>
       <p style="margin:8px 0 0;font-size:12px;color:#64748b">Clerk account + magic link were sent, but the lead row / drip / notice step failed: ${errorMsg}</p>
     </div></div>`
-  for (const to of ['xscore10@protonmail.com', 'support@usforeclosureleads.com']) {
+  // support@ only — Hostinger forward mirrors a single copy to xscore10.
+  for (const to of ['support@usforeclosureleads.com']) {
     await fetch(RELAY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-USFR-Relay-Token': RELAY_TOKEN },

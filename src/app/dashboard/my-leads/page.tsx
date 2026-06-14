@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { useUser } from "@clerk/nextjs"
 import { usePin } from "@/lib/pin-context"
+import { UPGRADE_URL } from "@/lib/upgrade"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -1593,13 +1594,13 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
             </div>
             <h3 className="text-lg font-bold mb-3 text-white">Please upgrade to unlock leads</h3>
             <p className="text-sm text-slate-300 mb-5 leading-relaxed">
-              Lead delivery isn&apos;t included on your <strong className="text-white">Free tier</strong>. Head to <strong className="text-white">My Account</strong> to view your upgrade options.
+              Lead delivery isn&apos;t included on your <strong className="text-white">Free tier</strong>. Become a certified <strong className="text-white">Asset Recovery Agent</strong> to unlock exclusive leads + outreach.
             </p>
             <button
-              onClick={() => { setShowBasicUpgradeModal(false); router.push("/dashboard/settings") }}
+              onClick={() => { setShowBasicUpgradeModal(false); window.open(UPGRADE_URL, "_blank", "noopener,noreferrer") }}
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 font-semibold shadow-md text-sm mb-3 w-full justify-center"
             >
-              Go to My Account now
+              Become an Asset Recovery Agent
             </button>
             <button
               onClick={() => setShowBasicUpgradeModal(false)}

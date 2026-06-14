@@ -13,6 +13,7 @@ import { usePin } from "@/lib/pin-context"
 import { PhoneUnlock } from "@/components/phone-unlock"
 import { DocumentUploader } from "@/components/document-uploader"
 import { CheckProofConsent } from "@/components/check-proof-consent"
+import { ComplianceDocs } from "@/components/compliance-docs"
 import { ReferralSection } from "@/components/dashboard/referral-section"
 import {
   User,
@@ -476,6 +477,17 @@ export default function SettingsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="rounded-lg border bg-muted/30 p-3">
+              <p className="mb-2 text-xs font-medium text-muted-foreground">
+                Example — a payout check marked for social proof:
+              </p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/hero-images/proof-2.png"
+                alt="Example payout disbursement check with privacy markers"
+                className="w-full max-w-md rounded-md border shadow-sm"
+              />
+            </div>
             <DocumentUploader folder="check-proof" accept="image/*" />
             <CheckProofConsent />
           </CardContent>
@@ -685,26 +697,7 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-medium">Compliance Documents</h4>
-              {[
-                { name: "TCPA Compliance Guide", date: "Updated Feb 2026" },
-                { name: "DNC Registry Guidelines", date: "Updated Jan 2026" },
-                { name: "State Telemarketing Laws", date: "Updated Feb 2026" },
-              ].map((doc, idx) => (
-                <a
-                  key={idx}
-                  href="#"
-                  className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted transition-colors"
-                >
-                  <div>
-                    <p className="font-medium text-sm">{doc.name}</p>
-                    <p className="text-xs text-muted-foreground">{doc.date}</p>
-                  </div>
-                  <ExternalLink className="h-4 w-4 text-muted-foreground" />
-                </a>
-              ))}
-            </div>
+            <ComplianceDocs />
 
             <div className="p-4 rounded-lg border border-yellow-500/50 bg-yellow-50 dark:bg-yellow-950">
               <div className="flex items-start gap-3">

@@ -14,6 +14,7 @@ import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, In
 import { CountyMap } from "@/components/county-map"
 import { useUser } from "@clerk/nextjs"
 import { supabase } from "@/lib/supabase"
+import { UPGRADE_URL } from "@/lib/upgrade"
 
 export default function StatesPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -391,7 +392,9 @@ export default function StatesPage() {
                 {!canViewData && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <a
-                      href="/dashboard/recovery-agent"
+                      href={UPGRADE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
                       className="flex items-center gap-1.5 text-xs font-semibold text-white bg-primary px-3 py-1.5 rounded-md shadow-lg hover:bg-primary/90 transition-colors"
                     >
@@ -511,7 +514,9 @@ export default function StatesPage() {
                   ) : (
                     /* Free: upgrade path */
                     <a
-                      href="/dashboard/recovery-agent"
+                      href={UPGRADE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs font-medium text-white bg-slate-600 px-3 py-1.5 rounded-md hover:bg-slate-500 transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
@@ -530,7 +535,9 @@ export default function StatesPage() {
                     {!canViewData && (
                       <div className="px-5 pt-4">
                         <a
-                          href="/dashboard/recovery-agent"
+                          href={UPGRADE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
                           className="flex items-center justify-center gap-2 text-sm font-semibold text-white bg-primary px-4 py-2.5 rounded-lg shadow hover:bg-primary/90 transition-colors"
                         >

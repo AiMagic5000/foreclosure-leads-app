@@ -13,8 +13,11 @@ const SMTP_PASS = (process.env.SMTP_SUPPORT_PASSWORD || "Thepassword#123").trim(
 const RELAY_USER = "info@tradelinejet.com"
 const RELAY_PASS = (process.env.SMTP_RELAY_PASSWORD || "Thepassword#123").trim()
 
+// Single admin recipient. xscore10@protonmail.com is reached via the Hostinger
+// forward on this mailbox (support@usforeclosureleads.com -> xscore10), so
+// listing xscore10 here too would double every notice. Route through support@
+// only; the forward delivers exactly one copy to xscore10.
 const ADMIN_EMAILS = [
-  "xscore10@protonmail.com",
   "support@usforeclosureleads.com",
 ]
 

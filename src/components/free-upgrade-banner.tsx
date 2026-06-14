@@ -2,6 +2,7 @@
 
 import { usePin } from "@/lib/pin-context"
 import { Crown, ArrowUpRight } from "lucide-react"
+import { UPGRADE_URL } from "@/lib/upgrade"
 
 // Upsell bar pinned to the top of every dashboard page (above the section video).
 // Shown to every tier EXCEPT full Owner Operators, who already bought the top
@@ -24,7 +25,9 @@ export function FreeUpgradeBanner() {
         </div>
         <div className="flex flex-none flex-col gap-2 sm:flex-row">
           <a
-            href="/dashboard/recovery-agent"
+            href={UPGRADE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
           >
             Become an Agent &mdash; $331 <ArrowUpRight className="h-4 w-4" />
