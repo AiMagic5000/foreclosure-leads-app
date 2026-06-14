@@ -40,7 +40,7 @@ export function PaymentMethodsNote({ compact = false }: { compact?: boolean }) {
           <span style={{ color: '#2563eb' }}>Guarantee</span>
         </span>{' '}
         <a
-          href="https://usforeclosureleads.com/#guarantee"
+          href="https://usforeclosureleads.com/arb-sections.html#guarantee"
           target="_blank"
           rel="noopener noreferrer"
           className="text-slate-500 underline underline-offset-2 hover:text-slate-700"

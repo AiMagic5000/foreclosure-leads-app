@@ -522,7 +522,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
         <header className={cn("relative sticky top-0 z-30 flex h-16 items-center gap-4 border-b px-4 lg:px-6", cardBg, borderColor)}>
           {/* Center: red/white/blue money-back guarantee (desktop only) */}
           <a
-            href="https://usforeclosureleads.com/#guarantee"
+            href="https://usforeclosureleads.com/arb-sections.html#guarantee"
             target="_blank"
             rel="noopener noreferrer"
             title="Money Back Guarantee — see details"
