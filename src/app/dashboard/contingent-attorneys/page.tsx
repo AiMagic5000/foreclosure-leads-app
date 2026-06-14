@@ -14,20 +14,23 @@ export default function ContingentAttorneysPage() {
             Partner attorneys and trust tooling to receive and disburse recovered surplus funds.
           </p>
         </div>
-        <div className="flex items-start gap-3 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4 text-sm">
-          <Mail className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
-          <p className="text-blue-900 dark:text-blue-200">
+        <div className="flex items-start gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-sm dark:border-slate-700 dark:bg-slate-800">
+          <Mail className="mt-0.5 h-5 w-5 shrink-0 text-blue-600 dark:text-blue-400" />
+          <p className="text-slate-800 dark:text-slate-100">
             Once you sign up for{" "}
             <a
               href="https://www.mytrustsoftware.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold underline underline-offset-2"
+              className="font-semibold text-blue-700 underline underline-offset-2 dark:text-blue-300"
             >
               My Trust Software
             </a>
             , email{" "}
-            <a href="mailto:trusts@mytrustsoftware.com?subject=Att%20Net" className="font-semibold underline underline-offset-2">
+            <a
+              href="mailto:trusts@mytrustsoftware.com?subject=Att%20Net"
+              className="font-semibold text-blue-700 underline underline-offset-2 dark:text-blue-300"
+            >
               trusts@mytrustsoftware.com
             </a>{" "}
             with the subject line <strong>&ldquo;Att Net&rdquo;</strong>. We&apos;ll set up a My Trust
