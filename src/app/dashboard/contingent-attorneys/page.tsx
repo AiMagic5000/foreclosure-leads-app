@@ -35,9 +35,18 @@ export default function ContingentAttorneysPage() {
             </a>{" "}
             with the subject line <strong>&ldquo;Att Net&rdquo;</strong>. We&apos;ll set up a My Trust
             Software business email in your name so you can do outreach to the attorneys in our
-            network for the jurisdictions you&apos;re working.
+            network for the jurisdictions you&apos;re working.{" "}
+            <strong>You must be a registered Asset Recovery Agent with us to access the network.</strong>
           </p>
         </div>
+        <a
+          href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#dc2626] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#b91c1c]"
+        >
+          Become a Registered Asset Recovery Agent <ExternalLink className="h-4 w-4" />
+        </a>
       </div>
 
       {/* My Trust Software blocks third-party embedding, so we show a live preview
