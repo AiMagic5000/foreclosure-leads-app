@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, Fragment } from "react"
 import { Inbox, RefreshCw, Loader2, Search, UserCheck, CheckSquare, Square, ChevronDown, ChevronRight, AlertTriangle, X } from "lucide-react"
+import { leadEconomics, fmtUsd } from "@/lib/lead-economics"
 
 interface Lead {
   id: string
@@ -254,14 +255,17 @@ export default function FreshLeadsPage() {
               <th className="p-2 w-10"><button onClick={toggleAll}>{allSelected ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4" />}</button></th>
               <th className="p-2 text-left">Owner</th><th className="p-2 text-left">Property</th>
               <th className="p-2 text-left">State</th><th className="p-2 text-left">County</th>
-              <th className="p-2 text-right">Surplus</th><th className="p-2 text-left">Phone</th><th className="p-2 text-left">Source</th>
+              <th className="p-2 text-right">Surplus</th>
+              <th className="p-2 text-left">Max fee</th>
+              <th className="p-2 text-right">Agent cut (50%)</th>
+              <th className="p-2 text-left">Phone</th><th className="p-2 text-left">Source</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={9} className="p-8 text-center text-gray-400"><Loader2 className="w-5 h-5 animate-spin inline" /> Loading…</td></tr>
+              <tr><td colSpan={11} className="p-8 text-center text-gray-400"><Loader2 className="w-5 h-5 animate-spin inline" /> Loading…</td></tr>
             ) : visibleLeads.length === 0 ? (
-              <tr><td colSpan={9} className="p-8 text-center text-gray-400">No leads{state !== "ALL" ? ` in ${state}` : ""}{contactFilter !== "all" ? ` with ${contactFilter === "both" ? "phone + email" : contactFilter}` : ""}. (Only contactable, $5k+, DNC-aware, deed-checked leads appear here.)</td></tr>
+              <tr><td colSpan={11} className="p-8 text-center text-gray-400">No leads{state !== "ALL" ? ` in ${state}` : ""}{contactFilter !== "all" ? ` with ${contactFilter === "both" ? "phone + email" : contactFilter}` : ""}. (Only contactable, $5k+, DNC-aware, deed-checked leads appear here.)</td></tr>
             ) : visibleLeads.map((l) => (
               <Fragment key={l.id}>
                 <tr className={`border-t ${selected.has(l.id) ? "bg-emerald-50" : "hover:bg-gray-50"}`}>
@@ -272,12 +276,16 @@ export default function FreshLeadsPage() {
                   <td className="p-2">{l.state_abbr || "—"}</td>
                   <td className="p-2">{l.county || l.surplus_county || "—"}</td>
                   <td className="p-2 text-right font-semibold text-emerald-700">{money(l.overage_amount)}</td>
+                  {(() => { const e = leadEconomics(l.overage_amount, l.state_abbr); return (<>
+                    <td className="p-2 text-xs">{e.restricted ? <span className="text-red-600 font-medium">restricted</span> : e.capLabel}</td>
+                    <td className="p-2 text-right font-bold text-blue-700">{e.agentCut != null ? fmtUsd(e.agentCut) : "—"}</td>
+                  </>) })()}
                   <td className="p-2">{l.primary_phone || "—"}</td>
                   <td className="p-2 text-xs text-gray-500">{l.source || "—"}</td>
                 </tr>
                 {expanded.has(l.id) && (
                   <tr className="bg-slate-50 border-t">
-                    <td colSpan={9} className="p-4">
+                    <td colSpan={11} className="p-4">
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3">
                         {field("Owner", l.owner_name)}{field("Property address", l.property_address)}
                         {field("Mailing address", l.mailing_address)}{field("City", l.city)}
@@ -285,6 +293,11 @@ export default function FreshLeadsPage() {
                         {field("County", l.county)}{field("Surplus county", l.surplus_county)}
                         {field("Parcel / APN", l.parcel_id || l.apn_number)}{field("Case #", l.case_number)}
                         {field("Surplus / overage", money(l.overage_amount))}{field("Sale amount", money(l.sale_amount))}
+                        {(() => { const e = leadEconomics(l.overage_amount, l.state_abbr); return (<>
+                          {field("Max claimant fee", e.restricted ? "restricted state" : e.capLabel + (e.note ? ` — ${e.note}` : ""))}
+                          {field("Firm cut (≤40%)", e.firmCut != null ? fmtUsd(e.firmCut) : "needs surplus $")}
+                          {field("Agent cut (50/50)", e.agentCut != null ? fmtUsd(e.agentCut) : "needs surplus $")}
+                        </>) })()}
                         {field("Mortgage amount", money(l.mortgage_amount))}{field("Sale date", l.sale_date)}
                         {field("Lender", l.lender_name)}{field("Foreclosure type", l.foreclosure_type)}
                         {field("Primary phone", l.primary_phone)}{field("Secondary phone", l.secondary_phone)}
