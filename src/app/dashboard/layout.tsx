@@ -99,6 +99,7 @@ const navSections: NavSection[] = [
       { name: "Contract Admin", href: "/dashboard/contract-admin", icon: ClipboardList, badge: { text: "5%", color: "purple" } },
       { name: "Automation", href: "/dashboard/automation", icon: Zap, badge: { text: "Add-on", color: "blue" } },
       { name: "Tax Deeds", href: "/dashboard/tax-deeds", icon: Landmark, badge: { text: "New", color: "emerald" } },
+      { name: "Contingent Attorneys Network", href: "/dashboard/contingent-attorneys", icon: Scale, badge: { text: "New", color: "violet" } },
     ],
   },
   {
