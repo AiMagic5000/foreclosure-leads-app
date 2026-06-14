@@ -70,6 +70,22 @@ function timeAgo(dateStr: string): string {
   return `${days}d ago`
 }
 
+// Judicial foreclosure states (court process) — badge BLUE; everything else
+// is non-judicial — badge RED. Matches the county map legend.
+const JUDICIAL_STATES = new Set([
+  "CT", "DE", "FL", "HI", "IL", "IN", "IA", "KS", "KY", "LA",
+  "ME", "MD", "MA", "NE", "NJ", "NM", "NY", "ND", "OH", "OK",
+  "PA", "SC", "SD", "VT", "WI",
+])
+const isJudicial = (st: string) => JUDICIAL_STATES.has((st || "").toUpperCase())
+
+// First name shown, everything after it blurred (privacy for the free feed).
+function splitName(full: string): { first: string; rest: string } {
+  const parts = (full || "").trim().split(/\s+/)
+  if (parts.length <= 1) return { first: parts[0] || "Lead", rest: "" }
+  return { first: parts[0], rest: parts.slice(1).join(" ") }
+}
+
 export default function DashboardPage() {
   const { theme } = useTheme()
   const isDark = theme === "dark"
@@ -149,12 +165,12 @@ export default function DashboardPage() {
           .slice(0, 7)
         setTopStates(sorted)
 
-        // Fetch recent leads (latest 8)
+        // Fetch recent leads (latest 10) for the live feed
         const { data: recent } = await supabase
           .from("foreclosure_leads")
           .select("id,owner_name,property_address,city,state_abbr,sale_amount,status,scraped_at,primary_phone")
           .order("created_at", { ascending: false })
-          .limit(8) as { data: Record<string, unknown>[] | null; error: unknown }
+          .limit(10) as { data: Record<string, unknown>[] | null; error: unknown }
 
         if (recent) {
           setRecentLeads(recent.map(r => ({
@@ -321,60 +337,79 @@ export default function DashboardPage() {
               <CardTitle>Recent Leads</CardTitle>
               <CardDescription>Latest foreclosure leads added to the database</CardDescription>
             </div>
-            <Link href="/dashboard/leads">
-              <Button variant="ghost" size="sm">
+            <Link href="/dashboard/my-leads">
+              <Button size="sm" className="bg-[#1E3A5F] text-white hover:bg-[#2d4a6f]">
                 View all
+                <ArrowUpRight className="ml-1.5 h-4 w-4" />
               </Button>
             </Link>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {recentLeads.length === 0 && (
-                <p className="text-sm text-muted-foreground text-center py-4">No leads found.</p>
-              )}
-              {recentLeads.map((lead) => (
-                <div
-                  key={lead.id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
-                >
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium truncate">{lead.ownerName}</span>
-                      <Badge variant="outline" className="text-xs shrink-0">
-                        {lead.state}
-                      </Badge>
-                      {lead.primaryPhone && (
-                        <Phone className="h-3 w-3 text-emerald-500 shrink-0" />
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin className="h-3 w-3 flex-shrink-0" />
-                      <span className="truncate">{lead.address}{lead.city ? `, ${lead.city}` : ""}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 ml-4">
-                    <div className="text-right hidden sm:block">
-                      {lead.saleAmount > 0 && (
-                        <div className="font-medium">
-                          ${lead.saleAmount.toLocaleString()}
+            {recentLeads.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-4">No leads found.</p>
+            ) : (
+              <div className="relative h-[400px] overflow-hidden group">
+                {/* keyframes for the vertical live-feed scroll */}
+                <style>{`@keyframes leadfeed { from { transform: translateY(0); } to { transform: translateY(-50%); } }`}</style>
+                {/* fade top/bottom edges */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-8 bg-gradient-to-b from-background to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-background to-transparent" />
+                <div className="flex flex-col gap-3 animate-[leadfeed_32s_linear_infinite] group-hover:[animation-play-state:paused]">
+                  {[...recentLeads, ...recentLeads].map((lead, idx) => {
+                    const { first, rest } = splitName(lead.ownerName)
+                    const judicial = isJudicial(lead.state)
+                    return (
+                      <div
+                        key={`${lead.id}-${idx}`}
+                        className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-medium truncate">
+                              {first}{" "}
+                              {rest && <span className="blur-[5px] select-none">{rest}</span>}
+                            </span>
+                            <Badge
+                              title={`${judicial ? "Judicial" : "Non-judicial"} state`}
+                              className={`text-xs shrink-0 cursor-help text-white ${
+                                judicial ? "bg-blue-600 hover:bg-blue-600" : "bg-red-600 hover:bg-red-600"
+                              }`}
+                            >
+                              {lead.state}
+                            </Badge>
+                            {lead.primaryPhone && (
+                              <Phone className="h-3 w-3 text-emerald-500 shrink-0" />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <MapPin className="h-3 w-3 flex-shrink-0" />
+                            <span className="truncate">
+                              {lead.address}
+                              {lead.city && (
+                                <>
+                                  , <span className="blur-[5px] select-none">{lead.city}</span>
+                                </>
+                              )}
+                            </span>
+                          </div>
                         </div>
-                      )}
-                      {lead.scrapedAt && (
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          {timeAgo(lead.scrapedAt)}
+                        <div className="flex items-center gap-3 ml-4">
+                          {lead.scrapedAt && (
+                            <div className="hidden sm:flex items-center gap-1 text-xs text-muted-foreground">
+                              <Clock className="h-3 w-3" />
+                              {timeAgo(lead.scrapedAt)}
+                            </div>
+                          )}
+                          <Badge className={statusColors[lead.status] || statusColors.new}>
+                            {lead.status.replaceAll("_", " ")}
+                          </Badge>
                         </div>
-                      )}
-                    </div>
-                    <Badge
-                      className={statusColors[lead.status] || statusColors.new}
-                    >
-                      {lead.status.replaceAll("_", " ")}
-                    </Badge>
-                  </div>
+                      </div>
+                    )
+                  })}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
