@@ -106,7 +106,6 @@ export default function DashboardPage() {
         const withEmail = leads.filter(l => l.primary_email && String(l.primary_email).trim() !== "").length
         const newLeads = leads.filter(l => l.status === "new").length
         const failed = leads.filter(l => l.status === "failed").length
-        const dncCleared = leads.filter(l => l.can_contact === true && l.dnc_checked === true && l.on_dnc === false).length
         // Real rates (ratios hold even if the fetch is a large sample).
         const hasContact = (l: Record<string, unknown>) =>
           (l.primary_phone && String(l.primary_phone).trim() !== "") || (l.primary_email && String(l.primary_email).trim() !== "")
@@ -115,9 +114,13 @@ export default function DashboardPage() {
         // (denominator = traced leads, not the raw county backlog that was never traced).
         const traced = leads.filter(l => l.skip_traced_at != null).length
         const tracedContact = leads.filter(l => l.skip_traced_at != null && hasContact(l)).length
-        const dncCheckedPhone = leads.filter(l => l.dnc_checked === true && l.primary_phone && String(l.primary_phone).trim() !== "").length
         const enrichmentPct = traced > 0 ? Math.round((tracedContact / traced) * 100) : 0
-        const dncCleanPct = dncCheckedPhone > 0 ? Math.round((dncCleared / dncCheckedPhone) * 100) : 0
+        // Ready to contact = leads with a phone/email that are NOT on the DNC list.
+        // (The actual dial/SMS gate still requires dnc_checked=true — enforced in
+        // the outreach paths, not here. This card reflects reachable inventory.)
+        const contactable = leads.filter(hasContact).length
+        const dncCleared = leads.filter(l => hasContact(l) && l.on_dnc !== true).length
+        const dncCleanPct = contactable > 0 ? Math.round((dncCleared / contactable) * 100) : 0
 
         setStats({
           totalLeads: total,

@@ -22,14 +22,13 @@ export default function StatesPage() {
   const [stateLeadCounts, setStateLeadCounts] = useState<Record<string, number>>({})
   const [foiaContacts, setFoiaContacts] = useState<any[]>([])
   const [subscriptionTier, setSubscriptionTier] = useState<string>("free")
-  const [previewFree, setPreviewFree] = useState(false)
+  // Admin defaults to the free (blurred) view agents see; can reveal real data.
+  const [adminShowData, setAdminShowData] = useState(false)
   const { theme } = useTheme()
   const isDark = theme === "dark"
-  const { isSignedIn, user } = useUser()
+  const { user } = useUser()
   const email = user?.primaryEmailAddress?.emailAddress || ""
   const isAdmin = email === "coreypearsonemail@gmail.com"
-  const isPaid = isSignedIn === true
-  const isOwnerOperator = isAdmin || subscriptionTier === "owner_operator"
 
   useEffect(() => {
     async function fetchSubscriptionTier() {
@@ -46,13 +45,6 @@ export default function StatesPage() {
       }
     }
     fetchSubscriptionTier()
-  }, [])
-
-  // ?preview=free lets an admin/paid user see the exact free/blurred experience.
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setPreviewFree(new URLSearchParams(window.location.search).get("preview") === "free")
-    }
   }, [])
 
   useEffect(() => {
@@ -118,11 +110,14 @@ export default function StatesPage() {
   }
   // Free (signed-in but not a paid recovery agent) sees blurred statute/source
   // data + an upgrade prompt. Paid tiers + admin see the real data.
-  const FREE_TIERS = new Set(["free", "basic", "free_webcast", ""])
-  const canViewData = !previewFree && (isAdmin || !FREE_TIERS.has(subscriptionTier))
-  // Preview-aware tier flags (so "Preview as free" also flips the CTAs).
-  const effIsPaid = isPaid && !previewFree
-  const effIsOwnerOperator = isOwnerOperator && !previewFree
+  // Only real paid recovery agents see unblurred data. Admin defaults to the
+  // free (blurred) experience here — matching the dashboard map — and can click
+  // "Show real data" for operational access. Free users always see the blur.
+  const PAID_TIERS = new Set(["owner_operator", "junior_owner_operator", "partnership"])
+  const isRealPaidAgent = !isAdmin && PAID_TIERS.has(subscriptionTier)
+  const isRealOwnerOperator = !isAdmin && subscriptionTier === "owner_operator"
+  const canViewData = isRealPaidAgent || (isAdmin && adminShowData)
+  const showInventory = isRealOwnerOperator || (isAdmin && adminShowData)
 
   return (
     <div className="space-y-6">
@@ -133,25 +128,25 @@ export default function StatesPage() {
             Detailed foreclosure statutes and regulations for all 50 states
           </p>
         </div>
-        {(isAdmin || isOwnerOperator) && (
+        {isAdmin && (
           <button
-            onClick={() => setPreviewFree((v) => !v)}
-            title="See exactly what free users see (blurred data + upgrade prompts)"
+            onClick={() => setAdminShowData((v) => !v)}
+            title="Toggle between the free (blurred) view agents see and the real data"
             className={`shrink-0 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md border transition-colors ${
-              previewFree
-                ? "bg-amber-500 text-white border-amber-500 hover:bg-amber-600"
-                : "hover:bg-muted"
+              adminShowData
+                ? "hover:bg-muted"
+                : "bg-amber-500 text-white border-amber-500 hover:bg-amber-600"
             }`}
           >
-            {previewFree ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
-            {previewFree ? "Exit free preview" : "Preview as free user"}
+            {adminShowData ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+            {adminShowData ? "Free view (agent preview)" : "Show real data"}
           </button>
         )}
       </div>
-      {previewFree && (
+      {isAdmin && !adminShowData && (
         <div className="flex items-center gap-2 text-sm rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-amber-700 dark:text-amber-400">
           <Eye className="h-4 w-4 shrink-0" />
-          Free-user preview: statutes, contacts &amp; counts are blurred. This is what non-agents see.
+          You&apos;re viewing the free agent experience — statutes, contacts &amp; counts are blurred. Click &quot;Show real data&quot; to reveal.
         </div>
       )}
 
@@ -241,7 +236,7 @@ export default function StatesPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <CountyMap isDark={isDark} isOwnerOperator={!previewFree && isOwnerOperator} />
+          <CountyMap isDark={isDark} isOwnerOperator={canViewData} />
         </CardContent>
       </Card>
 
@@ -493,7 +488,7 @@ export default function StatesPage() {
                     <TrendingUp className="h-4 w-4 text-primary" />
                     <span className="text-sm font-semibold">{(stateLeadCounts[selectedState] || 0).toLocaleString()} Vetted Leads Available</span>
                   </div>
-                  {effIsOwnerOperator ? (
+                  {showInventory ? (
                     /* Owner operators: full state-wide inventory */
                     <a
                       href={`/dashboard/leads?state=${selectedState}`}
@@ -503,7 +498,7 @@ export default function StatesPage() {
                       View Inventory
                       <ExternalLink className="h-3 w-3" />
                     </a>
-                  ) : effIsPaid ? (
+                  ) : isRealPaidAgent ? (
                     /* Paid agents: their own assigned leads, not the inventory */
                     <a
                       href="/dashboard/my-leads"
@@ -850,22 +845,22 @@ export default function StatesPage() {
                     {stateInfo.sources.length > 0 && (
                       <div className="pt-4 border-t relative">
                         <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">Data Sources</p>
-                        <div className={`flex flex-wrap gap-2 ${!isPaid ? "select-none" : ""}`} style={!isPaid ? { filter: "blur(4px)" } : undefined}>
+                        <div className={`flex flex-wrap gap-2 ${!canViewData ? "select-none" : ""}`} style={!canViewData ? { filter: "blur(4px)" } : undefined}>
                           {stateInfo.sources.map((source, idx) => (
                             <a
                               key={idx}
-                              href={isPaid ? source.url : "#"}
-                              target={isPaid ? "_blank" : undefined}
+                              href={canViewData ? source.url : "#"}
+                              target={canViewData ? "_blank" : undefined}
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 text-xs text-primary hover:underline bg-primary/5 px-2 py-1 rounded"
-                              onClick={isPaid ? undefined : (e) => e.preventDefault()}
+                              onClick={canViewData ? undefined : (e) => e.preventDefault()}
                             >
                               {source.name}
                               <ExternalLink className="h-3 w-3" />
                             </a>
                           ))}
                         </div>
-                        {!isPaid && (
+                        {!canViewData && (
                           <div className="absolute inset-0 flex items-center justify-center pt-4">
                             <div className="flex items-center gap-1 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded">
                               <Lock className="h-3 w-3" />
