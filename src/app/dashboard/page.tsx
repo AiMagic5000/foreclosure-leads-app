@@ -386,30 +386,40 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {topStates.map((state, i) => (
-                <div key={state.state} className="flex items-center gap-4">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-medium shrink-0">
-                    {i + 1}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">{STATE_NAMES[state.state] || state.state}</span>
-                      <span className="text-sm text-muted-foreground">
-                        {state.count.toLocaleString()}
-                      </span>
+              {topStates.map((state, i) => {
+                const judicial = isJudicial(state.state)
+                const color = judicial ? '#2563eb' : '#dc2626'
+                return (
+                  <div key={state.state} className="flex items-center gap-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-medium shrink-0">
+                      {i + 1}
                     </div>
-                    <div className="mt-1 h-2 rounded-full bg-muted overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${(state.count / maxStateCount) * 100}%`,
-                          backgroundColor: '#1E3A5F',
-                        }}
-                      />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span
+                          className="font-medium flex items-center gap-1.5 cursor-help"
+                          title={`${judicial ? 'Judicial' : 'Non-judicial'} state`}
+                        >
+                          <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                          {STATE_NAMES[state.state] || state.state}
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          {state.count.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="mt-1 h-2 rounded-full bg-muted overflow-hidden">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: `${(state.count / maxStateCount) * 100}%`,
+                            backgroundColor: color,
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </CardContent>
         </Card>
