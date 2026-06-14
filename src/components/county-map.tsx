@@ -115,6 +115,9 @@ export function CountyMap({
 }: CountyMapProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCounty, setSelectedCounty] = useState<CountyData | null>(null);
+  // Where the user clicked (relative to the map container) so the detail popup
+  // renders at the cursor instead of fixed at the bottom of the map.
+  const [clickPos, setClickPos] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
   const [leadData, setLeadData] = useState<Record<string, number>>({});
   const [position, setPosition] = useState({ coordinates: [-96, 38] as [number, number], zoom: 1 });
   const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
@@ -222,7 +225,10 @@ export function CountyMap({
     return isJudicial ? theme.judicialBase : theme.nonJudicialBase;
   };
 
-  const handleCountyClick = (geo: { id: string; properties?: { name?: string } }) => {
+  const handleCountyClick = (
+    geo: { id: string; properties?: { name?: string } },
+    e?: { clientX: number; clientY: number },
+  ) => {
     const fips = geo.id;
     const stateFips = fips?.toString().slice(0, 2);
     const stateCode = STATE_FIPS_TO_CODE[stateFips];
@@ -236,6 +242,16 @@ export function CountyMap({
     };
 
     setSelectedCounty(countyData);
+    // Anchor the popup to the click point RELATIVE TO THE ROOT (the popup's
+    // offsetParent), so it appears at the clicked county on every viewport
+    // instead of flying to the top-left.
+    if (e && typeof window !== "undefined") {
+      // VIEWPORT coords + position:fixed popup -> never clipped by any ancestor
+      // overflow, shows right at the clicked county on every viewport.
+      setClickPos({ x: e.clientX, y: e.clientY, w: window.innerWidth, h: window.innerHeight });
+    } else {
+      setClickPos(null);
+    }
     onCountyClick?.(countyData);
   };
 
@@ -272,7 +288,7 @@ export function CountyMap({
 
   return (
     <div
-      className="rounded-xl overflow-hidden"
+      className="relative rounded-xl overflow-hidden"
       style={{ backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}
     >
       {/* Header */}
@@ -367,7 +383,7 @@ export function CountyMap({
                         setHoveredCountyName(null);
                         setHoveredCountyPos(null);
                       }}
-                      onClick={() => handleCountyClick(geo)}
+                      onClick={(e: { clientX: number; clientY: number }) => handleCountyClick(geo, e)}
                       style={{
                         default: {
                           fill: getCountyColor(geo),
@@ -553,13 +569,37 @@ export function CountyMap({
       {selectedCounty && (() => {
         const contact = findCountyContact(selectedCounty.state, selectedCounty.name);
         const courtInfo = findCountyCourtInfo(selectedCounty.state, selectedCounty.name);
-        return (
-          <div
-            className="absolute bottom-20 left-1/2 transform -translate-x-1/2 rounded-xl p-4 shadow-xl max-w-sm w-full mx-4 z-10"
-            style={{
+        // Position the popup at the click point. Clamp horizontally so it stays
+        // inside the map, and open it upward when the click is in the lower half
+        // (so it never runs off the bottom), downward otherwise.
+        const POPUP_W = 320;
+        const half = POPUP_W / 2 + 8;
+        const anchored = !!clickPos;
+        // Clamp to the viewport so the popup is always fully visible.
+        const left = clickPos ? Math.max(half, Math.min(clickPos.x, clickPos.w - half)) : 0;
+        const openUp = clickPos ? clickPos.y > clickPos.h * 0.4 : true;
+        const popupStyle: React.CSSProperties = anchored
+          ? {
               backgroundColor: theme.bg,
               border: `2px solid ${theme.accent}`,
-            }}
+              position: 'fixed',
+              left,
+              top: clickPos!.y,
+              width: POPUP_W,
+              maxWidth: 'calc(100vw - 16px)',
+              maxHeight: '70vh',
+              overflowY: 'auto',
+              transform: openUp ? 'translate(-50%, calc(-100% - 14px))' : 'translate(-50%, 14px)',
+            }
+          : { backgroundColor: theme.bg, border: `2px solid ${theme.accent}` };
+        return (
+          <div
+            className={
+              anchored
+                ? 'rounded-xl p-4 shadow-2xl z-50'
+                : 'absolute bottom-20 left-1/2 transform -translate-x-1/2 rounded-xl p-4 shadow-xl max-w-sm w-full mx-4 z-10'
+            }
+            style={popupStyle}
           >
             <button
               onClick={() => setSelectedCounty(null)}
@@ -589,12 +629,18 @@ export function CountyMap({
             <div className="mt-3 pt-3 border-t" style={{ borderColor: theme.border }}>
               <div className="flex justify-between items-center">
                 <span className="text-sm" style={{ color: theme.textSecondary }}>Available Leads</span>
-                <span
-                  className="text-lg font-bold"
-                  style={{ color: selectedCounty.leadCount > 0 ? '#22c55e' : theme.textSecondary }}
-                >
-                  {selectedCounty.leadCount.toLocaleString()}
-                </span>
+                {isOwnerOperator ? (
+                  <span
+                    className="text-lg font-bold"
+                    style={{ color: selectedCounty.leadCount > 0 ? '#22c55e' : theme.textSecondary }}
+                  >
+                    {selectedCounty.leadCount.toLocaleString()}
+                  </span>
+                ) : (
+                  <a href="/dashboard/recovery-agent" className="text-sm font-bold hover:underline" style={{ color: theme.accent }}>
+                    Upgrade to access →
+                  </a>
+                )}
               </div>
               <div className="flex justify-between items-center mt-1">
                 <span className="text-sm" style={{ color: theme.textSecondary }}>Foreclosure Type</span>
@@ -690,15 +736,13 @@ export function CountyMap({
                       <ShieldAlert size={20} style={{ color: isDark ? '#fbbf24' : '#b45309' }} />
                     </div>
                     <p style={{ fontSize: '13px', fontWeight: 700, color: isDark ? '#fbbf24' : '#92400e', margin: '0 0 4px' }}>
-                      Owner Operator Access Only
+                      Asset Recovery Agents Only
                     </p>
                     <p style={{ fontSize: '11px', color: isDark ? '#a8a29e' : '#78716c', lineHeight: 1.4, margin: '0 0 10px' }}>
-                      Full county contact data, court filing links, and e-filing access is exclusive to Senior Asset Recovery Agents with a $5,000 Owner Operator investment.
+                      County lead counts, contact data, court filing links, and e-filing access are available to Asset Recovery Agents. Upgrade to download county leads.
                     </p>
                     <a
-                      href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href="/dashboard/recovery-agent"
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
@@ -713,7 +757,7 @@ export function CountyMap({
                       }}
                     >
                       <Lock size={12} />
-                      Become an Owner Operator
+                      Become an Asset Recovery Agent
                     </a>
                   </div>
                 </div>

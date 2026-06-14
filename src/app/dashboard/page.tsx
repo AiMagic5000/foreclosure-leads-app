@@ -79,19 +79,25 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchDashboardData() {
       try {
-        // Fetch all leads with minimal columns for stats
+        // Exact total via COUNT (not subject to row-limit caps) so it reflects
+        // the real number of leads in the system, not a fetch ceiling.
+        const { count: exactTotal } = await supabase
+          .from("foreclosure_leads")
+          .select("*", { count: "exact", head: true }) as { count: number | null }
+
+        // Fetch leads (minimal columns) for the breakdown stats + top states.
         const { data: leads, error } = await supabase
           .from("foreclosure_leads")
           .select("id,status,primary_phone,primary_email,state_abbr,can_contact,dnc_checked,on_dnc")
-          .limit(15000) as { data: Record<string, unknown>[] | null; error: unknown }
+          .limit(100000) as { data: Record<string, unknown>[] | null; error: unknown }
 
         if (error || !leads) {
           setLoading(false)
           return
         }
 
-        // Calculate stats
-        const total = leads.length
+        // Calculate stats — real total from the count, fall back to fetched length.
+        const total = exactTotal ?? leads.length
         const skipTraced = leads.filter(l => l.status === "skip_traced").length
         const withPhone = leads.filter(l => l.primary_phone && String(l.primary_phone).trim() !== "").length
         const withEmail = leads.filter(l => l.primary_email && String(l.primary_email).trim() !== "").length
