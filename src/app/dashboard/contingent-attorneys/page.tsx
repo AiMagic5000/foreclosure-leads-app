@@ -14,30 +14,47 @@ export default function ContingentAttorneysPage() {
             Partner attorneys and trust tooling to receive and disburse recovered surplus funds.
           </p>
         </div>
-        <div className="flex items-start gap-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-sm dark:border-slate-700 dark:bg-slate-800">
-          <Mail className="mt-0.5 h-5 w-5 shrink-0 text-blue-600 dark:text-blue-400" />
-          <p className="text-slate-800 dark:text-slate-100">
-            Once you sign up for{" "}
-            <a
-              href="https://www.mytrustsoftware.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-blue-700 underline underline-offset-2 dark:text-blue-300"
-            >
-              My Trust Software
-            </a>
-            , email{" "}
-            <a
-              href="mailto:trusts@mytrustsoftware.com?subject=Att%20Net"
-              className="font-semibold text-blue-700 underline underline-offset-2 dark:text-blue-300"
-            >
-              trusts@mytrustsoftware.com
-            </a>{" "}
-            with the subject line <strong>&ldquo;Att Net&rdquo;</strong>. We&apos;ll set up a My Trust
-            Software business email in your name for the jurisdictions you&apos;re working.{" "}
-            <strong>You must be a registered Asset Recovery Agent or Owner Operator with us to access the network.</strong>{" "}
-            Once you&apos;re registered, <strong>we take care of the attorneys for you</strong> &mdash; you
-            just get the contingency agreement signed, and we handle everything else.
+        <div className="space-y-3 rounded-lg border border-blue-300 bg-blue-50 p-4 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+          <div className="flex items-start gap-3">
+            <Mail className="mt-0.5 h-5 w-5 shrink-0 text-blue-600 dark:text-blue-400" />
+            <p>
+              <strong>Two ways to work with attorneys &mdash; depending on your level:</strong>
+            </p>
+          </div>
+          <div className="rounded-md border border-blue-200 bg-white/70 p-3 dark:border-slate-600 dark:bg-slate-900/40">
+            <p className="font-bold text-blue-800 dark:text-blue-300">1. Registered Asset Recovery Agent &mdash; we do the attorney part for you</p>
+            <p className="mt-1">
+              You don&apos;t talk to any attorneys. Just get the homeowner to sign the
+              contingency agreement. We find the right attorney for that state and handle
+              everything else for you.
+            </p>
+          </div>
+          <div className="rounded-md border border-blue-200 bg-white/70 p-3 dark:border-slate-600 dark:bg-slate-900/40">
+            <p className="font-bold text-blue-800 dark:text-blue-300">2. Owner Operator &mdash; you get your own keys to the attorney network</p>
+            <p className="mt-1">
+              You get direct access to the attorney network inside{" "}
+              <a
+                href="https://www.mytrustsoftware.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-blue-700 underline underline-offset-2 dark:text-blue-300"
+              >
+                My Trust Software
+              </a>
+              . Sign up, then email{" "}
+              <a
+                href="mailto:trusts@mytrustsoftware.com?subject=Att%20Net"
+                className="font-semibold text-blue-700 underline underline-offset-2 dark:text-blue-300"
+              >
+                trusts@mytrustsoftware.com
+              </a>{" "}
+              with the subject line <strong>&ldquo;Att Net&rdquo;</strong>. We&apos;ll make you a
+              My Trust Software business email in your name so you can reach attorneys yourself
+              in the states you work.
+            </p>
+          </div>
+          <p className="text-xs text-slate-600 dark:text-slate-300">
+            Either way, you must be registered with us first.
           </p>
         </div>
         <a
