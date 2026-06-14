@@ -23,7 +23,21 @@ export function FreeUpgradeBanner() {
           <h3 className="mt-1 text-lg font-bold text-[#0f172a]">Turn lead access into a real recovery business.</h3>
           <p className="mt-1 text-sm text-slate-600">Become a certified Asset Recovery Agent for $331, or go all the way with the full Owner Operator build-out.</p>
         </div>
-        <div className="flex flex-none flex-col gap-2 sm:flex-row">
+        <div className="flex flex-none flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            href="https://usforeclosureleads.com/arb-sections.html#guarantee"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Money Back Guarantee — see details"
+            className="flex flex-col items-center justify-center text-center sm:pr-1"
+          >
+            <span className="text-xs font-extrabold leading-tight">
+              <span style={{ color: "#1E3A5F" }}>Money </span>
+              <span style={{ color: "#dc2626" }}>Back </span>
+              <span style={{ color: "#2563eb" }}>Guarantee</span>
+            </span>
+            <span className="text-[10px] text-slate-500 underline">see details</span>
+          </a>
           <a
             href={UPGRADE_URL}
             target="_blank"
