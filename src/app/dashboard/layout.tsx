@@ -104,7 +104,7 @@ const navSections: NavSection[] = [
     label: "Business Suite",
     tier: "basic",
     items: [
-      { name: "Become Recovery Agent", href: "/dashboard/recovery-agent", icon: UserCheck, badge: { text: "Program", color: "blue" } },
+      { name: "Asset Recovery Agent", href: "/dashboard/recovery-agent", icon: UserCheck, badge: { text: "Program", color: "blue" } },
       { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
       { name: "Agent Onboarding", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
       { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Comp.", color: "emerald" } },

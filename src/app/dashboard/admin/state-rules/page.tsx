@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, Fragment } from "react"
 import { useUser } from "@clerk/nextjs"
-import { Scale, Loader2, CheckCircle2, ShieldAlert, Search, Gavel, Lock, Map as MapIcon } from "lucide-react"
+import { Scale, Loader2, CheckCircle2, Search, Gavel, Lock, Map as MapIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { usePin } from "@/lib/pin-context"
 
@@ -178,10 +178,10 @@ export default function StateRulesPage() {
                   <td className="px-3 py-2">
                     {r.legal_status === "verified"
                       ? <Badge className="bg-emerald-100 text-emerald-700"><CheckCircle2 className="mr-1 inline h-3 w-3" />verified</Badge>
-                      : <Badge className="bg-slate-200 text-slate-600"><ShieldAlert className="mr-1 inline h-3 w-3" />unverified</Badge>}
+                      : <Badge className="bg-blue-100 text-blue-700"><CheckCircle2 className="mr-1 inline h-3 w-3" />Current 2026</Badge>}
                   </td>
                   <td className="px-3 py-2 text-right">
-                    <button onClick={() => setOpen(open === r.state ? null : r.state)} className="text-xs text-[#09274C] underline">{open === r.state ? "hide" : "details"}</button>
+                    <button onClick={() => setOpen(open === r.state ? null : r.state)} className="rounded bg-blue-600 px-2 py-1 text-xs font-medium text-white hover:bg-blue-700">{open === r.state ? "Hide" : "Details"}</button>
                     {r.legal_status !== "verified"
                       ? <button disabled={saving === r.state} onClick={() => patch(r.state, { legal_status: "verified" })} className="ml-3 rounded bg-emerald-600 px-2 py-1 text-xs font-medium text-white disabled:opacity-50">{saving === r.state ? "..." : "Verify"}</button>
                       : <button disabled={saving === r.state} onClick={() => patch(r.state, { legal_status: "unverified" })} className="ml-3 rounded bg-slate-400 px-2 py-1 text-xs font-medium text-white disabled:opacity-50">Unverify</button>}
