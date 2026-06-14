@@ -79,6 +79,9 @@ export default function FreshLeadsPage() {
   const [requests, setRequests] = useState<LeadRequest[]>([])
   const [activeRequest, setActiveRequest] = useState<LeadRequest | null>(null)
   const [contactFilter, setContactFilter] = useState<"all" | "phone" | "email" | "both">("all")
+  const PAGE_SIZE = 50
+  const [page, setPage] = useState(1)
+  useEffect(() => { setPage(1) }, [state, contactFilter])
 
   const loadStates = useCallback(async () => {
     const r = await fetch("/api/admin/fresh-leads?states=1"); const j = await r.json()
@@ -133,8 +136,10 @@ export default function FreshLeadsPage() {
       (hasPhone(b) ? 1 : 0) - (hasPhone(a) ? 1 : 0))
   }, [leads, contactFilter])
 
-  const allSelected = visibleLeads.length > 0 && visibleLeads.every((l) => selected.has(l.id))
-  const toggleAll = () => setSelected(allSelected ? new Set() : new Set(visibleLeads.map((l) => l.id)))
+  const pageCount = Math.max(1, Math.ceil(visibleLeads.length / PAGE_SIZE))
+  const pageLeads = useMemo(() => visibleLeads.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE), [visibleLeads, page])
+  const allSelected = pageLeads.length > 0 && pageLeads.every((l) => selected.has(l.id))
+  const toggleAll = () => setSelected(allSelected ? new Set() : new Set(pageLeads.map((l) => l.id)))
   const toggle = (id: string) => setSelected((p) => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n })
   const toggleExpand = (id: string) => setExpanded((p) => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n })
 
@@ -269,7 +274,7 @@ export default function FreshLeadsPage() {
               <tr><td colSpan={10} className="p-8 text-center text-gray-400"><Loader2 className="w-5 h-5 animate-spin inline" /> Loading…</td></tr>
             ) : visibleLeads.length === 0 ? (
               <tr><td colSpan={10} className="p-8 text-center text-gray-400">No leads{state !== "ALL" ? ` in ${state}` : ""}{contactFilter !== "all" ? ` with ${contactFilter === "both" ? "phone + email" : contactFilter}` : ""}. (Only contactable, $5k+, DNC-aware, deed-checked leads appear here.)</td></tr>
-            ) : visibleLeads.map((l) => (
+            ) : pageLeads.map((l) => (
               <Fragment key={l.id}>
                 <tr className={`border-t ${selected.has(l.id) ? "bg-emerald-50" : "hover:bg-gray-50"}`}>
                   <td className="p-2 text-center"><button onClick={() => toggleExpand(l.id)}>{expanded.has(l.id) ? <ChevronDown className="w-4 h-4 text-gray-500" /> : <ChevronRight className="w-4 h-4 text-gray-400" />}</button></td>
@@ -319,6 +324,22 @@ export default function FreshLeadsPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination — 50 per page */}
+      {!loading && visibleLeads.length > 0 && (
+        <div className="flex items-center justify-between mt-3 text-sm">
+          <span className="text-gray-500">
+            Showing {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, visibleLeads.length)} of {visibleLeads.length.toLocaleString()}
+          </span>
+          <div className="flex items-center gap-1">
+            <button onClick={() => setPage(1)} disabled={page === 1} className="px-2 py-1 border rounded disabled:opacity-40 hover:bg-gray-50">« First</button>
+            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="px-2 py-1 border rounded disabled:opacity-40 hover:bg-gray-50">‹ Prev</button>
+            <span className="px-3 font-medium">Page {page} of {pageCount}</span>
+            <button onClick={() => setPage((p) => Math.min(pageCount, p + 1))} disabled={page >= pageCount} className="px-2 py-1 border rounded disabled:opacity-40 hover:bg-gray-50">Next ›</button>
+            <button onClick={() => setPage(pageCount)} disabled={page >= pageCount} className="px-2 py-1 border rounded disabled:opacity-40 hover:bg-gray-50">Last »</button>
+          </div>
+        </div>
+      )}
 
       {/* Confirm-before-transfer modal */}
       {showConfirm && agent && (
