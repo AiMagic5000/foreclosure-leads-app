@@ -12,6 +12,7 @@ import { IntegrationsSettings } from "@/components/integrations-settings"
 import { usePin } from "@/lib/pin-context"
 import { PhoneUnlock } from "@/components/phone-unlock"
 import { DocumentUploader } from "@/components/document-uploader"
+import { CheckProofConsent } from "@/components/check-proof-consent"
 import { ReferralSection } from "@/components/dashboard/referral-section"
 import {
   User,
@@ -458,6 +459,25 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent>
             <DocumentUploader folder="contingency-agreements" accept="image/*,video/*,application/pdf" />
+          </CardContent>
+        </Card>
+
+        {/* Payout Proof Checks — uploaded check images for social proof (consent-gated) */}
+        <Card className="lg:col-span-2 shadow-lg">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Camera className="h-5 w-5 text-muted-foreground" />
+              <CardTitle>Payout Proof Checks</CardTitle>
+            </div>
+            <CardDescription>
+              Got paid on a claimant case? Upload a clear photo of your <strong>disbursement check</strong>.
+              With your consent below, our team adds privacy markers (redacting names &amp; account
+              numbers) and may feature it on social media and marketing as proof of payout.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <DocumentUploader folder="check-proof" accept="image/*" />
+            <CheckProofConsent />
           </CardContent>
         </Card>
 
