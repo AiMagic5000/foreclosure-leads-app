@@ -258,14 +258,14 @@ export default function FreshLeadsPage() {
               <th className="p-2 text-right">Surplus</th>
               <th className="p-2 text-left">Max fee</th>
               <th className="p-2 text-right">Agent cut (50%)</th>
-              <th className="p-2 text-left">Phone</th><th className="p-2 text-left">Source</th>
+              <th className="p-2 text-left">Phone</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={11} className="p-8 text-center text-gray-400"><Loader2 className="w-5 h-5 animate-spin inline" /> Loading…</td></tr>
+              <tr><td colSpan={10} className="p-8 text-center text-gray-400"><Loader2 className="w-5 h-5 animate-spin inline" /> Loading…</td></tr>
             ) : visibleLeads.length === 0 ? (
-              <tr><td colSpan={11} className="p-8 text-center text-gray-400">No leads{state !== "ALL" ? ` in ${state}` : ""}{contactFilter !== "all" ? ` with ${contactFilter === "both" ? "phone + email" : contactFilter}` : ""}. (Only contactable, $5k+, DNC-aware, deed-checked leads appear here.)</td></tr>
+              <tr><td colSpan={10} className="p-8 text-center text-gray-400">No leads{state !== "ALL" ? ` in ${state}` : ""}{contactFilter !== "all" ? ` with ${contactFilter === "both" ? "phone + email" : contactFilter}` : ""}. (Only contactable, $5k+, DNC-aware, deed-checked leads appear here.)</td></tr>
             ) : visibleLeads.map((l) => (
               <Fragment key={l.id}>
                 <tr className={`border-t ${selected.has(l.id) ? "bg-emerald-50" : "hover:bg-gray-50"}`}>
@@ -281,11 +281,10 @@ export default function FreshLeadsPage() {
                     <td className="p-2 text-right font-bold text-blue-700">{e.agentCut != null ? fmtUsd(e.agentCut) : "—"}</td>
                   </>) })()}
                   <td className="p-2">{l.primary_phone || "—"}</td>
-                  <td className="p-2 text-xs text-gray-500">{l.source || "—"}</td>
                 </tr>
                 {expanded.has(l.id) && (
                   <tr className="bg-slate-50 border-t">
-                    <td colSpan={11} className="p-4">
+                    <td colSpan={10} className="p-4">
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3">
                         {field("Owner", l.owner_name)}{field("Property address", l.property_address)}
                         {field("Mailing address", l.mailing_address)}{field("City", l.city)}
@@ -303,7 +302,6 @@ export default function FreshLeadsPage() {
                         {field("Lender", l.lender_name)}{field("Foreclosure type", l.foreclosure_type)}
                         {field("Primary phone", l.primary_phone)}{field("Secondary phone", l.secondary_phone)}
                         {field("Email", l.primary_email)}{field("Lead tier", l.lead_tier)}
-                        {field("Source", l.source)}{field("Source URL", l.source_url)}
                         {field("Skip-trace source", l.skip_trace_source ? "Ref: Admin" : "—")}{field("Skip-traced at", l.skip_traced_at)}
                         {field("Scraped at", l.scraped_at)}
                         {field("DNC checked", l.dnc_checked ? "yes" : "no")}{field("On DNC", l.on_dnc ? "YES" : "no")}
@@ -334,7 +332,7 @@ export default function FreshLeadsPage() {
             </div>
             <div className="overflow-auto px-5 py-3 flex-1">
               <table className="w-full text-xs">
-                <thead className="text-gray-500"><tr><th className="text-left p-1">Owner</th><th className="text-left p-1">Property</th><th className="text-left p-1">St</th><th className="text-left p-1">County</th><th className="text-right p-1">Surplus</th><th className="text-left p-1">Phone</th><th className="text-left p-1">Source</th><th className="text-center p-1">DNC</th><th className="text-center p-1">Deed</th></tr></thead>
+                <thead className="text-gray-500"><tr><th className="text-left p-1">Owner</th><th className="text-left p-1">Property</th><th className="text-left p-1">St</th><th className="text-left p-1">County</th><th className="text-right p-1">Surplus</th><th className="text-left p-1">Phone</th><th className="text-center p-1">DNC</th><th className="text-center p-1">Deed</th></tr></thead>
                 <tbody>
                   {selectedLeads.map((l) => (
                     <tr key={l.id} className="border-t">
@@ -342,7 +340,6 @@ export default function FreshLeadsPage() {
                       <td className="p-1">{l.property_address || "—"}{l.city ? `, ${l.city}` : ""}</td>
                       <td className="p-1">{l.state_abbr || "—"}</td><td className="p-1">{l.county || "—"}</td>
                       <td className="p-1 text-right">{money(l.overage_amount)}</td><td className="p-1">{l.primary_phone || "—"}</td>
-                      <td className="p-1 text-gray-500">{l.source || "—"}</td>
                       <td className="p-1 text-center">{l.on_dnc ? <span className="text-red-600 font-semibold">DNC</span> : l.dnc_checked && l.can_contact ? <span className="text-emerald-600">clear</span> : <span className="text-amber-500">unchk</span>}</td>
                       <td className="p-1 text-center">{l.deed_verified ? "✓" : "—"}</td>
                     </tr>
