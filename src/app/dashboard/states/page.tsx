@@ -105,6 +105,16 @@ export default function StatesPage() {
     "non-judicial": "bg-red-600 text-white dark:bg-red-700 dark:text-white",
     both: "bg-purple-600 text-white dark:bg-purple-700 dark:text-white",
   }
+  // Judicial / Non-Judicial / Hybrid (data calls hybrid states "both")
+  const TYPE_LABEL: Record<string, string> = {
+    judicial: "Judicial",
+    "non-judicial": "Non-Judicial",
+    both: "Hybrid",
+  }
+  // Free (signed-in but not a paid recovery agent) sees blurred statute/source
+  // data + an upgrade prompt. Paid tiers + admin see the real data.
+  const FREE_TIERS = new Set(["free", "basic", "free_webcast", ""])
+  const canViewData = isAdmin || !FREE_TIERS.has(subscriptionTier)
 
   return (
     <div className="space-y-6">
@@ -251,7 +261,7 @@ export default function StatesPage() {
                       <X className="h-8 w-8 text-red-600 dark:text-red-500 stroke-[3]" />
                     </div>
                   )}
-                  <Badge className={typeColors[state.foreclosureType]}>{state.foreclosureType}</Badge>
+                  <Badge className={typeColors[state.foreclosureType]}>{TYPE_LABEL[state.foreclosureType] || state.foreclosureType}</Badge>
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Users className="h-3 w-3" />
                     <span>{(stateLeadCounts[state.abbr] || 0).toLocaleString()} leads</span>
@@ -293,70 +303,79 @@ export default function StatesPage() {
                 )
               })()}
 
-              {/* Statutes */}
-              <div className="space-y-2">
-                {state.taxOverageStatute && (
-                  <div className="flex items-start gap-2 text-sm">
-                    <Scale className="h-4 w-4 mt-0.5 text-muted-foreground shrink-0" />
-                    <div>
-                      <span className="font-medium">Tax Overage:</span>{" "}
-                      <span className="text-muted-foreground">{state.taxOverageStatute}</span>
-                    </div>
-                  </div>
-                )}
-                {state.mortgageOverageStatute && (
-                  <div className="flex items-start gap-2 text-sm">
-                    <FileText className="h-4 w-4 mt-0.5 text-muted-foreground shrink-0" />
-                    <div>
-                      <span className="font-medium">Mortgage Overage:</span>{" "}
-                      <span className="text-muted-foreground">{state.mortgageOverageStatute}</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Fee Limits */}
-              {state.feeLimits && (
-                <div className="flex items-center gap-1.5 text-sm">
-                  <DollarSign className="h-3.5 w-3.5 text-muted-foreground" />
-                  <span className="text-muted-foreground">{state.feeLimits}</span>
-                </div>
-              )}
-
-              {/* Data Sources */}
-              {state.sources.length > 0 && (
-                <div className="pt-2 border-t relative">
-                  <p className="text-xs font-medium text-muted-foreground mb-2">Data Sources</p>
-                  <div className={`flex flex-wrap gap-1 ${!isPaid ? "select-none" : ""}`} style={!isPaid ? { filter: "blur(4px)" } : undefined}>
-                    {state.sources.slice(0, 3).map((source, idx) => (
-                      <a
-                        key={idx}
-                        href={isPaid ? source.url : "#"}
-                        target={isPaid ? "_blank" : undefined}
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-                        onClick={isPaid ? undefined : (e) => e.preventDefault()}
-                      >
-                        {source.name}
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
-                    ))}
-                    {state.sources.length > 3 && (
-                      <span className="text-xs text-muted-foreground">
-                        +{state.sources.length - 3} more
-                      </span>
+              {/* Statutes + fees + sources — blurred for free users, upgrade to reveal */}
+              <div className="relative">
+                <div className={!canViewData ? "space-y-3 select-none pointer-events-none blur-[4px]" : "space-y-3"}>
+                  {/* Statutes */}
+                  <div className="space-y-2">
+                    {state.taxOverageStatute && (
+                      <div className="flex items-start gap-2 text-sm">
+                        <Scale className="h-4 w-4 mt-0.5 text-muted-foreground shrink-0" />
+                        <div>
+                          <span className="font-medium">Tax Overage:</span>{" "}
+                          <span className="text-muted-foreground">{state.taxOverageStatute}</span>
+                        </div>
+                      </div>
+                    )}
+                    {state.mortgageOverageStatute && (
+                      <div className="flex items-start gap-2 text-sm">
+                        <FileText className="h-4 w-4 mt-0.5 text-muted-foreground shrink-0" />
+                        <div>
+                          <span className="font-medium">Mortgage Overage:</span>{" "}
+                          <span className="text-muted-foreground">{state.mortgageOverageStatute}</span>
+                        </div>
+                      </div>
                     )}
                   </div>
-                  {!isPaid && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded">
-                        <Lock className="h-3 w-3" />
-                        <span>Subscribe to view</span>
+
+                  {/* Fee Limits */}
+                  {state.feeLimits && (
+                    <div className="flex items-center gap-1.5 text-sm">
+                      <DollarSign className="h-3.5 w-3.5 text-muted-foreground" />
+                      <span className="text-muted-foreground">{state.feeLimits}</span>
+                    </div>
+                  )}
+
+                  {/* Data Sources */}
+                  {state.sources.length > 0 && (
+                    <div className="pt-2 border-t">
+                      <p className="text-xs font-medium text-muted-foreground mb-2">Data Sources</p>
+                      <div className="flex flex-wrap gap-1">
+                        {state.sources.slice(0, 3).map((source, idx) => (
+                          <a
+                            key={idx}
+                            href={canViewData ? source.url : "#"}
+                            target={canViewData ? "_blank" : undefined}
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                            onClick={canViewData ? undefined : (e) => e.preventDefault()}
+                          >
+                            {source.name}
+                            <ExternalLink className="h-3 w-3" />
+                          </a>
+                        ))}
+                        {state.sources.length > 3 && (
+                          <span className="text-xs text-muted-foreground">
+                            +{state.sources.length - 3} more
+                          </span>
+                        )}
                       </div>
                     </div>
                   )}
                 </div>
-              )}
+                {!canViewData && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <a
+                      href="/dashboard/recovery-agent"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex items-center gap-1.5 text-xs font-semibold text-white bg-primary px-3 py-1.5 rounded-md shadow-lg hover:bg-primary/90 transition-colors"
+                    >
+                      <Lock className="h-3 w-3" />
+                      Upgrade to Asset Recovery Agent
+                    </a>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}
@@ -407,7 +426,7 @@ export default function StatesPage() {
                     <h2 className="text-xl font-bold">{stateInfo.name}</h2>
                     <div className="flex items-center gap-2 mt-1">
                       <Badge className={typeColors[stateInfo.foreclosureType]}>
-                        {stateInfo.foreclosureType}
+                        {TYPE_LABEL[stateInfo.foreclosureType] || stateInfo.foreclosureType}
                       </Badge>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <Users className="h-3 w-3" />
@@ -470,7 +489,20 @@ export default function StatesPage() {
               {(() => {
                 const fi = stateForeclosureInfo[selectedState]
                 return (
-                  <div className="p-5 space-y-4">
+                  <div className="relative">
+                    {!canViewData && (
+                      <div className="px-5 pt-4">
+                        <a
+                          href="/dashboard/recovery-agent"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center justify-center gap-2 text-sm font-semibold text-white bg-primary px-4 py-2.5 rounded-lg shadow hover:bg-primary/90 transition-colors"
+                        >
+                          <Lock className="h-4 w-4" />
+                          Upgrade to Asset Recovery Agent to unlock full statutes &amp; sources
+                        </a>
+                      </div>
+                    )}
+                    <div className={!canViewData ? "p-5 space-y-4 select-none pointer-events-none blur-[5px]" : "p-5 space-y-4"}>
                     {/* Tax Sale Overview */}
                     {fi && (fi.taxSaleType || fi.biddingType || fi.saleFrequency) && (
                       <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20">
@@ -801,6 +833,7 @@ export default function StatesPage() {
                         )}
                       </div>
                     )}
+                    </div>
                   </div>
                 )
               })()}
