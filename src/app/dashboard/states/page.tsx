@@ -30,9 +30,6 @@ export default function StatesPage() {
   const isAdmin = email === "coreypearsonemail@gmail.com"
   const isPaid = isSignedIn === true
   const isOwnerOperator = isAdmin || subscriptionTier === "owner_operator"
-  const selectedStates = isAdmin
-    ? ["AL","AR","AZ","CA","CO","DC","FL","GA","IA","ID","IL","IN","KY","LA","MA","MD","MI","MN","MO","MS","NC","NE","NJ","NM","NV","NY","OH","OK","OR","PA","SC","TN","TX","UT","VA","WA","WI"]
-    : isPaid ? ["GA", "FL", "TX", "CA", "AZ", "NV", "CO", "WA", "OR", "TN"] : []
 
   useEffect(() => {
     async function fetchSubscriptionTier() {
@@ -123,6 +120,9 @@ export default function StatesPage() {
   // data + an upgrade prompt. Paid tiers + admin see the real data.
   const FREE_TIERS = new Set(["free", "basic", "free_webcast", ""])
   const canViewData = !previewFree && (isAdmin || !FREE_TIERS.has(subscriptionTier))
+  // Preview-aware tier flags (so "Preview as free" also flips the CTAs).
+  const effIsPaid = isPaid && !previewFree
+  const effIsOwnerOperator = isOwnerOperator && !previewFree
 
   return (
     <div className="space-y-6">
@@ -493,23 +493,35 @@ export default function StatesPage() {
                     <TrendingUp className="h-4 w-4 text-primary" />
                     <span className="text-sm font-semibold">{(stateLeadCounts[selectedState] || 0).toLocaleString()} Vetted Leads Available</span>
                   </div>
-                  {isPaid && selectedStates.includes(selectedState) ? (
+                  {effIsOwnerOperator ? (
+                    /* Owner operators: full state-wide inventory */
                     <a
                       href={`/dashboard/leads?state=${selectedState}`}
                       className="inline-flex items-center gap-1 text-xs font-medium text-white bg-primary px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      View Leads
+                      View Inventory
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+                  ) : effIsPaid ? (
+                    /* Paid agents: their own assigned leads, not the inventory */
+                    <a
+                      href="/dashboard/my-leads"
+                      className="inline-flex items-center gap-1 text-xs font-medium text-white bg-primary px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View My Leads
                       <ExternalLink className="h-3 w-3" />
                     </a>
                   ) : (
+                    /* Free: upgrade path */
                     <a
-                      href="/dashboard/settings"
+                      href="/dashboard/recovery-agent"
                       className="inline-flex items-center gap-1 text-xs font-medium text-white bg-slate-600 px-3 py-1.5 rounded-md hover:bg-slate-500 transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Lock className="h-3 w-3" />
-                      {!isPaid ? "Subscribe to Access" : "Add This State"}
+                      Upgrade to access
                     </a>
                   )}
                 </div>
