@@ -98,6 +98,7 @@ const navSections: NavSection[] = [
       { name: "Hire a Closer", href: "/dashboard/hire-closer", icon: Briefcase, badge: { text: "Pro", color: "amber" } },
       { name: "Contract Admin", href: "/dashboard/contract-admin", icon: ClipboardList, badge: { text: "5%", color: "purple" } },
       { name: "Contingent Attorneys Network", href: "/dashboard/contingent-attorneys", icon: Scale, badge: { text: "New", color: "violet" } },
+      { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Comp.", color: "emerald" } },
       { name: "Tax Deeds", href: "/dashboard/tax-deeds", icon: Landmark, badge: { text: "New", color: "emerald" } },
       { name: "Automation", href: "/dashboard/automation", icon: Zap, badge: { text: "Add-on", color: "blue" } },
     ],
@@ -109,7 +110,6 @@ const navSections: NavSection[] = [
       { name: "Asset Recovery Agent", href: "/dashboard/recovery-agent", icon: UserCheck, badge: { text: "Program", color: "blue" } },
       { name: "Owner Operator", href: "/dashboard/owner-operator", icon: Briefcase, badge: { text: "Program", color: "red" } },
       { name: "Agent Onboarding", href: "/dashboard/white-label", icon: FolderKanban, badge: { text: "Biz", color: "sky" } },
-      { name: "Contingency Incentives", href: "/dashboard/contingency-incentives", icon: Gift, badge: { text: "Comp.", color: "emerald" } },
     ],
   },
   {
