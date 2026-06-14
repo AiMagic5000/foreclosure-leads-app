@@ -127,7 +127,10 @@ export default function FreshLeadsPage() {
     if (contactFilter === "phone") v = leads.filter(hasPhone)
     else if (contactFilter === "email") v = leads.filter(hasEmail)
     else if (contactFilter === "both") v = leads.filter((l) => hasPhone(l) && hasEmail(l))
-    return [...v].sort((a, b) => (hasPhone(b) ? 1 : 0) - (hasPhone(a) ? 1 : 0))
+    // Highest surplus first (so $ + agent-cut leads are on top), then phone-ready.
+    return [...v].sort((a, b) =>
+      (b.overage_amount || 0) - (a.overage_amount || 0) ||
+      (hasPhone(b) ? 1 : 0) - (hasPhone(a) ? 1 : 0))
   }, [leads, contactFilter])
 
   const allSelected = visibleLeads.length > 0 && visibleLeads.every((l) => selected.has(l.id))
@@ -247,8 +250,8 @@ export default function FreshLeadsPage() {
         {msg && <span className="text-sm text-gray-700">{msg}</span>}
       </div>
 
-      <div className="border rounded-lg overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="border rounded-lg overflow-x-auto">
+        <table className="w-full text-sm min-w-[900px]">
           <thead className="bg-gray-100 text-gray-600">
             <tr>
               <th className="p-2 w-8"></th>
