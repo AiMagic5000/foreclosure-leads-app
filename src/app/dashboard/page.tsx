@@ -30,6 +30,8 @@ interface DashboardStats {
   newLeads: number
   failedTraces: number
   dncCleared: number
+  enrichmentPct: number   // real: contactable (phone or email) / total
+  dncCleanPct: number      // real: DNC-clean / DNC-checked
 }
 
 interface RecentLead {
@@ -104,6 +106,11 @@ export default function DashboardPage() {
         const newLeads = leads.filter(l => l.status === "new").length
         const failed = leads.filter(l => l.status === "failed").length
         const dncCleared = leads.filter(l => l.can_contact === true && l.dnc_checked === true && l.on_dnc === false).length
+        // Real rates (ratios hold even if the fetch is a large sample).
+        const withContact = leads.filter(l => (l.primary_phone && String(l.primary_phone).trim() !== "") || (l.primary_email && String(l.primary_email).trim() !== "")).length
+        const dncCheckedPhone = leads.filter(l => l.dnc_checked === true && l.primary_phone && String(l.primary_phone).trim() !== "").length
+        const enrichmentPct = leads.length > 0 ? Math.round((withContact / leads.length) * 100) : 0
+        const dncCleanPct = dncCheckedPhone > 0 ? Math.round((dncCleared / dncCheckedPhone) * 100) : 0
 
         setStats({
           totalLeads: total,
@@ -113,6 +120,8 @@ export default function DashboardPage() {
           newLeads: newLeads,
           failedTraces: failed,
           dncCleared: dncCleared,
+          enrichmentPct,
+          dncCleanPct,
         })
 
         // Calculate top states
@@ -242,10 +251,10 @@ export default function DashboardPage() {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.skipTraced.toLocaleString()}</div>
+              <div className="text-2xl font-bold">{stats.enrichmentPct}%</div>
               <div className="flex items-center gap-1 text-xs">
                 <ArrowUpRight className="h-3 w-3 text-emerald-500" />
-                <span className="text-emerald-600">{stats.totalLeads > 0 ? Math.round((stats.skipTraced / stats.totalLeads) * 100) : 0}% enriched</span>
+                <span className="text-emerald-600">{stats.withPhone.toLocaleString()} with phone/email enriched</span>
               </div>
             </CardContent>
           </Card>
@@ -268,10 +277,10 @@ export default function DashboardPage() {
               <ShieldCheck className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.dncCleared.toLocaleString()}</div>
+              <div className="text-2xl font-bold">{stats.dncCleanPct}%</div>
               <div className="flex items-center gap-1 text-xs">
                 <CheckCircle className="h-3 w-3 text-emerald-500" />
-                <span className="text-emerald-600">Ready to contact</span>
+                <span className="text-emerald-600">{stats.dncCleared.toLocaleString()} clean &amp; ready to contact</span>
               </div>
             </CardContent>
           </Card>
