@@ -22,6 +22,7 @@ export default function StatesPage() {
   const [stateLeadCounts, setStateLeadCounts] = useState<Record<string, number>>({})
   const [foiaContacts, setFoiaContacts] = useState<any[]>([])
   const [subscriptionTier, setSubscriptionTier] = useState<string>("free")
+  const [previewFree, setPreviewFree] = useState(false)
   const { theme } = useTheme()
   const isDark = theme === "dark"
   const { isSignedIn, user } = useUser()
@@ -48,6 +49,13 @@ export default function StatesPage() {
       }
     }
     fetchSubscriptionTier()
+  }, [])
+
+  // ?preview=free lets an admin/paid user see the exact free/blurred experience.
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setPreviewFree(new URLSearchParams(window.location.search).get("preview") === "free")
+    }
   }, [])
 
   useEffect(() => {
@@ -114,7 +122,7 @@ export default function StatesPage() {
   // Free (signed-in but not a paid recovery agent) sees blurred statute/source
   // data + an upgrade prompt. Paid tiers + admin see the real data.
   const FREE_TIERS = new Set(["free", "basic", "free_webcast", ""])
-  const canViewData = isAdmin || !FREE_TIERS.has(subscriptionTier)
+  const canViewData = !previewFree && (isAdmin || !FREE_TIERS.has(subscriptionTier))
 
   return (
     <div className="space-y-6">
@@ -211,7 +219,7 @@ export default function StatesPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <CountyMap isDark={isDark} isOwnerOperator={isOwnerOperator} />
+          <CountyMap isDark={isDark} isOwnerOperator={!previewFree && isOwnerOperator} />
         </CardContent>
       </Card>
 

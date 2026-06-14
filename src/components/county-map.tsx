@@ -571,9 +571,18 @@ export function CountyMap({
         const POPUP_W = 320;
         const half = POPUP_W / 2 + 8;
         const anchored = !!clickPos;
-        // Clamp to the viewport so the popup is always fully visible.
+        const margin = 8;
+        const gap = 14;
+        // Clamp horizontally so the popup stays on-screen.
         const left = clickPos ? Math.max(half, Math.min(clickPos.x, clickPos.w - half)) : 0;
-        const openUp = clickPos ? clickPos.y > clickPos.h * 0.4 : true;
+        // Open toward whichever side of the click has more room, and cap the
+        // height to that room so the whole popup is always visible + scrollable
+        // (never runs off the top or bottom of the viewport).
+        const spaceAbove = clickPos ? clickPos.y - margin : 0;
+        const spaceBelow = clickPos ? clickPos.h - clickPos.y - margin : 0;
+        const openUp = clickPos ? spaceAbove > spaceBelow : true;
+        const avail = (openUp ? spaceAbove : spaceBelow) - gap;
+        const maxH = clickPos ? Math.min(clickPos.h - margin * 2, Math.max(180, avail)) : 0;
         const popupStyle: React.CSSProperties = anchored
           ? {
               backgroundColor: theme.bg,
@@ -583,8 +592,8 @@ export function CountyMap({
               top: clickPos!.y,
               width: POPUP_W,
               maxWidth: 'calc(100vw - 16px)',
-              maxHeight: '70vh',
-              overflowY: 'auto',
+              maxHeight: maxH,
+              overflow: 'hidden',
               transform: openUp ? 'translate(-50%, calc(-100% - 14px))' : 'translate(-50%, 14px)',
             }
           : { backgroundColor: theme.bg, border: `2px solid ${theme.accent}` };
@@ -592,19 +601,26 @@ export function CountyMap({
           <div
             className={
               anchored
-                ? 'rounded-xl p-4 shadow-2xl z-50'
-                : 'absolute bottom-20 left-1/2 transform -translate-x-1/2 rounded-xl p-4 shadow-xl max-w-sm w-full mx-4 z-10'
+                ? 'rounded-xl shadow-2xl z-50 overflow-hidden'
+                : 'absolute bottom-20 left-1/2 transform -translate-x-1/2 rounded-xl shadow-xl max-w-sm w-full mx-4 z-10 overflow-hidden'
             }
             style={popupStyle}
           >
+            {/* Close button — pinned to the popup corner OUTSIDE the scroll area
+                so it is always reachable even when the body scrolls. */}
             <button
               onClick={() => setSelectedCounty(null)}
-              className="absolute top-2 right-2 p-1 rounded hover:bg-opacity-80"
-              style={{ color: theme.textSecondary }}
+              className="absolute top-2 right-2 p-1 rounded-full hover:bg-black/10 z-[60]"
+              style={{ color: theme.textSecondary, backgroundColor: theme.bg }}
             >
               <X size={16} />
             </button>
 
+            {/* Scrolling body */}
+            <div
+              className="p-4"
+              style={anchored ? { maxHeight: maxH, overflowY: 'auto' } : undefined}
+            >
             <div className="flex items-start gap-3">
               <div
                 className="p-2 rounded-lg"
@@ -946,6 +962,7 @@ export function CountyMap({
                 <Users size={14} />
                 Add Leads
               </button>
+            </div>
             </div>
           </div>
         );
