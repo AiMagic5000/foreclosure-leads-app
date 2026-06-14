@@ -275,7 +275,7 @@ export default function FreshLeadsPage() {
                   <td className="p-2 text-gray-600">{l.property_address || "—"}{l.city ? `, ${l.city}` : ""}</td>
                   <td className="p-2">{l.state_abbr || "—"}</td>
                   <td className="p-2">{l.county || l.surplus_county || "—"}</td>
-                  <td className="p-2 text-right font-semibold text-emerald-700">{money(l.overage_amount)}</td>
+                  <td className="p-2 text-right font-semibold text-emerald-700">{money(l.overage_amount)}{l.source === "fdh_predicted" && l.overage_amount != null && <span className="ml-1 text-[9px] font-bold text-amber-600 align-top">EST</span>}</td>
                   {(() => { const e = leadEconomics(l.overage_amount, l.state_abbr); return (<>
                     <td className="p-2 text-xs">{e.restricted ? <span className="text-red-600 font-medium">restricted</span> : e.capLabel}</td>
                     <td className="p-2 text-right font-bold text-blue-700">{e.agentCut != null ? fmtUsd(e.agentCut) : "—"}</td>
@@ -291,7 +291,7 @@ export default function FreshLeadsPage() {
                         {field("State", l.state || l.state_abbr)}{field("ZIP", l.zip_code)}
                         {field("County", l.county)}{field("Surplus county", l.surplus_county)}
                         {field("Parcel / APN", l.parcel_id || l.apn_number)}{field("Case #", l.case_number)}
-                        {field("Surplus / overage", money(l.overage_amount))}{field("Sale amount", money(l.sale_amount))}
+                        {field("Surplus / overage", money(l.overage_amount) + (l.source === "fdh_predicted" && l.overage_amount != null ? " (EST from comps — verify on claim)" : ""))}{field("Sale amount", money(l.sale_amount))}
                         {(() => { const e = leadEconomics(l.overage_amount, l.state_abbr); return (<>
                           {field("Fee % (max 30, state cap)", e.restricted ? "restricted" : e.capLabel + (e.note ? ` — ${e.note}` : ""))}
                           {field("Total fee to claimant", e.totalFee != null ? fmtUsd(e.totalFee) : "needs surplus $")}
