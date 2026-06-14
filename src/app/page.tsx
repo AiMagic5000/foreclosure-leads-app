@@ -381,10 +381,32 @@ export default function LandingPage() {
                       </Button>
                     </Link>
                   </div>
-                  <p className="text-xs text-gray-500 mb-10 sm:mb-16 px-4 sm:px-0 flex items-center justify-center lg:justify-start gap-1.5">
+                  <p className="text-xs text-gray-500 mb-6 px-4 sm:px-0 flex items-center justify-center lg:justify-start gap-1.5">
                     <CheckCircle className="h-3.5 w-3.5 text-[#10b981]" />
                     Free training included. No credit card required.
                   </p>
+
+                  {/* Proof strip — real claimant disbursement checks */}
+                  <div className="mb-10 sm:mb-16 grid grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0">
+                    {[
+                      { src: "/hero-images/proof-1.png", alt: "Foreclosure Recovery Inc. claimant disbursement check" },
+                      { src: "/hero-images/proof-2.png", alt: "Surplus funds foreclosure overage recovery check proof" },
+                      { src: "/hero-images/proof-3.png", alt: "Excess proceeds foreclosure recovery check proof" },
+                    ].map((img) => (
+                      <div
+                        key={img.src}
+                        className="relative aspect-[3/2] overflow-hidden rounded-xl border-2 border-white/60 shadow-lg bg-white"
+                      >
+                        <Image
+                          src={img.src}
+                          alt={img.alt}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 33vw, 200px"
+                        />
+                      </div>
+                    ))}
+                  </div>
 
                   {/* Stats */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 max-w-3xl pt-6 sm:pt-8 border-t border-gray-200 mx-auto lg:mx-0">
