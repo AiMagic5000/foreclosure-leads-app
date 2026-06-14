@@ -72,10 +72,10 @@ const navSections: NavSection[] = [
     label: "Getting Started",
     tier: "basic",
     items: [
+      { name: "My Account", href: "/dashboard/settings", icon: Settings },
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
       { name: "FREE Training", href: "/dashboard/closing-training", icon: GraduationCap, badge: { text: "New", color: "indigo" } },
       { name: "Live Webcast", href: "/dashboard/live-webcast", icon: Radio, badge: { text: "Live", color: "red" } },
-      { name: "My Account", href: "/dashboard/settings", icon: Settings },
       { name: "State Laws", href: "/dashboard/states", icon: Map },
       { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Paid", color: "violet" } },
       { name: "My Leads", href: "/dashboard/my-leads", icon: FileStack, badge: { text: "New", color: "emerald" } },
@@ -485,7 +485,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                         )}
                       >
                         <FluentNavIcon href={item.href} fallback={item.icon} />
-                        {item.name}
+                        {isAccount ? <span className="font-semibold text-red-600">{item.name}</span> : item.name}
                         {isLocked ? (
                           <Lock className="ml-auto h-3.5 w-3.5 opacity-60" />
                         ) : item.badge ? (

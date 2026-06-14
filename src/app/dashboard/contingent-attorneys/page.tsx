@@ -63,6 +63,37 @@ export default function ContingentAttorneysPage() {
         </div>
       </a>
 
+      <div className="grid grid-cols-2 gap-4">
+        <a
+          href="https://www.mytrustsoftware.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block overflow-hidden rounded-xl border bg-white shadow-sm transition hover:shadow-md"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/living-trust-estate-planning-family.jpg"
+            alt="Multigenerational family protecting their legacy with a living trust"
+            className="w-full"
+            loading="lazy"
+          />
+        </a>
+        <a
+          href="https://www.mytrustsoftware.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block overflow-hidden rounded-xl border bg-white shadow-sm transition hover:shadow-md"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/my-trust-software-legacy-family.jpg"
+            alt="My Trust Software family legacy and estate protection"
+            className="w-full"
+            loading="lazy"
+          />
+        </a>
+      </div>
+
       <div className="flex justify-center">
         <a
           href="https://www.mytrustsoftware.com/"
