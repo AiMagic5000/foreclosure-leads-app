@@ -223,6 +223,21 @@ function FluentNavIcon({ href, fallback: Fallback }: {
 }) {
   const def = NAV_FLUENT[href]
   const [broken, setBroken] = useState(false)
+  // My Account uses the FRI eagle logo instead of a generic icon.
+  if (href === "/dashboard/settings") {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src="/fri-bird.png"
+        alt=""
+        width={22}
+        height={22}
+        loading="lazy"
+        draggable={false}
+        className="h-[22px] w-[22px] flex-shrink-0 object-contain"
+      />
+    )
+  }
   if (!def) return <Fallback className="h-5 w-5 flex-shrink-0" style={{ color: navIconColor(href) }} />
   if (broken) {
     return <span className="flex h-[22px] w-[22px] flex-shrink-0 items-center justify-center text-[18px] leading-none" role="img" aria-label={href}>{def.emoji}</span>

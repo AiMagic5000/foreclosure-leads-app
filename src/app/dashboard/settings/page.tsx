@@ -79,10 +79,14 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6 min-w-0 max-w-full overflow-x-hidden">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">My Account</h1>
-        <p className="text-muted-foreground">Manage your account and subscription</p>
+    <div className="space-y-6 min-w-0 max-w-full overflow-x-hidden rounded-2xl bg-sky-50 p-4 sm:p-6 dark:bg-slate-900/40">
+      <div className="flex items-center gap-3">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/fri-bird.png" alt="" className="h-9 w-9 shrink-0 object-contain" />
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">My Account</h1>
+          <p className="text-muted-foreground">Manage your account and subscription</p>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2 min-w-0 [&>*]:min-w-0">
@@ -470,26 +474,21 @@ export default function SettingsPage() {
               <Camera className="h-5 w-5 text-muted-foreground" />
               <CardTitle>Payout Proof Checks</CardTitle>
             </div>
-            <CardDescription>
-              Got paid on a claimant case? Upload a clear photo of your <strong>disbursement check</strong>.
-              With your consent below, our team adds privacy markers (redacting names &amp; account
-              numbers) and may feature it on social media and marketing as proof of payout.
-            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="rounded-lg border bg-muted/30 p-3">
-              <p className="mb-2 text-xs font-medium text-muted-foreground">
-                Example — a payout check marked for social proof:
+            <div className="flex flex-col gap-4 rounded-lg border bg-muted/30 p-4 sm:flex-row sm:items-center">
+              <p className="flex-1 text-sm text-muted-foreground">
+                Got paid on a claimant case? Upload a clear photo of your <strong>disbursement check</strong>.
+                With your consent below, our team adds privacy markers (redacting names &amp; account
+                numbers) and may feature it on social media and marketing as proof of payout.
               </p>
-              <div className="flex justify-end">
-                <div className="aspect-video w-full max-w-md overflow-hidden rounded-md border bg-white shadow-sm">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/hero-images/proof-2.png"
-                    alt="Example payout disbursement check with privacy markers"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
+              <div className="aspect-video w-full shrink-0 overflow-hidden rounded-md border bg-white shadow-sm sm:w-56">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/hero-images/proof-2.png"
+                  alt="Example payout disbursement check with privacy markers"
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
             <DocumentUploader folder="check-proof" accept="image/*" />
