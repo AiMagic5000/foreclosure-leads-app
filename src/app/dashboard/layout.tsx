@@ -314,6 +314,7 @@ function BadgeLabel({ color, text }: { color: string; text: string }) {
 function DashboardInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const { accountType, banned, banReason, impersonating, clearImpersonation } = usePin()
+  const { user } = useUser()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -388,7 +389,19 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                 Exit impersonation &mdash; back to admin
               </button>
             ) : (
-              <div className="mt-5"><UserButton afterSignOutUrl="/" /></div>
+              <div className="mt-5">
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: user && !user.hasImage
+                        ? "h-9 w-9 bg-white bg-[url('/images/fri-bird.png')] bg-contain bg-center bg-no-repeat"
+                        : "h-9 w-9",
+                      avatarImage: user && !user.hasImage ? "opacity-0" : "",
+                    },
+                  }}
+                />
+              </div>
             )}
           </div>
         </div>
@@ -538,7 +551,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           {/* Mobile: call button against the hamburger */}
           <a
             href="tel:+18885458007"
-            className="lg:hidden inline-flex flex-col leading-tight rounded-lg bg-[#1E3A5F] px-2.5 py-1 text-white shadow-sm"
+            className="lg:hidden inline-flex flex-col leading-tight rounded-lg bg-[#dc2626] px-2.5 py-1 text-white shadow-sm"
             title="Call us — (888) 545-8007 · 9 to 5 Pacific, 7 days a week"
           >
             <span className="inline-flex items-center gap-1 text-xs font-bold">
@@ -567,7 +580,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
             {/* Desktop: call button on the bell line */}
             <a
               href="tel:+18885458007"
-              className="hidden lg:inline-flex flex-col leading-tight rounded-lg bg-[#1E3A5F] px-3 py-1.5 text-white shadow-sm transition hover:bg-[#2d4a6f]"
+              className="hidden lg:inline-flex flex-col leading-tight rounded-lg bg-[#dc2626] px-3 py-1.5 text-white shadow-sm transition hover:bg-[#b91c1c]"
               title="Call us — (888) 545-8007 · 9 to 5 Pacific, 7 days a week"
             >
               <span className="inline-flex items-center gap-1.5 text-sm font-bold">
@@ -640,7 +653,13 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
               afterSignOutUrl="/"
               appearance={{
                 elements: {
-                  avatarBox: "h-9 w-9",
+                  // Only two avatars allowed: the user's real Google photo, or our
+                  // eagle. Never Clerk's purple default — when there's no real photo,
+                  // hide Clerk's image and show the eagle as the avatar background.
+                  avatarBox: user && !user.hasImage
+                    ? "h-9 w-9 bg-white bg-[url('/images/fri-bird.png')] bg-contain bg-center bg-no-repeat"
+                    : "h-9 w-9",
+                  avatarImage: user && !user.hasImage ? "opacity-0" : "",
                 },
               }}
             />

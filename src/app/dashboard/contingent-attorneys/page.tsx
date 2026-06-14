@@ -100,7 +100,7 @@ export default function ContingentAttorneysPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/living-trust-estate-planning-family.jpg"
-            alt="Multigenerational family protecting their legacy with a living trust"
+            alt="My Trust Software -- create your living trust in 7 simple steps"
             className="w-full"
             loading="lazy"
           />
