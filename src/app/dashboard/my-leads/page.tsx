@@ -1051,7 +1051,7 @@ function sampleSms(agentName: string) {
 
 /* ===== MAIN PAGE ===== */
 
-export default function MyLeadsPage() {
+export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolean }) {
   const { isAdmin, pinId, accountType, isLoading: pinLoading, hasSlybroadcast, hasTextbee } = usePin()
   const { user } = useUser()
   const agentName =
@@ -1396,8 +1396,13 @@ export default function MyLeadsPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const LEADS_PER_PAGE = 25
 
-  const showingMock = leads.length === 0
-  const baseLeads = showingMock ? [MOCK_LEAD] : leads
+  // On the Import tab we only show the operator's own imported lists (tagged
+  // source="imported:..."), and never the demo MOCK_LEAD.
+  const sourceLeads = importedOnly
+    ? leads.filter((l) => String(l.source || "").startsWith("imported:"))
+    : leads
+  const showingMock = !importedOnly && sourceLeads.length === 0
+  const baseLeads = showingMock ? [MOCK_LEAD] : sourceLeads
 
   // Free accounts only see the sample lead — expand it by default so they can
   // immediately see the example email + SMS sent on their behalf.
@@ -1494,30 +1499,39 @@ export default function MyLeadsPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
             <FileStack className="h-6 w-6" />
-            {viewAsUserId ? `Viewing: ${viewAsLabel}` : "My Leads"}
+            {importedOnly ? "Your Imported Leads" : viewAsUserId ? `Viewing: ${viewAsLabel}` : "My Leads"}
           </h1>
           <p className="text-muted-foreground">
-            {viewAsUserId ? "Admin view-as-user mode" : "Your assigned foreclosure recovery leads"} --{" "}
-            <Badge className="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
-              {ACCOUNT_LABELS[activeAccountType] || "Basic"} Account
-            </Badge>
+            {importedOnly
+              ? "Lists you uploaded -- work them with SMS, email, certified mail & voicemail like any other lead"
+              : viewAsUserId ? "Admin view-as-user mode" : "Your assigned foreclosure recovery leads"}{" "}
+            {!importedOnly && (
+              <>
+                --{" "}
+                <Badge className="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+                  {ACCOUNT_LABELS[activeAccountType] || "Basic"} Account
+                </Badge>
+              </>
+            )}
           </p>
         </div>
-        <Button
-          onClick={() => {
-            const basicTiers = ["basic", "free_webcast", "free"]
-            if (basicTiers.includes(activeAccountType)) {
-              setShowBasicUpgradeModal(true)
-            } else {
-              setShowRequestModal(true)
-              setRequestSuccess(false)
-            }
-          }}
-          className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
-        >
-          <Send className="h-4 w-4 mr-2" />
-          Request Leads
-        </Button>
+        {!importedOnly && (
+          <Button
+            onClick={() => {
+              const basicTiers = ["basic", "free_webcast", "free"]
+              if (basicTiers.includes(activeAccountType)) {
+                setShowBasicUpgradeModal(true)
+              } else {
+                setShowRequestModal(true)
+                setRequestSuccess(false)
+              }
+            }}
+            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
+          >
+            <Send className="h-4 w-4 mr-2" />
+            Request Leads
+          </Button>
+        )}
       </div>
 
       {/* Admin: View as User dropdown */}
@@ -2146,7 +2160,20 @@ export default function MyLeadsPage() {
       )}
 
       {/* No Results */}
-      {!showingMock && !loading && filteredLeads.length === 0 && leads.length > 0 && (
+      {importedOnly && !loading && filteredLeads.length === 0 && (
+        <Card>
+          <CardContent className="py-12 text-center">
+            <FileStack className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+            <h3 className="text-lg font-semibold mb-1">No imported leads yet</h3>
+            <p className="text-sm text-muted-foreground">
+              Upload a CSV above and your leads will appear here -- ready for SMS, email,
+              certified mail, and ringless voicemail.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+      {!importedOnly && !showingMock && !loading && filteredLeads.length === 0 && leads.length > 0 && (
         <Card>
           <CardContent className="py-12 text-center">
             <Search className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
@@ -2484,4 +2511,8 @@ export default function MyLeadsPage() {
       )}
     </div>
   )
+}
+
+export default function MyLeadsPage() {
+  return <LeadsWorkspace />
 }

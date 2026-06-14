@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { usePin } from "@/lib/pin-context"
+import { LeadsWorkspace } from "@/app/dashboard/my-leads/page"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
@@ -178,6 +179,9 @@ function ImportTool() {
   const [isImporting, setIsImporting] = useState(false)
   const [importError, setImportError] = useState<string | null>(null)
   const [result, setResult] = useState<{ imported: number; skipped: number } | null>(null)
+  // Bumped after each successful import so the embedded leads workspace remounts
+  // and refetches, surfacing the freshly imported leads immediately.
+  const [refreshKey, setRefreshKey] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFile = async (file: File | undefined) => {
@@ -265,6 +269,7 @@ function ImportTool() {
         return
       }
       setResult({ imported: data.imported ?? 0, skipped: data.skipped ?? 0 })
+      setRefreshKey((k) => k + 1)
     } catch {
       setImportError("Something went wrong during import. Please try again.")
     } finally {
@@ -325,6 +330,11 @@ function ImportTool() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Imported leads -- full My Leads functionality (SMS, email, certified mail, voicemail) */}
+        <div className="border-t pt-6">
+          <LeadsWorkspace importedOnly key={refreshKey} />
+        </div>
       </div>
     )
   }
@@ -558,6 +568,11 @@ function ImportTool() {
           </CardContent>
         </Card>
       )}
+
+      {/* Imported leads -- full My Leads functionality (SMS, email, certified mail, voicemail) */}
+      <div className="border-t pt-6">
+        <LeadsWorkspace importedOnly key={refreshKey} />
+      </div>
     </div>
   )
 }
