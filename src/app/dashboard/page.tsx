@@ -30,7 +30,8 @@ interface DashboardStats {
   newLeads: number
   failedTraces: number
   dncCleared: number
-  enrichmentPct: number   // real: contactable (phone or email) / total
+  tracedContact: number    // traced leads that returned a phone/email
+  enrichmentPct: number    // real: tracedContact / traced (skip-trace success rate)
   dncCleanPct: number      // real: DNC-clean / DNC-checked
 }
 
@@ -90,7 +91,7 @@ export default function DashboardPage() {
         // Fetch leads (minimal columns) for the breakdown stats + top states.
         const { data: leads, error } = await supabase
           .from("foreclosure_leads")
-          .select("id,status,primary_phone,primary_email,state_abbr,can_contact,dnc_checked,on_dnc")
+          .select("id,status,primary_phone,primary_email,state_abbr,can_contact,dnc_checked,on_dnc,skip_traced_at")
           .limit(100000) as { data: Record<string, unknown>[] | null; error: unknown }
 
         if (error || !leads) {
@@ -107,9 +108,15 @@ export default function DashboardPage() {
         const failed = leads.filter(l => l.status === "failed").length
         const dncCleared = leads.filter(l => l.can_contact === true && l.dnc_checked === true && l.on_dnc === false).length
         // Real rates (ratios hold even if the fetch is a large sample).
-        const withContact = leads.filter(l => (l.primary_phone && String(l.primary_phone).trim() !== "") || (l.primary_email && String(l.primary_email).trim() !== "")).length
+        const hasContact = (l: Record<string, unknown>) =>
+          (l.primary_phone && String(l.primary_phone).trim() !== "") || (l.primary_email && String(l.primary_email).trim() !== "")
+        // Skip-trace SUCCESS rate: of leads we actually skip-traced, how many
+        // came back with a phone or email. This is the honest "enrichment" number
+        // (denominator = traced leads, not the raw county backlog that was never traced).
+        const traced = leads.filter(l => l.skip_traced_at != null).length
+        const tracedContact = leads.filter(l => l.skip_traced_at != null && hasContact(l)).length
         const dncCheckedPhone = leads.filter(l => l.dnc_checked === true && l.primary_phone && String(l.primary_phone).trim() !== "").length
-        const enrichmentPct = leads.length > 0 ? Math.round((withContact / leads.length) * 100) : 0
+        const enrichmentPct = traced > 0 ? Math.round((tracedContact / traced) * 100) : 0
         const dncCleanPct = dncCheckedPhone > 0 ? Math.round((dncCleared / dncCheckedPhone) * 100) : 0
 
         setStats({
@@ -120,6 +127,7 @@ export default function DashboardPage() {
           newLeads: newLeads,
           failedTraces: failed,
           dncCleared: dncCleared,
+          tracedContact: tracedContact,
           enrichmentPct,
           dncCleanPct,
         })
@@ -254,7 +262,7 @@ export default function DashboardPage() {
               <div className="text-2xl font-bold">{stats.enrichmentPct}%</div>
               <div className="flex items-center gap-1 text-xs">
                 <ArrowUpRight className="h-3 w-3 text-emerald-500" />
-                <span className="text-emerald-600">{stats.withPhone.toLocaleString()} with phone/email enriched</span>
+                <span className="text-emerald-600">{stats.tracedContact.toLocaleString()} skip-traced leads enriched</span>
               </div>
             </CardContent>
           </Card>
