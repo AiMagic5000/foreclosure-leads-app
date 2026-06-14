@@ -75,6 +75,7 @@ export interface AgentProfile {
   introES: string
   signatureTitleEN: string
   signatureTitleES: string
+  socialLink?: string
   onBehalfEN: string
   onBehalfES: string
   byPhoneEN: string

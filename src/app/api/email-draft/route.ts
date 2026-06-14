@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveOperatorConfig, isCommsAuthorized, configToAgentProfile } from "@/lib/operator-config"
+import { getAgentSocialLink } from "@/lib/social-link"
 import { isRequestAdmin } from "@/lib/admin-guard"
 import type { AgentProfile } from "@/lib/operator-config"
 import { getStateRule } from "@/lib/surplus/state-rules"
@@ -158,6 +159,10 @@ function renderOutreachEmailEN(ctx: MergeContext, agent: AgentProfile, senderEma
     ONLINE_CLAIM_URL: agent.claimPageUrl,
     UNSUBSCRIBE_URL: UNSUBSCRIBE_URL,
     SEND_DATE: formatDate(),
+    // Per-agent consented social link (empty for agents who didn't enable it).
+    SOCIAL_LINE: agent.socialLink
+      ? `<p style="margin: 8px 0 0; font-size: 13px; font-family: 'Inter Tight',sans-serif;">That&rsquo;s really me &mdash; connect with me: <a style="color: #09274c; text-decoration: underline;" href="${agent.socialLink}" target="_blank" rel="noopener">${agent.socialLink}</a></p>`
+      : "",
   }
 
   const html = tpl.replace(/\[\[([A-Z0-9_]+)\]\]/g, (m, key) => (key in tokens ? tokens[key] : m))
@@ -501,6 +506,7 @@ ${buildDeadlineBox(v, "es")}
 <p style="margin: 0 0 2px; font-size: 13px; color: #5a6d82; font-family: 'Inter Tight', sans-serif;">${a.signatureTitleES}</p>
 ${a.onBehalfES ? `<p style="margin: 0 0 2px; font-size: 13px; color: #5a6d82; font-family: 'Inter Tight', sans-serif;">${a.onBehalfES}</p>` : ""}
 <p style="margin: 8px 0 0; font-size: 13px; font-family: 'Inter Tight', sans-serif;"><a style="color: #09274c; text-decoration: none;" href="${a.phoneHref}">${a.phoneDisplay}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a style="color: #09274c; text-decoration: none;" href="mailto:${senderEmail}">${senderEmail}</a></p>
+${a.socialLink ? `<p style="margin: 8px 0 0; font-size: 13px; font-family: 'Inter Tight', sans-serif;">Soy una persona real &mdash; conecte conmigo: <a style="color: #09274c; text-decoration: underline;" href="${a.socialLink}" target="_blank" rel="noopener">${a.socialLink}</a></p>` : ""}
 </td>
 </tr></tbody>
 </table>
@@ -735,6 +741,8 @@ export async function POST(request: NextRequest) {
     const IMAP_PASS = IMAP_PASSWORD_MAP[senderEmail] || config.imapPassword || domainDefaultPass
     const IMAP_HOST_RESOLVED = resolveImapHost(senderEmail)
     const agentProfile = configToAgentProfile(config)
+    // Per-agent consented social link (auto-appended to outgoing email, like SMS).
+    agentProfile.socialLink = (await getAgentSocialLink(config.email || userEmail)) || ""
 
     const leadData: Record<string, string> = {
       owner_name: String(lead.owner_name || ""),
