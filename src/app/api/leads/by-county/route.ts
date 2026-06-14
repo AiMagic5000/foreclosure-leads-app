@@ -178,36 +178,44 @@ const stateFipsMap: Record<string, string> = {
   '51': 'VA', '53': 'WA', '54': 'WV', '55': 'WI', '56': 'WY'
 }
 
+const norm = (s: string) =>
+  (s || "").toLowerCase().replace(/\b(county|parish|borough|census area|municipality|city and|city|of)\b/g, " ").replace(/[^a-z]/g, "")
+
 export async function GET() {
   try {
-    // TODO: Replace with actual database query when scraping system is connected
-    // Example query structure:
-    // const leads = await db.query(`
-    //   SELECT county_fips, county_name, state_abbr, COUNT(*) as lead_count
-    //   FROM foreclosure_leads
-    //   WHERE status = 'active'
-    //   GROUP BY county_fips, county_name, state_abbr
-    // `)
+    const { supabaseAdmin } = await import("@/lib/supabase")
+    // REAL total (exact count, not subject to row caps)
+    const { count: totalLeads } = await supabaseAdmin
+      .from("foreclosure_leads")
+      .select("*", { count: "exact", head: true })
 
-    const leadData: CountyLeadData[] = Object.entries(mockLeadCounts).map(([fips, leadCount]) => ({
-      fips,
-      name: countyNames[fips] || 'Unknown',
-      state: stateFipsMap[fips.substring(0, 2)] || 'Unknown',
-      leadCount,
-    }))
-
-    // Calculate total leads
-    const totalLeads = leadData.reduce((sum, county) => sum + county.leadCount, 0)
-    const countiesWithLeads = leadData.length
+    // REAL per-county counts, keyed "STATEABBR|normalizedcounty" — the map
+    // resolves these to FIPS client-side (geo.id) so coloring matches the total.
+    const leadsByName: Record<string, number> = {}
+    let from = 0
+    const PAGE = 1000
+    for (;;) {
+      const { data, error } = await supabaseAdmin
+        .from("foreclosure_leads")
+        .select("county,state_abbr")
+        .range(from, from + PAGE - 1)
+      if (error || !data || data.length === 0) break
+      for (const r of data as { county: string | null; state_abbr: string | null }[]) {
+        const st = (r.state_abbr || "").toUpperCase()
+        const c = norm(r.county || "")
+        if (st && c) { const k = st + "|" + c; leadsByName[k] = (leadsByName[k] || 0) + 1 }
+      }
+      if (data.length < PAGE) break
+      from += PAGE
+    }
 
     return NextResponse.json({
       success: true,
-      data: leadData,
-      meta: {
-        totalLeads,
-        countiesWithLeads,
-        lastUpdated: new Date().toISOString(),
-      }
+      totalLeads: totalLeads || 0,
+      leadsByName,
+      countiesWithLeads: Object.keys(leadsByName).length,
+      data: [] as CountyLeadData[],
+      meta: { totalLeads: totalLeads || 0, lastUpdated: new Date().toISOString() },
     })
   } catch (error) {
     console.error('Error fetching lead data by county:', error)

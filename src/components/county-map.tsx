@@ -118,7 +118,16 @@ export function CountyMap({
   // Where the user clicked (relative to the map container) so the detail popup
   // renders at the cursor instead of fixed at the bottom of the map.
   const [clickPos, setClickPos] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
-  const [leadData, setLeadData] = useState<Record<string, number>>({});
+  // Real per-county counts keyed "STATEABBR|normcounty" (from /api/leads/by-county),
+  // resolved to each geography's FIPS client-side so coloring matches the total.
+  const [leadsByName, setLeadsByName] = useState<Record<string, number>>({});
+  const normCounty = (s: string) =>
+    (s || "").toLowerCase().replace(/\b(county|parish|borough|census area|municipality|city and|city|of)\b/g, " ").replace(/[^a-z]/g, "");
+  const countFor = (fips: string, name?: string) => {
+    const code = STATE_FIPS_TO_CODE[fips?.toString().slice(0, 2)];
+    if (!code || !name) return 0;
+    return leadsByName[code + "|" + normCounty(name)] || 0;
+  };
   const [position, setPosition] = useState({ coordinates: [-96, 38] as [number, number], zoom: 1 });
   const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
   const [hoveredCountyName, setHoveredCountyName] = useState<string | null>(null);
@@ -133,30 +142,12 @@ export function CountyMap({
         const response = await fetch('/api/leads/by-county');
         if (response.ok) {
           const data = await response.json();
-          setLeadData(data.leadsByCounty || {});
+          setLeadsByName(data.leadsByName || {});
           setTotalLeads(data.totalLeads || 0);
         }
       } catch {
-        // Use mock data for demo
-        const mockData: Record<string, number> = {
-          '06037': 1247, // Los Angeles, CA
-          '48201': 892,  // Harris (Houston), TX
-          '04013': 743,  // Maricopa (Phoenix), AZ
-          '12086': 621,  // Miami-Dade, FL
-          '17031': 534,  // Cook (Chicago), IL
-          '06073': 478,  // San Diego, CA
-          '48113': 412,  // Dallas, TX
-          '53033': 389,  // King (Seattle), WA
-          '06059': 356,  // Orange, CA
-          '12011': 298,  // Broward, FL
-          '13121': 287,  // Fulton (Atlanta), GA
-          '32003': 245,  // Clark (Las Vegas), NV
-          '36047': 234,  // Kings (Brooklyn), NY
-          '48029': 221,  // Bexar (San Antonio), TX
-          '06065': 198,  // Riverside, CA
-        };
-        setLeadData(mockData);
-        setTotalLeads(Object.values(mockData).reduce((a, b) => a + b, 0));
+        setLeadsByName({});
+        setTotalLeads(0);
       }
     };
     fetchLeadData();
@@ -200,11 +191,11 @@ export function CountyMap({
   }), [isDark]);
 
   // Get color for county based on state type, fee cap, and lead count
-  const getCountyColor = (geo: { id: string }, isHovered: boolean = false) => {
+  const getCountyColor = (geo: { id: string; properties?: { name?: string } }, isHovered: boolean = false) => {
     const fips = geo.id;
     const stateFips = fips?.toString().slice(0, 2);
     const stateCode = STATE_FIPS_TO_CODE[stateFips];
-    const leads = leadData[fips] || 0;
+    const leads = countFor(fips, geo.properties?.name);
 
     const isJudicial = JUDICIAL_STATES.has(stateCode);
     const isFeeCapped = FEE_CAP_2500_STATES.has(stateCode);
@@ -238,7 +229,7 @@ export function CountyMap({
       fips,
       name: countyName,
       state: stateCode,
-      leadCount: leadData[fips] || 0,
+      leadCount: countFor(fips, countyName),
     };
 
     setSelectedCounty(countyData);
@@ -275,7 +266,7 @@ export function CountyMap({
     const data = {
       exportDate: new Date().toISOString(),
       totalLeads,
-      leadsByCounty: leadData,
+      leadsByCounty: leadsByName,
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
