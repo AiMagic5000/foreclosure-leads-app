@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, Info, Lock, Users, TrendingUp, Gavel, Home, Shield, Banknote, CalendarDays, BookOpen, AlertTriangle, Mail, Phone, Building2 } from "lucide-react"
+import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, Info, Lock, Users, TrendingUp, Gavel, Home, Shield, Banknote, CalendarDays, BookOpen, AlertTriangle, Mail, Phone, Building2, Eye, EyeOff } from "lucide-react"
 import { CountyMap } from "@/components/county-map"
 import { useUser } from "@clerk/nextjs"
 import { supabase } from "@/lib/supabase"
@@ -126,12 +126,34 @@ export default function StatesPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">State Information</h1>
-        <p className="text-muted-foreground">
-          Detailed foreclosure statutes and regulations for all 50 states
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">State Information</h1>
+          <p className="text-muted-foreground">
+            Detailed foreclosure statutes and regulations for all 50 states
+          </p>
+        </div>
+        {(isAdmin || isOwnerOperator) && (
+          <button
+            onClick={() => setPreviewFree((v) => !v)}
+            title="See exactly what free users see (blurred data + upgrade prompts)"
+            className={`shrink-0 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md border transition-colors ${
+              previewFree
+                ? "bg-amber-500 text-white border-amber-500 hover:bg-amber-600"
+                : "hover:bg-muted"
+            }`}
+          >
+            {previewFree ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+            {previewFree ? "Exit free preview" : "Preview as free user"}
+          </button>
+        )}
       </div>
+      {previewFree && (
+        <div className="flex items-center gap-2 text-sm rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-amber-700 dark:text-amber-400">
+          <Eye className="h-4 w-4 shrink-0" />
+          Free-user preview: statutes, contacts &amp; counts are blurred. This is what non-agents see.
+        </div>
+      )}
 
       {/* Filters */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
