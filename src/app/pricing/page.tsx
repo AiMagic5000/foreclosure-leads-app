@@ -30,7 +30,7 @@ export const metadata = {
   title:
     "Pricing -- Asset Recovery Agent Partnership | $995 Total Program Fee",
   description:
-    "Asset Recovery Agent Partnership: $995 total. Pay in full, three monthly payments of $331, or in-house financing. 50/50 split on 30% recovery fee, 50 exclusive leads per week, full training, automation, and MyStateFunds claim processing included.",
+    "Asset Recovery Agent Partnership: $995 total. Pay in full, three monthly payments of $331, or in-house financing. 50/50 split on 30% recovery fee, up to 125 exclusive leads per week, full training, automation, and MyStateFunds claim processing included.",
   keywords:
     "asset recovery agent partnership, surplus funds recovery program, foreclosure recovery, recovery agent business, asset recovery training",
 };
@@ -39,7 +39,8 @@ const ENROLL_URL =
   "https://stan.store/alliepearson/p/asset-recovery-agent-partnership";
 
 const programFeatures = [
-  "50 verified, exclusive leads per week (yours alone)",
+  "up to 125 verified, exclusive leads per week (500/month, yours alone)",
+  "Need more? Buy extra leads anytime for $5 each",
   "Certified letters mailed to your leads on your behalf",
   "Ongoing support -- phone, email, dashboard",
   "Full training program (audio, video, written)",
@@ -88,7 +89,7 @@ const faqs = [
   {
     question: "How many leads do I get?",
     answer:
-      "50 verified, exclusive foreclosure surplus fund leads per week. Exclusive means yours alone -- never shared with another agent. Each lead is skip-traced, DNC-scrubbed, and ready for outreach. Certified letters are mailed to each lead on your behalf with proof of service, jurisdiction language, and a free claims guide.",
+      "up to 125 verified, exclusive foreclosure surplus fund leads per week. Exclusive means yours alone -- never shared with another agent. Each lead is skip-traced, DNC-scrubbed, and ready for outreach. Certified letters are mailed to each lead on your behalf with proof of service, jurisdiction language, and a free claims guide.",
   },
   {
     question: "Do I need my own business or LLC?",
@@ -153,7 +154,7 @@ export default function PricingPage() {
             Asset Recovery Agent Partnership
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            $995 total program fee. 50/50 split on the recovery fee. 50
+            $995 total program fee. 50/50 split on the recovery fee. Up to 125
             exclusive leads per week. Everything you need to start closing
             recoveries.
           </p>

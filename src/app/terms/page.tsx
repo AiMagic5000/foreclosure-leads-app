@@ -254,7 +254,7 @@ export default function TermsOfService() {
 
                   <h3 className="text-lg font-bold text-[#1e3a5f] mb-2">3.3 What the Program Includes</h3>
                   <ul className="list-disc pl-6 space-y-2 text-slate-700 mb-4">
-                    <li>Fifty (50) verified, exclusive leads per week. "Exclusive" means each lead is assigned to a single agent and is not shared with other agents.</li>
+                    <li>Up to one hundred twenty-five (125) verified, exclusive leads per week. "Exclusive" means each lead is assigned to a single agent and is not shared with other agents.</li>
                     <li>Certified letters mailed to leads on the agent's behalf, with proof of service, jurisdiction language, and a free claims guide for the homeowner.</li>
                     <li>Ongoing support via phone, email, and the platform dashboard.</li>
                     <li>Full training program access (audio, video, and written materials).</li>
@@ -459,7 +459,7 @@ export default function TermsOfService() {
                     9. Lead Delivery
                   </h2>
                   <p className="text-slate-700 leading-relaxed mb-4">
-                    Enrolled agents receive fifty (50) verified leads per week, delivered through the platform dashboard. Each lead is exclusive to the agent to whom it is assigned and is not shared with any other agent. Leads are skip-traced and DNC-scrubbed prior to delivery.
+                    Enrolled agents receive up to one hundred twenty-five (125) verified leads per week, delivered through the platform dashboard. Each lead is exclusive to the agent to whom it is assigned and is not shared with any other agent. Leads are skip-traced and DNC-scrubbed prior to delivery.
                   </p>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     On the agent's behalf, the Company mails certified letters to the assigned leads, including proof of service, jurisdiction-appropriate language, and a free claims guide for the homeowner. The Company also runs ringless voicemail, SMS, and email drip outreach to the agent's leads using the agent's name and contact information.

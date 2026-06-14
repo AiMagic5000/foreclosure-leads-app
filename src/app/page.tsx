@@ -105,7 +105,8 @@ const PROGRAM = {
   commission: "50/50 Split on Recovery Fee",
   commissionNote: "You receive 50% and the company receives 50% of up to 30% of the recovery fee. Some jurisdictions like Texas cap recovery agent fees at 20%. Balance payments only come from cases you close.",
   features: [
-    "50 verified, exclusive leads per week (yours alone -- never shared with another agent)",
+    "up to 125 verified, exclusive leads per week (500/month) -- yours alone, never shared with another agent",
+    "Need more volume? Buy extra leads anytime for $5 each",
     "Certified letters mailed to your leads on your behalf, with proof of service, jurisdiction language, and a free claims guide",
     "Ongoing support -- phone, email, dashboard",
     "Full training program access (audio, video, written)",
@@ -136,11 +137,11 @@ const PARTNERSHIP_FAQ = [
   },
   {
     q: "What does my $995 program payment actually cover?",
-    a: "Your $995 covers the full program: 50 exclusive verified leads per week, certified letters mailed on your behalf, full training program access (audio/video/written), outreach automation (ringless voicemail, SMS, email drips loaded with your contact info), a dedicated landing page on USForeclosureRecovery.com, your own extension on our shared 800 number, a professional email at yourname@usforeclosurerecovery.com, dashboard-managed lead outreach, access to the registration inbox and lead-tracking back office, and free claim processing through MyStateFunds.com.",
+    a: "Your $995 covers the full program: up to 125 exclusive verified leads per week, certified letters mailed on your behalf, full training program access (audio/video/written), outreach automation (ringless voicemail, SMS, email drips loaded with your contact info), a dedicated landing page on USForeclosureRecovery.com, your own extension on our shared 800 number, a professional email at yourname@usforeclosurerecovery.com, dashboard-managed lead outreach, access to the registration inbox and lead-tracking back office, and free claim processing through MyStateFunds.com.",
   },
   {
     q: "How do I get leads?",
-    a: "You get 50 verified, exclusive leads assigned to your dashboard every week -- skip-traced, DNC-compliant, and yours alone. The automation system contacts them with your name and information before you even pick up the phone, and certified letters go out on your behalf.",
+    a: "You get up to 125 verified, exclusive leads assigned to your dashboard every week -- skip-traced, DNC-compliant, and yours alone. The automation system contacts them with your name and information before you even pick up the phone, and certified letters go out on your behalf.",
   },
   {
     q: "What payment options are available?",

@@ -288,9 +288,9 @@ const LEAD_LIMITS: Record<string, number> = {
   basic: 0,
   free: 0,
   free_webcast: 0,
-  partnership: 50,
-  junior_owner_operator: 50,
-  owner_operator: 100,
+  partnership: 125,
+  junior_owner_operator: 125,
+  owner_operator: 125,
   admin: 9999,
 }
 

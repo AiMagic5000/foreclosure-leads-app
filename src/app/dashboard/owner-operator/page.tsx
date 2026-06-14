@@ -10,7 +10,7 @@ const PRIMARY_FEATURES = [
   "Your own brand, LLC, EIN, and business bank account — set up for you",
   "A white-label website you own, fully refreshed with 6 months of SEO & AI optimization",
   "The complete built-in CRM wired into your site — you own the code, no $100+/mo rental",
-  "Up to 50 skip-traced leads per week for 3 months — every lead has a phone and an email, guaranteed",
+  "Up to 125 skip-traced leads per week for 3 months — every lead has a phone and an email, guaranteed",
   "One-click outreach on every lead: ringless voicemail, SMS, and ready-to-send email",
   "Email drafts in English and Spanish with the contingency agreement pre-filled and attached",
   "Certified-letter button — prints and mails certified from our office, tracking sent back to you",

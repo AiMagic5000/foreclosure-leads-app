@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
               <p style="margin:4px 0;"><strong>Email:</strong> ${emailLower}</p>
               <p style="margin:4px 0;"><strong>Temporary PIN:</strong> ${tempPassword}</p>
             </div>
-            <p><strong>Ready to access live leads?</strong> The Asset Recovery Agent Partnership gets you 50 exclusive leads per week, certified letters mailed on your behalf, and full outreach automation pre-configured. $995 total -- pay in full, three monthly payments of $331, or in-house financing.</p>
+            <p><strong>Ready to access live leads?</strong> The Asset Recovery Agent Partnership gets you up to 125 exclusive leads per week, certified letters mailed on your behalf, and full outreach automation pre-configured. $995 total -- pay in full, three monthly payments of $331, or in-house financing.</p>
             <p style="margin-top:12px;"><a href="https://usforeclosureleads.com/apply" style="display:inline-block;background:#d4a84b;color:#09274c;padding:12px 28px;text-decoration:none;font-weight:700;border-radius:6px;">ENROLL IN THE PARTNERSHIP</a></p>
             <p style="margin-top:20px;">Questions? Call us at <strong>(888) 545-8007</strong></p>
             <p>-- Corey Pearson<br/>Foreclosure Recovery Inc.</p>
