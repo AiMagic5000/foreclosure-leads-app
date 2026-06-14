@@ -8,9 +8,10 @@ import {
   Marker,
   ZoomableGroup,
 } from 'react-simple-maps';
-import { Search, RotateCcw, Download, X, MapPin, Phone, Mail, Globe, Users, FileText, Printer, Lock, ShieldAlert } from 'lucide-react';
+import { Search, RotateCcw, Download, X, MapPin, Phone, Mail, Globe, Users, FileText, Printer, Lock, ShieldAlert, Scale } from 'lucide-react';
 import { findCountyContact, type CountyContact } from '@/data/county-directory';
 import { findCountyCourtInfo, type CountyCourtInfo } from '@/data/county-court-directory';
+import { stateOverageGuide } from '@/data/state-overage-guide';
 
 // Judicial foreclosure states (require court process) - BLUE
 const JUDICIAL_STATES = new Set([
@@ -25,6 +26,10 @@ const NON_JUDICIAL_STATES = new Set([
   'MS', 'MO', 'MT', 'NV', 'NH', 'NC', 'OR', 'RI', 'TN', 'TX',
   'UT', 'VA', 'WA', 'WV', 'WY'
 ]);
+
+// Hybrid states allow BOTH judicial + non-judicial foreclosure (states.ts
+// foreclosureType: 'both'). Takes precedence over the binary sets in the badge.
+const HYBRID_STATES = new Set(['AR', 'HI', 'MD', 'MI', 'MN', 'OK', 'OR']);
 
 // States with $2,500 asset recovery agent fee cap - RED X warning
 const FEE_CAP_2500_STATES = new Set(['AZ', 'NV']);
@@ -638,14 +643,68 @@ export function CountyMap({
                 <span
                   className="text-sm font-medium px-2 py-0.5 rounded"
                   style={{
-                    backgroundColor: JUDICIAL_STATES.has(selectedCounty.state) ? theme.judicialBase : theme.nonJudicialBase,
+                    backgroundColor: HYBRID_STATES.has(selectedCounty.state)
+                      ? '#7c3aed'
+                      : JUDICIAL_STATES.has(selectedCounty.state)
+                      ? theme.judicialBase
+                      : theme.nonJudicialBase,
                     color: '#ffffff'
                   }}
                 >
-                  {JUDICIAL_STATES.has(selectedCounty.state) ? 'Judicial' : 'Non-Judicial'}
+                  {HYBRID_STATES.has(selectedCounty.state)
+                    ? 'Hybrid'
+                    : JUDICIAL_STATES.has(selectedCounty.state)
+                    ? 'Judicial'
+                    : 'Non-Judicial'}
                 </span>
               </div>
             </div>
+
+            {/* State Law — overage statutes (blurred for free users) */}
+            {(() => {
+              const og = stateOverageGuide[selectedCounty.state];
+              if (!og || (!og.taxOverageStatute && !og.mortgageOverageStatute && !og.notes)) return null;
+              return (
+                <div className="mt-3 pt-3 border-t" style={{ borderColor: theme.border }}>
+                  <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: theme.textSecondary }}>
+                    State Law — {STATE_NAMES[selectedCounty.state]}
+                  </p>
+                  <div className="relative">
+                    <div
+                      className={!isOwnerOperator ? 'space-y-1.5 pointer-events-none select-none' : 'space-y-1.5'}
+                      style={!isOwnerOperator ? { filter: 'blur(5px)' } : undefined}
+                    >
+                      {og.taxOverageStatute && (
+                        <div className="flex items-start gap-2 text-sm" style={{ color: theme.text }}>
+                          <Scale size={14} className="mt-0.5 shrink-0" style={{ color: theme.textSecondary }} />
+                          <span><span style={{ fontWeight: 600 }}>Tax overage:</span> {og.taxOverageStatute}</span>
+                        </div>
+                      )}
+                      {og.mortgageOverageStatute && (
+                        <div className="flex items-start gap-2 text-sm" style={{ color: theme.text }}>
+                          <FileText size={14} className="mt-0.5 shrink-0" style={{ color: theme.textSecondary }} />
+                          <span><span style={{ fontWeight: 600 }}>Mortgage overage:</span> {og.mortgageOverageStatute}</span>
+                        </div>
+                      )}
+                      {og.notes && (
+                        <p className="text-xs" style={{ color: theme.textSecondary }}>{og.notes}</p>
+                      )}
+                    </div>
+                    {!isOwnerOperator && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <a
+                          href="/dashboard/recovery-agent"
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-white px-3 py-1.5 rounded-md shadow-lg"
+                          style={{ backgroundColor: theme.accent }}
+                        >
+                          <Lock size={12} /> Upgrade to access
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Fee Cap Warning */}
             {FEE_CAP_2500_STATES.has(selectedCounty.state) && (
