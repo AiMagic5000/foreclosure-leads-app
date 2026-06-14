@@ -34,9 +34,10 @@ export default function ContingentAttorneysPage() {
               trusts@mytrustsoftware.com
             </a>{" "}
             with the subject line <strong>&ldquo;Att Net&rdquo;</strong>. We&apos;ll set up a My Trust
-            Software business email in your name so you can do outreach to the attorneys in our
-            network for the jurisdictions you&apos;re working.{" "}
-            <strong>You must be a registered Asset Recovery Agent with us to access the network.</strong>
+            Software business email in your name for the jurisdictions you&apos;re working.{" "}
+            <strong>You must be a registered Asset Recovery Agent or Owner Operator with us to access the network.</strong>{" "}
+            Once you&apos;re registered, <strong>we take care of the attorneys for you</strong> &mdash; you
+            just get the contingency agreement signed, and we handle everything else.
           </p>
         </div>
         <a
