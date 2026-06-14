@@ -33,6 +33,21 @@ export function PaymentMethodsNote({ compact = false }: { compact?: boolean }) {
           call (888) 545-8007
         </a>.
       </p>
+      <p className={`mx-auto mt-2 text-center ${compact ? 'text-[11px]' : 'text-xs'} text-slate-600`}>
+        <span className="font-bold">
+          <span style={{ color: '#1E3A5F' }}>Money </span>
+          <span style={{ color: '#dc2626' }}>Back </span>
+          <span style={{ color: '#2563eb' }}>Guarantee</span>
+        </span>{' '}
+        <a
+          href="https://usforeclosureleads.com/#guarantee"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-slate-500 underline underline-offset-2 hover:text-slate-700"
+        >
+          see details
+        </a>
+      </p>
     </div>
   )
 }

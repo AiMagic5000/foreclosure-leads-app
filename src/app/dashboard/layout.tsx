@@ -519,7 +519,23 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="lg:pl-64">
-        <header className={cn("sticky top-0 z-30 flex h-16 items-center gap-4 border-b px-4 lg:px-6", cardBg, borderColor)}>
+        <header className={cn("relative sticky top-0 z-30 flex h-16 items-center gap-4 border-b px-4 lg:px-6", cardBg, borderColor)}>
+          {/* Center: red/white/blue money-back guarantee (desktop only) */}
+          <a
+            href="https://usforeclosureleads.com/#guarantee"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Money Back Guarantee — see details"
+            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border-2 bg-white px-4 py-1 shadow-sm lg:flex"
+            style={{ borderColor: "#2563eb" }}
+          >
+            <span className="text-xs font-extrabold tracking-tight">
+              <span style={{ color: "#1E3A5F" }}>Money </span>
+              <span style={{ color: "#dc2626" }}>Back </span>
+              <span style={{ color: "#2563eb" }}>Guarantee</span>
+            </span>
+            <span className="text-[10px] text-slate-500 underline">see details</span>
+          </a>
           <button
             className="lg:hidden p-2 -ml-2"
             onClick={() => setSidebarOpen(true)}
