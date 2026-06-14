@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback, Suspense } from "react"
 import { AdminGate } from "@/components/admin-gate"
+import { leadEconomics, fmtUsd } from "@/lib/lead-economics"
 import Link from "next/link"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
@@ -787,10 +788,11 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
                 <p className="text-xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus)}</p>
                 <p className="text-xs text-muted-foreground">Est. Surplus</p>
               </div>
+              {(() => { const e = leadEconomics(lead.foreclosureDetails.estimatedSurplus, lead.stateAbbr); return (
               <div className="text-center">
-                <p className="text-xl font-bold text-emerald-700">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30)}</p>
-                <p className="text-xs text-muted-foreground">30% Service Fee</p>
-              </div>
+                <p className="text-xl font-bold text-blue-700">{e.agentCut != null ? fmtUsd(e.agentCut) : "—"}</p>
+                <p className="text-xs text-muted-foreground">Your cut (50%) · firm {e.capLabel}</p>
+              </div>) })()}
             </div>
           </div>
         </div>
@@ -956,14 +958,15 @@ function LeadDropdown({ lead, revealed, onReveal }: { lead: LeadData; revealed: 
                 <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus)}</p>
                 <p className="text-xs text-muted-foreground">Estimated Surplus</p>
               </div>
+              {(() => { const e = leadEconomics(lead.foreclosureDetails.estimatedSurplus, lead.stateAbbr); return (<>
               <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30)}</p>
-                <p className="text-xs text-muted-foreground">30% Service Fee</p>
+                <p className="text-2xl font-bold text-emerald-600">{e.firmCut != null ? fmtUsd(e.firmCut) : "—"}</p>
+                <p className="text-xs text-muted-foreground">Firm fee · {e.capLabel}</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30 * 0.85)}</p>
-                <p className="text-xs text-muted-foreground">Net (After Closer + Admin)</p>
-              </div>
+                <p className="text-2xl font-bold text-blue-700">{e.agentCut != null ? fmtUsd(e.agentCut) : "—"}</p>
+                <p className="text-xs text-muted-foreground">Your cut (50/50)</p>
+              </div></>) })()}
             </div>
           </div>
         </div>
