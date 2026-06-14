@@ -4,7 +4,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { UserButton, useUser } from "@clerk/nextjs"
+import { useUser } from "@clerk/nextjs"
+import { HeaderUserMenu } from "@/components/header-user-menu"
 import {
   Inbox,
   LayoutDashboard,
@@ -314,7 +315,6 @@ function BadgeLabel({ color, text }: { color: string; text: string }) {
 function DashboardInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const { accountType, banned, banReason, impersonating, clearImpersonation } = usePin()
-  const { user } = useUser()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -389,19 +389,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                 Exit impersonation &mdash; back to admin
               </button>
             ) : (
-              <div className="mt-5">
-                <UserButton
-                  afterSignOutUrl="/"
-                  appearance={{
-                    elements: {
-                      avatarBox: user && !user.hasImage
-                        ? "h-9 w-9 bg-white bg-[url('/images/fri-bird.png')] bg-contain bg-center bg-no-repeat"
-                        : "h-9 w-9",
-                      avatarImage: user && !user.hasImage ? "opacity-0" : "",
-                    },
-                  }}
-                />
-              </div>
+              <div className="mt-5"><HeaderUserMenu /></div>
             )}
           </div>
         </div>
@@ -649,20 +637,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
               )}
             </div>
 
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  // Only two avatars allowed: the user's real Google photo, or our
-                  // eagle. Never Clerk's purple default — when there's no real photo,
-                  // hide Clerk's image and show the eagle as the avatar background.
-                  avatarBox: user && !user.hasImage
-                    ? "h-9 w-9 bg-white bg-[url('/images/fri-bird.png')] bg-contain bg-center bg-no-repeat"
-                    : "h-9 w-9",
-                  avatarImage: user && !user.hasImage ? "opacity-0" : "",
-                },
-              }}
-            />
+            <HeaderUserMenu />
           </div>
         </header>
 
