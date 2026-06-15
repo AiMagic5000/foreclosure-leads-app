@@ -66,6 +66,7 @@ interface TrainingResource {
   file_type: string
   sort_order: number
   created_at: string
+  cover_url?: string | null
 }
 
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
@@ -860,6 +861,7 @@ export default function ClosingTrainingPage() {
                                       key={resource.id}
                                       displayName={resource.display_name}
                                       fileUrl={resource.file_url}
+                                      coverUrl={resource.cover_url}
                                       onDownload={() => handleDownload(resource)}
                                       onPrint={() => handlePrint(resource)}
                                       onDelete={isAdmin ? () => handleDeleteResource(resource.id) : undefined}

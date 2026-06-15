@@ -5,6 +5,7 @@ import { Download, Printer, X } from "lucide-react"
 interface ResourceFolderProps {
   displayName: string
   fileUrl: string
+  coverUrl?: string | null
   onDownload: () => void
   onPrint: () => void
   onDelete?: () => void
@@ -13,12 +14,13 @@ interface ResourceFolderProps {
 export function ResourceFolder({
   displayName,
   fileUrl,
+  coverUrl,
   onDownload,
   onPrint,
   onDelete,
 }: ResourceFolderProps) {
   return (
-    <div className="group relative flex flex-col items-center gap-2">
+    <div className="group relative flex flex-col items-center gap-3 rounded-xl border border-border bg-card/60 p-3 shadow-sm transition-shadow hover:shadow-md">
       {/* Admin delete button */}
       {onDelete && (
         <button
@@ -28,6 +30,24 @@ export function ResourceFolder({
           title="Delete resource"
         >
           <X className="h-3.5 w-3.5" />
+        </button>
+      )}
+
+      {/* Document cover preview (when available) */}
+      {coverUrl && (
+        <button
+          type="button"
+          onClick={onDownload}
+          className="block w-full overflow-hidden rounded-lg border border-border bg-white shadow-sm transition-transform hover:-translate-y-0.5"
+          title={`Open ${displayName}`}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={coverUrl}
+            alt={`${displayName} cover`}
+            className="w-full h-auto object-contain"
+            loading="lazy"
+          />
         </button>
       )}
 
