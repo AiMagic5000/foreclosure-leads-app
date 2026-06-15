@@ -29,7 +29,7 @@ export function DashboardGuideCard() {
         <span className="text-sm font-semibold text-slate-900">Free Agent Guide</span>
       </div>
 
-      <div className="mb-3 flex min-h-0 flex-1 items-center justify-center">
+      <div className="mb-3 flex min-h-0 flex-1 items-start justify-center">
         <button
           type="button"
           onClick={download}
