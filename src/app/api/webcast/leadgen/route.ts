@@ -158,13 +158,17 @@ export async function POST(req: NextRequest) {
       })
       userId = user.id
     } catch (err: unknown) {
-      const errors = (err as { errors?: Array<{ code?: string }> })?.errors || []
-      if (errors[0]?.code === 'form_identifier_exists') {
+      // createUser failed — by far the most common cause is a re-submitted lead
+      // whose email already exists. Clerk's exact error code/position varies, so
+      // don't depend on it: always try to resolve the existing user by email and
+      // reuse it. Only rethrow if no such user exists (a genuinely bad payload).
+      try {
         const existing = await client.users.getUserList({ emailAddress: [email] })
         userId = existing.data[0]?.id || null
-      } else {
-        throw err
+      } catch {
+        userId = null
       }
+      if (!userId) throw err
     }
     if (!userId) {
       return NextResponse.json({ error: 'Account creation failed' }, { status: 500 })
