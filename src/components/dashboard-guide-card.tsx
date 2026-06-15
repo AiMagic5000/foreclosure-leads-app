@@ -41,7 +41,7 @@ export function DashboardGuideCard() {
   const print = () => window.open(res.file_url, "_blank", "noopener,noreferrer")
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4">
+    <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4 lg:absolute lg:inset-0">
       <div className="mb-2 flex items-center gap-2">
         <FileText className="h-4 w-4 text-indigo-500" />
         <span className="text-sm font-semibold text-slate-900">Free Agent Guide</span>
@@ -52,14 +52,14 @@ export function DashboardGuideCard() {
           <button
             type="button"
             onClick={download}
-            className="block w-1/2 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-0.5"
+            className="flex max-h-full items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-0.5"
             title={`Open ${res.display_name}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={res.cover_url}
               alt={`${res.display_name} cover`}
-              className="h-auto w-full object-contain"
+              className="max-h-full w-auto max-w-full object-contain"
               loading="lazy"
             />
           </button>

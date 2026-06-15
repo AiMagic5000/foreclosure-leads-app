@@ -94,7 +94,11 @@ export function DashboardSectionVideo() {
           subtitle={cfg.subtitle}
           storageKey={`video-dismissed-${cfg.id}`}
         />
-        <DashboardGuideCard />
+        {/* lg:relative gives the absolute-filled guide card a context, so it can
+            only ever match the video cell's height (set by the video's 16:9). */}
+        <div className="lg:relative">
+          <DashboardGuideCard />
+        </div>
       </div>
     )
   }
