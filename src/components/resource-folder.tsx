@@ -20,7 +20,7 @@ export function ResourceFolder({
   onDelete,
 }: ResourceFolderProps) {
   return (
-    <div className="group relative flex flex-col items-center gap-3 rounded-xl border border-border bg-card/60 p-3 shadow-sm transition-shadow hover:shadow-md">
+    <div className="group relative flex items-center gap-4 rounded-xl border border-border bg-card/60 p-3 shadow-sm transition-shadow hover:shadow-md">
       {/* Admin delete button */}
       {onDelete && (
         <button
@@ -33,61 +33,64 @@ export function ResourceFolder({
         </button>
       )}
 
-      {/* Document cover preview (when available) */}
+      {/* Document cover preview — sits to the LEFT of the folder (when available) */}
       {coverUrl && (
         <button
           type="button"
           onClick={onDownload}
-          className="block w-full overflow-hidden rounded-lg border border-border bg-white shadow-sm transition-transform hover:-translate-y-0.5"
+          className="block w-24 shrink-0 self-stretch overflow-hidden rounded-lg border border-border bg-white shadow-sm transition-transform hover:-translate-y-0.5 sm:w-28"
           title={`Open ${displayName}`}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={coverUrl}
             alt={`${displayName} cover`}
-            className="w-full h-auto object-contain"
+            className="h-auto w-full object-contain"
             loading="lazy"
           />
         </button>
       )}
 
-      {/* Animated folder */}
-      <div className="folder-wrapper cursor-pointer" onClick={onDownload}>
-        <div className="folder">
-          <div className="folder-back" />
-          <div className="folder-paper">
-            <div className="folder-paper-line" />
-            <div className="folder-paper-line" />
-            <div className="folder-paper-line" />
+      {/* Folder + name + action buttons */}
+      <div className="flex flex-1 flex-col items-center gap-2">
+        {/* Animated folder */}
+        <div className="folder-wrapper cursor-pointer" onClick={onDownload}>
+          <div className="folder">
+            <div className="folder-back" />
+            <div className="folder-paper">
+              <div className="folder-paper-line" />
+              <div className="folder-paper-line" />
+              <div className="folder-paper-line" />
+            </div>
+            <div className="folder-front" />
+            <div className="folder-tab" />
           </div>
-          <div className="folder-front" />
-          <div className="folder-tab" />
         </div>
-      </div>
 
-      {/* File name */}
-      <p className="text-xs text-center font-medium text-muted-foreground leading-tight break-words w-full">
-        {displayName}
-      </p>
+        {/* File name */}
+        <p className="text-xs text-center font-medium text-muted-foreground leading-tight break-words w-full">
+          {displayName}
+        </p>
 
-      {/* Action buttons */}
-      <div className="flex items-center gap-1.5">
-        <button
-          type="button"
-          onClick={onDownload}
-          className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-600 text-white text-[10px] font-medium hover:bg-indigo-700 transition-colors"
-        >
-          <Download className="h-3 w-3" />
-          Download
-        </button>
-        <button
-          type="button"
-          onClick={onPrint}
-          className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-600 text-white text-[10px] font-medium hover:bg-slate-700 transition-colors"
-        >
-          <Printer className="h-3 w-3" />
-          Print
-        </button>
+        {/* Action buttons */}
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={onDownload}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-600 text-white text-[10px] font-medium hover:bg-indigo-700 transition-colors"
+          >
+            <Download className="h-3 w-3" />
+            Download
+          </button>
+          <button
+            type="button"
+            onClick={onPrint}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-600 text-white text-[10px] font-medium hover:bg-slate-700 transition-colors"
+          >
+            <Printer className="h-3 w-3" />
+            Print
+          </button>
+        </div>
       </div>
 
       {/* Folder CSS */}

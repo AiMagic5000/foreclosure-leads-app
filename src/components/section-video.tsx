@@ -76,8 +76,8 @@ export function SectionVideo({ src, poster, title, subtitle, storageKey, fit = "
         <div className="w-full px-4 pb-4 sm:px-5">
           <div className={aside ? "flex flex-col gap-4 lg:flex-row lg:items-stretch" : ""}>
             <div
-              className={`relative aspect-video w-full overflow-hidden rounded-xl bg-slate-900 ${
-                aside ? "lg:min-w-0 lg:flex-1" : "max-w-3xl"
+              className={`relative aspect-video overflow-hidden rounded-xl bg-slate-900 ${
+                aside ? "w-full lg:w-auto lg:max-w-3xl lg:flex-[0_1_48rem]" : "w-full max-w-3xl"
               }`}
             >
               <video
@@ -101,7 +101,7 @@ export function SectionVideo({ src, poster, title, subtitle, storageKey, fit = "
                 </button>
               )}
             </div>
-            {aside && <div className="w-full lg:w-72 lg:flex-none">{aside}</div>}
+            {aside && <div className="w-full lg:min-w-0 lg:flex-1">{aside}</div>}
           </div>
         </div>
       )}
