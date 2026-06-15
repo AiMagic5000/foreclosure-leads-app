@@ -560,13 +560,9 @@ export default function ClosingTrainingPage() {
 
   function handleDownload(resource: TrainingResource) {
     if (!hasResourceAccess(selectedModule)) { setShowAccessPopup("RESOURCE"); return }
-    const a = document.createElement("a")
-    a.href = resource.file_url
-    a.download = resource.file_name
-    a.target = "_blank"
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
+    // Open the document in the browser so the user can read it; the in-browser
+    // viewer still offers its own download/print.
+    window.open(resource.file_url, "_blank", "noopener,noreferrer")
   }
 
   function handlePrint(resource: TrainingResource) {
@@ -1451,6 +1447,7 @@ export default function ClosingTrainingPage() {
                               key={resource.id}
                               displayName={resource.display_name}
                               fileUrl={resource.file_url}
+                              coverUrl={resource.cover_url}
                               onDownload={() => handleDownload(resource)}
                               onPrint={() => handlePrint(resource)}
                               onDelete={isAdmin ? () => handleDeleteResource(resource.id) : undefined}

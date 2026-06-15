@@ -16,15 +16,11 @@ const GUIDE = {
  * in the dashboard layout — the cover scales to fit).
  */
 export function DashboardGuideCard() {
-  const download = () => {
-    const a = document.createElement("a")
-    a.href = GUIDE.pdf
-    a.download = "Allie-Call-Training-Guide.pdf"
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-  }
-  const print = () => window.open(GUIDE.pdf, "_blank", "noopener,noreferrer")
+  // Open the guide in the browser so the user can read it; the in-browser PDF
+  // viewer still offers its own download + print.
+  const open = () => window.open(GUIDE.pdf, "_blank", "noopener,noreferrer")
+  const download = open
+  const print = open
 
   return (
     <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4 lg:absolute lg:inset-0">

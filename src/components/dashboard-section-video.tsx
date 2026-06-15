@@ -86,7 +86,7 @@ export function DashboardSectionVideo() {
   // matches the video card's height. Stacks underneath on mobile.
   if (pathname === "/dashboard") {
     return (
-      <div className="mb-6 grid gap-4 lg:grid-cols-2 lg:items-stretch">
+      <div className="mb-6 grid gap-4 lg:grid-cols-[2fr_1fr] lg:items-stretch">
         <SectionVideo
           src={`/videos/${cfg.id}-16x9.mp4`}
           poster={`/videos/${cfg.id}-poster.jpg`}
