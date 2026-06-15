@@ -34,6 +34,29 @@ async function credFlags(pinId: string | null): Promise<{ hasSlybroadcast: boole
   }
 }
 
+// The Clerk dev->prod migration left duplicate rows per email (a paid one and a
+// downgraded free one). A login must ALWAYS resolve to the highest-access row,
+// never an arbitrary/duplicate one — otherwise paid users get locked out.
+const TIER_RANK: Record<string, number> = { owner_operator: 0, multi_state: 1, partnership: 2, free: 9 }
+const ACCT_RANK: Record<string, number> = { admin: 0, owner_operator: 1, junior_owner_operator: 2, partnership: 3, basic: 9 }
+const PKG_RANK: Record<string, number> = { owner_operator: 0, junior_owner_operator: 1, multi_state: 1, partnership: 2 }
+
+function pickBestUser<T extends { subscription_tier?: string | null; account_type?: string | null }>(rows: T[]): T | null {
+  return [...rows].sort((a, b) =>
+    (TIER_RANK[a?.subscription_tier ?? ''] ?? 5) - (TIER_RANK[b?.subscription_tier ?? ''] ?? 5) ||
+    (ACCT_RANK[a?.account_type ?? ''] ?? 5) - (ACCT_RANK[b?.account_type ?? ''] ?? 5)
+  )[0] || null
+}
+
+function pickBestPin<T extends { package_type?: string | null; slybroadcast_email?: string | null; textbee_api_key?: string | null }>(rows: T[]): T | null {
+  return [...rows].sort((a, b) => {
+    const ca = (a?.slybroadcast_email ? 1 : 0) + (a?.textbee_api_key ? 1 : 0)
+    const cb = (b?.slybroadcast_email ? 1 : 0) + (b?.textbee_api_key ? 1 : 0)
+    if (cb !== ca) return cb - ca
+    return (PKG_RANK[a?.package_type ?? ''] ?? 5) - (PKG_RANK[b?.package_type ?? ''] ?? 5)
+  })[0] || null
+}
+
 export async function GET(req: NextRequest) {
   const user = await currentUser()
   if (!user) {
@@ -87,17 +110,22 @@ export async function GET(req: NextRequest) {
     })
   }
 
-  // Normal (self) resolution.
-  const [{ data }, { data: pinData }] = await Promise.all([
-    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, phone_verified, profile_phone, banned, ban_reason').ilike('email', email).limit(1).maybeSingle(),
-    supabaseAdmin.from('user_pins').select('id, package_type, states_access, is_active, role').ilike('email', email).eq('is_active', true).single(),
+  // Normal (self) resolution. Fetch ALL rows for the email (duplicates exist) and
+  // pick the best — never .single() (throws on dupes) or limit(1) (arbitrary).
+  const [{ data: userRows }, { data: pinRows }] = await Promise.all([
+    supabaseAdmin.from('users').select('role, subscription_tier, account_type, training_unlocked, phone_verified, profile_phone, banned, ban_reason').ilike('email', email),
+    supabaseAdmin.from('user_pins').select('id, package_type, states_access, is_active, role, slybroadcast_email, textbee_api_key').ilike('email', email).eq('is_active', true),
   ])
+  const data = pickBestUser(userRows || [])
+  const pinData = pickBestPin(pinRows || [])
 
   const isAdmin = realIsAdmin
   const subscriptionTier = data?.subscription_tier || 'free'
   const accountType = pinData?.package_type || data?.account_type || 'basic'
   const pinId = pinData?.id || null
   const statesAccess = pinData?.states_access || []
+  // training unlocked if ANY duplicate row has it
+  const trainingUnlocked = (userRows || []).some((r) => r?.training_unlocked)
   const selfFlags = await credFlags(pinId)
 
   return NextResponse.json({
@@ -111,7 +139,7 @@ export async function GET(req: NextRequest) {
     accountType,
     pinId,
     statesAccess,
-    trainingUnlocked: !!data?.training_unlocked,
+    trainingUnlocked,
     hasPhone: !!data?.phone_verified,
     ...effectiveBan(data),
   })

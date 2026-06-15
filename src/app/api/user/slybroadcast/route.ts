@@ -7,13 +7,15 @@ import { notifyAccountActivity } from "@/lib/email"
 export const dynamic = "force-dynamic"
 
 async function pinForUser(email: string) {
+  // Dup pins can exist per email — never .single() (throws). Prefer the pin that
+  // already has SlyBroadcast creds, else the first active one.
   const { data } = await supabaseAdmin
     .from("user_pins")
     .select("id, email, slybroadcast_email, slybroadcast_password")
     .ilike("email", email)
     .eq("is_active", true)
-    .single()
-  return data
+  const rows = data || []
+  return rows.find((r) => r.slybroadcast_email && r.slybroadcast_password) || rows[0] || null
 }
 
 async function pinById(id: string) {
