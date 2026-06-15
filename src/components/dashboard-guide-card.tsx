@@ -41,34 +41,30 @@ export function DashboardGuideCard() {
   const print = () => window.open(res.file_url, "_blank", "noopener,noreferrer")
 
   return (
-    <div className="flex flex-col rounded-xl border border-border bg-card/60 p-4 shadow-sm">
-      <div className="mb-3 flex items-center gap-2">
+    <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4">
+      <div className="mb-2 flex items-center gap-2">
         <FileText className="h-4 w-4 text-indigo-500" />
-        <span className="text-sm font-semibold">Free Agent Guide</span>
+        <span className="text-sm font-semibold text-slate-900">Free Agent Guide</span>
       </div>
 
       {res.cover_url && (
         <button
           type="button"
           onClick={download}
-          className="mb-3 block overflow-hidden rounded-lg border border-border bg-white shadow-sm transition-transform hover:-translate-y-0.5"
+          className="mb-3 flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-0.5"
           title={`Open ${res.display_name}`}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={res.cover_url}
             alt={`${res.display_name} cover`}
-            className="h-auto w-full object-contain"
+            className="max-h-full w-auto max-w-full object-contain"
             loading="lazy"
           />
         </button>
       )}
 
-      <p className="mb-3 break-words text-xs font-medium leading-tight text-muted-foreground">
-        {res.display_name}
-      </p>
-
-      <div className="mt-auto flex items-center gap-2">
+      <div className="mt-auto flex flex-none items-center gap-2">
         <button
           type="button"
           onClick={download}
