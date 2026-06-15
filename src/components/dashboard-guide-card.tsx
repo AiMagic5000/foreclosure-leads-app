@@ -48,20 +48,22 @@ export function DashboardGuideCard() {
       </div>
 
       {res.cover_url && (
-        <button
-          type="button"
-          onClick={download}
-          className="mb-3 flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-0.5"
-          title={`Open ${res.display_name}`}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={res.cover_url}
-            alt={`${res.display_name} cover`}
-            className="max-h-full w-auto max-w-full object-contain"
-            loading="lazy"
-          />
-        </button>
+        <div className="mb-3 flex min-h-0 flex-1 items-center justify-center">
+          <button
+            type="button"
+            onClick={download}
+            className="block w-1/2 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-0.5"
+            title={`Open ${res.display_name}`}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={res.cover_url}
+              alt={`${res.display_name} cover`}
+              className="h-auto w-full object-contain"
+              loading="lazy"
+            />
+          </button>
+        </div>
       )}
 
       <div className="mt-auto flex flex-none items-center gap-2">
