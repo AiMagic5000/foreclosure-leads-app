@@ -29,18 +29,18 @@ export function DashboardGuideCard() {
         <span className="text-sm font-semibold text-slate-900">Free Agent Guide</span>
       </div>
 
-      <div className="mb-3 flex min-h-0 flex-1 items-start justify-center">
+      <div className="mb-3 min-h-0 flex-1">
         <button
           type="button"
           onClick={download}
-          className="flex max-h-full items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-0.5"
+          className="block h-full w-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-0.5"
           title={`Open ${GUIDE.name}`}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={GUIDE.cover}
             alt={`${GUIDE.name} cover`}
-            className="max-h-full w-auto max-w-full object-contain"
+            className="h-full w-full object-contain object-top"
             loading="lazy"
           />
         </button>
