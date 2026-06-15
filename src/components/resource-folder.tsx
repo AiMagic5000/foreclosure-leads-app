@@ -52,7 +52,7 @@ export function ResourceFolder({
       )}
 
       {/* Folder + name + action buttons */}
-      <div className="flex flex-1 flex-col items-center gap-2">
+      <div className="flex min-w-0 flex-1 flex-col items-center gap-2">
         {/* Animated folder */}
         <div className="folder-wrapper cursor-pointer" onClick={onDownload}>
           <div className="folder">
@@ -73,7 +73,7 @@ export function ResourceFolder({
         </p>
 
         {/* Action buttons */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center justify-center gap-1.5">
           <button
             type="button"
             onClick={onDownload}

@@ -851,7 +851,7 @@ export default function ClosingTrainingPage() {
                                   <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
                                 </div>
                               ) : resources.length > 0 ? (
-                                <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                   {resources.map((resource) => (
                                     <ResourceFolder
                                       key={resource.id}
@@ -1441,7 +1441,7 @@ export default function ClosingTrainingPage() {
                           <Loader2 className="h-6 w-6 animate-spin text-indigo-500" />
                         </div>
                       ) : resources.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {resources.map((resource) => (
                             <ResourceFolder
                               key={resource.id}

@@ -5,9 +5,9 @@ import { Download, Printer, FileText } from "lucide-react"
 // The dashboard guide is INDEPENDENT of the training-module resources. It points
 // at its own hosted PDF + cover so changing a training doc never affects it.
 const GUIDE = {
-  name: "Agent Overview — Common Questions & Answers",
-  cover: "/guides/allie-call-training-cover.jpg",
-  pdf: "/guides/allie-call-training-guide.pdf",
+  name: "Asset Recovery Agent — Quick Start",
+  cover: "/guides/asset-recovery-quick-start-cover.jpg",
+  pdf: "/guides/asset-recovery-quick-start.pdf",
 }
 
 /**
