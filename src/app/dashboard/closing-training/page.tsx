@@ -311,11 +311,11 @@ export default function ClosingTrainingPage() {
     if (isFreePreview(mod)) return true
     return tierAllowed(mod)
   }
-  // Resources are PAID-ONLY across EVERY module — including the free preview's.
-  // No free/basic tier gets resources from any video. Module/video access and
-  // phone number are irrelevant here; only a paid agent tier unlocks resources.
-  function hasResourceAccess(_mod: TrainingModule | null): boolean {
+  // Module 1 (the free preview) resources download for ANY tier — including free/basic.
+  // Every OTHER module's resources stay paid-only (partnership / owner_operator).
+  function hasResourceAccess(mod: TrainingModule | null): boolean {
     if (effectiveIsAdmin || trainingUnlocked) return true
+    if (isFreePreview(mod)) return true
     return accountType === "partnership" || accountType === "owner_operator" || accountType === "junior_owner_operator"
   }
 
