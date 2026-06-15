@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation"
 import { SectionVideo } from "./section-video"
+import { DashboardGuideCard } from "./dashboard-guide-card"
 
 /**
  * Renders the matching section-overview video for the current dashboard route.
@@ -79,6 +80,25 @@ export function DashboardSectionVideo() {
 
   const cfg = pathname ? MAP[pathname] : undefined
   if (!cfg) return null
+
+  // Main dashboard: top video on the left, the downloadable guide card on the
+  // right (desktop). On mobile the grid collapses so the guide + its buttons
+  // stack underneath the video.
+  if (pathname === "/dashboard") {
+    return (
+      <div className="mb-6 grid gap-4 lg:grid-cols-[2fr_1fr] lg:items-start">
+        <SectionVideo
+          src={`/videos/${cfg.id}-16x9.mp4`}
+          poster={`/videos/${cfg.id}-poster.jpg`}
+          title={cfg.title}
+          subtitle={cfg.subtitle}
+          storageKey={`video-dismissed-${cfg.id}`}
+        />
+        <DashboardGuideCard />
+      </div>
+    )
+  }
+
   return (
     <div className="mb-6">
       <SectionVideo
