@@ -12,6 +12,35 @@ Disallow: /api/
 Disallow: /sign-in
 Disallow: /sign-up
 
+# Social link-preview scrapers — must read OG tags on ANY shared page
+# (incl. /sign-in, /webcast) even though those are blocked for search indexers.
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: facebookcatalog/1.0
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: Slackbot-LinkExpanding
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
 # AI Crawlers - Welcome!
 User-agent: GPTBot
 Allow: /
