@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, type ReactNode } from "react"
+import { useState, useRef } from "react"
 import { Play, ChevronDown } from "lucide-react"
 
 interface SectionVideoProps {
@@ -12,9 +12,6 @@ interface SectionVideoProps {
   storageKey: string
   /** "contain" shows the full frame (no edge cropping) for sources wider than 16:9. */
   fit?: "cover" | "contain"
-  /** optional side panel rendered inside the same card, right of the video
-   *  (desktop) / under it (mobile), stretched to the video's height. */
-  aside?: ReactNode
 }
 
 /**
@@ -25,7 +22,7 @@ interface SectionVideoProps {
  * reopen). Click-to-play with sound; the video pauses when collapsed.
  * Left-aligned, brand styled (white card, red #D82221 + blue #2563eb).
  */
-export function SectionVideo({ src, poster, title, subtitle, storageKey, fit = "cover", aside }: SectionVideoProps) {
+export function SectionVideo({ src, poster, title, subtitle, storageKey, fit = "cover" }: SectionVideoProps) {
   // Lazy init from storage (SSR-safe) — avoids setState-in-effect.
   const [collapsed, setCollapsed] = useState<boolean>(() => {
     if (typeof window === "undefined") return false
@@ -74,34 +71,27 @@ export function SectionVideo({ src, poster, title, subtitle, storageKey, fit = "
       {/* collapsible body */}
       {!collapsed && (
         <div className="w-full px-4 pb-4 sm:px-5">
-          <div className={aside ? "flex flex-col gap-4 lg:flex-row lg:items-stretch" : ""}>
-            <div
-              className={`relative aspect-video overflow-hidden rounded-xl bg-slate-900 ${
-                aside ? "w-full lg:w-auto lg:max-w-3xl lg:flex-[0_1_48rem]" : "w-full max-w-3xl"
-              }`}
-            >
-              <video
-                ref={videoRef}
-                src={src}
-                poster={poster}
-                controls={playing}
-                preload="metadata"
-                playsInline
-                className={`h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
-              />
-              {!playing && (
-                <button
-                  onClick={play}
-                  aria-label="Play overview video"
-                  className="group absolute inset-0 flex items-center justify-center bg-slate-900/10 transition hover:bg-slate-900/0"
-                >
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#D82221] shadow-lg transition group-hover:scale-105 sm:h-20 sm:w-20">
-                    <Play className="ml-1 h-7 w-7 fill-white text-white sm:h-9 sm:w-9" />
-                  </span>
-                </button>
-              )}
-            </div>
-            {aside && <div className="w-full lg:min-w-0 lg:flex-1">{aside}</div>}
+          <div className="relative aspect-video w-full max-w-3xl overflow-hidden rounded-xl bg-slate-900">
+            <video
+              ref={videoRef}
+              src={src}
+              poster={poster}
+              controls={playing}
+              preload="metadata"
+              playsInline
+              className={`h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
+            />
+            {!playing && (
+              <button
+                onClick={play}
+                aria-label="Play overview video"
+                className="group absolute inset-0 flex items-center justify-center bg-slate-900/10 transition hover:bg-slate-900/0"
+              >
+                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#D82221] shadow-lg transition group-hover:scale-105 sm:h-20 sm:w-20">
+                  <Play className="ml-1 h-7 w-7 fill-white text-white sm:h-9 sm:w-9" />
+                </span>
+              </button>
+            )}
           </div>
         </div>
       )}
