@@ -289,6 +289,14 @@ export default function ClosingTrainingPage() {
     return !!mod && modules.length > 0 && mod.id === modules[0].id
   }
 
+  // A module is FREE to watch for any tier when it's the free preview OR its
+  // access level includes the basic (free) tier. Drives the red "FREE" menu label.
+  function isFreeModule(mod: TrainingModule): boolean {
+    if (isFreePreview(mod)) return true
+    const levels = mod.access_level || ["basic", "partnership", "owner_operator", "admin"]
+    return levels.includes("basic")
+  }
+
   // Admin: swap a module's sort_order with its neighbor to reorder the list.
   async function moveModule(idx: number, dir: "up" | "down") {
     const swapIdx = dir === "up" ? idx - 1 : idx + 1
@@ -684,7 +692,12 @@ export default function ClosingTrainingPage() {
                         >
                           {mod.title}
                         </p>
-                        <span className="text-xs text-muted-foreground">{mod.duration}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {mod.duration}
+                          {isFreeModule(mod) && (
+                            <span className="ml-2 font-bold uppercase tracking-wide text-red-600">Free</span>
+                          )}
+                        </span>
                       </div>
                       <div className="shrink-0 flex items-center gap-1.5">
                         {effectiveIsAdmin && (
