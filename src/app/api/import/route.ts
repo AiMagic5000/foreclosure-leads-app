@@ -6,6 +6,13 @@ import { isRequestAdmin } from "@/lib/admin-guard"
 
 const ADMIN_EMAIL_LOWER = "coreypearsonemail@gmail.com"
 
+// Paid plans allowed to import their OWN leads. "basic"/"free_webcast" are NOT paid.
+const PAID_PACKAGES = new Set([
+  "partnership",
+  "junior_owner_operator",
+  "owner_operator",
+  "admin",
+])
 
 // Canonical field keys the client maps CSV columns to.
 type CanonicalRow = {
@@ -74,14 +81,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Gate: lead assignment is ADMIN-ONLY. Importing creates operator_lead_assignments
-    // (it assigns the imported leads to an operator), so only the primary admin may do
-    // it — agents can no longer self-import/self-assign leads.
-    if (!isAdminUser) {
-      return NextResponse.json(
-        { error: "Lead assignment is handled by the admin. Contact support to have leads added to your account." },
-        { status: 403 }
-      )
+    // Gate: paid plans only. Basic / free are rejected with an upgrade prompt.
+    // Paid agents may import THEIR OWN leads (and have them show in My Leads).
+    // Company-pipeline assignment stays admin-only (Fresh Leads / leads-assign).
+    if (!isAdminUser && !PAID_PACKAGES.has(config.packageType)) {
+      return NextResponse.json({ error: "upgrade_required" }, { status: 403 })
     }
 
     const operatorPinId = config.pinId
