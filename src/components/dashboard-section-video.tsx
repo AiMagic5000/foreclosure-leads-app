@@ -40,6 +40,12 @@ const MY_LEADS_VIDEOS = [
   { src: "https://seafile.alwaysencrypted.com/f/d271ac1bc0d64730b64b/?dl=1", poster: "/videos/my-leads-walkthrough-poster.jpg", id: "my-leads-walkthrough", title: "Full My Leads walkthrough", subtitle: "Corey works the tab end to end — every button, every play, real leads." },
 ]
 
+// SMS page: the how-to overview first (left), the original overview second (right).
+const SMS_VIDEOS = [
+  { id: "sms-overview", title: "How your SMS texting works — start here", subtitle: "A quick walkthrough: what you need and how to connect." },
+  { id: "sms-messages", title: "Every text in one inbox", subtitle: "Replies route to you, threaded by homeowner, in real time." },
+]
+
 export function DashboardSectionVideo() {
   const pathname = usePathname()
 
@@ -55,6 +61,23 @@ export function DashboardSectionVideo() {
             subtitle={v.subtitle}
             storageKey={`video-dismissed-${v.id}`}
             fit={v.id === "my-leads-walkthrough" ? "contain" : "cover"}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  if (pathname === "/dashboard/sms-messages") {
+    return (
+      <div className="mb-6 grid gap-4 lg:grid-cols-2">
+        {SMS_VIDEOS.map((v) => (
+          <SectionVideo
+            key={v.id}
+            src={`/videos/${v.id}-16x9.mp4`}
+            poster={`/videos/${v.id}-poster.jpg`}
+            title={v.title}
+            subtitle={v.subtitle}
+            storageKey={`video-dismissed-${v.id}`}
           />
         ))}
       </div>
