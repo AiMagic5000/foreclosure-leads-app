@@ -80,7 +80,6 @@ const navSections: NavSection[] = [
       { name: "State Laws", href: "/dashboard/states", icon: Map },
       { name: "State Rules", href: "/dashboard/admin/state-rules", icon: Scale, badge: { text: "Paid", color: "violet" } },
       { name: "My Leads", href: "/dashboard/my-leads", icon: FileStack, badge: { text: "New", color: "emerald" } },
-      { name: "Import Leads", href: "/dashboard/import", icon: Upload, badge: { text: "Paid", color: "violet" } },
     ],
   },
   {
@@ -125,6 +124,7 @@ const navSections: NavSection[] = [
       // Lead sources
       { name: "Fresh Leads", href: "/dashboard/admin/fresh-leads", icon: Inbox, badge: { text: "Issue", color: "emerald" } },
       { name: "Foreclosure Leads", href: "/dashboard/leads", icon: Users },
+      { name: "Import Leads", href: "/dashboard/import", icon: Upload, badge: { text: "Admin", color: "red" } },
       { name: "Pre-Foreclosure", href: "/dashboard/pre-foreclosure", icon: Gavel, badge: { text: "New", color: "orange" } },
       { name: "Title Leads", href: "/dashboard/title-leads", icon: Building2, badge: { text: "5%", color: "cyan" } },
       { name: "Real Estate Leads", href: "/dashboard/real-estate-leads", icon: TrendingUp, badge: { text: "8%", color: "orange" } },
