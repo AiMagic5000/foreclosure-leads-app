@@ -160,46 +160,44 @@ ${P(`Once you are logged in, click <strong style="color:#1a7a3a;">Live Webcast</
 </td></tr></tbody></table>`,
     },
     1: {
-      subject: `${fn}, have you added your phone yet?`,
-      preheader: 'One quick step unlocks all your free training videos and the resources under each.',
-      label: 'Follow-Up: Unlock Training',
+      subject: `${fn}, your free training is waiting`,
+      preheader: 'Log in and open Free Training — the videos and guides, at no cost.',
+      label: 'Follow-Up: Your Training',
       eyebrow: 'Quick Reminder',
-      heading: 'One Step Away From Your Free<br />Training Videos',
+      heading: 'Your Free Training Is Ready<br />Whenever You Are',
       content: `
 ${P(`Hi ${fn},`)}
-${P(`Your free account is ready, but your training is still locked behind one quick step: <strong style="color:#1a7a3a;">add your phone number in the My Account tab</strong>.`)}
-${P(`The moment you do, every free training video opens up &mdash; along with the downloadable guides under each one so you can research the process and confirm you qualify to make claims.`)}
-${BTN('▶&nbsp; Add Your Phone &amp; Unlock Training', `${APP}/dashboard/settings`, '#1a7a3a')}
-${NOTE(`Add it once. No spam, no commitment &mdash; just full access to your free training.`)}
-${P(`<strong style="color:#09274c;">Got interrupted or distracted during the webcast?</strong> No problem &mdash; here is the quick recap, and you can watch the full session anytime you have a few minutes.`)}
-<img src="${APP}/images/foreclosure-surplus-math.jpg" alt="The foreclosure surplus math: $120,000 average surplus times a 30% recovery fee equals $36,000 per claim" width="520" style="display:block;width:520px;max-width:100%;height:auto;border-radius:8px;margin:0 0 8px;border:1px solid #dce1e8;" />
-${BTN('▶&nbsp; Watch the Full Webcast', `${APP}/dashboard/live-webcast`, '#09274c')}`,
+${P(`Your free account is ready to go. Log in anytime, open <strong style="color:#1a7a3a;">Free Training</strong> in the left-side menu, and start the videos.`)}
+${P(`Each video has guides you can download. They walk you through how surplus recovery works and how to confirm a claimant has proper standing &mdash; everything you need to research it for yourself.`)}
+${BTN('Log In and Start Training', SIGNIN, '#1a7a3a')}
+${P(`<strong style="color:#09274c;">Missed part of the webcast?</strong> Here is the quick recap, and you can watch the full session anytime from your dashboard.`)}
+<img src="${APP}/images/foreclosure-surplus-math.jpg" alt="Foreclosure surplus example: a 120,000 dollar average surplus at a 30 percent recovery fee is about 36,000 dollars per claim" width="520" style="display:block;width:520px;max-width:100%;height:auto;border-radius:8px;margin:0 0 8px;border:1px solid #dce1e8;" />
+${BTN('Log In to Watch the Webcast', SIGNUP, '#09274c')}`,
     },
     2: {
-      subject: 'Inside the dashboard: where your training lives',
-      preheader: 'After you add your phone, open Closing Training in the left menu.',
+      subject: 'Where to find your training inside the dashboard',
+      preheader: 'Log in, then open Free Training in the left-side menu.',
       label: 'Follow-Up: Your Training',
       eyebrow: 'Getting Started',
-      heading: 'Where to Find Your Training<br />Once You Are In',
+      heading: 'Where to Find Your Training',
       content: `
 ${P(`${fn},`)}
-${P(`Once your phone is on file, head to your dashboard and look at the <strong style="color:#09274c;">left-side menu</strong>. Click <strong style="color:#1a7a3a;">&ldquo;Closing Training&rdquo;</strong> &mdash; that is where every module lives.`)}
-${P(`Watch the videos in order, and download the resource under each one. These guides walk you through how surplus recovery works, the paperwork, and how to confirm a claimant has proper standing.`)}
-${BTN('▶&nbsp; Open My Dashboard', `${APP}/dashboard`, '#1a7a3a')}
+${P(`Log in and look at the <strong style="color:#09274c;">left-side menu</strong>. Click <strong style="color:#1a7a3a;">Free Training</strong> &mdash; that is where every video lives.`)}
+${P(`Watch the videos in order, and download the guide under each one. These walk you through how surplus recovery works, the paperwork, and how to confirm a claimant has proper standing.`)}
+${BTN('Log In to My Dashboard', SIGNIN, '#1a7a3a')}
 ${P(`Work through it at your own pace. It is built so you can decide if this is for you before you ever spend a dollar.`)}`,
     },
     3: {
-      subject: `${fn}, this is what the work actually looks like`,
-      preheader: 'Real recovered amounts from people who did the training and took action.',
-      label: 'Follow-Up: Real Results',
-      eyebrow: 'Real Numbers',
-      heading: 'What This Looks Like for People<br />Who Took the First Step',
+      subject: `${fn}, what this looks like once it clicks`,
+      preheader: 'A quick picture of what is possible once the training clicks.',
+      label: 'Follow-Up: The Opportunity',
+      eyebrow: 'The Opportunity',
+      heading: 'What This Looks Like for People<br />Who Take the First Step',
       content: `
 ${P(`${fn},`)}
-${P(`A quick picture of what is possible once the training clicks:`)}
-${P(`<strong style="color:#09274c;">Marcus</strong> &mdash; first deal, $14,200, eleven days from first contact to check. <br><strong style="color:#09274c;">Sandra</strong> &mdash; first quarter, three deals, $30K her share. <br><strong style="color:#09274c;">Derek</strong> &mdash; closed his first deal from his phone, $22K.`)}
-${P(`Every one of them started exactly where you are: a free account and the training. If you have not added your phone yet to open your videos, now is the time.`)}
-${BTN('▶&nbsp; Unlock My Free Training', `${APP}/dashboard/settings`, '#1a7a3a')}`,
+${P(`Here is the math that makes this worth your time: the average surplus is around $120,000, and the recovery fee runs about 30 percent. That is roughly $36,000 on a single claim &mdash; and these funds are sitting in state records right now, waiting to be claimed.`)}
+${P(`Everyone who works these cases started exactly where you are: a free account and the training. If you have not opened your free training yet, now is the time.`)}
+${BTN('Log In and Start Training', SIGNIN, '#1a7a3a')}`,
     },
     4: {
       subject: 'Ready for leads that go to you only?',
@@ -209,9 +207,9 @@ ${BTN('▶&nbsp; Unlock My Free Training', `${APP}/dashboard/settings`, '#1a7a3a
       heading: 'When You Are Ready, Here Is How<br />You Go Live',
       content: `
 ${P(`${fn},`)}
-${P(`Your account and training are free for as long as you like. When you decide to start working real cases, here is what activating gets you:`)}
+${P(`Your account and training are at no cost for as long as you like. When you decide to start working real cases, here is what activating gets you:`)}
 ${P(`&bull; Exclusive surplus leads assigned <strong style="color:#1a7a3a;">only to you</strong> &mdash; never shared. <br>&bull; Your own business 800 number. <br>&bull; A business email with done-for-you outreach templates. <br>&bull; Certified letters mailed on your behalf.`)}
-${BTN('💳&nbsp; View Packages &amp; Get Started', `${APP}/#pricing`, '#09274c')}
+${BTN('View Packages & Get Started', STAN, '#09274c')}
 ${NOTE(`Not ready yet? No problem &mdash; keep going through the free training. Your account does not expire.`, '#f0f7ff')}`,
     },
     5: {
@@ -224,8 +222,8 @@ ${NOTE(`Not ready yet? No problem &mdash; keep going through the free training. 
 ${P(`${fn},`)}
 ${P(`This is the last note in this sequence &mdash; not because we are giving up on you, but because we respect your time and your inbox.`)}
 ${P(`Here is what we know: the leads are real, the process is legal, and the money is sitting in state records right now. Your free account does not expire, and your training is always there.`)}
-${P(`If you have not opened your free training yet, add your phone in My Account and dive in. And when you want to talk through going live, just reach out.`)}
-${BTN('▶&nbsp; Go to My Account', `${APP}/dashboard/settings`, '#1a7a3a')}
+${P(`If you have not opened your free training yet, log in and dive in. And when you want to talk through going live, just reach out.`)}
+${BTN('Log In and Start Training', SIGNIN, '#1a7a3a')}
 ${P(`Text <strong>&ldquo;READY&rdquo;</strong> to (888) 545-8007 anytime and I will respond personally.`)}`,
     },
   }
