@@ -1393,6 +1393,7 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedState, setSelectedState] = useState("All States")
   const [selectedStatus, setSelectedStatus] = useState("all")
+  const [selectedOrigin, setSelectedOrigin] = useState("all") // all | issued | imported
   const [sortBy, setSortBy] = useState("issued_newest")
   const [currentPage, setCurrentPage] = useState(1)
   const LEADS_PER_PAGE = 25
@@ -1428,6 +1429,14 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
     return counts
   }, [leads])
 
+  // Origin counts: imported = leads the agent uploaded themselves (source
+  // "imported:..."); issued = leads assigned to them from the company pipeline.
+  const originCounts = useMemo(() => {
+    let imported = 0
+    for (const l of leads) if (String(l.source || "").startsWith("imported:")) imported++
+    return { imported, issued: leads.length - imported }
+  }, [leads])
+
   // Filter and sort
   const filteredLeads = useMemo(() => {
     const query = searchQuery.toLowerCase()
@@ -1449,7 +1458,13 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
       const matchesStatus =
         selectedStatus === "all" || lead.status === selectedStatus
 
-      return matchesSearch && matchesState && matchesStatus
+      const isImported = String(lead.source || "").startsWith("imported:")
+      const matchesOrigin =
+        selectedOrigin === "all" ||
+        (selectedOrigin === "imported" && isImported) ||
+        (selectedOrigin === "issued" && !isImported)
+
+      return matchesSearch && matchesState && matchesStatus && matchesOrigin
     })
 
     return filtered.sort((a, b) => {
@@ -1474,12 +1489,12 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
           return 0
       }
     })
-  }, [baseLeads, searchQuery, selectedState, selectedStatus, sortBy])
+  }, [baseLeads, searchQuery, selectedState, selectedStatus, selectedOrigin, sortBy])
 
   // Reset page on filter change
   useEffect(() => {
     setCurrentPage(1)
-  }, [searchQuery, selectedState, selectedStatus, sortBy])
+  }, [searchQuery, selectedState, selectedStatus, selectedOrigin, sortBy])
 
   const totalPages = Math.max(1, Math.ceil(filteredLeads.length / LEADS_PER_PAGE))
   const paginatedLeads = useMemo(() => {
@@ -1774,6 +1789,17 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                   </option>
                 ))}
               </select>
+              {!importedOnly && (
+                <select
+                  value={selectedOrigin}
+                  onChange={(e) => setSelectedOrigin(e.target.value)}
+                  className="h-10 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                >
+                  <option value="all">All Sources ({leads.length})</option>
+                  <option value="issued">Issued ({originCounts.issued})</option>
+                  <option value="imported">Imported ({originCounts.imported})</option>
+                </select>
+              )}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
