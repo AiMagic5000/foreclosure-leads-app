@@ -122,7 +122,7 @@ export function getEmailTemplate(step: number, lead: LeadData): { subject: strin
 
   const steps: Record<number, { subject: string; preheader: string; label: string; eyebrow: string; heading: string; content: string }> = {
     0: {
-      subject: `${fn}, your account is ready`,
+      subject: `${fn}, Your account is ready`,
       preheader: 'Log in and start your training videos and guides — nothing to set up.',
       label: 'Welcome: Getting Started',
       eyebrow: 'Getting Started',
