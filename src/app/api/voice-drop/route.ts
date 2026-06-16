@@ -208,9 +208,17 @@ async function sendSlyBroadcast(
   audioUrl: string,
   config: OperatorConfig
 ): Promise<{ success: boolean; campaignId?: string; error?: string }> {
+  // Always send through the COMPANY SlyBroadcast account — it is the only one
+  // with API access enabled. Agents' own SlyBroadcast accounts return
+  // "API access not allowed" over the API, so routing every drop through the
+  // company account means a drop never fails just because an agent connected a
+  // personal account. We keep the AGENT's caller ID so the claimant still sees
+  // the agent's number.
+  const companyUid = process.env.SLYBROADCAST_EMAIL || "coreypearsonemail@gmail.com";
+  const companyPass = process.env.SLYBROADCAST_PASSWORD || "Slypassword#1";
   const formData = new URLSearchParams();
-  formData.append("c_uid", config.slybroadcastEmail);
-  formData.append("c_password", config.slybroadcastPassword);
+  formData.append("c_uid", companyUid);
+  formData.append("c_password", companyPass);
   formData.append("c_method", "new_campaign");
   formData.append("c_phone", phoneNumber);
   formData.append("c_url", audioUrl);
