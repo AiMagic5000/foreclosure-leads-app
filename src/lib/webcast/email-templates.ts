@@ -113,44 +113,48 @@ function wrapEmail(o: {
 
 export function getEmailTemplate(step: number, lead: LeadData): { subject: string; html: string } {
   const fn = lead.first_name
+  const SIGNIN = `${APP}/sign-in`
   const ACCOUNT = `${APP}/dashboard/settings`
   const TRAINING = `${APP}/dashboard/closing-training`
-  const PRICING = `${APP}/#pricing`
+  const STAN = 'https://stan.store/alliepearson/p/asset-recovery-agent-partnership'
+  const PRICING = STAN
 
   const steps: Record<number, { subject: string; preheader: string; label: string; eyebrow: string; heading: string; content: string }> = {
     0: {
-      subject: `${fn}, your account is ready — add your phone to unlock training`,
-      preheader: 'Your free account is created. Add your phone in My Account to unlock all your free training videos and resources.',
+      subject: `${fn}, your account is ready`,
+      preheader: 'Log in and start your training videos and guides — nothing to set up.',
       label: 'Welcome: Getting Started',
-      eyebrow: 'Action Required',
-      heading: 'Your Account Is Ready &mdash; Add Your<br />Phone to Unlock Your Free Training',
+      eyebrow: 'Getting Started',
+      heading: 'Your Account Is Ready &mdash; Log In<br />and Start Your Training',
       content: `
 ${P(`Hi ${fn},`)}
-${P(`Great news &mdash; your free account on <strong style="color:#09274c;">usforeclosureleads.com</strong> is created and ready to go. There is nothing left to set up to start learning.`)}
-${P(`Your next step takes less than a minute: <strong style="color:#1a7a3a;">add your phone number in the My Account tab</strong>. That one step unlocks <strong>all of the free training videos</strong> in your free tier &mdash; plus the <strong>downloadable resources under each video</strong> so you can research the process on your own.`)}
-${BTN('▶&nbsp; Go to My Account &amp; Add Your Phone', ACCOUNT, '#1a7a3a')}
-${NOTE(`<strong>✅ Why your phone?</strong> It is how we keep your training and account tied to you &mdash; no spam. Add it once in <strong style="color:#1a7a3a;">My Account</strong> and your full free training opens up instantly.`)}
-${H2('Then: Start Your Free Training')}
-${P(`Once your phone is on file, open <strong style="color:#1a7a3a;">&ldquo;Closing Training&rdquo;</strong> in the left-side menu. Watch the videos and download the guides under each one &mdash; learn exactly how surplus recovery works and confirm you have the proper standing to make claims, all completely free.`)}
+${P(`Good news &mdash; your account on <strong style="color:#09274c;">usforeclosureleads.com</strong> is created and ready. There is nothing to set up. Just log in and start learning.`)}
+${BTN('Log Into My Account', SIGNIN, '#1a7a3a')}
+${H2('Start Your Training')}
+${P(`Log in and open <strong style="color:#1a7a3a;">Free Training</strong> in the left-side menu. Watch the videos and download the guides under each one &mdash; you will learn how surplus recovery works and how to confirm you have the proper standing to make a claim.`)}
 ${CHECKLIST([
-  `<strong style="color:#09274c;">Free account created</strong> &mdash; done ✓`,
-  `<strong style="color:#09274c;">Add your phone</strong> in the My Account tab &rarr; unlocks your free training videos &amp; resources`,
-  `<strong style="color:#09274c;">Open &ldquo;Closing Training&rdquo;</strong>, watch the videos, and download the resources under each`,
-  `<strong style="color:#09274c;">When you are ready for live leads</strong>, your own 800 number and business email &mdash; make your payment (below)`,
+  `<strong style="color:#09274c;">Account created</strong> &mdash; done`,
+  `<strong style="color:#09274c;">Log in</strong> at usforeclosureleads.com`,
+  `<strong style="color:#09274c;">Open Free Training</strong>, watch the videos, and download the guides under each`,
+  `<strong style="color:#09274c;">When you are ready for live leads</strong> &mdash; your own 800 number and business email &mdash; choose a package (below)`,
 ])}
+${P(`<strong style="color:#09274c;">Start with these two guides.</strong> Please read both &mdash; they answer most of the questions people have when getting started. You will find them under the first Free Training module&rsquo;s Resources section, in the <strong style="color:#1a7a3a;">Free Training</strong> tab on your dashboard.`)}
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="margin:6px 0 18px;"><tbody><tr>
+<td width="50%" align="center" valign="top" style="padding:0 6px;"><a href="${TRAINING}" target="_blank" rel="noopener noreferrer"><img src="${APP}/guides/doc-a.jpg" alt="Agent Overview" width="250" style="display:block;width:100%;max-width:250px;height:auto;border:1px solid #dce1e8;border-radius:6px;" /></a></td>
+<td width="50%" align="center" valign="top" style="padding:0 6px;"><a href="${TRAINING}" target="_blank" rel="noopener noreferrer"><img src="${APP}/guides/doc-b.jpg" alt="Quick Start" width="250" style="display:block;width:100%;max-width:250px;height:auto;border:1px solid #dce1e8;border-radius:6px;" /></a></td>
+</tr></tbody></table>
 <table style="border:1px solid #dce1e8;border-radius:6px;border-left:4px solid #09274c;width:100%;margin:22px 0 0;" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="property-box" style="padding:22px 24px;">
 <p style="margin:0 0 12px;font-size:11px;color:#09274c;text-transform:uppercase;letter-spacing:1.5px;font-weight:bold;font-family:${FONT};">Ready for Live Leads?</p>
-<p style="margin:0 0 14px;font-size:14px;color:#2c3e50;line-height:22px;font-family:${FONT};">Your account and training are free. When you want exclusive leads sent only to you, your own 800 number, and a business email with done-for-you outreach templates, choose a package below.</p>
-${BTN('💳&nbsp; View Partnership Packages &amp; Make Payment', PRICING, '#09274c')}
+<p style="margin:0 0 14px;font-size:14px;color:#2c3e50;line-height:22px;font-family:${FONT};">Your account and training are at no cost. When you want exclusive leads sent only to you, your own 800 number, and a business email with done-for-you outreach templates, choose a package below.</p>
+${BTN('View Partnership Packages', STAN, '#09274c')}
 </td></tr></tbody></table>
-${NOTE(`<strong>💡 Reminder:</strong> Your account setup and training are <strong style="color:#1a7a3a;">completely free</strong>. Payment is only needed when you are ready to activate live leads and set up your 800 number and business email &mdash; leads that go to you only, never shared.`, '#f0f7ff')}
-${P(`<strong style="color:#09274c;">Got interrupted or distracted during the webcast?</strong> Here is the quick recap &mdash; and you can watch the full session anytime.`)}
-<img src="${APP}/images/foreclosure-surplus-math.jpg" alt="The foreclosure surplus math: $120,000 average surplus times a 30% recovery fee equals $36,000 per claim" width="520" style="display:block;width:520px;max-width:100%;height:auto;border-radius:8px;margin:8px 0;border:1px solid #dce1e8;" />
-${BTN('▶&nbsp; Watch the Full Webcast', `${APP}/dashboard/live-webcast`, '#09274c')}
+${P(`<strong style="color:#09274c;">Missed part of the webcast?</strong> Here is the quick recap &mdash; and you can watch the full session anytime.`)}
+<img src="${APP}/images/foreclosure-surplus-math.jpg" alt="Foreclosure surplus example: a 120,000 dollar average surplus at a 30 percent recovery fee is about 36,000 dollars per claim" width="520" style="display:block;width:520px;max-width:100%;height:auto;border-radius:8px;margin:8px 0;border:1px solid #dce1e8;" />
+${BTN('Watch the Full Webcast', `${APP}/dashboard/live-webcast`, '#09274c')}
 <table style="background-color:#f0f7ff;border-radius:6px;border-left:4px solid #09274c;width:100%;margin:18px 0 0;" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td style="padding:20px 24px;text-align:center;">
-<p style="margin:0 0 12px;font-size:15px;color:#09274c;font-weight:600;font-family:${FONT};">Have Questions? We Are Here to Help.</p>
-<p style="margin:0 0 16px;font-size:14px;color:#2c3e50;line-height:22px;font-family:${FONT};">Reply to this email or give us a call &mdash; we will walk you through everything.</p>
-<a class="cta-btn" href="tel:+18885458007" style="display:inline-block;padding:14px 32px;background-color:#09274c;color:#ffffff;text-decoration:none;border-radius:6px;font-size:15px;font-weight:600;font-family:${FONT};">📞&nbsp; Call (888) 545-8007</a>
+<p style="margin:0 0 12px;font-size:15px;color:#09274c;font-weight:600;font-family:${FONT};">Questions? We are here to help.</p>
+<p style="margin:0 0 16px;font-size:14px;color:#2c3e50;line-height:22px;font-family:${FONT};">Reply to this email or give us a call and we will walk you through everything.</p>
+<a class="cta-btn" href="tel:+18885458007" style="display:inline-block;padding:14px 32px;background-color:#09274c;color:#ffffff;text-decoration:none;border-radius:6px;font-size:15px;font-weight:600;font-family:${FONT};">Call (888) 545-8007</a>
 </td></tr></tbody></table>`,
     },
     1: {
