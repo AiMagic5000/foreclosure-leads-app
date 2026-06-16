@@ -114,6 +114,7 @@ function wrapEmail(o: {
 export function getEmailTemplate(step: number, lead: LeadData): { subject: string; html: string } {
   const fn = lead.first_name
   const SIGNIN = `${APP}/sign-in`
+  const SIGNUP = `${APP}/sign-up`
   const ACCOUNT = `${APP}/dashboard/settings`
   const TRAINING = `${APP}/dashboard/closing-training`
   const STAN = 'https://stan.store/alliepearson/p/asset-recovery-agent-partnership'
@@ -148,9 +149,10 @@ ${P(`<strong style="color:#09274c;">Start with these two guides.</strong> Please
 <p style="margin:0 0 14px;font-size:14px;color:#2c3e50;line-height:22px;font-family:${FONT};">Your account and training are at no cost. When you want exclusive leads sent only to you, your own 800 number, and a business email with done-for-you outreach templates, choose a package below.</p>
 ${BTN('View Partnership Packages', STAN, '#09274c')}
 </td></tr></tbody></table>
-${P(`<strong style="color:#09274c;">Missed part of the webcast?</strong> Here is the quick recap &mdash; and you can watch the full session anytime.`)}
+${P(`<strong style="color:#09274c;">Missed part of the webcast?</strong> Here is the quick recap &mdash; and you can watch the full session anytime from your dashboard.`)}
 <img src="${APP}/images/foreclosure-surplus-math.jpg" alt="Foreclosure surplus example: a 120,000 dollar average surplus at a 30 percent recovery fee is about 36,000 dollars per claim" width="520" style="display:block;width:520px;max-width:100%;height:auto;border-radius:8px;margin:8px 0;border:1px solid #dce1e8;" />
-${BTN('Watch the Full Webcast', `${APP}/dashboard/live-webcast`, '#09274c')}
+${BTN('Log In to Watch the Webcast', SIGNUP, '#09274c')}
+${P(`Once you are logged in, click <strong style="color:#1a7a3a;">Live Webcast</strong> in your dashboard menu to watch the full session.`)}
 <table style="background-color:#f0f7ff;border-radius:6px;border-left:4px solid #09274c;width:100%;margin:18px 0 0;" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td style="padding:20px 24px;text-align:center;">
 <p style="margin:0 0 12px;font-size:15px;color:#09274c;font-weight:600;font-family:${FONT};">Questions? We are here to help.</p>
 <p style="margin:0 0 16px;font-size:14px;color:#2c3e50;line-height:22px;font-family:${FONT};">Reply to this email or give us a call and we will walk you through everything.</p>
