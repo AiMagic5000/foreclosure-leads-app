@@ -127,50 +127,52 @@ export function ClosingToolsSlideshow() {
         </div>
       </div>
 
-      {/* Fullscreen lightbox */}
+      {/* Lightbox — bounded ~1200px box centered in front of the content.
+          Plain <img> with max-width/height so it can never draw past the viewport
+          (the previous next/image `fill` had no resolved height and rendered a giant black canvas). */}
       {fullscreen && (
         <div
-          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center"
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 sm:p-8"
           onClick={() => setFullscreen(false)}
         >
-          <div className="relative w-full h-full" onClick={(e) => e.stopPropagation()}>
-            <Image
+          <div
+            className="relative w-full max-w-[1200px] max-h-[85vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
               key={`fs-${IMAGES[index]}`}
               src={IMAGES[index]}
               alt={`Closing tool ${index + 1}`}
-              fill
-              sizes="100vw"
-              className="object-contain"
-              priority
+              className="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
             />
 
             {/* Close */}
             <button
               onClick={() => setFullscreen(false)}
-              aria-label="Close fullscreen"
-              className="absolute top-4 right-4 grid place-items-center h-11 w-11 rounded-full bg-white/10 hover:bg-white/25 text-white"
+              aria-label="Close"
+              className="absolute -top-3 -right-3 grid place-items-center h-10 w-10 rounded-full bg-white text-slate-900 shadow-lg hover:bg-slate-200"
             >
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             </button>
 
             {/* Prev / Next */}
             <button
               onClick={prev}
               aria-label="Previous image"
-              className="absolute left-4 top-1/2 -translate-y-1/2 grid place-items-center h-12 w-12 rounded-full bg-white/10 hover:bg-white/25 text-white"
+              className="absolute left-2 top-1/2 -translate-y-1/2 grid place-items-center h-11 w-11 rounded-full bg-black/50 hover:bg-black/75 text-white"
             >
-              <ChevronLeft className="h-7 w-7" />
+              <ChevronLeft className="h-6 w-6" />
             </button>
             <button
               onClick={next}
               aria-label="Next image"
-              className="absolute right-4 top-1/2 -translate-y-1/2 grid place-items-center h-12 w-12 rounded-full bg-white/10 hover:bg-white/25 text-white"
+              className="absolute right-2 top-1/2 -translate-y-1/2 grid place-items-center h-11 w-11 rounded-full bg-black/50 hover:bg-black/75 text-white"
             >
-              <ChevronRight className="h-7 w-7" />
+              <ChevronRight className="h-6 w-6" />
             </button>
 
             {/* Counter */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-sm font-medium tracking-wide">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white/90 text-sm font-medium px-3 py-1 rounded-full">
               {index + 1} / {IMAGES.length}
             </div>
           </div>
