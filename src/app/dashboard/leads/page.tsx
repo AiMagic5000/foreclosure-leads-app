@@ -98,6 +98,8 @@ interface LeadData {
   voicemailSent: boolean
   voicemailSentAt: string | null
   voicemailError: string | null
+  smsSent: boolean
+  emailDraftCreated: boolean
   aiDisposition: string | null
   lastAiCallAt: string | null
   aiCallCount: number
@@ -263,6 +265,28 @@ function DncStatusIcon({ lead }: { lead: LeadData }) {
     <span title="DNC cleared - OK to contact" className="flex items-center">
       <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
     </span>
+  )
+}
+
+// Per-lead outreach indicators so an agent can see what was already sent (avoid duplicates).
+// Email = a draft was created for this lead (then sent from webmail); SMS = sent via dashboard.
+function OutreachStatus({ lead }: { lead: LeadData }) {
+  if (!lead.emailDraftCreated && !lead.smsSent) return null
+  return (
+    <>
+      {lead.emailDraftCreated && (
+        <Badge className="bg-blue-100 text-blue-700 border-blue-200 text-xs gap-1" title="Email draft created for this lead">
+          <Mail className="h-3 w-3" />
+          Emailed
+        </Badge>
+      )}
+      {lead.smsSent && (
+        <Badge className="bg-violet-100 text-violet-700 border-violet-200 text-xs gap-1" title="SMS sent to this lead">
+          <MessageSquare className="h-3 w-3" />
+          Texted
+        </Badge>
+      )}
+    </>
   )
 }
 
@@ -1087,6 +1111,8 @@ function mapDbRowToLead(row: Record<string, unknown>): LeadData {
     voicemailSent: Boolean(row.voicemail_sent),
     voicemailSentAt: row.voicemail_sent_at ? String(row.voicemail_sent_at) : null,
     voicemailError: row.voicemail_error ? String(row.voicemail_error) : null,
+    smsSent: Boolean(row.sms_sent),
+    emailDraftCreated: Boolean(row.email_draft_created),
     aiDisposition: row.ai_disposition ? String(row.ai_disposition) : null,
     lastAiCallAt: row.last_ai_call_at ? String(row.last_ai_call_at) : null,
     aiCallCount: Number(row.ai_call_count || 0),
@@ -1564,7 +1590,7 @@ function LeadsPageContent() {
       try {
         const { data, error } = await supabase
           .from("foreclosure_leads")
-          .select("id,owner_name,property_address,city,state,state_abbr,zip_code,county,parcel_id,apn_number,sale_date,sale_amount,mortgage_amount,lender_name,foreclosure_type,primary_phone,secondary_phone,primary_email,status,source,scraped_at,lat,lng,property_image_url,mailing_address,associated_names,property_type,year_built,square_footage,lot_size,bedrooms,bathrooms,stories,assessed_value,estimated_market_value,overage_amount,case_number,trustee_name,created_at,dnc_checked,on_dnc,can_contact,dnc_type,voicemail_sent,voicemail_sent_at,voicemail_error,deed_verified,deed_history,foreclosure_confirmed,last_sale_date,last_sale_price,last_buyer_name,mailing_address_verified,pubrec_property_id,assigned_agent,agent_ext,agent_volume,agent_email")
+          .select("id,owner_name,property_address,city,state,state_abbr,zip_code,county,parcel_id,apn_number,sale_date,sale_amount,mortgage_amount,lender_name,foreclosure_type,primary_phone,secondary_phone,primary_email,status,source,scraped_at,lat,lng,property_image_url,mailing_address,associated_names,property_type,year_built,square_footage,lot_size,bedrooms,bathrooms,stories,assessed_value,estimated_market_value,overage_amount,case_number,trustee_name,created_at,dnc_checked,on_dnc,can_contact,dnc_type,voicemail_sent,voicemail_sent_at,voicemail_error,sms_sent,email_draft_created,deed_verified,deed_history,foreclosure_confirmed,last_sale_date,last_sale_price,last_buyer_name,mailing_address_verified,pubrec_property_id,assigned_agent,agent_ext,agent_volume,agent_email")
           .order("primary_phone", { ascending: true, nullsFirst: false })
           .order("created_at", { ascending: false })
           .limit(5000) as { data: Record<string, unknown>[] | null; error: unknown }
@@ -2927,6 +2953,7 @@ Thank you.`}
                         </div>
                         <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                           <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
+                          <OutreachStatus lead={lead} />
                           <AICallButton lead={lead} sending={!!sendingAICall[lead.id]} result={aiCallResult[lead.id]} onCall={sendAICall} />
                         </div>
                         {lead.primaryEmail && (
@@ -3204,6 +3231,7 @@ Thank you.`}
                         </div>
                         <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                           <VoiceDropButton lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
+                          <OutreachStatus lead={lead} />
                           <AICallButton lead={lead} sending={!!sendingAICall[lead.id]} result={aiCallResult[lead.id]} onCall={sendAICall} />
                         </div>
                       </>

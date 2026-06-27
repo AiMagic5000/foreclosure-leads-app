@@ -130,15 +130,19 @@ export default function AiAgentPage() {
       const mr = supported ? new MediaRecorder(stream, { mimeType: supported }) : new MediaRecorder(stream)
       chunksRef.current = []
       mr.ondataavailable = (e) => { if (e.data.size) chunksRef.current.push(e.data) }
+      mr.onerror = () => { setErr("Recording was interrupted by the browser. Please try again, or upload an audio file instead."); stopRecording() }
       mr.onstop = () => {
         stream.getTracks().forEach((t) => t.stop())
         const mt = mr.mimeType || "audio/webm"
         const ext = mt.includes("mp4") ? "m4a" : mt.includes("mpeg") ? "mp3" : mt.includes("ogg") ? "ogg" : "webm"
-        uploadVoice(new Blob(chunksRef.current, { type: mt }), ext)
+        const blob = new Blob(chunksRef.current, { type: mt })
+        if (blob.size < 1024) { setErr("That recording came back empty — your browser may have blocked the mic. Please try again, or upload an audio file."); return }
+        uploadVoice(blob, ext)
       }
-      mr.start(); mediaRef.current = mr
+      stream.getAudioTracks().forEach((t) => { t.onended = () => stopRecording() })
+      mr.start(1000); mediaRef.current = mr // timeslice so nothing is lost if it stops early
       setRecording(true); setElapsed(0)
-      timerRef.current = setInterval(() => setElapsed((s) => { if (s >= 90) stopRecording(); return s + 1 }), 1000)
+      timerRef.current = setInterval(() => setElapsed((s) => { if (s >= 120) stopRecording(); return s + 1 }), 1000)
     } catch { setErr("Microphone access denied. Allow mic permission, or upload an audio file instead.") }
   }
   function stopRecording() {

@@ -21,6 +21,12 @@ export function Footer() {
               Daily foreclosure lead data for surplus funds recovery
               professionals.
             </p>
+            <a
+              href="tel:+18889073234"
+              className="mt-3 inline-block text-sm font-semibold text-[#1e3a5f] hover:text-[#dc2626]"
+            >
+              Call us: (888) 907-3234
+            </a>
           </div>
           <div>
             <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">

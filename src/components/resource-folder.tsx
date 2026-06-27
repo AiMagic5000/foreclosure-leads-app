@@ -1,6 +1,6 @@
 "use client"
 
-import { Download, Printer, X } from "lucide-react"
+import { Download, Printer, X, Pencil, ChevronLeft, ChevronRight } from "lucide-react"
 
 interface ResourceFolderProps {
   displayName: string
@@ -9,6 +9,9 @@ interface ResourceFolderProps {
   onDownload: () => void
   onPrint: () => void
   onDelete?: () => void
+  onEdit?: () => void
+  onMoveUp?: () => void
+  onMoveDown?: () => void
 }
 
 export function ResourceFolder({
@@ -18,9 +21,36 @@ export function ResourceFolder({
   onDownload,
   onPrint,
   onDelete,
+  onEdit,
+  onMoveUp,
+  onMoveDown,
 }: ResourceFolderProps) {
   return (
     <div className="group relative flex items-center gap-4 rounded-xl border border-border bg-card/60 p-3 shadow-sm transition-shadow hover:shadow-md">
+      {/* Admin reorder controls (move earlier / later) */}
+      {(onMoveUp || onMoveDown) && (
+        <div className="absolute -top-1 -left-1 z-10 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button type="button" onClick={onMoveUp} title="Move earlier (toward top-left)"
+            className="h-6 w-6 rounded-full bg-slate-700 text-white flex items-center justify-center hover:bg-slate-800">
+            <ChevronLeft className="h-3.5 w-3.5" />
+          </button>
+          <button type="button" onClick={onMoveDown} title="Move later (toward bottom-right)"
+            className="h-6 w-6 rounded-full bg-slate-700 text-white flex items-center justify-center hover:bg-slate-800">
+            <ChevronRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
+      {/* Admin edit button */}
+      {onEdit && (
+        <button
+          type="button"
+          onClick={onEdit}
+          className="absolute -top-1 right-6 z-10 h-6 w-6 rounded-full bg-indigo-600 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-indigo-700"
+          title="Edit resource (rename, cover, file)"
+        >
+          <Pencil className="h-3 w-3" />
+        </button>
+      )}
       {/* Admin delete button */}
       {onDelete && (
         <button

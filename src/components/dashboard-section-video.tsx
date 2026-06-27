@@ -46,6 +46,12 @@ const SMS_VIDEOS = [
   { id: "sms-messages", title: "Every text in one inbox", subtitle: "Replies route to you, threaded by homeowner, in real time." },
 ]
 
+// Closing Training: the commercial plays first (left), the close-training overview second (right).
+const CLOSING_TRAINING_VIDEOS = [
+  { src: "/videos/usfl-commercial-v2-web.mp4", poster: "/videos/usfl-commercial-v2-poster.jpg", id: "usfl-commercial", title: "Start here: the surplus recovery opportunity", subtitle: "A 2-minute look at what you're stepping into and how the money works." },
+  { src: "/videos/closing-training-16x9.mp4", poster: "/videos/closing-training-poster.jpg", id: "closing-training", title: "Learn to close on the phone", subtitle: "The conversations that turn a voicemail into a signed agreement." },
+]
+
 export function DashboardSectionVideo() {
   const pathname = usePathname()
 
@@ -92,6 +98,23 @@ export function DashboardSectionVideo() {
             key={v.id}
             src={`/videos/${v.id}-16x9.mp4`}
             poster={`/videos/${v.id}-poster.jpg`}
+            title={v.title}
+            subtitle={v.subtitle}
+            storageKey={`video-dismissed-${v.id}`}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  if (pathname === "/dashboard/closing-training") {
+    return (
+      <div className="mb-6 grid gap-4 lg:grid-cols-2">
+        {CLOSING_TRAINING_VIDEOS.map((v) => (
+          <SectionVideo
+            key={v.id}
+            src={v.src}
+            poster={v.poster}
             title={v.title}
             subtitle={v.subtitle}
             storageKey={`video-dismissed-${v.id}`}

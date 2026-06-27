@@ -64,7 +64,7 @@ export default function WhiteLabelPage() {
   const [ownerLastName, setOwnerLastName] = useState("")
   const [ssnLast4, setSsnLast4] = useState("")
   const [dateOfBirth, setDateOfBirth] = useState("")
-  const [creditProfile, setCreditProfile] = useState("not_sure")
+  const [creditProfile] = useState("not_sure")
   const [businessPhone, setBusinessPhone] = useState("")
   const [callForwardingPhone, setCallForwardingPhone] = useState("")
   const [currentEmail, setCurrentEmail] = useState("")
@@ -303,10 +303,10 @@ export default function WhiteLabelPage() {
       <form onSubmit={handleSubmit}>
         <div className="space-y-6">
           <div className="rounded-xl border-l-4 border-blue-600 bg-white p-4 text-sm shadow-sm">
-            <p className="font-bold text-[#0f172a]">You have White Label access (manual upgrade)</p>
+            <p className="font-bold text-[#0f172a]">Asset Recovery Agent 1099 Data</p>
             <p className="mt-1 text-slate-700">
-              Completing this form sets up your White Label brand. Note: this manual upgrade does <strong className="text-[#0f172a]">not</strong> include
-              the full business build-out components &mdash; to add the complete build-out, upgrade to Owner Operator.
+              Completing this form sets up your Asset Recovery Agent account for payout. Note: this manual upgrade does <strong className="text-[#0f172a]">not</strong> include
+              the full business build-out components &mdash; to add the complete build-out, upgrade to <a href="/dashboard/owner-operator" className="font-semibold text-emerald-700 underline underline-offset-2 hover:text-emerald-800">Owner Operator</a>.
               The SSN and date of birth below are optional; placeholder numbers are fine.
             </p>
           </div>
@@ -332,13 +332,16 @@ export default function WhiteLabelPage() {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Businesses current website URL or desired domain name or any keywords associated with desired domain name <span className="text-red-500">*</span>
+                  Businesses current website URL or desired domain name or any keywords associated with desired domain name
                 </label>
                 <Input
                   placeholder="www.yourbusiness.com or keywords for your domain"
                   value={websiteUrl}
                   onChange={(e) => setWebsiteUrl(e.target.value)}
                 />
+                <p className="text-[11px] text-muted-foreground">
+                  Only fill this out if you plan on being an owner operator.
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -348,7 +351,7 @@ export default function WhiteLabelPage() {
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
                 <User className="h-4 w-4" />
-                Business Owner Name <span className="text-red-500">*</span>
+                Asset Recovery Agent Name <span className="text-red-500">*</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -379,7 +382,7 @@ export default function WhiteLabelPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Business Owner SSN <span className="text-muted-foreground font-normal">(optional)</span>
+                  Asset Recovery Agent SSN <span className="text-muted-foreground font-normal">(optional)</span>
                 </label>
                 <Input
                   placeholder="***-**-****"
@@ -393,7 +396,7 @@ export default function WhiteLabelPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Business Owner Date of Birth <span className="text-muted-foreground font-normal">(optional)</span>
+                  Asset Recovery Agent Date of Birth <span className="text-muted-foreground font-normal">(optional)</span>
                 </label>
                 <Input
                   placeholder="January 1st 1980"
@@ -405,23 +408,6 @@ export default function WhiteLabelPage() {
                 </p>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium">
-                  The Businesses Personal Guarantors Credit Profile will be? <span className="text-red-500">*</span>
-                </label>
-                <select
-                  value={creditProfile}
-                  onChange={(e) => setCreditProfile(e.target.value)}
-                  className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
-                >
-                  <option value="not_sure">Please choose one</option>
-                  <option value="myself">Myself</option>
-                  <option value="business_partner">Business Partner</option>
-                </select>
-                <p className="text-[11px] text-muted-foreground">
-                  Even though there will be multiple options to be able to get access to business credit & accounts without a personal guarantor we still need to understand which credit profile you will use for managing the company in the future
-                </p>
-              </div>
             </CardContent>
           </Card>
 
@@ -435,14 +421,14 @@ export default function WhiteLabelPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium">Business Phone Number</label>
+                <label className="text-sm font-medium">Agent&apos;s Phone Number</label>
                 <Input
                   placeholder="(555) 123-4567"
                   value={businessPhone}
                   onChange={(e) => setBusinessPhone(e.target.value)}
                 />
                 <p className="text-[11px] text-muted-foreground">
-                  If you have already created a business phone number please provide it. If not we will create one for you and you can leave this field blank.
+                  Your phone number. If you already have a number you want to use, provide it. If not, we will create one for you and you can leave this field blank.
                 </p>
               </div>
 
@@ -472,7 +458,7 @@ export default function WhiteLabelPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Business Owner Home Address <span className="text-red-500">*</span>
+                  Agent&apos;s Home Address <span className="text-red-500">*</span>
                 </label>
                 <Input
                   placeholder="456 Oak Ave, City, State ZIP"
@@ -497,15 +483,15 @@ export default function WhiteLabelPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Current business email or desired business email prefix
+                  Provide the prefix you want for your new business email address @usforeclosurerecovery.com
                 </label>
                 <Input
-                  placeholder="info@, support@, etc."
+                  placeholder="firstname or firstnamelastinitial"
                   value={businessEmailPrefix}
                   onChange={(e) => setBusinessEmailPrefix(e.target.value)}
                 />
                 <p className="text-[11px] text-muted-foreground">
-                  An example of a business email prefix would be: info@, support@ and so on
+                  An example would be your first name and last initial, or just your first name, etc.
                 </p>
               </div>
 
@@ -535,6 +521,7 @@ export default function WhiteLabelPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Business documents</label>
+                <p className="text-sm font-bold text-[#0f172a]">For Owner Operators only.</p>
                 <p className="text-[11px] text-muted-foreground">
                   Provide any files or documents you feel are necessary to help us successfully manage your new business start-up. For example when registering with Duns and Bradstreet they request the articles of organization and another document associated with the business and business owner. Provide us any business documents that can help us continue building out your business if you have already started some of the duties required for your new business.
                 </p>

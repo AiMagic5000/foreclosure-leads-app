@@ -19,7 +19,14 @@ export function DashboardGuideCard() {
   // Open the guide in the browser so the user can read it; the in-browser PDF
   // viewer still offers its own download + print.
   const open = () => window.open(GUIDE.pdf, "_blank", "noopener,noreferrer")
-  const download = open
+  // Log the download to the user's activity (shows in admin User Activity).
+  const track = () =>
+    fetch("/api/activity/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: "download", path: `Downloaded guide: ${GUIDE.name}` }),
+    }).catch(() => {})
+  const download = () => { open(); track() }
   const print = open
 
   return (

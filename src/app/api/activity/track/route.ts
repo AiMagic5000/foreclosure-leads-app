@@ -13,7 +13,8 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json().catch(() => ({}))
     const path = String(body?.path || "").slice(0, 200)
-    const kind = body?.kind === "login" ? "login" : "view"
+    // kinds: "login", "view" (page view), "download" (resource/guide download)
+    const kind = body?.kind === "login" ? "login" : body?.kind === "download" ? "download" : "view"
     if (!path && kind !== "login") return NextResponse.json({ ok: false })
 
     await supabaseAdmin.from("page_activity").insert({ email, path: path || "/login", kind })

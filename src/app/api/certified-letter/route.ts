@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
+import { hasSeparateMailingAddress } from "@/lib/surplus/address"
 import * as fs from "fs"
 import * as path from "path"
 import nodemailer from "@/lib/nodemailer-relay-shim"
@@ -460,7 +461,22 @@ export async function POST(request: NextRequest) {
     }
 
     const userEmail = user.emailAddresses?.[0]?.emailAddress?.toLowerCase()
-    if (!userEmail || !ALLOWED_EMAILS.has(userEmail)) {
+    if (!userEmail) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+    // Allowlist (admins/legacy) OR any ACTIVE PAID agent may request certified letters.
+    let allowed = ALLOWED_EMAILS.has(userEmail)
+    if (!allowed) {
+      const { data: pins } = await supabaseAdmin
+        .from("user_pins")
+        .select("package_type")
+        .ilike("email", userEmail)
+        .eq("is_active", true)
+        .limit(1)
+      const tier = pins?.[0]?.package_type || ""
+      allowed = ["partnership", "owner_operator", "junior_owner_operator", "multi_state"].includes(tier)
+    }
+    if (!allowed) {
       return NextResponse.json({ error: "Access denied" }, { status: 403 })
     }
 
@@ -482,12 +498,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Lead not found" }, { status: 404 })
     }
 
-    // Verify mailing address differs from property address
-    const propertyAddr = String(lead.property_address || "").toLowerCase().trim()
-    const mailingAddr = String(lead.mailing_address || "").toLowerCase().trim()
-
-    if (!mailingAddr || mailingAddr === propertyAddr) {
-      return NextResponse.json({ error: "Lead does not have a separate mailing address" }, { status: 400 })
+    // Certified letters NEVER go to the foreclosed property address -- only to a
+    // genuinely separate mailing address (different physical place).
+    if (!hasSeparateMailingAddress(String(lead.property_address || ""), String(lead.mailing_address || ""))) {
+      return NextResponse.json({ error: "Certified mail requires a separate mailing address (not the foreclosed property)." }, { status: 400 })
     }
 
     // Determine agent profile

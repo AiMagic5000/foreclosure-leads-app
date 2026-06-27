@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { resolveOperatorConfig, isCommsAuthorized } from "@/lib/operator-config";
 import type { OperatorConfig } from "@/lib/operator-config";
 import { isRequestAdmin } from "@/lib/admin-guard";
+import { leadTypeCopy } from "@/lib/surplus/lead-type-copy";
 
 const MINIMAX_API_KEY = process.env.MINIMAX_API_KEY || "";
 const MINIMAX_BASE_URL = "https://api.minimax.io/v1";
@@ -46,30 +47,66 @@ function domainToSpoken(domain: string): string {
     .replace(/^usforeclosure/, "U. S. foreclosure");
 }
 
+function emailToSpoken(email: string): string {
+  const [local, domain] = String(email || "").split("@");
+  if (!domain) return local || "";
+  return `${local} at ${domainToSpoken(domain)}`;
+}
+
+// Make a raw property_address read clearly: drop the trailing ZIP (mashes into the
+// street number and is unintelligible spoken), drop a duplicated trailing city, and
+// expand common street-type abbreviations so TTS pronounces them in full.
+function spokenStreet(propertyAddress: string, city: string): string {
+  let a = String(propertyAddress || "").trim();
+  a = a.replace(/\s*\b\d{5}(-\d{4})?\b\s*$/, "").trim();
+  if (city) {
+    const c = city.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    a = a.replace(new RegExp("\\s*,?\\s*" + c + "\\s*$", "i"), "").trim();
+  }
+  const ab: Record<string, string> = {
+    Ave: "Avenue", Rd: "Road", Dr: "Drive", Blvd: "Boulevard", Ln: "Lane",
+    Ct: "Court", Hwy: "Highway", Pkwy: "Parkway", Cir: "Circle",
+    Ter: "Terrace", Pl: "Place", Trl: "Trail",
+  };
+  a = a.replace(/\b(Ave|Rd|Dr|Blvd|Ln|Ct|Hwy|Pkwy|Cir|Ter|Pl|Trl)\b\.?/gi,
+    (m) => ab[m.charAt(0).toUpperCase() + m.slice(1).toLowerCase().replace(/\.$/, "")] || m);
+  // Spell digit groups (street/unit numbers) one digit at a time so TTS reads them
+  // clearly: "202" -> "two zero two" instead of mumbling "two hundred two".
+  const DIG = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+  a = a.replace(/\d+/g, (m) => m.split("").map((d) => DIG[Number(d)]).join(" "));
+  return a.replace(/\s{2,}/g, " ").replace(/\s+,/g, ",").trim();
+}
+
 function generateScript(lead: Record<string, unknown>, config: OperatorConfig): string {
   const ownerName = String(lead.owner_name || "Homeowner");
+  const firstName = ownerName.split(/\s+/)[0] || ownerName;
   const propertyAddress = String(lead.property_address || "your property");
   const city = String(lead.city || "");
   const stateRaw = String(lead.state || lead.state_abbr || "");
   const stateFull = stateToFullName(stateRaw);
+  const streetClean = spokenStreet(propertyAddress, city);
   const fullAddress =
-    city && stateFull ? `${propertyAddress}, ${city}, ${stateFull}` : propertyAddress;
+    city && stateFull ? `${streetClean}, ${city}, ${stateFull}` : streetClean;
 
   const overage = Number(lead.overage_amount) || 0;
   const statedAmount = overage > 10000 ? overage - 10000 : overage;
+  // Per-lead-type wording (tax-deed overage / pre-foreclosure / completed foreclosure).
+  const copy = leadTypeCopy(lead.lead_type as string | undefined, lead.foreclosure_type as string | undefined);
   const surplusLine =
     statedAmount > 0
-      ? `A forensic audit has identified surplus funds in excess of ${formatDollarForSpeech(statedAmount)} -- also known as overages -- from the equity in your property that exceed the lender's claim from the foreclosure sale.`
-      : `A forensic audit has identified surplus funds -- also known as overages -- from the equity in your property that exceed the lender's claim from the foreclosure sale.`;
+      ? `A forensic audit has identified surplus funds in excess of ${formatDollarForSpeech(statedAmount)} -- also known as overages -- from ${copy.vmSurplusSource}.`
+      : `A forensic audit has identified surplus funds -- also known as overages -- from ${copy.vmSurplusSource}.`;
 
   const agentName = config.displayName;
   const companySpoken = config.companyName;
   const phoneSpoken = phoneToSpoken(config.phoneDisplay);
   const websiteSpoken = domainToSpoken(config.websiteUrl);
+  const extSpoken = config.extension ? `, extension ${config.extension}` : "";
+  const emailSpoken = emailToSpoken(config.senderEmail);
 
-  return `Hi, this message is for ${ownerName}.
+  return `Hi ${firstName}, this message is for ${ownerName}.
 
-My name is ${agentName}, calling on behalf of ${companySpoken}. We are legally required to inform you that a forensic audit has been completed on the property located at ${fullAddress}.
+My name is ${agentName}, calling on behalf of ${companySpoken}. We are legally required to inform you that ${copy.vmAudit.replace("{ADDR}", fullAddress)}.
 
 This is NOT a sales call, and there is no cost or money required from you in connection with this communication.
 
@@ -77,17 +114,15 @@ If the person receiving this message is not the primary deed holder but is an he
 
 ${surplusLine} These funds have not yet been distributed and legally belong to you or your heirs.
 
-If there were any liens or encumbrances on the property at the time of foreclosure, please know that those obligations are accounted for within the surplus -- and there are still remaining funds that require distribution to the primary deed holder or their heirs.
+${copy.vmLien}
 
 Call as soon as possible so we can begin processing your claim and get those funds distributed as quickly as possible.
 
-Please return this call at your earliest convenience.
+Please return this call at your earliest convenience. You can reach me directly at ${phoneSpoken}${extSpoken}, or by email at ${emailSpoken}.
 
 To learn more about our process, feel free to visit us at: ${websiteSpoken}.
 
-Again this is ${agentName} -- ${phoneSpoken}.
-
-We look forward to hearing from you.`;
+Again, this is ${agentName} with ${companySpoken}. We look forward to hearing from you.`;
 }
 
 async function generateAudioMiniMax(script: string, voiceId: string): Promise<Buffer> {
@@ -132,10 +167,12 @@ async function generateAudioElevenLabs(script: string, voiceId: string = ELEVENL
       body: JSON.stringify({
         text: script,
         model_id: "eleven_multilingual_v2",
+        // More expressive, less monotone: lower stability widens emotional range,
+        // style adds delivery variation, speaker boost keeps the cloned voice present.
         voice_settings: {
-          stability: 0.5,
-          similarity_boost: 0.75,
-          style: 0.0,
+          stability: 0.35,
+          similarity_boost: 0.8,
+          style: 0.5,
           use_speaker_boost: true,
         },
         output_format: "mp3_44100_128",
@@ -152,10 +189,20 @@ async function generateAudioElevenLabs(script: string, voiceId: string = ELEVENL
   return Buffer.from(arrayBuffer);
 }
 
+// Generic MiniMax fallback voice (Wise Woman) — used ONLY when an ElevenLabs
+// cloned voice was requested but ElevenLabs is unavailable (e.g. out of credits).
+const MINIMAX_FALLBACK_VOICE = "moss_audio_c0bbc114-1f24-11f1-83c7-3e0d56c699a9";
+
 async function generateAudio(script: string, voiceId: string): Promise<Buffer> {
-  // Agents with a cloned ElevenLabs voice (user_pins.voice_id) get THEIR voice.
-  // MiniMax voice ids are "moss_audio_..."; anything else is an ElevenLabs id.
-  const isElevenLabsVoice = !!voiceId && !voiceId.startsWith("moss_audio");
+  // Voice id taxonomy (user_pins.voice_id):
+  //   - 20-char alphanumeric (e.g. "ioRCUMBLQYICIH6h2vLV") => ElevenLabs cloned voice.
+  //   - "moss_audio_..."                                   => MiniMax SYSTEM voice.
+  //   - anything else (e.g. "marieusfr0612")               => MiniMax CUSTOM clone.
+  // MiniMax handles both system + custom-clone ids on the same t2a endpoint, so a
+  // custom clone keeps THE AGENT'S voice even when ElevenLabs is down. ElevenLabs is
+  // only attempted for a true ElevenLabs id, and falls back to the generic MiniMax
+  // voice (never to a different agent's voice).
+  const isElevenLabsVoice = /^[A-Za-z0-9]{20}$/.test(voiceId);
   if (isElevenLabsVoice && ELEVENLABS_API_KEY) {
     try {
       return await generateAudioElevenLabs(script, voiceId);
@@ -165,10 +212,13 @@ async function generateAudio(script: string, voiceId: string): Promise<Buffer> {
     }
   }
 
-  // MiniMax 2.5 (default/admin voice path)
+  // MiniMax 2.5 — system voice, custom clone, or generic fallback for a failed EL id.
   if (MINIMAX_API_KEY) {
+    const mmVoice = isElevenLabsVoice
+      ? MINIMAX_FALLBACK_VOICE
+      : (voiceId || MINIMAX_FALLBACK_VOICE);
     try {
-      return await generateAudioMiniMax(script, isElevenLabsVoice ? "moss_audio_c0bbc114-1f24-11f1-83c7-3e0d56c699a9" : voiceId);
+      return await generateAudioMiniMax(script, mmVoice);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error(`MiniMax TTS failed, falling back to ElevenLabs: ${msg}`);
@@ -208,17 +258,19 @@ async function sendSlyBroadcast(
   audioUrl: string,
   config: OperatorConfig
 ): Promise<{ success: boolean; campaignId?: string; error?: string }> {
-  // Always send through the COMPANY SlyBroadcast account — it is the only one
-  // with API access enabled. Agents' own SlyBroadcast accounts return
-  // "API access not allowed" over the API, so routing every drop through the
-  // company account means a drop never fails just because an agent connected a
-  // personal account. We keep the AGENT's caller ID so the claimant still sees
-  // the agent's number.
+  // An agent who connected their OWN SlyBroadcast account sends through THEIR
+  // account — that's the entire point of connecting it (their drops bill to their
+  // own SlyBroadcast credits, not the company's). Everyone who has NOT connected
+  // their own account falls back to the company account. The agent's caller ID is
+  // kept either way. NOTE: an agent's personal account must have SlyBroadcast API
+  // access enabled, or the send returns "API access not allowed" (surfaced to them).
   const companyUid = process.env.SLYBROADCAST_EMAIL || "coreypearsonemail@gmail.com";
   const companyPass = process.env.SLYBROADCAST_PASSWORD || "Slypassword#1";
+  const uid = config.slybroadcastEmail || companyUid;
+  const pass = config.slybroadcastPassword || companyPass;
   const formData = new URLSearchParams();
-  formData.append("c_uid", companyUid);
-  formData.append("c_password", companyPass);
+  formData.append("c_uid", uid);
+  formData.append("c_password", pass);
   formData.append("c_method", "new_campaign");
   formData.append("c_phone", phoneNumber);
   formData.append("c_url", audioUrl);

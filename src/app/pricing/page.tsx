@@ -40,7 +40,7 @@ const ENROLL_URL =
 
 const programFeatures = [
   "up to 125 verified, exclusive leads per week (500/month, yours alone)",
-  "Need more? Buy extra leads anytime for $5 each",
+  "Need more? Buy extra leads anytime for $2.50 each",
   "Certified letters mailed to your leads on your behalf",
   "Ongoing support -- phone, email, dashboard",
   "Full training program (audio, video, written)",

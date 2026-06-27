@@ -18,10 +18,30 @@ function effectiveBan(row: { banned?: boolean | null; ban_reason?: string | null
   return { banned: true, banReason: reason }
 }
 
-// Whether an operator pin has the outreach credentials saved. Voice-drop needs
-// SlyBroadcast; SMS needs TextBee. Buttons stay inactive until these are true.
-async function credFlags(pinId: string | null): Promise<{ hasSlybroadcast: boolean; hasTextbee: boolean }> {
-  if (!pinId) return { hasSlybroadcast: false, hasTextbee: false }
+// Packages allowed to send voice drops. Every drop is delivered through the
+// COMPANY SlyBroadcast account (the only one with API access) using the agent's
+// own voice + caller ID — so the button no longer depends on the agent saving
+// personal SlyBroadcast creds. Any voicedrop-eligible package gets a live button.
+// Must match isCommsAuthorized() in operator-config.ts — otherwise an agent could
+// see a live button that 403s on send.
+const VOICEDROP_PACKAGES = new Set([
+  'partnership',
+  'junior_owner_operator',
+  'owner_operator',
+  'admin',
+])
+
+// Outreach-button availability. Voice-drop is company-routed, so it's enabled for
+// any voicedrop-eligible package. SMS (TextBee) still needs the agent's own device
+// creds, so it stays gated on those.
+async function credFlags(
+  pinId: string | null,
+  packageType?: string | null
+): Promise<{ hasSlybroadcast: boolean; hasTextbee: boolean }> {
+  // Voicedrop is live if the package is eligible (company-routed delivery) OR the
+  // pin has SlyBroadcast creds saved. Either path turns the button green.
+  const pkgEligible = VOICEDROP_PACKAGES.has((packageType || '').toLowerCase())
+  if (!pinId) return { hasSlybroadcast: pkgEligible, hasTextbee: false }
   const { data } = await supabaseAdmin
     .from('user_pins')
     .select('slybroadcast_email, slybroadcast_password, textbee_api_key, textbee_device_id')
@@ -29,7 +49,7 @@ async function credFlags(pinId: string | null): Promise<{ hasSlybroadcast: boole
     .maybeSingle()
   const p = (data || {}) as Record<string, string | null>
   return {
-    hasSlybroadcast: !!(p.slybroadcast_email && p.slybroadcast_password),
+    hasSlybroadcast: pkgEligible || !!(p.slybroadcast_email && p.slybroadcast_password),
     hasTextbee: !!(p.textbee_api_key && p.textbee_device_id),
   }
 }
@@ -92,7 +112,7 @@ export async function GET(req: NextRequest) {
     // table shows). The pin's package_type can be stale, so prefer the users row.
     const effectiveAccountType = tUser?.account_type || target.packageType || 'basic'
     const effectiveIsAdmin = effectiveAccountType === 'admin' || tUser?.role === 1
-    const tFlags = await credFlags(target.pinId)
+    const tFlags = await credFlags(target.pinId, effectiveAccountType)
     return NextResponse.json({
       ...tFlags,
       isAdmin: effectiveIsAdmin,
@@ -126,7 +146,7 @@ export async function GET(req: NextRequest) {
   const statesAccess = pinData?.states_access || []
   // training unlocked if ANY duplicate row has it
   const trainingUnlocked = (userRows || []).some((r) => r?.training_unlocked)
-  const selfFlags = await credFlags(pinId)
+  const selfFlags = await credFlags(pinId, isAdmin ? 'admin' : accountType)
 
   return NextResponse.json({
     ...selfFlags,

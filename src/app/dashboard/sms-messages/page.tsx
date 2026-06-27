@@ -243,59 +243,6 @@ export default function SmsMessagesPage() {
         </CardContent>
       </Card>
 
-      {/* Section 4: Recent Replies (inbound via TextBee) */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Send className="h-5 w-5 text-muted-foreground" />
-            <CardTitle className="text-lg">Recent Replies</CardTitle>
-          </div>
-          <CardDescription>
-            Text messages homeowners have sent back to your TextBee device
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {!tb.connected ? (
-            <div className="text-center py-10">
-              <MessageSquare className="h-10 w-10 text-muted-foreground/40 mx-auto mb-3" />
-              <p className="text-sm text-muted-foreground">Connect TextBee above to start receiving replies.</p>
-            </div>
-          ) : tb.messages.length === 0 ? (
-            <div className="text-center py-10">
-              <MessageSquare className="h-10 w-10 text-muted-foreground/40 mx-auto mb-3" />
-              <p className="text-sm text-muted-foreground">No replies yet. When a homeowner texts back, it shows up here.</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-3 px-2 font-medium text-muted-foreground">Received</th>
-                    <th className="text-left py-3 px-2 font-medium text-muted-foreground">From</th>
-                    <th className="text-left py-3 px-2 font-medium text-muted-foreground">Message</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tb.messages.map((msg) => (
-                    <tr key={msg.id} className="border-b last:border-0 hover:bg-muted/50 transition-colors">
-                      <td className="py-3 px-2 whitespace-nowrap text-muted-foreground">
-                        {msg.receivedAt ? formatDateTime(msg.receivedAt) : "—"}
-                      </td>
-                      <td className="py-3 px-2 whitespace-nowrap font-medium">
-                        {formatPhone(msg.sender)}
-                      </td>
-                      <td className="py-3 px-2">
-                        <span className="line-clamp-2 max-w-md text-muted-foreground">{msg.message}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
       {/* Section 5: FAQ */}
       <Card>
         <CardHeader>

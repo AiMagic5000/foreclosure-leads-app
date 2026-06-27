@@ -154,6 +154,22 @@ export default function OwnerOperatorPage() {
         </div>
       </div>
 
+      {/* Start My Business build-out dashboard preview (own section, above the features) */}
+      <a
+        href="https://www.startmybusiness.us/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/start-my-business-build-out-dashboard.webp"
+          alt="Your Start My Business build-out dashboard — 45 daily tasks handled for you"
+          className="w-full"
+          loading="lazy"
+        />
+      </a>
+
       {/* What you get — primary features + Additional Features dropdown */}
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <h2 className="text-xl font-bold text-[#0f172a]">Everything the Owner Operator program gives you</h2>

@@ -106,7 +106,7 @@ const PROGRAM = {
   commissionNote: "You receive 50% and the company receives 50% of up to 30% of the recovery fee. Some jurisdictions like Texas cap recovery agent fees at 20%. Balance payments only come from cases you close.",
   features: [
     "up to 125 verified, exclusive leads per week (500/month) -- yours alone, never shared with another agent",
-    "Need more volume? Buy extra leads anytime for $5 each",
+    "Need more volume? Buy extra leads anytime for $2.50 each",
     "Certified letters mailed to your leads on your behalf, with proof of service, jurisdiction language, and a free claims guide",
     "Ongoing support -- phone, email, dashboard",
     "Full training program access (audio, video, written)",

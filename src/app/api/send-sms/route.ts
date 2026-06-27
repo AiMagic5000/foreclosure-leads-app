@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase"
 import { resolveOperatorConfig, isCommsAuthorized } from "@/lib/operator-config"
 import { isRequestAdmin } from "@/lib/admin-guard"
 import { getAgentSocialLink } from "@/lib/social-link"
+import { leadTypeCopy } from "@/lib/surplus/lead-type-copy"
 
 const TEXTBEE_BASE_URL = "https://api.textbee.dev/api/v1/gateway/devices"
 const SMS_GATEWAY_SEND_PATH = "/api/v1/send"
@@ -15,8 +16,9 @@ function buildSmsMessage(lead: Record<string, unknown>, config: { displayName: s
   const state = String(lead.state || lead.state_abbr || "state")
   // Don't append extension if phoneDisplay already contains it
   const ext = (config.extension && !config.phoneDisplay.includes("ext")) ? ` ext. ${config.extension}` : ""
+  const copy = leadTypeCopy(lead.lead_type as string | undefined, lead.foreclosure_type as string | undefined)
 
-  return `${firstName}, this is ${config.displayName} from ${config.companyName}. Our forensic audit has identified funds that are owed to you from the foreclosure of your property at ${propertyAddress}. Check your email for full details. To claim these funds, please call ${config.displayName} at ${config.phoneDisplay}${ext} or reply to this message. Time is limited under ${state} law. https://${config.websiteUrl}/`
+  return `${firstName}, this is ${config.displayName} from ${config.companyName}. Our forensic audit has identified funds that are owed to you from ${copy.smsSaleRef} at ${propertyAddress}. Check your email for full details. To claim these funds, please call ${config.displayName} at ${config.phoneDisplay}${ext} or reply to this message. Time is limited under ${state} law. https://${config.websiteUrl}/`
 }
 
 function buildMeetAgentSms(lead: Record<string, unknown>, config: { displayName: string; companyName: string; phoneDisplay: string; meetAgentUrl: string }): string {

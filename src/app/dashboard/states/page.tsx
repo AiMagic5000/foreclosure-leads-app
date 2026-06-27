@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Search, MapPin, Scale, Clock, DollarSign, FileText, ExternalLink, X, Info, Lock, Users, TrendingUp, Gavel, Home, Shield, Banknote, CalendarDays, BookOpen, AlertTriangle, Mail, Phone, Building2, Eye, EyeOff } from "lucide-react"
 import { CountyMap } from "@/components/county-map"
 import { useUser } from "@clerk/nextjs"
+import { usePin } from "@/lib/pin-context"
 import { supabase } from "@/lib/supabase"
 import { UPGRADE_URL } from "@/lib/upgrade"
 
@@ -22,31 +23,15 @@ export default function StatesPage() {
   const [selectedState, setSelectedState] = useState<string | null>(null)
   const [stateLeadCounts, setStateLeadCounts] = useState<Record<string, number>>({})
   const [foiaContacts, setFoiaContacts] = useState<any[]>([])
-  const [subscriptionTier, setSubscriptionTier] = useState<string>("free")
-  // Admin defaults to the free (blurred) view agents see; can reveal real data.
-  const [adminShowData, setAdminShowData] = useState(false)
+  // Admin sees real data by default; can toggle to the free (blurred) agent preview.
+  const [adminShowData, setAdminShowData] = useState(true)
   const { theme } = useTheme()
   const isDark = theme === "dark"
   const { user } = useUser()
   const email = user?.primaryEmailAddress?.emailAddress || ""
-  const isAdmin = email === "coreypearsonemail@gmail.com"
-
-  useEffect(() => {
-    async function fetchSubscriptionTier() {
-      try {
-        const res = await fetch("/api/user/role")
-        if (res.ok) {
-          const data = await res.json()
-          if (data.subscriptionTier) {
-            setSubscriptionTier(data.subscriptionTier)
-          }
-        }
-      } catch {
-        // silently fail, default to "free"
-      }
-    }
-    fetchSubscriptionTier()
-  }, [])
+  // Impersonation-aware tier (usePin honors admin "View as"): admin viewing a free
+  // user => isAdmin=false, accountType=basic => blurred gate. Real admin => isAdmin=true.
+  const { isAdmin, accountType } = usePin()
 
   useEffect(() => {
     async function fetchLeadCounts() {
@@ -115,8 +100,8 @@ export default function StatesPage() {
   // free (blurred) experience here — matching the dashboard map — and can click
   // "Show real data" for operational access. Free users always see the blur.
   const PAID_TIERS = new Set(["owner_operator", "junior_owner_operator", "partnership"])
-  const isRealPaidAgent = !isAdmin && PAID_TIERS.has(subscriptionTier)
-  const isRealOwnerOperator = !isAdmin && subscriptionTier === "owner_operator"
+  const isRealPaidAgent = !isAdmin && PAID_TIERS.has(accountType)
+  const isRealOwnerOperator = !isAdmin && accountType === "owner_operator"
   const canViewData = isRealPaidAgent || (isAdmin && adminShowData)
   const showInventory = isRealOwnerOperator || (isAdmin && adminShowData)
 

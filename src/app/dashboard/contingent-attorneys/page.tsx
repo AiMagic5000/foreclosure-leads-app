@@ -78,8 +78,8 @@ export default function ContingentAttorneysPage() {
         <div className="relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/mytrustsoftware-preview.png"
-            alt="My Trust Software — create your living trust online"
+            src="/images/my-trust-software-documents-dashboard.webp"
+            alt="My Trust Software — your trust documents dashboard"
             className="w-full"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition group-hover:bg-black/10">

@@ -59,18 +59,23 @@ export default function RinglessDripsPage() {
       const mr = supported ? new MediaRecorder(stream, { mimeType: supported }) : new MediaRecorder(stream)
       chunksRef.current = []
       mr.ondataavailable = (e) => { if (e.data.size) chunksRef.current.push(e.data) }
+      // Surface (don't swallow) a recorder error so an interrupted take never looks like a silent ~10s cutoff.
+      mr.onerror = () => { setErr("Recording was interrupted by the browser. Please try again, or upload an audio file instead."); stopRecording() }
       mr.onstop = () => {
         stream.getTracks().forEach((t) => t.stop())
         const mt = mr.mimeType || "audio/webm"
         const ext = mt.includes("mp4") ? "m4a" : mt.includes("mpeg") ? "mp3" : mt.includes("ogg") ? "ogg" : "webm"
         const blob = new Blob(chunksRef.current, { type: mt })
+        if (blob.size < 1024) { setErr("That recording came back empty — your browser may have blocked the mic. Please try again, or upload an audio file."); return }
         upload(blob, ext)
       }
-      mr.start()
+      // If the mic track ends unexpectedly (OS interruption, device switch), finalize what we have.
+      stream.getAudioTracks().forEach((t) => { t.onended = () => stopRecording() })
+      mr.start(1000) // timeslice: flush a chunk every second so nothing is lost if it stops early
       mediaRef.current = mr
       setRecording(true); setElapsed(0)
       timerRef.current = setInterval(() => setElapsed((s) => {
-        if (s >= 75) { stopRecording() } // hard cap ~75s
+        if (s >= 120) { stopRecording() } // hard cap ~2 min
         return s + 1
       }), 1000)
     } catch {

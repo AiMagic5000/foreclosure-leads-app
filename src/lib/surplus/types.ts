@@ -37,6 +37,8 @@ export interface MergeContext {
   propertyAddress: string
   propertyState: string          // 2-letter, authoritative
   propertyType: string
+  leadType: string                // foreclosure_leads.lead_type (tax_overage / pre_foreclosure / import label)
+  foreclosureType: string         // foreclosure_leads.foreclosure_type ('tax' refines fallback)
   saleDate: string
   estimatedSurplus: number        // SINGLE SOURCE OF TRUTH
   estimatedSurplusFormatted: string

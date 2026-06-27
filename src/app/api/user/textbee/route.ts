@@ -44,27 +44,10 @@ export async function GET(req: NextRequest) {
   const deviceId = pin?.textbee_device_id || ""
   const connected = !!(apiKey && deviceId)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let messages: any[] = []
-  if (connected) {
-    try {
-      const res = await fetch(`${TEXTBEE_BASE}/${deviceId}/get-received-sms?page=1`, {
-        headers: { "x-api-key": apiKey, "User-Agent": BROWSER_UA },
-      })
-      if (res.ok) {
-        const data = await res.json()
-        const rows = data?.data || data?.messages || []
-        messages = rows.slice(0, 10).map((m: Record<string, unknown>) => ({
-          id: (m._id || m.id || "") as string,
-          sender: (m.sender || m.from || "") as string,
-          message: (m.message || m.body || m.text || "") as string,
-          receivedAt: (m.receivedAt || m.createdAt || "") as string,
-        }))
-      }
-    } catch {
-      // inbound fetch is best-effort
-    }
-  }
+  // Inbound SMS feed REMOVED 2026-06-19 (privacy): we no longer pull an agent's
+  // received texts into the dashboard — their phone carries personal messages too.
+  // Sending + connection status stay; STOP/opt-out scanning runs server-side only.
+  const messages: never[] = []
 
   return NextResponse.json({
     connected,

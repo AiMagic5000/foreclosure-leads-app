@@ -122,6 +122,7 @@ const navSections: NavSection[] = [
       { name: "User Data", href: "/dashboard/user-data", icon: UserCircle, badge: { text: "CRM", color: "teal" } },
       { name: "User Activity", href: "/dashboard/admin/user-activity", icon: Activity, badge: { text: "Live", color: "blue" } },
       { name: "Pipeline Monitor", href: "/dashboard/admin/pipeline", icon: Activity, badge: { text: "Live", color: "emerald" } },
+      { name: "Agent Ext's", href: "/dashboard/admin/extensions", icon: Phone, badge: { text: "888", color: "emerald" } },
       // Lead sources
       { name: "Fresh Leads", href: "/dashboard/admin/fresh-leads", icon: Inbox, badge: { text: "Issue", color: "emerald" } },
       { name: "Foreclosure Leads", href: "/dashboard/leads", icon: Users },

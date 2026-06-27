@@ -1,6 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { usePin } from "@/lib/pin-context"
 import Link from "next/link"
 import {
   Users,
@@ -94,6 +96,22 @@ export default function DashboardPage() {
   const [topStates, setTopStates] = useState<StateCount[]>([])
   const [loading, setLoading] = useState(true)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  // Use the impersonation-aware pin context (NOT a raw role fetch) so that admin
+  // "View as <free user>" correctly shows the free/blurred gate. Paid tiers +
+  // real admin see unblurred popups; free/basic gets the upgrade gate.
+  const { isAdmin, accountType, isLoading } = usePin()
+  const canViewMap = isAdmin || (["partnership", "junior_owner_operator", "owner_operator"] as string[]).includes(accountType)
+  const router = useRouter()
+
+  // New (free/basic) members land on the FREE Training tab the first time they hit
+  // the dashboard each session; paid tiers + admin stay on the dashboard. Session
+  // marker = no trap (they can navigate back to /dashboard freely afterward).
+  useEffect(() => {
+    if (isLoading || typeof window === "undefined") return
+    if (sessionStorage.getItem("usfl_post_login_routed")) return
+    sessionStorage.setItem("usfl_post_login_routed", "1")
+    if (!isAdmin && accountType === "basic") router.replace("/dashboard/closing-training")
+  }, [isLoading, isAdmin, accountType, router])
 
   useEffect(() => {
     async function fetchDashboardData() {
@@ -305,7 +323,7 @@ export default function DashboardPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <CountyMap isDark={isDark} />
+          <CountyMap isDark={isDark} isOwnerOperator={canViewMap} />
         </CardContent>
       </Card>
 

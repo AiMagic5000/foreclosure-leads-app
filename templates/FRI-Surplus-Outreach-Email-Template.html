@@ -13,7 +13,7 @@ MERGE FIELDS:
   [[ESTIMATED_SURPLUS]]    Preliminary estimate — MUST be identical to the figure in the Contingency Agreement
   [[STATE_DEADLINE_CLAUSE]] Jurisdiction-specific claim-deadline sentence for PROPERTY_STATE (NOT a generic/other state)
   [[FEE_PCT]]              Contingency rate, capped to PROPERTY_STATE max (default "up to 30%")
-  [[REP_NAME]]             Sending rep / agent name (e.g., Corey Pearson)
+  [[REP_NAME]]             Sending rep / agent name (the agent's own full name)
   [[REP_TITLE]]            e.g., Director / Recovery Agent
   [[REP_EMAIL]]            On-brand address (claim@usforeclosurerecovery.com or rep@usforeclosurerecovery.com)
   [[REP_PHONE]]            (888) 545-8007 or rep extension
@@ -46,29 +46,36 @@ SUBJECT LINE (honest — no fake "Re:"):
   }
 </style>
 <center style="width: 100%; background-color: #f4f5f7;">
-<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">Public records indicate surplus proceeds may be available to you from the foreclosure sale of [[PROPERTY_ADDRESS]]. You may claim these funds yourself, or hire us on a no-upfront-cost basis.</div>
+<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">Public records indicate surplus proceeds may be available to you from the [[SALE_EVENT]] of [[PROPERTY_ADDRESS]]. You may claim these funds yourself, or hire us on a no-upfront-cost basis.</div>
 <div class="v1email-container" style="max-width: 600px; margin: 0 auto;">
 
-  <!-- top rule -->
-  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
-    <tr><td style="background-color: #09274c; height: 4px; font-size: 0; line-height: 0;">&nbsp;</td></tr>
-  </tbody></table>
-
-  <!-- header -->
-  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
-    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 28px 40px 20px;">
-      <table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
-        <td align="left" valign="middle" width="55%">
-          <a style="text-decoration: none;" href="https://usforeclosurerecovery.com" target="_blank" rel="noopener noreferrer">
-            <img style="display: block; max-width: 185px; height: auto;" src="https://cdn.prod.website-files.com/67ec4cfbdf0509c176a8cdfe/69897785586ae271c69d085e_image%20(1).png" alt="Foreclosure Recovery Inc." width="185" />
-          </a>
-        </td>
-        <td align="right" valign="middle" width="45%">
-          <p style="margin: 0; font-size: 12px; color: #7a8a9e; font-family: 'Inter Tight','Segoe UI',Tahoma,Geneva,Verdana,sans-serif; line-height: 18px;">[[SEND_DATE]]</p>
-        </td>
-      </tr></tbody></table>
-    </td></tr>
-  </tbody></table>
+  <!-- brand header -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background-color: #d82221; padding: 9px 32px; font-size: 12px; color: #ffffff; text-align: right;"><a style="color: #ffffff; text-decoration: none;" href="tel:+18885458007" target="_blank" rel="noopener noreferrer">(888) 545-8007</a> &nbsp;&middot;&nbsp; <a style="color: #ffffff; text-decoration: none;" href="mailto:support@usforeclosureleads.com" rel="noreferrer">support@usforeclosureleads.com</a> &nbsp;&middot;&nbsp; <a style="color: #ffffff; text-decoration: none;" href="https://usforeclosureleads.com" target="_blank" rel="noopener noreferrer">usforeclosureleads.com</a></td>
+</tr>
+</tbody>
+</table>
+<table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background-color: #09274c; padding: 28px 40px;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="vertical-align: middle;">
+<p style="margin: 0; font-size: 20px; font-weight: bold; color: #ffffff; letter-spacing: 0.3px;">Foreclosure Recovery Inc.</p>
+<p style="margin: 2px 0 0; font-size: 11px; color: #8eb4d8; letter-spacing: 1.4px; text-transform: uppercase;">Asset Recovery Specialists</p>
+</td>
+<td style="vertical-align: middle; text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
 
   <!-- divider -->
   <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
@@ -210,24 +217,76 @@ SUBJECT LINE (honest — no fake "Re:"):
     </td></tr>
   </tbody></table>
 
-  <!-- accent rule -->
-  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
-    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 0 40px;"><div style="border-top: 2px solid #D82221; width: 60px;">&nbsp;</div></td></tr>
-  </tbody></table>
-
-  <!-- footer / disclosures -->
-  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
-    <tr><td class="v1padding-mobile" style="background-color: #ffffff; padding: 20px 40px 30px;">
-      <p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight',sans-serif;">Foreclosure Recovery Inc. &middot; 30 N Gould St, Ste R &middot; Sheridan, WY 82801 &middot; [[REP_PHONE]]</p>
-      <p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight',sans-serif;">This message concerns the property and individual named above. Recovery of foreclosure surplus proceeds is subject to individual case evaluation and applicable state law; deadlines, fee limits, and procedures vary by state. Estimated amounts are preliminary and based on public records. Foreclosure Recovery Inc. is not a law firm and does not provide legal advice; where required, we engage licensed professionals at our own expense. We do not guarantee recovery, and results vary. You may pursue this claim yourself, potentially at no cost.</p>
-      <p style="margin: 0; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight',sans-serif;">&copy; 2026 Foreclosure Recovery Inc. All rights reserved.&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="https://usforeclosurerecovery.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="[[UNSUBSCRIBE_URL]]">Unsubscribe</a></p>
-    </td></tr>
-  </tbody></table>
-
-  <!-- bottom rule -->
-  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody>
-    <tr><td style="background-color: #09274c; height: 4px; font-size: 0; line-height: 0;">&nbsp;</td></tr>
-  </tbody></table>
-
+  <!-- per-agent signature is in the body above; company seal + legal footer only (no personal Managing-Principals block) -->
+  <table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background-color: #ffffff; padding: 28px 40px 8px; text-align: center;">
+<p style="margin: 0 0 16px; font-size: 10px; font-weight: bold; color: #8a96a5; letter-spacing: 2.5px; text-transform: uppercase;">THE GREAT SEAL</p>
+<a style="display: inline-block;" href="https://usforeclosureleads.com/" target="_blank" rel="noopener noreferrer"><img style="display: block; margin: 0 auto; border: 0; border-radius: 50%; box-shadow: 0 0 0 4px #ffffff,0 0 0 7px #09274C,0 0 0 9px #C8A84B,0 6px 24px rgba(9,39,76,0.20);" src="https://seafile.alwaysencrypted.com/seafhttp/f/fe13430ebf9d4d6483a7/?op=view" alt="Foreclosure Recovery Inc. Great Seal" width="200" height="200" /></a>
+<p style="margin: 16px 0 4px; font-size: 12px; font-weight: bold; color: #09274c; letter-spacing: 1.5px; text-transform: uppercase;">PART OF THE FORECLOSURE RECOVERY INC. NETWORK</p>
+<p style="margin: 0; font-size: 11px; color: #8a96a5; letter-spacing: 0.5px;">Serving Claimants &amp; Recovery Agents Nationwide</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background-color: #ffffff; padding: 20px 60px 0;">
+<div style="border-top: 1px solid #dde3ec;">&nbsp;</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background-color: #ffffff; padding: 18px 40px 0;">
+<p style="margin: 0 0 14px; font-size: 10px; font-weight: bold; color: #8a96a5; letter-spacing: 2.5px; text-transform: uppercase; text-align: center;">Our Network of Services</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background-color: #ffffff; padding: 16px 24px; text-align: center; vertical-align: middle; border-right: 1px solid #eef0f4; border-bottom: 1px solid #eef0f4;" width="50%"><a href="https://mystatefunds.com/" target="_blank" rel="noopener noreferrer"><img style="display: block; border: 0; max-width: 170px; height: 55px; margin: 0 auto;" src="https://seafile.alwaysencrypted.com/seafhttp/f/85a0d210440542c981bd/?op=view" alt="My State Funds" width="170" height="55" /></a></td>
+<td style="background-color: #ffffff; padding: 16px 24px; text-align: center; vertical-align: middle; border-bottom: 1px solid #eef0f4;" width="50%"><a href="https://usforeclosurerecovery.com/" target="_blank" rel="noopener"><img style="display: block; border: 0; max-width: 150px; height: 47px; margin: 0 auto;" src="https://seafile.alwaysencrypted.com/seafhttp/f/7fe1bd4bc8af4f068119/?op=view" alt="Foreclosure Recovery Inc." width="150" height="47" /></a></td>
+</tr>
+<tr>
+<td style="background-color: #ffffff; padding: 16px 24px; text-align: center; vertical-align: middle; border-right: 1px solid #eef0f4;" width="50%"><a href="https://usforeclosureleads.com/" target="_blank" rel="noopener noreferrer"><img style="display: block; border: 0; max-width: 160px; height: 55px; margin: 0 auto;" src="https://seafile.alwaysencrypted.com/seafhttp/f/0b2ed75f56234bc9a765/?op=view" alt="US Foreclosure Leads" width="160" height="55" /></a></td>
+<td style="background-color: #ffffff; padding: 16px 24px; text-align: center; vertical-align: middle;" width="50%"><a href="https://usmortgagerecovery.com/" target="_blank" rel="noopener noreferrer"><img style="display: block; border: 0; max-width: 160px; height: 55px; margin: 0 auto;" src="https://seafile.alwaysencrypted.com/seafhttp/f/e9d7da95a70548298f8f/?op=view" alt="US Mortgage Recovery" width="160" height="55" /></a></td>
+</tr>
+</tbody>
+</table>
+<table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background: linear-gradient(to right,#09274C,#C8A84B,#09274C); height: 3px; font-size: 0; line-height: 0;">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background-color: #ffffff; padding: 24px 40px 32px; text-align: center;">
+<p style="margin: 0 0 12px; font-size: 12px; font-weight: bold; color: #5a6d82; letter-spacing: 0.3px;">Copyright &copy; 2026 | Foreclosure Recovery Inc. | All Rights Reserved</p>
+<p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 19px;">30 N Gould St, Ste R<br />Sheridan, WY 82801<br />United States</p>
+<p style="margin: 0 0 14px; font-size: 11px; color: #8a96a5; line-height: 18px;"><a style="color: #09274c; text-decoration: underline;" href="https://usforeclosureleads.com/unsubscribe" target="_blank" rel="noopener noreferrer">Unsubscribe</a> &nbsp;or&nbsp; <a style="color: #09274c; text-decoration: underline;" href="https://usforeclosureleads.com/privacy-policy" target="_blank" rel="noopener noreferrer">Change your preferences</a></p>
+<p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 19px;">This message is intended only for the named recipient and may contain confidential information. If you received it in error, please disregard and delete it.</p>
+<p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 19px;">Foreclosure Recovery Inc. operates in compliance with state unclaimed property laws. Surplus funds recovery is governed by individual state statutes. Results vary based on property details, outstanding liens, and applicable law. Past recoveries do not guarantee future results. Earnings examples are illustrations, not promises of income.</p>
+<p style="margin: 0; font-size: 11px; color: #8a96a5; line-height: 19px;">To keep getting these emails, add <strong>support@usforeclosureleads.com</strong> to your address book.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table style="max-width: 600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td style="background-color: #09274c; height: 5px; font-size: 0; line-height: 0;">&nbsp;</td>
+</tr>
+</tbody>
+</table>
 </div>
 </center>

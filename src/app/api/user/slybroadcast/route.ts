@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
 import { notifyAccountActivity } from "@/lib/email"
+import { sendVoiceUploadRequestEmail } from "@/lib/agent-voice-automation"
 
 export const dynamic = "force-dynamic"
 
@@ -74,5 +75,8 @@ export async function POST(req: NextRequest) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
   await notifyAccountActivity(email, "Connected SlyBroadcast")
+  // Automation: ask the agent to upload a voice sample so we can clone their voice
+  // and make every drop personalized. Best-effort — never block connecting.
+  await sendVoiceUploadRequestEmail(email)
   return NextResponse.json({ success: true })
 }

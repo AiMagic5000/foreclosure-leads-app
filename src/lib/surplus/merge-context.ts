@@ -3,7 +3,8 @@ import type { MergeContext, StateRule } from "./types"
 const DEFAULT_FEE_PCT = 30
 
 export function formatSurplus(amount: number): string {
-  if (!Number.isFinite(amount) || amount <= 0) return "$0"
+  // Never show "$0" on a lead — an unknown surplus is verified with the claimant, not zero.
+  if (!Number.isFinite(amount) || amount <= 0) return "To be verified"
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -44,9 +45,14 @@ export interface LeadLike {
   state_abbr?: string | null
   zip_code?: string | null
   property_type?: string | null
+  lead_type?: string | null
+  foreclosure_type?: string | null
   sale_date?: string | null
   overage_amount?: string | number | null
   estimated_surplus?: string | number | null
+  assessed_value?: string | number | null
+  estimated_market_value?: string | number | null
+  sale_amount?: string | number | null
   primary_phone?: string | null
 }
 
@@ -68,7 +74,21 @@ export function buildMergeContext(lead: LeadLike, rule: StateRule | null, reques
     ? (city && propertyState ? `${rawProp}, ${city}, ${propertyState}${lead.zip_code ? ` ${lead.zip_code}` : ""}` : rawProp)
     : (lead.mailing_address || "")
 
-  const estimatedSurplus = num(lead.overage_amount) || num(lead.estimated_surplus) || 0
+  // Resolve surplus once. Real overage first; if none, estimate from comparable sales
+  // (market value/Zestimate minus opening bid). Never fall back to $0.
+  let estimatedSurplus = num(lead.overage_amount) || num(lead.estimated_surplus) || 0
+  let surplusEstimated = false
+  if (estimatedSurplus <= 0) {
+    const marketValue = num(lead.assessed_value) || num(lead.estimated_market_value) || 0
+    const saleAmt = num(lead.sale_amount) || 0
+    if (marketValue > 0 && saleAmt > 0 && marketValue > saleAmt) {
+      estimatedSurplus = Math.round(marketValue - saleAmt)
+      surplusEstimated = true
+    }
+  }
+  const estimatedSurplusFormatted = estimatedSurplus > 0
+    ? formatSurplus(estimatedSurplus) + (surplusEstimated ? " (estimated from comparable sales)" : "")
+    : "To be verified"
   const feePct = resolveFeePct(rule, requestedFeePct)
 
   return {
@@ -79,9 +99,11 @@ export function buildMergeContext(lead: LeadLike, rule: StateRule | null, reques
     propertyAddress,
     propertyState,
     propertyType: lead.property_type || "Residential",
+    leadType: lead.lead_type || "",
+    foreclosureType: lead.foreclosure_type || "",
     saleDate: lead.sale_date || "",
     estimatedSurplus,
-    estimatedSurplusFormatted: formatSurplus(estimatedSurplus),
+    estimatedSurplusFormatted,
     feePct,
     governingLawState: propertyState,
     venueText: rule?.venue_text || (propertyState ? `Claimant's jurisdiction, ${rule?.state_name || propertyState}` : ""),

@@ -739,6 +739,55 @@ function WebcastLiveContent() {
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
           />
+          {/* Promo marquee -- scrolls across the bottom of the live video */}
+          {!sessionEnded && (
+            <div
+              aria-hidden
+              style={{
+                position: 'absolute', left: 0, right: 0, top: 0, zIndex: 30,
+                overflow: 'hidden', whiteSpace: 'nowrap', pointerEvents: 'none',
+                background: 'rgba(9,39,76,0.92)', borderBottom: '2px solid #c8a84b',
+              }}
+            >
+              <div style={{ display: 'inline-block', whiteSpace: 'nowrap', animation: 'usflMarquee 30s linear infinite', willChange: 'transform' }}>
+                {[0, 1].map((i) => (
+                  <span key={i} style={{ display: 'inline-block', color: '#ffffff', fontWeight: 700, fontSize: '14px', letterSpacing: '0.4px', padding: '7px 0' }}>
+                    ALL AGENTS GET 50% COMMISSION
+                    <span style={{ color: '#c8a84b', padding: '0 22px' }}>&#9670;</span>
+                    UP TO 125 LEADS A WEEK
+                    <span style={{ color: '#c8a84b', padding: '0 22px' }}>&#9670;</span>
+                    NO MONTHLY CRM FEES
+                    <span style={{ color: '#c8a84b', padding: '0 22px' }}>&#9670;</span>
+                    MONEY-BACK GUARANTEE
+                    <span style={{ color: '#c8a84b', padding: '0 22px' }}>&#9670;</span>
+                  </span>
+                ))}
+              </div>
+              <style>{`@keyframes usflMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
+            </div>
+          )}
+          {/* Promo marquee #2 -- scrolls across the BOTTOM of the live video (plans + entry price) */}
+          {!sessionEnded && (
+            <div
+              aria-hidden
+              style={{
+                position: 'absolute', left: 0, right: 0, bottom: 0, zIndex: 30,
+                overflow: 'hidden', whiteSpace: 'nowrap', pointerEvents: 'none',
+                background: 'rgba(9,39,76,0.92)', borderTop: '2px solid #c8a84b',
+              }}
+            >
+              <div style={{ display: 'inline-block', whiteSpace: 'nowrap', animation: 'usflMarquee 30s linear infinite', willChange: 'transform' }}>
+                {[0, 1].map((i) => (
+                  <span key={i} style={{ display: 'inline-block', color: '#ffffff', fontWeight: 700, fontSize: '14px', letterSpacing: '0.4px', padding: '7px 0' }}>
+                    TWO PLANS ONLY: THE ASSET RECOVERY AGENT PLAN &amp; THE OWNER OPERATOR PLAN
+                    <span style={{ color: '#c8a84b', padding: '0 22px' }}>&#9670;</span>
+                    JUST $331 TO GET STARTED
+                    <span style={{ color: '#c8a84b', padding: '0 22px' }}>&#9670;</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
           {!showUnmutePrompt && !sessionEnded && (
             <div
               onClick={() => {

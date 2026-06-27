@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
 import { notifyAccountActivity } from "@/lib/email"
+import { autoCloneAgentVoice, sendVoiceClonedEmail } from "@/lib/agent-voice-automation"
 
 export const dynamic = "force-dynamic"
 const BUCKET = "agent-voice"
@@ -84,7 +85,22 @@ export async function POST(req: NextRequest) {
   if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 })
   const actor = (await currentUser())?.emailAddresses?.[0]?.emailAddress || "unknown"
   await notifyAccountActivity(actor, "Uploaded a voice sample", label)
-  return NextResponse.json({ success: true, path })
+
+  // Automation: auto-clone the uploaded voice into ElevenLabs + store it on the
+  // agent's pin(s), then email them a confirmation. Best-effort — a clone failure
+  // must NOT fail the upload itself.
+  let cloned = false
+  try {
+    const { data: pinRow } = await supabaseAdmin.from("user_pins").select("display_name").eq("id", pinId).single()
+    const voiceId = await autoCloneAgentVoice(pinId, buf, `${label}.${ext}`, pinRow?.display_name || undefined)
+    if (voiceId) {
+      cloned = true
+      if (actor && actor !== "unknown") await sendVoiceClonedEmail(actor)
+    }
+  } catch (e) {
+    console.error("[voice-recordings] auto-clone failed:", e instanceof Error ? e.message : String(e))
+  }
+  return NextResponse.json({ success: true, path, cloned })
 }
 
 // DELETE — remove a recording (?name=, ?asPinId=)

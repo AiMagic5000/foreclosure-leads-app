@@ -172,6 +172,22 @@ export default function ContingencyIncentivesPage() {
         </div>
       </div>
 
+      {/* Sales Incentive Network agent dashboard preview */}
+      <a
+        href="https://salesincentivenetwork.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/incentives/sales-incentive-network-agent-dashboard.webp"
+          alt="Sales Incentive Network agent dashboard — manage your incentives and hop links"
+          className="w-full"
+          loading="lazy"
+        />
+      </a>
+
       {/* CTA */}
       <div className="rounded-2xl bg-[#0f172a] p-6 text-center sm:p-8">
         <h2 className="text-2xl font-bold text-white">Get your complimentary certificate credits</h2>

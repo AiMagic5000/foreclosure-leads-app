@@ -110,6 +110,13 @@ export default function ClosingTrainingPage() {
   const [resources, setResources] = useState<TrainingResource[]>([])
   const [loading, setLoading] = useState(true)
   const [resourcesLoading, setResourcesLoading] = useState(false)
+  // Admin in-place resource editing (rename / replace cover / replace file)
+  const [editResource, setEditResource] = useState<TrainingResource | null>(null)
+  const [editName, setEditName] = useState("")
+  const [editBusy, setEditBusy] = useState(false)
+  // Per-resource download tier overrides: { resourceId: ["owner_operator","admin"] }
+  const [resourceAccess, setResourceAccess] = useState<Record<string, string[]>>({})
+  const [editTiers, setEditTiers] = useState<string[]>([])
 
   // Admin edit state
   const [editing, setEditing] = useState(false)
@@ -207,6 +214,14 @@ export default function ClosingTrainingPage() {
     fetchUserProgress()
   }, [fetchModules, fetchUserProgress])
 
+  // Load per-resource download-tier overrides (admin-set).
+  useEffect(() => {
+    fetch("/api/training/resource-access")
+      .then((r) => r.json())
+      .then((d) => setResourceAccess(d.access || {}))
+      .catch(() => {})
+  }, [])
+
   useEffect(() => {
     if (selectedModule) {
       fetchResources(selectedModule.id)
@@ -273,11 +288,18 @@ export default function ClosingTrainingPage() {
     vid.onerror = () => vid.remove()
   }
 
-  // Does the user's TIER permit this module? "OO+A"-tagged modules exclude basic/free.
-  // Junior Owner Operator is treated as a full paid tier for access purposes.
+  // Any PAID agent (partnership or owner-operator/junior) gets full access to ALL
+  // training modules + resources — company policy. Free/basic accounts stay gated.
+  function isPaidTier(): boolean {
+    return accountType === "partnership" || accountType === "owner_operator" || accountType === "junior_owner_operator"
+  }
+
+  // Does the user's TIER permit this module? Paid agents get everything; free/basic
+  // only get the free preview + basic-tagged modules.
   function tierAllowed(mod: TrainingModule | null): boolean {
     if (!mod) return false
     if (effectiveIsAdmin || trainingUnlocked) return true
+    if (isPaidTier()) return true
     const tier = (accountType === "junior_owner_operator" ? "owner_operator" : (accountType || "basic")) as AccountTier
     const levels = mod.access_level || ["basic", "partnership", "owner_operator", "admin"]
     return levels.includes(tier)
@@ -326,6 +348,43 @@ export default function ClosingTrainingPage() {
     if (effectiveIsAdmin || trainingUnlocked) return true
     if (isFreePreview(mod)) return true
     return accountType === "partnership" || accountType === "owner_operator" || accountType === "junior_owner_operator"
+  }
+
+  // Owner-Operator tier (junior counts as OO for access, matching the rest of this page).
+  function isOwnerOp(): boolean {
+    return effectiveIsAdmin || accountType === "owner_operator" || accountType === "junior_owner_operator"
+  }
+  // Owner-Operator-only resources (any module): the Surplus Funds Recovery Forms
+  // Package and the US County Asset Recovery Directory. Matched by name so it
+  // applies wherever these appear (e.g. modules 4 and 10).
+  function isOwnerOpOnlyResource(r: TrainingResource): boolean {
+    const n = (r.display_name || "").toLowerCase()
+    return /forms\s*package/.test(n) || /asset recovery directory/.test(n)
+  }
+  function myTier(): string {
+    if (effectiveIsAdmin) return "admin"
+    return accountType === "junior_owner_operator" ? "owner_operator" : (accountType || "basic")
+  }
+  // Whether the current user may download a resource. A per-resource tier override
+  // (resourceAccess) wins; else fall back to the module gate + legacy OO-only rule.
+  function accessAllows(r: TrainingResource): boolean {
+    if (effectiveIsAdmin || trainingUnlocked) return true
+    if (isPaidTier()) return true   // all paid agents download every resource
+    const tiers = resourceAccess[String(r.id)]
+    if (tiers && tiers.length) {
+      const t = myTier()
+      return tiers.includes(t) || (t === "owner_operator" && tiers.includes("junior_owner_operator"))
+    }
+    if (!hasResourceAccess(selectedModule)) return false
+    if (isOwnerOpOnlyResource(r) && !isOwnerOp()) return false
+    return true
+  }
+  function blockedPopupFor(r: TrainingResource): string {
+    const tiers = resourceAccess[String(r.id)]
+    const ooOnly = tiers && tiers.length
+      ? tiers.includes("owner_operator") && !tiers.includes("partnership") && !tiers.includes("basic")
+      : isOwnerOpOnlyResource(r)
+    return ooOnly ? "OO_RESOURCE" : "RESOURCE"
   }
 
   // The only thing that blocks a module now is its TIER ("OO+A" = paid only).
@@ -499,6 +558,99 @@ export default function ClosingTrainingPage() {
     }
   }
 
+  // ---- Admin: edit an existing resource in place (rename / cover / file) ----
+  async function patchResource(id: string, patch: Record<string, unknown>) {
+    await fetch("/api/training/resources", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, ...patch }),
+    })
+    if (selectedModule) fetchResources(selectedModule.id)
+  }
+
+  async function saveEditName() {
+    if (!editResource || !editName.trim()) return
+    setEditBusy(true)
+    try {
+      await patchResource(editResource.id, { display_name: editName.trim() })
+      setEditResource((prev) => (prev ? { ...prev, display_name: editName.trim() } : prev))
+    } finally { setEditBusy(false) }
+  }
+
+  // Upload a file via the training upload endpoint; returns {url, fileName, fileSize}.
+  async function uploadTrainingFile(file: File): Promise<{ url?: string; fileName?: string; fileSize?: number }> {
+    const fd = new FormData()
+    fd.append("file", file)
+    fd.append("type", "resource")
+    const res = await fetch("/api/training/upload", { method: "POST", body: fd })
+    return res.json()
+  }
+
+  async function handleReplaceCover(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file || !editResource) return
+    setEditBusy(true)
+    try {
+      const up = await uploadTrainingFile(file)
+      if (up.url) {
+        await patchResource(editResource.id, { cover_url: up.url })
+        setEditResource((prev) => (prev ? { ...prev, cover_url: up.url } : prev))
+      }
+    } finally { setEditBusy(false); e.target.value = "" }
+  }
+
+  async function handleReplaceFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file || !editResource) return
+    setEditBusy(true)
+    try {
+      const up = await uploadTrainingFile(file)
+      if (up.url) {
+        await patchResource(editResource.id, { file_url: up.url, file_name: up.fileName, file_size: up.fileSize, file_type: file.type })
+        setEditResource((prev) => (prev ? { ...prev, file_url: up.url! } : prev))
+      }
+    } finally { setEditBusy(false); e.target.value = "" }
+  }
+
+  // Reorder a resource within its module (dir -1 = earlier/up-left, +1 = later/down-right).
+  // Normalizes all sort_orders to their new index so order is always clean.
+  async function moveResource(resource: TrainingResource, dir: -1 | 1) {
+    const idx = resources.findIndex((r) => r.id === resource.id)
+    const j = idx + dir
+    if (idx < 0 || j < 0 || j >= resources.length) return
+    const arr = [...resources]
+    ;[arr[idx], arr[j]] = [arr[j], arr[idx]]
+    setResources(arr) // optimistic
+    await Promise.all(
+      arr.map((r, i) =>
+        fetch("/api/training/resources", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: r.id, sort_order: i }),
+        }).catch(() => {})
+      )
+    )
+  }
+
+  // Save which tiers may download the resource being edited (empty = revert to module gate).
+  async function saveResourceAccess() {
+    if (!editResource) return
+    setEditBusy(true)
+    try {
+      await fetch("/api/training/resource-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: String(editResource.id), tiers: editTiers }),
+      })
+      setResourceAccess((prev) => {
+        const m = { ...prev }
+        if (editTiers.length) m[String(editResource.id)] = editTiers
+        else delete m[String(editResource.id)]
+        return m
+      })
+    } finally { setEditBusy(false) }
+  }
+
   async function createNewModule() {
     if (!newModuleTitle.trim()) return
     setCreatingModule(true)
@@ -559,14 +711,23 @@ export default function ClosingTrainingPage() {
   }
 
   function handleDownload(resource: TrainingResource) {
-    if (!hasResourceAccess(selectedModule)) { setShowAccessPopup("RESOURCE"); return }
+    if (!accessAllows(resource)) { setShowAccessPopup(blockedPopupFor(resource)); return }
     // Open the document in the browser so the user can read it; the in-browser
     // viewer still offers its own download/print.
     window.open(resource.file_url, "_blank", "noopener,noreferrer")
+    // Log the download to the user's activity (shows in admin User Activity).
+    fetch("/api/activity/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        kind: "download",
+        path: `Downloaded guide: ${resource.display_name}${selectedModule?.title ? ` (${selectedModule.title})` : ""}`,
+      }),
+    }).catch(() => {})
   }
 
   function handlePrint(resource: TrainingResource) {
-    if (!hasResourceAccess(selectedModule)) { setShowAccessPopup("RESOURCE"); return }
+    if (!accessAllows(resource)) { setShowAccessPopup(blockedPopupFor(resource)); return }
     window.open(resource.file_url, "_blank")
   }
 
@@ -636,7 +797,7 @@ export default function ClosingTrainingPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0 overflow-hidden">
-            <div className="lg:max-h-[560px] lg:overflow-y-auto divide-y divide-border">
+            <div className="divide-y divide-border">
               {modules.map((mod, idx) => {
                 const isSelected = selectedModule?.id === mod.id
                 const accessible = isAdmin || isModuleAccessible()
@@ -802,7 +963,7 @@ export default function ClosingTrainingPage() {
                         {/* Module Description */}
                         <div className="overflow-hidden">
                           <p className="text-sm font-semibold text-foreground break-words">{selectedModule.title}</p>
-                          <p className="text-xs text-muted-foreground mt-1 break-words">{selectedModule.description}</p>
+                          <div className="text-xs text-muted-foreground mt-1 break-words line-clamp-3 [&_p]:mb-1 [&_p:last-child]:mb-0 [&_strong]:text-foreground [&_b]:text-foreground" dangerouslySetInnerHTML={{ __html: selectedModule.description || "" }} />
                         </div>
 
                         {/* Mark Complete / Completed */}
@@ -860,6 +1021,9 @@ export default function ClosingTrainingPage() {
                                       coverUrl={resource.cover_url}
                                       onDownload={() => handleDownload(resource)}
                                       onPrint={() => handlePrint(resource)}
+                                      onEdit={isAdmin ? () => { setEditResource(resource); setEditName(resource.display_name); setEditTiers(resourceAccess[String(resource.id)] || []) } : undefined}
+                                      onMoveUp={isAdmin ? () => moveResource(resource, -1) : undefined}
+                                      onMoveDown={isAdmin ? () => moveResource(resource, 1) : undefined}
                                       onDelete={isAdmin ? () => handleDeleteResource(resource.id) : undefined}
                                     />
                                   ))}
@@ -1193,12 +1357,14 @@ export default function ClosingTrainingPage() {
                             />
                           </div>
                           <div>
-                            <label className="text-xs text-muted-foreground mb-1 block">Description</label>
+                            <label className="text-xs text-muted-foreground mb-1 block">
+                              Description <span className="text-indigo-500">— HTML supported (paste &lt;p&gt;, &lt;ul&gt;, &lt;strong&gt;, etc. to format)</span>
+                            </label>
                             <textarea
                               value={editDescription}
                               onChange={(e) => setEditDescription(e.target.value)}
-                              rows={3}
-                              className="w-full px-3 py-2 rounded-md border border-border bg-background text-sm resize-none"
+                              rows={8}
+                              className="w-full px-3 py-2 rounded-md border border-border bg-background text-sm font-mono resize-y"
                             />
                           </div>
                           <div className="grid grid-cols-2 gap-3">
@@ -1290,7 +1456,10 @@ export default function ClosingTrainingPage() {
                       ) : (
                         <>
                           <CardTitle className="text-lg">{selectedModule.title}</CardTitle>
-                          <CardDescription className="mt-1">{selectedModule.description}</CardDescription>
+                          <div
+                            className="mt-1 text-sm text-muted-foreground leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-3 [&_li]:mb-1 [&_strong]:text-foreground [&_b]:text-foreground [&_a]:text-indigo-600 [&_a]:underline [&_br]:block"
+                            dangerouslySetInnerHTML={{ __html: selectedModule.description || "" }}
+                          />
                         </>
                       )}
                     </div>
@@ -1450,6 +1619,9 @@ export default function ClosingTrainingPage() {
                               coverUrl={resource.cover_url}
                               onDownload={() => handleDownload(resource)}
                               onPrint={() => handlePrint(resource)}
+                              onEdit={isAdmin ? () => { setEditResource(resource); setEditName(resource.display_name); setEditTiers(resourceAccess[String(resource.id)] || []) } : undefined}
+                              onMoveUp={isAdmin ? () => moveResource(resource, -1) : undefined}
+                              onMoveDown={isAdmin ? () => moveResource(resource, 1) : undefined}
                               onDelete={isAdmin ? () => handleDeleteResource(resource.id) : undefined}
                             />
                           ))}
@@ -1551,6 +1723,74 @@ export default function ClosingTrainingPage() {
         />
       </div>
 
+      {/* Admin: edit a resource in place (rename / replace cover / replace file) */}
+      {editResource && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4" onClick={() => setEditResource(null)}>
+          <div className="bg-background rounded-xl p-6 max-w-md w-full shadow-2xl border border-border" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-semibold mb-4">Edit resource</h3>
+
+            <label className="text-xs text-muted-foreground mb-1 block">Listing name</label>
+            <div className="flex gap-2 mb-4">
+              <input
+                type="text"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+                className="flex-1 px-3 py-2 rounded-md border border-border bg-background text-sm"
+              />
+              <Button onClick={saveEditName} disabled={editBusy || !editName.trim()} size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white">Save</Button>
+            </div>
+
+            <div className="flex items-start gap-4 mb-4">
+              {editResource.cover_url ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={editResource.cover_url} alt="cover" className="w-20 rounded border border-border object-contain" />
+              ) : (
+                <div className="w-20 h-24 rounded border border-dashed border-border flex items-center justify-center text-[10px] text-muted-foreground text-center">No cover</div>
+              )}
+              <div className="flex-1 space-y-2">
+                <label className="text-xs font-medium block">Replace cover image
+                  <input type="file" accept="image/*" onChange={handleReplaceCover} disabled={editBusy} className="mt-1 block w-full text-xs" />
+                </label>
+                <label className="text-xs font-medium block">Replace download file
+                  <input type="file" onChange={handleReplaceFile} disabled={editBusy} className="mt-1 block w-full text-xs" />
+                </label>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="text-xs text-muted-foreground mb-1 block">Who can download this guide</label>
+              <div className="flex flex-wrap gap-2">
+                {([["basic", "Basic"], ["partnership", "Partnership"], ["owner_operator", "Owner Operator"], ["admin", "Admin"]] as const).map(([val, label]) => {
+                  const on = editTiers.includes(val)
+                  return (
+                    <button
+                      key={val}
+                      type="button"
+                      onClick={() => setEditTiers((prev) => (prev.includes(val) ? prev.filter((t) => t !== val) : [...prev, val]))}
+                      className={`px-2.5 py-1 rounded-full text-xs font-medium border transition-colors ${on ? "bg-indigo-600 text-white border-indigo-600" : "bg-background text-muted-foreground border-border hover:bg-muted"}`}
+                    >
+                      {label}
+                    </button>
+                  )
+                })}
+              </div>
+              <div className="mt-2 flex items-center gap-2">
+                <Button onClick={saveResourceAccess} disabled={editBusy} size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white">Save access</Button>
+                <span className="text-[11px] text-muted-foreground">{editTiers.length ? "Only the selected tiers can download." : "No restriction — uses the module's default access."}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <a href={editResource.file_url} target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-600 hover:underline">View current file</a>
+              <div className="flex items-center gap-2">
+                {editBusy && <Loader2 className="h-4 w-4 animate-spin text-indigo-500" />}
+                <button onClick={() => setEditResource(null)} className="text-sm text-muted-foreground hover:text-foreground">Done</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Phone-gate popup — unlock training by adding a phone number */}
       {showAccessPopup && (
         <div
@@ -1576,6 +1816,20 @@ export default function ClosingTrainingPage() {
                   className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
                 >
                   Upgrade to become an Asset Recovery Agent
+                </Button>
+              </>
+            ) : showAccessPopup === "OO_RESOURCE" ? (
+              <>
+                <h3 className="text-lg font-semibold mb-2">Owner Operators only</h3>
+                <p className="text-sm text-muted-foreground mb-5">
+                  This resource is reserved for <span className="font-medium text-foreground">Owner Operator</span> members.
+                  Upgrade to the Owner Operator program to download and print it.
+                </p>
+                <Button
+                  onClick={() => { setShowAccessPopup(null); router.push("/dashboard/owner-operator") }}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 w-full mb-2"
+                >
+                  Upgrade to Owner Operator
                 </Button>
               </>
             ) : (

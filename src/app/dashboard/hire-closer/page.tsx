@@ -587,6 +587,7 @@ export default function HireCloserPage() {
               <p className="text-sm text-muted-foreground mt-1">
                 Closers earn <strong className="text-foreground">10% of your service fee</strong> on each recovery.
                 Contract administration can be farmed out for an additional <strong className="text-foreground">5%</strong>. Attorney fees are billed separately.
+                Hiring a closer is part of the <a href="/dashboard/owner-operator" className="font-semibold text-emerald-700 underline underline-offset-2 hover:text-emerald-800 dark:text-emerald-300">Owner Operator program</a>.
               </p>
             </div>
             <div className="shrink-0 text-right">

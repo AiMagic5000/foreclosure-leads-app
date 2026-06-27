@@ -17,9 +17,10 @@ SaaS platform for foreclosure surplus fund recovery. Scrapes county foreclosure 
 - If overlap is ever discovered: remove the duplicate from the NEWER assignment (first-assigned agent wins)
 - This applies to ALL assignment methods: bulk SQL, API calls, UI actions, scripts
 
-### No Judicial States
-- NEVER scrape, enrich, or work on leads from judicial foreclosure states
-- Only non-judicial states: AL, AK, AZ, AR, GA, ID, MI, MN, MS, MO, NE, NV, NH, OR, RI, TN, VA, WV, WY
+### All States Usable (UPDATED 2026-06-22)
+- **ALL US states are usable — judicial AND non-judicial.** The prior "non-judicial only" restriction is RESCINDED (user directive 2026-06-22).
+- Do NOT filter or exclude leads by state (no CA/FL/TX/NY exclusion). Scrape, enrich, assign, and outreach across all states.
+- Assignment gates that DO still apply: overage ≥ $5,000, dnc_checked=true & on_dnc=false, exclusivity (one lead = one agent), verifiable source, valid owner name.
 
 ## Tech Stack
 - **Framework**: Next.js 16 (App Router) with React 19

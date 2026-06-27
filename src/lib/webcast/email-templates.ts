@@ -1,3 +1,5 @@
+import { BRAND_HEADER, BRAND_FOOTER } from "@/lib/email-brand"
+
 interface LeadData {
   first_name: string
   email: string
@@ -6,7 +8,6 @@ interface LeadData {
 }
 
 const FONT = "'Inter Tight','Segoe UI',Tahoma,Geneva,Verdana,sans-serif"
-const LOGO = 'https://cdn.prod.website-files.com/67ec4cfbdf0509c176a8cdfe/69897785586ae271c69d085e_image%20(1).png'
 const APP = 'https://usforeclosureleads.com'
 
 /* ---- content helpers (inline-styled, email-safe) ---- */
@@ -67,16 +68,7 @@ function wrapEmail(o: {
 <center style="width:100%;background-color:#f4f5f7;">
 <div class="email-container" style="max-width:600px;margin:0 auto;">
 
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="background-color:#09274c;height:4px;font-size:0;line-height:0;">&nbsp;</td></tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="padding-mobile" style="background-color:#ffffff;padding:28px 40px 18px;">
-    <table border="0" width="100%" cellspacing="0" cellpadding="0"><tbody><tr>
-      <td style="width:55%;" align="left" valign="middle"><a href="https://usforeclosurerecovery.com" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><img class="logo-img" src="${LOGO}" alt="Foreclosure Recovery Inc." width="185" height="67" style="display:block;max-width:185px;height:auto;border:0;" /></a></td>
-      <td style="width:45%;" align="right" valign="middle"><p class="header-date" style="margin:0;font-size:12px;color:#7a8a9e;font-family:${FONT};line-height:18px;"><span style="color:#09274c;font-weight:600;">${o.headerLabel}</span></p></td>
-    </tr></tbody></table>
-  </td></tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="padding-mobile" style="background-color:#ffffff;padding:0 40px;"><div style="border-top:1px solid #e2e6eb;font-size:0;line-height:0;">&nbsp;</div></td></tr></tbody></table>
+  ${BRAND_HEADER}
 
   <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="padding-mobile" style="background-color:#ffffff;padding:18px 40px 0;">
     <p style="margin:0 0 6px;font-size:11px;color:#1a7a3a;text-transform:uppercase;letter-spacing:1.2px;font-family:${FONT};font-weight:600;">${o.eyebrow}</p>
@@ -87,26 +79,7 @@ function wrapEmail(o: {
     ${o.content}
   </td></tr></tbody></table>
 
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="padding-mobile" style="background-color:#ffffff;padding:26px 40px 12px;">
-    <table style="border-top:1px solid #e2e6eb;width:100%;" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td style="padding-top:20px;">
-      <img src="${APP}/images/corey-allie-pearson.jpg" alt="Corey and Allie, Foreclosure Recovery Inc." width="220" style="display:block;width:220px;max-width:60%;height:auto;border-radius:8px;margin:0 0 10px;" />
-      <p style="margin:0 0 12px;font-size:13px;color:#5a6d82;font-style:italic;font-family:${FONT};">&ldquo;Helping agents close deals since 1999&rdquo;</p>
-      <p style="margin:0 0 2px;font-size:15px;color:#09274c;font-weight:bold;font-family:${FONT};">Corey Pearson</p>
-      <p style="margin:0 0 2px;font-size:15px;color:#09274c;font-weight:bold;font-family:${FONT};">Allie Pearson</p>
-      <p style="margin:0 0 2px;font-size:13px;color:#5a6d82;font-family:${FONT};">Recovery Agent Partnerships</p>
-      <p style="margin:0 0 2px;font-size:13px;color:#5a6d82;font-family:${FONT};">Foreclosure Recovery Inc.</p>
-      <p style="margin:8px 0 0;font-size:13px;font-family:${FONT};"><a href="tel:+18885458007" style="color:#09274c;text-decoration:none;">(888) 545-8007</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:support@usforeclosureleads.com" style="color:#09274c;text-decoration:none;">support@usforeclosureleads.com</a></p>
-    </td></tr></tbody></table>
-  </td></tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="padding-mobile" style="background-color:#ffffff;padding:0 40px;"><div style="border-top:2px solid #1a7a3a;width:60px;font-size:0;line-height:0;">&nbsp;</div></td></tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td class="padding-mobile" style="background-color:#ffffff;padding:20px 40px 28px;">
-    <p style="margin:0 0 10px;font-size:11px;color:#8a96a5;line-height:17px;font-family:${FONT};">Foreclosure Recovery Inc. &middot; 30 N Gould St, Ste R &middot; Sheridan, WY 82801 &middot; (888) 545-8007</p>
-    <p style="margin:0;font-size:11px;color:#8a96a5;line-height:17px;font-family:${FONT};">&copy; 2026 Foreclosure Recovery Inc. All rights reserved.&nbsp;&nbsp;<a href="https://usforeclosurerecovery.com/privacy-policy" target="_blank" rel="noopener noreferrer" style="color:#7a8a9e;text-decoration:underline;">Privacy Policy</a>&nbsp;&nbsp;<a href="${APP}/unsubscribe?email=${encodeURIComponent(o.email)}" style="color:#7a8a9e;text-decoration:underline;">Unsubscribe</a></p>
-  </td></tr></tbody></table>
-
-  <table style="max-width:600px;width:100%;" border="0" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="background-color:#09274c;height:4px;font-size:0;line-height:0;">&nbsp;</td></tr></tbody></table>
+  ${BRAND_FOOTER}
 
 </div></center></body></html>`
 }

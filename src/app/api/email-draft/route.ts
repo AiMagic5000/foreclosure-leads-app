@@ -4,12 +4,14 @@ import { supabaseAdmin } from "@/lib/supabase"
 import { resolveOperatorConfig, isCommsAuthorized, configToAgentProfile } from "@/lib/operator-config"
 import { getAgentSocialLink } from "@/lib/social-link"
 import { isRequestAdmin } from "@/lib/admin-guard"
+import { BRAND_HEADER, BRAND_FOOTER_COMPANY } from "@/lib/email-brand"
 import type { AgentProfile } from "@/lib/operator-config"
 import { getStateRule } from "@/lib/surplus/state-rules"
 import { buildMergeContext } from "@/lib/surplus/merge-context"
 import { runGate } from "@/lib/surplus/validation-gate"
 import { logGateResult } from "@/lib/surplus/gate-logger"
 import type { MergeContext } from "@/lib/surplus/types"
+import { leadTypeCopy } from "@/lib/surplus/lead-type-copy"
 import * as tls from "tls"
 import * as fs from "fs"
 import * as path from "path"
@@ -141,6 +143,9 @@ function renderOutreachEmailEN(ctx: MergeContext, agent: AgentProfile, senderEma
   const deadlineClause = ctx.claimDeadlineText ||
     `Surplus-fund claims in ${stateName} are subject to a statutory deadline that runs from the date of the sale.`
 
+  // Per-lead-type wording (tax-deed overage / pre-foreclosure / completed foreclosure).
+  const copy = leadTypeCopy(ctx.leadType, ctx.foreclosureType)
+
   const tokens: Record<string, string> = {
     CLAIMANT_NAME: ctx.claimantName || "Property Owner",
     PROPERTY_ADDRESS: ctx.propertyAddress || "your property",
@@ -149,6 +154,7 @@ function renderOutreachEmailEN(ctx: MergeContext, agent: AgentProfile, senderEma
     SALE_DATE: ctx.saleDate ? formatDateValue(ctx.saleDate) : "Not specified",
     ESTIMATED_SURPLUS: ctx.estimatedSurplusFormatted,
     STATE_DEADLINE_CLAUSE: deadlineClause,
+    SALE_EVENT: copy.emailSaleNoun,
     FEE_PCT: `up to ${ctx.feePct}%`,
     REP_NAME: agent.name,
     REP_TITLE: agent.title,
@@ -166,7 +172,7 @@ function renderOutreachEmailEN(ctx: MergeContext, agent: AgentProfile, senderEma
   }
 
   const html = tpl.replace(/\[\[([A-Z0-9_]+)\]\]/g, (m, key) => (key in tokens ? tokens[key] : m))
-  const subject = `Surplus funds may be owed to you from the sale of ${ctx.propertyAddress || "your former property"}`
+  const subject = `Surplus funds may be owed to you from the ${copy.emailSaleNoun} of ${ctx.propertyAddress || "your former property"}`
   return { subject, html }
 }
 
@@ -275,12 +281,22 @@ function buildLeadVars(lead: Record<string, string>) {
   const apn = lead.apn_number || lead.parcel_id || ""
   const propertyType = lead.property_type || "Residential"
   const caseNumber = lead.case_number || ""
-  const estimatedSurplus = parseFloat(lead.overage_amount) || parseFloat(lead.estimated_surplus) || 0
+  let estimatedSurplus = parseFloat(lead.overage_amount) || parseFloat(lead.estimated_surplus) || 0
+  let surplusEstimated = false
+  if (!estimatedSurplus) {
+    // Comparables-based estimate: market value (Zestimate stored in assessed_value) - opening bid/debt.
+    const marketValue = parseFloat(lead.assessed_value) || parseFloat(lead.estimated_market_value) || 0
+    const saleAmt = parseFloat(lead.sale_amount) || 0
+    if (marketValue > 0 && saleAmt > 0 && marketValue > saleAmt) {
+      estimatedSurplus = Math.round(marketValue - saleAmt)
+      surplusEstimated = true
+    }
+  }
   const deadlineInfo = calculateDeadline(lead.sale_date, lead.state)
   const stateKey = (lead.state || "").toUpperCase()
   const claimYears = STATE_CLAIM_WINDOWS[stateKey] || 1
   const stateName = stateKey ? getStateName(stateKey) : ""
-  return { firstName, lastName, fullAddress, county, apn, propertyType, caseNumber, estimatedSurplus, deadlineInfo, stateKey, claimYears, stateName, state }
+  return { firstName, lastName, fullAddress, county, apn, propertyType, caseNumber, estimatedSurplus, surplusEstimated, deadlineInfo, stateKey, claimYears, stateName, state }
 }
 
 function buildEmailHead(): string {
@@ -321,7 +337,7 @@ ${v.county ? `<tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; fo
 ${v.apn ? `<tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">APN:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${v.apn}</td></tr>` : ""}
 <tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">State:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${v.state}</td></tr>
 <tr><td style="padding: 5px 0; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top;" width="110">Property Type:</td><td style="padding: 5px 0; font-size: 14px; color: #09274c; font-weight: 600; font-family: 'Inter Tight', sans-serif;">${v.propertyType}</td></tr>
-${v.estimatedSurplus > 0 ? `<tr><td style="padding: 8px 0 5px; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top; border-top: 1px solid #e2e6eb;" width="110">Est. Surplus:</td><td style="padding: 8px 0 5px; font-size: 16px; color: #1a7a3a; font-weight: 700; font-family: 'Inter Tight', sans-serif; border-top: 1px solid #e2e6eb;">${formatCurrency(v.estimatedSurplus)}</td></tr>` : ""}
+<tr><td style="padding: 8px 0 5px; font-size: 13px; color: #7a8a9e; font-family: 'Inter Tight', sans-serif; vertical-align: top; border-top: 1px solid #e2e6eb;" width="110">Est. Surplus:</td><td style="padding: 8px 0 5px; font-size: 16px; color: #1a7a3a; font-weight: 700; font-family: 'Inter Tight', sans-serif; border-top: 1px solid #e2e6eb;">${v.estimatedSurplus > 0 ? formatCurrency(v.estimatedSurplus) + (v.surplusEstimated ? " (estimated from comparable sales)" : "") : "To be verified"}</td></tr>
 </tbody>
 </table>
 </td>
@@ -371,25 +387,12 @@ function buildDeadlineBox(v: ReturnType<typeof buildLeadVars>, lang: "en" | "es"
 <div style="height: 18px;">&nbsp;</div>`
 }
 
-function buildFooter(senderEmail: string, a: AgentProfile): string {
-  const companyAddr = a.companyAddress
-  const companyName = a.companyName
-  const privacyUrl = a.privacyPolicyUrl
-  return `<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr><td class="padding-mobile" style="background-color: #ffffff; padding: 0 40px 0;"><div style="border-top: 2px solid #D82221; width: 60px;">&nbsp;</div></td></tr></tbody>
-</table>
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr>
-<td class="padding-mobile" style="background-color: #ffffff; padding: 20px 40px 30px;">
-<p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight', sans-serif;">${companyAddr}</p>
-<p style="margin: 0 0 10px; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight', sans-serif;">This correspondence pertains to the property and individual(s) named above. Recovery of foreclosure surplus proceeds is subject to individual case evaluation and applicable state statutes. ${companyName} is not a law firm and does not provide legal counsel. Estimated timelines may vary based on state regulations and third-party response times.</p>
-<p style="margin: 0; font-size: 11px; color: #8a96a5; line-height: 17px; font-family: 'Inter Tight', sans-serif;">&copy; 2026 ${companyName} All rights reserved.&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="${privacyUrl}">Privacy Policy</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<a style="color: #7a8a9e; text-decoration: underline;" href="#">Unsubscribe</a></p>
-</td>
-</tr></tbody>
-</table>
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr><td style="background-color: #09274c; height: 4px; font-size: 0; line-height: 0;">&nbsp;</td></tr></tbody>
-</table>
+function buildFooter(_senderEmail: string, _a: AgentProfile): string {
+  // Independent-agent claimant outreach: company footer ONLY (Great Seal + network logos +
+  // legal). The agent's own name/title/extension/business email is rendered in the email body
+  // signature above -- the personal "Corey & Allie Pearson" block is intentionally excluded so
+  // each agent's draft is signed as themselves, not the principals. Edit src/lib/email-brand.ts.
+  return `${BRAND_FOOTER_COMPANY}
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 </center>
@@ -407,16 +410,13 @@ function populateTemplateES(lead: Record<string, string>, senderEmail: string, a
 <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">Re: Se necesita direccion de envio -- Propiedad en ${v.fullAddress} -- Por favor responda a la brevedad posible.</div>
 <div class="email-container" style="max-width: 600px; margin: 0 auto;">
 <!--[if mso]><table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600"><tr><td><![endif]-->
-<table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
-<tbody><tr><td style="background-color: #09274c; height: 4px; font-size: 0; line-height: 0;">&nbsp;</td></tr></tbody>
-</table>
+${BRAND_HEADER}
 <table style="max-width: 600px;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" align="center">
 <tbody><tr>
 <td class="padding-mobile" style="background-color: #ffffff; padding: 28px 40px 20px;">
 <table role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
 <tbody><tr>
-<td align="left" valign="middle" width="55%"><a style="text-decoration: none;" href="${a.websiteUrl}" target="_blank" rel="noopener"><img style="display: block; max-width: 185px; height: auto;" src="${a.logoUrl}" alt="${a.logoAlt}" width="185" /></a></td>
-<td align="right" valign="middle" width="45%">
+<td align="left" valign="middle" width="100%">
 <p style="margin: 0; font-size: 12px; color: #7a8a9e; font-family: 'Inter Tight', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 18px;">${formatDateES()}${v.caseNumber ? `<br /><span style="color: #09274c; font-weight: 600;">Ref: <span style="color: #0a0a0a; font-size: 14px; font-weight: 500;">${v.caseNumber}</span></span>` : ""}</p>
 </td>
 </tr></tbody>

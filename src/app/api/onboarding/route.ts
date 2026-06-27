@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { sendEmail, sendAdminNotification } from "@/lib/email"
+import { send1099Docs } from "@/lib/send-1099-docs"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
 import { notifyAccountActivity } from "@/lib/email"
 
@@ -200,6 +201,10 @@ export async function POST(request: NextRequest) {
     buildWelcomeEmailHtml(ownerFirstName, businessName)
   )
   console.log(`[ONBOARDING] Welcome email to ${currentEmail}: ${welcomeResult.success ? "SENT" : "FAILED"} - ${welcomeResult.error || welcomeResult.messageId}`)
+
+  // Auto-send the 1099 contractor paperwork (W-9 + blank agreement) to the agent, personalized.
+  const docsResult = await send1099Docs(currentEmail, ownerFirstName)
+  console.log(`[ONBOARDING] 1099 docs to ${currentEmail}: ${docsResult.success ? "SENT" : "FAILED"} - ${docsResult.error || docsResult.messageId}`)
 
   await notifyAccountActivity(currentEmail || "unknown", "Submitted White Label onboarding", businessName || undefined)
   return NextResponse.json({ success: true, id: data.id })

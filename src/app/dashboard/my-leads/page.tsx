@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { leadTypeCopy } from "@/lib/surplus/lead-type-copy"
+import { hasSeparateMailingAddress } from "@/lib/surplus/address"
 import { RecoveryCountdown } from "@/components/recovery-countdown"
 import { ZipLocalTime } from "@/components/zip-local-time"
 import {
@@ -18,6 +20,7 @@ import {
   Phone,
   Mail,
   MapPin,
+  StickyNote,
   DollarSign,
   Calendar,
   Eye,
@@ -57,6 +60,9 @@ import {
   XCircle,
   ShieldAlert,
   MailCheck,
+  Ban,
+  Flag,
+  RotateCcw,
 } from "lucide-react"
 
 /* ===== TYPES ===== */
@@ -123,6 +129,7 @@ interface ForeclosureDetails {
   auctionLocation: string
   openingBid: number
   estimatedSurplus: number
+  surplusEstimated: boolean
   defaultAmount: number
   noticeType: string
 }
@@ -166,8 +173,15 @@ interface LeadData {
   voicemailSent: boolean
   voicemailSentAt: string | null
   voicemailError: string | null
+  smsSent: boolean
+  emailDraftCreated: boolean
+  leadType: string
   mailingAddress: string
   certifiedLetterRequested: boolean
+  canCertify: boolean
+  badEmail: boolean
+  badPhone: boolean
+  agentStatus: string
   isMock: boolean
   assignedAt: string
   skipTrace: SkipTraceData
@@ -211,8 +225,15 @@ const MOCK_LEAD: LeadData = {
   voicemailSent: false,
   voicemailSentAt: null,
   voicemailError: null,
+  smsSent: false,
+  emailDraftCreated: false,
+  leadType: "",
   mailingAddress: "5678 Elm Street, Tampa, FL 33602",
   certifiedLetterRequested: false,
+  canCertify: true,
+  badEmail: false,
+  badPhone: false,
+  agentStatus: "",
   isMock: true,
   assignedAt: new Date().toISOString(),
   skipTrace: {
@@ -276,6 +297,7 @@ const MOCK_LEAD: LeadData = {
     auctionLocation: "Orange County Courthouse, 425 N Orange Ave",
     openingBid: 192000,
     estimatedSurplus: 93000,
+    surplusEstimated: false,
     defaultAmount: 32000,
     noticeType: "Lis Pendens",
   },
@@ -308,6 +330,65 @@ const ACCOUNT_LABELS: Record<string, string> = {
 
 function fmt(n: number): string {
   return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+// Surplus shows a real or comparables-based estimate; never a confusing $0.
+function surplusDisp(fd: { estimatedSurplus: number; surplusEstimated: boolean }): string {
+  if (fd.estimatedSurplus > 0) return `$${fmt(fd.estimatedSurplus)}${fd.surplusEstimated ? " (est.)" : ""}`
+  return "To be verified"
+}
+function feeDisp(fd: { estimatedSurplus: number }): string {
+  return fd.estimatedSurplus > 0 ? `$${fmt(fd.estimatedSurplus * 0.30)}` : "To be verified"
+}
+function netDisp(fd: { estimatedSurplus: number }): string {
+  return fd.estimatedSurplus > 0 ? `$${fmt(fd.estimatedSurplus * 0.30 * 0.85)}` : "To be verified"
+}
+
+const LEAD_FAQS: { q: string; a: string }[] = [
+  { q: "Why does a lead show an estimated surplus instead of an exact amount?",
+    a: "The figures come from public foreclosure and county records plus an estimate of the property's value from comparable sales in the area. The exact surplus is confirmed during the forensic audit, after you verify the property and sale details with the claimant. Treat the estimate as a strong starting point, not a final number." },
+  { q: "What is the 'Opening Bid' on the Foreclosure tab?",
+    a: "It's the amount the foreclosing party started the auction at, which usually reflects what was owed (loan balance plus fees). When a property sells for more than the opening bid, the extra money is surplus that belongs to the former owner. Comparing the opening bid to the property's market value is how we estimate potential surplus." },
+  { q: "What does the auction / sale date mean?",
+    a: "It's the date the property was (or is scheduled to be) sold at foreclosure. A past date means the sale likely happened and surplus may already be held by the state. Always confirm the date with the claimant, since records can lag or change." },
+  { q: "Why do I need to verify the property details with the claimant?",
+    a: "The data we provide is collected from state and county sources and is preliminary. Your job as the agent is to confirm it is accurate -- the address, the sale, the ownership -- so we can run an accurate forensic audit and establish the claimant's right to the funds. Verifying first prevents wasted filings and protects the claim." },
+  { q: "What is the forensic audit and what is my role?",
+    a: "The forensic audit is our detailed review that confirms how much surplus exists and who is legally entitled to it. Your role is to make first contact, confirm the claimant is the right party, and verify the property details. Once you confirm interest and the basics check out, we handle the audit and filing." },
+  { q: "What is the estimated surplus based on?",
+    a: "Either the recorded overage when the state publishes it, or -- when it does not -- an estimate from comparable property values in the area minus the opening bid/debt. If we do not yet have enough data, the lead shows 'To be verified' instead of a number; your verification call fills that gap." },
+  { q: "What if the claimant says the property info is wrong or outdated?",
+    a: "That is exactly why you call. Note what they correct -- ownership, address, whether they still owned it at the time of sale -- and we update the record and re-run the audit. Corrected information makes the claim stronger, not weaker." },
+  { q: "Is the claimant guaranteed to be owed money?",
+    a: "No. The estimate indicates a surplus is likely based on the records, but it is confirmed only after the audit. Be honest: tell them a surplus 'may be available' and that we verify it at no cost or risk to them." },
+  { q: "What is the difference between a foreclosure-sale lead and a pre-foreclosure lead?",
+    a: "A completed foreclosure-sale lead means the property already sold and surplus may be held now. A pre-foreclosure lead means the sale has not happened yet, so there is no surplus to claim yet -- that conversation is about the upcoming sale. The lead's type label tells you which, and your scripts adjust automatically." },
+  { q: "The lead says 'DNC-cleared' or 'manual dial only' -- what does that mean?",
+    a: "DNC-cleared means the number passed our Do-Not-Call scrub and is safe to contact. 'Manual dial only' means contact is allowed but should be a manual, person-to-person call rather than automated. Always follow the status shown on the lead." },
+  { q: "How do I explain there is no upfront cost?",
+    a: "We work on contingency -- the claimant pays nothing out of pocket. Our fee comes only out of the funds we successfully recover. If nothing is recovered, they owe nothing. Lead with that; it removes their biggest hesitation." },
+  { q: "The claimant is interested -- what are the next steps?",
+    a: "Confirm their identity and the property details, then send the agreement and Limited Power of Attorney (use the Email or Certified Letter buttons). Once they sign, we begin the forensic audit and filing. Log the contact so the team can take it from there." },
+  { q: "I have a bad email or phone number -- can I flag it so it turns red and I skip it?",
+    a: "Yes. Click the small circle-slash icon next to any phone number or email in your list to mark it bad -- it turns red and gets a line through it, and outreach (voice drops, SMS, email) will skip it. Click the same icon again to restore it. To mark the whole lead, open it and go to the Notes tab: set it Active, Bad Lead, or Dead. Bad and dead leads automatically drop to the bottom of your inventory, and you can show only the ones you want with the Active / Marked Bad / Dead filter at the top of the page." },
+]
+
+function LeadFAQ() {
+  return (
+    <details className="mt-4 rounded-lg border bg-muted/30">
+      <summary className="cursor-pointer select-none px-4 py-3 font-semibold text-sm">
+        Common Questions &amp; Answers About These Leads
+      </summary>
+      <div className="px-3 pb-3 space-y-1.5">
+        {LEAD_FAQS.map((f, i) => (
+          <details key={i} className="rounded-md border bg-background">
+            <summary className="cursor-pointer select-none px-3 py-2 text-sm font-medium">{f.q}</summary>
+            <p className="px-3 pb-3 pt-1 text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </details>
+  )
 }
 
 function BlurredText({ children, className = "", revealed = false }: { children: React.ReactNode; className?: string; revealed?: boolean }) {
@@ -391,6 +472,47 @@ function ActionButton({ icon: Icon, label, color, onShowUpgrade }: { icon: React
   )
 }
 
+// Lead category badge so agents instantly tell a tax sale / pre-foreclosure / completed
+// foreclosure apart -- drives which outreach wording the email/voice/SMS use.
+function LeadTypeBadge({ lead }: { lead: LeadData }) {
+  const key = leadTypeCopy(lead.leadType, lead.foreclosureType).key
+  const map: Record<string, { label: string; cls: string }> = {
+    foreclosure: { label: "Foreclosure", cls: "bg-slate-100 text-slate-700 border-slate-200" },
+    tax_deed: { label: "Tax Sale", cls: "bg-red-100 text-red-700 border-red-200" },
+    pre_foreclosure: { label: "Pre-Foreclosure", cls: "bg-amber-100 text-amber-700 border-amber-200" },
+  }
+  const m = map[key] || map.foreclosure
+  return <Badge className={cn("text-[10px] px-1.5 py-0", m.cls)}>{m.label}</Badge>
+}
+
+// Persistent outreach activity per lead (loaded from the DB every session, for every paid agent):
+// Emailed = a draft was created for this lead, Texted = an SMS was sent, VM = ringless voicemail delivered.
+function OutreachStatus({ lead }: { lead: LeadData }) {
+  if (!lead.emailDraftCreated && !lead.smsSent && !lead.voicemailSent) return null
+  return (
+    <div className="flex flex-wrap items-center gap-1 pt-0.5">
+      {lead.emailDraftCreated && (
+        <Badge className="bg-blue-100 text-blue-700 border-blue-200 text-[10px] gap-1 px-1.5 py-0" title="You created an email draft for this lead">
+          <Mail className="h-3 w-3" />
+          Emailed
+        </Badge>
+      )}
+      {lead.smsSent && (
+        <Badge className="bg-violet-100 text-violet-700 border-violet-200 text-[10px] gap-1 px-1.5 py-0" title="You sent an SMS to this lead">
+          <MessageSquare className="h-3 w-3" />
+          Texted
+        </Badge>
+      )}
+      {lead.voicemailSent && (
+        <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 text-[10px] gap-1 px-1.5 py-0" title="Ringless voicemail delivered to this lead">
+          <CheckCircle2 className="h-3 w-3" />
+          VM
+        </Badge>
+      )}
+    </div>
+  )
+}
+
 function VoiceDropBtn({ lead, sending, onSend, hasSlybroadcast, onNeedCreds }: { lead: LeadData; sending: boolean; onSend: (id: string) => void; hasSlybroadcast?: boolean; onNeedCreds?: () => void }) {
   if (!lead.primaryPhone) return null
 
@@ -470,15 +592,19 @@ function VoiceDropBtn({ lead, sending, onSend, hasSlybroadcast, onNeedCreds }: {
 function transformDbRow(row: Record<string, unknown>): LeadData {
   const saleAmount = Number(row.sale_amount) || 0
   const mortgageAmount = Number(row.mortgage_amount) || 0
-  const marketValue = Number(row.estimated_market_value) || 0
+  // Market value from area comparables (Zestimate is stored in assessed_value on FDH leads).
+  const marketValue = Number(row.estimated_market_value) || Number(row.assessed_value) || 0
   const dbOverage = Number(row.overage_amount) || 0
 
+  // Real overage if we have it; otherwise estimate from comparables:
+  // equity above the lender's claim ~= market value (comps) - opening bid/debt.
   let estimatedSurplus = dbOverage
-  if (!estimatedSurplus && saleAmount > 0) {
+  let surplusEstimated = false
+  if (!estimatedSurplus) {
     if (mortgageAmount > 0 && saleAmount > mortgageAmount) {
-      estimatedSurplus = saleAmount - mortgageAmount
-    } else if (marketValue > 0 && saleAmount > marketValue * 0.8) {
-      estimatedSurplus = Math.round(saleAmount - marketValue * 0.8)
+      estimatedSurplus = Math.round(saleAmount - mortgageAmount); surplusEstimated = true
+    } else if (marketValue > 0 && saleAmount > 0 && marketValue > saleAmount) {
+      estimatedSurplus = Math.round(marketValue - saleAmount); surplusEstimated = true
     }
   }
 
@@ -515,8 +641,15 @@ function transformDbRow(row: Record<string, unknown>): LeadData {
     voicemailSent: Boolean(row.voicemail_sent),
     voicemailSentAt: row.voicemail_sent_at ? String(row.voicemail_sent_at) : null,
     voicemailError: row.voicemail_error ? String(row.voicemail_error) : null,
+    smsSent: Boolean(row.sms_sent),
+    emailDraftCreated: Boolean(row.email_draft_created),
+    leadType: String(row.lead_type || ""),
     mailingAddress: String(row.mailing_address || ""),
     certifiedLetterRequested: Boolean(row.certified_letter_requested),
+    canCertify: hasSeparateMailingAddress(String(row.property_address || ""), String(row.mailing_address || "")),
+    badEmail: Boolean(row.bad_email),
+    badPhone: Boolean(row.bad_phone),
+    agentStatus: String(row.agent_status || ""),
     isMock: false,
     assignedAt: String(row.assigned_at || ""),
     skipTrace: {
@@ -578,16 +711,89 @@ function transformDbRow(row: Record<string, unknown>): LeadData {
       auctionLocation: "",
       openingBid: saleAmount,
       estimatedSurplus,
+      surplusEstimated,
       defaultAmount: 0,
       noticeType: "",
     },
   }
 }
 
+/* ===== LEAD NOTES (persistent per lead + operator) ===== */
+
+function LeadNotes({ leadId, pinId }: { leadId: string; pinId: string | null }) {
+  const [notes, setNotes] = useState("")
+  const [loaded, setLoaded] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [dirty, setDirty] = useState(false)
+  const [savedAt, setSavedAt] = useState<string | null>(null)
+  const [err, setErr] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    if (!pinId) { setLoaded(true); return }
+    ;(async () => {
+      try {
+        const res = await fetch(`/api/lead-notes?leadId=${leadId}&pinId=${pinId}`)
+        const d = await res.json()
+        if (!cancelled) {
+          setNotes(d.notes || "")
+          setSavedAt(d.updatedAt || null)
+        }
+      } catch { /* leave empty */ }
+      finally { if (!cancelled) setLoaded(true) }
+    })()
+    return () => { cancelled = true }
+  }, [leadId, pinId])
+
+  async function save() {
+    if (!pinId) { setErr("Notes can't be saved for this account yet."); return }
+    setSaving(true); setErr(null)
+    try {
+      const res = await fetch("/api/lead-notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, pinId, notes }),
+      })
+      const d = await res.json()
+      if (!res.ok) throw new Error(d.error || "Save failed")
+      setDirty(false); setSavedAt(new Date().toISOString())
+    } catch (e) { setErr(e instanceof Error ? e.message : "Save failed") }
+    finally { setSaving(false) }
+  }
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-sm font-medium text-slate-700">Your private notes for this lead</p>
+        {savedAt && !dirty && (
+          <span className="text-xs text-muted-foreground">Saved {new Date(savedAt).toLocaleString()}</span>
+        )}
+      </div>
+      <textarea
+        value={notes}
+        disabled={!loaded}
+        onChange={(e) => { setNotes(e.target.value); setDirty(true) }}
+        onBlur={() => { if (dirty) save() }}
+        placeholder={loaded ? "Call outcomes, next steps, claimant details, follow-up dates…" : "Loading…"}
+        rows={8}
+        className="w-full resize-y rounded-lg border border-slate-300 bg-white p-3 text-sm leading-6 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+      />
+      <div className="flex items-center gap-3">
+        <Button size="sm" onClick={save} disabled={saving || !dirty || !loaded}>
+          {saving ? <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Saving…</> : "Save note"}
+        </Button>
+        {dirty && !saving && <span className="text-xs text-amber-600">Unsaved changes — saves when you click Save or tab away.</span>}
+        {err && <span className="text-xs text-red-600">{err}</span>}
+      </div>
+      <p className="text-xs text-muted-foreground">Notes are private to your account and stay with this lead across sessions.</p>
+    </div>
+  )
+}
+
 /* ===== LEAD DROPDOWN (Matches Admin Leads Page) ===== */
 
-function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, onSms, onCertifiedLetter, voiceDropSending, onVoiceDrop, hasSlybroadcast, hasTextbee, onNeedCreds }: { lead: LeadData; revealed: boolean; onReveal: () => void; onShowUpgrade: () => void; onEmailDraft?: () => void; onSms?: () => void; onCertifiedLetter?: () => void; voiceDropSending?: boolean; onVoiceDrop?: (id: string) => void; hasSlybroadcast?: boolean; hasTextbee?: boolean; onNeedCreds?: (channel: "voice" | "sms") => void }) {
-  const [activeTab, setActiveTab] = useState<"property" | "skipTrace" | "tax" | "foreclosure" | "map">("property")
+function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, onSms, onCertifiedLetter, voiceDropSending, onVoiceDrop, hasSlybroadcast, hasTextbee, onNeedCreds, pinId, onFlag }: { lead: LeadData; revealed: boolean; onReveal: () => void; onShowUpgrade: () => void; onEmailDraft?: () => void; onSms?: () => void; onCertifiedLetter?: () => void; voiceDropSending?: boolean; onVoiceDrop?: (id: string) => void; hasSlybroadcast?: boolean; hasTextbee?: boolean; onNeedCreds?: (channel: "voice" | "sms") => void; pinId?: string | null; onFlag?: (leadId: string, field: "bad_email" | "bad_phone" | "agent_status", value: boolean | string) => void }) {
+  const [activeTab, setActiveTab] = useState<"property" | "skipTrace" | "tax" | "foreclosure" | "map" | "notes">("property")
 
   const tabs = [
     { id: "property" as const, label: "Property Details", icon: Home },
@@ -595,6 +801,7 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
     { id: "skipTrace" as const, label: "Skip Trace", icon: UserSearch },
     { id: "tax" as const, label: "Tax & Sales", icon: Receipt },
     { id: "map" as const, label: "Map", icon: MapPin },
+    { id: "notes" as const, label: "Notes", icon: StickyNote },
   ]
 
   return (
@@ -672,17 +879,20 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
           <ActionButton icon={Mail} label="Email" color="indigo" onShowUpgrade={onEmailDraft || onShowUpgrade} />
           {onCertifiedLetter ? (
             <button
-              onClick={(e) => { e.stopPropagation(); onCertifiedLetter() }}
+              onClick={(e) => { e.stopPropagation(); if (lead.canCertify && !lead.certifiedLetterRequested) onCertifiedLetter() }}
+              title={!lead.canCertify ? "Certified mail only goes to a separate mailing address, never the foreclosed property" : undefined}
               className={cn(
                 "inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors",
                 lead.certifiedLetterRequested
                   ? "bg-amber-100 text-amber-700 cursor-default"
-                  : "bg-orange-600 text-white hover:bg-orange-700 cursor-pointer"
+                  : !lead.canCertify
+                    ? "bg-slate-200 text-slate-400 cursor-not-allowed"
+                    : "bg-orange-600 text-white hover:bg-orange-700 cursor-pointer"
               )}
-              disabled={lead.certifiedLetterRequested}
+              disabled={lead.certifiedLetterRequested || !lead.canCertify}
             >
               <MailCheck className="h-3 w-3" />
-              {lead.certifiedLetterRequested ? "Letter Requested" : "Certified Letter"}
+              {lead.certifiedLetterRequested ? "Letter Requested" : !lead.canCertify ? "No Alt. Address" : "Certified Letter"}
             </button>
           ) : null}
         </div>
@@ -728,11 +938,11 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
                 </div>
               )}
               <div className="text-center">
-                <p className="text-xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus)}</p>
+                <p className="text-xl font-bold text-emerald-600">{surplusDisp(lead.foreclosureDetails)}</p>
                 <p className="text-xs text-muted-foreground">Est. Surplus</p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-bold text-emerald-700">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30)}</p>
+                <p className="text-xl font-bold text-emerald-700">{feeDisp(lead.foreclosureDetails)}</p>
                 <p className="text-xs text-muted-foreground">30% Service Fee</p>
               </div>
             </div>
@@ -890,22 +1100,22 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
             {lead.foreclosureDetails.openingBid > 0 && <DataRow label="Opening Bid" value={`$${fmt(lead.foreclosureDetails.openingBid)}`} icon={DollarSign} />}
             {lead.foreclosureDetails.defaultAmount > 0 && <DataRow label="Default Amount" value={`$${fmt(lead.foreclosureDetails.defaultAmount)}`} icon={DollarSign} />}
             <div className="pt-2 mt-2 border-t">
-              <DataRow label="Estimated Surplus" value={`$${fmt(lead.foreclosureDetails.estimatedSurplus)}`} icon={DollarSign} />
+              <DataRow label="Estimated Surplus" value={surplusDisp(lead.foreclosureDetails)} icon={DollarSign} />
             </div>
           </div>
           <div className="sm:col-span-2 p-3 rounded-lg border bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-500/30">
             <h4 className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-2">Recovery Opportunity</h4>
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus)}</p>
+                <p className="text-2xl font-bold text-emerald-600">{surplusDisp(lead.foreclosureDetails)}</p>
                 <p className="text-xs text-muted-foreground">Estimated Surplus</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30)}</p>
+                <p className="text-2xl font-bold text-emerald-600">{feeDisp(lead.foreclosureDetails)}</p>
                 <p className="text-xs text-muted-foreground">30% Service Fee</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-600">${fmt(lead.foreclosureDetails.estimatedSurplus * 0.30 * 0.85)}</p>
+                <p className="text-2xl font-bold text-emerald-600">{netDisp(lead.foreclosureDetails)}</p>
                 <p className="text-xs text-muted-foreground">Net (After Closer + Admin)</p>
               </div>
             </div>
@@ -956,6 +1166,50 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
               </div>
             )}
           </div>
+        </div>
+      )}
+
+      {activeTab === "notes" && (
+        <div className="space-y-4">
+          <div className="p-3 rounded-lg border bg-muted/40">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Lead Designation</h4>
+            <p className="text-xs text-muted-foreground mb-2">Re-designate this lead to sort it out of your active list. Bad / dead leads drop to the bottom of your inventory.</p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={(e) => { e.stopPropagation(); onFlag?.(lead.id, "agent_status", "") }}
+                className={cn("inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium border transition-colors", !lead.agentStatus ? "bg-emerald-600 text-white border-emerald-700" : "bg-background hover:bg-muted")}
+              >
+                <CheckCircle2 className="h-3 w-3" /> Active
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onFlag?.(lead.id, "agent_status", "bad") }}
+                className={cn("inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium border transition-colors", lead.agentStatus === "bad" ? "bg-red-100 text-red-700 border-red-300" : "bg-background hover:bg-muted")}
+              >
+                <Flag className="h-3 w-3" /> Bad Lead
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onFlag?.(lead.id, "agent_status", "dead") }}
+                className={cn("inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium border transition-colors", lead.agentStatus === "dead" ? "bg-red-600 text-white border-red-700" : "bg-background hover:bg-muted")}
+              >
+                <Ban className="h-3 w-3" /> Dead
+              </button>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                onClick={(e) => { e.stopPropagation(); onFlag?.(lead.id, "bad_phone", !lead.badPhone) }}
+                className={cn("inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium border transition-colors", lead.badPhone ? "bg-red-100 text-red-700 border-red-300" : "bg-background hover:bg-muted")}
+              >
+                <Phone className="h-3 w-3" /> {lead.badPhone ? "Phone marked bad - click to restore" : "Mark phone bad"}
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onFlag?.(lead.id, "bad_email", !lead.badEmail) }}
+                className={cn("inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium border transition-colors", lead.badEmail ? "bg-red-100 text-red-700 border-red-300" : "bg-background hover:bg-muted")}
+              >
+                <Mail className="h-3 w-3" /> {lead.badEmail ? "Email marked bad - click to restore" : "Mark email bad"}
+              </button>
+            </div>
+          </div>
+          <LeadNotes leadId={lead.id} pinId={pinId ?? null} />
         </div>
       )}
 
@@ -1389,11 +1643,31 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
     }
   }, [certLetterModal, certLetterNotes])
 
+  // Agent marks a bad email/phone (red, skip) or marks the lead bad/dead (re-sorts to bottom).
+  const flagLead = useCallback(async (leadId: string, field: "bad_email" | "bad_phone" | "agent_status", value: boolean | string) => {
+    setLeads(prev => prev.map(l => l.id === leadId ? {
+      ...l,
+      badEmail: field === "bad_email" ? Boolean(value) : l.badEmail,
+      badPhone: field === "bad_phone" ? Boolean(value) : l.badPhone,
+      agentStatus: field === "agent_status" ? String(value || "") : l.agentStatus,
+    } : l))
+    if (!activePinId) return
+    try {
+      await fetch("/api/lead-flag", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, pinId: activePinId, field, value }),
+      })
+    } catch { /* optimistic update already applied; next refresh reconciles */ }
+  }, [activePinId])
+
   // Search & filter state
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedState, setSelectedState] = useState("All States")
   const [selectedStatus, setSelectedStatus] = useState("all")
   const [selectedOrigin, setSelectedOrigin] = useState("all") // all | issued | imported
+  const [selectedLeadType, setSelectedLeadType] = useState("all") // all | foreclosure | tax_deed | pre_foreclosure
+  const [selectedDesignation, setSelectedDesignation] = useState("all") // all | active | bad | dead
   const [sortBy, setSortBy] = useState("issued_newest")
   const [currentPage, setCurrentPage] = useState(1)
   const LEADS_PER_PAGE = 25
@@ -1437,6 +1711,13 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
     return { imported, issued: leads.length - imported }
   }, [leads])
 
+  // Count leads by resolved outreach type (foreclosure / tax_deed / pre_foreclosure)
+  const typeCounts = useMemo(() => {
+    const c = { foreclosure: 0, tax_deed: 0, pre_foreclosure: 0 }
+    for (const l of leads) c[leadTypeCopy(l.leadType, l.foreclosureType).key]++
+    return c
+  }, [leads])
+
   // Filter and sort
   const filteredLeads = useMemo(() => {
     const query = searchQuery.toLowerCase()
@@ -1464,10 +1745,32 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
         (selectedOrigin === "imported" && isImported) ||
         (selectedOrigin === "issued" && !isImported)
 
-      return matchesSearch && matchesState && matchesStatus && matchesOrigin
+      const matchesLeadType =
+        selectedLeadType === "all" ||
+        leadTypeCopy(lead.leadType, lead.foreclosureType).key === selectedLeadType
+
+      const matchesDesignation =
+        selectedDesignation === "all" ||
+        (selectedDesignation === "active" && !lead.agentStatus) ||
+        lead.agentStatus === selectedDesignation
+
+      return matchesSearch && matchesState && matchesStatus && matchesOrigin && matchesLeadType && matchesDesignation
     })
 
+    // Agent-marked bad/dead leads sink to the very bottom of the inventory.
+    const statusRank = (s: string) => (s === "dead" ? 2 : s === "bad" ? 1 : 0)
+    // Lead-type priority: completed foreclosures + tax deeds first, pre-foreclosure last.
+    const typeRank = (lt: string) => {
+      const t = (lt || "").toLowerCase()
+      if (t.includes("pre")) return 2
+      if (t.includes("foreclosure") || t.includes("tax")) return 0
+      return 1
+    }
     return filtered.sort((a, b) => {
+      const sr = statusRank(a.agentStatus) - statusRank(b.agentStatus)
+      if (sr !== 0) return sr
+      const tr = typeRank(a.leadType) - typeRank(b.leadType)
+      if (tr !== 0) return tr
       switch (sortBy) {
         case "issued_newest":
           return new Date(b.assignedAt || 0).getTime() - new Date(a.assignedAt || 0).getTime()
@@ -1489,12 +1792,12 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
           return 0
       }
     })
-  }, [baseLeads, searchQuery, selectedState, selectedStatus, selectedOrigin, sortBy])
+  }, [baseLeads, searchQuery, selectedState, selectedStatus, selectedOrigin, selectedLeadType, selectedDesignation, sortBy])
 
   // Reset page on filter change
   useEffect(() => {
     setCurrentPage(1)
-  }, [searchQuery, selectedState, selectedStatus, selectedOrigin, sortBy])
+  }, [searchQuery, selectedState, selectedStatus, selectedOrigin, selectedLeadType, selectedDesignation, sortBy])
 
   const totalPages = Math.max(1, Math.ceil(filteredLeads.length / LEADS_PER_PAGE))
   const paginatedLeads = useMemo(() => {
@@ -1549,6 +1852,8 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
           </Button>
         )}
       </div>
+
+      {!importedOnly && <LeadFAQ />}
 
       {/* Admin: View as User dropdown */}
       {isAdmin && allUsers.length > 0 && (
@@ -1801,6 +2106,28 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                 </select>
               )}
               <select
+                value={selectedLeadType}
+                onChange={(e) => setSelectedLeadType(e.target.value)}
+                className="h-10 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                title="Filter by lead type (controls outreach wording)"
+              >
+                <option value="all">All Types ({leads.length})</option>
+                <option value="tax_deed">Tax Sale ({typeCounts.tax_deed})</option>
+                <option value="pre_foreclosure">Pre-Foreclosure ({typeCounts.pre_foreclosure})</option>
+                <option value="foreclosure">Foreclosure ({typeCounts.foreclosure})</option>
+              </select>
+              <select
+                value={selectedDesignation}
+                onChange={(e) => setSelectedDesignation(e.target.value)}
+                className="h-10 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                title="Filter by how you designated the lead"
+              >
+                <option value="all">All Leads ({leads.length})</option>
+                <option value="active">Active ({leads.filter(l => !l.agentStatus).length})</option>
+                <option value="bad">Marked Bad ({leads.filter(l => l.agentStatus === "bad").length})</option>
+                <option value="dead">Dead ({leads.filter(l => l.agentStatus === "dead").length})</option>
+              </select>
+              <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="h-10 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -1815,11 +2142,11 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                 <option value="oldest">Scraped: Oldest First</option>
               </select>
             </div>
-            {(searchQuery || selectedState !== "All States" || selectedStatus !== "all") && (
+            {(searchQuery || selectedState !== "All States" || selectedStatus !== "all" || selectedLeadType !== "all" || selectedDesignation !== "all") && (
               <div className="flex items-center gap-2 mt-3 text-sm text-muted-foreground">
                 <span>{filteredLeads.length} of {leads.length} leads</span>
                 <button
-                  onClick={() => { setSearchQuery(""); setSelectedState("All States"); setSelectedStatus("all") }}
+                  onClick={() => { setSearchQuery(""); setSelectedState("All States"); setSelectedStatus("all"); setSelectedLeadType("all"); setSelectedDesignation("all") }}
                   className="text-blue-600 hover:text-blue-800 font-medium"
                 >
                   Clear filters
@@ -2044,6 +2371,10 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                               <span className="text-sm font-medium text-red-400 line-through cursor-not-allowed" title="On Do Not Call list - all contact disabled">
                                 <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                               </span>
+                            ) : lead.badPhone ? (
+                              <span className="text-sm font-medium text-red-500 line-through cursor-not-allowed" title="You marked this phone as bad - skip it">
+                                <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
+                              </span>
                             ) : (
                               <button
                                 className="text-sm font-medium text-emerald-700 hover:underline cursor-pointer"
@@ -2052,10 +2383,19 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                                 <BlurredText revealed={isRevealed}>{lead.primaryPhone}</BlurredText>
                               </button>
                             )}
+                            {!lead.onDnc && isRevealed && !lead.isMock && (
+                              <button
+                                title={lead.badPhone ? "Restore phone (mark good)" : "Mark phone as bad"}
+                                onClick={(e) => { e.stopPropagation(); flagLead(lead.id, "bad_phone", !lead.badPhone) }}
+                                className={cn("ml-0.5 shrink-0 rounded p-0.5 hover:bg-muted", lead.badPhone ? "text-emerald-600" : "text-muted-foreground hover:text-red-600")}
+                              >
+                                {lead.badPhone ? <RotateCcw className="h-3 w-3" /> : <Ban className="h-3 w-3" />}
+                              </button>
+                            )}
                           </div>
-                          {!lead.onDnc && (
+                          {!lead.onDnc && !lead.badPhone && (
                             <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
-                              <VoiceDropBtn lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} />
+                              <VoiceDropBtn lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} hasSlybroadcast={hasSlybroadcast} onNeedCreds={() => setCommsGate("voice")} />
                             </div>
                           )}
                           {lead.onDnc && (
@@ -2065,16 +2405,42 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                             </Badge>
                           )}
                           {lead.primaryEmail && (
-                            <button
-                              className="flex items-center gap-1.5 hover:bg-blue-50 dark:hover:bg-blue-950 rounded px-1 -mx-1 transition-colors"
-                              onClick={(e) => { e.stopPropagation(); if (isRevealed) openEmailDraft(lead.id, lead.primaryEmail!, lead.ownerName) }}
-                            >
-                              <Mail className="h-3 w-3 text-blue-600" />
-                              <span className="text-xs text-blue-600 truncate max-w-[140px]">
-                                <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
-                              </span>
-                            </button>
+                            <div className="flex items-center gap-1">
+                              {lead.badEmail ? (
+                                <span className="flex items-center gap-1.5 px-1 -mx-1" title="You marked this email as bad - skip it">
+                                  <Mail className="h-3 w-3 text-red-500" />
+                                  <span className="text-xs text-red-500 line-through truncate max-w-[140px]">
+                                    <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
+                                  </span>
+                                </span>
+                              ) : (
+                                <button
+                                  className="flex items-center gap-1.5 hover:bg-blue-50 dark:hover:bg-blue-950 rounded px-1 -mx-1 transition-colors"
+                                  onClick={(e) => { e.stopPropagation(); if (isRevealed) openEmailDraft(lead.id, lead.primaryEmail!, lead.ownerName) }}
+                                >
+                                  <Mail className="h-3 w-3 text-blue-600" />
+                                  <span className="text-xs text-blue-600 truncate max-w-[140px]">
+                                    <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
+                                  </span>
+                                </button>
+                              )}
+                              {isRevealed && !lead.isMock && (
+                                <button
+                                  title={lead.badEmail ? "Restore email (mark good)" : "Mark email as bad"}
+                                  onClick={(e) => { e.stopPropagation(); flagLead(lead.id, "bad_email", !lead.badEmail) }}
+                                  className={cn("shrink-0 rounded p-0.5 hover:bg-muted", lead.badEmail ? "text-emerald-600" : "text-muted-foreground hover:text-red-600")}
+                                >
+                                  {lead.badEmail ? <RotateCcw className="h-3 w-3" /> : <Ban className="h-3 w-3" />}
+                                </button>
+                              )}
+                            </div>
                           )}
+                          <div className="flex flex-wrap items-center gap-1">
+                            <LeadTypeBadge lead={lead} />
+                            {lead.agentStatus === "dead" && <Badge className="bg-red-600 text-white border-red-700 text-[10px] px-1.5 py-0">Dead</Badge>}
+                            {lead.agentStatus === "bad" && <Badge className="bg-red-100 text-red-700 border-red-200 text-[10px] px-1.5 py-0">Bad Lead</Badge>}
+                          </div>
+                          <OutreachStatus lead={lead} />
                         </div>
                       ) : (
                         <div className="flex items-center gap-1.5 text-muted-foreground">
@@ -2150,6 +2516,8 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                       hasSlybroadcast={hasSlybroadcast}
                       hasTextbee={hasTextbee}
                       onNeedCreds={(ch) => setCommsGate(ch)}
+                      pinId={activePinId}
+                      onFlag={flagLead}
                     />
                   )}
                 </CardContent>
@@ -2210,7 +2578,7 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
             </p>
             <Button
               variant="outline"
-              onClick={() => { setSearchQuery(""); setSelectedState("All States"); setSelectedStatus("all") }}
+              onClick={() => { setSearchQuery(""); setSelectedState("All States"); setSelectedStatus("all"); setSelectedDesignation("all") }}
             >
               Clear all filters
             </Button>

@@ -348,21 +348,160 @@ function ImportTool() {
         </p>
       </div>
 
-      {/* VSL Video */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="overflow-hidden rounded-2xl border bg-black">
-            <video
-              controls
-              preload="metadata"
-              poster="/videos/lead-import-poster.jpg"
-              className="h-auto w-full"
-            >
-              <source src="/videos/lead-import-16x9.mp4" type="video/mp4" />
-            </video>
+      {/* VSL Videos — two-up: how to import, then how lead type drives outreach */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardContent className="p-4">
+            <div className="overflow-hidden rounded-2xl border bg-black">
+              <video
+                controls
+                preload="metadata"
+                poster="/videos/lead-import-poster.jpg"
+                className="h-auto w-full"
+              >
+                <source src="/videos/lead-import-16x9.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p className="mt-3 text-center text-sm text-muted-foreground">
+              Start here: how to import your existing lists and put them on autopilot.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="overflow-hidden rounded-2xl border bg-black">
+              <video
+                controls
+                preload="metadata"
+                poster="/videos/lead-import-integration-poster.jpg"
+                className="h-auto w-full"
+              >
+                <source src="/videos/lead-import-integration-16x9.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p className="mt-3 text-center text-sm text-muted-foreground">
+              Watch next: how the lead type you pick reshapes your voicemail, SMS, and email.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* How lead type changes your outreach */}
+      <Card className="border-slate-200 bg-slate-50 shadow-sm">
+        <CardHeader className="border-b border-slate-200 bg-white rounded-t-xl">
+          <CardTitle className="text-lg text-[#09274c]">How importing works — and why the lead type matters</CardTitle>
+          <CardDescription>
+            Pick the right type when you upload. Every voicemail, text, and email you draft from
+            that lead is written to match it — no manual editing.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6 pt-6">
+          {/* Steps */}
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-100">
+                <Upload className="h-5 w-5 text-emerald-600" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-slate-900">1. Upload your file</p>
+                <p className="text-xs text-slate-500">
+                  Drop in a CSV or spreadsheet of leads you already own.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-100">
+                <FileSpreadsheet className="h-5 w-5 text-emerald-600" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-slate-900">2. Pick the lead type</p>
+                <p className="text-xs text-slate-500">
+                  Tax Deed, Pre-Foreclosure, Foreclosure Surplus, Probate, or General. This is the
+                  switch that controls your wording.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-100">
+                <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-slate-900">3. Map columns &amp; import</p>
+                <p className="text-xs text-slate-500">
+                  Match your headers to ours. The leads land in My Leads tagged with their type.
+                </p>
+              </div>
+            </div>
           </div>
-          <p className="mt-3 text-center text-sm text-muted-foreground">
-            Watch this first: how to import your existing lists and put them on autopilot.
+
+          {/* What the type changes */}
+          <div className="rounded-xl border border-[#09274c] bg-gradient-to-br from-[#09274c] to-[#0f2d56] p-5 shadow-md">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#C8A84B]">
+              When you draft outreach, the type rewrites all three channels
+            </p>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+                <div className="mb-1 flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-emerald-600" />
+                  <span className="text-sm font-semibold text-slate-900">Voicemail drop</span>
+                </div>
+                <p className="text-xs text-slate-500">
+                  Reads the right sale wording for the lead — a tax sale, an upcoming sale, or a
+                  completed foreclosure — instead of one-size-fits-all.
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+                <div className="mb-1 flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4 text-emerald-600" />
+                  <span className="text-sm font-semibold text-slate-900">SMS text</span>
+                </div>
+                <p className="text-xs text-slate-500">
+                  References the correct event, so a tax-sale owner never gets a foreclosure text
+                  and a pre-foreclosure owner hears the sale hasn&apos;t happened yet.
+                </p>
+              </div>
+              <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+                <div className="mb-1 flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-emerald-600" />
+                  <span className="text-sm font-semibold text-slate-900">Email draft</span>
+                </div>
+                <p className="text-xs text-slate-500">
+                  Subject line and body match the type — &ldquo;tax sale&rdquo;,
+                  &ldquo;upcoming foreclosure sale&rdquo;, or &ldquo;foreclosure sale&rdquo;. One
+                  template, written correctly every time.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Per-type cheat sheet */}
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-lg border border-red-200 border-l-4 border-l-red-500 bg-red-50 p-3 shadow-sm">
+              <p className="text-sm font-semibold text-red-700">Tax Deed Surplus</p>
+              <p className="mt-1 text-xs text-slate-600">
+                For overages from a county tax sale (FL/GA tax-deed work). Wording talks about the
+                tax sale and back taxes — no lender or mortgage language.
+              </p>
+            </div>
+            <div className="rounded-lg border border-amber-200 border-l-4 border-l-amber-500 bg-amber-50 p-3 shadow-sm">
+              <p className="text-sm font-semibold text-amber-700">Pre-Foreclosure</p>
+              <p className="mt-1 text-xs text-slate-600">
+                The sale hasn&apos;t happened yet. Wording is softer and time-sensitive — protect
+                the equity before the sale, not recover it after.
+              </p>
+            </div>
+            <div className="rounded-lg border border-slate-300 border-l-4 border-l-slate-500 bg-slate-100 p-3 shadow-sm">
+              <p className="text-sm font-semibold text-slate-700">Foreclosure Surplus</p>
+              <p className="mt-1 text-xs text-slate-600">
+                A completed mortgage foreclosure. Standard surplus wording — equity above the
+                lender&apos;s claim after the sale. Probate and General use this too.
+              </p>
+            </div>
+          </div>
+
+          <p className="rounded-lg border border-slate-200 bg-white p-3 text-xs text-slate-600 shadow-sm">
+            <span className="font-semibold text-[#09274c]">Tip:</span> each lead in My Leads shows a colored type badge so you always know which script
+            it will use before you send.
           </p>
         </CardContent>
       </Card>

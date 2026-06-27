@@ -341,7 +341,7 @@ export function CountyMap({
       <div
         ref={mapContainerRef}
         className="relative"
-        style={{ height: '400px' }}
+        style={{ height: '750px' }}
         onMouseMove={(e) => {
           if (mapContainerRef.current) {
             const rect = mapContainerRef.current.getBoundingClientRect();

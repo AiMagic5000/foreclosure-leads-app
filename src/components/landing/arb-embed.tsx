@@ -111,7 +111,7 @@ export function ArbEmbed() {
   return (
     <iframe
       ref={iframeRef}
-      src="/arb-sections.html?v=20260609g"
+      src="/arb-sections.html?v=20260623a"
       title="The Complete Asset Recovery Agent Business"
       className="block w-full border-0"
       style={{ height }}

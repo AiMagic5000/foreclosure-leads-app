@@ -139,6 +139,16 @@ export function Header() {
               </span>
               Live Webcast
             </Link>
+            <a
+              href="tel:8885458007"
+              className="inline-flex h-10 items-center gap-2 rounded-md bg-[#d82221] px-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_8px_24px_-12px_rgba(216,34,33,0.6)] transition-all hover:bg-[#c01e1d] hover:-translate-y-[1px] active:translate-y-0"
+            >
+              <Phone className="h-4 w-4 shrink-0" />
+              <span className="flex flex-col leading-none">
+                <span className="text-[13px] font-bold tracking-tight">(888) 545-8007</span>
+                <span className="text-[9px] font-medium uppercase tracking-[0.08em] opacity-90 mt-[3px]">9&ndash;5 PT &middot; 7 days a week</span>
+              </span>
+            </a>
             <Link href="/sign-up">
               <button className="group relative inline-flex h-10 items-center gap-2 overflow-hidden rounded-md bg-gradient-to-b from-[#1e3a5f] to-[#0B1A2E] px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_1px_2px_rgba(15,23,42,0.2),0_8px_24px_-12px_rgba(30,58,95,0.5)] transition-all hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_2px_4px_rgba(15,23,42,0.25),0_12px_32px_-10px_rgba(30,58,95,0.6)] hover:-translate-y-[1px] active:translate-y-0">
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />

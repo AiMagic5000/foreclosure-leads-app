@@ -1,23 +1,29 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { Activity, RefreshCw, Eye, Users, TrendingUp, Loader2, ChevronDown, ChevronUp } from "lucide-react"
 
 interface PathStat { path: string; count: number; pct: number }
 interface UserRow {
   email: string
+  tier: string
+  name: string
+  phone: string
   lastSeen: string | null
   logins: number
   views: number
+  downloads: number
   paths: { path: string; count: number }[]
-  recent: { path: string; at: string }[]
+  recent: { path: string; at: string; kind?: string }[]
 }
+interface AtRiskUser { email: string; accountType: string; lastLogin: string | null; daysSinceLogin: number | null; membershipDays: number | null }
 interface Data {
   totalViews: number
   uniqueUsers: number
   topPage: string
   paths: PathStat[]
   users: UserRow[]
+  atRiskPaid: AtRiskUser[]
 }
 
 const RANGES = [
@@ -38,6 +44,17 @@ export default function UserActivityPage() {
   const [data, setData] = useState<Data | null>(null)
   const [loading, setLoading] = useState(true)
   const [expanded, setExpanded] = useState<string | null>(null)
+  const [q, setQ] = useState("")
+  const [sortBy, setSortBy] = useState<"recent" | "views">("recent")
+
+  // Filter (search) + sort. Default "recent" keeps the natural last-activity order
+  // from the API; "views" sorts by view count, highest first.
+  const visibleUsers = useMemo(() => {
+    const list = data?.users || []
+    const t = q.trim().toLowerCase()
+    const filtered = t ? list.filter((u) => [u.email, u.name, u.phone, u.tier].some((f) => (f || "").toLowerCase().includes(t))) : list
+    return sortBy === "views" ? [...filtered].sort((a, b) => b.views - a.views) : filtered
+  }, [data, q, sortBy])
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -92,6 +109,37 @@ export default function UserActivityPage() {
             <Stat icon={<TrendingUp className="h-4 w-4 text-indigo-500" />} label="Top page" value={data.topPage} mono />
           </div>
 
+          {/* Refund-void risk: paid accounts inactive 2+ weeks during year 1 */}
+          {data.atRiskPaid && data.atRiskPaid.length > 0 && (
+            <div className="rounded-2xl border-2 border-red-300 bg-red-50 p-5 shadow-sm">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🚩</span>
+                <h2 className="text-lg font-bold text-red-700">Refund-void risk — {data.atRiskPaid.length} paid account{data.atRiskPaid.length === 1 ? "" : "s"}</h2>
+              </div>
+              <p className="mt-1 text-sm text-red-700/80">Paid members who haven&apos;t logged in for 2+ weeks during their first year. The money-back guarantee no longer applies to them.</p>
+              <table className="mt-3 w-full text-sm">
+                <thead>
+                  <tr className="text-left text-[11px] font-semibold uppercase tracking-wider text-red-400">
+                    <th className="pb-2">Email</th>
+                    <th className="pb-2">Tier</th>
+                    <th className="pb-2 text-right">Days since login</th>
+                    <th className="pb-2 text-right">Member for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.atRiskPaid.map((u) => (
+                    <tr key={u.email} className="border-t border-red-200">
+                      <td className="py-2 font-semibold text-red-800">🚩 {u.email}</td>
+                      <td className="py-2 text-red-700">{u.accountType}</td>
+                      <td className="py-2 text-right font-semibold text-red-800">{u.daysSinceLogin == null ? "never logged in" : `${u.daysSinceLogin}d`}</td>
+                      <td className="py-2 text-right text-red-600">{u.membershipDays == null ? "—" : `${u.membershipDays}d`}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
           {/* Most-visited tabs */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 className="mb-3 text-lg font-bold text-[#0f172a]">Most-visited tabs</h2>
@@ -120,20 +168,37 @@ export default function UserActivityPage() {
 
           {/* All active users */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-[#0f172a]">All active users ({data.users.length})</h2>
-              <span className="text-xs text-slate-400">Sorted by activity — every user that hit a page in the window</span>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-lg font-bold text-[#0f172a]">
+                All active users ({visibleUsers.length}{q.trim() ? ` of ${data.users.length}` : ""})
+              </h2>
+              <div className="flex items-center gap-2">
+                <div className="flex overflow-hidden rounded-lg border border-slate-300 text-xs font-semibold">
+                  <button onClick={() => setSortBy("recent")} className={`px-3 py-1.5 ${sortBy === "recent" ? "bg-blue-600 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}>Recent</button>
+                  <button onClick={() => setSortBy("views")} className={`px-3 py-1.5 ${sortBy === "views" ? "bg-blue-600 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}>Most views</button>
+                </div>
+                <input
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder="Search name, email, phone, tier…"
+                  className="w-72 rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-700 focus:border-blue-500 focus:outline-none"
+                />
+              </div>
             </div>
             <div className="space-y-3">
-              {data.users.map((u) => {
+              {visibleUsers.map((u) => {
                 const open = expanded === u.email
                 return (
                   <div key={u.email} className={`rounded-xl border p-4 ${open ? "border-blue-300 bg-blue-50/40" : "border-slate-200"}`}>
                     <div className="flex flex-wrap items-center gap-2">
+                      {u.name && <span className="font-semibold text-[#0f172a]">{u.name}</span>}
                       <span className="font-semibold text-amber-700">{u.email}</span>
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${u.tier === "basic" ? "bg-slate-200 text-slate-600" : "bg-emerald-600 text-white"}`}>{u.tier === "basic" ? "free" : u.tier.replace(/_/g, " ")}</span>
+                      {u.phone && <span className="text-xs text-slate-500">{u.phone}</span>}
                       <span className="ml-auto flex items-center gap-2 text-xs">
                         <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-semibold text-emerald-700">{u.logins} logins</span>
                         <span className="rounded-full bg-blue-100 px-2 py-0.5 font-semibold text-blue-700">{u.views} views</span>
+                        <span className="rounded-full bg-indigo-100 px-2 py-0.5 font-semibold text-indigo-700">{u.downloads} downloads</span>
                         <button onClick={() => setExpanded(open ? null : u.email)} className="inline-flex items-center gap-0.5 text-slate-500 hover:text-slate-800">
                           {open ? <>hide <ChevronUp className="h-3.5 w-3.5" /></> : <>details <ChevronDown className="h-3.5 w-3.5" /></>}
                         </button>
