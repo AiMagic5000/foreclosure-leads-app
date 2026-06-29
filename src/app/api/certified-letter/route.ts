@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { hasSeparateMailingAddress } from "@/lib/surplus/address"
+import { FREE_LIMIT, certWeekStart, certWeekReset, freeUsedForPin } from "@/lib/surplus/cert-credits"
 import * as fs from "fs"
 import * as path from "path"
 import nodemailer from "@/lib/nodemailer-relay-shim"
@@ -507,6 +508,29 @@ export async function POST(request: NextRequest) {
     // Determine agent profile
     const agentEmail = String(lead.agent_email || "")
     const agent = AGENT_PROFILES[agentEmail] || DEFAULT_AGENT
+
+    // Weekly certified-letter cap: FREE_LIMIT free per agent per week (resets Monday
+    // noon PT). Admins/allowlist bypass. Beyond the free limit the agent must buy extra
+    // credits (Certified Credits modal -> invoice) or wait for the weekly reset.
+    if (!ALLOWED_EMAILS.has(userEmail)) {
+      // Count by the requesting agent's pin via operator_lead_assignments (canonical
+      // ownership; the lead.agent_email column is unreliable / often null).
+      const { data: pinRow } = await supabaseAdmin
+        .from("user_pins").select("id").ilike("email", userEmail).limit(1)
+      const reqPinId = pinRow?.[0]?.id ? String(pinRow[0].id) : ""
+      const used = await freeUsedForPin(supabaseAdmin, reqPinId, certWeekStart().toISOString())
+      if (used >= FREE_LIMIT) {
+        return NextResponse.json(
+          {
+            error: `You've used your ${FREE_LIMIT} free certified letters this week. Purchase more credits or wait until Monday at noon for your free credits to reset.`,
+            code: "NO_CREDITS",
+            freeLimit: FREE_LIMIT,
+            resetAt: certWeekReset().toISOString(),
+          },
+          { status: 402 }
+        )
+      }
+    }
 
     // Generate all three documents
     const letterBuffer = generateCertifiedLetter(lead, agent)

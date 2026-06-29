@@ -1613,6 +1613,34 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
   const [certLetterLoading, setCertLetterLoading] = useState(false)
   const [certLetterResult, setCertLetterResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
 
+  // Certified-letter weekly credits (5 free/week, reset Mon noon; extra = $10 each)
+  const [showCertCredits, setShowCertCredits] = useState(false)
+  const [credits, setCredits] = useState<{ freeLimit: number; freeUsed: number; freeRemaining: number; pricePerLetter: number; resetAt: string; isAdmin: boolean } | null>(null)
+  const [creditQty, setCreditQty] = useState(1)
+  const [creditReqLoading, setCreditReqLoading] = useState(false)
+  const [creditReqResult, setCreditReqResult] = useState<{ ok?: boolean; message?: string; error?: string } | null>(null)
+  const [showCreditsExhausted, setShowCreditsExhausted] = useState<{ resetAt?: string; freeLimit?: number } | null>(null)
+
+  const openCertCredits = useCallback(async () => {
+    setShowCertCredits(true); setCreditReqResult(null); setCredits(null)
+    try {
+      const qs = activePinId ? `?pinId=${encodeURIComponent(activePinId)}` : ""
+      const r = await fetch(`/api/cert-credits${qs}`)
+      if (r.ok) setCredits(await r.json())
+    } catch { /* shown as loading */ }
+  }, [activePinId])
+
+  const requestCredits = useCallback(async () => {
+    setCreditReqLoading(true); setCreditReqResult(null)
+    try {
+      const r = await fetch("/api/cert-credits", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ qty: creditQty, pinId: activePinId }) })
+      const d = await r.json()
+      if (!r.ok) throw new Error(d.error || "Request failed")
+      setCreditReqResult({ ok: true, message: d.message })
+    } catch (e) { setCreditReqResult({ error: e instanceof Error ? e.message : "Request failed" }) }
+    finally { setCreditReqLoading(false) }
+  }, [creditQty, activePinId])
+
   const openCertLetterModal = useCallback((leadId: string, ownerName: string, mailingAddress: string) => {
     setCertLetterModal({ leadId, ownerName, mailingAddress })
     setCertLetterNotes("")
@@ -1630,7 +1658,14 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
         body: JSON.stringify({ leadId: certLetterModal.leadId, notes: certLetterNotes }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || "Request failed")
+      if (!res.ok) {
+        if (data.code === "NO_CREDITS") {
+          setCertLetterModal(null)
+          setShowCreditsExhausted({ resetAt: data.resetAt, freeLimit: data.freeLimit })
+          return
+        }
+        throw new Error(data.error || "Request failed")
+      }
       setCertLetterResult({ success: true, message: data.message || "Request submitted" })
       // Update local lead state
       setLeads(prev => prev.map(l =>
@@ -1835,21 +1870,31 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
           </p>
         </div>
         {!importedOnly && (
-          <Button
-            onClick={() => {
-              const basicTiers = ["basic", "free_webcast", "free"]
-              if (basicTiers.includes(activeAccountType)) {
-                setShowBasicUpgradeModal(true)
-              } else {
-                setShowRequestModal(true)
-                setRequestSuccess(false)
-              }
-            }}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
-          >
-            <Send className="h-4 w-4 mr-2" />
-            Request Leads
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              onClick={openCertCredits}
+              variant="outline"
+              className="border-orange-300 text-orange-700 hover:bg-orange-50"
+            >
+              <CreditCard className="h-4 w-4 mr-2" />
+              Certified Credits
+            </Button>
+            <Button
+              onClick={() => {
+                const basicTiers = ["basic", "free_webcast", "free"]
+                if (basicTiers.includes(activeAccountType)) {
+                  setShowBasicUpgradeModal(true)
+                } else {
+                  setShowRequestModal(true)
+                  setRequestSuccess(false)
+                }
+              }}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md"
+            >
+              <Send className="h-4 w-4 mr-2" />
+              Request Leads
+            </Button>
+          </div>
         )}
       </div>
 
@@ -2810,6 +2855,56 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
       )}
 
       {/* Certified Letter Modal */}
+      {showCertCredits && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowCertCredits(false)}>
+          <Card className="w-full max-w-lg" onClick={(e) => e.stopPropagation()}>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2"><CreditCard className="h-5 w-5 text-orange-600" />Certified Letter Credits</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 text-sm">
+              <p>Each week you get <strong>{credits?.freeLimit ?? 5} free certified letters</strong> — we print and mail them to your claimants at no cost. Beyond that, certified letters are <strong>${credits?.pricePerLetter ?? 10} each</strong> (print + certified mailing), or you can wait for your free credits to reset <strong>Monday at noon</strong>.</p>
+              {credits ? (
+                <div className="rounded-lg border p-3 bg-orange-50/50 space-y-1">
+                  <div className="flex justify-between"><span>Free used this week</span><span className="font-semibold">{credits.isAdmin ? "Unlimited (admin)" : `${credits.freeUsed} / ${credits.freeLimit}`}</span></div>
+                  <div className="flex justify-between"><span>Free remaining</span><span className="font-bold text-orange-700">{credits.isAdmin ? "∞" : credits.freeRemaining}</span></div>
+                  <div className="flex justify-between text-xs text-muted-foreground"><span>Free credits reset</span><span>{new Date(credits.resetAt).toLocaleString()}</span></div>
+                </div>
+              ) : <p className="text-muted-foreground">Loading your credits…</p>}
+              <div className="border-t pt-3">
+                <p className="font-medium mb-2">Need to mail more this week? Request paid certified letters:</p>
+                <div className="flex items-center gap-2">
+                  <input type="number" min={1} max={500} value={creditQty} onChange={(e) => setCreditQty(Math.max(1, Number(e.target.value) || 1))} className="w-24 border rounded px-2 py-1" />
+                  <span className="text-muted-foreground">× ${credits?.pricePerLetter ?? 10} = <strong>${((credits?.pricePerLetter ?? 10) * creditQty).toFixed(2)}</strong></span>
+                </div>
+                <Button disabled={creditReqLoading} onClick={requestCredits} className="mt-3 bg-orange-600 hover:bg-orange-700 text-white">
+                  {creditReqLoading ? "Sending…" : "Request & Get Invoice"}
+                </Button>
+                {creditReqResult?.ok && <p className="text-emerald-600 mt-2">{creditReqResult.message}</p>}
+                {creditReqResult?.error && <p className="text-red-600 mt-2">{creditReqResult.error}</p>}
+                <p className="text-xs text-muted-foreground mt-2">We email you an invoice for the total. Once paid, we print and mail those certified letters to your leads&apos; current addresses.</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {showCreditsExhausted && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowCreditsExhausted(null)}>
+          <Card className="w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-orange-700"><MailCheck className="h-5 w-5" />Out of Free Certified Letters</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 text-sm">
+              <p>You&apos;ve used all <strong>{showCreditsExhausted.freeLimit ?? 5} free certified letters</strong> for this week. To send more right now, purchase additional credits — otherwise your free credits reset <strong>Monday at noon</strong>{showCreditsExhausted.resetAt ? ` (${new Date(showCreditsExhausted.resetAt).toLocaleDateString()})` : ""}.</p>
+              <div className="flex gap-2">
+                <Button onClick={() => { setShowCreditsExhausted(null); openCertCredits() }} className="bg-orange-600 hover:bg-orange-700 text-white">Purchase Credits</Button>
+                <Button variant="outline" onClick={() => setShowCreditsExhausted(null)}>Wait Until Monday</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
       {certLetterModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => { setCertLetterModal(null); setCertLetterResult(null) }}>
           <Card className="w-full max-w-lg flex flex-col" onClick={(e) => e.stopPropagation()}>
