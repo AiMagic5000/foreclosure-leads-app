@@ -431,7 +431,7 @@ function WebcastLiveContent() {
       video.src = HLS_URL
       video.addEventListener('loadedmetadata', () => setTimeout(startPlayback, 500), { once: true })
     } else {
-      video.src = '/assets/webcast.mp4'
+      video.src = 'https://foreclosure-db.alwaysencrypted.com/storage/v1/object/public/voicedrops/webcast/live-broadcast-edited.mp4'
       video.addEventListener('loadedmetadata', () => setTimeout(startPlayback, 500), { once: true })
     }
 
