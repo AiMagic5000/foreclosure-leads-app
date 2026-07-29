@@ -35,7 +35,8 @@ export async function POST(req: NextRequest) {
     if (recUrl && SW_PROJECT && SW_TOKEN) {
       await ensureBucket()
       const auth = Buffer.from(`${SW_PROJECT}:${SW_TOKEN}`).toString("base64")
-      const r = await fetch(`${recUrl}.mp3`, { headers: { Authorization: `Basic ${auth}` } })
+      const recFetchUrl = recUrl.match(/\.(wav|mp3)$/) ? recUrl.replace(/\.wav$/, ".mp3") : `${recUrl}.mp3`
+      const r = await fetch(recFetchUrl, { headers: { Authorization: `Basic ${auth}` } })
       if (r.ok) {
         const buf = Buffer.from(await r.arrayBuffer())
         const path = `ext-${ext || "unknown"}/${callSid}.mp3`
