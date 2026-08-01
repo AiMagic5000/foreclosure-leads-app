@@ -14,17 +14,27 @@ const PAID_PACKAGES = new Set([
   "admin",
 ])
 
-// Canonical field keys the client maps CSV columns to.
+// Canonical field keys the client maps CSV columns to. Agents often bring rich
+// lists from other sources, so we accept a full name OR first/last, a separate
+// mailing/current address, and up to three phones + three emails — everything
+// gets imported (extras fan out into the phone_numbers/email_addresses arrays).
 type CanonicalRow = {
   owner_name?: string
+  first_name?: string
+  last_name?: string
   property_address?: string
+  mailing_address?: string
   city?: string
   state?: string
   state_abbr?: string
   zip_code?: string
   county?: string
   primary_phone?: string
+  secondary_phone?: string
+  phone_3?: string
   primary_email?: string
+  secondary_email?: string
+  email_3?: string
   amount?: string
   case_number?: string
   notes?: string
@@ -32,6 +42,20 @@ type CanonicalRow = {
 
 function clean(v: unknown): string {
   return typeof v === "string" ? v.trim() : v == null ? "" : String(v).trim()
+}
+
+// Collect non-empty, de-duplicated values (used for the phone / email lists).
+function collectList(...vals: unknown[]): string[] {
+  const out: string[] = []
+  const seen = new Set<string>()
+  for (const v of vals) {
+    const s = clean(v)
+    if (s && !seen.has(s.toLowerCase())) {
+      seen.add(s.toLowerCase())
+      out.push(s)
+    }
+  }
+  return out
 }
 
 // Parse a free-form money string ("$12,500.00", "12500") into a number, or null.
@@ -93,34 +117,84 @@ export async function POST(request: NextRequest) {
     const source = `imported:${leadType}:${operatorPinId || "admin"}`
     const nowIso = new Date().toISOString()
 
+    // Dedupe: never create a duplicate of a lead this operator already has.
+    // Re-importing the same file must NOT spawn duplicate rows — doing so also
+    // orphans the agent's notes/progress on the original copy. An agent's leads
+    // are theirs; we don't duplicate or overwrite them. Match on property address
+    // (strong identity), else owner name + phone.
+    const norm = (s: string) => (s || "").toLowerCase().replace(/\s+/g, " ").trim()
+    const dkey = (addr: string, name: string, phone: string) => {
+      const a = norm(addr)
+      if (a) return "a:" + a
+      return "np:" + norm(name) + "|" + (phone || "").replace(/\D/g, "")
+    }
+    const seenKeys = new Set<string>()
+    if (operatorPinId) {
+      const { data: assigns } = await supabaseAdmin
+        .from("operator_lead_assignments")
+        .select("lead_id")
+        .eq("operator_pin_id", operatorPinId)
+        .eq("status", "active")
+      const leadIds = (assigns || []).map((a: { lead_id: string }) => a.lead_id).filter(Boolean)
+      for (let j = 0; j < leadIds.length; j += 1000) {
+        const { data: exist } = await supabaseAdmin
+          .from("foreclosure_leads")
+          .select("property_address, owner_name, primary_phone")
+          .in("id", leadIds.slice(j, j + 1000))
+        for (const l of exist || []) {
+          seenKeys.add(dkey(l.property_address || "", l.owner_name || "", l.primary_phone || ""))
+        }
+      }
+    }
+
     let imported = 0
     let skipped = 0
+    let duplicates = 0
     const errors: string[] = []
+    // Returned so the UI can offer one-click skip tracing on exactly this batch.
+    const leadIds: string[] = []
 
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i] || {}
-      const ownerName = clean(row.owner_name)
+      // Name: prefer an explicit full name; otherwise stitch first + last.
+      const ownerName = clean(row.owner_name) || [clean(row.first_name), clean(row.last_name)].filter(Boolean).join(" ")
       const propertyAddress = clean(row.property_address)
-      const primaryPhone = clean(row.primary_phone)
-      const primaryEmail = clean(row.primary_email)
+      const mailingAddress = clean(row.mailing_address)
+      // Phones / emails: any of the mapped columns; extras go into the arrays.
+      const phones = collectList(row.primary_phone, row.secondary_phone, row.phone_3)
+      const emails = collectList(row.primary_email, row.secondary_email, row.email_3).map((e) => e.toLowerCase())
 
       // Skip rows with no identifying data at all.
-      if (!ownerName && !propertyAddress && !primaryPhone && !primaryEmail) {
+      if (!ownerName && !propertyAddress && !mailingAddress && phones.length === 0 && emails.length === 0) {
         skipped++
         continue
       }
 
+      // Already have this lead (from a prior import or same file) — skip so we
+      // don't duplicate the operator's list or bury their existing notes/progress.
+      const key = dkey(propertyAddress, ownerName, phones[0] || "")
+      if (seenKeys.has(key)) {
+        duplicates++
+        continue
+      }
+      seenKeys.add(key)
+
       const insertRow: Record<string, unknown> = {
         // owner_name is NOT NULL in the schema -- never insert null.
         owner_name: ownerName || "Unknown Owner",
-        property_address: propertyAddress,
+        property_address: propertyAddress || null,
+        mailing_address: mailingAddress || null,
         city: clean(row.city) || null,
         state: clean(row.state) || null,
         state_abbr: clean(row.state_abbr).toUpperCase() || null,
         zip_code: clean(row.zip_code) || null,
         county: clean(row.county) || null,
-        primary_phone: primaryPhone || null,
-        primary_email: primaryEmail || null,
+        primary_phone: phones[0] || null,
+        secondary_phone: phones[1] || null,
+        // Keep every phone/email the agent provided (arrays), not just the first.
+        phone_numbers: phones.length ? phones : null,
+        primary_email: emails[0] || null,
+        email_addresses: emails.length ? emails : null,
         overage_amount: parseAmount(row.amount),
         case_number: clean(row.case_number) || null,
         // notes has no dedicated column on foreclosure_leads; carry it on the
@@ -171,9 +245,10 @@ export async function POST(request: NextRequest) {
       }
 
       imported++
+      leadIds.push(newLeadId)
     }
 
-    return NextResponse.json({ imported, skipped, errors })
+    return NextResponse.json({ imported, skipped, duplicates, errors, leadIds })
   } catch (err) {
     const message = err instanceof Error ? err.message : "Internal server error"
     return NextResponse.json({ error: message }, { status: 500 })

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
-import { FREE_LIMIT, PRICE_PER_LETTER_CENTS, certWeekStart, certWeekReset, freeUsedForPin } from "@/lib/surplus/cert-credits"
+import { canonicalEmail } from "@/lib/email-alias"
+import { FREE_WEEKLY_LIMIT, FREE_TOTAL, PRICE_PER_LETTER_CENTS, certWeekStart, certWeekReset, freeUsedForPin, inFreeMonth, freeMonthEnd } from "@/lib/surplus/cert-credits"
 import { BRAND_HEADER, BRAND_FOOTER_COMPANY } from "@/lib/email-brand"
 import nodemailer from "@/lib/nodemailer-relay-shim"
 
@@ -13,14 +14,14 @@ const SMTP_PORT = 465
 const SMTP_USER = "support@usforeclosurerecovery.com"
 const SMTP_PASS = process.env.IMAP_SUPPORT_PASSWORD || "Thepassword#1234"
 
-type PinRow = { id: string; email: string | null; full_name: string | null }
+type PinRow = { id: string; email: string | null; full_name: string | null; cert_credits_eligible?: boolean; created_at?: string | null }
 
 async function pinByEmail(email: string): Promise<PinRow | null> {
-  const { data } = await supabaseAdmin.from("user_pins").select("id, email, full_name").ilike("email", email).limit(1)
+  const { data } = await supabaseAdmin.from("user_pins").select("id, email, full_name, cert_credits_eligible, created_at").ilike("email", canonicalEmail(email)).limit(1)
   return data?.[0] || null
 }
 async function pinById(id: string): Promise<PinRow | null> {
-  const { data } = await supabaseAdmin.from("user_pins").select("id, email, full_name").eq("id", id).limit(1)
+  const { data } = await supabaseAdmin.from("user_pins").select("id, email, full_name, cert_credits_eligible, created_at").eq("id", id).limit(1)
   return data?.[0] || null
 }
 
@@ -44,11 +45,28 @@ export async function GET(req: NextRequest) {
   const paramPinId = new URL(req.url).searchParams.get("pinId")
   const { pin, isAdmin } = await resolveTarget(callerEmail, paramPinId)
 
-  const used = isAdmin || !pin ? 0 : await freeUsedForPin(supabaseAdmin, pin.id, certWeekStart().toISOString())
+  // Free weekly credits are a full-$995-partnership benefit. $331 agents are not
+  // eligible -> 0 free, pay-per-letter only (until they upgrade).
+  const eligible = isAdmin || !!pin?.cert_credits_eligible
+  const createdAt = pin?.created_at || null
+  // Free = 5/week for the first month (20 total). After that: pay $12.50/letter or print own.
+  const freeMonthActive = isAdmin || (eligible && inFreeMonth(createdAt))
+  const weekUsed = isAdmin || !pin ? 0 : await freeUsedForPin(supabaseAdmin, pin.id, certWeekStart().toISOString())
+  const totalUsed = isAdmin || !pin || !createdAt ? 0 : await freeUsedForPin(supabaseAdmin, pin.id, createdAt)
+  const weekRemaining = isAdmin ? 9999 : (freeMonthActive ? Math.max(0, FREE_WEEKLY_LIMIT - weekUsed) : 0)
+  const totalRemaining = isAdmin ? 9999 : (eligible ? Math.max(0, FREE_TOTAL - totalUsed) : 0)
   return NextResponse.json({
-    freeLimit: FREE_LIMIT,
-    freeUsed: used,
-    freeRemaining: isAdmin ? 9999 : Math.max(0, FREE_LIMIT - used),
+    eligible,
+    freeMonthActive,
+    freeMonthEndsAt: freeMonthEnd(createdAt)?.toISOString() || null,
+    freeWeeklyLimit: FREE_WEEKLY_LIMIT,
+    freeTotal: FREE_TOTAL,
+    weekUsed,
+    totalUsed,
+    // Back-compat fields the existing modal reads:
+    freeLimit: freeMonthActive ? FREE_WEEKLY_LIMIT : 0,
+    freeUsed: weekUsed,
+    freeRemaining: Math.min(weekRemaining, totalRemaining),
     pricePerLetter: PRICE_PER_LETTER_CENTS / 100,
     resetAt: certWeekReset().toISOString(),
     isAdmin,
@@ -85,7 +103,7 @@ export async function POST(req: NextRequest) {
     <table style="max-width:600px;" border="0" width="100%" cellspacing="0" cellpadding="0" align="center"><tbody><tr>
     <td style="background-color:#ffffff;padding:32px 40px;font-family:Arial,sans-serif;color:#33404f;font-size:15px;line-height:1.6;">
     <p style="margin:0 0 16px;">Hi ${agentName},</p>
-    <p style="margin:0 0 16px;">Here is your invoice for the additional certified letters you requested. These are mailed in addition to your ${FREE_LIMIT} free weekly certified letters.</p>
+    <p style="margin:0 0 16px;">Here is your invoice for the certified letters you requested at $${(PRICE_PER_LETTER_CENTS/100).toFixed(2)} each for shipping &amp; handling. New accounts also receive ${FREE_WEEKLY_LIMIT} free certified letters per week during their first month.</p>
     <table border="0" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 18px;border:1px solid #e5e9ef;">
       <tbody>
       <tr><td style="padding:10px 14px;border-bottom:1px solid #eef0f4;">Certified letters requested</td><td style="padding:10px 14px;border-bottom:1px solid #eef0f4;text-align:right;font-weight:bold;">${qty}</td></tr>

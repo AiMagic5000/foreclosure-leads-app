@@ -78,44 +78,39 @@ export async function sendVoiceClonedEmail(toEmail: string): Promise<void> {
   } catch { /* never throw from automation */ }
 }
 
-// Auto-clone an uploaded sample into ElevenLabs and store the voice id on the pin.
-// Returns the new voice id, or null on failure (caller should not fail the upload).
+// Publish an uploaded voice sample as the agent's Chatterbox reference clip.
+// Self-hosted Chatterbox clones zero-shot from this reference at generation time,
+// so there is no external clone to create — we just store the public ref URL on the
+// pin(s). Returns the public reference URL, or null on failure (caller must not fail
+// the upload). See memory: chatterbox-voicedrops.
 export async function autoCloneAgentVoice(
   pinId: string,
   sample: Buffer,
-  filename: string,
-  displayName?: string
+  _filename: string,
+  _displayName?: string
 ): Promise<string | null> {
-  const KEY = process.env.ELEVENLABS_API_KEY
-  if (!KEY) return null
   try {
-    const fd = new FormData()
-    fd.append("name", (displayName || `Agent ${pinId.slice(0, 8)}`).slice(0, 100))
-    fd.append("description", "USFR agent voice - auto-cloned from dashboard upload")
-    fd.append("remove_background_noise", "true")
-    fd.append("files", new Blob([new Uint8Array(sample)], { type: "audio/mpeg" }), filename || "sample.mp3")
-    const r = await fetch("https://api.elevenlabs.io/v1/voices/add", {
-      method: "POST",
-      headers: { "xi-api-key": KEY },
-      body: fd,
-    })
-    if (!r.ok) {
-      console.error("[voice-clone] ElevenLabs add failed:", r.status, (await r.text()).slice(0, 200))
+    const path = `refs/${pinId}.mp3`
+    const { error: upErr } = await supabaseAdmin.storage
+      .from("voicedrops")
+      .upload(path, new Uint8Array(sample), { contentType: "audio/mpeg", upsert: true })
+    if (upErr) {
+      console.error("[voice-ref] publish failed:", upErr.message)
       return null
     }
-    const data = (await r.json()) as { voice_id?: string }
-    const voiceId = data?.voice_id
-    if (!voiceId) return null
-    // Set the clone on ALL active pins for this agent's email so whichever resolves uses it.
+    const { data: pub } = supabaseAdmin.storage.from("voicedrops").getPublicUrl(path)
+    const refUrl = pub?.publicUrl
+    if (!refUrl) return null
+    // Set the reference on ALL active pins for this agent's email so whichever resolves uses it.
     const { data: pin } = await supabaseAdmin.from("user_pins").select("email").eq("id", pinId).single()
     if (pin?.email) {
-      await supabaseAdmin.from("user_pins").update({ voice_id: voiceId }).ilike("email", pin.email).eq("is_active", true)
+      await supabaseAdmin.from("user_pins").update({ voice_ref_url: refUrl }).ilike("email", pin.email).eq("is_active", true)
     } else {
-      await supabaseAdmin.from("user_pins").update({ voice_id: voiceId }).eq("id", pinId)
+      await supabaseAdmin.from("user_pins").update({ voice_ref_url: refUrl }).eq("id", pinId)
     }
-    return voiceId
+    return refUrl
   } catch (err) {
-    console.error("[voice-clone] error:", err instanceof Error ? err.message : String(err))
+    console.error("[voice-ref] error:", err instanceof Error ? err.message : String(err))
     return null
   }
 }

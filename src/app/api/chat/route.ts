@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import Anthropic from "@anthropic-ai/sdk"
 import nodemailer from '@/lib/nodemailer-relay-shim'
+import { HOMEOWNER_INTEL } from "@/lib/chatbot-intel"
 
 export const dynamic = "force-dynamic"
 export const maxDuration = 30
@@ -21,11 +22,67 @@ Voice and rules:
 - Say "state" rather than "county" when referring to where funds are held.
 - Be warm, concise, and professional. Keep replies short (2-4 sentences).
 - You are not a law firm and do not give legal advice.
-- Help visitors understand surplus funds, how our recovery process works (no upfront cost, contingency fee), and answer questions about the dashboard and agent programs (Asset Recovery Agent $995, Owner Operator $5,200).
+- Help visitors understand surplus funds, how our recovery process works (no upfront cost, contingency fee), and answer questions about the dashboard and agent programs (Asset Recovery Agent $995, Owner Operator $7,495).
 - When someone seems interested or has a specific claim, collect their name, phone, and email and tell them our recovery agent Allie Pearson will follow up. Encourage them to call (888) 545-8007.
-- If you don't know something, say so and offer to connect them with our team.`
+- If you don't know something, say so and offer to connect them with our team.
+
+${HOMEOWNER_INTEL}`
 
 type Msg = { role: "user" | "assistant"; content: string }
+
+// Self-healing model selection. If a model is deprecated/retired (Anthropic
+// returns 404 not_found_error), fall forward to the next candidate instead of
+// 500-ing the chatbot. Ordered: env override -> pinned current models -> the
+// "-latest" aliases as a permanent safety net (they auto-track live models).
+// The last model that worked is cached so we don't re-probe dead ids per request.
+// Ids verified against Anthropic /v1/models (2026-07-06). Ordered cheapest-first
+// for a support chatbot; each is a real, current id so a single retirement just
+// falls to the next. Keep a "-latest" alias last as an ultimate net.
+const MODEL_CANDIDATES: string[] = [
+  process.env.CLAUDE_MODEL,
+  "claude-haiku-4-5-20251001",
+  "claude-sonnet-4-5-20250929",
+  "claude-sonnet-5",
+  "claude-3-5-haiku-latest",
+].filter((m): m is string => !!m)
+
+let healthyModel: string | null = null
+
+function isModelGoneError(e: unknown): boolean {
+  const err = e as { status?: number; error?: { type?: string }; message?: string } | undefined
+  if (!err) return false
+  if (err.status === 404) return true
+  if (err.error?.type === "not_found_error") return true
+  return /model|not_found|deprecat/i.test(err.message || "")
+}
+
+async function createWithFallback(client: Anthropic, args: Omit<Anthropic.MessageCreateParamsNonStreaming, "model">) {
+  // Try the cached-healthy model first, then the ordered candidates (deduped).
+  const ordered = [healthyModel, ...MODEL_CANDIDATES].filter((m): m is string => !!m)
+  const tried = new Set<string>()
+  let lastErr: unknown = null
+  for (const model of ordered) {
+    if (tried.has(model)) continue
+    tried.add(model)
+    try {
+      const res = await client.messages.create({ ...args, model })
+      if (healthyModel !== model) {
+        healthyModel = model
+        console.log(`[chat] model self-heal: now using "${model}"`)
+      }
+      return res
+    } catch (e) {
+      lastErr = e
+      if (isModelGoneError(e)) {
+        console.error(`[chat] model "${model}" unavailable, trying next candidate`)
+        if (healthyModel === model) healthyModel = null
+        continue
+      }
+      throw e // non-model error (rate limit, auth, network) — don't burn candidates
+    }
+  }
+  throw lastErr
+}
 
 async function emailTranscript(messages: Msg[], meta: { name?: string; email?: string; sessionId?: string }) {
   const lines = messages.map((m) => `${m.role === "user" ? "Visitor" : "Foreclosure Recovery Inc."}: ${m.content}`).join("\n\n")
@@ -84,8 +141,7 @@ export async function POST(req: NextRequest) {
       .filter((m) => m.content?.trim())
       .map((m) => ({ role: m.role, content: m.content }))
 
-    const response = await client.messages.create({
-      model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
+    const response = await createWithFallback(client, {
       max_tokens: 400,
       system: SYSTEM_PROMPT,
       messages: convo.length ? convo : [{ role: "user", content: "Hello" }],

@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic"
 const BUCKET = "pbx-config"
 const FILE = "extensions.json"
 
-type ExtRec = { forwarding_phone: string; agent_name?: string; agent_email?: string; active?: boolean }
+type ExtRec = { forwarding_phone?: string; sip_endpoint?: string; agent_name?: string; agent_email?: string; active?: boolean; ai_cover?: boolean }
 type ExtMap = Record<string, ExtRec>
 
 async function load(): Promise<ExtMap> {
@@ -48,6 +48,19 @@ export async function POST(req: NextRequest) {
   if (!(await isRequestAdmin())) return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   const body = await req.json().catch(() => ({}))
   const extension = String(body?.extension || "").replace(/\D/g, "").trim()
+
+  // "AI covers me" toggle — flips ai_cover on an existing extension without re-entering
+  // the phone number (an away agent may have only a SIP endpoint, no forwarding cell).
+  if (body?.action === "toggle_ai") {
+    if (!extension) return NextResponse.json({ error: "extension required" }, { status: 400 })
+    const map = await load()
+    const rec = map[extension]
+    if (!rec) return NextResponse.json({ error: "extension not found" }, { status: 404 })
+    map[extension] = { ...rec, ai_cover: body?.ai_cover === true }
+    await save(map)
+    return NextResponse.json({ success: true, extension, ai_cover: map[extension].ai_cover === true })
+  }
+
   const forwarding_phone = normPhone(String(body?.forwarding_phone || ""))
   if (!extension || !forwarding_phone) {
     return NextResponse.json({ error: "Extension and forwarding phone are required" }, { status: 400 })
@@ -56,10 +69,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Forwarding phone must be a valid US number" }, { status: 400 })
   }
   const map = await load()
+  // Preserve fields the add form doesn't manage (sip_endpoint, ai_cover).
+  const prev = map[extension] || {}
   map[extension] = {
+    ...prev,
     forwarding_phone,
-    agent_name: String(body?.agent_name || "").trim() || undefined,
-    agent_email: String(body?.agent_email || "").trim() || undefined,
+    agent_name: String(body?.agent_name || "").trim() || prev.agent_name,
+    agent_email: String(body?.agent_email || "").trim() || prev.agent_email,
     active: body?.active === false ? false : true,
   }
   await save(map)

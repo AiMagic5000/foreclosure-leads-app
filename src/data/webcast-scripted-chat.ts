@@ -153,15 +153,15 @@ export const SCRIPTED_MESSAGES: ScriptedMessage[] = [
   // 26:00-27:00 (final messages)
   { trigger_second: 1423, sender_name: 'Allie', sender_type: 'moderator_ai', message: 'For everyone who applied -- Corey reviews apps tonight. Check your email tomorrow. For everyone still on the fence, your preview account is active so explore the dashboard. We will be here when you are ready.' },
   { trigger_second: 1439, sender_name: 'Allie', sender_type: 'moderator_ai', message: 'Last reminder -- usforeclosurerecovery.com has all the details about the program. Spanish translation is available on the site. Text or call (888) 545-8007 if you have questions after the webcast.' },
-  { trigger_second: 1455, sender_name: 'Sandra R.', message: 'Thank you Allie and Corey! This was amazing' },
-  { trigger_second: 1467, sender_name: 'Monique F.', message: '27 minutes went by SO fast. Incredible info' },
-  { trigger_second: 1483, sender_name: 'Allie', sender_type: 'moderator_ai', message: 'Thank you everyone for spending time with us today! If you have not applied yet, the partnership link is still active. Questions? Reply here or text (888) 545-8007. Talk soon!' },
+  { trigger_second: 1438, sender_name: 'Sandra R.', message: 'Thank you Allie and Corey! This was amazing' },
+  { trigger_second: 1445, sender_name: 'Monique F.', message: '27 minutes went by SO fast. Incredible info' },
+  { trigger_second: 1451, sender_name: 'Allie', sender_type: 'moderator_ai', message: 'Thank you everyone for spending time with us today! If you have not applied yet, the partnership link is still active. Questions? Reply here or text (888) 545-8007. Talk soon!' },
 ]
 
 // The webcast reel is exactly this long. The session window == the reel so the
 // loop is seamless (one cycle = one full reel, no black tail, no partial replay).
 // Keep in sync with the actual /opt/webcast-stream HLS reel duration.
-export const SESSION_DURATION = 1488 // seconds (24:48) — matches the new edited HLS reel
+export const SESSION_DURATION = 1454 // seconds (24:14) — matches the 2026-07-21 webcast reel (video is 1454.5s; window sits just under it so the loop never seeks past the end = no black frame)
 
 // Continuous, globally-synchronized rolling loop: every viewer at the same
 // wall-clock second computes the same offset, and it cycles exactly with the reel.

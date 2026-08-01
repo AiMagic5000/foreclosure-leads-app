@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { clerkClient } from '@clerk/nextjs/server'
+import { supabaseAdmin } from '@/lib/supabase'
 import { z } from 'zod'
 import crypto from 'crypto'
 import zlib from 'zlib'
@@ -140,6 +141,22 @@ export async function POST(req: NextRequest) {
     }
     const { firstName, lastName, email, phone } = lead
 
+    // JOURNAL-FIRST (loss-proofing): record the lead in lead_intake with a direct
+    // DB write BEFORE anything that can fail (Clerk, internal register fetch).
+    // The R740xd reconciler re-enrolls any journaled lead that never completed,
+    // so a lead that reaches this route can no longer be silently lost.
+    let intakeId: number | null = null
+    try {
+      const { data: intakeRow } = await supabaseAdmin
+        .from('lead_intake')
+        .insert({ full_name: [firstName, lastName].filter(Boolean).join(' '), email, phone: phone || null })
+        .select('id')
+        .single()
+      intakeId = intakeRow?.id ?? null
+    } catch (e) {
+      console.error('leadgen: intake journal write failed (continuing):', e)
+    }
+
     const client = await clerkClient()
 
     // Create the account or find the existing one. When the lead gave a phone
@@ -151,7 +168,11 @@ export async function POST(req: NextRequest) {
     try {
       const user = await client.users.createUser({
         emailAddress: [email],
-        password: phoneDigits.length >= 10 ? phoneDigits : crypto.randomBytes(18).toString('base64url'),
+        // Password = the LAST 10 digits of the phone. Meta lead phones usually
+        // arrive with a country code (+1 -> 11 digits); storing all of them made
+        // the password 11 digits while the lead logs in with their 10-digit
+        // number -> mismatch. slice(-10) makes login work with the number they know.
+        password: phoneDigits.length >= 10 ? phoneDigits.slice(-10) : crypto.randomBytes(18).toString('base64url'),
         skipPasswordChecks: phoneDigits.length >= 10,
         firstName,
         lastName: lastName || undefined,
@@ -181,25 +202,35 @@ export async function POST(req: NextRequest) {
     // The x-leadgen-secret header bypasses register's per-IP rate limit (all
     // internal calls share Vercel's egress IP — real leads were getting 429'd).
     let registerError = ''
-    try {
-      const regRes = await fetch(`${SITE}/api/webcast/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-leadgen-secret': secret },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          phone,
-          smsConsent: Boolean(phone),
-          utmSource: 'fb_leadgen',
-          utmMedium: 'lead_ad',
-        }),
-      })
-      if (!regRes.ok) {
-        registerError = `register ${regRes.status}: ${(await regRes.text()).slice(0, 200)}`
+    // Up to 3 attempts — the single unretried fetch here silently lost 10 leads
+    // overnight 2026-07-07/08 when the internal hop flaked.
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      registerError = ''
+      try {
+        const regRes = await fetch(`${SITE}/api/webcast/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-leadgen-secret': secret },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            phone,
+            smsConsent: Boolean(phone),
+            utmSource: 'fb_leadgen',
+            utmMedium: 'lead_ad',
+          }),
+        })
+        if (!regRes.ok) {
+          registerError = `register ${regRes.status}: ${(await regRes.text()).slice(0, 200)}`
+        }
+      } catch (e) {
+        registerError = e instanceof Error ? e.message : String(e)
       }
-    } catch (e) {
-      registerError = e instanceof Error ? e.message : String(e)
+      if (!registerError) break
+      await new Promise((r) => setTimeout(r, 1500 * attempt))
+    }
+    if (!registerError && intakeId) {
+      await supabaseAdmin.from('lead_intake').update({ enrolled: true }).eq('id', intakeId)
     }
     // Never lose a lead silently: if enrollment failed, alert the admin inboxes
     // directly so the lead can be backfilled.

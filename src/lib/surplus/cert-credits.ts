@@ -1,11 +1,32 @@
-// Certified-letter weekly credit policy.
-// Each agent gets FREE_LIMIT certified letters per week that the company prints + mails
-// for free. Beyond that they either wait for the weekly reset (Monday 12:00 noon Pacific)
-// or buy extra at PRICE_PER_LETTER each (invoiced via the Certified Credits modal).
+// Certified-letter credit policy.
+// Each account gets FREE_WEEKLY_LIMIT (5) certified letters per week that the company
+// prints + mails for free — but ONLY for the first FREE_WEEKS (4 = "one month") after the
+// account is created, capped at FREE_TOTAL (20) letters. After that free month is over
+// (or the 20-letter cap is reached), there are no more free credits: the agent either pays
+// PRICE_PER_LETTER (shipping & handling) to have us keep mailing, or prints and mails their
+// own letters (cover letter + agreement + POA) from their own printer.
 
-export const FREE_LIMIT = 5
-export const PRICE_PER_LETTER_CENTS = 1000 // $10.00
+export const FREE_WEEKLY_LIMIT = 5           // free letters per week during the free month
+export const FREE_WEEKS = 4                  // the "one free month"
+export const FREE_TOTAL = FREE_WEEKLY_LIMIT * FREE_WEEKS // 20 total free
+export const PRICE_PER_LETTER_CENTS = 1250   // $12.50 shipping & handling per letter
+// Back-compat alias (older imports referenced FREE_LIMIT as the weekly cap).
+export const FREE_LIMIT = FREE_WEEKLY_LIMIT
 const TZ = "America/Los_Angeles"
+
+// End of the free month for an account created at createdAtISO (null-safe).
+export function freeMonthEnd(createdAtISO: string | null | undefined): Date | null {
+  if (!createdAtISO) return null
+  const t = new Date(createdAtISO).getTime()
+  if (Number.isNaN(t)) return null
+  return new Date(t + FREE_WEEKS * 7 * 24 * 60 * 60 * 1000)
+}
+
+// Is the account still inside its free month?
+export function inFreeMonth(createdAtISO: string | null | undefined, now: Date = new Date()): boolean {
+  const end = freeMonthEnd(createdAtISO)
+  return !!end && now.getTime() < end.getTime()
+}
 
 // Most recent Monday 12:00 noon Pacific, as a real UTC instant.
 export function certWeekStart(now: Date = new Date()): Date {

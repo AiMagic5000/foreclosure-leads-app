@@ -29,8 +29,16 @@ export async function GET() {
   }> = []
 
   try {
-    const response = await client.users.getUserList({ limit: 500, orderBy: '-created_at' })
-    clerkUsers = response.data as typeof clerkUsers
+    // Page through ALL Clerk users — a single limit-500 call silently dropped
+    // older accounts, so their last_sign_in showed "--" in the admin table.
+    let offset = 0
+    for (;;) {
+      const response = await client.users.getUserList({ limit: 500, offset, orderBy: '-created_at' })
+      const batch = response.data as typeof clerkUsers
+      clerkUsers = clerkUsers.concat(batch)
+      if (batch.length < 500 || clerkUsers.length >= 10000) break
+      offset += 500
+    }
   } catch (err) {
     console.error('Failed to fetch Clerk users:', err)
   }

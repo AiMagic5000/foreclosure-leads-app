@@ -26,6 +26,25 @@ export async function GET(req: NextRequest) {
   const rows = (data || []) as Row[]
   const views = rows.filter((r) => r.kind === "view")
 
+  // Logged-in time (heartbeat-tracked, per day). Two sums per user: the selected
+  // range and all-time — so a signed agreement can be quantified against the
+  // hours the agent actually put in.
+  const sinceDay = since.slice(0, 10)
+  const [timeRangeRes, timeTotalRes] = await Promise.all([
+    supabaseAdmin.from("user_time_daily").select("email, seconds").gte("day", sinceDay).limit(50000),
+    supabaseAdmin.from("user_time_daily").select("email, seconds").limit(50000),
+  ])
+  const timeRange = new Map<string, number>()
+  for (const r of (timeRangeRes.data || []) as { email: string; seconds: number }[]) {
+    const k = (r.email || "").toLowerCase()
+    if (k) timeRange.set(k, (timeRange.get(k) || 0) + (r.seconds || 0))
+  }
+  const timeTotal = new Map<string, number>()
+  for (const r of (timeTotalRes.data || []) as { email: string; seconds: number }[]) {
+    const k = (r.email || "").toLowerCase()
+    if (k) timeTotal.set(k, (timeTotal.get(k) || 0) + (r.seconds || 0))
+  }
+
   // Most-visited paths
   const pathCounts = new Map<string, number>()
   for (const r of views) pathCounts.set(r.path, (pathCounts.get(r.path) || 0) + 1)
@@ -81,7 +100,7 @@ export async function GET(req: NextRequest) {
     // Recent activity includes page views AND guide downloads (kind marks which).
     const recent = urows.filter((r) => r.kind === "view" || r.kind === "download").slice(0, 25).map((r) => ({ path: r.path, at: r.created_at, kind: r.kind }))
     const prof = profByEmail.get(email) || { tier: "basic", name: "", phone: "" }
-    return { email, lastSeen, logins, views: uViews.length, downloads, paths: userPaths, recent, tier: prof.tier, name: prof.name, phone: prof.phone }
+    return { email, lastSeen, logins, views: uViews.length, downloads, paths: userPaths, recent, tier: prof.tier, name: prof.name, phone: prof.phone, timeSeconds: timeRange.get(email.toLowerCase()) || 0, timeTotalSeconds: timeTotal.get(email.toLowerCase()) || 0 }
   }).sort((a, b) => (b.lastSeen || "").localeCompare(a.lastSeen || ""))
 
   // --- Refund-void risk flag ---------------------------------------------

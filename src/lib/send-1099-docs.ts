@@ -7,7 +7,7 @@ import { BRAND_HEADER, BRAND_FOOTER } from "@/lib/email-brand"
 // agreement is blank so each agent writes their own name (avoids name mix-ups). Sent via
 // Resend (supports attachments + bypasses the Hostinger/MailChannels relay).
 
-const RESEND_KEY = process.env.RESEND_API_KEY || "re_QeLJDFJN_KphHdkEntvu14LFSGESQrqVj"
+const RESEND_KEY = process.env.RESEND_API_KEY || "re_T54sWRAZ_PPYJ3yXJHuJBpiA2uikL6nCn"
 const W9_PATH = path.join(process.cwd(), "documents", "IRS-Form-W9.pdf")
 const ICA_PATH = path.join(process.cwd(), "documents", "Independent-Contractor-Agreement.pdf")
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"

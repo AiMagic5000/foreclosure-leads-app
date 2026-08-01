@@ -8,6 +8,7 @@ export interface SocialLinkSetting {
   enabled: boolean
   link: string
   consent: boolean
+  og_image?: string
 }
 
 export async function getSocialSetting(email?: string | null): Promise<SocialLinkSetting> {
@@ -21,7 +22,7 @@ export async function getSocialSetting(email?: string | null): Promise<SocialLin
     .limit(1)
     .maybeSingle()
   const d = (data?.details || {}) as Partial<SocialLinkSetting>
-  return { enabled: !!d.enabled, link: d.link || "", consent: !!d.consent }
+  return { enabled: !!d.enabled, link: d.link || "", consent: !!d.consent, og_image: (d as Record<string, string>).og_image || "" }
 }
 
 // Returns the consented, enabled link or null. Used by the send routes.

@@ -103,10 +103,31 @@ async function queueEmailDrip(leadId: string, sessionTime: Date) {
     scheduled_at: new Date(sessionTime.getTime() + d.hoursAfter * 3600000).toISOString(),
     status: 'pending',
   }))
-  await supabaseAdmin.from('webcast_email_drip_queue').insert(rows)
+  // Upsert (ignore dupes) so a lead re-pushed by Make retries / the reconciler / a CSV
+  // re-import can NEVER create duplicate step rows (which caused double/triple emails).
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const { error } = await supabaseAdmin
+      .from('webcast_email_drip_queue')
+      .upsert(rows, { onConflict: 'lead_id,step_number', ignoreDuplicates: true })
+    if (!error) return
+    console.error(`[register] email drip upsert failed (attempt ${attempt + 1}) for lead ${leadId}:`, error.message)
+    if (attempt < 2) await new Promise((r) => setTimeout(r, 400 * (attempt + 1)))
+  }
+}
+
+// Normalize any phone shape to +1XXXXXXXXXX; returns null for non-US/unfixable
+// (bare 10-digit, "1"-prefixed 11-digit, dashes/parens all seen in real imports —
+// unnormalized numbers reach TextBee and never confirm delivery).
+function normalizeUsPhone(raw: string): string | null {
+  const d = (raw || '').replace(/\D/g, '')
+  if (d.length === 10) return '+1' + d
+  if (d.length === 11 && d.startsWith('1')) return '+' + d
+  return null
 }
 
 async function queueSmsDrip(leadId: string, phone: string, sessionTime: Date) {
+  const normalized = normalizeUsPhone(phone)
+  if (!normalized) return // non-US or junk — gateway can't deliver, don't enqueue
   const delays = [
     { step: 1, minutesBefore: 5, isPreWebcast: true },
     { step: 2, hoursAfter: 1 },
@@ -121,13 +142,23 @@ async function queueSmsDrip(leadId: string, phone: string, sessionTime: Date) {
     return {
       lead_id: leadId,
       step_number: d.step,
-      phone,
+      phone: normalized,
       message: SMS_TEMPLATES[d.step] || '',
       scheduled_at: scheduledAt.toISOString(),
       status: 'pending',
     }
   })
-  await supabaseAdmin.from('webcast_sms_queue').insert(rows)
+  // Upsert (ignore dupes) so repeated enrollment can NEVER create duplicate step rows.
+  // Retried and error-checked: under DB load these were dying on statement timeouts
+  // (Postgres 57014) and the failure was swallowed, silently costing the lead its drip.
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const { error } = await supabaseAdmin
+      .from('webcast_sms_queue')
+      .upsert(rows, { onConflict: 'lead_id,step_number', ignoreDuplicates: true })
+    if (!error) return
+    console.error(`[register] sms drip upsert failed (attempt ${attempt + 1}) for lead ${leadId}:`, error.message)
+    if (attempt < 2) await new Promise((r) => setTimeout(r, 400 * (attempt + 1)))
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -235,12 +266,17 @@ export async function POST(request: NextRequest) {
     // Idempotency guard: retried/duplicate registrations (poller timeouts,
     // backfills, double form fills) must NOT re-queue drips or re-text the
     // lead. Existing drip rows for this lead = already enrolled.
-    const { data: existingDrip } = await supabaseAdmin
-      .from('webcast_email_drip_queue')
-      .select('id')
-      .eq('lead_id', lead.id)
-      .limit(1)
-    const alreadyEnrolled = Boolean(existingDrip && existingDrip.length > 0)
+    // Checked PER QUEUE, not once for both. A partial enrolment — email rows written
+    // but the SMS upsert killed by a statement timeout under DB load — used to latch
+    // "already enrolled" forever off the email queue alone, so the lead could never
+    // get its SMS drip on any retry. Each queue now heals independently.
+    const [{ data: existingDrip }, { data: existingSms }] = await Promise.all([
+      supabaseAdmin.from('webcast_email_drip_queue').select('id').eq('lead_id', lead.id).limit(1),
+      supabaseAdmin.from('webcast_sms_queue').select('id').eq('lead_id', lead.id).limit(1),
+    ])
+    const emailQueued = Boolean(existingDrip && existingDrip.length > 0)
+    const smsQueued = Boolean(existingSms && existingSms.length > 0)
+    const alreadyEnrolled = emailQueued
 
     // Await DB operations (fast) -- must complete before response
     if (!alreadyEnrolled) {
@@ -273,6 +309,11 @@ export async function POST(request: NextRequest) {
         dbTasks.push(queueSmsDrip(lead.id, phone, sessionTime))
       }
       await Promise.allSettled(dbTasks)
+    } else if (phone && smsConsent && !smsQueued) {
+      // Email drip is already in place but the SMS queue is empty — a partial
+      // enrolment from an earlier attempt. Fill in just the missing half.
+      console.warn('[register] healing missing SMS drip for lead', lead.id)
+      await queueSmsDrip(lead.id, phone, sessionTime)
     }
 
     // Welcome email is owned by the Clerk user.created webhook (single source — no duplicate welcomes).

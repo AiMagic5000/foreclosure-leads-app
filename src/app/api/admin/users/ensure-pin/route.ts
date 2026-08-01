@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
+import { canonicalEmail } from "@/lib/email-alias"
 import crypto from "crypto"
 import bcrypt from "bcryptjs"
 
@@ -18,7 +19,10 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json()
-  const email = String(body?.email || "").trim().toLowerCase()
+  // Fold a merged 2nd login onto the primary account email so "View as" lands on
+  // the account's real pin (with the leads) instead of trying to insert a new pin
+  // — which would collide with the deactivated duplicate's unique email.
+  const email = canonicalEmail(body?.email)
   const accountType = String(body?.accountType || "basic")
   if (!email) return NextResponse.json({ error: "email is required" }, { status: 400 })
 

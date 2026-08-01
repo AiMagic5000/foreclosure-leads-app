@@ -1,10 +1,17 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse, after } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { sendEmail, sendAdminNotification } from "@/lib/email"
 import { send1099Docs } from "@/lib/send-1099-docs"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
 import { notifyAccountActivity } from "@/lib/email"
+
+// Onboarding insert is instant; the admin email + welcome email + 1099 PDF
+// generation that follow are slow. With no maxDuration Vercel 504'd mid-send,
+// so the form showed "it won't take" even though the row already saved (Joe
+// Gonzalez, 2026-07-11). We now respond as soon as the row is saved and run
+// the notifications in after() (post-response), with headroom to finish.
+export const maxDuration = 60
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "coreypearsonemail@gmail.com"
 
@@ -189,23 +196,35 @@ export async function POST(request: NextRequest) {
     "Terms Agreed": termsAgreed,
   }
 
-  const adminResult = await sendAdminNotification(
-    `New Business Onboarding: ${businessName} - ${ownerFirstName} ${ownerLastName}`,
-    buildAdminNotificationHtml(notificationData)
-  )
-  console.log(`[ONBOARDING] Admin notification: ${adminResult.success ? "SENT" : "FAILED"} - ${adminResult.error || adminResult.messageId}`)
+  // Row is saved -> confirm to the agent NOW. Emails + 1099 PDF run post-response
+  // so a slow send can never make the form look like it failed.
+  after(async () => {
+    try {
+      const notifySubject = `New Agent Onboarding Form: ${businessName} - ${ownerFirstName} ${ownerLastName}`
+      const notifyHtml = buildAdminNotificationHtml(notificationData)
+      const adminResult = await sendAdminNotification(notifySubject, notifyHtml)
+      console.log(`[ONBOARDING] Admin notification: ${adminResult.success ? "SENT" : "FAILED"} - ${adminResult.error || adminResult.messageId}`)
 
-  const welcomeResult = await sendEmail(
-    currentEmail,
-    `Business onboarding received -- ${businessName}`,
-    buildWelcomeEmailHtml(ownerFirstName, businessName)
-  )
-  console.log(`[ONBOARDING] Welcome email to ${currentEmail}: ${welcomeResult.success ? "SENT" : "FAILED"} - ${welcomeResult.error || welcomeResult.messageId}`)
+      // Owner Gmail copy now comes from sendAdminNotification itself (ADMIN_EMAILS
+      // includes coreypearsonemail@gmail.com since 2026-07-26) — no extra send here
+      // or the owner would get doubles.
 
-  // Auto-send the 1099 contractor paperwork (W-9 + blank agreement) to the agent, personalized.
-  const docsResult = await send1099Docs(currentEmail, ownerFirstName)
-  console.log(`[ONBOARDING] 1099 docs to ${currentEmail}: ${docsResult.success ? "SENT" : "FAILED"} - ${docsResult.error || docsResult.messageId}`)
+      const welcomeResult = await sendEmail(
+        currentEmail,
+        `Business onboarding received -- ${businessName}`,
+        buildWelcomeEmailHtml(ownerFirstName, businessName)
+      )
+      console.log(`[ONBOARDING] Welcome email to ${currentEmail}: ${welcomeResult.success ? "SENT" : "FAILED"} - ${welcomeResult.error || welcomeResult.messageId}`)
 
-  await notifyAccountActivity(currentEmail || "unknown", "Submitted White Label onboarding", businessName || undefined)
+      // Auto-send the 1099 contractor paperwork (W-9 + blank agreement), personalized.
+      const docsResult = await send1099Docs(currentEmail, ownerFirstName)
+      console.log(`[ONBOARDING] 1099 docs to ${currentEmail}: ${docsResult.success ? "SENT" : "FAILED"} - ${docsResult.error || docsResult.messageId}`)
+
+      await notifyAccountActivity(currentEmail || "unknown", "Submitted White Label onboarding", businessName || undefined)
+    } catch (e) {
+      console.error("[ONBOARDING] post-response notify error:", e)
+    }
+  })
+
   return NextResponse.json({ success: true, id: data.id })
 }

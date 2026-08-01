@@ -1,75 +1,72 @@
-import nodemailer from '@/lib/nodemailer-relay-shim'
 
-const SMTP_HOST = "smtp.hostinger.com"
-const SMTP_PORT = 465
 
 // Primary sender - used for external recipients (clients, ProtonMail, etc.)
 const SMTP_USER = "support@usforeclosureleads.com"
-const SMTP_PASS = (process.env.SMTP_SUPPORT_PASSWORD || "Thepassword#123").trim()
 
 // Relay sender - used ONLY for delivering to support@usforeclosureleads.com
 // Hostinger silently drops self-addressed emails (same FROM and TO),
 // so we use a different account to relay notifications to the support inbox.
-const RELAY_USER = "info@tradelinejet.com"
-const RELAY_PASS = (process.env.SMTP_RELAY_PASSWORD || "Thepassword#123").trim()
 
-// Single admin recipient. xscore10@protonmail.com is reached via the Hostinger
-// forward on this mailbox (support@usforeclosureleads.com -> xscore10), so
-// listing xscore10 here too would double every notice. Route through support@
-// only; the forward delivers exactly one copy to xscore10.
+// Single admin recipient: xscore10 DIRECT. The old route (support@ + Hostinger
+// forward -> xscore10) silently broke 2026-07-07: the relay now delivers via
+// Resend and Hostinger junk-files those notices — and Hostinger does NOT
+// forward Junk-classified mail, so xscore10 stopped receiving them. Sending
+// straight to xscore10 removes the forward from the chain entirely. Do NOT add
+// support@ back here — if its forward fires again you get doubles.
+// xscore10's copy of NEW-LEAD notices is delivered by the R740xd lead-notifier
+// cron (/opt/lead-notifier, plain SMTP — the path that verifiably lands). This
+// app-side list keeps support@ as the archive copy only. Do NOT add xscore10
+// here — that would double it against the notifier.
 const ADMIN_EMAILS = [
   "support@usforeclosureleads.com",
+  // Owner copy DIRECT to Gmail: the support@ copy is self-addressed (from support@ ->
+  // to support@) and MXRoute junk-files it, so upload/consent/activity notices were
+  // invisible for weeks (agents' avatar photos sat unnoticed). Resend -> external
+  // Gmail lands clean. Do NOT add xscore10 here (lead notices would double against
+  // the R740xd lead-notifier).
+  "coreypearsonemail@gmail.com",
 ]
 
-const transporter = nodemailer.createTransport({
-  host: SMTP_HOST,
-  port: SMTP_PORT,
-  secure: true,
-  auth: {
-    user: SMTP_USER,
-    pass: SMTP_PASS,
-  },
-  tls: { rejectUnauthorized: false },
-  connectionTimeout: 15000,
-  greetingTimeout: 15000,
-  socketTimeout: 30000,
-})
-
-const relayTransporter = nodemailer.createTransport({
-  host: SMTP_HOST,
-  port: SMTP_PORT,
-  secure: true,
-  auth: {
-    user: RELAY_USER,
-    pass: RELAY_PASS,
-  },
-  tls: { rejectUnauthorized: false },
-  connectionTimeout: 15000,
-  greetingTimeout: 15000,
-  socketTimeout: 30000,
-})
+// SURE PATH (2026-07-22): sends now go through Resend, not the nodemailer relay shim.
+// The shim was silently throwing (same failure that stranded the webcast drip), and
+// because every caller here swallows errors, account-activity notifications died
+// invisibly for weeks (Bobby/Samantha setup events never reached the owner).
+// api.resend.com sits behind Cloudflare — the browser User-Agent is required (err 1010).
+const RESEND_API_KEY = process.env.RESEND_API_KEY || "re_T54sWRAZ_PPYJ3yXJHuJBpiA2uikL6nCn"
+const RESEND_UA =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 
 export async function sendEmail(
   to: string,
   subject: string,
-  html: string
+  html: string,
+  attachments?: { filename: string; content: Buffer }[]
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   try {
-    // If sending to the same address as our primary sender, use relay to avoid self-send block
-    const isSelfSend = to.toLowerCase() === SMTP_USER.toLowerCase()
-    const mailer = isSelfSend ? relayTransporter : transporter
-    const from = isSelfSend
-      ? `"US Foreclosure Leads" <${RELAY_USER}>`
-      : `"US Foreclosure Leads" <${SMTP_USER}>`
-
-    const info = await mailer.sendMail({
-      from,
-      to,
-      subject,
-      html,
-      text: subject,
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+        "User-Agent": RESEND_UA,
+      },
+      body: JSON.stringify({
+        from: `US Foreclosure Leads <${SMTP_USER}>`,
+        to: [to],
+        subject,
+        html,
+        ...(attachments && attachments.length
+          ? { attachments: attachments.map((a) => ({ filename: a.filename, content: a.content.toString("base64") })) }
+          : {}),
+      }),
     })
-    return { success: true, messageId: info.messageId }
+    if (!res.ok) {
+      const errText = (await res.text()).slice(0, 200)
+      console.error(`[EMAIL] Resend ${res.status} to ${to}: ${errText}`)
+      return { success: false, error: `Resend ${res.status}: ${errText}` }
+    }
+    const j = (await res.json()) as { id?: string }
+    return { success: true, messageId: j.id }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
     console.error(`[EMAIL] Failed to send to ${to}:`, message)
@@ -79,10 +76,11 @@ export async function sendEmail(
 
 export async function sendAdminNotification(
   subject: string,
-  html: string
+  html: string,
+  attachments?: { filename: string; content: Buffer }[]
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   const results = await Promise.allSettled(
-    ADMIN_EMAILS.map((email) => sendEmail(email, subject, html))
+    ADMIN_EMAILS.map((email) => sendEmail(email, subject, html, attachments))
   )
 
   const firstSuccess = results.find(
@@ -106,12 +104,18 @@ export async function sendAdminNotification(
 export async function notifyAccountActivity(
   email: string,
   action: string,
-  detail?: string
+  detail?: string,
+  attachment?: { filename: string; content: Buffer },
+  actorEmail?: string
 ): Promise<void> {
   try {
     const when = new Date().toLocaleString("en-US", {
       year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", timeZoneName: "short",
     })
+    // "Performed by" identifies WHO actually did it — shown only when it differs from the
+    // account owner (i.e. an admin/team member did it on the agent's behalf via view-as).
+    const performedBy =
+      actorEmail && actorEmail.toLowerCase() !== (email || "").toLowerCase() ? actorEmail : null
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto;">
         <div style="background: linear-gradient(135deg, #1E3A5F, #2563eb); padding: 18px 24px; border-radius: 10px 10px 0 0; text-align: center;">
@@ -120,14 +124,19 @@ export async function notifyAccountActivity(
         </div>
         <div style="background: #ffffff; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 10px 10px; padding: 20px 24px;">
           <table style="width: 100%; border-collapse: collapse;">
-            <tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px; width: 90px;">User</td><td style="padding: 6px 0; color: #111827; font-size: 14px; font-weight: 600;">${email}</td></tr>
+            <tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px; width: 100px;">Account</td><td style="padding: 6px 0; color: #111827; font-size: 14px; font-weight: 600;">${email}</td></tr>
+            <tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px;">Performed by</td><td style="padding: 6px 0; color: #111827; font-size: 14px; font-weight: 600;">${performedBy ? `${performedBy} <span style="color:#b45309;font-weight:600">(team, on their behalf)</span>` : `${email} <span style="color:#059669;font-weight:600">(the agent)</span>`}</td></tr>
             <tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px;">Action</td><td style="padding: 6px 0; color: #111827; font-size: 14px;">${action}</td></tr>
             ${detail ? `<tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px;">Detail</td><td style="padding: 6px 0; color: #111827; font-size: 14px;">${detail}</td></tr>` : ""}
             <tr><td style="padding: 6px 0; color: #6b7280; font-size: 13px;">Time</td><td style="padding: 6px 0; color: #111827; font-size: 14px;">${when}</td></tr>
           </table>
         </div>
       </div>`
-    await sendAdminNotification(`Account activity: ${action} — ${email}`, html)
+    await sendAdminNotification(
+      `Account activity: ${action} — ${email}${performedBy ? ` (by ${performedBy})` : ""}`,
+      html,
+      attachment ? [attachment] : undefined
+    )
   } catch {
     // never throw from a notification
   }

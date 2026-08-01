@@ -8,8 +8,10 @@ async function verifyAdmin(): Promise<boolean> {
   const { userId } = await auth()
   if (!userId) return false
   const user = await currentUser()
-  const email = user?.emailAddresses?.[0]?.emailAddress?.toLowerCase()
-  return email === ADMIN_EMAIL.toLowerCase()
+  // Match ANY of the account's emails (Clerk does not guarantee [0] is the primary),
+  // so a valid admin is never wrongly 403'd out of managing training resources.
+  const emails = (user?.emailAddresses || []).map((e) => e.emailAddress?.toLowerCase()).filter(Boolean)
+  return emails.includes(ADMIN_EMAIL.toLowerCase())
 }
 
 export async function GET(request: NextRequest) {
