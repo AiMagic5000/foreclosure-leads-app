@@ -3,13 +3,15 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
 import { notifyAccountActivity } from "@/lib/email"
+import { resolveCallerEmails } from "@/lib/caller-identity"
 
 export const dynamic = "force-dynamic"
 
 // Resolve the target email — the caller's own, or (admin only) an impersonated user's.
 async function targetEmail(req: NextRequest, asPinIdFromBody?: string | null): Promise<{ email: string | null; error?: string }> {
   const user = await currentUser()
-  const email = user?.emailAddresses?.[0]?.emailAddress
+  const callerEmails = resolveCallerEmails(user)
+  const email = callerEmails[0]
   if (!email) return { email: null, error: "Unauthorized" }
   const asPinId = asPinIdFromBody ?? req.nextUrl.searchParams.get("asPinId")
   if (asPinId) {
@@ -69,7 +71,7 @@ export async function POST(req: NextRequest) {
 
   // Enroll the number in the SMS drip + fire the welcome text immediately (idempotent by phone).
   await enrollDrip(phone, email as string)
-  await notifyAccountActivity(email as string, "Added phone number", phone)
+  await notifyAccountActivity(email as string, "Added phone number", phone, undefined, (await currentUser())?.emailAddresses?.[0]?.emailAddress)
 
   return NextResponse.json({ success: true, hasPhone: true, phone })
 }

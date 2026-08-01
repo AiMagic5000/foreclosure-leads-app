@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { hasSeparateMailingAddress } from "@/lib/surplus/address"
-import { FREE_LIMIT, certWeekStart, certWeekReset, freeUsedForPin } from "@/lib/surplus/cert-credits"
+import { FREE_WEEKLY_LIMIT, FREE_TOTAL, PRICE_PER_LETTER_CENTS, inFreeMonth, certWeekStart, certWeekReset, freeUsedForPin } from "@/lib/surplus/cert-credits"
 import * as fs from "fs"
 import * as path from "path"
 import nodemailer from "@/lib/nodemailer-relay-shim"
 import PizZip from "pizzip"
 import Docxtemplater from "docxtemplater"
+import { resolveCallerEmails } from "@/lib/caller-identity"
 
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
 const CLAIM_EMAIL = "claim@usforeclosurerecovery.com"
@@ -53,6 +54,51 @@ const AGENT_PROFILES: Record<string, AgentInfo> = {
     textNumber: "725-287-7791",
     email: "joshua@usforeclosurerecovery.com",
   },
+}
+
+// Resolve the ACTUAL asset recovery agent for a lead from user_pins (mirrors the
+// printer's generate_certified_package.resolve_agent). Precedence: lead.agent_email
+// (active pin) -> active assignment (operator_lead_assignments) -> static legacy map
+// -> company default. Keeps the notification email + emailed DOCX consistent with the
+// printed packet instead of falling back to a hardcoded name.
+async function resolveAgent(leadId: string, agentEmail: string): Promise<AgentInfo> {
+  const cols = "display_name,extension,phone_display,email,sender_email"
+  let pin: Record<string, unknown> | null = null
+
+  if (agentEmail) {
+    const { data } = await supabaseAdmin
+      .from("user_pins")
+      .select(cols)
+      .or(`sender_email.eq.${agentEmail},email.eq.${agentEmail}`)
+      .eq("is_active", true)
+      .limit(1)
+    pin = data?.[0] || null
+  }
+  if (!pin) {
+    const { data: asg } = await supabaseAdmin
+      .from("operator_lead_assignments")
+      .select("operator_pin_id")
+      .eq("lead_id", leadId)
+      .eq("status", "active")
+      .limit(1)
+    const pinId = asg?.[0]?.operator_pin_id
+    if (pinId) {
+      const { data } = await supabaseAdmin.from("user_pins").select(cols).eq("id", pinId).limit(1)
+      pin = data?.[0] || null
+    }
+  }
+  if (!pin) return AGENT_PROFILES[agentEmail] || DEFAULT_AGENT
+
+  let phoneDisplay = String(pin.phone_display || DEFAULT_AGENT.phoneDisplay)
+  const ext = String(pin.extension || "").trim()
+  if (ext && !/ext/i.test(phoneDisplay)) phoneDisplay = `${phoneDisplay} ext. ${ext}`
+  return {
+    name: String(pin.display_name || DEFAULT_AGENT.name),
+    title: "Asset Recovery Agent",
+    phoneDisplay,
+    textNumber: DEFAULT_AGENT.textNumber,
+    email: String(pin.sender_email || pin.email || CLAIM_EMAIL),
+  }
 }
 
 const AGREEMENT_EN_PATH = path.join(process.cwd(), "documents", "Contingency-Fee-Agreement-V1.docx")
@@ -461,7 +507,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const userEmail = user.emailAddresses?.[0]?.emailAddress?.toLowerCase()
+    // ALL addresses: Clerk's [0] is not necessarily the one that owns the pin.
+    const callerEmails = resolveCallerEmails(user)
+    const userEmail = callerEmails[0]
     if (!userEmail) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
@@ -483,6 +531,8 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
     const { leadId, notes } = body
+    // mode "send" (default) = we print + mail; "download" = agent prints their own copies.
+    const mode = String(body?.mode || "send")
 
     if (!leadId) {
       return NextResponse.json({ error: "leadId is required" }, { status: 400 })
@@ -505,93 +555,84 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Certified mail requires a separate mailing address (not the foreclosed property)." }, { status: 400 })
     }
 
-    // Determine agent profile
+    // Determine agent profile — resolved from user_pins (assigned agent), not a static map.
     const agentEmail = String(lead.agent_email || "")
-    const agent = AGENT_PROFILES[agentEmail] || DEFAULT_AGENT
+    const agent = await resolveAgent(leadId, agentEmail)
 
-    // Weekly certified-letter cap: FREE_LIMIT free per agent per week (resets Monday
-    // noon PT). Admins/allowlist bypass. Beyond the free limit the agent must buy extra
-    // credits (Certified Credits modal -> invoice) or wait for the weekly reset.
+    // PRINT-YOUR-OWN: return the three personalized documents (cover letter + contingency
+    // agreement + limited power of attorney) for the agent to print and mail themselves.
+    // No credit consumed, nothing mailed on our end — this is the free alternative to the
+    // $12.50/letter shipping fee once the free month is used up.
+    if (mode === "download") {
+      const letterBuffer = generateCertifiedLetter(lead, agent)
+      const agreementBuffer = generateAgreement(lead)
+      const poaBuffer = generatePOA(lead, agent)
+      const nm = String(lead.owner_name || "lead").replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "")
+      return NextResponse.json({
+        mode: "download",
+        files: [
+          { name: `Cover-Letter-${nm}.docx`, b64: letterBuffer.toString("base64") },
+          { name: `Contingency-Agreement-${nm}.docx`, b64: agreementBuffer.toString("base64") },
+          { name: `Limited-Power-of-Attorney-${nm}.docx`, b64: poaBuffer.toString("base64") },
+        ],
+      })
+    }
+
+    // Free-credit gate (admins/allowlist bypass). Free = FREE_WEEKLY_LIMIT (5) per week,
+    // but ONLY during the account's first month (FREE_WEEKS), capped at FREE_TOTAL (20).
+    // After the free month (or the 20 cap) the agent must pay $12.50/letter or print their own.
     if (!ALLOWED_EMAILS.has(userEmail)) {
       // Count by the requesting agent's pin via operator_lead_assignments (canonical
       // ownership; the lead.agent_email column is unreliable / often null).
       const { data: pinRow } = await supabaseAdmin
-        .from("user_pins").select("id").ilike("email", userEmail).limit(1)
+        .from("user_pins").select("id, created_at").ilike("email", userEmail).limit(1)
       const reqPinId = pinRow?.[0]?.id ? String(pinRow[0].id) : ""
-      const used = await freeUsedForPin(supabaseAdmin, reqPinId, certWeekStart().toISOString())
-      if (used >= FREE_LIMIT) {
+      const createdAt = (pinRow?.[0]?.created_at as string | undefined) || null
+      const weekUsed = await freeUsedForPin(supabaseAdmin, reqPinId, certWeekStart().toISOString())
+      const totalUsed = createdAt ? await freeUsedForPin(supabaseAdmin, reqPinId, createdAt) : FREE_TOTAL
+      const price = (PRICE_PER_LETTER_CENTS / 100).toFixed(2)
+
+      // Free month over, or the 20-letter free cap is reached -> pay per letter or print own.
+      if (!inFreeMonth(createdAt) || totalUsed >= FREE_TOTAL) {
         return NextResponse.json(
           {
-            error: `You've used your ${FREE_LIMIT} free certified letters this week. Purchase more credits or wait until Monday at noon for your free credits to reset.`,
+            error: `Your free month of certified letters has ended. Continue at $${price} per letter for shipping & handling, or print and mail your own letters for free.`,
             code: "NO_CREDITS",
-            freeLimit: FREE_LIMIT,
+            reason: "free_month_over",
+            pricePerLetter: PRICE_PER_LETTER_CENTS / 100,
+            canPrintOwn: true,
+          },
+          { status: 402 }
+        )
+      }
+
+      // Still inside the free month but this week's 5 are used up.
+      if (weekUsed >= FREE_WEEKLY_LIMIT) {
+        return NextResponse.json(
+          {
+            error: `You've used your ${FREE_WEEKLY_LIMIT} free certified letters this week. They reset Monday at noon Pacific — or print and mail your own now.`,
+            code: "NO_CREDITS",
+            reason: "weekly_cap",
+            freeLimit: FREE_WEEKLY_LIMIT,
             resetAt: certWeekReset().toISOString(),
+            canPrintOwn: true,
           },
           { status: 402 }
         )
       }
     }
 
-    // Generate all three documents
-    const letterBuffer = generateCertifiedLetter(lead, agent)
-    const agreementBuffer = generateAgreement(lead)
-    const poaBuffer = generatePOA(lead, agent)
-
     const ownerName = String(lead.owner_name || "Unknown")
-    const sanitizedName = ownerName.replace(/[^a-zA-Z0-9\s]/g, "").replace(/\s+/g, "-")
     const agentNotes = String(notes || "").trim()
 
-    // Create SMTP transporter
-    const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: SMTP_PORT,
-      secure: true,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-    })
-
-    const subject = `Certified Mail Request - ${ownerName} - ${String(lead.state_abbr || "")} - ${formatCurrency(Number(lead.overage_amount) || 0)}`
-    const htmlBody = buildNotificationHtml(lead, agent, agentNotes)
-
-    // Send to claim@ with all attachments
-    await transporter.sendMail({
-      from: `"Foreclosure Recovery Inc." <${SMTP_USER}>`,
-      to: CLAIM_EMAIL,
-      subject,
-      html: htmlBody,
-      attachments: [
-        { filename: `Letter-${sanitizedName}.docx`, content: letterBuffer },
-        { filename: `Agreement-${sanitizedName}.docx`, content: agreementBuffer },
-        { filename: `POA-${sanitizedName}.docx`, content: poaBuffer },
-      ],
-    })
-
-    // Send notification to agent email (no attachments, just notification)
-    if (agent.email !== CLAIM_EMAIL) {
-      await transporter.sendMail({
-        from: `"Foreclosure Recovery Inc." <${SMTP_USER}>`,
-        to: agent.email,
-        subject: `Certified Mail Request Submitted - ${ownerName}`,
-        html: htmlBody,
-      })
-    }
-
-    // Also notify requesting agent's personal email
-    const agentPersonalEmails: Record<string, string> = {
-      "rebecca@usforeclosurerecovery.com": "beckymaguire74@gmail.com",
-      "joshua@usforeclosurerecovery.com": "jaywaylst@gmail.com",
-    }
-    const personalEmail = agentPersonalEmails[agentEmail]
-    if (personalEmail && personalEmail !== userEmail) {
-      await transporter.sendMail({
-        from: `"Foreclosure Recovery Inc." <${SMTP_USER}>`,
-        to: personalEmail,
-        subject: `Certified Mail Request Submitted - ${ownerName}`,
-        html: htmlBody,
-      })
-    }
-
-    // Update lead status
-    await supabaseAdmin
+    // CRITICAL — persist the request FLAG FIRST, before any email.
+    // The certified-mail printer is DB-poll driven (it polls
+    // certified_letter_requested=true and regenerates the packet locally); it does NOT
+    // depend on the notification below. Writing the flag up front guarantees a submitted
+    // request always prints, even when the mail relay is down.
+    // (Prior bug: the email step ran first with no try/catch — a relay failure threw,
+    //  the outer catch returned 500, and this flag update never ran, so nothing printed.)
+    const { error: flagError } = await supabaseAdmin
       .from("foreclosure_leads")
       .update({
         certified_letter_requested: true,
@@ -599,10 +640,79 @@ export async function POST(request: NextRequest) {
         certified_letter_notes: agentNotes || null,
       })
       .eq("id", leadId)
+    if (flagError) {
+      return NextResponse.json(
+        { error: "Could not record the certified mail request. Please try again." },
+        { status: 500 }
+      )
+    }
+
+    // Best-effort notification to claim@ + the agent. Wrapped so a mail-relay failure
+    // can never fail the request — the request is already recorded and will print.
+    try {
+      const sanitizedName = ownerName.replace(/[^a-zA-Z0-9\s]/g, "").replace(/\s+/g, "-")
+      const letterBuffer = generateCertifiedLetter(lead, agent)
+      const agreementBuffer = generateAgreement(lead)
+      const poaBuffer = generatePOA(lead, agent)
+
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: SMTP_PORT,
+        secure: true,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+      })
+
+      const subject = `Certified Mail Request - ${ownerName} - ${String(lead.state_abbr || "")} - ${formatCurrency(Number(lead.overage_amount) || 0)}`
+      const htmlBody = buildNotificationHtml(lead, agent, agentNotes)
+
+      // Send to claim@ with all attachments
+      await transporter.sendMail({
+        from: `"Foreclosure Recovery Inc." <${SMTP_USER}>`,
+        to: CLAIM_EMAIL,
+        subject,
+        html: htmlBody,
+        attachments: [
+          { filename: `Letter-${sanitizedName}.docx`, content: letterBuffer },
+          { filename: `Agreement-${sanitizedName}.docx`, content: agreementBuffer },
+          { filename: `POA-${sanitizedName}.docx`, content: poaBuffer },
+        ],
+      })
+
+      // Notify the agent's business email
+      if (agent.email !== CLAIM_EMAIL) {
+        await transporter.sendMail({
+          from: `"Foreclosure Recovery Inc." <${SMTP_USER}>`,
+          to: agent.email,
+          subject: `Certified Mail Request Submitted - ${ownerName}`,
+          html: htmlBody,
+        })
+      }
+
+      // Also notify the requesting agent's personal email
+      const agentPersonalEmails: Record<string, string> = {
+        "rebecca@usforeclosurerecovery.com": "beckymaguire74@gmail.com",
+        "joshua@usforeclosurerecovery.com": "jaywaylst@gmail.com",
+      }
+      const personalEmail = agentPersonalEmails[agentEmail]
+      if (personalEmail && personalEmail !== userEmail) {
+        await transporter.sendMail({
+          from: `"Foreclosure Recovery Inc." <${SMTP_USER}>`,
+          to: personalEmail,
+          subject: `Certified Mail Request Submitted - ${ownerName}`,
+          html: htmlBody,
+        })
+      }
+    } catch (mailErr) {
+      // Request is already recorded — a notification failure is non-fatal.
+      console.error(
+        "[certified-letter] notification failed (request still recorded, will print):",
+        mailErr instanceof Error ? mailErr.message : "unknown"
+      )
+    }
 
     return NextResponse.json({
       success: true,
-      message: `Certified mail request submitted for ${ownerName}. Documents sent to ${CLAIM_EMAIL}. Request will be processed within 24 hours.`,
+      message: `Certified mail request submitted for ${ownerName}. It will be printed and mailed within 24 hours.`,
     })
   } catch (err) {
     const message = err instanceof Error ? err.message : "Internal server error"

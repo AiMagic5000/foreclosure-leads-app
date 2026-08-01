@@ -1,4 +1,6 @@
 import { supabaseAdmin } from "@/lib/supabase"
+import { canonicalEmail } from "@/lib/email-alias"
+import { pickBestPin, type PinRow } from "@/lib/caller-identity"
 
 const ADMIN_EMAIL = "coreypearsonemail@gmail.com"
 
@@ -48,6 +50,7 @@ export interface OperatorConfig {
   slyCallbackNumber: string
   voiceId: string
   voicedropAudioUrl: string | null
+  voiceRefUrl: string | null
   websiteUrl: string
   logoUrl: string
   privacyPolicyUrl: string
@@ -76,6 +79,7 @@ export interface AgentProfile {
   signatureTitleEN: string
   signatureTitleES: string
   socialLink?: string
+  socialOgImage?: string
   onBehalfEN: string
   onBehalfES: string
   byPhoneEN: string
@@ -99,7 +103,10 @@ export async function resolveOperatorConfig(opts: {
   leadId?: string | null
   requesterIsAdmin?: boolean
 }): Promise<OperatorConfig> {
-  const { clerkEmail, operatorPinId, leadId, requesterIsAdmin = false } = opts
+  const { clerkEmail: rawClerkEmail, operatorPinId, leadId, requesterIsAdmin = false } = opts
+  // Fold a merged 2nd login onto the primary account email so comms resolve to
+  // the same operator pin (sender identity, voice, creds) on either login.
+  const clerkEmail = canonicalEmail(rawClerkEmail) || null
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let pinRow: Record<string, any> | null = null
   let resolvedVia = "admin_defaults"
@@ -130,12 +137,15 @@ export async function resolveOperatorConfig(opts: {
 
   // Step 2: Clerk email lookup in user_pins
   if (!pinRow && clerkEmail) {
-    const { data, error } = await supabaseAdmin
+    // limit+pick, never .single(): duplicate user_pins rows for one email used to
+    // null this out and drop the agent to admin defaults (then a hard 422).
+    const { data: rows, error } = await supabaseAdmin
       .from("user_pins")
       .select("*")
       .ilike("email", clerkEmail)
       .eq("is_active", true)
-      .single()
+      .limit(5)
+    const data = pickBestPin((rows ?? []) as PinRow[])
     if (error) {
       console.error("[resolveOperatorConfig] Step 2 failed (email lookup):", { clerkEmail, error: error.message })
     }
@@ -200,7 +210,10 @@ export async function resolveOperatorConfig(opts: {
   return {
     pinId: String(r.id || ""),
     email: String(r.email || clerkEmail || ""),
-    displayName: String(r.display_name || ADMIN_DEFAULTS.display_name),
+    // outreach_name lets an agent front their outreach (voicedrop / email / SMS)
+    // under a different name than their dashboard display_name — e.g. an executive
+    // assistant calling on the agent's behalf. Falls back to display_name.
+    displayName: String(r.outreach_name || r.display_name || ADMIN_DEFAULTS.display_name),
     title: String(r.title || ADMIN_DEFAULTS.title),
     extension: r.extension ? String(r.extension) : ADMIN_DEFAULTS.extension,
     phoneDisplay: String(r.phone_display || ADMIN_DEFAULTS.phone_display),
@@ -223,6 +236,7 @@ export async function resolveOperatorConfig(opts: {
     slyCallbackNumber: String(r.sly_callback_number || ADMIN_DEFAULTS.sly_callback_number).trim(),
     voiceId: String(r.voice_id || ADMIN_DEFAULTS.voice_id),
     voicedropAudioUrl: r.voicedrop_audio_url ? String(r.voicedrop_audio_url) : null,
+    voiceRefUrl: r.voice_ref_url ? String(r.voice_ref_url) : null,
     websiteUrl: String(r.website_url || ADMIN_DEFAULTS.website_url),
     logoUrl: String(r.logo_url || ADMIN_DEFAULTS.logo_url),
     privacyPolicyUrl: `https://${String(r.website_url || ADMIN_DEFAULTS.website_url)}/privacy-policy`,
@@ -233,16 +247,36 @@ export async function resolveOperatorConfig(opts: {
   }
 }
 
-export async function isCommsAuthorized(clerkEmail: string): Promise<boolean> {
-  if (clerkEmail.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return true
-  const { data } = await supabaseAdmin
-    .from("user_pins")
-    .select("package_type, is_active")
-    .ilike("email", clerkEmail)
-    .eq("is_active", true)
-    .single()
-  if (!data) return false
-  return ["partnership", "junior_owner_operator", "owner_operator", "admin"].includes(data.package_type)
+/**
+ * Is this caller allowed to send claimant comms?
+ *
+ * Accepts a single email OR every address on the caller's Clerk account. Passing
+ * all of them is strongly preferred: Clerk's emailAddresses[0] is not necessarily
+ * the address that owns the pin.
+ *
+ * Previously this used `.single()`, which nulls `data` when an email has more
+ * than one user_pins row — and duplicates exist. That denied every outreach
+ * channel to real, paid agents with no actionable error. Now: limit-then-pick.
+ */
+export async function isCommsAuthorized(clerkEmail: string | string[]): Promise<boolean> {
+  const emails = (Array.isArray(clerkEmail) ? clerkEmail : [clerkEmail])
+    .map((e) => canonicalEmail(e))
+    .filter(Boolean)
+  if (emails.some((e) => e === ADMIN_EMAIL.toLowerCase())) return true
+
+  for (const email of emails) {
+    const { data } = await supabaseAdmin
+      .from("user_pins")
+      .select("package_type, is_active, slybroadcast_email, textbee_api_key")
+      .ilike("email", email)
+      .eq("is_active", true)
+      .limit(5)
+    const best = pickBestPin((data ?? []) as unknown as PinRow[])
+    if (best && ["partnership", "junior_owner_operator", "owner_operator", "admin"].includes(String(best.package_type))) {
+      return true
+    }
+  }
+  return false
 }
 
 export function configToAgentProfile(config: OperatorConfig): AgentProfile {

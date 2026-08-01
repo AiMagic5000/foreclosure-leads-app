@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { currentUser } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { PRIMARY_ADMIN_EMAIL, resolveImpersonationTarget } from '@/lib/admin-guard'
+import { canonicalEmail } from '@/lib/email-alias'
 
 export const dynamic = 'force-dynamic'
 
@@ -83,9 +84,37 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ isAdmin: false, isPrimaryAdmin: false }, { status: 401 })
   }
 
-  const email = user.emailAddresses[0]?.emailAddress?.toLowerCase()
-  if (!email) {
+  // Fold known account-merge aliases so a user's 2nd login resolves to their
+  // canonical pin/users row (leads, tier, notes persist across both logins).
+  //
+  // Clerk does NOT guarantee emailAddresses[0] is the primary. When an agent has a
+  // second address on their account (e.g. their company mailbox added so they can
+  // sign in with either), [0] can be the address that has NO user_pins row. That
+  // returns pinId=null, which leaves isVerified false in pin-context — so every
+  // phone number and email on their leads stays hidden behind a PIN prompt they
+  // cannot find. Resolve against ALL their addresses and use the one that owns a pin.
+  const candidateEmails = Array.from(
+    new Set(
+      [
+        user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress,
+        ...user.emailAddresses.map((e) => e.emailAddress),
+      ]
+        .filter(Boolean)
+        .map((e) => canonicalEmail(String(e)))
+        .filter(Boolean)
+    )
+  )
+  if (candidateEmails.length === 0) {
     return NextResponse.json({ isAdmin: false, isPrimaryAdmin: false })
+  }
+  // Prefer an address that actually has an active pin; fall back to the primary.
+  let email = candidateEmails[0]
+  if (candidateEmails.length > 1) {
+    for (const cand of candidateEmails) {
+      const { data: probe } = await supabaseAdmin
+        .from('user_pins').select('id').ilike('email', cand).eq('is_active', true).limit(1)
+      if (probe && probe.length > 0) { email = cand; break }
+    }
   }
 
   const realIsPrimaryAdmin = email === PRIMARY_ADMIN_EMAIL

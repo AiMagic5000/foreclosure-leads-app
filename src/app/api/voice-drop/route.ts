@@ -1,3 +1,4 @@
+export const maxDuration = 300
 import { NextRequest, NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 import { supabaseAdmin } from "@/lib/supabase";
@@ -5,6 +6,7 @@ import { resolveOperatorConfig, isCommsAuthorized } from "@/lib/operator-config"
 import type { OperatorConfig } from "@/lib/operator-config";
 import { isRequestAdmin } from "@/lib/admin-guard";
 import { leadTypeCopy } from "@/lib/surplus/lead-type-copy";
+import { resolveCallerEmails } from "@/lib/caller-identity"
 
 const MINIMAX_API_KEY = process.env.MINIMAX_API_KEY || "";
 const MINIMAX_BASE_URL = "https://api.minimax.io/v1";
@@ -193,7 +195,24 @@ async function generateAudioElevenLabs(script: string, voiceId: string = ELEVENL
 // cloned voice was requested but ElevenLabs is unavailable (e.g. out of credits).
 const MINIMAX_FALLBACK_VOICE = "moss_audio_c0bbc114-1f24-11f1-83c7-3e0d56c699a9";
 
-async function generateAudio(script: string, voiceId: string): Promise<Buffer> {
+const CHATTERBOX_URL = process.env.CHATTERBOX_URL || "https://chatterbox.alwaysencrypted.com";
+const CBX_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
+
+// Self-hosted Chatterbox (Resemble AI) on the PC GPU — clones the agent's real voice
+// from a reference clip. Primary path for any agent that has a voice_ref_url.
+async function generateAudioChatterbox(script: string, refUrl: string): Promise<Buffer> {
+  const res = await fetch(`${CHATTERBOX_URL}/tts`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "User-Agent": CBX_UA },
+    body: JSON.stringify({ text: script, ref_url: refUrl, format: "mp3" }),
+  });
+  if (!res.ok) throw new Error(`Chatterbox ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  if (buf.length < 2000) throw new Error("Chatterbox returned too-small audio");
+  return buf;
+}
+
+async function generateAudio(script: string, voiceId: string, voiceRefUrl?: string | null): Promise<Buffer> {
   // Voice id taxonomy (user_pins.voice_id):
   //   - 20-char alphanumeric (e.g. "ioRCUMBLQYICIH6h2vLV") => ElevenLabs cloned voice.
   //   - "moss_audio_..."                                   => MiniMax SYSTEM voice.
@@ -202,6 +221,14 @@ async function generateAudio(script: string, voiceId: string): Promise<Buffer> {
   // custom clone keeps THE AGENT'S voice even when ElevenLabs is down. ElevenLabs is
   // only attempted for a true ElevenLabs id, and falls back to the generic MiniMax
   // voice (never to a different agent's voice).
+  // Chatterbox (self-hosted clone) is PRIMARY when the agent has a reference clip.
+  if (voiceRefUrl) {
+    try {
+      return await generateAudioChatterbox(script, voiceRefUrl);
+    } catch (err) {
+      console.error(`Chatterbox TTS failed, falling back: ${err instanceof Error ? err.message : String(err)}`);
+    }
+  }
   const isElevenLabsVoice = /^[A-Za-z0-9]{20}$/.test(voiceId);
   if (isElevenLabsVoice && ELEVENLABS_API_KEY) {
     try {
@@ -319,9 +346,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userEmail = user.emailAddresses?.[0]?.emailAddress?.toLowerCase();
+    // ALL addresses: Clerk's [0] is not necessarily the one that owns the pin.
+    const callerEmails = resolveCallerEmails(user);
+    const userEmail = callerEmails[0];
 
-    if (!userEmail || !(await isCommsAuthorized(userEmail))) {
+    if (!userEmail || !(await isCommsAuthorized(callerEmails))) {
       return NextResponse.json(
         { error: "Access required - Partnership plan or higher" },
         { status: 403 }
@@ -370,7 +399,7 @@ export async function POST(request: NextRequest) {
       if (config.voicedropAudioUrl) {
         audioUrl = config.voicedropAudioUrl;
       } else {
-        const audioBuffer = await generateAudio(script, config.voiceId);
+        const audioBuffer = await generateAudio(script, config.voiceId, config.voiceRefUrl);
         const audioFilename = `vd-test-${Date.now()}.mp3`;
         audioUrl = await uploadAudioToStorage(audioBuffer, audioFilename);
       }
@@ -433,53 +462,49 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate personalized script (still recorded even if static audio is used)
+    // Generate personalized script (recorded on the queue job + lead)
     const script = generateScript(lead, config);
-
-    // Per-operator static audio override -- skip TTS + upload
-    let audioUrl: string;
-    if (config.voicedropAudioUrl) {
-      audioUrl = config.voicedropAudioUrl;
-    } else {
-      const audioBuffer = await generateAudio(script, config.voiceId);
-      const audioFilename = `vd-${leadId}-${Date.now()}.mp3`;
-      audioUrl = await uploadAudioToStorage(audioBuffer, audioFilename);
-    }
-
-    // Send via SlyBroadcast
     const cleanPhone = cleanPhoneNumber(lead.primary_phone);
-    const result = await sendSlyBroadcast(cleanPhone, audioUrl, config);
 
-    if (!result.success) {
-      await supabaseAdmin
-        .from("foreclosure_leads")
-        .update({
-          voicemail_script: script,
-          voicemail_error: result.error || "SlyBroadcast delivery failed",
-        })
-        .eq("id", leadId);
-
+    // ENQUEUE — a single worker (R740xd) drains public.voice_drop_queue ONE job
+    // at a time, so N agents sending at once never collide on the single-GPU
+    // Chatterbox TTS. Generation + SlyBroadcast delivery happen in the worker;
+    // the agent's dashboard shows "Sent" immediately (optimistic).
+    const { error: qErr } = await supabaseAdmin.from("voice_drop_queue").insert({
+      lead_id: leadId,
+      operator_pin_id: config.pinId,
+      phone: cleanPhone,
+      caller_id: config.slyCallbackNumber,
+      script,
+      voice_ref_url: config.voiceRefUrl,
+      voicedrop_audio_url: config.voicedropAudioUrl || null,
+      sly_uid: config.slybroadcastEmail || null,
+      sly_pass: config.slybroadcastPassword || null,
+      status: "queued",
+    });
+    if (qErr) {
       return NextResponse.json(
-        { error: result.error || "Voice drop delivery failed" },
+        { error: `Could not queue voice drop: ${qErr.message}` },
         { status: 500 }
       );
     }
 
-    // Update lead record with success
+    // Optimistic: mark the lead sent now so the agent's dashboard reflects it.
     await supabaseAdmin
       .from("foreclosure_leads")
       .update({
         voicemail_sent: true,
         voicemail_sent_at: new Date().toISOString(),
-        voicemail_delivery_id: result.campaignId || null,
         voicemail_script: script,
         voicemail_error: null,
       })
       .eq("id", leadId);
+    // First outreach moves a workable lead to "contacted" (never clobbers dead/converted/etc.)
+    await supabaseAdmin.from("foreclosure_leads").update({ status: "contacted" }).eq("id", leadId).in("status", ["new", "skip_traced"]);
 
     return NextResponse.json({
       success: true,
-      campaignId: result.campaignId,
+      queued: true,
       phone: cleanPhone,
     });
   } catch (err) {

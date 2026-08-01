@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveOperatorConfig, isCommsAuthorized, configToAgentProfile } from "@/lib/operator-config"
-import { getAgentSocialLink } from "@/lib/social-link"
+import { getAgentSocialLink, getSocialSetting } from "@/lib/social-link"
 import { isRequestAdmin } from "@/lib/admin-guard"
 import { BRAND_HEADER, BRAND_FOOTER_COMPANY } from "@/lib/email-brand"
 import type { AgentProfile } from "@/lib/operator-config"
@@ -12,11 +12,17 @@ import { runGate } from "@/lib/surplus/validation-gate"
 import { logGateResult } from "@/lib/surplus/gate-logger"
 import type { MergeContext } from "@/lib/surplus/types"
 import { leadTypeCopy } from "@/lib/surplus/lead-type-copy"
+import { createSigningLink, signButtonHtmlEN, signButtonHtmlES, type DocusealMergeValues } from "@/lib/docuseal"
 import * as tls from "tls"
 import * as fs from "fs"
 import * as path from "path"
 import PizZip from "pizzip"
 import Docxtemplater from "docxtemplater"
+
+// Give the function room so a slow MXRoute IMAP append resolves as JSON
+// (the 15s IMAP timeout used to exceed Vercel's default limit -> HTML 504 ->
+// "Unexpected token '<'" in the UI). maxDuration > IMAP timeout guarantees JSON.
+export const maxDuration = 60
 
 const DEFAULT_IMAP_HOST = "imap.hostinger.com"
 const IMAP_PORT = 993
@@ -167,7 +173,9 @@ function renderOutreachEmailEN(ctx: MergeContext, agent: AgentProfile, senderEma
     SEND_DATE: formatDate(),
     // Per-agent consented social link (empty for agents who didn't enable it).
     SOCIAL_LINE: agent.socialLink
-      ? `<p style="margin: 8px 0 0; font-size: 13px; font-family: 'Inter Tight',sans-serif;">That&rsquo;s really me &mdash; connect with me: <a style="color: #09274c; text-decoration: underline;" href="${agent.socialLink}" target="_blank" rel="noopener">${agent.socialLink}</a></p>`
+      ? (agent.socialOgImage
+        ? `<div style="margin: 10px 0 0; max-width: 420px;"><p style="margin: 0 0 6px; font-size: 13px; font-family: 'Inter Tight',sans-serif;">That&rsquo;s really me &mdash; see my face and hear my message:</p><a href="${agent.socialLink}" target="_blank" rel="noopener" style="display:block;"><img src="${agent.socialOgImage}" alt="${agent.name} — Watch my message" width="420" style="display:block;width:100%;max-width:420px;height:auto;border-radius:10px;border:1px solid #e2e8f0;" /></a><p style="margin: 6px 0 0; font-size: 13px; font-family: 'Inter Tight',sans-serif;"><a style="color: #09274c; font-weight: bold; text-decoration: underline;" href="${agent.socialLink}" target="_blank" rel="noopener">&#9654; Watch my message</a></p></div>`
+        : `<p style="margin: 8px 0 0; font-size: 13px; font-family: 'Inter Tight',sans-serif;">That&rsquo;s really me &mdash; connect with me: <a style="color: #09274c; text-decoration: underline;" href="${agent.socialLink}" target="_blank" rel="noopener">${agent.socialLink}</a></p>`)
       : "",
   }
 
@@ -517,11 +525,30 @@ ${buildFooter(senderEmail, a)}`
   return { subject, html }
 }
 
+
+// MXRoute IMAP is unreachable from Vercel/datacenter IPs (same ban as the SMTP
+// relay). For usforeclosurerecovery.com mailboxes, QUEUE the finished MIME to
+// pending_email_drafts; the R740xd drain appends it over the WARP proxy within a
+// minute. Hostinger mailboxes still append directly (reachable from Vercel).
+async function deliverDraft(mime: string, imapUser: string, imapPass: string, imapHost: string): Promise<{ success: boolean; error?: string; queued?: boolean }> {
+  if (imapHost === MXROUTE_HOST) {
+    const { error } = await supabaseAdmin.from("pending_email_drafts").insert({
+      mailbox: imapUser,
+      imap_host: imapHost,
+      drafts_folder: "Drafts",
+      mime_content: mime,
+    })
+    if (error) return { success: false, error: "Could not queue draft: " + error.message }
+    return { success: true, queued: true }
+  }
+  return imapAppendDraft(mime, imapUser, imapPass, imapHost)
+}
+
 function imapAppendDraft(emailContent: string, imapUser: string, imapPass: string, imapHost: string = DEFAULT_IMAP_HOST): Promise<{ success: boolean; error?: string }> {
   return new Promise((resolve) => {
     const timeout = setTimeout(() => {
       resolve({ success: false, error: "IMAP connection timed out" })
-    }, 15000)
+    }, 12000)  // < maxDuration so we always return JSON, never a Vercel HTML 504
 
     let buffer = ""
     let state = "connecting"
@@ -669,6 +696,31 @@ function buildMimeEmail(opts: {
   return parts.join("\r\n")
 }
 
+
+// Build DocuSeal prefill values so the online-signed doc matches the DOCX attachment 1:1.
+
+// Insert the sign button just before the closing </body>/</html> if present, else append.
+function injectSignButton(html: string, buttonHtml: string): string {
+  const m = html.match(/<\/body>/i)
+  if (m) return html.replace(/<\/body>/i, buttonHtml + "</body>")
+  return html + buttonHtml
+}
+
+function docusealValuesFromCtx(ctx: MergeContext): DocusealMergeValues {
+  const venue = ctx.rule?.venue_text || (ctx.propertyState ? `the courts of ${ctx.rule?.state_name || ctx.propertyState}` : "the courts of the property's state")
+  return {
+    CLAIMANT_NAME: ctx.claimantName,
+    CLAIMANT_ADDRESS: ctx.claimantAddress,
+    CLAIMANT_PHONE: ctx.claimantPhone || "(on file)",
+    PROPERTY_ADDRESS: ctx.propertyAddress,
+    PROPERTY_STATE: ctx.propertyState,
+    SALE_DATE: ctx.saleDate ? formatDateValue(ctx.saleDate) : "Not specified",
+    ESTIMATED_SURPLUS: ctx.estimatedSurplusFormatted,
+    FEE_PCT: `up to ${ctx.feePct}%`,
+    VENUE_COUNTY: venue,
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const user = await currentUser()
@@ -676,9 +728,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const userEmail = user.emailAddresses?.[0]?.emailAddress?.toLowerCase()
+    // Clerk returns emailAddresses in arbitrary order — [0] is NOT necessarily the
+    // primary. An agent who adds a second address (e.g. their company mailbox, so
+    // they can sign in with either) could land with the non-pin address at [0] and
+    // get a 403 on every preview despite signing in fine. Prefer the primary, then
+    // fall back to whichever of their verified addresses is actually authorized.
+    const primaryEmail = user.emailAddresses?.find((e) => e.id === user.primaryEmailAddressId)?.emailAddress
+    const candidates = [primaryEmail, ...(user.emailAddresses ?? []).map((e) => e.emailAddress)]
+      .filter(Boolean)
+      .map((e) => String(e).toLowerCase())
 
-    if (!userEmail || !(await isCommsAuthorized(userEmail))) {
+    let userEmail: string | undefined
+    for (const candidate of Array.from(new Set(candidates))) {
+      if (await isCommsAuthorized(candidate)) { userEmail = candidate; break }
+    }
+
+    if (!userEmail) {
       return NextResponse.json({ error: "Access required" }, { status: 403 })
     }
 
@@ -699,7 +764,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Lead not found" }, { status: 404 })
     }
 
-    const recipientEmail = lead.primary_email
+    // Recipient: default primary, but the agent may pick ANY email that's on the
+    // lead (primary or the email_addresses list — incl. agent-added ones).
+    const requestedTo = String(body?.toEmail || "").trim().toLowerCase()
+    const leadEmails: string[] = [
+      ...(lead.primary_email ? [String(lead.primary_email).toLowerCase()] : []),
+      ...((lead.email_addresses || []) as string[]).map((e) => String(e).toLowerCase()),
+    ]
+    if (requestedTo && !leadEmails.includes(requestedTo)) {
+      return NextResponse.json({ error: "That email is not on this lead." }, { status: 400 })
+    }
+    const recipientEmail = requestedTo || lead.primary_email
     if (!recipientEmail) {
       return NextResponse.json({ error: "Lead has no email address" }, { status: 400 })
     }
@@ -742,7 +817,9 @@ export async function POST(request: NextRequest) {
     const IMAP_HOST_RESOLVED = resolveImapHost(senderEmail)
     const agentProfile = configToAgentProfile(config)
     // Per-agent consented social link (auto-appended to outgoing email, like SMS).
-    agentProfile.socialLink = (await getAgentSocialLink(config.email || userEmail)) || ""
+    const socialSetting = await getSocialSetting(config.email || userEmail)
+    agentProfile.socialLink = socialSetting.enabled && socialSetting.consent && socialSetting.link ? socialSetting.link : ""
+    agentProfile.socialOgImage = socialSetting.og_image || ""
 
     const leadData: Record<string, string> = {
       owner_name: String(lead.owner_name || ""),
@@ -794,6 +871,56 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // ---- Agreement control (agent gets full control before anything is sent) ----
+    // The contingency agreement is generated server-side and attached at send time.
+    // These actions let the agent DOWNLOAD it to review first, REPLACE it with their
+    // own edited copy, or RESET back to the generated version.
+    const AGREEMENT_BUCKET = "agent-docs"
+    const agreementOverridePath = (id: string) => `agreement-overrides/${id}.docx`
+
+    if (action === "agreement") {
+      let buf: Buffer
+      const { data: override } = await supabaseAdmin.storage
+        .from(AGREEMENT_BUCKET).download(agreementOverridePath(String(leadId)))
+      if (override) {
+        buf = Buffer.from(await override.arrayBuffer())
+      } else {
+        try {
+          buf = generateFilledAgreementEN(mergeCtx)
+        } catch (e) {
+          return NextResponse.json({ error: `Agreement generation failed: ${e instanceof Error ? e.message : "Unknown"}` }, { status: 500 })
+        }
+      }
+      return NextResponse.json({
+        success: true,
+        filename: `Contingency-Fee-Agreement-${firstName}-${lastName}.docx`.replace(/\s+/g, "-"),
+        base64: buf.toString("base64"),
+        isCustom: !!override,
+      })
+    }
+
+    if (action === "agreement_upload") {
+      const b64 = String(body?.fileBase64 || "")
+      if (!b64) return NextResponse.json({ error: "fileBase64 is required" }, { status: 400 })
+      const buf = Buffer.from(b64, "base64")
+      if (buf.length > 10 * 1024 * 1024) {
+        return NextResponse.json({ error: "That file is larger than 10MB." }, { status: 400 })
+      }
+      const { error: upErr } = await supabaseAdmin.storage
+        .from(AGREEMENT_BUCKET)
+        .upload(agreementOverridePath(String(leadId)), buf, {
+          contentType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          upsert: true,
+        })
+      if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 })
+      return NextResponse.json({ success: true, isCustom: true })
+    }
+
+    if (action === "agreement_reset") {
+      await supabaseAdmin.storage.from(AGREEMENT_BUCKET).remove([agreementOverridePath(String(leadId))])
+      return NextResponse.json({ success: true, isCustom: false })
+    }
+
     // Preview English (NEW merge-safe outreach template)
     if (action === "preview") {
       const { subject, html } = renderOutreachEmailEN(mergeCtx, agentProfile, senderEmail)
@@ -814,14 +941,31 @@ export async function POST(request: NextRequest) {
     if (action === "create_draft" || action === "create_draft_en") {
       const { subject, html } = renderOutreachEmailEN(mergeCtx, agentProfile, senderEmail)
       let agreementBuf: Buffer
-      try {
-        agreementBuf = generateFilledAgreementEN(mergeCtx)
-      } catch (e) {
-        return NextResponse.json({ error: `Agreement generation failed: ${e instanceof Error ? e.message : "Unknown"}` }, { status: 500 })
+      // If the agent uploaded their own edited agreement for this lead, send THAT
+      // instead of the generated one. They keep full control of what goes out.
+      const { data: overrideDoc } = await supabaseAdmin.storage
+        .from(AGREEMENT_BUCKET).download(agreementOverridePath(String(leadId)))
+      if (overrideDoc) {
+        agreementBuf = Buffer.from(await overrideDoc.arrayBuffer())
+      } else {
+        try {
+          agreementBuf = generateFilledAgreementEN(mergeCtx)
+        } catch (e) {
+          return NextResponse.json({ error: `Agreement generation failed: ${e instanceof Error ? e.message : "Unknown"}` }, { status: 500 })
+        }
       }
       const gate = await runShadowGate({ subject, html }, "")
       if (gate?.blocked) {
         return NextResponse.json({ error: "Blocked by compliance gate", gate: { fails: gate.fails } }, { status: 422 })
+      }
+
+      // DocuSeal: prefilled online-signing link injected into the email. Graceful:
+      // null -> button omitted, email still sends.
+      let htmlEN = html
+      const signEN = await createSigningLink(String(leadId), recipientEmail, mergeCtx.claimantName, docusealValuesFromCtx(mergeCtx))
+      if (signEN) {
+        htmlEN = injectSignButton(html, signButtonHtmlEN(signEN.url))
+        await supabaseAdmin.from("foreclosure_leads").update({ agreement_docuseal_id: signEN.slug }).eq("id", leadId)
       }
 
       const attachmentFilename = `Contingency-Fee-Agreement-${firstName}-${lastName}.docx`.replace(/\s+/g, "-")
@@ -829,19 +973,20 @@ export async function POST(request: NextRequest) {
         from: senderEmail,
         to: recipientEmail,
         subject,
-        html,
+        html: htmlEN,
         leadId,
         senderName: config.displayName,
         attachments: [{ filename: attachmentFilename, base64Lines: toBase64Lines(agreementBuf) }],
       })
 
-      const imapResult = await imapAppendDraft(emailRaw, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
+      const imapResult = await deliverDraft(emailRaw, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
       if (!imapResult.success) {
         return NextResponse.json({ error: `Draft creation failed: ${imapResult.error}` }, { status: 500 })
       }
 
       await supabaseAdmin.from("foreclosure_leads").update({ email_draft_created: true, email_draft_created_at: new Date().toISOString() }).eq("id", leadId)
-      return NextResponse.json({ success: true, message: `English draft created in ${senderEmail}`, to: recipientEmail, subject })
+      await supabaseAdmin.from("foreclosure_leads").update({ status: "contacted" }).eq("id", leadId).in("status", ["new", "skip_traced"])
+      return NextResponse.json({ success: true, message: `English draft created — it will appear in your Drafts within a minute`, to: recipientEmail, subject })
     }
 
     // Create Spanish draft
@@ -854,24 +999,32 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: `Spanish agreement generation failed: ${e instanceof Error ? e.message : "Unknown"}` }, { status: 500 })
       }
 
+      let htmlES = html
+      const signES = await createSigningLink(String(leadId), recipientEmail, mergeCtx.claimantName, docusealValuesFromCtx(mergeCtx))
+      if (signES) {
+        htmlES = injectSignButton(html, signButtonHtmlES(signES.url))
+        await supabaseAdmin.from("foreclosure_leads").update({ agreement_docuseal_id: signES.slug }).eq("id", leadId)
+      }
+
       const attachmentFilename = `Acuerdo-Honorarios-Contingentes-${firstName}-${lastName}.docx`.replace(/\s+/g, "-")
       const emailRaw = buildMimeEmail({
         from: senderEmail,
         to: recipientEmail,
         subject,
-        html,
+        html: htmlES,
         leadId,
         senderName: config.displayName,
         attachments: [{ filename: attachmentFilename, base64Lines: toBase64Lines(agreementBuf) }],
       })
 
-      const imapResult = await imapAppendDraft(emailRaw, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
+      const imapResult = await deliverDraft(emailRaw, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
       if (!imapResult.success) {
         return NextResponse.json({ error: `Spanish draft creation failed: ${imapResult.error}` }, { status: 500 })
       }
 
       await supabaseAdmin.from("foreclosure_leads").update({ email_draft_created: true, email_draft_created_at: new Date().toISOString() }).eq("id", leadId)
-      return NextResponse.json({ success: true, message: `Spanish draft created in ${senderEmail}`, to: recipientEmail, subject })
+      await supabaseAdmin.from("foreclosure_leads").update({ status: "contacted" }).eq("id", leadId).in("status", ["new", "skip_traced"])
+      return NextResponse.json({ success: true, message: `Spanish draft created — it will appear in your Drafts within a minute`, to: recipientEmail, subject })
     }
 
     // Create both English + Spanish drafts (two separate emails in Drafts)
@@ -890,30 +1043,39 @@ export async function POST(request: NextRequest) {
       const enFilename = `Contingency-Fee-Agreement-${firstName}-${lastName}.docx`.replace(/\s+/g, "-")
       const esFilename = `Acuerdo-Honorarios-Contingentes-${firstName}-${lastName}.docx`.replace(/\s+/g, "-")
 
+      // One signing link, injected into both drafts (EN + ES button text).
+      const signBoth = await createSigningLink(String(leadId), recipientEmail, mergeCtx.claimantName, docusealValuesFromCtx(mergeCtx))
+      if (signBoth) {
+        await supabaseAdmin.from("foreclosure_leads").update({ agreement_docuseal_id: signBoth.slug }).eq("id", leadId)
+      }
+
       // English draft
       const enEmail = buildMimeEmail({
-        from: senderEmail, to: recipientEmail, subject: enResult.subject, html: enResult.html, leadId,
+        from: senderEmail, to: recipientEmail, subject: enResult.subject,
+        html: signBoth ? injectSignButton(enResult.html, signButtonHtmlEN(signBoth.url)) : enResult.html, leadId,
         senderName: config.displayName,
         attachments: [{ filename: enFilename, base64Lines: toBase64Lines(enAgreement) }],
       })
-      const enImap = await imapAppendDraft(enEmail, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
+      const enImap = await deliverDraft(enEmail, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
       if (!enImap.success) {
         return NextResponse.json({ error: `English draft failed: ${enImap.error}` }, { status: 500 })
       }
 
       // Spanish draft
       const esEmail = buildMimeEmail({
-        from: senderEmail, to: recipientEmail, subject: esResult.subject, html: esResult.html, leadId,
+        from: senderEmail, to: recipientEmail, subject: esResult.subject,
+        html: signBoth ? injectSignButton(esResult.html, signButtonHtmlES(signBoth.url)) : esResult.html, leadId,
         senderName: config.displayName,
         attachments: [{ filename: esFilename, base64Lines: toBase64Lines(esAgreement) }],
       })
-      const esImap = await imapAppendDraft(esEmail, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
+      const esImap = await deliverDraft(esEmail, IMAP_USER, IMAP_PASS, IMAP_HOST_RESOLVED)
       if (!esImap.success) {
         return NextResponse.json({ error: `Spanish draft failed: ${esImap.error}` }, { status: 500 })
       }
 
       await supabaseAdmin.from("foreclosure_leads").update({ email_draft_created: true, email_draft_created_at: new Date().toISOString() }).eq("id", leadId)
-      return NextResponse.json({ success: true, message: `Both EN + ES drafts created in ${senderEmail}`, to: recipientEmail })
+      await supabaseAdmin.from("foreclosure_leads").update({ status: "contacted" }).eq("id", leadId).in("status", ["new", "skip_traced"])
+      return NextResponse.json({ success: true, message: `Both drafts created — they will appear in your Drafts within a minute`, to: recipientEmail })
     }
 
     return NextResponse.json({ error: "Invalid action. Use: preview, preview_es, create_draft, create_draft_es, create_draft_both" }, { status: 400 })

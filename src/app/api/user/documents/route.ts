@@ -3,6 +3,8 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
 import { notifyAccountActivity } from "@/lib/email"
+import { canonicalEmail } from "@/lib/email-alias"
+import { resolveCallerEmails, resolvePinForEmails } from "@/lib/caller-identity"
 
 export const dynamic = "force-dynamic"
 const BUCKET = "agent-docs"
@@ -21,7 +23,8 @@ async function ensureBucket() {
 
 async function ownerPinId(req: NextRequest, asPinIdFromBody?: string | null): Promise<{ pinId: string | null; error?: string }> {
   const user = await currentUser()
-  const email = user?.emailAddresses?.[0]?.emailAddress
+  const callerEmails = resolveCallerEmails(user)
+  const email = callerEmails[0]
   if (!email) return { pinId: null, error: "Unauthorized" }
   const asPinId = asPinIdFromBody ?? req.nextUrl.searchParams.get("asPinId")
   if (asPinId) {
@@ -29,7 +32,8 @@ async function ownerPinId(req: NextRequest, asPinIdFromBody?: string | null): Pr
     if (!target) return { pinId: null, error: "Not authorized" }
     return { pinId: target.pinId }
   }
-  const { data } = await supabaseAdmin.from("user_pins").select("id").ilike("email", email).eq("is_active", true).single()
+  // all addresses + limit-then-pick (see caller-identity.ts)
+  const data = await resolvePinForEmails(callerEmails, "id, email, package_type, is_active, slybroadcast_email, textbee_api_key")
   return { pinId: data?.id || null }
 }
 
@@ -95,8 +99,56 @@ export async function POST(req: NextRequest) {
     upsert: false,
   })
   if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 })
+  // Guard against silent storage-write failures: the client can return success without the
+  // object actually persisting. Confirm it's really there before reporting success / notifying,
+  // so a dropped upload becomes a visible retry instead of a lost file. (John Bailey, 2026-07-13.)
+  const fileKey = `${ts}-${safeName}`
+  const { data: check } = await supabaseAdmin.storage.from(BUCKET).list(`${pinId}/${folder}`, { search: fileKey })
+  if (!check?.some((f) => f.name === fileKey)) {
+    return NextResponse.json({ error: "Upload did not save. Please try again." }, { status: 502 })
+  }
   const actor = (await currentUser())?.emailAddresses?.[0]?.emailAddress || "unknown"
-  await notifyAccountActivity(actor, "Uploaded a document", `${folder}: ${safeName}`)
+  // Resolve whose account this doc belongs to (the pin owner) so the notification shows both
+  // the account AND who actually uploaded (agent themselves, or a team member via view-as).
+  const { data: ownerPin } = await supabaseAdmin.from("user_pins").select("email").eq("id", pinId).maybeSingle()
+  const ownerEmail = (ownerPin as { email?: string } | null)?.email || actor
+  // Attach the uploaded file to the admin notification so we can see it without going into the account.
+  await notifyAccountActivity(ownerEmail, "Uploaded a document", `${folder}: ${safeName}`, { filename: safeName, content: buf }, actor)
+
+  // Payment / tax documents (W-9, direct deposit, LLC): confirm to BOTH the agent AND the
+  // business inbox via Resend (reliable from Vercel; the SMTP admin notice above is the archive copy).
+  if (folder.startsWith("payment")) {
+    try {
+      const { data: pinRow } = await supabaseAdmin.from("user_pins").select("email").eq("id", pinId).maybeSingle()
+      const recipients = Array.from(
+        new Set([pinRow?.email, "support@usforeclosureleads.com"].filter(Boolean) as string[])
+      )
+      if (recipients.length) {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.RESEND_API_KEY || "re_T54sWRAZ_PPYJ3yXJHuJBpiA2uikL6nCn"}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Foreclosure Recovery Inc. <support@usforeclosureleads.com>",
+            to: recipients,
+            subject: `Payment document received — ${safeName}`,
+            html:
+              `<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px">` +
+              `<h2 style="color:#1E3A5F;margin:0 0 6px">Payment document received</h2>` +
+              `<p style="color:#334155;margin:0 0 4px">We&rsquo;ve received <strong>${safeName}</strong> for the agent payment file.</p>` +
+              `<p style="color:#64748b;font-size:14px;margin:0">The agent attested the information is true and accurate. ` +
+              `Our team will review it and set up payment. No further action is needed right now.</p>` +
+              `<p style="color:#94a3b8;font-size:12px;margin-top:14px">Foreclosure Recovery Inc. &middot; agent payment setup</p></div>`,
+          }),
+        })
+      }
+    } catch {
+      // non-fatal — the upload already succeeded and the admin archive notice was sent.
+    }
+  }
+
   return NextResponse.json({ success: true, path })
 }
 

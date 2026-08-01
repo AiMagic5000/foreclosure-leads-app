@@ -3,7 +3,9 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
 import { notifyAccountActivity } from "@/lib/email"
+import { canonicalEmail } from "@/lib/email-alias"
 import { autoCloneAgentVoice, sendVoiceClonedEmail } from "@/lib/agent-voice-automation"
+import { resolveCallerEmails, resolvePinForEmails } from "@/lib/caller-identity"
 
 export const dynamic = "force-dynamic"
 const BUCKET = "agent-voice"
@@ -23,7 +25,8 @@ async function ensureBucket() {
 
 async function ownerPinId(req: NextRequest, asPinIdFromBody?: string | null): Promise<{ pinId: string | null; error?: string }> {
   const user = await currentUser()
-  const email = user?.emailAddresses?.[0]?.emailAddress
+  const callerEmails = resolveCallerEmails(user)
+  const email = callerEmails[0]
   if (!email) return { pinId: null, error: "Unauthorized" }
   const asPinId = asPinIdFromBody ?? req.nextUrl.searchParams.get("asPinId")
   if (asPinId) {
@@ -31,7 +34,9 @@ async function ownerPinId(req: NextRequest, asPinIdFromBody?: string | null): Pr
     if (!target) return { pinId: null, error: "Not authorized" }
     return { pinId: target.pinId }
   }
-  const { data } = await supabaseAdmin.from("user_pins").select("id").ilike("email", email).eq("is_active", true).single()
+  // all addresses + limit-then-pick: .single() nulled out on duplicate pin rows
+  // and returned "No active operator profile found" to real, paid agents.
+  const data = await resolvePinForEmails(callerEmails, "id, email, package_type, is_active, slybroadcast_email, textbee_api_key")
   return { pinId: data?.id || null }
 }
 
@@ -84,7 +89,9 @@ export async function POST(req: NextRequest) {
   })
   if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 })
   const actor = (await currentUser())?.emailAddresses?.[0]?.emailAddress || "unknown"
-  await notifyAccountActivity(actor, "Uploaded a voice sample", label)
+  const { data: ownerPin } = await supabaseAdmin.from("user_pins").select("email").eq("id", pinId).maybeSingle()
+  const ownerEmail = (ownerPin as { email?: string } | null)?.email || actor
+  await notifyAccountActivity(ownerEmail, "Uploaded a voice sample", label, undefined, actor)
 
   // Automation: auto-clone the uploaded voice into ElevenLabs + store it on the
   // agent's pin(s), then email them a confirmation. Best-effort — a clone failure

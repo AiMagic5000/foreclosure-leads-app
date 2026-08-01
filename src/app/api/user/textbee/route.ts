@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
 import { resolveImpersonationTarget } from "@/lib/admin-guard"
 import { notifyAccountActivity } from "@/lib/email"
+import { resolveCallerEmails, resolvePinForEmails } from "@/lib/caller-identity"
 
 // Browser UA required — api.textbee.dev is behind Cloudflare (default UA => 1010/403).
 const BROWSER_UA =
@@ -11,14 +12,14 @@ const TEXTBEE_BASE = "https://api.textbee.dev/api/v1/gateway/devices"
 
 export const dynamic = "force-dynamic"
 
-async function pinForUser(email: string) {
-  const { data } = await supabaseAdmin
-    .from("user_pins")
-    .select("id, email, textbee_api_key, textbee_device_id")
-    .ilike("email", email)
-    .eq("is_active", true)
-    .single()
-  return data
+// Accepts a single address or every address on the caller's Clerk account.
+// Never .single(): duplicate user_pins rows for one email nulled this out and
+// returned "No active operator profile found for your account. Contact support."
+// to real agents — which also made it impossible to connect TextBee at all, so
+// texting could never be fixed from the agent's side.
+async function pinForUser(email: string | string[]) {
+  const emails = (Array.isArray(email) ? email : [email]).filter(Boolean)
+  return resolvePinForEmails(emails, "id, email, textbee_api_key, textbee_device_id, package_type, is_active, slybroadcast_email")
 }
 
 async function pinById(id: string) {
@@ -33,34 +34,34 @@ async function pinById(id: string) {
 // GET — current agent's (or, for an admin, the impersonated user's) TextBee status + inbound
 export async function GET(req: NextRequest) {
   const user = await currentUser()
-  const email = user?.emailAddresses?.[0]?.emailAddress
+  const callerEmails = resolveCallerEmails(user)
+  const email = callerEmails[0]
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const asPinId = req.nextUrl.searchParams.get("asPinId")
   const target = asPinId ? await resolveImpersonationTarget(asPinId) : null
   if (asPinId && !target) return NextResponse.json({ error: "Not authorized" }, { status: 403 })
-  const pin = target ? await pinById(target.pinId) : await pinForUser(email)
+  const pin = target ? await pinById(target.pinId) : await pinForUser(callerEmails)
   const apiKey = pin?.textbee_api_key || ""
   const deviceId = pin?.textbee_device_id || ""
   const connected = !!(apiKey && deviceId)
 
-  // Inbound SMS feed REMOVED 2026-06-19 (privacy): we no longer pull an agent's
-  // received texts into the dashboard — their phone carries personal messages too.
-  // Sending + connection status stay; STOP/opt-out scanning runs server-side only.
-  const messages: never[] = []
-
+  // NEVER return the agent's inbound SMS. Their device carries their personal
+  // messages, so pulling that feed onto our platform would expose private texts to
+  // anyone with dashboard or admin access. Their replies belong in their own TextBee
+  // app and nowhere else. Connection status and masked credentials only.
   return NextResponse.json({
     connected,
     deviceId: deviceId ? `…${deviceId.slice(-6)}` : "",
     apiKeyMasked: apiKey ? `${apiKey.slice(0, 4)}…${apiKey.slice(-4)}` : "",
-    messages,
   })
 }
 
 // POST — save the agent's own TextBee credentials to their pin
 export async function POST(req: NextRequest) {
   const user = await currentUser()
-  const email = user?.emailAddresses?.[0]?.emailAddress
+  const callerEmails = resolveCallerEmails(user)
+  const email = callerEmails[0]
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const body = await req.json()
@@ -73,7 +74,7 @@ export async function POST(req: NextRequest) {
   const asPinId = String(body?.asPinId || "")
   const target = asPinId ? await resolveImpersonationTarget(asPinId) : null
   if (asPinId && !target) return NextResponse.json({ error: "Not authorized" }, { status: 403 })
-  const pin = target ? await pinById(target.pinId) : await pinForUser(email)
+  const pin = target ? await pinById(target.pinId) : await pinForUser(callerEmails)
   if (!pin) {
     return NextResponse.json({ error: "No active operator profile found for your account. Contact support." }, { status: 404 })
   }
