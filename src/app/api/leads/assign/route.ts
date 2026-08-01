@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { supabaseAdmin } from "@/lib/supabase"
+import { canonicalEmail } from "@/lib/email-alias"
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "coreypearsonemail@gmail.com"
 
@@ -36,9 +37,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "pinId is required" }, { status: 400 })
   }
 
-  // Verify the pinId belongs to the requesting user or user is admin
+  // Verify the pinId belongs to the requesting user or user is admin.
+  // canonicalEmail folds a merged 2nd login onto the primary account email so
+  // the ownership check below matches the canonical pin's email.
   const user = await currentUser()
-  const email = user?.emailAddresses?.[0]?.emailAddress?.toLowerCase()
+  const email = canonicalEmail(user?.emailAddresses?.[0]?.emailAddress)
   const isAdmin = email === ADMIN_EMAIL.toLowerCase()
 
   if (!isAdmin) {
@@ -62,7 +65,29 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Failed to fetch leads" }, { status: 500 })
   }
 
-  return NextResponse.json({ leads: leads || [] })
+  // Overlay THIS agent's own flags. They live in lead_agent_flags keyed
+  // (lead_id, operator_pin_id) rather than on the lead, so a lead that moves to a
+  // new agent never arrives pre-marked with the previous holder's judgements.
+  // The columns still on foreclosure_leads are legacy and deliberately ignored —
+  // reading them would resurrect exactly the cross-agent bleed we just removed.
+  const rows = (leads || []) as Record<string, unknown>[]
+  if (rows.length > 0) {
+    const { data: flags } = await supabaseAdmin
+      .from("lead_agent_flags")
+      .select("lead_id, bad_phone, bad_email, agent_status, bad_phones, bad_emails")
+      .eq("operator_pin_id", pinId)
+    const byLead = new Map((flags ?? []).map((f) => [String(f.lead_id), f]))
+    for (const r of rows) {
+      const f = byLead.get(String(r.id))
+      r.bad_phone = f?.bad_phone ?? false
+      r.bad_email = f?.bad_email ?? false
+      r.agent_status = f?.agent_status ?? null
+      r.bad_phones = f?.bad_phones ?? []
+      r.bad_emails = f?.bad_emails ?? []
+    }
+  }
+
+  return NextResponse.json({ leads: rows })
 }
 
 // POST: Assign leads to an operator (admin only)
