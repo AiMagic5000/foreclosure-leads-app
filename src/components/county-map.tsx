@@ -1,5 +1,7 @@
 "use client"
 
+import { useAgentManager } from "@/components/agent-manager-modal"
+
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   ComposableMap,
@@ -119,6 +121,7 @@ export function CountyMap({
   onPinRequired,
   isOwnerOperator = false
 }: CountyMapProps) {
+  const { openAgentManager } = useAgentManager()
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCounty, setSelectedCounty] = useState<CountyData | null>(null);
   // Where the user clicked (relative to the map container) so the detail popup
@@ -650,9 +653,9 @@ export function CountyMap({
                     {selectedCounty.leadCount.toLocaleString()}
                   </span>
                 ) : (
-                  <a href={UPGRADE_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-bold hover:underline" style={{ color: theme.accent }}>
+                  <button type="button" onClick={openAgentManager} className="text-sm font-bold hover:underline" style={{ color: theme.accent }}>
                     Upgrade to access →
-                  </a>
+                  </button>
                 )}
               </div>
               <div className="flex justify-between items-center mt-1">
@@ -709,13 +712,9 @@ export function CountyMap({
                     </div>
                     {!isOwnerOperator && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <a
-                          href={UPGRADE_URL} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-white px-3 py-1.5 rounded-md shadow-lg"
-                          style={{ backgroundColor: theme.accent }}
-                        >
+                        <button type="button" onClick={openAgentManager} className="inline-flex items-center gap-1 text-xs font-semibold text-white px-3 py-1.5 rounded-md shadow-lg" style={{ backgroundColor: theme.accent }}>
                           <Lock size={12} /> Upgrade to access
-                        </a>
+                        </button>
                       </div>
                     )}
                   </div>
@@ -808,24 +807,10 @@ export function CountyMap({
                     <p style={{ fontSize: '11px', color: isDark ? '#a8a29e' : '#78716c', lineHeight: 1.4, margin: '0 0 10px' }}>
                       County lead counts, contact data, court filing links, and e-filing access are available to Asset Recovery Agents. Upgrade to download county leads.
                     </p>
-                    <a
-                      href={UPGRADE_URL} target="_blank" rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        color: '#ffffff',
-                        backgroundColor: isDark ? '#b45309' : '#d97706',
-                        padding: '6px 14px',
-                        borderRadius: '8px',
-                        textDecoration: 'none',
-                      }}
-                    >
+                    <button type="button" onClick={openAgentManager} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '12px', fontWeight: 600, color: '#ffffff', backgroundColor: isDark ? '#b45309' : '#d97706', padding: '6px 14px', borderRadius: '8px', textDecoration: 'none', }}>
                       <Lock size={12} />
                       Become an Asset Recovery Agent
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -2,8 +2,8 @@
 
 import { Calendar } from "lucide-react";
 
-// Update this URL when the Calendly account is configured
-const CALENDLY_URL = "https://calendly.com/foreclosurerecovery/15min";
+// coreypearson/30min is the LIVE booking page (foreclosurerecovery/15min 404s — verified 2026-07-07)
+const CALENDLY_URL = "https://calendly.com/coreypearson/30min";
 
 export function CalendlyBooking() {
   return (

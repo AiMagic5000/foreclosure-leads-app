@@ -13,6 +13,8 @@ interface UserRow {
   logins: number
   views: number
   downloads: number
+  timeSeconds: number
+  timeTotalSeconds: number
   paths: { path: string; count: number }[]
   recent: { path: string; at: string; kind?: string }[]
 }
@@ -32,6 +34,13 @@ const RANGES = [
   { key: "7d", label: "LAST 7D" },
   { key: "30d", label: "LAST 30D" },
 ]
+
+function fmtDuration(sec: number) {
+  if (!sec) return "0m"
+  const h = Math.floor(sec / 3600)
+  const m = Math.round((sec % 3600) / 60)
+  return h > 0 ? `${h}h ${m}m` : `${m}m`
+}
 
 function fmtTime(s: string | null) {
   if (!s) return "—"
@@ -196,6 +205,7 @@ export default function UserActivityPage() {
                       <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${u.tier === "basic" ? "bg-slate-200 text-slate-600" : "bg-emerald-600 text-white"}`}>{u.tier === "basic" ? "free" : u.tier.replace(/_/g, " ")}</span>
                       {u.phone && <span className="text-xs text-slate-500">{u.phone}</span>}
                       <span className="ml-auto flex items-center gap-2 text-xs">
+                        <span title={`All-time on site: ${fmtDuration(u.timeTotalSeconds)}`} className="rounded-full bg-amber-100 px-2 py-0.5 font-semibold text-amber-700">{fmtDuration(u.timeSeconds)} on site</span>
                         <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-semibold text-emerald-700">{u.logins} logins</span>
                         <span className="rounded-full bg-blue-100 px-2 py-0.5 font-semibold text-blue-700">{u.views} views</span>
                         <span className="rounded-full bg-indigo-100 px-2 py-0.5 font-semibold text-indigo-700">{u.downloads} downloads</span>

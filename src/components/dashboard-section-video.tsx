@@ -17,7 +17,7 @@ const MAP: Record<string, { id: string; title: string; subtitle: string }> = {
   "/dashboard/hire-closer": { id: "hire-closer", title: "Let a pro close it for you", subtitle: "You own the lead, a specialist makes the calls, you split the win." },
   "/dashboard/contract-admin": { id: "contract-admin", title: "From signature to filed claim", subtitle: "Upload the signed page — we prepare, pay court costs, and file." },
   "/dashboard/automation": { id: "automation", title: "Put your follow-up on autopilot", subtitle: "Sequenced email, text, and voicemail under your name." },
-  "/dashboard/sms-messages": { id: "sms-messages", title: "Every text in one inbox", subtitle: "Replies route to you, threaded by homeowner, in real time." },
+  "/dashboard/sms-messages": { id: "sms-messages", title: "Text from your own phone", subtitle: "You send from your device. Replies stay in your TextBee app — we never see them." },
   "/dashboard/white-label": { id: "white-label", title: "Run it under your own brand", subtitle: "Your name, your site — our recovery engine behind the scenes." },
   "/dashboard/settings": { id: "my-account", title: "Your account, explained", subtitle: "Every tier, what each one unlocks, and how to set up your tools." },
   "/dashboard/owner-operator": { id: "owner-operator", title: "The Owner Operator program", subtitle: "Your brand, your LLC, the full 45-point build-out — and 100% of your fee." },
@@ -43,7 +43,7 @@ const MY_LEADS_VIDEOS = [
 // SMS page: the how-to overview first (left), the original overview second (right).
 const SMS_VIDEOS = [
   { id: "sms-overview", title: "How your SMS texting works — start here", subtitle: "A quick walkthrough: what you need and how to connect." },
-  { id: "sms-messages", title: "Every text in one inbox", subtitle: "Replies route to you, threaded by homeowner, in real time." },
+  { id: "sms-messages", title: "Text from your own phone", subtitle: "You send from your device. Replies stay in your TextBee app — we never see them." },
 ]
 
 // Closing Training: the commercial plays first (left), the close-training overview second (right).
@@ -57,7 +57,7 @@ export function DashboardSectionVideo() {
 
   if (pathname === "/dashboard/my-leads") {
     return (
-      <div className="mb-6 grid gap-4 lg:grid-cols-2">
+      <div className="mb-6 grid gap-4 lg:grid-cols-2 lg:items-start">
         {MY_LEADS_VIDEOS.map((v) => (
           <SectionVideo
             key={v.id}
@@ -75,7 +75,7 @@ export function DashboardSectionVideo() {
 
   if (pathname === "/dashboard/sms-messages") {
     return (
-      <div className="mb-6 grid gap-4 lg:grid-cols-2">
+      <div className="mb-6 grid gap-4 lg:grid-cols-2 lg:items-start">
         {SMS_VIDEOS.map((v) => (
           <SectionVideo
             key={v.id}
@@ -92,7 +92,7 @@ export function DashboardSectionVideo() {
 
   if (pathname === "/dashboard/owner-operator") {
     return (
-      <div className="mb-6 grid gap-4 lg:grid-cols-2">
+      <div className="mb-6 grid gap-4 lg:grid-cols-2 lg:items-start">
         {OWNER_OP_VIDEOS.map((v) => (
           <SectionVideo
             key={v.id}
@@ -109,7 +109,7 @@ export function DashboardSectionVideo() {
 
   if (pathname === "/dashboard/closing-training") {
     return (
-      <div className="mb-6 grid gap-4 lg:grid-cols-2">
+      <div className="mb-6 grid gap-4 lg:grid-cols-2 lg:items-start">
         {CLOSING_TRAINING_VIDEOS.map((v) => (
           <SectionVideo
             key={v.id}

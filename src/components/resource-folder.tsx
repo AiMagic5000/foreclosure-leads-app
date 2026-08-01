@@ -6,6 +6,8 @@ interface ResourceFolderProps {
   displayName: string
   fileUrl: string
   coverUrl?: string | null
+  // Access designation for the tier pill: "free" → green FREE, "live_agent" → red LIVE AGENT ACCESS.
+  accessTier?: "free" | "live_agent"
   onDownload: () => void
   onPrint: () => void
   onDelete?: () => void
@@ -18,6 +20,7 @@ export function ResourceFolder({
   displayName,
   fileUrl,
   coverUrl,
+  accessTier,
   onDownload,
   onPrint,
   onDelete,
@@ -101,6 +104,25 @@ export function ResourceFolder({
         <p className="text-xs text-center font-medium text-muted-foreground leading-tight break-words w-full">
           {displayName}
         </p>
+
+        {/* Tier pill — green FREE / red LIVE AGENT ACCESS */}
+        {accessTier && (
+          <span
+            className={
+              "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide " +
+              (accessTier === "free"
+                ? "bg-emerald-100 text-emerald-700 border border-emerald-300"
+                : "bg-red-100 text-red-700 border border-red-300")
+            }
+          >
+            <span
+              className={
+                "h-1.5 w-1.5 rounded-full " + (accessTier === "free" ? "bg-emerald-500" : "bg-red-500")
+              }
+            />
+            {accessTier === "free" ? "Free" : "Live Agent Access"}
+          </span>
+        )}
 
         {/* Action buttons */}
         <div className="flex flex-wrap items-center justify-center gap-1.5">

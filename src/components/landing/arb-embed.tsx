@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { AgentManagerModal } from "@/components/agent-manager-modal"
 
 // Embeds the full Asset Recovery Business page (self-contained HTML under /arb/)
 // and sizes the iframe to its content. Because the frame is SAME-ORIGIN we read
@@ -11,6 +12,7 @@ import { useEffect, useRef, useState } from "react"
 // bridge hash-anchor menu links to the sections that live INSIDE the iframe.
 export function ArbEmbed() {
   const [height, setHeight] = useState(4000)
+  const [mgrOpen, setMgrOpen] = useState(false)
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
@@ -34,6 +36,11 @@ export function ArbEmbed() {
 
     // Fallback: the embed also posts its height.
     function onMessage(e: MessageEvent) {
+      // Enrollment CTAs inside the embed ask the parent to open the agent-manager popup.
+      if (e.data && (e.data as { arbOpenAgentManager?: boolean }).arbOpenAgentManager) {
+        setMgrOpen(true)
+        return
+      }
       const h = (e.data && (e.data as { arbHeight?: number }).arbHeight) || 0
       applyHeight(h)
     }
@@ -109,13 +116,16 @@ export function ArbEmbed() {
   }, [])
 
   return (
-    <iframe
-      ref={iframeRef}
-      src="/arb-sections.html?v=20260623a"
-      title="The Complete Asset Recovery Agent Business"
-      className="block w-full border-0"
-      style={{ height }}
-      scrolling="no"
-    />
+    <>
+      <iframe
+        ref={iframeRef}
+        src="/arb-sections.html?v=20260727popup2"
+        title="The Complete Asset Recovery Agent Business"
+        className="block w-full border-0"
+        style={{ height }}
+        scrolling="no"
+      />
+      <AgentManagerModal open={mgrOpen} onClose={() => setMgrOpen(false)} />
+    </>
   )
 }

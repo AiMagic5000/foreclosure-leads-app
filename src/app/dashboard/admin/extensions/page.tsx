@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react"
 import { usePin } from "@/lib/pin-context"
 
-type Ext = { extension: string; forwarding_phone: string; agent_name?: string; agent_email?: string; active?: boolean }
+type Ext = { extension: string; forwarding_phone?: string; agent_name?: string; agent_email?: string; active?: boolean; ai_cover?: boolean }
 
 export default function ExtensionsAdminPage() {
   const { isAdmin, isRealAdmin, isLoading } = usePin()
@@ -53,6 +53,16 @@ export default function ExtensionsAdminPage() {
     refresh()
   }
 
+  const toggleAi = async (extension: string, on: boolean) => {
+    setRows((prev) => prev.map((r) => (r.extension === extension ? { ...r, ai_cover: on } : r)))
+    await fetch("/api/admin/pbx-extensions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "toggle_ai", extension, ai_cover: on }),
+    })
+    refresh()
+  }
+
   if (isLoading) return <div className="p-8 text-gray-500">Loading…</div>
   if (!admin) return <div className="p-8 text-red-600">Admins only.</div>
 
@@ -91,20 +101,34 @@ export default function ExtensionsAdminPage() {
               <th className="text-left px-4 py-2">Forwards to</th>
               <th className="text-left px-4 py-2">Agent</th>
               <th className="text-left px-4 py-2">Status</th>
+              <th className="text-left px-4 py-2">AI covers me</th>
               <th className="px-4 py-2"></th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={5} className="px-4 py-6 text-center text-gray-400">Loading…</td></tr>
+              <tr><td colSpan={6} className="px-4 py-6 text-center text-gray-400">Loading…</td></tr>
             ) : rows.length === 0 ? (
-              <tr><td colSpan={5} className="px-4 py-6 text-center text-gray-400">No extensions yet. Add one above.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-6 text-center text-gray-400">No extensions yet. Add one above.</td></tr>
             ) : rows.map((r) => (
               <tr key={r.extension} className="border-t">
                 <td className="px-4 py-2 font-semibold text-[#09274c]">{r.extension}</td>
-                <td className="px-4 py-2">{r.forwarding_phone}</td>
+                <td className="px-4 py-2">{r.forwarding_phone || "—"}</td>
                 <td className="px-4 py-2">{r.agent_name || "—"}{r.agent_email ? ` (${r.agent_email})` : ""}</td>
                 <td className="px-4 py-2">{r.active === false ? <span className="text-gray-400">Off</span> : <span className="text-emerald-600">Active</span>}</td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => toggleAi(r.extension, !r.ai_cover)}
+                    title="When ON, calls to this extension are answered by the AI assistant, which takes a message and emails you."
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold border transition ${
+                      r.ai_cover
+                        ? "bg-amber-500 text-white border-amber-500"
+                        : "bg-white text-gray-500 border-gray-300 hover:border-amber-400"
+                    }`}
+                  >
+                    {r.ai_cover ? "🤖 AI ON" : "AI off"}
+                  </button>
+                </td>
                 <td className="px-4 py-2 text-right">
                   <button onClick={() => del(r.extension)} className="text-red-600 hover:underline text-xs">Remove</button>
                 </td>

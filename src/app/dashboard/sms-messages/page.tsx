@@ -43,8 +43,8 @@ export default function SmsMessagesPage() {
   const { accountType, impersonating } = usePin()
   const hasAccess = accountType === "partnership" || accountType === "junior_owner_operator" || accountType === "owner_operator" || accountType === "admin"
 
-  interface TbState { connected: boolean; deviceId: string; apiKeyMasked: string; messages: { id: string; sender: string; message: string; receivedAt: string }[] }
-  const [tb, setTb] = useState<TbState>({ connected: false, deviceId: "", apiKeyMasked: "", messages: [] })
+  interface TbState { connected: boolean; deviceId: string; apiKeyMasked: string }
+  const [tb, setTb] = useState<TbState>({ connected: false, deviceId: "", apiKeyMasked: "" })
   const [apiKeyInput, setApiKeyInput] = useState("")
   const [deviceIdInput, setDeviceIdInput] = useState("")
   const [saving, setSaving] = useState(false)
@@ -207,6 +207,20 @@ export default function SmsMessagesPage() {
               <a href="/dashboard/settings#textbee" className="text-sm font-medium text-slate-500 hover:underline">
                 Manage in My Account
               </a>
+            </div>
+            {/* Stated plainly on the page: we never pull an agent's inbound texts onto
+                this platform. Their device carries personal messages and those are theirs. */}
+            <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3">
+              <p className="text-sm font-semibold text-emerald-900">Your replies stay private</p>
+              <p className="mt-1 text-sm text-emerald-800">
+                Texts you send go out from your own phone, and when a homeowner replies it comes back to your phone
+                like any other text. <strong>We do not read, store, or display your incoming messages</strong> &mdash;
+                not on this page, and not to anyone on our side. To read replies, open your own{" "}
+                <a href="https://app.textbee.dev/dashboard" target="_blank" rel="noopener noreferrer" className="font-medium underline">
+                  TextBee dashboard
+                </a>{" "}
+                or just look at your phone.
+              </p>
             </div>
           </CardContent>
         </Card>

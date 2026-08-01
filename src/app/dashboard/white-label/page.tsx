@@ -109,8 +109,27 @@ export default function WhiteLabelPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitting(true)
     setError(null)
+
+    // Tell the user EXACTLY what's missing instead of leaving the button dead/disabled.
+    const missing: string[] = []
+    if (!businessName.trim()) missing.push("Business Name")
+    if (!ownerFirstName.trim()) missing.push("First Name")
+    if (!ownerLastName.trim()) missing.push("Last Name")
+    if (!callForwardingPhone.trim()) missing.push("Phone number to forward business calls to")
+    if (!emailForwarding.trim()) missing.push("Email to forward business emails to")
+    if (termsAgreed.toLowerCase().trim() !== "i agree") missing.push('Type "I agree" at the bottom to confirm')
+    if (missing.length) {
+      setError("Please complete these before submitting: " + missing.join("; ") + ".")
+      if (typeof window !== "undefined") window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
+      return
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailForwarding.trim())) {
+      setError("The forwarding email address doesn't look right — please double-check it (example: you@gmail.com).")
+      return
+    }
+
+    setSubmitting(true)
 
     try {
       const res = await fetch("/api/onboarding", {
@@ -300,7 +319,7 @@ export default function WhiteLabelPage() {
       )}
 
       {/* Onboarding Form */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <div className="space-y-6">
           <div className="rounded-xl border-l-4 border-blue-600 bg-white p-4 text-sm shadow-sm">
             <p className="font-bold text-[#0f172a]">Asset Recovery Agent 1099 Data</p>
@@ -571,7 +590,7 @@ export default function WhiteLabelPage() {
 
               <Button
                 type="submit"
-                disabled={submitting || termsAgreed.toLowerCase().trim() !== "i agree" || !businessName || !ownerFirstName || !ownerLastName || !callForwardingPhone || !emailForwarding}
+                disabled={submitting}
                 className="w-full"
                 size="lg"
               >

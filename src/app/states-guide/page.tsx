@@ -25,7 +25,7 @@ import { Footer } from "@/components/footer";
 export const metadata: Metadata = {
   title: "50 States Foreclosure Guide - Tax Deed & Mortgage Surplus Laws",
   description:
-    "Comprehensive guide to foreclosure surplus funds laws in all 50 US states. Tax overage statutes, mortgage surplus rules, claim windows, fee limits, and foreclosure types for asset recovery professionals.",
+    "Comprehensive guide to foreclosure surplus funds laws in all 50 US states — mortgage surplus rules, claim windows, fee limits, and foreclosure types — plus which states sell tax deeds (surplus-producing) versus tax liens.",
   keywords: [
     "foreclosure laws by state",
     "tax deed surplus statutes",
@@ -149,7 +149,7 @@ export default function StatesGuidePage() {
             "@type": "Article",
             headline: "50 States Foreclosure Surplus Funds Guide",
             description:
-              "Comprehensive guide to tax deed and mortgage surplus laws in all 50 US states",
+              "Guide to mortgage surplus laws in all 50 US states, including which states hold tax deed sales that produce surplus and which sell tax liens",
             author: {
               "@type": "Organization",
               name: "Foreclosure Recovery Inc.",
@@ -175,9 +175,34 @@ export default function StatesGuidePage() {
             50 States Foreclosure Surplus Funds Guide
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            Complete reference for tax deed surplus and mortgage overage laws
-            across all US states. Includes statutes, claim windows, fee limits,
-            and data sources for each state.
+            Complete reference for mortgage overage laws across all US states,
+            plus tax sale surplus rules for the states that sell tax deeds.
+            Includes statutes, claim windows, fee limits, and data sources for
+            each state.
+          </p>
+        </div>
+
+        {/* Tax sales: deed vs lien — the accurate picture */}
+        <div className="mb-12 max-w-3xl rounded-xl border border-amber-200 bg-amber-50 p-6">
+          <h2 className="text-lg font-bold text-amber-900">Do all states have tax sales?</h2>
+          <p className="mt-2 text-sm leading-relaxed text-amber-900/90">
+            No &mdash; and the difference matters. Every state enforces delinquent
+            property taxes, but they do it two different ways. Roughly{" "}
+            <strong>30 states (and many counties in hybrid states) sell tax deeds</strong>{" "}
+            &mdash; the property itself is auctioned, and when it sells for more than
+            the taxes owed, the extra money is a surplus the former owner can claim.
+            The remaining states sell <strong>tax lien certificates</strong> instead:
+            investors buy the tax debt, the property is not auctioned, and no surplus
+            is created at that sale (a surplus can only arise later if the lien itself
+            is foreclosed to a deed).
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-amber-900/90">
+            <strong>Mortgage foreclosure surplus is different:</strong> every state
+            can produce mortgage foreclosure overages, which is why our foreclosure
+            surplus coverage is genuinely 50-state. And since the U.S. Supreme
+            Court&apos;s <em>Tyler v. Hennepin County</em> decision (2023), no state
+            or its counties may keep tax sale surplus &mdash; the excess belongs to the
+            former owner nationwide.
           </p>
         </div>
 

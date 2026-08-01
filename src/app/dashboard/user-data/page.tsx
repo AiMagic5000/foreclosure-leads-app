@@ -72,6 +72,7 @@ const statusColors: Record<string, string> = {
 }
 
 const BAN_REASONS = [
+  "Payment due",
   "Bad phone number",
   "Fake / invalid information",
   "Spam or abuse",
@@ -108,6 +109,9 @@ export default function UserDataPage() {
   const [sortAsc, setSortAsc] = useState(false)
   const [savingId, setSavingId] = useState<string | null>(null)
   const [banSel, setBanSel] = useState<Record<string, string>>({})
+  const [page, setPage] = useState(1)
+  const [statFilter, setStatFilter] = useState<"all" | "admin" | "owner_operator" | "partnership" | "recent">("all")
+  const PAGE_SIZE = 50
 
   const fetchUsers = async () => {
     setLoading(true)
@@ -232,6 +236,10 @@ export default function UserDataPage() {
 
   const filteredUsers = users
     .filter((u) => {
+      if (statFilter === "admin" && u.account_type !== "admin") return false
+      if (statFilter === "owner_operator" && u.account_type !== "owner_operator") return false
+      if (statFilter === "partnership" && u.account_type !== "partnership") return false
+      if (statFilter === "recent" && Date.now() - new Date(u.created_at).getTime() >= 7 * 24 * 60 * 60 * 1000) return false
       if (!searchQuery) return true
       const q = searchQuery.toLowerCase()
       return (
@@ -257,6 +265,10 @@ export default function UserDataPage() {
       }
       return 0
     })
+
+  const totalPages = Math.max(1, Math.ceil(filteredUsers.length / PAGE_SIZE))
+  const safePage = Math.min(page, totalPages)
+  const pageUsers = filteredUsers.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
 
   const exportCSV = () => {
     const headers = ["Email", "Name", "Account Type", "Tier", "Status", "States", "Phone", "Signed Up", "Last Sign In"]
@@ -356,53 +368,37 @@ export default function UserDataPage() {
         </div>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Cards — click to filter the table below */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-5">
-        <Card>
-          <CardHeader className="pb-2">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-blue-500" />
-              <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>
-            </div>
-            <p className="text-3xl font-bold">{totalUsers}</p>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-red-500" />
-              <CardTitle className="text-sm font-medium text-muted-foreground">Admins</CardTitle>
-            </div>
-            <p className="text-3xl font-bold">{adminUsers}</p>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <div className="flex items-center gap-2">
-              <Crown className="h-4 w-4 text-emerald-500" />
-              <CardTitle className="text-sm font-medium text-muted-foreground">Owner Operators</CardTitle>
-            </div>
-            <p className="text-3xl font-bold">{ownerOperatorUsers}</p>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <div className="flex items-center gap-2">
-              <UserCircle className="h-4 w-4 text-blue-500" />
-              <CardTitle className="text-sm font-medium text-muted-foreground">Partnerships</CardTitle>
-            </div>
-            <p className="text-3xl font-bold">{partnershipUsers}</p>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-amber-500" />
-              <CardTitle className="text-sm font-medium text-muted-foreground">Last 7 Days</CardTitle>
-            </div>
-            <p className="text-3xl font-bold">{recentSignups}</p>
-          </CardHeader>
-        </Card>
+        {([
+          { key: "all", label: "Total Users", value: totalUsers, icon: <Users className="h-4 w-4 text-blue-500" /> },
+          { key: "admin", label: "Admins", value: adminUsers, icon: <Shield className="h-4 w-4 text-red-500" /> },
+          { key: "owner_operator", label: "Owner Operators", value: ownerOperatorUsers, icon: <Crown className="h-4 w-4 text-emerald-500" /> },
+          { key: "partnership", label: "Partnerships", value: partnershipUsers, icon: <UserCircle className="h-4 w-4 text-blue-500" /> },
+          { key: "recent", label: "Last 7 Days", value: recentSignups, icon: <Calendar className="h-4 w-4 text-amber-500" /> },
+        ] as const).map((c) => (
+          <button
+            key={c.key}
+            onClick={() => { setStatFilter(statFilter === c.key ? "all" : c.key); setPage(1) }}
+            className="text-left"
+            title={c.key === "all" ? "Show everyone" : `Show only ${c.label.toLowerCase()}`}
+          >
+            <Card className={statFilter === c.key && c.key !== "all"
+              ? "cursor-pointer border-2 border-blue-500 bg-blue-50/50 transition-colors"
+              : "cursor-pointer transition-colors hover:border-blue-300 hover:bg-slate-50"}>
+              <CardHeader className="pb-2">
+                <div className="flex items-center gap-2">
+                  {c.icon}
+                  <CardTitle className="text-sm font-medium text-muted-foreground">{c.label}</CardTitle>
+                </div>
+                <p className="text-3xl font-bold">{c.value}</p>
+                {statFilter === c.key && c.key !== "all" && (
+                  <p className="text-[11px] font-medium text-blue-600">Filtering — click to clear</p>
+                )}
+              </CardHeader>
+            </Card>
+          </button>
+        ))}
       </div>
 
       {/* Search */}
@@ -411,7 +407,7 @@ export default function UserDataPage() {
         <Input
           placeholder="Search by email, name, tier, or account type..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => { setSearchQuery(e.target.value); setPage(1) }}
           className="pl-10"
         />
       </div>
@@ -477,7 +473,7 @@ export default function UserDataPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredUsers.map((u) => {
+                  {pageUsers.map((u) => {
                     const acctType = u.account_type || "basic"
                     const tier = u.subscription_tier || "free"
                     const status = u.subscription_status || "active"
@@ -620,6 +616,30 @@ export default function UserDataPage() {
                   })}
                 </tbody>
               </table>
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between border-t border-slate-200 px-2 py-3 text-sm">
+                  <span className="text-slate-500">
+                    Showing {(safePage - 1) * PAGE_SIZE + 1}&ndash;{Math.min(safePage * PAGE_SIZE, filteredUsers.length)} of {filteredUsers.length}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={safePage <= 1}
+                      className="rounded-md border border-slate-300 px-3 py-1 font-medium disabled:opacity-40 hover:bg-slate-50"
+                    >
+                      Previous
+                    </button>
+                    <span className="text-slate-600">Page {safePage} of {totalPages}</span>
+                    <button
+                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={safePage >= totalPages}
+                      className="rounded-md border border-slate-300 px-3 py-1 font-medium disabled:opacity-40 hover:bg-slate-50"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </CardContent>

@@ -50,6 +50,7 @@ export default function AiAgentPage() {
   const [agreeChecked, setAgreeChecked] = useState(false)
   const [savingConsent, setSavingConsent] = useState(false)
   const [videoFailed, setVideoFailed] = useState(false)
+  const [openPassage, setOpenPassage] = useState<number | null>(null)
 
   // voice
   const [recordings, setRecordings] = useState<Recording[]>([])
@@ -355,15 +356,25 @@ export default function AiAgentPage() {
         {/* Read-aloud passages — ~1 minute each */}
         <div className="mt-4 space-y-2">
           <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Pick a passage and read it aloud</p>
-          {READING_SCRIPTS.map((s, i) => (
-            <details key={s.title} className="group rounded-xl border border-slate-200 bg-slate-50">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-[#0f172a]">
-                <span>{i + 1}. {s.title} <span className="ml-1 font-normal text-slate-400">· about 1 minute</span></span>
-                <ChevronDown className="h-4 w-4 flex-none text-slate-400 transition group-open:rotate-180" />
-              </summary>
-              <p className="px-4 pb-4 text-[15px] leading-7 text-slate-700">{s.text}</p>
-            </details>
-          ))}
+          {READING_SCRIPTS.map((s, i) => {
+            const isOpen = openPassage === i
+            return (
+              <div key={s.title} className="rounded-xl border border-slate-200 bg-slate-50">
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenPassage(isOpen ? null : i)}
+                  className="flex w-full cursor-pointer items-center justify-between gap-2 px-4 py-3 text-left text-sm font-semibold text-[#0f172a]"
+                >
+                  <span>{i + 1}. {s.title} <span className="ml-1 font-normal text-slate-400">· about 1 minute</span></span>
+                  <ChevronDown className={`h-4 w-4 flex-none text-slate-400 transition ${isOpen ? "rotate-180" : ""}`} />
+                </button>
+                {isOpen && (
+                  <p className="px-4 pb-4 text-[15px] leading-7 text-slate-700">{s.text}</p>
+                )}
+              </div>
+            )
+          })}
         </div>
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -488,6 +499,7 @@ export default function AiAgentPage() {
         <p className="mt-2 max-w-2xl text-sm text-slate-300">Once your voice + avatar are built, we wire them into your claimant outreach — voicemail, email, and SMS in your own voice and face.</p>
         <a href="tel:+18885458007" className="mt-5 inline-flex items-center gap-2 rounded-xl bg-violet-600 px-5 py-3 text-base font-bold text-white transition hover:opacity-90"><PhoneCall className="h-5 w-5" /> Questions? (888) 545-8007</a>
       </div>
+
 
       {/* Live camera capture modal */}
       {cameraPose && (

@@ -1,8 +1,11 @@
 "use client"
 
+import { useAgentManager } from "@/components/agent-manager-modal"
 import { useState, useEffect, useMemo } from "react"
 import { useTheme } from "@/components/theme-provider"
 import { statesData } from "@/data/states"
+import { stateDirectories } from "@/data/county-directory"
+import { CountyInfoDialog } from "@/components/county-info-dialog"
 import { stateOverageGuide } from "@/data/state-overage-guide"
 import { stateForeclosureInfo } from "@/data/state-foreclosure-info"
 import { stateFlags } from "@/data/state-flags"
@@ -18,11 +21,34 @@ import { supabase } from "@/lib/supabase"
 import { UPGRADE_URL } from "@/lib/upgrade"
 
 export default function StatesPage() {
+  const { openAgentManager } = useAgentManager()
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedType, setSelectedType] = useState<string>("all")
   const [selectedState, setSelectedState] = useState<string | null>(null)
+  // County picked from the search results — opens the same popup the county map uses.
+  const [selectedCounty, setSelectedCounty] = useState<{ state: string; county: string } | null>(null)
   const [stateLeadCounts, setStateLeadCounts] = useState<Record<string, number>>({})
-  const [foiaContacts, setFoiaContacts] = useState<any[]>([])
+  type FoiaContact = {
+    id?: string
+    county?: string
+    office_name?: string
+    office_type?: string
+    contact_name?: string
+    contact_title?: string
+    email?: string
+    phone?: string
+    fax?: string
+    website?: string
+    mailing_address?: string
+    notes?: string
+    has_surplus_funds?: boolean
+    is_correct_office?: boolean
+    redirect_to_email?: string
+    redirect_to_office?: string
+    response_type?: string
+    surplus_process_notes?: string
+  }
+  const [foiaContacts, setFoiaContacts] = useState<FoiaContact[]>([])
   // Admin sees real data by default; can toggle to the free (blurred) agent preview.
   const [adminShowData, setAdminShowData] = useState(true)
   const { theme } = useTheme()
@@ -50,10 +76,7 @@ export default function StatesPage() {
   }, [])
 
   useEffect(() => {
-    if (!selectedState) {
-      setFoiaContacts([])
-      return
-    }
+    if (!selectedState) return
     const abbr = selectedState
     async function fetchFoiaContacts() {
       const { data, error } = await supabase
@@ -80,6 +103,28 @@ export default function StatesPage() {
       const matchesType = selectedType === "all" || state.foreclosureType === selectedType
       return matchesSearch && matchesType
     })
+  }, [searchQuery, selectedType])
+
+  // County search: match county names across every state directory once the
+  // query is specific enough (2+ chars). Results render as cards like the
+  // state containers; clicking one opens the county-map popup data.
+  const matchedCounties = useMemo(() => {
+    const query = searchQuery.toLowerCase().replace(/\s+county$/i, "").trim()
+    if (query.length < 2) return []
+    const out: { state: string; stateName: string; county: string; phone: string }[] = []
+    for (const dir of stateDirectories) {
+      if (selectedType !== "all") {
+        const st = statesData.find((s) => s.abbr === dir.stateAbbr)
+        if (st && st.foreclosureType !== selectedType) continue
+      }
+      for (const c of dir.counties) {
+        if (c.county.toLowerCase().includes(query)) {
+          out.push({ state: dir.stateAbbr, stateName: dir.stateName, county: c.county, phone: c.phone })
+          if (out.length >= 24) return out
+        }
+      }
+    }
+    return out
   }, [searchQuery, selectedType])
 
   // Updated colors to match map: Blue for Judicial, Red for Non-Judicial
@@ -141,7 +186,7 @@ export default function StatesPage() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search states..."
+            placeholder="Search states or counties..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -225,6 +270,54 @@ export default function StatesPage() {
           <CountyMap isDark={isDark} isOwnerOperator={canViewData} />
         </CardContent>
       </Card>
+
+      {/* County search results — shown like the state containers when the query matches counties */}
+      {matchedCounties.length > 0 && (
+        <div className="space-y-3">
+          <h2 className="flex items-center gap-2 text-lg font-semibold">
+            <MapPin className="h-5 w-5 text-blue-600" />
+            Counties matching &ldquo;{searchQuery.trim()}&rdquo;
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {matchedCounties.map((c) => (
+              <Card
+                key={`${c.state}-${c.county}`}
+                className="cursor-pointer overflow-hidden transition-all hover:ring-2 hover:ring-primary/50"
+                onClick={() => setSelectedCounty({ state: c.state, county: c.county })}
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      {stateFlags[c.state] && (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={stateFlags[c.state].flagUrl}
+                          alt={`${c.stateName} flag`}
+                          className="h-8 w-12 rounded border object-cover"
+                        />
+                      )}
+                      <div>
+                        <CardTitle className="text-base">{c.county} County</CardTitle>
+                        <CardDescription>
+                          {c.stateName} ({c.state})
+                        </CardDescription>
+                      </div>
+                    </div>
+                    <Badge variant="outline" className="shrink-0">
+                      County
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <p className="text-sm text-muted-foreground">
+                    Click for lead counts, county contact &amp; court filing info
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* States Grid */}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -376,16 +469,12 @@ export default function StatesPage() {
                 </div>
                 {!canViewData && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <a
-                      href={UPGRADE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
+                    <button type="button" onClick={(e) => { e.stopPropagation(); openAgentManager() }}
                       className="flex items-center gap-1.5 text-xs font-semibold text-white bg-primary px-3 py-1.5 rounded-md shadow-lg hover:bg-primary/90 transition-colors"
                     >
                       <Lock className="h-3 w-3" />
                       Upgrade to Asset Recovery Agent
-                    </a>
+                    </button>
                   </div>
                 )}
               </div>
@@ -411,7 +500,7 @@ export default function StatesPage() {
         return (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-            onClick={() => setSelectedState(null)}
+            onClick={() => { setSelectedState(null); setFoiaContacts([]) }}
           >
             <div
               className="bg-background border rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto"
@@ -449,7 +538,7 @@ export default function StatesPage() {
                   </div>
                 </div>
                 <button
-                  onClick={() => setSelectedState(null)}
+                  onClick={() => { setSelectedState(null); setFoiaContacts([]) }}
                   className="p-2 rounded-lg hover:bg-muted transition-colors"
                 >
                   <X className="h-5 w-5" />
@@ -498,16 +587,11 @@ export default function StatesPage() {
                     </a>
                   ) : (
                     /* Free: upgrade path */
-                    <a
-                      href={UPGRADE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-medium text-white bg-slate-600 px-3 py-1.5 rounded-md hover:bg-slate-500 transition-colors"
-                      onClick={(e) => e.stopPropagation()}
+                    <button type="button" onClick={(e) => { e.stopPropagation(); openAgentManager() }} className="inline-flex items-center gap-1 text-xs font-medium text-white bg-slate-600 px-3 py-1.5 rounded-md hover:bg-slate-500 transition-colors"
                     >
                       <Lock className="h-3 w-3" />
                       Upgrade to access
-                    </a>
+                    </button>
                   )}
                 </div>
               </div>
@@ -519,16 +603,12 @@ export default function StatesPage() {
                   <div className="relative">
                     {!canViewData && (
                       <div className="px-5 pt-4">
-                        <a
-                          href={UPGRADE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
+                        <button type="button" onClick={(e) => { e.stopPropagation(); openAgentManager() }}
                           className="flex items-center justify-center gap-2 text-sm font-semibold text-white bg-primary px-4 py-2.5 rounded-lg shadow hover:bg-primary/90 transition-colors"
                         >
                           <Lock className="h-4 w-4" />
                           Upgrade to Asset Recovery Agent to unlock full statutes &amp; sources
-                        </a>
+                        </button>
                       </div>
                     )}
                     <div className={!canViewData ? "p-5 space-y-4 select-none pointer-events-none blur-[5px]" : "p-5 space-y-4"}>
@@ -870,6 +950,17 @@ export default function StatesPage() {
           </div>
         )
       })()}
+
+      {/* County popup — same data as the foreclosure-map county click */}
+      {selectedCounty && (
+        <CountyInfoDialog
+          stateAbbr={selectedCounty.state}
+          countyName={selectedCounty.county}
+          open
+          onClose={() => setSelectedCounty(null)}
+          isOwnerOperator={canViewData}
+        />
+      )}
     </div>
   )
 }

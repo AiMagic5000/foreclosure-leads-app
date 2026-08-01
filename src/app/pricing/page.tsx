@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EnrollCta } from "@/components/enroll-cta";
 import { Button } from "@/components/ui/button";
 import { PaymentMethodsNote } from '@/components/payment-methods-note'
 import {
@@ -250,17 +251,12 @@ export default function PricingPage() {
                 </div>
               </CardContent>
               <CardFooter className="flex-col gap-3">
-                <a
-                  href={ENROLL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full"
-                >
+                <EnrollCta className="w-full">
                   <Button className="w-full" size="lg">
                     Enroll Now -- $995
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                </a>
+                </EnrollCta>
                 <a href="tel:8885458007" className="w-full">
                   <Button className="w-full" size="lg" variant="outline">
                     <Phone className="mr-2 h-4 w-4" />
@@ -420,11 +416,11 @@ export default function PricingPage() {
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             $995 total. Three ways to pay. Money Back Guarantee.
           </p>
-          <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer">
+          <EnrollCta className="">
             <Button size="lg" className="text-lg px-8">
               Enroll Now -- $995
             </Button>
-          </a>
+          </EnrollCta>
           <div className="mx-auto mt-4 max-w-lg">
             <PaymentMethodsNote compact />
           </div>

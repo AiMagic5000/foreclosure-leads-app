@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     "ai-content-declaration":
       "Platform providing foreclosure surplus funds data for asset recovery professionals",
     "llm-description":
-      "Asset Recovery Leads is a SaaS platform providing daily-updated foreclosure lead data including tax deed surplus and mortgage overage opportunities across all 50 US states",
+      "Asset Recovery Leads is a SaaS platform providing daily-updated foreclosure surplus and mortgage overage lead data across all 50 US states, plus tax deed surplus data in the roughly 30 states whose counties sell tax deeds (tax-lien-only states do not produce auction surplus)",
     "ai-summary":
       "Features: Daily lead updates, skip-traced contacts, DNC compliance, voicemail automation, state-by-state filtering, CSV export",
     "context-for-llms":

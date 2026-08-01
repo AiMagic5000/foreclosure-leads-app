@@ -118,6 +118,15 @@ export default function ClosingTrainingPage() {
   const [resourceAccess, setResourceAccess] = useState<Record<string, string[]>>({})
   const [editTiers, setEditTiers] = useState<string[]>([])
 
+  // Green FREE / red LIVE AGENT ACCESS pill: a guide is "free" when it has no tier
+  // restriction or its restriction still includes the basic (free) tier; otherwise
+  // it's restricted to paid agents = "live_agent".
+  function resourceTier(id: string | number): "free" | "live_agent" {
+    const tiers = resourceAccess[String(id)]
+    if (!tiers || tiers.length === 0 || tiers.includes("basic")) return "free"
+    return "live_agent"
+  }
+
   // Admin edit state
   const [editing, setEditing] = useState(false)
   const [editTitle, setEditTitle] = useState("")
@@ -154,9 +163,10 @@ export default function ClosingTrainingPage() {
   const [userCompletedModules, setUserCompletedModules] = useState<Set<number>>(new Set())
   const [markingComplete, setMarkingComplete] = useState(false)
 
-  // Mobile accordion: track which module is expanded on mobile
-  const [mobileExpandedId, setMobileExpandedId] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
+  // On mobile every accessible video is shown expanded, so we cache each module's
+  // resources by id (the single `resources` state only holds the selected module's).
+  const [resByModule, setResByModule] = useState<Record<number, TrainingResource[]>>({})
 
   useEffect(() => {
     const mql = window.matchMedia("(max-width: 1023px)")
@@ -165,6 +175,27 @@ export default function ClosingTrainingPage() {
     mql.addEventListener("change", handler)
     return () => mql.removeEventListener("change", handler)
   }, [])
+
+  // Mobile: preload every module's resources so each expanded video can show its own.
+  useEffect(() => {
+    if (!isMobile || modules.length === 0) return
+    let cancelled = false
+    ;(async () => {
+      const entries = await Promise.all(
+        modules.map(async (m) => {
+          try {
+            const res = await fetch(`/api/training/resources?module_id=${m.id}`)
+            const json = await res.json()
+            return [m.id, (json.data || []) as TrainingResource[]] as const
+          } catch {
+            return [m.id, [] as TrainingResource[]] as const
+          }
+        })
+      )
+      if (!cancelled) setResByModule(Object.fromEntries(entries))
+    })()
+    return () => { cancelled = true }
+  }, [isMobile, modules])
 
   const fetchModules = useCallback(async () => {
     try {
@@ -234,7 +265,6 @@ export default function ClosingTrainingPage() {
     if (autoExpandedRef.current) return
     if (isMobile && modules.length > 0) {
       autoExpandedRef.current = true
-      setMobileExpandedId(modules[0].id)
       setSelectedModule((cur) => cur ?? modules[0])
     }
   }, [isMobile, modules])
@@ -519,26 +549,32 @@ export default function ClosingTrainingPage() {
       formData.append("type", "resource")
 
       const uploadRes = await fetch("/api/training/upload", { method: "POST", body: formData })
-      const uploadJson = await uploadRes.json()
-
-      if (uploadJson.url) {
-        await fetch("/api/training/resources", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            module_id: selectedModule.id,
-            file_name: uploadJson.fileName,
-            display_name: file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
-            file_url: uploadJson.url,
-            file_size: uploadJson.fileSize,
-            file_type: file.type,
-            sort_order: resources.length,
-          }),
-        })
-        fetchResources(selectedModule.id)
+      const uploadJson = await uploadRes.json().catch(() => ({}))
+      if (!uploadRes.ok || !uploadJson.url) {
+        alert(uploadJson.error || "Upload failed. Please try again.")
+        return
       }
-    } catch {
-      // Error
+      const createRes = await fetch("/api/training/resources", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          module_id: selectedModule.id,
+          file_name: uploadJson.fileName,
+          display_name: file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
+          file_url: uploadJson.url,
+          file_size: uploadJson.fileSize,
+          file_type: file.type,
+          sort_order: resources.length,
+        }),
+      })
+      const createJson = await createRes.json().catch(() => ({}))
+      if (!createRes.ok) {
+        alert(createJson.error || "Could not add the resource. Please try again.")
+        return
+      }
+      fetchResources(selectedModule.id)
+    } catch (err) {
+      alert("Something went wrong adding the resource: " + (err instanceof Error ? err.message : "unknown error"))
     } finally {
       setUploading(false)
       setShowAddResource(false)
@@ -748,6 +784,16 @@ export default function ClosingTrainingPage() {
           Master every step of the asset recovery closing process -- from first contact to
           disbursement.
         </p>
+        <div className="mt-3 flex flex-col items-start gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-xs sm:text-sm font-semibold text-green-800 ring-1 ring-inset ring-green-300">
+            <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            All agents now get up to 125 skiptraced leads a week!
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-xs sm:text-sm font-semibold text-green-800 ring-1 ring-inset ring-green-300">
+            <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            All Asset Recovery Agents get 50% of all claimant contracts
+          </span>
+        </div>
       </div>
 
       {/* Stats Row -- horizontal on all screens */}
@@ -801,7 +847,8 @@ export default function ClosingTrainingPage() {
               {modules.map((mod, idx) => {
                 const isSelected = selectedModule?.id === mod.id
                 const accessible = isAdmin || isModuleAccessible()
-                const isMobileExpanded = isMobile && mobileExpandedId === mod.id
+                // On mobile every accessible module is shown expanded (no accordion).
+                const isMobileExpanded = isMobile && accessible
 
                 return (
                   <div key={mod.id}>
@@ -810,19 +857,11 @@ export default function ClosingTrainingPage() {
                       disabled={!accessible}
                       onClick={() => {
                         if (!accessible) return
+                        // On mobile all videos are already expanded — the header isn't a toggle.
+                        if (isMobile) return
                         setPlayingVideoId(null)
-                        if (isMobile) {
-                          // Accordion toggle on mobile
-                          const newId = mobileExpandedId === mod.id ? null : mod.id
-                          setMobileExpandedId(newId)
-                          if (newId !== null) {
-                            setSelectedModule(mod)
-                            setEditing(false)
-                          }
-                        } else {
-                          setSelectedModule(mod)
-                          setEditing(false)
-                        }
+                        setSelectedModule(mod)
+                        setEditing(false)
                       }}
                       className={cn(
                         "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
@@ -880,32 +919,23 @@ export default function ClosingTrainingPage() {
                             {mod.access_level.map((t) => t === "owner_operator" ? "OO" : t === "partnership" ? "P" : t === "admin" ? "A" : "B").join("+")}
                           </span>
                         )}
-                        {/* Mobile chevron indicator */}
-                        {isMobile && accessible && (
-                          <ChevronDown
-                            className={cn(
-                              "h-4 w-4 text-muted-foreground transition-transform duration-200",
-                              isMobileExpanded && "rotate-180"
-                            )}
-                          />
-                        )}
                       </div>
                     </button>
 
-                    {/* Mobile accordion expanded content */}
-                    {isMobileExpanded && accessible && selectedModule?.id === mod.id && (
+                    {/* Mobile: every accessible module is shown expanded (per-module video + resources) */}
+                    {isMobileExpanded && accessible && (
                       <div className="px-3 pb-4 pt-2 space-y-4 bg-muted/30 border-t border-border/50 overflow-hidden">
                         {/* Video Player */}
                         <div className="rounded-xl overflow-hidden w-full">
                           <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
-                            {selectedModule.video_url && playingVideoId === selectedModule.id ? (
-                              isYouTubeOrVimeo(selectedModule.video_url) ? (
+                            {mod.video_url && playingVideoId === mod.id ? (
+                              isYouTubeOrVimeo(mod.video_url) ? (
                                 <iframe
-                                  src={getEmbedUrl(selectedModule.video_url)}
+                                  src={getEmbedUrl(mod.video_url)}
                                   className="absolute inset-0 w-full h-full rounded-xl"
                                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                   allowFullScreen
-                                  title={selectedModule.title}
+                                  title={mod.title}
                                 />
                               ) : (
                                 <video
@@ -913,27 +943,27 @@ export default function ClosingTrainingPage() {
                                   controls
                                   autoPlay
                                   preload="metadata"
-                                  key={`mobile-${selectedModule.video_url}`}
+                                  key={`mobile-${mod.video_url}`}
                                 >
-                                  <source src={selectedModule.video_url} type="video/mp4" />
+                                  <source src={mod.video_url} type="video/mp4" />
                                 </video>
                               )
                             ) : (
                               <div
                                 className="absolute inset-0 rounded-xl overflow-hidden cursor-pointer"
                                 onClick={() => {
-                                  if (!selectedModule.video_url) return
-                                  if (!hasVideoAccess(selectedModule)) {
-                                    showBlockedPopup(selectedModule)
+                                  if (!mod.video_url) return
+                                  if (!hasVideoAccess(mod)) {
+                                    showBlockedPopup(mod)
                                     return
                                   }
-                                  setPlayingVideoId(selectedModule.id)
+                                  setPlayingVideoId(mod.id)
                                 }}
                               >
-                                {selectedModule.poster_url && (
+                                {mod.poster_url && (
                                   <img
-                                    src={selectedModule.poster_url}
-                                    alt={selectedModule.title}
+                                    src={mod.poster_url}
+                                    alt={mod.title}
                                     className="absolute inset-0 w-full h-full object-cover"
                                   />
                                 )}
@@ -942,16 +972,16 @@ export default function ClosingTrainingPage() {
                                   <div className="flex flex-col items-center gap-2 text-white/90">
                                     <div className={cn(
                                       "flex items-center justify-center h-14 w-14 rounded-full text-white shadow-xl",
-                                      hasVideoAccess(selectedModule) ? "bg-indigo-600/90 shadow-indigo-600/30" : "bg-slate-600/90 shadow-slate-600/30"
+                                      hasVideoAccess(mod) ? "bg-indigo-600/90 shadow-indigo-600/30" : "bg-slate-600/90 shadow-slate-600/30"
                                     )}>
-                                      {hasVideoAccess(selectedModule) ? (
+                                      {hasVideoAccess(mod) ? (
                                         <Play className="h-6 w-6 ml-0.5" />
                                       ) : (
                                         <Lock className="h-5 w-5" />
                                       )}
                                     </div>
                                     <span className="text-xs font-medium">
-                                      {!selectedModule.video_url ? "No video yet" : hasVideoAccess(selectedModule) ? "Play" : "Restricted"}
+                                      {!mod.video_url ? "No video yet" : hasVideoAccess(mod) ? "Play" : "Restricted"}
                                     </span>
                                   </div>
                                 </div>
@@ -962,14 +992,14 @@ export default function ClosingTrainingPage() {
 
                         {/* Module Description */}
                         <div className="overflow-hidden">
-                          <p className="text-sm font-semibold text-foreground break-words">{selectedModule.title}</p>
-                          <div className="text-xs text-muted-foreground mt-1 break-words line-clamp-3 [&_p]:mb-1 [&_p:last-child]:mb-0 [&_strong]:text-foreground [&_b]:text-foreground" dangerouslySetInnerHTML={{ __html: selectedModule.description || "" }} />
+                          <p className="text-sm font-semibold text-foreground break-words">{mod.title}</p>
+                          <div className="text-xs text-muted-foreground mt-1 break-words line-clamp-3 [&_p]:mb-1 [&_p:last-child]:mb-0 [&_strong]:text-foreground [&_b]:text-foreground" dangerouslySetInnerHTML={{ __html: mod.description || "" }} />
                         </div>
 
                         {/* Mark Complete / Completed */}
-                        {hasVideoAccess(selectedModule) && !userCompletedModules.has(selectedModule.id) && isModuleAccessible() && (
+                        {hasVideoAccess(mod) && !userCompletedModules.has(mod.id) && isModuleAccessible() && (
                           <Button
-                            onClick={() => markModuleComplete(selectedModule.id)}
+                            onClick={() => markModuleComplete(mod.id)}
                             disabled={markingComplete}
                             className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-5 text-sm font-semibold"
                           >
@@ -987,38 +1017,36 @@ export default function ClosingTrainingPage() {
                           </Button>
                         )}
 
-                        {userCompletedModules.has(selectedModule.id) && (
+                        {userCompletedModules.has(mod.id) && (
                           <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
                             <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0" />
                             <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">Module Completed</span>
                           </div>
                         )}
 
-                        {/* Resources */}
-                        {(resources.length > 0 || isAdmin) && (
-                          <div className="relative">
-                            <div>
-                              <div className="flex items-center gap-2 mb-3">
-                                <FolderOpen className="h-4 w-4 text-indigo-500" />
-                                <span className="text-sm font-semibold">Resources</span>
-                                {resources.length > 0 && (
-                                  <Badge variant="outline" className="text-xs">
-                                    {resources.length} file{resources.length !== 1 ? "s" : ""}
-                                  </Badge>
-                                )}
-                              </div>
-                              {resourcesLoading ? (
-                                <div className="flex items-center justify-center py-4">
-                                  <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-                                </div>
-                              ) : resources.length > 0 ? (
+                        {/* Resources — open dropdown, this module's own files */}
+                        {((resByModule[mod.id]?.length ?? 0) > 0 || isAdmin) && (
+                          <details open className="rounded-lg border border-border/50 bg-background/40">
+                            <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 list-none [&::-webkit-details-marker]:hidden">
+                              <FolderOpen className="h-4 w-4 text-indigo-500" />
+                              <span className="text-sm font-semibold">Resources</span>
+                              {(resByModule[mod.id]?.length ?? 0) > 0 && (
+                                <Badge variant="outline" className="text-xs">
+                                  {resByModule[mod.id]!.length} file{resByModule[mod.id]!.length !== 1 ? "s" : ""}
+                                </Badge>
+                              )}
+                              <ChevronDown className="h-4 w-4 text-muted-foreground ml-auto" />
+                            </summary>
+                            <div className="px-3 pb-3">
+                              {(resByModule[mod.id]?.length ?? 0) > 0 ? (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                  {resources.map((resource) => (
+                                  {(resByModule[mod.id] || []).map((resource) => (
                                     <ResourceFolder
                                       key={resource.id}
                                       displayName={resource.display_name}
                                       fileUrl={resource.file_url}
                                       coverUrl={resource.cover_url}
+                                      accessTier={resourceTier(resource.id)}
                                       onDownload={() => handleDownload(resource)}
                                       onPrint={() => handlePrint(resource)}
                                       onEdit={isAdmin ? () => { setEditResource(resource); setEditName(resource.display_name); setEditTiers(resourceAccess[String(resource.id)] || []) } : undefined}
@@ -1034,7 +1062,7 @@ export default function ClosingTrainingPage() {
                                 </p>
                               )}
                             </div>
-                          </div>
+                          </details>
                         )}
                       </div>
                     )}
@@ -1617,6 +1645,7 @@ export default function ClosingTrainingPage() {
                               displayName={resource.display_name}
                               fileUrl={resource.file_url}
                               coverUrl={resource.cover_url}
+                              accessTier={resourceTier(resource.id)}
                               onDownload={() => handleDownload(resource)}
                               onPrint={() => handlePrint(resource)}
                               onEdit={isAdmin ? () => { setEditResource(resource); setEditName(resource.display_name); setEditTiers(resourceAccess[String(resource.id)] || []) } : undefined}
@@ -1758,7 +1787,25 @@ export default function ClosingTrainingPage() {
             </div>
 
             <div className="mb-4">
-              <label className="text-xs text-muted-foreground mb-1 block">Who can download this guide</label>
+              <label className="text-xs text-muted-foreground mb-1 block">Access designation (shows the pill on the guide)</label>
+              <div className="flex flex-wrap gap-2 mb-2">
+                <button
+                  type="button"
+                  onClick={() => setEditTiers([])}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors ${!editTiers.includes("partnership") && !editTiers.includes("owner_operator") || editTiers.includes("basic") ? "bg-emerald-600 text-white border-emerald-600" : "bg-background text-emerald-700 border-emerald-300 hover:bg-emerald-50"}`}
+                >
+                  ● Free (all agents)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditTiers(["partnership", "owner_operator", "admin"])}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors ${editTiers.length > 0 && !editTiers.includes("basic") ? "bg-red-600 text-white border-red-600" : "bg-background text-red-700 border-red-300 hover:bg-red-50"}`}
+                >
+                  ● Live Agent Access (paid only)
+                </button>
+                <Button onClick={saveResourceAccess} disabled={editBusy} size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white">Save</Button>
+              </div>
+              <label className="text-[11px] text-muted-foreground mb-1 block">Fine control — exact download tiers</label>
               <div className="flex flex-wrap gap-2">
                 {([["basic", "Basic"], ["partnership", "Partnership"], ["owner_operator", "Owner Operator"], ["admin", "Admin"]] as const).map(([val, label]) => {
                   const on = editTiers.includes(val)

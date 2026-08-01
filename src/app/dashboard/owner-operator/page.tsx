@@ -1,16 +1,25 @@
 "use client"
 
+import { useAgentManager } from "@/components/agent-manager-modal"
 import { PaymentMethodsNote } from '@/components/payment-methods-note'
-import { Check, Phone, FileText, Crown, Building2, Globe, ShieldCheck, ChevronDown, Play } from "lucide-react"
+import { OwnerOpCountdown } from '@/components/owner-op-countdown'
+import { OoImageSlider } from '@/components/oo-image-slider'
+import { Check, Phone, FileText, Crown, Building2, Globe, ShieldCheck, ChevronDown, Play, CalendarDays } from "lucide-react"
+
+const CALENDLY_URL = "https://calendly.com/coreypearson/30min"
 
 const AGENT_995_URL = "https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business"
 
 // The standout features Corey walks through on the call — the reasons to upgrade.
 const PRIMARY_FEATURES = [
   "Your own brand, LLC, EIN, and business bank account — set up for you",
+  "2 live 2-hour screen-share sessions — we sit with you and run the back office together until you can run it yourself",
+  "A dedicated VA for your first 2 months — manages your dashboard day to day and hands off cleanly to you or your own VA",
+  "Our ad copy and ad training videos — the exact ads we run right now to generate agent leads, handed to you",
+  "Large-volume skip tracing + DNC scrubbing training — process thousands of leads yourself, fully independent of us",
   "A white-label website you own, fully refreshed with 6 months of SEO & AI optimization",
   "The complete built-in CRM wired into your site — you own the code, no $100+/mo rental",
-  "Up to 250 skip-traced, DNC-screened leads per week for 3 months (then $5 per lead)",
+  "Your first 2 months of leads FREE — up to 250 skip-traced, DNC-screened leads per week (then $5 per lead)",
   "One-click outreach on every lead: ringless voicemail, SMS, and ready-to-send email",
   "Email drafts in English and Spanish with the contingency agreement pre-filled and attached",
   "Certified-letter button — prints and mails certified from our office, tracking sent back to you",
@@ -80,6 +89,7 @@ const HEADLINE_INCLUDES = [
 ]
 
 export default function OwnerOperatorPage() {
+  const { openAgentManager } = useAgentManager()
   return (
     <div className="max-w-5xl space-y-8 pb-12">
       {/* Hero */}
@@ -91,27 +101,36 @@ export default function OwnerOperatorPage() {
               <Crown className="h-3.5 w-3.5" /> Owner Operator Program
             </span>
             <h1 className="mt-3 font-serif text-3xl font-bold text-[#0f172a] sm:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
-              Your own brand, your own LLC, your own business.
+              Stop renting your income. Own the whole business.
             </h1>
             <p className="mt-3 text-slate-600">
-              The complete business build-out. You keep <strong className="text-[#0f172a]">100%</strong> of the recovery
+              If you&apos;re the kind of person who was never going to work for someone else forever, this is the exit.
+              Surplus recovery is a human-in-the-loop business by law &mdash; a court will not release a family&apos;s money
+              to software. That makes this one of the few businesses AI makes <em>stronger</em> instead of obsolete.
+              The complete build-out, and you keep <strong className="text-[#0f172a]">100%</strong> of the recovery
               fee &mdash; up to 30% (some states like Texas cap recovery agents at 20%).
             </p>
             <div className="mt-5 flex flex-wrap items-end gap-x-6 gap-y-2">
               <div>
-                <div className="text-3xl font-bold text-[#0f172a]">$5,200</div>
-                <div className="text-sm text-slate-500">or 4 payments of $1,300</div>
+                <div className="text-3xl font-bold text-[#0f172a]">$7,495</div>
+                <div className="text-sm text-slate-500">or 4 payments of $1,874</div>
               </div>
               <div className="rounded-lg bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-700">
                 Keep 100% of your recovery fee
               </div>
             </div>
+            <div className="mt-4">
+              <OwnerOpCountdown />
+            </div>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="https://stan.store/alliepearson/p/owner-operator--complete-business-buildout" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-base font-bold text-white transition hover:bg-emerald-700">
-                Enroll &mdash; $1,300 Down (4 &times; $1,300)
+              <button type="button" onClick={openAgentManager} className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-base font-bold text-white transition hover:bg-emerald-700">
+                Enroll &mdash; $1,874 Down (4 &times; $1,874)
+              </button>
+              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-5 py-3 text-base font-bold text-white transition hover:opacity-90">
+                <CalendarDays className="h-5 w-5" /> Schedule a Consult
               </a>
               <a href="tel:+18885458007" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#D82221] px-5 py-3 text-base font-bold text-white transition hover:opacity-90">
-                <Phone className="h-5 w-5" /> Call to Upgrade &mdash; (888) 545-8007
+                <Phone className="h-5 w-5" /> (888) 545-8007
               </a>
               <a href="https://www.usforeclosurerecovery.com/foreclosure-recovery-surplus-funds-business" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-base font-semibold text-[#1E3A5F] transition hover:bg-slate-50">
                 See the full program
@@ -122,6 +141,17 @@ export default function OwnerOperatorPage() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
+            {/* 1:1 intro video — muted autoplay loop, controls so the user can unmute */}
+            <video
+              src="/videos/owner-operator-intro.mp4"
+              className="aspect-square w-full rounded-xl border border-slate-200 bg-black shadow-sm"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+            />
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
               <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Everything in Partnership, plus</p>
               <ul className="mt-3 space-y-2.5">
@@ -154,21 +184,22 @@ export default function OwnerOperatorPage() {
         </div>
       </div>
 
-      {/* Start My Business build-out dashboard preview (own section, above the features) */}
-      <a
-        href="https://www.startmybusiness.us/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/start-my-business-build-out-dashboard.webp"
-          alt="Your Start My Business build-out dashboard — 45 daily tasks handled for you"
-          className="w-full"
-          loading="lazy"
-        />
-      </a>
+      {/* Image slider — hero composite, admin proof, income proof, SMB build-out dashboard */}
+      <div>
+        <div className="mb-3 rounded-full bg-[#09274c] px-6 py-3 text-center shadow-sm">
+          <p className="text-sm font-medium text-white">
+            Reinvest your first contingency agreement distribution to the owner operator program
+          </p>
+        </div>
+        <OoImageSlider />
+        <div className="mt-3 rounded-full bg-[#d82221] px-6 py-3 text-center shadow-sm">
+          <p className="text-sm font-medium text-white">
+            These figures exclude signed contingency agreements and their pending profits, which &mdash; depending on
+            jurisdiction and county distribution timelines &mdash; dramatically increase the total earning potential of
+            this model.
+          </p>
+        </div>
+      </div>
 
       {/* What you get — primary features + Additional Features dropdown */}
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -234,8 +265,9 @@ export default function OwnerOperatorPage() {
         </div>
         <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
           <p className="text-sm text-emerald-900">
-            <strong>Add-On: One-Click Skip Tracing.</strong> After your 3 months of included leads, upload your own lists and
-            skip trace + Do Not Call scrub them in one click &mdash; a month-to-month module you start or pause anytime.
+            <strong>After your 2 free months of leads, keep your pipeline full two ways.</strong> Do the skip tracing yourself
+            &mdash; we train you on the exact workflow our own team runs (included in your build-out) &mdash; or have us do it
+            for you from $300/month: upload your lists, one click, and they come back skip traced + Do Not Call scrubbed.
           </p>
           <a
             href="https://seafile.alwaysencrypted.com/f/e68d39e251294d84abf1/"
@@ -274,15 +306,15 @@ export default function OwnerOperatorPage() {
           <div className="mt-3 space-y-2 text-sm">
             <div className="rounded-lg bg-slate-50 border border-slate-200 p-3">
               <p className="font-semibold text-[#0f172a]">Already a Partner</p>
-              <p className="text-slate-600">$5,200 &minus; $995 (already paid) = <strong className="text-[#0f172a]">$4,205</strong> to upgrade</p>
-              <p className="text-slate-500 text-xs">Or 4 payments of <strong className="text-[#0f172a]">$1,051</strong> — first payment is your down payment.</p>
-              <a href="https://stan.store/alliepearson/p/owner-operator-upgrade" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700">Upgrade &mdash; $1,051 Down (4 &times; $1,051)</a>
+              <p className="text-slate-600">$7,495 &minus; $995 (already paid) = <strong className="text-[#0f172a]">$6,500</strong> to upgrade</p>
+              <p className="text-slate-500 text-xs">Or 4 payments of <strong className="text-[#0f172a]">$1,625</strong> — first payment is your down payment.</p>
+              <button type="button" onClick={openAgentManager} className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700">Upgrade &mdash; $1,625 Down (4 &times; $1,625)</button>
             </div>
             <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3">
               <p className="font-semibold text-[#0f172a]">Partner + already own an LLC</p>
-              <p className="text-slate-600">$5,200 &minus; $995 &minus; $500 (LLC) = <strong className="text-[#0f172a]">$3,705</strong> to upgrade</p>
-              <p className="text-slate-500 text-xs">Or 4 payments of <strong className="text-[#0f172a]">$926</strong> — first payment is your down payment.</p>
-              <a href="https://stan.store/alliepearson/p/owner-operator-upgrade--partner--you-own-your-l" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700">Upgrade &mdash; $926 Down (4 &times; $926)</a>
+              <p className="text-slate-600">$7,495 &minus; $995 &minus; $500 (LLC) = <strong className="text-[#0f172a]">$6,000</strong> to upgrade</p>
+              <p className="text-slate-500 text-xs">Or 4 payments of <strong className="text-[#0f172a]">$1,500</strong> — first payment is your down payment.</p>
+              <button type="button" onClick={openAgentManager} className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700">Upgrade &mdash; $1,500 Down (4 &times; $1,500)</button>
             </div>
             <p className="text-xs text-slate-500">Payment plans must be completed before website/build-out delivery.</p>
             <PaymentMethodsNote compact />
@@ -294,12 +326,11 @@ export default function OwnerOperatorPage() {
               <div className="text-lg font-bold text-[#0f172a]">$995</div>
               <div className="text-xs text-slate-500">agent program</div>
             </a>
-            <a href="https://stan.store/alliepearson/p/owner-operator--complete-business-buildout" target="_blank" rel="noopener noreferrer"
-              className="rounded-lg border-2 border-[#D82221] p-3 text-center transition hover:bg-red-50 cursor-pointer">
+            <button type="button" onClick={openAgentManager} className="rounded-lg border-2 border-[#D82221] p-3 text-center transition hover:bg-red-50 cursor-pointer">
               <div className="text-xs font-semibold uppercase text-[#D82221]">Owner Operator</div>
-              <div className="text-lg font-bold text-[#0f172a]">$5,200</div>
-              <div className="text-xs text-slate-500">4 x $1,300 &mdash; enroll</div>
-            </a>
+              <div className="text-lg font-bold text-[#0f172a]">$7,495</div>
+              <div className="text-xs text-slate-500">4 x $1,874 &mdash; enroll</div>
+            </button>
           </div>
         </div>
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6">
@@ -353,13 +384,23 @@ export default function OwnerOperatorPage() {
 
       {/* Final CTA */}
       <div className="rounded-2xl bg-[#0f172a] p-6 text-center sm:p-8">
-        <h2 className="text-2xl font-bold text-white">Ready to own the whole business?</h2>
+        <h2 className="text-2xl font-bold text-white">In 30 days this page says $9,995.</h2>
         <p className="mx-auto mt-2 max-w-xl text-sm text-slate-300">
-          Call our team and we&apos;ll walk you through the Owner Operator upgrade &mdash; your brand, your LLC, 100% of the commission.
+          If you&apos;ve ever caught yourself thinking &quot;I could run this whole thing myself&quot; &mdash; you&apos;re
+          who this was built for. It&apos;s not for someone looking for another course to watch. It&apos;s a working
+          company handed to you: your LLC, your website, your CRM, your leads, a VA running your dashboard while we
+          train you live. Six months from now you&apos;re not an agent splitting fees &mdash; you&apos;re the firm
+          keeping all of them. The only thing that changes by waiting is the price.
         </p>
+        <div className="mx-auto mt-4 max-w-md">
+          <OwnerOpCountdown dark />
+        </div>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <a href="https://stan.store/alliepearson/p/owner-operator--complete-business-buildout" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-lg font-bold text-white transition hover:bg-emerald-700">
-            Enroll &mdash; $1,300 Down
+          <button type="button" onClick={openAgentManager} className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-lg font-bold text-white transition hover:bg-emerald-700">
+            Enroll &mdash; $1,874 Down
+          </button>
+          <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-6 py-3 text-lg font-bold text-white transition hover:opacity-90">
+            <CalendarDays className="h-5 w-5" /> Schedule a Consult
           </a>
           <a href="tel:+18885458007" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#D82221] px-6 py-3 text-lg font-bold text-white transition hover:opacity-90">
             <Phone className="h-5 w-5" /> (888) 545-8007

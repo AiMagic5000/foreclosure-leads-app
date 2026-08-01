@@ -1,5 +1,6 @@
 "use client"
 
+import { useAgentManager } from "@/components/agent-manager-modal"
 import { useEffect, useState, useCallback, Fragment } from "react"
 import { useUser } from "@clerk/nextjs"
 import { Scale, Loader2, CheckCircle2, Search, Gavel, Lock, Map as MapIcon } from "lucide-react"
@@ -58,6 +59,7 @@ function disbursement(r: Rule): { label: string; cls: string; detail: string } {
 }
 
 export default function StateRulesPage() {
+  const { openAgentManager } = useAgentManager()
   const { user } = useUser()
   const { accountType, isAdmin: pinAdmin } = usePin()
   const isAdmin = pinAdmin || user?.emailAddresses?.[0]?.emailAddress?.toLowerCase() === ADMIN_EMAIL
@@ -110,7 +112,7 @@ export default function StateRulesPage() {
         <h2 className="mt-4 text-xl font-bold text-[#0f172a]">State Rules is a paid feature</h2>
         <p className="mt-2 text-sm text-slate-600">Detailed state-by-state recovery rules - fee caps, claim deadlines, solicitation limits, and statute references - are included with any paid plan. Upgrade to unlock all 50 states, or browse the free State Laws overview.</p>
         <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
-          <a href={UPGRADE_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#D82221] px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90">Upgrade Your Plan</a>
+          <button type="button" onClick={openAgentManager} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#D82221] px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90">Upgrade Your Plan</button>
           <a href="/dashboard/states" className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-[#1E3A5F] transition hover:bg-white"><MapIcon className="h-4 w-4" /> View State Laws (free)</a>
         </div>
       </div>

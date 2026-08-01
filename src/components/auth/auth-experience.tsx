@@ -1,5 +1,6 @@
 "use client"
 
+import { InAppBrowserBanner } from "@/components/auth/in-app-browser-banner"
 import { useState } from "react"
 import { SignUp, SignIn } from "@clerk/nextjs"
 import Link from "next/link"
@@ -51,6 +52,7 @@ export function AuthExperience({ defaultMode = "signup" }: { defaultMode?: "sign
   return (
     <div className="min-h-screen bg-white">
       <div className="h-1 bg-gradient-to-r from-[#1e3a5f] via-[#dc2626] to-[#1e3a5f]" />
+      <InAppBrowserBanner />
 
       {/* Header */}
       <header className="bg-white border-b border-slate-200">

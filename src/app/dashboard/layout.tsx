@@ -1,5 +1,6 @@
 "use client"
 
+import { useAgentManager } from "@/components/agent-manager-modal"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
@@ -47,12 +48,15 @@ import {
 import { Button } from "@/components/ui/button"
 import { DashboardSectionVideo } from "@/components/dashboard-section-video"
 import { ImpersonationBanner } from "@/components/impersonation-banner"
+import { TimeTracker } from "@/components/time-tracker"
 import { FreeUpgradeBanner } from "@/components/free-upgrade-banner"
 import { UPGRADE_URL } from "@/lib/upgrade"
 import { ChatWidget } from "@/components/chat-widget"
 import { ActivityTracker } from "@/components/activity-tracker"
 import { cn } from "@/lib/utils"
+import { PRODUCT_UPDATES, LATEST_UPDATE_ID } from "@/lib/product-updates"
 import { PinProvider, usePin } from "@/lib/pin-context"
+import { AgentManagerProvider } from "@/components/agent-manager-modal"
 
 interface NavItem {
   name: string
@@ -314,19 +318,42 @@ function BadgeLabel({ color, text }: { color: string; text: string }) {
 }
 
 function DashboardInner({ children }: { children: React.ReactNode }) {
+  const { openAgentManager } = useAgentManager()
   const pathname = usePathname()
   const { accountType, banned, banReason, impersonating, clearImpersonation } = usePin()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
+  // Product updates: dot blinks until the user opens the bell, then read state
+  // persists in localStorage (re-blinks when a newer update ships).
+  const [updatesUnread, setUpdatesUnread] = useState(false)
+  useEffect(() => {
+    // Deferred (microtask) so the effect body has no synchronous setState —
+    // localStorage is only readable client-side, hence the effect.
+    queueMicrotask(() => {
+      try {
+        const readId = Number(localStorage.getItem("product-updates-read-id") || 0)
+        setUpdatesUnread(readId < LATEST_UPDATE_ID)
+      } catch { setUpdatesUnread(true) }
+    })
+  }, [])
+  const openNotifications = () => {
+    setNotifOpen(!notifOpen)
+    if (!notifOpen && updatesUnread) {
+      try { localStorage.setItem("product-updates-read-id", String(LATEST_UPDATE_ID)) } catch {}
+      setUpdatesUnread(false)
+    }
+  }
 
   useEffect(() => {
-    setMounted(true)
-    const stored = localStorage.getItem("dashboard-theme")
-    if (stored === "dark") {
-      setIsDark(true)
-    }
+    queueMicrotask(() => {
+      setMounted(true)
+      const stored = localStorage.getItem("dashboard-theme")
+      if (stored === "dark") {
+        setIsDark(true)
+      }
+    })
     // Notify admin of dashboard login (debounced server-side)
     const lastPing = sessionStorage.getItem("login-notified")
     if (!lastPing) {
@@ -353,6 +380,8 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
 
   // Banned accounts get a full-screen block — no dashboard, no content.
   if (banned) {
+    // Non-payment bans get a "pay to reactivate" screen instead of a plain suspension notice.
+    const paymentDue = !!banReason && /payment due|non-?payment|past.?due/i.test(banReason)
     return (
       <div className="flex min-h-screen items-center justify-center p-6" style={{ backgroundColor: "#241c12" }}>
         <div className="w-full max-w-md sm:max-w-lg overflow-hidden rounded-2xl border-2 text-center shadow-2xl" style={{ backgroundColor: "#f4ecd8", borderColor: "#8a6a43" }}>
@@ -373,14 +402,30 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
               alt="Foreclosure Recovery Inc."
               className="mx-auto mb-4 h-9 w-auto"
             />
-            <h1 className="text-xl font-bold" style={{ color: "#5b4327" }}>Account suspended</h1>
-            <p className="mt-2 text-sm" style={{ color: "#6b5640" }}>
-              Your account has been suspended and dashboard access is disabled.
-              {banReason ? <> Reason: <span className="font-semibold" style={{ color: "#5b4327" }}>{banReason}</span>.</> : null}
-            </p>
-            <p className="mt-3 text-sm" style={{ color: "#6b5640" }}>
-              If you believe this is a mistake, contact us at <a href="tel:+18885458007" className="font-semibold underline" style={{ color: "#8a5a1f" }}>(888) 545-8007</a> or <a href="mailto:support@usforeclosureleads.com" className="font-semibold underline" style={{ color: "#8a5a1f" }}>support@usforeclosureleads.com</a>.
-            </p>
+            <h1 className="text-xl font-bold" style={{ color: "#5b4327" }}>{paymentDue ? "Payment due" : "Account suspended"}</h1>
+            {paymentDue ? (
+              <>
+                <p className="mt-2 text-sm" style={{ color: "#6b5640" }}>
+                  Your account is on hold for a past-due payment. Complete your payment below to reactivate your account and restore full access right away.
+                </p>
+                <button type="button" onClick={openAgentManager} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-bold text-white shadow-md" style={{ backgroundColor: "#b8860b" }}>
+                  Complete payment &amp; reactivate
+                </button>
+                <p className="mt-4 text-sm" style={{ color: "#6b5640" }}>
+                  Questions? Reach us at <a href="tel:+18885458007" className="font-semibold underline" style={{ color: "#8a5a1f" }}>(888) 545-8007</a> or <a href="mailto:support@usforeclosureleads.com" className="font-semibold underline" style={{ color: "#8a5a1f" }}>support@usforeclosureleads.com</a>.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="mt-2 text-sm" style={{ color: "#6b5640" }}>
+                  Your account has been suspended and dashboard access is disabled.
+                  {banReason ? <> Reason: <span className="font-semibold" style={{ color: "#5b4327" }}>{banReason}</span>.</> : null}
+                </p>
+                <p className="mt-3 text-sm" style={{ color: "#6b5640" }}>
+                  If you believe this is a mistake, contact us at <a href="tel:+18885458007" className="font-semibold underline" style={{ color: "#8a5a1f" }}>(888) 545-8007</a> or <a href="mailto:support@usforeclosureleads.com" className="font-semibold underline" style={{ color: "#8a5a1f" }}>support@usforeclosureleads.com</a>.
+                </p>
+              </>
+            )}
             {impersonating ? (
               <button
                 onClick={() => clearImpersonation()}
@@ -505,25 +550,43 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
           </nav>
 
           <div className={cn("p-4 border-t space-y-4", borderColor)}>
-            <div className="rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 p-3 text-white">
-              <p className="font-semibold text-sm text-center">Upgrade to become an</p>
-              <a href={UPGRADE_URL} target="_blank" rel="noopener noreferrer" className="block">
-                <Button
-                  size="sm"
-                  className="w-full mt-2 h-auto whitespace-normal py-2 text-xs leading-tight bg-red-600 text-white hover:bg-red-700 border border-red-400/30"
+            {accountType === "partnership" ? (
+              /* Paid agents already own ARA — pitch the next tier instead. */
+              <div className="rounded-lg bg-gradient-to-r from-amber-600 to-yellow-500 p-3 text-white">
+                <p className="font-semibold text-sm text-center">Upgrade to become an</p>
+                <Link href="/dashboard/owner-operator" className="block">
+                  <Button
+                    size="sm"
+                    className="w-full mt-2 h-auto whitespace-normal py-2 text-xs leading-tight bg-[#09274c] text-white hover:bg-[#0e3a70] border border-amber-300/40"
+                  >
+                    OWNER OPERATOR
+                  </Button>
+                </Link>
+                <p className="mt-2 text-center text-[11px] font-semibold text-white/95">
+                  Own the whole operation &mdash; your brand, your business
+                </p>
+              </div>
+            ) : accountType === "owner_operator" || accountType === "junior_owner_operator" ? null : (
+              <div className="rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 p-3 text-white">
+                <p className="font-semibold text-sm text-center">Upgrade to become an</p>
+                <button type="button" onClick={openAgentManager} className="block">
+                  <Button
+                    size="sm"
+                    className="w-full mt-2 h-auto whitespace-normal py-2 text-xs leading-tight bg-red-600 text-white hover:bg-red-700 border border-red-400/30"
+                  >
+                    ASSET RECOVERY AGENT
+                  </Button>
+                </button>
+                <a
+                  href="https://usforeclosureleads.com/arb-sections.html#guarantee"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 block text-center text-[11px] font-semibold text-white"
                 >
-                  ASSET RECOVERY AGENT
-                </Button>
-              </a>
-              <a
-                href="https://usforeclosureleads.com/arb-sections.html#guarantee"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 block text-center text-[11px] font-semibold text-white"
-              >
-                Money Back Guarantee <span className="underline opacity-90">see details</span>
-              </a>
-            </div>
+                  Money Back Guarantee <span className="underline opacity-90">see details</span>
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </aside>
@@ -591,18 +654,42 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
             </button>
 
             <div className="relative">
-              <Button variant="ghost" size="icon" className="relative" onClick={() => setNotifOpen(!notifOpen)}>
+              <Button variant="ghost" size="icon" className="relative" onClick={openNotifications}>
                 <Bell className={cn("h-5 w-5", isDark ? "text-slate-300" : "text-gray-600")} />
-                <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500" />
+                {updatesUnread && (
+                  <span className="absolute top-1 right-1 flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500" />
+                  </span>
+                )}
               </Button>
               {notifOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
                   <div className={cn(
-                    "absolute right-0 top-full mt-2 z-50 w-72 rounded-xl border shadow-lg p-4 space-y-3",
+                    "absolute right-0 top-full mt-2 z-50 w-80 max-h-[70vh] overflow-y-auto rounded-xl border shadow-lg p-4 space-y-3",
                     isDark ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"
                   )}>
-                    <h4 className={cn("text-sm font-bold", textColor)}>Need Help?</h4>
+                    <h4 className={cn("text-sm font-bold", textColor)}>What&apos;s New</h4>
+                    <div className="space-y-2">
+                      {PRODUCT_UPDATES.map((u) => (
+                        <a
+                          key={u.id}
+                          href={u.href || "#"}
+                          className={cn(
+                            "block rounded-lg border px-3 py-2.5 transition-colors",
+                            isDark ? "border-slate-700 hover:bg-slate-800" : "border-gray-100 hover:bg-gray-50"
+                          )}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <p className={cn("text-sm font-semibold", textColor)}>{u.title}</p>
+                            <span className="flex-none text-[10px] text-muted-foreground">{u.date}</span>
+                          </div>
+                          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{u.body}</p>
+                        </a>
+                      ))}
+                    </div>
+                    <h4 className={cn("text-sm font-bold pt-1", textColor)}>Need Help?</h4>
                     <a
                       href="mailto:support@usforeclosureleads.com"
                       className={cn(
@@ -644,6 +731,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
 
         <main className="p-4 lg:p-6 min-w-0 max-w-full overflow-x-hidden">
           <ImpersonationBanner />
+          <TimeTracker />
           <FreeUpgradeBanner />
           <DashboardSectionVideo />
           {children}
@@ -669,7 +757,9 @@ export default function DashboardLayout({
   }
   return (
     <PinProvider>
-      <DashboardInner>{children}</DashboardInner>
+      <AgentManagerProvider>
+        <DashboardInner>{children}</DashboardInner>
+      </AgentManagerProvider>
     </PinProvider>
   )
 }

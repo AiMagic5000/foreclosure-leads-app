@@ -1,10 +1,12 @@
 "use client"
 
+import { useAgentManager } from "@/components/agent-manager-modal"
 import { ExternalLink, Mail } from "lucide-react"
 
 // The shared upgrade banner is rendered on top of every dashboard page by the
 // layout (FreeUpgradeBanner), so it already appears above this iframe.
 export default function ContingentAttorneysPage() {
+  const { openAgentManager } = useAgentManager()
   return (
     <div className="space-y-4">
       <div className="space-y-3">
@@ -57,14 +59,9 @@ export default function ContingentAttorneysPage() {
             Either way, you must be registered with us first.
           </p>
         </div>
-        <a
-          href="https://stan.store/alliepearson/p/asset-recovery-agent-partnership"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg bg-[#dc2626] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#b91c1c]"
-        >
+        <button type="button" onClick={openAgentManager} className="inline-flex items-center gap-2 rounded-lg bg-[#dc2626] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#b91c1c]">
           Become a Registered Asset Recovery Agent <ExternalLink className="h-4 w-4" />
-        </a>
+        </button>
       </div>
 
       {/* My Trust Software blocks third-party embedding, so we show a live preview

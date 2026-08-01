@@ -41,9 +41,11 @@ import { statesData } from "@/data/states";
 import { ClosingToolsSlideshow } from "@/components/landing/ClosingToolsSlideshow";
 import { DashboardSlideshow } from "@/components/landing/DashboardSlideshow";
 import { AnimatedFeatures } from "@/components/landing/AnimatedFeatures";
+import { OwnerOperatorSection } from "@/components/landing/OwnerOperatorSection";
 import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
 import { BackToTop } from "@/components/back-to-top";
+import { AgentManagerProvider } from "@/components/agent-manager-modal";
 
 const STATS = [
   { value: "3,200", label: "Counties Covered" },
@@ -450,6 +452,11 @@ export default function LandingPage() {
 
         {/* The complete Asset Recovery Business page — every section, image, and video, embedded (no duplicates) */}
         <ArbEmbed />
+
+        {/* Owner Operator — full-business offer with the price-change countdown */}
+        <AgentManagerProvider>
+          <OwnerOperatorSection />
+        </AgentManagerProvider>
       </main>
 
       <Footer />

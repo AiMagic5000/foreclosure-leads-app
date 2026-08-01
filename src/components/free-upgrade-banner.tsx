@@ -1,5 +1,7 @@
 "use client"
 
+import { useAgentManager } from "@/components/agent-manager-modal"
+
 import { usePin } from "@/lib/pin-context"
 import { Crown, ArrowUpRight } from "lucide-react"
 import { UPGRADE_URL } from "@/lib/upgrade"
@@ -10,6 +12,7 @@ import { UPGRADE_URL } from "@/lib/upgrade"
 // tier resolves — the old version defaulted accountType to "basic" (shown), then
 // hid once a non-basic tier (admin/OO) loaded, which read as "appears then vanishes".
 export function FreeUpgradeBanner() {
+  const { openAgentManager } = useAgentManager()
   const { accountType, isLoading } = usePin()
   if (isLoading) return null
   if (accountType === "owner_operator") return null
@@ -38,14 +41,9 @@ export function FreeUpgradeBanner() {
             </span>
             <span className="text-[10px] text-slate-500 underline">see details</span>
           </a>
-          <a
-            href={UPGRADE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
-          >
-            Become an Agent &mdash; $331 <ArrowUpRight className="h-4 w-4" />
-          </a>
+          <button type="button" onClick={openAgentManager} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90">
+            Become an Agent <ArrowUpRight className="h-4 w-4" />
+          </button>
           <a
             href="/dashboard/owner-operator"
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#D82221] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"

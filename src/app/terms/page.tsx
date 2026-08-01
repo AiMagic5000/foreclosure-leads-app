@@ -6,6 +6,7 @@ import Link from "next/link";
 
 const sections = [
   { id: "acceptance", title: "Acceptance of Terms" },
+  { id: "esign-consent", title: "Electronic Signatures & Consent" },
   { id: "service", title: "Description of Service" },
   { id: "program", title: "Asset Recovery Agent Partnership Program" },
   { id: "account", title: "Account Registration & Security" },
@@ -179,6 +180,25 @@ export default function TermsOfService() {
                   </p>
                 </section>
 
+                {/* Electronic Signatures & Consent (E-SIGN) */}
+                <section id="esign-consent">
+                  <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
+                    Electronic Signatures &amp; Consent (E-SIGN)
+                  </h2>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    You agree to transact with the Company electronically. When you create an account, check a consent box, click a button such as &ldquo;I Agree,&rdquo; &ldquo;Enroll,&rdquo; &ldquo;Sign Up,&rdquo; or &ldquo;Submit,&rdquo; or otherwise indicate your assent to these Terms, the Privacy Policy, the Money Back Guarantee, any Independent Contractor Agreement, or any other agreement presented to you through the Platform, you are providing your <strong>electronic signature</strong>.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    You acknowledge and agree that your electronic signature is the legal equivalent of your handwritten signature in ink on paper, and that it carries the same legal force, effect, and enforceability as a physical signature. Under the federal Electronic Signatures in Global and National Commerce Act (15 U.S.C. &sect; 7001, the &ldquo;E-SIGN Act&rdquo;) and the Uniform Electronic Transactions Act (UETA), your electronic signature and the electronic records of your agreement are valid, binding, and admissible, and may not be denied legal effect solely because they are in electronic form.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    You consent to receive all agreements, disclosures, notices, and records related to your account and this relationship in electronic form. The Company maintains electronic records of your acceptance, including the date, time, and identifying information associated with your assent, and you agree that such records constitute evidence of the terms you agreed to and of the fact of your agreement. You are responsible for retaining a copy of the agreements you accept; they remain available to you through the Platform.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed">
+                    You may request a paper copy of any electronically signed agreement, or withdraw your consent to transact electronically, by contacting us using the information in the Contact section. Because the Service is provided electronically, withdrawing consent may prevent you from using or continuing in the program.
+                  </p>
+                </section>
+
                 {/* Section 2 */}
                 <section id="service">
                   <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4 border-b-2 border-[#10b981] pb-2">
@@ -346,6 +366,9 @@ export default function TermsOfService() {
                   <p className="text-slate-700 leading-relaxed mb-4">
                     Fees do not include applicable sales tax, value-added tax (VAT), or other governmental taxes or fees, which shall be your responsibility. If a scheduled installment payment fails, the Company will attempt to contact you and reattempt collection. The Company reserves the right to suspend access to the Service, including paused activation of the Vegas Vacation Client Incentive described in Section 3.5, until payments are brought current.
                   </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    <strong>Three-Payment Plan Completion Requirement (Lapse and Forfeiture).</strong> If you enroll under the three-payment ($331 per payment) installment plan, you agree to make all three (3) scheduled payments, which together satisfy the total program administration fee. Each installment is a required part of that single total fee, not an optional recurring charge. If any scheduled installment lapses and is not brought current after the Company's attempts to contact you and reattempt collection, your account will be suspended and you will forfeit any right to claimant proceeds, commissions, or recovery fees associated with cases worked, assigned, or pending under your account, including cases in progress at the time of suspension. Reinstatement, if offered at the Company's sole discretion, requires bringing all installments current. You expressly acknowledge and agree to this completion requirement, the suspension of access, and the forfeiture of claimant proceeds upon lapse at the time of enrollment.
+                  </p>
                   <p className="text-slate-700 leading-relaxed">
                     The Company reserves the right to update pricing for future enrollments upon thirty (30) days' written notice. Price changes do not affect previously completed enrollments or payment plans already in progress.
                   </p>
@@ -463,6 +486,9 @@ export default function TermsOfService() {
                   </p>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     On the agent's behalf, the Company mails certified letters to the assigned leads, including proof of service, jurisdiction-appropriate language, and a free claims guide for the homeowner. The Company also runs ringless voicemail, SMS, and email drip outreach to the agent's leads using the agent's name and contact information.
+                  </p>
+                  <p className="text-slate-700 leading-relaxed mb-4">
+                    <strong>Certified letter credits.</strong> Each enrolled account receives up to five (5) free certified letters per week &mdash; that the Company prints and mails at no charge &mdash; for the first one (1) month following account creation, up to a total of twenty (20) free certified letters. After that one-month period ends, or once the twenty-letter total is reached (whichever occurs first), free certified-letter credits stop. To continue having the Company print and mail certified letters, the agent pays a shipping-and-handling fee of twelve dollars and fifty cents ($12.50) per certified letter. Alternatively, at no charge, the agent may download and print the personalized cover letter, contingency agreement, and limited power of attorney for each lead from the dashboard and mail those documents to claimants themselves. Weekly free credits reset Monday at 12:00 noon Pacific during the free-month period and do not roll over.
                   </p>
                   <p className="text-slate-700 leading-relaxed mb-4">
                     The Company does not guarantee that any specific number of leads will respond, contract, or close. Lead volume targets are commercially reasonable estimates and may vary by week based on data availability, jurisdiction, and seasonal factors. The Company will, in good faith, replace verifiably duplicate or invalid leads.

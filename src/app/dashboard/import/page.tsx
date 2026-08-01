@@ -20,15 +20,22 @@ import {
 
 // Canonical fields posted to /api/import. Keys MUST match the API contract.
 const CANONICAL_FIELDS: { key: string; label: string }[] = [
-  { key: "owner_name", label: "Owner Name" },
+  { key: "owner_name", label: "Owner Name (full)" },
+  { key: "first_name", label: "First Name" },
+  { key: "last_name", label: "Last Name" },
   { key: "property_address", label: "Property Address" },
+  { key: "mailing_address", label: "Mailing / Current Address" },
   { key: "city", label: "City" },
   { key: "state", label: "State" },
   { key: "state_abbr", label: "State Abbr" },
   { key: "zip_code", label: "Zip" },
   { key: "county", label: "County" },
-  { key: "primary_phone", label: "Phone" },
-  { key: "primary_email", label: "Email" },
+  { key: "primary_phone", label: "Phone 1" },
+  { key: "secondary_phone", label: "Phone 2" },
+  { key: "phone_3", label: "Phone 3" },
+  { key: "primary_email", label: "Email 1" },
+  { key: "secondary_email", label: "Email 2" },
+  { key: "email_3", label: "Email 3" },
   { key: "amount", label: "Amount / Surplus" },
   { key: "case_number", label: "Case Number" },
   { key: "notes", label: "Notes" },
@@ -113,7 +120,10 @@ function guessField(header: string): string | null {
   if (!h) return null
   const has = (...words: string[]) => words.some((w) => h.includes(w))
 
+  if (has("firstname", "fname", "givenname")) return "first_name"
+  if (has("lastname", "lname", "surname", "familyname")) return "last_name"
   if (has("owner") || (has("name") && !has("city", "county", "company"))) return "owner_name"
+  if (has("mailingaddress", "mailing", "currentaddress", "owneraddress", "ownermailing")) return "mailing_address"
   if (has("propertyaddress", "siteaddress", "situsaddress")) return "property_address"
   if (has("address", "street", "addr")) return "property_address"
   if (has("cityname") || h === "city" || (has("city") && !has("capacity"))) return "city"
@@ -121,8 +131,16 @@ function guessField(header: string): string | null {
   if (h === "state" || has("statename")) return "state"
   if (has("zip", "postal")) return "zip_code"
   if (has("county", "parish")) return "county"
-  if (has("phone", "mobile", "cell", "tel")) return "primary_phone"
-  if (has("email", "mail") && !has("mailingaddress")) return "primary_email"
+  if (has("phone", "mobile", "cell", "tel")) {
+    if (has("2", "second", "secondary", "alt", "other")) return "secondary_phone"
+    if (has("3", "third")) return "phone_3"
+    return "primary_phone"
+  }
+  if (has("email", "mail") && !has("mailingaddress", "mailing")) {
+    if (has("2", "second", "secondary", "alt", "other")) return "secondary_email"
+    if (has("3", "third")) return "email_3"
+    return "primary_email"
+  }
   if (has("amount", "surplus", "overage", "balance", "excess")) return "amount"
   if (has("case", "docket", "claim")) return "case_number"
   if (has("note", "comment", "memo", "remark")) return "notes"
@@ -178,7 +196,9 @@ function ImportTool() {
   const [parseError, setParseError] = useState<string | null>(null)
   const [isImporting, setIsImporting] = useState(false)
   const [importError, setImportError] = useState<string | null>(null)
-  const [result, setResult] = useState<{ imported: number; skipped: number } | null>(null)
+  const [result, setResult] = useState<{ imported: number; skipped: number; duplicates: number; leadIds?: string[] } | null>(null)
+  const [traceState, setTraceState] = useState<"idle" | "working" | "done" | "error">("idle")
+  const [traceMsg, setTraceMsg] = useState("")
   // Bumped after each successful import so the embedded leads workspace remounts
   // and refetches, surfacing the freshly imported leads immediately.
   const [refreshKey, setRefreshKey] = useState(0)
@@ -242,7 +262,18 @@ function ImportTool() {
   const importableCount = useMemo(
     () =>
       mappedRows.filter(
-        (r) => r.owner_name || r.property_address || r.primary_phone || r.primary_email
+        (r) =>
+          r.owner_name ||
+          r.first_name ||
+          r.last_name ||
+          r.property_address ||
+          r.mailing_address ||
+          r.primary_phone ||
+          r.secondary_phone ||
+          r.phone_3 ||
+          r.primary_email ||
+          r.secondary_email ||
+          r.email_3
       ).length,
     [mappedRows]
   )
@@ -268,12 +299,37 @@ function ImportTool() {
         }
         return
       }
-      setResult({ imported: data.imported ?? 0, skipped: data.skipped ?? 0 })
+      setResult({ imported: data.imported ?? 0, skipped: data.skipped ?? 0, duplicates: data.duplicates ?? 0, leadIds: data.leadIds || [] })
+      setTraceState("idle"); setTraceMsg("")
       setRefreshKey((k) => k + 1)
     } catch {
       setImportError("Something went wrong during import. Please try again.")
     } finally {
       setIsImporting(false)
+    }
+  }
+
+  const runSkipTrace = async () => {
+    if (!result?.leadIds?.length) return
+    setTraceState("working"); setTraceMsg("")
+    try {
+      const res = await fetch("/api/import/skip-trace", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadIds: result.leadIds }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setTraceState("error"); setTraceMsg(data?.error || "Skip trace failed. Please try again.")
+        return
+      }
+      const bits: string[] = []
+      if (data.submitted > 0) bits.push(`${data.submitted} lead${data.submitted === 1 ? "" : "s"} submitted for skip tracing - phone numbers and emails will appear on your leads automatically (usually within a few hours)`)
+      if (data.dncQueued > 0) bits.push(`${data.dncQueued} imported number${data.dncQueued === 1 ? "" : "s"} queued for the overnight DNC scrub (or run the instant DNC check on any phone in My Leads)`)
+      if (!bits.length) bits.push("Nothing to trace - these leads need at least a name and address.")
+      setTraceState("done"); setTraceMsg(bits.join(". ") + ".")
+    } catch {
+      setTraceState("error"); setTraceMsg("Something went wrong. Please try again.")
     }
   }
 
@@ -315,8 +371,36 @@ function ImportTool() {
                     address, phone, or email).
                   </>
                 )}
+                {result.duplicates > 0 && (
+                  <>
+                    {" "}
+                    {result.duplicates} {result.duplicates === 1 ? "was" : "were"} already in
+                    your list, so we left your existing lead{result.duplicates === 1 ? "" : "s"}{" "}
+                    (and your notes) untouched.
+                  </>
+                )}
               </p>
             </div>
+            {result.leadIds && result.leadIds.length > 0 && (
+              <div className="w-full max-w-md rounded-xl border border-blue-200 bg-blue-50/60 p-4 text-left">
+                <p className="text-sm font-semibold text-[#09274c]">Want phone numbers for these leads?</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  One click skip-traces your imported leads (name + address is all we need) and
+                  queues every number for a DNC check - so texting and voice drops unlock.
+                </p>
+                <Button
+                  size="sm"
+                  className="mt-3 bg-[#09274c] hover:bg-[#0d3766]"
+                  onClick={runSkipTrace}
+                  disabled={traceState === "working" || traceState === "done"}
+                >
+                  {traceState === "working" ? "Submitting..." : traceState === "done" ? "Submitted ✓" : "Skip Trace + DNC Check"}
+                </Button>
+                {traceMsg && (
+                  <p className={`mt-2 text-xs ${traceState === "error" ? "text-red-600" : "text-emerald-700"}`}>{traceMsg}</p>
+                )}
+              </div>
+            )}
             <div className="flex flex-col items-center gap-2 sm:flex-row">
               <Link href="/dashboard/my-leads">
                 <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700">
