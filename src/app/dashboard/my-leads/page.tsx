@@ -1,9 +1,11 @@
 "use client"
 
-import { useState, useEffect, useMemo, useCallback } from "react"
+import { useAgentManager } from "@/components/agent-manager-modal"
+import { useState, useEffect, useMemo, useCallback, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useUser } from "@clerk/nextjs"
 import { usePin } from "@/lib/pin-context"
+import { CountyInfoDialog } from "@/components/county-info-dialog"
 import { UPGRADE_URL } from "@/lib/upgrade"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -63,6 +65,10 @@ import {
   Ban,
   Flag,
   RotateCcw,
+  Trash2,
+  ShoppingCart,
+  Download,
+  Upload,
 } from "lucide-react"
 
 /* ===== TYPES ===== */
@@ -159,8 +165,12 @@ interface LeadData {
   foreclosureType: string
   primaryPhone: string
   secondaryPhone: string | null
+  allPhones: string[]
+  badPhones: string[]
+  badEmails: string[]
   primaryEmail: string | null
   secondaryEmail: string | null
+  allEmails: string[]
   status: string
   source: string
   scrapedAt: string
@@ -175,6 +185,8 @@ interface LeadData {
   voicemailError: string | null
   smsSent: boolean
   emailDraftCreated: boolean
+  agreementSigned: boolean
+  agreementSignedPdfUrl: string | null
   leadType: string
   mailingAddress: string
   certifiedLetterRequested: boolean
@@ -211,8 +223,12 @@ const MOCK_LEAD: LeadData = {
   foreclosureType: "Judicial",
   primaryPhone: "(407) 555-0199",
   secondaryPhone: "(407) 555-0233",
+  allPhones: ["(407) 555-0199", "(407) 555-0233"],
+  badPhones: [],
+  badEmails: [],
   primaryEmail: "j.smith.example@email.com",
   secondaryEmail: null,
+  allEmails: ["j.smith.example@email.com"],
   status: "new",
   source: "Orange County Clerk",
   scrapedAt: new Date().toISOString(),
@@ -227,6 +243,8 @@ const MOCK_LEAD: LeadData = {
   voicemailError: null,
   smsSent: false,
   emailDraftCreated: false,
+  agreementSigned: false,
+  agreementSignedPdfUrl: null,
   leadType: "",
   mailingAddress: "5678 Elm Street, Tampa, FL 33602",
   certifiedLetterRequested: false,
@@ -488,7 +506,7 @@ function LeadTypeBadge({ lead }: { lead: LeadData }) {
 // Persistent outreach activity per lead (loaded from the DB every session, for every paid agent):
 // Emailed = a draft was created for this lead, Texted = an SMS was sent, VM = ringless voicemail delivered.
 function OutreachStatus({ lead }: { lead: LeadData }) {
-  if (!lead.emailDraftCreated && !lead.smsSent && !lead.voicemailSent) return null
+  if (!lead.emailDraftCreated && !lead.smsSent && !lead.voicemailSent && !lead.agreementSigned) return null
   return (
     <div className="flex flex-wrap items-center gap-1 pt-0.5">
       {lead.emailDraftCreated && (
@@ -507,6 +525,12 @@ function OutreachStatus({ lead }: { lead: LeadData }) {
         <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 text-[10px] gap-1 px-1.5 py-0" title="Ringless voicemail delivered to this lead">
           <CheckCircle2 className="h-3 w-3" />
           VM
+        </Badge>
+      )}
+      {lead.agreementSigned && (
+        <Badge className="bg-green-600 text-white border-green-700 text-[10px] gap-1 px-1.5 py-0" title="Claimant signed the contingency agreement online">
+          <CheckCircle2 className="h-3 w-3" />
+          SIGNED
         </Badge>
       )}
     </div>
@@ -629,6 +653,32 @@ function transformDbRow(row: Record<string, unknown>): LeadData {
     secondaryPhone: row.secondary_phone ? String(row.secondary_phone) : null,
     primaryEmail: row.primary_email ? String(row.primary_email) : null,
     secondaryEmail: null,
+    // every email on the lead (primary + extras incl. agent-added), deduped
+    allEmails: Array.from(new Set([
+      ...(row.primary_email ? [String(row.primary_email).toLowerCase()] : []),
+      ...((Array.isArray(row.email_addresses) ? row.email_addresses : []) as string[]).map((e) => String(e).toLowerCase()),
+    ])),
+    badPhones: (Array.isArray(row.bad_phones) ? row.bad_phones : []) as string[],
+    badEmails: ((Array.isArray(row.bad_emails) ? row.bad_emails : []) as string[]).map((e) => String(e).toLowerCase()),
+    // Every phone on the lead. Emails already surfaced all of theirs; phones only
+    // ever showed primary + secondary, so a THIRD number (e.g. one the agent added
+    // for a relative or gatekeeper) was saved to phone_numbers and then invisible —
+    // the agent could add it and never see it again. Dedupe on last-10-digits so
+    // formatting differences don't produce duplicates.
+    allPhones: (() => {
+      const seen = new Set<string>()
+      const out: string[] = []
+      const push = (p: unknown) => {
+        const s = String(p || "").trim()
+        const key = s.replace(/\D/g, "").slice(-10)
+        if (!s || key.length !== 10 || seen.has(key)) return
+        seen.add(key); out.push(s)
+      }
+      push(row.primary_phone)
+      push(row.secondary_phone)
+      ;(Array.isArray(row.phone_numbers) ? row.phone_numbers : []).forEach(push)
+      return out
+    })(),
     status: String(row.status || "new"),
     source: String(row.source || ""),
     scrapedAt: String(row.scraped_at || new Date().toISOString()),
@@ -643,6 +693,8 @@ function transformDbRow(row: Record<string, unknown>): LeadData {
     voicemailError: row.voicemail_error ? String(row.voicemail_error) : null,
     smsSent: Boolean(row.sms_sent),
     emailDraftCreated: Boolean(row.email_draft_created),
+    agreementSigned: Boolean(row.agreement_signed),
+    agreementSignedPdfUrl: row.agreement_signed_pdf_url ? String(row.agreement_signed_pdf_url) : null,
     leadType: String(row.lead_type || ""),
     mailingAddress: String(row.mailing_address || ""),
     certifiedLetterRequested: Boolean(row.certified_letter_requested),
@@ -792,8 +844,15 @@ function LeadNotes({ leadId, pinId }: { leadId: string; pinId: string | null }) 
 
 /* ===== LEAD DROPDOWN (Matches Admin Leads Page) ===== */
 
-function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, onSms, onCertifiedLetter, voiceDropSending, onVoiceDrop, hasSlybroadcast, hasTextbee, onNeedCreds, pinId, onFlag }: { lead: LeadData; revealed: boolean; onReveal: () => void; onShowUpgrade: () => void; onEmailDraft?: () => void; onSms?: () => void; onCertifiedLetter?: () => void; voiceDropSending?: boolean; onVoiceDrop?: (id: string) => void; hasSlybroadcast?: boolean; hasTextbee?: boolean; onNeedCreds?: (channel: "voice" | "sms") => void; pinId?: string | null; onFlag?: (leadId: string, field: "bad_email" | "bad_phone" | "agent_status", value: boolean | string) => void }) {
-  const [activeTab, setActiveTab] = useState<"property" | "skipTrace" | "tax" | "foreclosure" | "map" | "notes">("property")
+function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, onSms, onCertifiedLetter, voiceDropSending, onVoiceDrop, hasSlybroadcast, hasTextbee, onNeedCreds, pinId, onFlag, onDelete, onAddContact, onDncCheck, onEmailTo, initialTab }: { initialTab?: "property" | "skipTrace" | "tax" | "foreclosure" | "map" | "notes"; lead: LeadData; revealed: boolean; onReveal: () => void; onShowUpgrade: () => void; onEmailDraft?: () => void; onSms?: () => void; onCertifiedLetter?: () => void; voiceDropSending?: boolean; onVoiceDrop?: (id: string) => void; hasSlybroadcast?: boolean; hasTextbee?: boolean; onNeedCreds?: (channel: "voice" | "sms") => void; pinId?: string | null; onFlag?: (leadId: string, field: "bad_email" | "bad_phone" | "agent_status" | "bad_phone_value" | "bad_email_value", value: boolean | string, contact?: string) => void; onDelete?: (leadId: string) => void; onAddContact?: (leadId: string, kind: "email" | "phone") => void; onDncCheck?: (leadId: string) => void; onEmailTo?: (email: string) => void }) {
+  const [activeTab, setActiveTab] = useState<"property" | "skipTrace" | "tax" | "foreclosure" | "map" | "notes">(initialTab || "property")
+  // Address-click deep link: adjust during render (not in an effect) when the
+  // requested tab changes, so re-clicking the address re-focuses the Map tab.
+  const [prevInitialTab, setPrevInitialTab] = useState(initialTab)
+  if (initialTab !== prevInitialTab) {
+    setPrevInitialTab(initialTab)
+    if (initialTab) setActiveTab(initialTab)
+  }
 
   const tabs = [
     { id: "property" as const, label: "Property Details", icon: Home },
@@ -1227,6 +1286,79 @@ function LeadDropdown({ lead, revealed, onReveal, onShowUpgrade, onEmailDraft, o
             <span>Source: {lead.source}</span>
           </div>
         )}
+        {onAddContact && (
+          <span className="flex items-center gap-1.5">
+            <button
+              onClick={(e) => { e.stopPropagation(); onAddContact(lead.id, "email") }}
+              className="flex items-center gap-1 rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 font-medium text-blue-700 transition-colors hover:bg-blue-100"
+              title="Add an email you found for this claimant"
+            >
+              <Mail className="h-3.5 w-3.5" /> Add email
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); onAddContact(lead.id, "phone") }}
+              className="flex items-center gap-1 rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 font-medium text-blue-700 transition-colors hover:bg-blue-100"
+              title="Add a phone number you found for this claimant"
+            >
+              <Phone className="h-3.5 w-3.5" /> Add phone
+            </button>
+          </span>
+        )}
+        {onDncCheck && lead.primaryPhone && !lead.dncChecked && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onDncCheck(lead.id) }}
+            className="flex items-center gap-1 rounded-md border border-amber-300 bg-amber-50 px-2 py-0.5 font-medium text-amber-700 transition-colors hover:bg-amber-100"
+            title="Run a live Do-Not-Call check on this phone number (unlocks voice drops and texting if it clears)"
+          >
+            <PhoneCall className="h-3.5 w-3.5" /> Run DNC check
+          </button>
+        )}
+        {onEmailTo && revealed && lead.allEmails.length > 1 && (
+          <span className="flex flex-wrap items-center gap-1.5">
+            <span className="text-slate-400">Draft to:</span>
+            {lead.allEmails.map((em) => {
+              const emBad = lead.badEmails.includes(em.trim().toLowerCase())
+              return (
+                <span key={em} className="inline-flex items-center gap-0.5">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); if (!emBad) onEmailTo(em) }}
+                    disabled={emBad}
+                    className={cn(
+                      "flex items-center gap-1 rounded-md border px-2 py-0.5 font-medium transition-colors",
+                      emBad
+                        ? "border-red-200 bg-red-50 text-red-500 line-through cursor-not-allowed"
+                        : "border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                    )}
+                    title={emBad ? "You marked this address bad" : `Create your claimant email draft addressed to ${em}`}
+                  >
+                    <Mail className="h-3 w-3" /> {em}
+                  </button>
+                  {/* Mark THIS address bad. Previously the only control was a single
+                      bad_email boolean for the whole lead, so an agent could not
+                      retire one address out of several — the button looked dead. */}
+                  {onFlag && !lead.isMock && (
+                    <button
+                      title={emBad ? "Restore this address (mark good)" : "Mark THIS address bad"}
+                      onClick={(e) => { e.stopPropagation(); onFlag(lead.id, "bad_email_value", !emBad, em) }}
+                      className={cn("shrink-0 rounded p-0.5 hover:bg-muted", emBad ? "text-emerald-600" : "text-muted-foreground hover:text-red-600")}
+                    >
+                      {emBad ? <RotateCcw className="h-3 w-3" /> : <Ban className="h-3 w-3" />}
+                    </button>
+                  )}
+                </span>
+              )
+            })}
+          </span>
+        )}
+        {lead.source?.startsWith("imported:") && onDelete && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onDelete(lead.id) }}
+            className="flex items-center gap-1 rounded-md border border-red-200 bg-red-50 px-2 py-0.5 font-medium text-red-600 transition-colors hover:bg-red-100"
+            title="Delete this lead you imported"
+          >
+            <Trash2 className="h-3.5 w-3.5" /> Delete lead
+          </button>
+        )}
         {lead.scrapedAt && (
           <div className="flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5" />
@@ -1307,6 +1439,7 @@ function sampleSms(agentName: string) {
 /* ===== MAIN PAGE ===== */
 
 export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolean }) {
+  const { openAgentManager } = useAgentManager()
   const { isAdmin, pinId, accountType, isLoading: pinLoading, hasSlybroadcast, hasTextbee } = usePin()
   const { user } = useUser()
   const agentName =
@@ -1314,9 +1447,14 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
     [user?.firstName, user?.lastName].filter(Boolean).join(" ").trim() ||
     "Your Name"
   const [commsGate, setCommsGate] = useState<null | "voice" | "sms">(null)
+  const [guideSending, setGuideSending] = useState<null | "slybroadcast" | "textbee">(null)
+  const [guideSent, setGuideSent] = useState<string | null>(null)
   const [leads, setLeads] = useState<LeadData[]>([])
   const [loading, setLoading] = useState(true)
   const [expandedLeads, setExpandedLeads] = useState<string[]>([])
+  // County popup (same data as the foreclosure-map county click) + address->Map-tab deep link.
+  const [countyDialog, setCountyDialog] = useState<{ state: string; county: string } | null>(null)
+  const [focusMapLeadId, setFocusMapLeadId] = useState<string | null>(null)
   const [hiddenLeads, setHiddenLeads] = useState<string[]>([])
   const [resolvedPinId, setResolvedPinId] = useState<string | null>(null)
 
@@ -1346,8 +1484,15 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
 
   // Upgrade popup
   const [showUpgradePopup, setShowUpgradePopup] = useState(false)
+  // "No email on file" notice (shown when a paid agent tries to email a lead with no email address)
+  const [showNoEmailNotice, setShowNoEmailNotice] = useState(false)
   // Basic-tier lead-request upgrade modal
   const [showBasicUpgradeModal, setShowBasicUpgradeModal] = useState(false)
+  // Buy More Leads (past the 125/week cap, $2.50 each -> invoice)
+  const [showBuyModal, setShowBuyModal] = useState(false)
+  const [buyQty, setBuyQty] = useState(25)
+  const [buying, setBuying] = useState(false)
+  const [buySuccess, setBuySuccess] = useState(false)
   const router = useRouter()
 
   // Admin view-as-user
@@ -1416,8 +1561,10 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
     )
   }
 
+  const [requestError, setRequestError] = useState<string | null>(null)
   const submitLeadRequest = async () => {
     setRequesting(true)
+    setRequestError(null)
     try {
       const res = await fetch("/api/leads/request", {
         method: "POST",
@@ -1430,11 +1577,36 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
       })
       if (res.ok) {
         setRequestSuccess(true)
+      } else if (res.status === 429) {
+        // Weekly 125-lead cap hit -> steer them to Buy More Leads.
+        setShowRequestModal(false)
+        setShowBuyModal(true)
+        setBuySuccess(false)
+      } else {
+        // NEVER fail silently — a blocked agent must see why (Danny Sai
+        // 2026-07-15: a tier-gate 403 showed nothing, he thought it sent).
+        const data = await res.json().catch(() => ({}))
+        setRequestError(data?.message || "Your request could not be submitted. Please contact support at (888) 907-3234.")
       }
+    } catch {
+      setRequestError("Connection problem - please try again.")
+    }
+    setRequesting(false)
+  }
+
+  const submitBuyExtra = async () => {
+    setBuying(true)
+    try {
+      const res = await fetch("/api/leads/buy-extra", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quantity: buyQty }),
+      })
+      if (res.ok) setBuySuccess(true)
     } catch {
       // silently handle
     }
-    setRequesting(false)
+    setBuying(false)
   }
 
   // Email draft state
@@ -1444,6 +1616,115 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
   const [emailPreviewLang, setEmailPreviewLang] = useState<"en" | "es">("en")
   const [emailDraftLoading, setEmailDraftLoading] = useState(false)
   const [emailDraftResult, setEmailDraftResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
+  // Editable subject (body is edited in-place in the rendered iframe). Sending state.
+  const [emailSubject, setEmailSubject] = useState("")
+  // Contingency agreement control: the agent can download the exact file that will
+  // be attached, replace it with their own edited copy, or reset to the generated one.
+  const [agreementBusy, setAgreementBusy] = useState<null | "download" | "upload" | "reset">(null)
+  const [agreementIsCustom, setAgreementIsCustom] = useState(false)
+  const [agreementNote, setAgreementNote] = useState<string | null>(null)
+  const agreementFileRef = useRef<HTMLInputElement>(null)
+
+  const agreementAction = useCallback(async (act: "agreement" | "agreement_upload" | "agreement_reset", fileBase64?: string) => {
+    if (!emailDraftModal) return
+    setAgreementBusy(act === "agreement" ? "download" : act === "agreement_upload" ? "upload" : "reset")
+    setAgreementNote(null)
+    try {
+      const res = await fetch("/api/email-draft", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId: emailDraftModal.leadId, action: act, operatorPinId: activePinId, fileBase64 }),
+      })
+      const j = await res.json().catch(() => ({}))
+      if (!res.ok) { setAgreementNote(j?.error || "That didn't work. Please try again."); return }
+      if (act === "agreement") {
+        const bin = atob(j.base64)
+        const bytes = new Uint8Array(bin.length)
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
+        const url = URL.createObjectURL(new Blob([bytes], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" }))
+        const a = document.createElement("a")
+        a.href = url; a.download = j.filename || "Contingency-Fee-Agreement.docx"
+        document.body.appendChild(a); a.click(); a.remove()
+        URL.revokeObjectURL(url)
+        setAgreementIsCustom(!!j.isCustom)
+        setAgreementNote(j.isCustom ? "Downloaded your uploaded version." : "Downloaded the agreement that will be attached.")
+      } else {
+        setAgreementIsCustom(!!j.isCustom)
+        setAgreementNote(act === "agreement_upload"
+          ? "Your version is saved — it will be the copy attached to this claimant's email."
+          : "Reset. The standard agreement will be attached.")
+      }
+    } catch {
+      setAgreementNote("That didn't work. Please try again.")
+    } finally { setAgreementBusy(null) }
+  }, [emailDraftModal, activePinId])
+  const [emailSending, setEmailSending] = useState(false)
+  const emailBodyRef = useRef<HTMLIFrameElement | null>(null)
+  // The claimant email is a fixed 600px-wide branded template. On a phone the preview
+  // pane is ~340px, so it rendered as an unreadable sliver. Render the iframe at its
+  // true 600px and scale it down to whatever width we actually have.
+  const [emailPreviewScale, setEmailPreviewScale] = useState(1)
+  const EMAIL_PREVIEW_W = 600
+  // Callback ref, NOT useRef + useEffect([]). This wrapper only exists while the
+  // preview modal is open, so on mount the node is null — an effect with an empty
+  // dep array bailed and never re-ran, leaving the scale pinned at 1. On a phone
+  // that rendered the 600px email inside a ~340px pane, so the agent saw the left
+  // sliver (mostly white margin) and reported the preview "won't open". Desktop
+  // panes are >=600px, so scale 1 was already correct there and it looked fine.
+  const roRef = useRef<ResizeObserver | null>(null)
+  const emailPreviewWrapRef = useCallback((el: HTMLDivElement | null) => {
+    roRef.current?.disconnect()
+    roRef.current = null
+    if (!el) return
+    const measure = () => {
+      const w = el.clientWidth
+      if (w > 0) setEmailPreviewScale(Math.min(1, w / EMAIL_PREVIEW_W))
+    }
+    measure()
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(measure)
+      ro.observe(el)
+      roRef.current = ro
+    }
+  }, [])
+
+  // One-time "you can send from here now" notice. Source of truth is the server
+  // (user_activity action=email_send_notice_ack); localStorage is an instant cache.
+  const NOTICE_KEY = "email_send_notice_ack"
+  const [noticeAcked, setNoticeAcked] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false
+    return localStorage.getItem(NOTICE_KEY) === "1"
+  })
+  const [showSendNotice, setShowSendNotice] = useState(false)
+  const [noticeChecked, setNoticeChecked] = useState(false)
+
+  // Load the server-side ack so an acknowledged notice never reappears on any device.
+  // Impersonation-aware: when an admin is viewing-as an agent (viewAsUserId), check
+  // that AGENT's ack — and ignore the admin's own localStorage cache so the preview
+  // reflects the agent's real state (they'll see the notice if they haven't acked).
+  useEffect(() => {
+    let cancelled = false
+    const viewing = !!viewAsUserId
+    if (viewing) setNoticeAcked(false)
+    const url = `/api/user/ack-notice?action=${NOTICE_KEY}` + (viewing ? `&asPinId=${encodeURIComponent(viewAsUserId)}` : "")
+    fetch(url)
+      .then((r) => r.json())
+      .then((d) => {
+        if (cancelled) return
+        setNoticeAcked(!!d?.acknowledged)
+        if (!viewing && d?.acknowledged) {
+          try { localStorage.setItem(NOTICE_KEY, "1") } catch {}
+        }
+      })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [viewAsUserId])
+
+  // Keep the editable subject synced to whichever language preview is active.
+  useEffect(() => {
+    const active = emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview
+    if (active) setEmailSubject(active.subject)
+  }, [emailPreview, emailPreviewES, emailPreviewLang])
 
   const openEmailDraft = useCallback(async (leadId: string, to: string, ownerName: string) => {
     // Sample lead: show a client-side example draft (no real lead in the DB)
@@ -1471,12 +1752,12 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
         fetch("/api/email-draft", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ leadId, action: "preview", operatorPinId: activePinId }),
+          body: JSON.stringify({ leadId, action: "preview", operatorPinId: activePinId, toEmail: to }),
         }),
         fetch("/api/email-draft", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ leadId, action: "preview_es", operatorPinId: activePinId }),
+          body: JSON.stringify({ leadId, action: "preview_es", operatorPinId: activePinId, toEmail: to }),
         }),
       ])
       const enData = await enRes.json()
@@ -1491,29 +1772,83 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
     }
   }, [activePinId, agentName])
 
-  const createEmailDraft = useCallback(async (draftAction: "create_draft_en" | "create_draft_es" | "create_draft_both" = "create_draft_en") => {
+  // Read the (possibly edited) rendered HTML back out of the preview iframe. The agent
+  // edits the body in place (contentEditable); we serialize the whole document so the
+  // full branded shell is preserved exactly and the edits ride along.
+  const readEditedHtml = useCallback((): string => {
+    const iframe = emailBodyRef.current
+    const active = emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview
+    const fallback = active?.html || ""
+    try {
+      const doc = iframe?.contentDocument
+      if (doc?.documentElement) {
+        return "<!DOCTYPE html>" + doc.documentElement.outerHTML
+      }
+    } catch {
+      // cross-origin / not ready — fall back to the untouched preview HTML.
+    }
+    return fallback
+  }, [emailPreview, emailPreviewES, emailPreviewLang])
+
+  // Record the one-time notice acknowledgement (server = source of truth, localStorage = cache).
+  const ackSendNotice = useCallback(async () => {
+    setNoticeAcked(true)
+    // Only cache in the admin's own browser when NOT impersonating (else the cache
+    // would falsely mark the notice acked for the admin's real account).
+    if (!viewAsUserId) { try { localStorage.setItem(NOTICE_KEY, "1") } catch {} }
+    fetch("/api/user/ack-notice", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: NOTICE_KEY, ...(viewAsUserId ? { asPinId: viewAsUserId } : {}) }),
+    }).catch(() => {})
+  }, [viewAsUserId])
+
+  // Actually send the edited claimant email via the rotating warm-up domains.
+  const sendEmailNow = useCallback(async () => {
     if (!emailDraftModal) return
-    if (!activePinId) {
-      setEmailDraftResult({ success: false, error: "Your agent profile is still loading. Please wait a moment and try again." })
+    // Sample lead never sends for real.
+    if (emailDraftModal.leadId === MOCK_LEAD.id) {
+      setEmailDraftResult({ success: false, error: "This is a sample lead — nothing is actually sent. Upgrade to work real leads and send for real." })
       return
     }
-    setEmailDraftLoading(true)
+    setEmailSending(true)
     setEmailDraftResult(null)
     try {
-      const res = await fetch("/api/email-draft", {
+      const html = readEditedHtml()
+      const res = await fetch("/api/email-send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: emailDraftModal.leadId, action: draftAction, operatorPinId: activePinId }),
+        body: JSON.stringify({
+          leadId: emailDraftModal.leadId,
+          toEmail: emailDraftModal.to,
+          subject: emailSubject,
+          html,
+        }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || "Draft creation failed")
-      setEmailDraftResult({ success: true, message: data.message || "Draft created" })
+      if (!res.ok) throw new Error(data.message || data.error || "Send failed, please try again.")
+      setEmailDraftResult({ success: true, message: data.message || `Email sent to ${emailDraftModal.to}.` })
+      setLeads(prev => prev.map(l =>
+        l.id === emailDraftModal.leadId
+          ? { ...l, emailDraftCreated: true, status: ["new", "skip_traced"].includes(l.status) ? "contacted" : l.status }
+          : l
+      ))
     } catch (err) {
-      setEmailDraftResult({ success: false, error: err instanceof Error ? err.message : "Draft creation failed" })
+      setEmailDraftResult({ success: false, error: err instanceof Error ? err.message : "Send failed, please try again." })
     } finally {
-      setEmailDraftLoading(false)
+      setEmailSending(false)
     }
-  }, [emailDraftModal, activePinId])
+  }, [emailDraftModal, emailSubject, readEditedHtml])
+
+  // Send button click: first time ever, gate through the one-time notice modal.
+  const handleSendClick = useCallback(() => {
+    if (!noticeAcked) {
+      setNoticeChecked(false)
+      setShowSendNotice(true)
+      return
+    }
+    sendEmailNow()
+  }, [noticeAcked, sendEmailNow])
 
   // Voice drop state
   const [sendingVoiceDrop, setSendingVoiceDrop] = useState<Record<string, boolean>>({})
@@ -1521,6 +1856,9 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
   const sendVoiceDrop = useCallback(async (leadId: string) => {
     if (!activePinId) return
     setSendingVoiceDrop(prev => ({ ...prev, [leadId]: true }))
+    // Enqueue returns near-instantly; hold the "sending" state ~3s so the agent
+    // perceives the drop actually triggering before it flips to "Sent".
+    const minDelay = new Promise(resolve => setTimeout(resolve, 3000))
     try {
       const res = await fetch("/api/voice-drop", {
         method: "POST",
@@ -1529,13 +1867,15 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Voice drop failed")
+      await minDelay
       setLeads(prev => prev.map(l =>
         l.id === leadId
-          ? { ...l, voicemailSent: true, voicemailSentAt: new Date().toISOString() }
+          ? { ...l, voicemailSent: true, voicemailSentAt: new Date().toISOString(), status: ["new", "skip_traced"].includes(l.status) ? "contacted" : l.status }
           : l
       ))
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Voice drop failed"
+      await minDelay
       setLeads(prev => prev.map(l =>
         l.id === leadId ? { ...l, voicemailError: msg } : l
       ))
@@ -1546,10 +1886,11 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
 
   // SMS state
   const [smsModal, setSmsModal] = useState<{ leadId: string; phone: string; ownerName: string } | null>(null)
-  const [smsPreview, setSmsPreview] = useState<{ phone: string; message: string; charCount: number; segments: number } | null>(null)
+  const [smsPreview, setSmsPreview] = useState<{ phone: string; message: string; charCount: number; segments: number; signLink?: string | null } | null>(null)
   const [smsLoading, setSmsLoading] = useState(false)
   const [smsResult, setSmsResult] = useState<{ success?: boolean; error?: string; message?: string } | null>(null)
   const [smsEditMessage, setSmsEditMessage] = useState("")
+  const [smsLang, setSmsLang] = useState<"en" | "es">("en")
 
   const openSmsPreview = useCallback(async (leadId: string, phone: string, ownerName: string) => {
     // Sample lead: show a client-side example text (no real lead in the DB)
@@ -1567,6 +1908,7 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
       return
     }
     setSmsModal({ leadId, phone, ownerName })
+    setSmsLang("en")
     setSmsPreview(null)
     setSmsResult(null)
     setSmsLoading(true)
@@ -1587,6 +1929,29 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
     }
   }, [activePinId, agentName])
 
+  // Spanish option for the text step. The email step already had one; agents with
+  // Spanish-speaking claimants had no equivalent here.
+  const reloadSmsPreview = useCallback(async (nextLang: "en" | "es") => {
+    if (!smsModal || !activePinId) return
+    setSmsLang(nextLang)
+    setSmsLoading(true)
+    try {
+      const res = await fetch("/api/send-sms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId: smsModal.leadId, action: "preview", operatorPinId: activePinId, lang: nextLang }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to load preview")
+      setSmsPreview(data)
+      setSmsEditMessage(data.message)
+    } catch (err) {
+      setSmsResult({ success: false, error: err instanceof Error ? err.message : "Preview failed" })
+    } finally {
+      setSmsLoading(false)
+    }
+  }, [smsModal, activePinId])
+
   const sendSms = useCallback(async () => {
     if (!smsModal || !activePinId) return
     setSmsLoading(true)
@@ -1595,17 +1960,22 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
       const res = await fetch("/api/send-sms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: smsModal.leadId, action: "send", customMessage: smsEditMessage, operatorPinId: activePinId }),
+        body: JSON.stringify({ leadId: smsModal.leadId, action: "send", customMessage: smsEditMessage, operatorPinId: activePinId, lang: smsLang }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "SMS send failed")
       setSmsResult({ success: true, message: data.message || "SMS sent" })
+      setLeads(prev => prev.map(l =>
+        l.id === smsModal.leadId
+          ? { ...l, smsSent: true, status: ["new", "skip_traced"].includes(l.status) ? "contacted" : l.status }
+          : l
+      ))
     } catch (err) {
       setSmsResult({ success: false, error: err instanceof Error ? err.message : "SMS send failed" })
     } finally {
       setSmsLoading(false)
     }
-  }, [smsModal, smsEditMessage, activePinId])
+  }, [smsModal, smsEditMessage, activePinId, smsLang])
 
   // Certified letter state
   const [certLetterModal, setCertLetterModal] = useState<{ leadId: string; ownerName: string; mailingAddress: string } | null>(null)
@@ -1619,7 +1989,8 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
   const [creditQty, setCreditQty] = useState(1)
   const [creditReqLoading, setCreditReqLoading] = useState(false)
   const [creditReqResult, setCreditReqResult] = useState<{ ok?: boolean; message?: string; error?: string } | null>(null)
-  const [showCreditsExhausted, setShowCreditsExhausted] = useState<{ resetAt?: string; freeLimit?: number } | null>(null)
+  const [showCreditsExhausted, setShowCreditsExhausted] = useState<{ resetAt?: string; freeLimit?: number; reason?: string; pricePerLetter?: number; canPrintOwn?: boolean; leadId?: string; ownerName?: string } | null>(null)
+  const [printingOwn, setPrintingOwn] = useState(false)
 
   const openCertCredits = useCallback(async () => {
     setShowCertCredits(true); setCreditReqResult(null); setCredits(null)
@@ -1660,8 +2031,13 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
       const data = await res.json()
       if (!res.ok) {
         if (data.code === "NO_CREDITS") {
+          const prev = certLetterModal
           setCertLetterModal(null)
-          setShowCreditsExhausted({ resetAt: data.resetAt, freeLimit: data.freeLimit })
+          setShowCreditsExhausted({
+            resetAt: data.resetAt, freeLimit: data.freeLimit, reason: data.reason,
+            pricePerLetter: data.pricePerLetter, canPrintOwn: data.canPrintOwn,
+            leadId: prev?.leadId, ownerName: prev?.ownerName,
+          })
           return
         }
         throw new Error(data.error || "Request failed")
@@ -1678,23 +2054,161 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
     }
   }, [certLetterModal, certLetterNotes])
 
+  // Print-your-own: download the 3 personalized documents (cover letter + contingency
+  // agreement + limited POA) for this lead so the agent can print + mail them themselves.
+  const printOwnLetters = useCallback(async (leadId?: string, ownerName?: string) => {
+    if (!leadId) return
+    setPrintingOwn(true)
+    try {
+      const res = await fetch("/api/certified-letter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, mode: "download" }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Could not generate the documents.")
+      for (const f of (data.files || []) as { name: string; b64: string }[]) {
+        const bin = atob(f.b64)
+        const bytes = new Uint8Array(bin.length)
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
+        const blob = new Blob([bytes], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement("a")
+        a.href = url; a.download = f.name
+        document.body.appendChild(a); a.click(); a.remove()
+        URL.revokeObjectURL(url)
+      }
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Could not generate the documents.")
+    } finally {
+      setPrintingOwn(false)
+    }
+  }, [])
+
   // Agent marks a bad email/phone (red, skip) or marks the lead bad/dead (re-sorts to bottom).
-  const flagLead = useCallback(async (leadId: string, field: "bad_email" | "bad_phone" | "agent_status", value: boolean | string) => {
-    setLeads(prev => prev.map(l => l.id === leadId ? {
-      ...l,
-      badEmail: field === "bad_email" ? Boolean(value) : l.badEmail,
-      badPhone: field === "bad_phone" ? Boolean(value) : l.badPhone,
-      agentStatus: field === "agent_status" ? String(value || "") : l.agentStatus,
-    } : l))
+  const flagLead = useCallback(async (
+    leadId: string,
+    field: "bad_email" | "bad_phone" | "agent_status" | "bad_phone_value" | "bad_email_value",
+    value: boolean | string,
+    contact?: string,
+  ) => {
+    const pkey = (p: string) => String(p || "").replace(/\D/g, "").slice(-10)
+    setLeads(prev => prev.map(l => {
+      if (l.id !== leadId) return l
+      // Per-contact toggles operate on a list, not a boolean.
+      if (field === "bad_phone_value" && contact) {
+        const on = l.badPhones.some((p) => pkey(p) === pkey(contact))
+        return { ...l, badPhones: on ? l.badPhones.filter((p) => pkey(p) !== pkey(contact)) : [...l.badPhones, contact] }
+      }
+      if (field === "bad_email_value" && contact) {
+        const c = contact.trim().toLowerCase()
+        const on = l.badEmails.includes(c)
+        return { ...l, badEmails: on ? l.badEmails.filter((e) => e !== c) : [...l.badEmails, c] }
+      }
+      return {
+        ...l,
+        badEmail: field === "bad_email" ? Boolean(value) : l.badEmail,
+        badPhone: field === "bad_phone" ? Boolean(value) : l.badPhone,
+        agentStatus: field === "agent_status" ? String(value || "") : l.agentStatus,
+      }
+    }))
     if (!activePinId) return
     try {
       await fetch("/api/lead-flag", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId, pinId: activePinId, field, value }),
+        body: JSON.stringify({ leadId, pinId: activePinId, field, value, contact }),
       })
     } catch { /* optimistic update already applied; next refresh reconciles */ }
   }, [activePinId])
+
+  // Delete a lead the agent imported themselves (server enforces imported-only +
+  // ownership; company leads can never be deleted here).
+  const handleDeleteLead = useCallback(async (leadId: string) => {
+    if (!activePinId) return
+    if (typeof window !== "undefined" && !window.confirm("Delete this lead you imported? This can't be undone.")) return
+    setLeads(prev => prev.filter(l => l.id !== leadId)) // optimistic
+    try {
+      const res = await fetch("/api/leads/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, operatorPinId: activePinId }),
+      })
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}))
+        alert(j?.error || "Could not delete this lead.")
+        if (typeof window !== "undefined") window.location.reload()
+      }
+    } catch {
+      if (typeof window !== "undefined") window.location.reload()
+    }
+  }, [activePinId])
+
+  // Agent-found contact info: add an email/phone onto an assigned lead so
+  // outreach can use it (server enforces ownership + blacklist + DNC-pending).
+  const handleAddContact = useCallback(async (leadId: string, kind: "email" | "phone") => {
+    if (typeof window === "undefined") return
+    if (!activePinId) {
+      alert("Your account is still loading — give it a moment and try again.")
+      return
+    }
+    const value = window.prompt(kind === "email"
+      ? "Enter the email address you found for this claimant:"
+      : "Enter ONE 10-digit phone number for this claimant (add more one at a time):")
+    if (!value?.trim()) return
+    try {
+      const res = await fetch("/api/leads/add-contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, operatorPinId: activePinId, kind, value: value.trim() }),
+      })
+      const j = await res.json().catch(() => ({}))
+      if (!res.ok) { alert(j?.error || "Could not add that contact."); return }
+      setLeads(prev => prev.map(l => l.id === leadId ? {
+        ...l,
+        primaryEmail: kind === "email" ? (j.primaryEmail || l.primaryEmail) : l.primaryEmail,
+        allEmails: kind === "email" ? Array.from(new Set([...l.allEmails, value.trim().toLowerCase()])) : l.allEmails,
+        primaryPhone: kind === "phone" ? (j.primaryPhone || l.primaryPhone) : l.primaryPhone,
+        // show the number immediately even when primary+secondary are already taken
+        allPhones: kind === "phone"
+          ? (() => {
+              const key = (p: string) => p.replace(/\D/g, "").slice(-10)
+              const added = value.trim()
+              return l.allPhones.some((p) => key(p) === key(added)) ? l.allPhones : [...l.allPhones, added]
+            })()
+          : l.allPhones,
+        dncChecked: kind === "phone" && j.dncPending ? false : l.dncChecked,
+        canContact: kind === "phone" && j.dncPending ? false : l.canContact,
+      } : l))
+      alert(kind === "phone" && j.dncPending
+        ? "Phone added. It will unlock for voice drops and texting after our Do-Not-Call check clears it."
+        : "Added. Outreach can use it now.")
+    } catch { alert("Could not add that contact. Please try again.") }
+  }, [activePinId])
+
+  // Live DNC check (Tracerfy) on a lead's phone — agent-triggered from the row.
+  const [dncChecking, setDncChecking] = useState<Record<string, boolean>>({})
+  const handleDncCheck = useCallback(async (leadId: string) => {
+    if (!activePinId || dncChecking[leadId]) return
+    setDncChecking(prev => ({ ...prev, [leadId]: true }))
+    try {
+      const res = await fetch("/api/leads/dnc-check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId, operatorPinId: activePinId }),
+      })
+      const j = await res.json().catch(() => ({}))
+      if (!res.ok) { alert(j?.error || "DNC check failed. Please try again."); return }
+      if (j.pending) { alert(j.message || "Still processing — try again in a minute."); return }
+      setLeads(prev => prev.map(l => l.id === leadId ? {
+        ...l, dncChecked: true, onDnc: !!j.onDnc, canContact: !!j.canContact,
+      } : l))
+      alert(j.isClean
+        ? "Cleared! This number is NOT on the Do-Not-Call registry. Voice drops and texting are now unlocked."
+        : "This number IS on the Do-Not-Call registry. Voice drops and texting stay locked — reach out by email or mail instead.")
+    } catch { alert("DNC check failed. Please try again.") }
+    finally { setDncChecking(prev => ({ ...prev, [leadId]: false })) }
+  }, [activePinId, dncChecking])
 
   // Search & filter state
   const [searchQuery, setSearchQuery] = useState("")
@@ -1880,6 +2394,13 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
               Certified Credits
             </Button>
             <Button
+              onClick={() => { setShowBuyModal(true); setBuySuccess(false) }}
+              className="bg-gradient-to-r from-emerald-600 to-green-600 text-white hover:from-emerald-700 hover:to-green-700 shadow-md"
+            >
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Buy More Leads
+            </Button>
+            <Button
               onClick={() => {
                 const basicTiers = ["basic", "free_webcast", "free"]
                 if (basicTiers.includes(activeAccountType)) {
@@ -1962,7 +2483,7 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
               Lead delivery isn&apos;t included on your <strong className="text-white">Free tier</strong>. Become a certified <strong className="text-white">Asset Recovery Agent</strong> to unlock exclusive leads + outreach.
             </p>
             <button
-              onClick={() => { setShowBasicUpgradeModal(false); window.open(UPGRADE_URL, "_blank", "noopener,noreferrer") }}
+              onClick={() => { setShowBasicUpgradeModal(false); openAgentManager() }}
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 font-semibold shadow-md text-sm mb-3 w-full justify-center"
             >
               Become an Asset Recovery Agent
@@ -1972,6 +2493,27 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
               className="text-sm text-slate-400 hover:text-white mt-2"
             >
               Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* No-email-on-file notice (paid agents) */}
+      {showNoEmailNotice && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" onClick={() => setShowNoEmailNotice(false)}>
+          <div className="bg-white dark:bg-slate-900 rounded-xl border shadow-2xl w-full max-w-sm p-6 text-center" onClick={(e) => e.stopPropagation()}>
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-100 to-amber-200 ring-4 ring-amber-200/50">
+              <Mail className="h-7 w-7 text-amber-600" />
+            </div>
+            <h3 className="text-lg font-bold mb-2">No email on file</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              This lead doesn&apos;t have an email address yet, so there&apos;s nothing to email. Reach this homeowner by <strong>phone</strong>, <strong>SMS</strong>, or <strong>certified mail</strong> instead.
+            </p>
+            <button
+              onClick={() => setShowNoEmailNotice(false)}
+              className="inline-flex items-center justify-center px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 font-semibold shadow-md text-sm w-full"
+            >
+              Got it
             </button>
           </div>
         </div>
@@ -2024,7 +2566,7 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                 <CheckCircle2 className="h-12 w-12 text-emerald-500 mx-auto mb-4" />
                 <h3 className="text-lg font-bold mb-2 text-white">Request Submitted</h3>
                 <p className="text-sm text-slate-300 mb-4">
-                  Your lead request has been sent to our team. We will assign leads to your account within 1-2 business days.
+                  Your lead request is in. We&rsquo;ll issue your leads within 24 hours based on availability, matching any state preference you set. If a state or lead type is thin, we send the closest alternatives. Check your email for confirmation.
                 </p>
                 <Button onClick={() => setShowRequestModal(false)} variant="outline">Close</Button>
               </div>
@@ -2069,11 +2611,76 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                       className="w-full rounded-md border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-white shadow-sm placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500"
                     />
                   </div>
+                  {requestError && (
+                    <div className="rounded-lg bg-red-950/60 border border-red-800 px-3 py-2.5 text-sm text-red-200">
+                      {requestError}
+                    </div>
+                  )}
                   <div className="flex gap-3 pt-2">
                     <Button variant="outline" className="flex-1 text-foreground" onClick={() => setShowRequestModal(false)}>Cancel</Button>
                     <Button className="flex-1 bg-blue-600 text-white hover:bg-blue-700" onClick={submitLeadRequest} disabled={requesting}>
                       {requesting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Send className="h-4 w-4 mr-2" />}
                       Submit Request
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Buy More Leads (past the 125/week cap, $2.50 each -> invoice) */}
+      {showBuyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" onClick={() => setShowBuyModal(false)}>
+          <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-md p-6" onClick={(e) => e.stopPropagation()}>
+            {buySuccess ? (
+              <div className="text-center py-4">
+                <CheckCircle2 className="h-12 w-12 text-emerald-500 mx-auto mb-4" />
+                <h3 className="text-lg font-bold mb-2 text-white">Invoice On Its Way</h3>
+                <p className="text-sm text-slate-300 mb-1">
+                  We're sending an invoice for <strong className="text-white">{buyQty} extra leads</strong> (${(buyQty * 2.5).toFixed(2)}) to your email.
+                </p>
+                <p className="text-sm text-slate-400 mb-4">Once it's paid, your extra leads are issued within 24 hours.</p>
+                <Button onClick={() => setShowBuyModal(false)} variant="outline">Close</Button>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2"><ShoppingCart className="h-5 w-5 text-emerald-400" /> Buy More Leads</h3>
+                  <button onClick={() => setShowBuyModal(false)} className="text-slate-400 hover:text-white">
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+                <div className="rounded-lg bg-emerald-950/60 border border-emerald-800 px-4 py-3 mb-4">
+                  <p className="text-sm text-emerald-200 leading-relaxed">
+                    Already went through your up to <strong>125 weekly leads</strong> and want more? Buy extra leads here at <strong>$2.50 each</strong>. We'll email you an invoice, and your leads are issued within 24 hours of payment.
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-white mb-1.5 block">How many extra leads?</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="range"
+                        min={1}
+                        max={100}
+                        value={buyQty}
+                        onChange={(e) => setBuyQty(Number(e.target.value))}
+                        className="flex-1 accent-emerald-600"
+                      />
+                      <span className="text-2xl font-bold text-emerald-400 w-12 text-center">{buyQty}</span>
+                    </div>
+                    <div className="flex items-center justify-between mt-3 rounded-lg bg-slate-800 px-4 py-3">
+                      <span className="text-sm text-slate-300">{buyQty} leads &times; $2.50</span>
+                      <span className="text-xl font-bold text-white">${(buyQty * 2.5).toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 pt-1">
+                    <Button variant="outline" className="flex-1 text-foreground" onClick={() => setShowBuyModal(false)}>Cancel</Button>
+                    <Button className="flex-1 bg-emerald-600 text-white hover:bg-emerald-700" onClick={submitBuyExtra} disabled={buying}>
+                      {buying ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ShoppingCart className="h-4 w-4 mr-2" />}
+                      Send My Invoice
                     </Button>
                   </div>
                 </div>
@@ -2096,7 +2703,7 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                 Below is a sample lead showing exactly what your assigned leads will look like.
                 Click the lead bar to expand and see full details including property data, contact info,
                 foreclosure details, tax records, skip trace data, and the Google Maps location.
-                Click <strong>"Request Leads"</strong> to get your leads assigned.
+                Click <strong>&ldquo;Request Leads&rdquo;</strong> to get your leads assigned.
                 Your <strong>{ACCOUNT_LABELS[activeAccountType] || "Basic"}</strong> account allows up to <strong>{maxLeads} leads</strong>.
               </p>
             </div>
@@ -2333,7 +2940,17 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                         </Badge>
                       )}
                       {lead.county && (
-                        <div className="text-xs text-muted-foreground mt-1">{lead.county} County</div>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setCountyDialog({ state: lead.stateAbbr, county: lead.county })
+                          }}
+                          title="View county lead counts, contacts & court filing info"
+                          className="mt-1 text-xs text-blue-600 underline-offset-2 hover:underline dark:text-blue-400"
+                        >
+                          {lead.county} County
+                        </button>
                       )}
                     </div>
 
@@ -2342,9 +2959,18 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                       <div className="flex items-start gap-2">
                         <MapPin className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium truncate">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              if (!expandedLeads.includes(lead.id)) toggleExpanded(lead.id)
+                              setFocusMapLeadId(lead.id)
+                            }}
+                            title="Open this property on the lead's Map tab"
+                            className="block w-full truncate text-left font-medium text-blue-700 underline-offset-2 hover:underline dark:text-blue-400"
+                          >
                             <BlurredText revealed={isRevealed}>{lead.propertyAddress}</BlurredText>
-                          </div>
+                          </button>
                           <div className="text-sm text-muted-foreground">
                             {lead.city}, {lead.stateAbbr} {lead.zipCode}
                           </div>
@@ -2438,6 +3064,38 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                               </button>
                             )}
                           </div>
+                          {/* Every OTHER number on the lead. Previously only primary and
+                              secondary ever rendered, so a third number an agent added
+                              (a relative, a gatekeeper) was saved but never shown again. */}
+                          {isRevealed && lead.allPhones.filter((p) => p.replace(/\D/g, "").slice(-10) !== lead.primaryPhone.replace(/\D/g, "").slice(-10)).map((p) => {
+                            const isBad = lead.badPhones.some((b) => b.replace(/\D/g, "").slice(-10) === p.replace(/\D/g, "").slice(-10))
+                            return (
+                              <div key={p} className="flex items-center gap-1.5 pl-5">
+                                <Phone className={cn("h-3 w-3 shrink-0", isBad ? "text-red-400" : "text-emerald-600/70")} />
+                                {isBad ? (
+                                  <span className="text-xs font-medium text-red-500 line-through" title="You marked this number bad - outreach skips it">{p}</span>
+                                ) : (
+                                  <button
+                                    className="text-xs font-medium text-emerald-700 hover:underline cursor-pointer"
+                                    onClick={(e) => { e.stopPropagation(); if (hasTextbee) { openSmsPreview(lead.id, p, lead.ownerName) } else { setCommsGate("sms") } }}
+                                    title="Also on this lead - click to text this number"
+                                  >
+                                    {p}
+                                  </button>
+                                )}
+                                <span className="text-[10px] text-muted-foreground">also on file</span>
+                                {!lead.isMock && (
+                                  <button
+                                    title={isBad ? "Restore this number (mark good)" : "Mark THIS number bad"}
+                                    onClick={(e) => { e.stopPropagation(); flagLead(lead.id, "bad_phone_value", !isBad, p) }}
+                                    className={cn("shrink-0 rounded p-0.5 hover:bg-muted", isBad ? "text-emerald-600" : "text-muted-foreground hover:text-red-600")}
+                                  >
+                                    {isBad ? <RotateCcw className="h-3 w-3" /> : <Ban className="h-3 w-3" />}
+                                  </button>
+                                )}
+                              </div>
+                            )
+                          })}
                           {!lead.onDnc && !lead.badPhone && (
                             <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                               <VoiceDropBtn lead={lead} sending={!!sendingVoiceDrop[lead.id]} onSend={sendVoiceDrop} hasSlybroadcast={hasSlybroadcast} onNeedCreds={() => setCommsGate("voice")} />
@@ -2480,6 +3138,18 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                               )}
                             </div>
                           )}
+                          {!lead.primaryEmail && !lead.isMock && (
+                            /* Has a phone but no email — let the agent add one inline. */
+                            <div onClick={(e) => e.stopPropagation()}>
+                              <button
+                                onClick={() => handleAddContact(lead.id, "email")}
+                                className="flex items-center gap-1 rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 transition-colors hover:bg-blue-100"
+                                title="Add an email you found for this claimant"
+                              >
+                                <Mail className="h-3 w-3" /> Add email
+                              </button>
+                            </div>
+                          )}
                           <div className="flex flex-wrap items-center gap-1">
                             <LeadTypeBadge lead={lead} />
                             {lead.agentStatus === "dead" && <Badge className="bg-red-600 text-white border-red-700 text-[10px] px-1.5 py-0">Dead</Badge>}
@@ -2488,9 +3158,47 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                           <OutreachStatus lead={lead} />
                         </div>
                       ) : (
-                        <div className="flex items-center gap-1.5 text-muted-foreground">
-                          <Phone className="h-3.5 w-3.5" />
-                          <span className="text-xs">No phone on file</span>
+                        /* No phone on file. This used to be a dead end — no way to add a
+                           phone OR an email (the email block lives in the has-phone branch),
+                           which is why imported leads looked un-editable. Give the agent the
+                           add actions right here where they look for the contact info. */
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-1.5 text-muted-foreground">
+                            <Phone className="h-3.5 w-3.5" />
+                            <span className="text-xs">No phone on file</span>
+                          </div>
+                          {lead.primaryEmail && (
+                            <button
+                              className="flex items-center gap-1.5 rounded px-1 -mx-1 transition-colors hover:bg-blue-50 dark:hover:bg-blue-950"
+                              onClick={(e) => { e.stopPropagation(); if (isRevealed) openEmailDraft(lead.id, lead.primaryEmail!, lead.ownerName) }}
+                            >
+                              <Mail className="h-3 w-3 text-blue-600" />
+                              <span className="max-w-[140px] truncate text-xs text-blue-600">
+                                <BlurredText revealed={isRevealed}>{lead.primaryEmail}</BlurredText>
+                              </span>
+                            </button>
+                          )}
+                          {!lead.isMock && (
+                            <div className="flex flex-wrap items-center gap-1" onClick={(e) => e.stopPropagation()}>
+                              <button
+                                onClick={() => handleAddContact(lead.id, "phone")}
+                                className="flex items-center gap-1 rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 transition-colors hover:bg-blue-100"
+                                title="Add a phone number you found for this claimant"
+                              >
+                                <Phone className="h-3 w-3" /> Add phone
+                              </button>
+                              {!lead.primaryEmail && (
+                                <button
+                                  onClick={() => handleAddContact(lead.id, "email")}
+                                  className="flex items-center gap-1 rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 transition-colors hover:bg-blue-100"
+                                  title="Add an email you found for this claimant"
+                                >
+                                  <Mail className="h-3 w-3" /> Add email
+                                </button>
+                              )}
+                            </div>
+                          )}
+                          <LeadTypeBadge lead={lead} />
                         </div>
                       )}
                     </div>
@@ -2550,10 +3258,15 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                   {isExpanded && (
                     <LeadDropdown
                       lead={lead}
+                      initialTab={focusMapLeadId === lead.id ? "map" : undefined}
                       revealed={isRevealed}
                       onReveal={() => toggleReveal(lead.id)}
                       onShowUpgrade={() => setShowUpgradePopup(true)}
-                      onEmailDraft={lead.primaryEmail && isRevealed ? () => openEmailDraft(lead.id, lead.primaryEmail!, lead.ownerName) : undefined}
+                      onEmailDraft={() => {
+                        if (!isRevealed) { toggleReveal(lead.id); return }
+                        if (!lead.primaryEmail) { setShowNoEmailNotice(true); return }
+                        openEmailDraft(lead.id, lead.primaryEmail, lead.ownerName)
+                      }}
                       onSms={lead.primaryPhone && isRevealed && !lead.onDnc ? () => openSmsPreview(lead.id, lead.primaryPhone, lead.ownerName) : undefined}
                       onCertifiedLetter={lead.mailingAddress && lead.mailingAddress.toLowerCase().trim() !== lead.propertyAddress.toLowerCase().trim() && isRevealed ? () => openCertLetterModal(lead.id, lead.ownerName, lead.mailingAddress) : undefined}
                       voiceDropSending={sendingVoiceDrop[lead.id]}
@@ -2563,6 +3276,10 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                       onNeedCreds={(ch) => setCommsGate(ch)}
                       pinId={activePinId}
                       onFlag={flagLead}
+                      onDelete={handleDeleteLead}
+                      onAddContact={handleAddContact}
+                      onDncCheck={handleDncCheck}
+                      onEmailTo={(em) => openEmailDraft(lead.id, em, lead.ownerName)}
                     />
                   )}
                 </CardContent>
@@ -2672,17 +3389,145 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                       Espanol
                     </button>
                   </div>
-                  <div className="flex flex-col gap-1 text-sm border rounded-lg p-3 bg-slate-50">
-                    <div><span className="text-muted-foreground">From:</span> <span className="font-medium">{(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).from}</span></div>
-                    <div><span className="text-muted-foreground">To:</span> <span className="font-medium">{(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).to}</span></div>
-                    <div><span className="text-muted-foreground">Subject:</span> <span className="font-medium">{(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).subject}</span></div>
+                  <div className="flex flex-col gap-2 text-sm border rounded-lg p-3 bg-slate-50">
+                    <div><span className="text-muted-foreground">From:</span> <span className="font-medium">{agentName} &middot; Foreclosure Recovery</span></div>
+                    <div><span className="text-muted-foreground">Replies to:</span> <span className="font-medium">{(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).from}</span> <span className="text-xs text-muted-foreground">(sent through our secure delivery service)</span></div>
+                    {/* Recipient is EDITABLE. It used to be read-only text, so an agent
+                        who needed to send to a second address on the lead (a relative or
+                        gatekeeper forwarding to the claimant) had no way to change it —
+                        the only switcher was behind the PIN-reveal gate on the row and
+                        was invisible until the PIN was entered. */}
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground whitespace-nowrap">To:</span>
+                      <select
+                        value={emailDraftModal.to}
+                        onChange={(e) => setEmailDraftModal((m) => (m ? { ...m, to: e.target.value } : m))}
+                        className="h-8 flex-1 min-w-0 rounded-md border border-input bg-white px-2 text-sm font-medium"
+                      >
+                        {Array.from(
+                          new Set(
+                            [
+                              emailDraftModal.to,
+                              ...((leads.find((l) => l.id === emailDraftModal.leadId)?.allEmails) || []),
+                            ].filter(Boolean)
+                          )
+                        ).map((em) => (
+                          <option key={em} value={em}>{em}</option>
+                        ))}
+                      </select>
+                    </div>
+                    {(leads.find((l) => l.id === emailDraftModal.leadId)?.allEmails || []).length > 1 && (
+                      <p className="text-xs text-muted-foreground -mt-1">
+                        This claimant has more than one address on file — pick who this goes to.
+                      </p>
+                    )}
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground whitespace-nowrap">Subject:</span>
+                      <Input
+                        value={emailSubject}
+                        onChange={(e) => setEmailSubject(e.target.value)}
+                        className="h-8 text-sm font-medium bg-white"
+                        placeholder="Email subject"
+                      />
+                    </div>
                   </div>
-                  <div className="border rounded-lg overflow-auto max-h-[45vh] bg-white">
+                  <p className="text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-md px-3 py-2">
+                    Click directly on any wording in the message below and type to change it. Scroll
+                    inside the message to read all of it, including the part under the agreement note.
+                  </p>
+
+                  {/* Contingency agreement — full agent control before anything goes out */}
+                  {emailDraftModal.leadId !== MOCK_LEAD.id && (
+                    <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <FileText className="h-4 w-4 text-amber-700" />
+                        <span className="text-sm font-semibold text-amber-900">
+                          Contingency agreement {agreementIsCustom && <span className="font-normal">(your uploaded copy)</span>}
+                        </span>
+                        <span className="text-xs text-amber-800">attached automatically when you send</span>
+                      </div>
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <Button size="sm" variant="outline" disabled={!!agreementBusy}
+                          onClick={() => agreementAction("agreement")}
+                          className="border-amber-300 bg-white text-amber-900 hover:bg-amber-100">
+                          {agreementBusy === "download" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <Download className="mr-1.5 h-3.5 w-3.5" />}
+                          Download &amp; review
+                        </Button>
+                        <Button size="sm" variant="outline" disabled={!!agreementBusy}
+                          onClick={() => agreementFileRef.current?.click()}
+                          className="border-amber-300 bg-white text-amber-900 hover:bg-amber-100">
+                          {agreementBusy === "upload" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <Upload className="mr-1.5 h-3.5 w-3.5" />}
+                          Upload edited version
+                        </Button>
+                        {agreementIsCustom && (
+                          <Button size="sm" variant="outline" disabled={!!agreementBusy}
+                            onClick={() => agreementAction("agreement_reset")}
+                            className="border-amber-300 bg-white text-amber-900 hover:bg-amber-100">
+                            {agreementBusy === "reset" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <RotateCcw className="mr-1.5 h-3.5 w-3.5" />}
+                            Use standard again
+                          </Button>
+                        )}
+                        <input
+                          ref={agreementFileRef}
+                          type="file"
+                          accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const f = e.target.files?.[0]
+                            e.target.value = ""
+                            if (!f) return
+                            const buf = await f.arrayBuffer()
+                            let bin = ""
+                            const bytes = new Uint8Array(buf)
+                            for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i])
+                            await agreementAction("agreement_upload", btoa(bin))
+                          }}
+                        />
+                      </div>
+                      <p className="mt-2 text-xs text-amber-800">
+                        Download it to check the numbers and wording first. Need a change? Edit the file and upload it —
+                        your copy gets attached to this claimant instead of the standard one.
+                      </p>
+                      {agreementNote && <p className="mt-1.5 text-xs font-medium text-amber-900">{agreementNote}</p>}
+                    </div>
+                  )}
+                  <div
+                    ref={emailPreviewWrapRef}
+                    // 42vh on desktop cut the message off so the agent could not reach the
+                    // text under the agreement block; give it real room on both sizes.
+                    className="border-2 border-blue-200 rounded-lg overflow-auto max-h-[70vh] sm:max-h-[68vh] bg-white"
+                    style={{ height: `${Math.round(900 * emailPreviewScale)}px` }}
+                  >
                     <iframe
+                      key={emailPreviewLang}
+                      ref={emailBodyRef}
                       srcDoc={(emailPreviewLang === "es" && emailPreviewES ? emailPreviewES : emailPreview).html}
-                      className="w-full min-h-[400px] border-0"
+                      className="border-0"
+                      style={{
+                        width: `${EMAIL_PREVIEW_W}px`,
+                        height: "900px",
+                        transform: `scale(${emailPreviewScale})`,
+                        transformOrigin: "0 0",
+                      }}
                       title="Email preview"
                       sandbox="allow-same-origin"
+                      onLoad={(e) => {
+                        // Make the body editable in place so the agent can tweak the wording.
+                        // contentEditable alone was not reliably taking (agents reported "it
+                        // will not let me click and edit anything"), so also set designMode
+                        // and give the caret something to land on. Belt and braces.
+                        try {
+                          const doc = (e.currentTarget as HTMLIFrameElement).contentDocument
+                          if (!doc?.body) return
+                          doc.body.contentEditable = "true"
+                          doc.body.style.outline = "none"
+                          doc.body.style.cursor = "text"
+                          try { doc.designMode = "on" } catch { /* some browsers refuse */ }
+                          doc.body.addEventListener("click", () => {
+                            try { doc.body.focus() } catch { /* ignore */ }
+                          })
+                        } catch { /* ignore */ }
+                      }}
                     />
                   </div>
                 </>
@@ -2712,34 +3557,67 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
               <Button variant="outline" onClick={() => { setEmailDraftModal(null); setEmailDraftResult(null) }}>
                 Close
               </Button>
-              {emailPreview && !emailDraftResult?.success && emailDraftModal.leadId !== MOCK_LEAD.id && (
-                <>
-                  <Button
-                    onClick={() => createEmailDraft("create_draft_en")}
-                    disabled={emailDraftLoading}
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
-                  >
-                    {emailDraftLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Mail className="h-4 w-4 mr-2" />}
-                    English Draft
-                  </Button>
-                  <Button
-                    onClick={() => createEmailDraft("create_draft_es")}
-                    disabled={emailDraftLoading}
-                    className="bg-amber-600 hover:bg-amber-700 text-white"
-                  >
-                    {emailDraftLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Mail className="h-4 w-4 mr-2" />}
-                    Spanish Draft
-                  </Button>
-                  <Button
-                    onClick={() => createEmailDraft("create_draft_both")}
-                    disabled={emailDraftLoading}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white"
-                  >
-                    {emailDraftLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Mail className="h-4 w-4 mr-2" />}
-                    Send Both
-                  </Button>
-                </>
+              {emailPreview && !emailDraftResult?.success && (
+                <Button
+                  onClick={handleSendClick}
+                  disabled={emailSending || !emailSubject.trim()}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  {emailSending ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
+                  Send Email
+                </Button>
               )}
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* One-time "you can send from here now" notice — shows the first time an agent
+          hits Send, then never again once acknowledged (persisted server-side). */}
+      {showSendNotice && (
+        <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4" onClick={() => setShowSendNotice(false)}>
+          <Card className="w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2">
+                <Send className="h-5 w-5 text-blue-600" />
+                New: send claimant emails right here
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Good news &mdash; you no longer need to log into your business email to send a homeowner&rsquo;s
+                first-touch email. Review and edit your message here, hit Send, and it goes out for you automatically
+                from the dashboard. You can still log into your business email anytime to correspond with a homeowner
+                directly &mdash; only these first-touch claimant emails now send from here instead of your business
+                email Drafts folder.
+              </p>
+              <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={noticeChecked}
+                  onChange={(e) => setNoticeChecked(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-slate-300"
+                />
+                <span>I understand this change and don&rsquo;t need to see this notice again.</span>
+              </label>
+            </CardContent>
+            <div className="flex items-center justify-end gap-2 p-6 pt-0">
+              <Button variant="outline" onClick={() => setShowSendNotice(false)}>
+                Close
+              </Button>
+              <Button
+                onClick={async () => {
+                  // Always sends. The checkbox only decides whether the notice is
+                  // dismissed for good — unchecked sends this time but shows again next.
+                  if (noticeChecked) await ackSendNotice()
+                  setShowSendNotice(false)
+                  sendEmailNow()
+                }}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Got it, send my email
+              </Button>
             </div>
           </Card>
         </div>
@@ -2761,8 +3639,46 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                 Go to <strong>My Account &rarr; Outreach Integrations</strong> and save your credentials to turn it on for every lead.
                 Until then you can still call and text manually, and create email drafts.
               </p>
+              {/* The blocking step for SlyBroadcast lives on slybroadcast.com (API
+                  access must be enabled there), so "Go to My Account" alone never
+                  unblocked anyone. Put the guide one click away at the exact moment
+                  they hit the wall. */}
+              <Button
+                variant="outline"
+                className="w-full border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+                disabled={guideSending !== null}
+                onClick={async () => {
+                  const which = commsGate === "voice" ? "slybroadcast" : "textbee"
+                  setGuideSending(which)
+                  try {
+                    const r = await fetch("/api/user/send-guide", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ guide: which }),
+                    })
+                    const j = await r.json().catch(() => ({}))
+                    setGuideSent(r.ok ? (j.to || "your email") : null)
+                    if (!r.ok) alert(j?.error || "Could not send the guide. Please try again.")
+                  } catch {
+                    alert("Could not send the guide. Please try again.")
+                  } finally {
+                    setGuideSending(null)
+                  }
+                }}
+              >
+                {guideSending ? (
+                  <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Sending...</>
+                ) : (
+                  <><Mail className="h-4 w-4 mr-2" /> Send me the {commsGate === "voice" ? "SLY" : "TextBee"} Connection Guide</>
+                )}
+              </Button>
+              {guideSent && (
+                <p className="text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-md px-3 py-2">
+                  Sent to <strong>{guideSent}</strong>. Check your inbox — the full step-by-step is attached as a PDF.
+                </p>
+              )}
               <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={() => setCommsGate(null)}>Close</Button>
+                <Button variant="outline" onClick={() => { setCommsGate(null); setGuideSent(null) }}>Close</Button>
                 <Button onClick={() => { setCommsGate(null); window.location.href = "/dashboard/settings" }}>Go to My Account</Button>
               </div>
             </CardContent>
@@ -2792,6 +3708,26 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
               )}
               {smsPreview && (
                 <>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-medium text-muted-foreground">Language</span>
+                    <div className="inline-flex rounded-md border overflow-hidden">
+                      <button
+                        type="button"
+                        className={`px-3 py-1 text-xs font-medium ${smsLang === "en" ? "bg-emerald-600 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}
+                        onClick={() => smsLang !== "en" && reloadSmsPreview("en")}
+                        disabled={smsLoading || !!smsResult?.success}
+                      >English</button>
+                      <button
+                        type="button"
+                        className={`px-3 py-1 text-xs font-medium border-l ${smsLang === "es" ? "bg-emerald-600 text-white" : "bg-white text-slate-600 hover:bg-slate-50"}`}
+                        onClick={() => smsLang !== "es" && reloadSmsPreview("es")}
+                        disabled={smsLoading || !!smsResult?.success}
+                      >Espa&ntilde;ol</button>
+                    </div>
+                    {smsLang === "es" && (
+                      <span className="text-[11px] text-muted-foreground">Spanish text for a Spanish-speaking claimant</span>
+                    )}
+                  </div>
                   <textarea
                     className="w-full border rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50"
                     rows={6}
@@ -2803,6 +3739,40 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                     <span>{smsEditMessage.length} characters</span>
                     <span>{Math.ceil(smsEditMessage.length / 160)} SMS segment{Math.ceil(smsEditMessage.length / 160) !== 1 ? "s" : ""}</span>
                   </div>
+                  {/* Agreement e-sign link — same link the email uses, so the claimant
+                      can review and sign right from their phone. */}
+                  {smsPreview.signLink && (
+                    <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <FileText className="h-4 w-4 text-emerald-700" />
+                        <span className="text-sm font-semibold text-emerald-900">Agreement sign link included</span>
+                      </div>
+                      <p className="mt-1 break-all font-mono text-[11px] text-emerald-800">{smsPreview.signLink}</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <Button size="sm" variant="outline"
+                          className="border-emerald-300 bg-white text-emerald-800 hover:bg-emerald-100"
+                          onClick={() => { navigator.clipboard?.writeText(smsPreview.signLink || "") }}>
+                          Copy link
+                        </Button>
+                        {smsEditMessage.includes(smsPreview.signLink) ? (
+                          <Button size="sm" variant="outline"
+                            className="border-emerald-300 bg-white text-emerald-800 hover:bg-emerald-100"
+                            onClick={() => setSmsEditMessage(smsEditMessage.replace(new RegExp("\\n*Review & sign your agreement here: " + smsPreview.signLink!.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), "").trim())}>
+                            Remove from text
+                          </Button>
+                        ) : (
+                          <Button size="sm" variant="outline"
+                            className="border-emerald-300 bg-white text-emerald-800 hover:bg-emerald-100"
+                            onClick={() => setSmsEditMessage(`${smsEditMessage}\n\nReview & sign your agreement here: ${smsPreview.signLink}`)}>
+                            Add back to text
+                          </Button>
+                        )}
+                      </div>
+                      <p className="mt-2 text-xs text-emerald-800">
+                        This is the same agreement link the email sends — the claimant can review and sign on their phone.
+                      </p>
+                    </div>
+                  )}
                 </>
               )}
               {smsResult && (
@@ -2890,16 +3860,57 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
 
       {showCreditsExhausted && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowCreditsExhausted(null)}>
-          <Card className="w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+          <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-orange-700"><MailCheck className="h-5 w-5" />Out of Free Certified Letters</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-orange-700">
+                <MailCheck className="h-5 w-5" />
+                {showCreditsExhausted.reason === "free_month_over" ? "Free Certified Letters Used Up" : "Out of Free Certified Letters This Week"}
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-sm">
-              <p>You&apos;ve used all <strong>{showCreditsExhausted.freeLimit ?? 5} free certified letters</strong> for this week. To send more right now, purchase additional credits — otherwise your free credits reset <strong>Monday at noon</strong>{showCreditsExhausted.resetAt ? ` (${new Date(showCreditsExhausted.resetAt).toLocaleDateString()})` : ""}.</p>
-              <div className="flex gap-2">
-                <Button onClick={() => { setShowCreditsExhausted(null); openCertCredits() }} className="bg-orange-600 hover:bg-orange-700 text-white">Purchase Credits</Button>
-                <Button variant="outline" onClick={() => setShowCreditsExhausted(null)}>Wait Until Monday</Button>
+              {showCreditsExhausted.reason === "free_month_over" ? (
+                <p>
+                  Your <strong>free month of certified letters</strong> (5 per week for your first
+                  month) is used up. To keep having us print &amp; mail them, it&apos;s{" "}
+                  <strong>${(showCreditsExhausted.pricePerLetter ?? 12.5).toFixed(2)} per letter</strong>{" "}
+                  for shipping &amp; handling. Or print and mail your own for free — see below.
+                </p>
+              ) : (
+                <p>
+                  You&apos;ve used all <strong>{showCreditsExhausted.freeLimit ?? 5} free certified letters</strong> for
+                  this week. Your free credits reset <strong>Monday at noon</strong>
+                  {showCreditsExhausted.resetAt ? ` (${new Date(showCreditsExhausted.resetAt).toLocaleDateString()})` : ""}.
+                  You can also print and mail your own now — see below.
+                </p>
+              )}
+
+              <div className="flex flex-wrap gap-2">
+                <Button onClick={() => { setShowCreditsExhausted(null); openCertCredits() }} className="bg-orange-600 hover:bg-orange-700 text-white">
+                  {showCreditsExhausted.reason === "free_month_over" ? `Pay $${(showCreditsExhausted.pricePerLetter ?? 12.5).toFixed(2)}/letter` : "Purchase Credits"}
+                </Button>
+                <Button variant="outline" onClick={() => setShowCreditsExhausted(null)}>
+                  {showCreditsExhausted.reason === "free_month_over" ? "Close" : "Wait Until Monday"}
+                </Button>
               </div>
+
+              {/* Print-your-own alternative + steps */}
+              {showCreditsExhausted.canPrintOwn && showCreditsExhausted.leadId && (
+                <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3">
+                  <p className="font-semibold text-emerald-800">Or print &amp; mail your own — free</p>
+                  <ol className="mt-1 list-decimal space-y-0.5 pl-5 text-[13px] text-slate-700">
+                    <li>Click <strong>Download my letters</strong> below. You&apos;ll get 3 files: the cover letter, the contingency agreement, and the limited power of attorney — all personalized for {showCreditsExhausted.ownerName || "this claimant"} under your name.</li>
+                    <li>Print all three on your own printer.</li>
+                    <li>Mail them to the claimant&apos;s <strong>mailing address</strong> (not the foreclosed property) via USPS Certified Mail at the post office, and keep the tracking receipt.</li>
+                  </ol>
+                  <Button
+                    onClick={() => printOwnLetters(showCreditsExhausted.leadId, showCreditsExhausted.ownerName)}
+                    disabled={printingOwn}
+                    className="mt-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+                  >
+                    {printingOwn ? "Preparing…" : "Download my letters"}
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -2951,11 +3962,28 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
                   )}
                 </div>
               )}
+              {!certLetterResult?.success && (
+                <p className="text-xs text-muted-foreground">
+                  Prefer to mail it yourself? Use <strong>Print my own</strong> to download the cover
+                  letter, contingency agreement, and limited power of attorney — print all three and
+                  mail them to the claimant&apos;s mailing address via USPS Certified Mail.
+                </p>
+              )}
             </CardContent>
-            <div className="flex justify-end gap-2 p-6 pt-0">
+            <div className="flex flex-wrap justify-end gap-2 p-6 pt-0">
               <Button variant="outline" onClick={() => { setCertLetterModal(null); setCertLetterResult(null) }}>
                 Close
               </Button>
+              {!certLetterResult?.success && (
+                <Button
+                  variant="outline"
+                  onClick={() => printOwnLetters(certLetterModal.leadId, certLetterModal.ownerName)}
+                  disabled={printingOwn}
+                  className="border-emerald-300 text-emerald-700 hover:bg-emerald-50"
+                >
+                  {printingOwn ? "Preparing…" : "Print my own"}
+                </Button>
+              )}
               {!certLetterResult?.success && (
                 <Button
                   onClick={submitCertLetter}
@@ -2999,10 +4027,22 @@ export function LeadsWorkspace({ importedOnly = false }: { importedOnly?: boolea
           </CardContent>
         </Card>
       )}
+
+      {/* County popup — same data the foreclosure-map county click shows */}
+      {countyDialog && (
+        <CountyInfoDialog
+          stateAbbr={countyDialog.state}
+          countyName={countyDialog.county}
+          open
+          onClose={() => setCountyDialog(null)}
+          isOwnerOperator={isAdmin || ["owner_operator", "junior_owner_operator", "partnership"].includes(activeAccountType)}
+        />
+      )}
     </div>
   )
 }
 
 export default function MyLeadsPage() {
+  const { openAgentManager } = useAgentManager()
   return <LeadsWorkspace />
 }
